@@ -1,0 +1,27 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {onCancel = id; onChangeChecks = id; onOk = id; }; 
+            CLASS = ModeSheet; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                aCheck = id; 
+                iCheck = id; 
+                kCheck = id; 
+                lCheck = id; 
+                limit = id; 
+                mCheck = id; 
+                nCheck = id; 
+                pCheck = id; 
+                password = id; 
+                rCheck = id; 
+                sCheck = id; 
+                sheet = id; 
+                tCheck = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }
+    ); 
+    IBVersion = 1; 
+}

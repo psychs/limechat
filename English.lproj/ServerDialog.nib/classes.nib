@@ -1,0 +1,30 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {onCancel = id; onOk = id; }; 
+            CLASS = ServerDialog; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                "auto_connectCheck" = id; 
+                encodingCombo = id; 
+                hostCombo = id; 
+                invisibleCheck = id; 
+                leaveCommentText = id; 
+                loosenNickLengthCheck = id; 
+                nameText = id; 
+                nickLengthText = id; 
+                nickText = id; 
+                okButton = id; 
+                passwordText = id; 
+                portText = id; 
+                realnameText = id; 
+                userinfoText = id; 
+                usernameText = id; 
+                window = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }
+    ); 
+    IBVersion = 1; 
+}

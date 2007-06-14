@@ -1,0 +1,63 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {textEntered = id; }; 
+            CLASS = AppController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                "channel_menu" = id; 
+                "console_base" = id; 
+                "console_menu" = id; 
+                "info_split" = id; 
+                "log_base" = id; 
+                "log_menu" = id; 
+                "log_split" = id; 
+                "member_list" = id; 
+                "member_menu" = id; 
+                menu = id; 
+                "root_split" = id; 
+                "server_menu" = id; 
+                text = id; 
+                tree = id; 
+                "tree_menu" = id; 
+                window = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = ChatBox; LANGUAGE = ObjC; SUPERCLASS = NSBox; }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = ListView; LANGUAGE = ObjC; SUPERCLASS = NSTableView; }, 
+        {CLASS = MainWindow; LANGUAGE = ObjC; SUPERCLASS = NSWindow; }, 
+        {
+            ACTIONS = {
+                onAddChannel = id; 
+                onAddServer = id; 
+                onCancelReconnecting = id; 
+                onChannelProperties = id; 
+                onConnect = id; 
+                onCopyServer = id; 
+                onDcc = id; 
+                onDeleteChannel = id; 
+                onDeleteServer = id; 
+                onDisconnect = id; 
+                onJoin = id; 
+                onLeave = id; 
+                onMemberDeop = id; 
+                onMemberGiveOp = id; 
+                onMemberTalk = id; 
+                onMemberWhois = id; 
+                onMode = id; 
+                onPaste = id; 
+                onSearchWeb = id; 
+                onServerProperties = id; 
+                onTopic = id; 
+            }; 
+            CLASS = MenuController; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = Splitter; LANGUAGE = ObjC; SUPERCLASS = NSSplitView; }, 
+        {CLASS = TreeView; LANGUAGE = ObjC; SUPERCLASS = NSOutlineView; }
+    ); 
+    IBVersion = 1; 
+}

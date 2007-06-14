@@ -1,0 +1,671 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		78DB8A8E0C1C3216000C27D9 /* dmg */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 78DB8A8F0C1C3234000C27D9 /* Build configuration list for PBXAggregateTarget "dmg" */;
+			buildPhases = (
+				78DB8A8D0C1C3216000C27D9 /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = dmg;
+			productName = dmg;
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXBuildFile section */
+		78E572390C1C30BA00BDF7EC /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		78E5723A0C1C30BA00BDF7EC /* RubyCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5D3C7BF0AEB9FEB00C17985 /* RubyCocoa.framework */; };
+		78E5723B0C1C30BA00BDF7EC /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 788D56F00BB6872B00DDBF69 /* WebKit.framework */; };
+		78E5723C0C1C30BA00BDF7EC /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 787FD46C0BFE960100F2F22D /* Carbon.framework */; };
+		78E5723D0C1C30BA00BDF7EC /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 780253C20C09525900C170D4 /* CoreServices.framework */; };
+		78E5723E0C1C30C300BDF7EC /* AsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 786926F30BB6EC1B0081019B /* AsyncSocket.m */; };
+		78E5723F0C1C30C300BDF7EC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 786926F40BB6EC1B0081019B /* main.m */; };
+		78E572400C1C30C300BDF7EC /* LogEventSinkBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 78189D1C0BB8D4A500AC17B2 /* LogEventSinkBase.m */; };
+		78E572410C1C30C300BDF7EC /* Splitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 783A3AA70BC8CB2000FD455A /* Splitter.m */; };
+		78E572420C1C30C300BDF7EC /* GradientFill.m in Sources */ = {isa = PBXBuildFile; fileRef = 7804271D0BCA810600C14486 /* GradientFill.m */; };
+		78E572430C1C30CE00BDF7EC /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 29B97318FDCFA39411CA2CEA /* MainMenu.nib */; };
+		78E572440C1C30CE00BDF7EC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
+		78E572450C1C30CE00BDF7EC /* rb_main.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7869272D0BB6ED9E0081019B /* rb_main.rb */; };
+		78E572460C1C30CE00BDF7EC /* CommentSheet.nib in Resources */ = {isa = PBXBuildFile; fileRef = 78C5BAD30BE7B95100C4497A /* CommentSheet.nib */; };
+		78E572470C1C30CE00BDF7EC /* ModeSheet.nib in Resources */ = {isa = PBXBuildFile; fileRef = 781E254B0BE9E8E20040F56E /* ModeSheet.nib */; };
+		78E572480C1C30CE00BDF7EC /* ServerDialog.nib in Resources */ = {isa = PBXBuildFile; fileRef = 78785B570BEDCF6800456645 /* ServerDialog.nib */; };
+		78E572490C1C30CE00BDF7EC /* ChannelDialog.nib in Resources */ = {isa = PBXBuildFile; fileRef = 78B869B90BF2D613007315AA /* ChannelDialog.nib */; };
+		78E5724A0C1C30CE00BDF7EC /* ircsocket.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78A47CF60BF6DE6B001C5B15 /* ircsocket.rb */; };
+		78E5724B0C1C30CE00BDF7EC /* tcpclient.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78A47CF80BF6DE6B001C5B15 /* tcpclient.rb */; };
+		78E5724C0C1C30CE00BDF7EC /* tcpserver.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78A47CF90BF6DE6B001C5B15 /* tcpserver.rb */; };
+		78E5724D0C1C30CE00BDF7EC /* timer.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78A47CFA0BF6DE6B001C5B15 /* timer.rb */; };
+		78E5724E0C1C30CE00BDF7EC /* appcontroller.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78A47CFC0BF6DE6B001C5B15 /* appcontroller.rb */; };
+		78E5724F0C1C30CE00BDF7EC /* menucontroller.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78A47CFD0BF6DE6B001C5B15 /* menucontroller.rb */; };
+		78E572500C1C30CE00BDF7EC /* preferences.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78A47CFE0BF6DE6B001C5B15 /* preferences.rb */; };
+		78E572510C1C30CE00BDF7EC /* channeldialog.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78A47D000BF6DE6B001C5B15 /* channeldialog.rb */; };
+		78E572520C1C30CE00BDF7EC /* commentsheet.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78A47D010BF6DE6B001C5B15 /* commentsheet.rb */; };
+		78E572530C1C30CE00BDF7EC /* modesheet.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78A47D020BF6DE6B001C5B15 /* modesheet.rb */; };
+		78E572540C1C30CE00BDF7EC /* serverdialog.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78A47D030BF6DE6B001C5B15 /* serverdialog.rb */; };
+		78E572550C1C30CE00BDF7EC /* dialoghelper.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78A47D050BF6DE6B001C5B15 /* dialoghelper.rb */; };
+		78E572560C1C30CE00BDF7EC /* utility.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78A47D060BF6DE6B001C5B15 /* utility.rb */; };
+		78E572570C1C30CE00BDF7EC /* channel.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78A47D080BF6DE6B001C5B15 /* channel.rb */; };
+		78E572580C1C30CE00BDF7EC /* channelmode.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78A47D090BF6DE6B001C5B15 /* channelmode.rb */; };
+		78E572590C1C30CE00BDF7EC /* config.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78A47D0A0BF6DE6B001C5B15 /* config.rb */; };
+		78E5725A0C1C30CE00BDF7EC /* ircmessage.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78A47D0B0BF6DE6B001C5B15 /* ircmessage.rb */; };
+		78E5725B0C1C30CE00BDF7EC /* unit.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78A47D0C0BF6DE6B001C5B15 /* unit.rb */; };
+		78E5725C0C1C30CE00BDF7EC /* user.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78A47D0D0BF6DE6B001C5B15 /* user.rb */; };
+		78E5725D0C1C30CE00BDF7EC /* world.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78A47D0E0BF6DE6B001C5B15 /* world.rb */; };
+		78E5725E0C1C30CE00BDF7EC /* chatbox.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78A47D100BF6DE6B001C5B15 /* chatbox.rb */; };
+		78E5725F0C1C30CE00BDF7EC /* log.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78A47D110BF6DE6B001C5B15 /* log.rb */; };
+		78E572600C1C30CE00BDF7EC /* logview.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78A47D120BF6DE6B001C5B15 /* logview.rb */; };
+		78E572610C1C30CE00BDF7EC /* treeview.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78A47D130BF6DE6B001C5B15 /* treeview.rb */; };
+		78E572620C1C30CE00BDF7EC /* mainwindow.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78A47D140BF6DE6B001C5B15 /* mainwindow.rb */; };
+		78E572630C1C30CE00BDF7EC /* dccreceiver.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7817A00F0BF6DF87005C7737 /* dccreceiver.rb */; };
+		78E572640C1C30CE00BDF7EC /* dccsender.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7817A0110BF6DFB6005C7737 /* dccsender.rb */; };
+		78E572650C1C30CE00BDF7EC /* dccmanager.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7817A0300BF6FEA2005C7737 /* dccmanager.rb */; };
+		78E572660C1C30CE00BDF7EC /* DccDialog.nib in Resources */ = {isa = PBXBuildFile; fileRef = 7817A0380BF6FFCD005C7737 /* DccDialog.nib */; };
+		78E572670C1C30CE00BDF7EC /* dialogwindow.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78F0849C0BFE91D100520D74 /* dialogwindow.rb */; };
+		78E572680C1C30CE00BDF7EC /* usermode.rb in Resources */ = {isa = PBXBuildFile; fileRef = 785391480BFF174000606AB2 /* usermode.rb */; };
+		78E572690C1C30CE00BDF7EC /* WhoisDialog.nib in Resources */ = {isa = PBXBuildFile; fileRef = 78A86AD90BFFD87500E28592 /* WhoisDialog.nib */; };
+		78E5726A0C1C30CE00BDF7EC /* whoisdialog.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78A86AE70BFFE33F00E28592 /* whoisdialog.rb */; };
+		78E5726B0C1C30CE00BDF7EC /* urlopener.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78DF97C30C05A114004E6053 /* urlopener.rb */; };
+		78E5726C0C1C30CE00BDF7EC /* stringvalidator.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78DF97CB0C05A214004E6053 /* stringvalidator.rb */; };
+		78E5726D0C1C30CE00BDF7EC /* listview.rb in Resources */ = {isa = PBXBuildFile; fileRef = 788475220C0958780086138A /* listview.rb */; };
+		78E5726E0C1C30CE00BDF7EC /* unitnamecell.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78671AA00C095A2D008CDC20 /* unitnamecell.rb */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
+		29B97319FDCFA39411CA2CEA /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/MainMenu.nib; sourceTree = "<group>"; };
+		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		780253C20C09525900C170D4 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
+		7804271C0BCA810600C14486 /* GradientFill.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GradientFill.h; path = objc/GradientFill.h; sourceTree = "<group>"; };
+		7804271D0BCA810600C14486 /* GradientFill.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GradientFill.m; path = objc/GradientFill.m; sourceTree = "<group>"; };
+		7817A00F0BF6DF87005C7737 /* dccreceiver.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = dccreceiver.rb; sourceTree = "<group>"; };
+		7817A0110BF6DFB6005C7737 /* dccsender.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = dccsender.rb; sourceTree = "<group>"; };
+		7817A0300BF6FEA2005C7737 /* dccmanager.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = dccmanager.rb; sourceTree = "<group>"; };
+		7817A0390BF6FFCD005C7737 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/DccDialog.nib; sourceTree = "<group>"; };
+		78189D1B0BB8D4A500AC17B2 /* LogEventSinkBase.h */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = sourcecode.c.h; name = LogEventSinkBase.h; path = objc/LogEventSinkBase.h; sourceTree = "<group>"; };
+		78189D1C0BB8D4A500AC17B2 /* LogEventSinkBase.m */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = sourcecode.c.objc; name = LogEventSinkBase.m; path = objc/LogEventSinkBase.m; sourceTree = "<group>"; };
+		781E254C0BE9E8E20040F56E /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/ModeSheet.nib; sourceTree = "<group>"; };
+		783A3AA60BC8CB2000FD455A /* Splitter.h */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = sourcecode.c.h; name = Splitter.h; path = objc/Splitter.h; sourceTree = "<group>"; };
+		783A3AA70BC8CB2000FD455A /* Splitter.m */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = sourcecode.c.objc; name = Splitter.m; path = objc/Splitter.m; sourceTree = "<group>"; };
+		785391480BFF174000606AB2 /* usermode.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = usermode.rb; sourceTree = "<group>"; };
+		78671AA00C095A2D008CDC20 /* unitnamecell.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = unitnamecell.rb; sourceTree = "<group>"; };
+		786926F20BB6EC1B0081019B /* AsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = sourcecode.c.h; name = AsyncSocket.h; path = objc/AsyncSocket.h; sourceTree = "<group>"; };
+		786926F30BB6EC1B0081019B /* AsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = sourcecode.c.objc; name = AsyncSocket.m; path = objc/AsyncSocket.m; sourceTree = "<group>"; };
+		786926F40BB6EC1B0081019B /* main.m */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = sourcecode.c.objc; name = main.m; path = objc/main.m; sourceTree = "<group>"; };
+		7869272D0BB6ED9E0081019B /* rb_main.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; name = rb_main.rb; path = objc/rb_main.rb; sourceTree = "<group>"; };
+		78785B580BEDCF6800456645 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/ServerDialog.nib; sourceTree = "<group>"; };
+		787FD46C0BFE960100F2F22D /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
+		788475220C0958780086138A /* listview.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = listview.rb; sourceTree = "<group>"; };
+		788D56F00BB6872B00DDBF69 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
+		78A47CF60BF6DE6B001C5B15 /* ircsocket.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = ircsocket.rb; sourceTree = "<group>"; };
+		78A47CF80BF6DE6B001C5B15 /* tcpclient.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = tcpclient.rb; sourceTree = "<group>"; };
+		78A47CF90BF6DE6B001C5B15 /* tcpserver.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = tcpserver.rb; sourceTree = "<group>"; };
+		78A47CFA0BF6DE6B001C5B15 /* timer.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = timer.rb; sourceTree = "<group>"; };
+		78A47CFC0BF6DE6B001C5B15 /* appcontroller.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = appcontroller.rb; sourceTree = "<group>"; };
+		78A47CFD0BF6DE6B001C5B15 /* menucontroller.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = menucontroller.rb; sourceTree = "<group>"; };
+		78A47CFE0BF6DE6B001C5B15 /* preferences.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = preferences.rb; sourceTree = "<group>"; };
+		78A47D000BF6DE6B001C5B15 /* channeldialog.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = channeldialog.rb; sourceTree = "<group>"; };
+		78A47D010BF6DE6B001C5B15 /* commentsheet.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = commentsheet.rb; sourceTree = "<group>"; };
+		78A47D020BF6DE6B001C5B15 /* modesheet.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = modesheet.rb; sourceTree = "<group>"; };
+		78A47D030BF6DE6B001C5B15 /* serverdialog.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = serverdialog.rb; sourceTree = "<group>"; };
+		78A47D050BF6DE6B001C5B15 /* dialoghelper.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = dialoghelper.rb; sourceTree = "<group>"; };
+		78A47D060BF6DE6B001C5B15 /* utility.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = utility.rb; sourceTree = "<group>"; };
+		78A47D080BF6DE6B001C5B15 /* channel.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = channel.rb; sourceTree = "<group>"; };
+		78A47D090BF6DE6B001C5B15 /* channelmode.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = channelmode.rb; sourceTree = "<group>"; };
+		78A47D0A0BF6DE6B001C5B15 /* config.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = config.rb; sourceTree = "<group>"; };
+		78A47D0B0BF6DE6B001C5B15 /* ircmessage.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = ircmessage.rb; sourceTree = "<group>"; };
+		78A47D0C0BF6DE6B001C5B15 /* unit.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = unit.rb; sourceTree = "<group>"; };
+		78A47D0D0BF6DE6B001C5B15 /* user.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = user.rb; sourceTree = "<group>"; };
+		78A47D0E0BF6DE6B001C5B15 /* world.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = world.rb; sourceTree = "<group>"; };
+		78A47D100BF6DE6B001C5B15 /* chatbox.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = chatbox.rb; sourceTree = "<group>"; };
+		78A47D110BF6DE6B001C5B15 /* log.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = log.rb; sourceTree = "<group>"; };
+		78A47D120BF6DE6B001C5B15 /* logview.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = logview.rb; sourceTree = "<group>"; };
+		78A47D130BF6DE6B001C5B15 /* treeview.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = treeview.rb; sourceTree = "<group>"; };
+		78A47D140BF6DE6B001C5B15 /* mainwindow.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = mainwindow.rb; sourceTree = "<group>"; };
+		78A86ADA0BFFD87500E28592 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/WhoisDialog.nib; sourceTree = "<group>"; };
+		78A86AE70BFFE33F00E28592 /* whoisdialog.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = whoisdialog.rb; sourceTree = "<group>"; };
+		78B869BA0BF2D613007315AA /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/ChannelDialog.nib; sourceTree = "<group>"; };
+		78C5BAD40BE7B95100C4497A /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/CommentSheet.nib; sourceTree = "<group>"; };
+		78DF97C30C05A114004E6053 /* urlopener.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = urlopener.rb; sourceTree = "<group>"; };
+		78DF97CB0C05A214004E6053 /* stringvalidator.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = stringvalidator.rb; sourceTree = "<group>"; };
+		78E570D00C1C306500BDF7EC /* LimeChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LimeChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		78F0849C0BFE91D100520D74 /* dialogwindow.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = dialogwindow.rb; sourceTree = "<group>"; };
+		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		A5D3C7BF0AEB9FEB00C17985 /* RubyCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RubyCocoa.framework; path = /Library/Frameworks/RubyCocoa.framework; sourceTree = "<absolute>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		78E570CE0C1C306500BDF7EC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				78E572390C1C30BA00BDF7EC /* Cocoa.framework in Frameworks */,
+				78E5723A0C1C30BA00BDF7EC /* RubyCocoa.framework in Frameworks */,
+				78E5723B0C1C30BA00BDF7EC /* WebKit.framework in Frameworks */,
+				78E5723C0C1C30BA00BDF7EC /* Carbon.framework in Frameworks */,
+				78E5723D0C1C30BA00BDF7EC /* CoreServices.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		080E96DDFE201D6D7F000001 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				78A47CF40BF6DE6B001C5B15 /* ruby */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				787FD46C0BFE960100F2F22D /* Carbon.framework */,
+				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
+			);
+			name = "Linked Frameworks";
+			sourceTree = "<group>";
+		};
+		1058C7A2FEA54F0111CA2CBB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				780253C20C09525900C170D4 /* CoreServices.framework */,
+				29B97324FDCFA39411CA2CEA /* AppKit.framework */,
+				29B97325FDCFA39411CA2CEA /* Foundation.framework */,
+				13E42FB307B3F0F600E4EEF1 /* CoreData.framework */,
+				788D56F00BB6872B00DDBF69 /* WebKit.framework */,
+				A5D3C7BF0AEB9FEB00C17985 /* RubyCocoa.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		19C28FACFE9D520D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				78E570D00C1C306500BDF7EC /* LimeChat.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29B97314FDCFA39411CA2CEA /* LimeChat */ = {
+			isa = PBXGroup;
+			children = (
+				080E96DDFE201D6D7F000001 /* Classes */,
+				29B97315FDCFA39411CA2CEA /* Other Sources */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				19C28FACFE9D520D11CA2CBB /* Products */,
+			);
+			name = LimeChat;
+			sourceTree = "<group>";
+		};
+		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				786927470BB6EE130081019B /* objc */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		29B97317FDCFA39411CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				8D1107310486CEB800E47090 /* Info.plist */,
+				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
+				29B97318FDCFA39411CA2CEA /* MainMenu.nib */,
+				78C5BAD30BE7B95100C4497A /* CommentSheet.nib */,
+				781E254B0BE9E8E20040F56E /* ModeSheet.nib */,
+				78785B570BEDCF6800456645 /* ServerDialog.nib */,
+				78B869B90BF2D613007315AA /* ChannelDialog.nib */,
+				7817A0380BF6FFCD005C7737 /* DccDialog.nib */,
+				78A86AD90BFFD87500E28592 /* WhoisDialog.nib */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
+				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		786927470BB6EE130081019B /* objc */ = {
+			isa = PBXGroup;
+			children = (
+				783A3AA60BC8CB2000FD455A /* Splitter.h */,
+				783A3AA70BC8CB2000FD455A /* Splitter.m */,
+				78189D1B0BB8D4A500AC17B2 /* LogEventSinkBase.h */,
+				78189D1C0BB8D4A500AC17B2 /* LogEventSinkBase.m */,
+				786926F20BB6EC1B0081019B /* AsyncSocket.h */,
+				786926F30BB6EC1B0081019B /* AsyncSocket.m */,
+				7869272D0BB6ED9E0081019B /* rb_main.rb */,
+				786926F40BB6EC1B0081019B /* main.m */,
+				7804271C0BCA810600C14486 /* GradientFill.h */,
+				7804271D0BCA810600C14486 /* GradientFill.m */,
+			);
+			name = objc;
+			sourceTree = "<group>";
+		};
+		78A47CF40BF6DE6B001C5B15 /* ruby */ = {
+			isa = PBXGroup;
+			children = (
+				78A47CF50BF6DE6B001C5B15 /* component */,
+				78A47CFB0BF6DE6B001C5B15 /* controller */,
+				78A47CFF0BF6DE6B001C5B15 /* dialog */,
+				78A47D040BF6DE6B001C5B15 /* lib */,
+				78A47D070BF6DE6B001C5B15 /* model */,
+				78A47D0F0BF6DE6B001C5B15 /* view */,
+			);
+			path = ruby;
+			sourceTree = "<group>";
+		};
+		78A47CF50BF6DE6B001C5B15 /* component */ = {
+			isa = PBXGroup;
+			children = (
+				7817A0300BF6FEA2005C7737 /* dccmanager.rb */,
+				7817A0110BF6DFB6005C7737 /* dccsender.rb */,
+				7817A00F0BF6DF87005C7737 /* dccreceiver.rb */,
+				78A47CF60BF6DE6B001C5B15 /* ircsocket.rb */,
+				78A47CF80BF6DE6B001C5B15 /* tcpclient.rb */,
+				78A47CF90BF6DE6B001C5B15 /* tcpserver.rb */,
+				78A47CFA0BF6DE6B001C5B15 /* timer.rb */,
+			);
+			path = component;
+			sourceTree = "<group>";
+		};
+		78A47CFB0BF6DE6B001C5B15 /* controller */ = {
+			isa = PBXGroup;
+			children = (
+				78A47CFC0BF6DE6B001C5B15 /* appcontroller.rb */,
+				78A47CFD0BF6DE6B001C5B15 /* menucontroller.rb */,
+				78A47CFE0BF6DE6B001C5B15 /* preferences.rb */,
+			);
+			path = controller;
+			sourceTree = "<group>";
+		};
+		78A47CFF0BF6DE6B001C5B15 /* dialog */ = {
+			isa = PBXGroup;
+			children = (
+				78A86AE70BFFE33F00E28592 /* whoisdialog.rb */,
+				78A47D000BF6DE6B001C5B15 /* channeldialog.rb */,
+				78A47D010BF6DE6B001C5B15 /* commentsheet.rb */,
+				78A47D020BF6DE6B001C5B15 /* modesheet.rb */,
+				78A47D030BF6DE6B001C5B15 /* serverdialog.rb */,
+			);
+			path = dialog;
+			sourceTree = "<group>";
+		};
+		78A47D040BF6DE6B001C5B15 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				78DF97CB0C05A214004E6053 /* stringvalidator.rb */,
+				78DF97C30C05A114004E6053 /* urlopener.rb */,
+				78A47D050BF6DE6B001C5B15 /* dialoghelper.rb */,
+				78A47D060BF6DE6B001C5B15 /* utility.rb */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
+		78A47D070BF6DE6B001C5B15 /* model */ = {
+			isa = PBXGroup;
+			children = (
+				78A47D080BF6DE6B001C5B15 /* channel.rb */,
+				78A47D090BF6DE6B001C5B15 /* channelmode.rb */,
+				78A47D0A0BF6DE6B001C5B15 /* config.rb */,
+				78A47D0B0BF6DE6B001C5B15 /* ircmessage.rb */,
+				78A47D0C0BF6DE6B001C5B15 /* unit.rb */,
+				78A47D0D0BF6DE6B001C5B15 /* user.rb */,
+				785391480BFF174000606AB2 /* usermode.rb */,
+				78A47D0E0BF6DE6B001C5B15 /* world.rb */,
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
+		78A47D0F0BF6DE6B001C5B15 /* view */ = {
+			isa = PBXGroup;
+			children = (
+				78671AA00C095A2D008CDC20 /* unitnamecell.rb */,
+				788475220C0958780086138A /* listview.rb */,
+				78F0849C0BFE91D100520D74 /* dialogwindow.rb */,
+				78A47D100BF6DE6B001C5B15 /* chatbox.rb */,
+				78A47D110BF6DE6B001C5B15 /* log.rb */,
+				78A47D120BF6DE6B001C5B15 /* logview.rb */,
+				78A47D130BF6DE6B001C5B15 /* treeview.rb */,
+				78A47D140BF6DE6B001C5B15 /* mainwindow.rb */,
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		78E570CF0C1C306500BDF7EC /* LimeChat */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 78E570D30C1C306500BDF7EC /* Build configuration list for PBXNativeTarget "LimeChat" */;
+			buildPhases = (
+				78E570CC0C1C306500BDF7EC /* Resources */,
+				78E570CD0C1C306500BDF7EC /* Sources */,
+				78E570CE0C1C306500BDF7EC /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LimeChat;
+			productName = LimeChat;
+			productReference = 78E570D00C1C306500BDF7EC /* LimeChat.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "LimeChat" */;
+			hasScannedForEncodings = 1;
+			mainGroup = 29B97314FDCFA39411CA2CEA /* LimeChat */;
+			projectDirPath = "";
+			targets = (
+				78E570CF0C1C306500BDF7EC /* LimeChat */,
+				78DB8A8E0C1C3216000C27D9 /* dmg */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		78E570CC0C1C306500BDF7EC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				78E572430C1C30CE00BDF7EC /* MainMenu.nib in Resources */,
+				78E572440C1C30CE00BDF7EC /* InfoPlist.strings in Resources */,
+				78E572450C1C30CE00BDF7EC /* rb_main.rb in Resources */,
+				78E572460C1C30CE00BDF7EC /* CommentSheet.nib in Resources */,
+				78E572470C1C30CE00BDF7EC /* ModeSheet.nib in Resources */,
+				78E572480C1C30CE00BDF7EC /* ServerDialog.nib in Resources */,
+				78E572490C1C30CE00BDF7EC /* ChannelDialog.nib in Resources */,
+				78E5724A0C1C30CE00BDF7EC /* ircsocket.rb in Resources */,
+				78E5724B0C1C30CE00BDF7EC /* tcpclient.rb in Resources */,
+				78E5724C0C1C30CE00BDF7EC /* tcpserver.rb in Resources */,
+				78E5724D0C1C30CE00BDF7EC /* timer.rb in Resources */,
+				78E5724E0C1C30CE00BDF7EC /* appcontroller.rb in Resources */,
+				78E5724F0C1C30CE00BDF7EC /* menucontroller.rb in Resources */,
+				78E572500C1C30CE00BDF7EC /* preferences.rb in Resources */,
+				78E572510C1C30CE00BDF7EC /* channeldialog.rb in Resources */,
+				78E572520C1C30CE00BDF7EC /* commentsheet.rb in Resources */,
+				78E572530C1C30CE00BDF7EC /* modesheet.rb in Resources */,
+				78E572540C1C30CE00BDF7EC /* serverdialog.rb in Resources */,
+				78E572550C1C30CE00BDF7EC /* dialoghelper.rb in Resources */,
+				78E572560C1C30CE00BDF7EC /* utility.rb in Resources */,
+				78E572570C1C30CE00BDF7EC /* channel.rb in Resources */,
+				78E572580C1C30CE00BDF7EC /* channelmode.rb in Resources */,
+				78E572590C1C30CE00BDF7EC /* config.rb in Resources */,
+				78E5725A0C1C30CE00BDF7EC /* ircmessage.rb in Resources */,
+				78E5725B0C1C30CE00BDF7EC /* unit.rb in Resources */,
+				78E5725C0C1C30CE00BDF7EC /* user.rb in Resources */,
+				78E5725D0C1C30CE00BDF7EC /* world.rb in Resources */,
+				78E5725E0C1C30CE00BDF7EC /* chatbox.rb in Resources */,
+				78E5725F0C1C30CE00BDF7EC /* log.rb in Resources */,
+				78E572600C1C30CE00BDF7EC /* logview.rb in Resources */,
+				78E572610C1C30CE00BDF7EC /* treeview.rb in Resources */,
+				78E572620C1C30CE00BDF7EC /* mainwindow.rb in Resources */,
+				78E572630C1C30CE00BDF7EC /* dccreceiver.rb in Resources */,
+				78E572640C1C30CE00BDF7EC /* dccsender.rb in Resources */,
+				78E572650C1C30CE00BDF7EC /* dccmanager.rb in Resources */,
+				78E572660C1C30CE00BDF7EC /* DccDialog.nib in Resources */,
+				78E572670C1C30CE00BDF7EC /* dialogwindow.rb in Resources */,
+				78E572680C1C30CE00BDF7EC /* usermode.rb in Resources */,
+				78E572690C1C30CE00BDF7EC /* WhoisDialog.nib in Resources */,
+				78E5726A0C1C30CE00BDF7EC /* whoisdialog.rb in Resources */,
+				78E5726B0C1C30CE00BDF7EC /* urlopener.rb in Resources */,
+				78E5726C0C1C30CE00BDF7EC /* stringvalidator.rb in Resources */,
+				78E5726D0C1C30CE00BDF7EC /* listview.rb in Resources */,
+				78E5726E0C1C30CE00BDF7EC /* unitnamecell.rb in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		78DB8A8D0C1C3216000C27D9 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "imagename=\"build/$PROJECT_NAME.dmg\"\nif [ -e \"$imagename\" ]\nthen\nrm \"$imagename\"\nfi\n#hdiutil create -srcfolder $CONFIGURATION_BUILD_DIR -volname \"$PROJECT_NAME\" \"$imagename\"\nln -s /Applications build/Release\ncp doc/* build/Release/LimeChat.app/Contents/Resources/\nhdiutil create -srcfolder build/Release -volname \"$PROJECT_NAME\" \"$imagename\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		78E570CD0C1C306500BDF7EC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				78E5723E0C1C30C300BDF7EC /* AsyncSocket.m in Sources */,
+				78E5723F0C1C30C300BDF7EC /* main.m in Sources */,
+				78E572400C1C30C300BDF7EC /* LogEventSinkBase.m in Sources */,
+				78E572410C1C30C300BDF7EC /* Splitter.m in Sources */,
+				78E572420C1C30C300BDF7EC /* GradientFill.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		089C165CFE840E0CC02AAC07 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				089C165DFE840E0CC02AAC07 /* English */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		29B97318FDCFA39411CA2CEA /* MainMenu.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				29B97319FDCFA39411CA2CEA /* English */,
+			);
+			name = MainMenu.nib;
+			sourceTree = "<group>";
+		};
+		7817A0380BF6FFCD005C7737 /* DccDialog.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7817A0390BF6FFCD005C7737 /* English */,
+			);
+			name = DccDialog.nib;
+			sourceTree = "<group>";
+		};
+		781E254B0BE9E8E20040F56E /* ModeSheet.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				781E254C0BE9E8E20040F56E /* English */,
+			);
+			name = ModeSheet.nib;
+			sourceTree = "<group>";
+		};
+		78785B570BEDCF6800456645 /* ServerDialog.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				78785B580BEDCF6800456645 /* English */,
+			);
+			name = ServerDialog.nib;
+			sourceTree = "<group>";
+		};
+		78A86AD90BFFD87500E28592 /* WhoisDialog.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				78A86ADA0BFFD87500E28592 /* English */,
+			);
+			name = WhoisDialog.nib;
+			sourceTree = "<group>";
+		};
+		78B869B90BF2D613007315AA /* ChannelDialog.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				78B869BA0BF2D613007315AA /* English */,
+			);
+			name = ChannelDialog.nib;
+			sourceTree = "<group>";
+		};
+		78C5BAD30BE7B95100C4497A /* CommentSheet.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				78C5BAD40BE7B95100C4497A /* English */,
+			);
+			name = CommentSheet.nib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		78DB8A900C1C3234000C27D9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = dmg;
+			};
+			name = Debug;
+		};
+		78DB8A910C1C3234000C27D9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				PRODUCT_NAME = dmg;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		78E570D40C1C306500BDF7EC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = LimeChat;
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = YES;
+			};
+			name = Debug;
+		};
+		78E570D50C1C306500BDF7EC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = LimeChat;
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		C01FCF4F08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH)";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+			};
+			name = Debug;
+		};
+		C01FCF5008A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					"$(NATIVE_ARCH)",
+					ppc,
+				);
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		78DB8A8F0C1C3234000C27D9 /* Build configuration list for PBXAggregateTarget "dmg" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				78DB8A900C1C3234000C27D9 /* Debug */,
+				78DB8A910C1C3234000C27D9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		78E570D30C1C306500BDF7EC /* Build configuration list for PBXNativeTarget "LimeChat" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				78E570D40C1C306500BDF7EC /* Debug */,
+				78E570D50C1C306500BDF7EC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "LimeChat" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4F08A954540054247B /* Debug */,
+				C01FCF5008A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}

@@ -1,0 +1,47 @@
+# Created by Satoshi Nakagawa.
+# You can redistribute it and/or modify it under the same terms as Ruby.
+
+class ListView < OSX::NSTableView
+  include OSX
+
+  def selectedRows
+    ary = []
+    set = selectedRowIndexes
+    i = set.firstIndex.to_i
+    return ary if i == NSNotFound
+    ary << i
+    (set.count.to_i-1).times do
+      i = set.indexGreaterThanIndex(i).to_i
+      break if i == NSNotFound
+      ary << i
+    end
+    ary
+  end
+  
+  def select(index, extendSelection=false)
+    selectRowIndexes_byExtendingSelection(NSIndexSet.indexSetWithIndex(index), extendSelection)
+  end
+  
+  def selectRows(indices, extendSelection=false)
+    set = NSMutableIndexSet.alloc.init
+    indicies.each {|i| set.addIndex(i) }
+    selectRowIndexes_byExtendingSelection(indices, extendSelection)
+  end
+  
+  def countSelectedRows
+    selectedRowIndexes.count.to_i
+  end
+  
+  def rightMouseDown(event)
+    p = convertPoint_fromView(event.locationInWindow, nil)
+    i = rowAtPoint(p)
+    if i >= 0
+      unless selectedRowIndexes.containsIndex(i)
+        select(i)
+      end
+    else
+      #deselectAll(self)
+    end
+    super_rightMouseDown(event)
+  end
+end

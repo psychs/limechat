@@ -1,0 +1,24 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {onCancel = id; onOk = id; }; 
+            CLASS = ServerDialog; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                "auto_joinCheck" = id; 
+                consoleCheck = id; 
+                keywordCheck = id; 
+                modeText = id; 
+                nameText = id; 
+                okButton = id; 
+                passwordText = id; 
+                topicText = id; 
+                unreadCheck = id; 
+                window = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }
+    ); 
+    IBVersion = 1; 
+}

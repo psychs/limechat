@@ -1,0 +1,286 @@
+# Created by Satoshi Nakagawa.
+# You can redistribute it and/or modify it under the same terms as Ruby.
+
+class AppController < OSX::NSObject
+  include OSX
+  ib_outlet :window, :tree, :log_base, :console_base, :member_list, :text
+  ib_outlet :root_split, :log_split, :info_split
+  ib_outlet :menu, :server_menu, :channel_menu, :member_menu, :tree_menu, :log_menu, :console_menu
+  
+  def awakeFromNib
+    @pref = Preferences.new
+    
+    @window.key_delegate = self
+    @text.setFocusRingType(NSFocusRingTypeNone)
+    @window.makeFirstResponder(@text)
+    @root_split.setFixedViewIndex(1)
+    @log_split.setFixedViewIndex(1)
+    @info_split.setFixedViewIndex(1)
+    load_window_state
+    
+    @world = IRCWorld.alloc.init
+    @world.pref = @pref
+    @world.window = @window
+    @world.tree = @tree
+    @world.text = @text
+    @world.log_base = @log_base
+    @world.console_base = @console_base
+    @world.member_list = @member_list
+    @world.server_menu = @server_menu
+    @world.channel_menu = @channel_menu
+    @world.tree_menu = @tree_menu
+    @world.log_menu = @log_menu
+    @world.console_menu = @console_menu
+    @tree.setDataSource(@world)
+    @tree.setDelegate(@world)
+    @tree.responder_delegate = @world
+    #cell = UnitNameCell.alloc.init
+    #cell.view = @tree
+    #@tree.tableColumnWithIdentifier('name').setDataCell(cell)
+    #@tree.setIndentationPerLevel(0.0)
+    #seed = {:units => {}}
+    #@world.setup(IRCWorldConfig.new(seed))
+    @world.setup(IRCWorldConfig.new(@pref.load_world))
+    @tree.reloadData
+    @world.setup_tree
+    
+    @menu.pref = @pref
+    @menu.world = @world
+    @menu.window = @window
+    @menu.tree = @tree
+    @menu.member_list = @member_list
+    @menu.text = @text
+    
+    @member_list.setTarget(@menu)
+    @member_list.setDoubleAction('memberList_doubleClicked:')
+    #@member_list.tableColumnWithIdentifier('nick').setDataCell(MemberListCell.alloc.init)
+    
+    @dcc = DccManager.alloc.init
+    @world.dcc = @dcc
+  end
+  
+  def applicationDidFinishLaunching(sender)
+    @world.start_timer
+    @world.auto_connect
+  end
+  
+  def applicationShouldTerminate(sender)
+    return NSTerminateNow;
+    #return NSTerminateCancel;
+  end
+  
+  def applicationWillTerminate(notification)
+    @menu.terminate
+    @world.terminate
+    save_window_state
+    #@world.save
+  end
+  
+  def applicationDidBecomeActive(notification)
+    sel = @world.selected
+    sel.reset_state if sel
+    @tree.reloadData
+  end
+  
+  def applicationDidResignActive(notification)
+    @tree.reloadData
+  end
+  
+  def windowShouldClose(sender)
+    true
+  end
+  
+  def windowWillClose(notification)
+    NSApp.terminate(self)
+  end
+      
+  def load_window_state
+    win = @pref.load('window')
+    if win
+      f = @window.frame
+      f.origin.x = win[:x].to_f
+      f.origin.y = win[:y].to_f
+      f.size.width = win[:w].to_f
+      f.size.height = win[:h].to_f
+      f.size.width = 100 if f.size.width <= 10
+      f.size.height = 100 if f.size.height <= 10
+      @window.setFrame_display(f, true)
+    end
+    split = @pref.load('splitter')
+    if split
+      @root_split.setPosition(split[:root].to_f)
+      @log_split.setPosition(split[:log].to_f)
+      @info_split.setPosition(split[:info].to_f)
+    else
+      @root_split.setPosition(150.0)
+      @log_split.setPosition(150.0)
+      @info_split.setPosition(250.0)
+    end
+  end
+  
+  def save_window_state
+    f = @window.frame
+    win = {
+      :x => f.origin.x,
+      :y => f.origin.y,
+      :w => f.size.width,
+      :h => f.size.height,
+    }
+    @pref.save('window', win)
+    split = {
+      :root => @root_split.position,
+      :log => @log_split.position,
+      :info => @info_split.position,
+    }
+    @pref.save('splitter', split)
+  end
+  
+  def textEntered(sender)
+    s = @text.stringValue.to_s
+    unless s.empty?
+      if @world.input_text(s)
+        @text.setStringValue('')
+      end
+    end
+    @world.select_text
+  end
+  
+  def move(direction, target=:all)
+    case direction
+    when :up,:down
+      sel = @world.selected
+      return unless sel
+      n = @tree.rowForItem(sel)
+      return unless n
+      n = n.to_i
+      start = n
+      size = @tree.numberOfRows.to_i
+      loop do
+        if direction == :up
+          n -= 1
+          n = size - 1 if n < 0
+        else
+          n += 1
+          n = 0 if n >= size
+        end
+        break if n == start
+        i = @tree.itemAtRow(n)
+        if i
+          case target
+          when :active
+            if !i.unit? && i.active?
+              @world.select(i)
+              break
+            end
+          when :unread
+            if i.unread
+              @world.select(i)
+              break
+            end
+          else
+            @world.select(i)
+            break
+          end
+        end
+      end
+    when :left,:right
+      sel = @world.selected
+      return unless sel
+      unit = sel.unit
+      n = @world.units.index(unit)
+      return unless n
+      start = n
+      size = @world.units.length
+      loop do
+        if direction == :left
+          n -= 1
+          n = size - 1 if n < 0
+        else
+          n += 1
+          n = 0 if n >= size
+        end
+        break if n == start
+        unit = @world.units[n]
+        if unit
+          case target
+          when :active
+            if unit.login?
+              t = unit.last_selected_channel
+              t = unit unless t
+              @world.select(t)
+              break
+            end
+          else
+            t = unit.last_selected_channel
+            t = unit unless t
+            @world.select(t)
+            break
+          end
+        end
+      end
+    end
+  end
+  
+  def controlUp
+    move(:up)
+  end
+  
+  def controlDown
+    move(:down)
+  end
+  
+  def controlLeft
+    move(:left)
+  end
+  
+  def controlRight
+    move(:right)
+  end
+  
+  def commandUp
+    move(:up, :active)
+  end
+  
+  def commandDown
+    move(:down, :active)
+  end
+  
+  def commandLeft
+    move(:left, :active)
+  end
+  
+  def commandRight
+    move(:right, :active)
+  end
+  
+  def controlTab
+    move(:down, :unread)
+  end
+  
+  def controlShiftTab
+    move(:up, :unread)
+  end
+  
+  def scroll(direction)
+    if @window.firstResponder == @text.currentEditor
+      sel = @world.selected
+      if sel
+        log = sel.log
+        view = log.view
+        case direction
+        when :up; view.scrollPageUp(self)
+        when :down; view.scrollPageDown(self)
+        when :home; log.moveToTop
+        when :end; log.moveToBottom
+        end
+      end
+      true
+    else
+      false
+    end
+  end
+  
+  def number(n)
+    @world.select_channel_at(n)
+  end
+end
