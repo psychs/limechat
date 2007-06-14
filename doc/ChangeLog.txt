@@ -1,8 +1,13 @@
 2007-06-15  Satoshi Nakagawa <artension@gmail.com>
 
+	Added DCC file receiving.
+	Added DCC dialog size management.
+
+2007-06-15  Satoshi Nakagawa <artension@gmail.com>
+
 	* Objective-C sources:
 	Changed tab style to 2 soft tabs.
 
 2007-06-10  Satoshi Nakagawa <artension@gmail.com>
 
-	* The first version 0.1 released.
+	The first version 0.1 released.
