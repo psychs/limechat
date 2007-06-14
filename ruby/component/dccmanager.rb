@@ -84,6 +84,8 @@ class DccManager < OSX::NSObject
     sel = sel.map {|i| @receivers[i]}
     sel.each do |i|
       i.close
+      bar = i.progress_bar
+      bar.removeFromSuperview if bar
       @receivers.delete(i)
     end
     reload_receiver_table
@@ -142,14 +144,12 @@ class DccManager < OSX::NSObject
   
   def dccreceiver_on_close(sender)
     return unless @loaded
-#=begin
     bar = sender.progress_bar
     if bar
       sender.progress_bar = nil
       bar.removeFromSuperview
       reload_receiver_table
     end
-#=end
     reload_receiver_table
   end
   
@@ -175,6 +175,8 @@ class DccManager < OSX::NSObject
       cell.received_size = i.received_size
       cell.speed = i.speed
       cell.time_remaining = i.speed > 0 ? (i.size - i.received_size) / i.speed : nil
+      cell.status = i.status
+      cell.error = i.error
       
       ext = File.extname(i.filename)
       ext = $1 if /\A\.?(.+)\z/ =~ ext
@@ -224,7 +226,7 @@ end
 
 class FileReceiverCell < OSX::NSCell
   include OSX
-  attr_accessor :sender_nick, :received_size, :size, :speed, :time_remaining, :message
+  attr_accessor :sender_nick, :received_size, :size, :speed, :time_remaining, :status, :error
   attr_accessor :progress_bar
   
   FILENAME_HEIGHT = 20
@@ -288,11 +290,32 @@ class FileReceiverCell < OSX::NSCell
     attrs = {
       NSParagraphStyleAttributeName => style,
       NSFontAttributeName => NSFont.fontWithName_size('Helvetica', 11),
-      NSForegroundColorAttributeName => self.isHighlighted ? NSColor.whiteColor : NSColor.grayColor
+      NSForegroundColorAttributeName =>
+        if @status == :error
+          NSColor.redColor
+        elsif @status == :complete
+          NSColor.blueColor
+        elsif self.isHighlighted
+          NSColor.whiteColor
+        else
+          NSColor.grayColor
+        end
     }
-    str = "From #{@sender_nick}    #{fsize(@received_size)} / #{fsize(@size)} (#{fsize(@speed)}/s)"
-    if @time_remaining
-      str += "  -- #{ftime(@time_remaining)} remaining"
+    str = "From #{@sender_nick}    "
+    case @status
+    when :waiting
+      str += "#{fsize(@size)}"
+    when :receiving
+      str += "#{fsize(@received_size)} / #{fsize(@size)} (#{fsize(@speed)}/s)"
+      if @time_remaining
+        str += "  -- #{ftime(@time_remaining)} remaining"
+      end
+    when :stop
+      str += "#{fsize(@received_size)} / #{fsize(@size)}  -- Stopped"
+    when :error
+      str += "#{fsize(@received_size)} / #{fsize(@size)}  -- Error: #{@error}"
+    when :complete
+      str += "#{fsize(@size)}  -- Complete"
     end
     NSString.stringWithString(str).drawInRect_withAttributes(rect, attrs)
   end

@@ -63,6 +63,8 @@ class DccReceiver
   
   def tcpclient_on_disconnect(sender)
     puts '*** disconnect'
+    @status = :error
+    @error = 'Disconnected'
     close
     @delegate.dccreceiver_on_change(self) if @delegate
   end
@@ -71,8 +73,7 @@ class DccReceiver
     puts '*** error'
     @status = :error
     @error = err.localizedDescription.to_s
-    close_file
-    @delegate.dccreceiver_on_close(self) if @delegate
+    close
     @delegate.dccreceiver_on_change(self) if @delegate
   end
   

@@ -88,7 +88,7 @@
 		780253C20C09525900C170D4 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
 		7804271C0BCA810600C14486 /* GradientFill.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GradientFill.h; path = objc/GradientFill.h; sourceTree = "<group>"; };
 		7804271D0BCA810600C14486 /* GradientFill.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GradientFill.m; path = objc/GradientFill.m; sourceTree = "<group>"; };
-		781044F90C21F11D0020F3B8 /* tableprogressindicator.rb */ = {isa = PBXFileReference; fileEncoding = "-2147483647"; lastKnownFileType = text.script.ruby; path = tableprogressindicator.rb; sourceTree = "<group>"; };
+		781044F90C21F11D0020F3B8 /* tableprogressindicator.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = tableprogressindicator.rb; sourceTree = "<group>"; };
 		7817A00F0BF6DF87005C7737 /* dccreceiver.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = dccreceiver.rb; sourceTree = "<group>"; };
 		7817A0110BF6DFB6005C7737 /* dccsender.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = dccsender.rb; sourceTree = "<group>"; };
 		7817A0300BF6FEA2005C7737 /* dccmanager.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = dccmanager.rb; sourceTree = "<group>"; };
