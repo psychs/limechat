@@ -56,6 +56,7 @@ class AppController < OSX::NSObject
     #@member_list.tableColumnWithIdentifier('nick').setDataCell(MemberListCell.alloc.init)
     
     @dcc = DccManager.alloc.init
+    @dcc.pref = @pref
     @world.dcc = @dcc
   end
   
@@ -72,6 +73,7 @@ class AppController < OSX::NSObject
   def applicationWillTerminate(notification)
     @menu.terminate
     @world.terminate
+    @dcc.save_window_state
     save_window_state
     #@world.save
   end

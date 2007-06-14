@@ -944,7 +944,6 @@ class IRCUnit < OSX::NSObject
       host = addr
     end
     
-=begin
     c = DccReceiver.new
     c.uid = @id
     c.sender_nick = m.sender_nick
@@ -955,9 +954,8 @@ class IRCUnit < OSX::NSObject
     c.size = size
     c.version = ver
     @world.dcc.add_receiver(c)
-    c.open
+    #c.open
     @world.dcc.show
-=end
   end
   
   def receive_ctcp_reply(m, text)

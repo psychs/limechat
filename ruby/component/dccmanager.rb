@@ -5,7 +5,8 @@ require 'utility'
 
 class DccManager < OSX::NSObject
   include OSX
-  ib_outlet :window, :receiver_table, :sender_table
+  ib_outlet :window, :splitter, :receiver_table, :sender_table
+  attr_accessor :pref
   
   def initialize
     @receivers = []
@@ -17,6 +18,7 @@ class DccManager < OSX::NSObject
     NSBundle.loadNibNamed_owner('DccDialog', self)
     @window.key_delegate = self
     @loaded = true
+    @splitter.setFixedViewIndex(1)
     @receiver_cell = FileReceiverCell.alloc.init
     col = @receiver_table.tableColumns[0]
     col.setDataCell(@receiver_cell)
@@ -25,6 +27,7 @@ class DccManager < OSX::NSObject
         dccreceiver_on_open(r)
       end
     end
+    load_window_state
   end
   
   def show
@@ -37,6 +40,56 @@ class DccManager < OSX::NSObject
   def close
     @window.orderOut(self)
   end
+
+  # menu
+
+  def validateMenuItem(i)
+    if i.tag < 3100
+      return false if @receiver_table.countSelectedRows == 0
+      sel = @receiver_table.selectedRows
+      sel = sel.map {|e| @receivers[e]}
+      case i.tag
+      when 3001 #start
+        !!sel.find {|e| e.status == :waiting}
+      when 3002 #resume
+        true
+      when 3003 #stop
+        !!sel.find {|e| e.status == :connecting || e.status == :receiving}
+      when 3004 #delete
+        true
+      else
+        false
+      end
+    else
+      false
+    end
+  end
+  
+  def startReceiver(sender)
+    sel = @receiver_table.selectedRows
+    sel = sel.map {|i| @receivers[i]}
+    sel.each {|i| i.open}
+    reload_receiver_table
+  end
+  
+  def stopReceiver(sender)
+    sel = @receiver_table.selectedRows
+    sel = sel.map {|i| @receivers[i]}
+    sel.each {|i| i.close}
+    reload_receiver_table
+  end
+  
+  def deleteReceiver(sender)
+    sel = @receiver_table.selectedRows
+    sel = sel.map {|i| @receivers[i]}
+    sel.each do |i|
+      i.close
+      @receivers.delete(i)
+    end
+    reload_receiver_table
+  end
+
+  # items
   
   def add_receiver(i)
     i.delegate = self
@@ -76,7 +129,7 @@ class DccManager < OSX::NSObject
   def dccreceiver_on_open(sender)
     return unless @loaded
     unless sender.progress_bar
-      bar = NSProgressIndicator.alloc.init
+      bar = TableProgressIndicator.alloc.init
       bar.setIndeterminate(false)
       bar.setMinValue(0)
       bar.setMaxValue(sender.size)
@@ -89,14 +142,14 @@ class DccManager < OSX::NSObject
   
   def dccreceiver_on_close(sender)
     return unless @loaded
-=begin
+#=begin
     bar = sender.progress_bar
     if bar
       sender.progress_bar = nil
       bar.removeFromSuperview
       reload_receiver_table
     end
-=end
+#=end
     reload_receiver_table
   end
   
@@ -126,7 +179,7 @@ class DccManager < OSX::NSObject
       ext = File.extname(i.filename)
       ext = $1 if /\A\.?(.+)\z/ =~ ext
       cell.setImage(NSWorkspace.sharedWorkspace.iconForFileType(ext))
-      cell.progress_bar = i.progress_bar if i.progress_bar
+      cell.progress_bar = i.progress_bar
       i.filename
     else
       ''
@@ -137,6 +190,34 @@ class DccManager < OSX::NSObject
   
   def dialogWindow_onEscape
     @window.orderOut(self)
+  end
+
+  def load_window_state
+    win = @pref.load('dcc_window')
+    if win
+      f = @window.frame
+      f.origin.x = win[:x].to_f
+      f.origin.y = win[:y].to_f
+      f.size.width = win[:w].to_f
+      f.size.height = win[:h].to_f
+      f.size.width = 100 if f.size.width <= 10
+      f.size.height = 100 if f.size.height <= 10
+      @window.setFrame_display(f, true)
+      @splitter.setPosition(win[:split].to_f)
+    end
+  end
+
+  def save_window_state
+    return unless @loaded
+    f = @window.frame
+    win = {
+      :x => f.origin.x,
+      :y => f.origin.y,
+      :w => f.size.width,
+      :h => f.size.height,
+      :split => @splitter.position,
+    }
+    @pref.save('dcc_window', win)
   end
 end
 

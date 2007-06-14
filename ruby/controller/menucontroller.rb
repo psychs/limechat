@@ -34,7 +34,7 @@ class MenuController < OSX::NSObject
     
     case i.tag
     when 201  # dcc
-      false
+      true
     when 313  # paste
       return false unless NSPasteboard.generalPasteboard.availableTypeFromArray([NSStringPboardType])
       t = @window.firstResponder

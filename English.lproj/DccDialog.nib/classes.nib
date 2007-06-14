@@ -1,14 +1,24 @@
 {
     IBClasses = (
         {
+            ACTIONS = {
+                deleteReceiver = id; 
+                deleteSender = id; 
+                resumeReceiver = id; 
+                startReceiver = id; 
+                startSender = id; 
+                stopReceiver = id; 
+                stopSender = id; 
+            }; 
             CLASS = DccManager; 
             LANGUAGE = ObjC; 
-            OUTLETS = {"receiver_table" = id; "sender_table" = id; window = id; }; 
+            OUTLETS = {"receiver_table" = id; "sender_table" = id; splitter = id; window = id; }; 
             SUPERCLASS = NSObject; 
         }, 
         {CLASS = DialogWindow; LANGUAGE = ObjC; SUPERCLASS = NSWindow; }, 
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
-        {CLASS = ListView; LANGUAGE = ObjC; SUPERCLASS = NSTableView; }
+        {CLASS = ListView; LANGUAGE = ObjC; SUPERCLASS = NSTableView; }, 
+        {CLASS = Splitter; LANGUAGE = ObjC; SUPERCLASS = NSSplitView; }
     ); 
     IBVersion = 1; 
 }

@@ -5,8 +5,6 @@
 	<key>documents</key>
 	<array>
 		<dict>
-			<key>expanded</key>
-			<true/>
 			<key>name</key>
 			<string>doc</string>
 			<key>regexFolderFilter</key>
@@ -29,8 +27,6 @@
 			<date>2007-06-14T18:23:36Z</date>
 		</dict>
 		<dict>
-			<key>expanded</key>
-			<true/>
 			<key>name</key>
 			<string>objc</string>
 			<key>regexFolderFilter</key>
@@ -50,12 +46,12 @@
 		</dict>
 	</array>
 	<key>fileHierarchyDrawerWidth</key>
-	<integer>200</integer>
+	<integer>257</integer>
 	<key>metaData</key>
 	<dict/>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{567, 153}, {1020, 938}}</string>
+	<string>{{577, 68}, {943, 1100}}</string>
 </dict>
 </plist>
