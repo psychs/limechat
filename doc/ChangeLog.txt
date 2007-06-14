@@ -1,3 +1,8 @@
-Sun Jun 10 02:50:00 2007  Satoshi Nakagawa  <artension@gmail.com>
+2007-06-15  Satoshi Nakagawa <artension@gmail.com>
 
-	* the first version 0.1 released.
+	* Objective-C sources:
+	Changed tab style to 2 soft tabs.
+
+2007-06-10  Satoshi Nakagawa <artension@gmail.com>
+
+	* The first version 0.1 released.

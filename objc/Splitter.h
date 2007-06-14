@@ -5,10 +5,10 @@
 
 @interface Splitter : NSSplitView
 {
-	int fixedViewIndex;
-	float position;
-	float myDividerThickness;
-	BOOL inverted;
+  int fixedViewIndex;
+  float position;
+  float myDividerThickness;
+  BOOL inverted;
 }
 
 - (void)setFixedViewIndex:(int)index;

@@ -5,8 +5,8 @@
 
 @interface GradientFill : NSObject
 {
-	NSColor* beginColor;
-	NSColor* endColor;
+  NSColor* beginColor;
+  NSColor* endColor;
 }
 
 + (GradientFill*)gradientWithBeginColor:(NSColor*)from endColor:(NSColor*)end;

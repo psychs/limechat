@@ -23,11 +23,11 @@ extern NSString *const AsyncSocketErrorDomain;
 
 enum AsyncSocketError
 {
-	AsyncSocketCFSocketError = kCFSocketError,	// From CFSocketError enum.
-	AsyncSocketNoError = 0,						// Never used.
-	AsyncSocketCanceledError,					// onSocketWillConnect: returned NO.
-	AsyncSocketReadTimeoutError,
-	AsyncSocketWriteTimeoutError
+  AsyncSocketCFSocketError = kCFSocketError,  // From CFSocketError enum.
+  AsyncSocketNoError = 0,            // Never used.
+  AsyncSocketCanceledError,          // onSocketWillConnect: returned NO.
+  AsyncSocketReadTimeoutError,
+  AsyncSocketWriteTimeoutError
 };
 typedef enum AsyncSocketError AsyncSocketError;
 
@@ -61,30 +61,30 @@ typedef enum AsyncSocketError AsyncSocketError;
 
 @interface AsyncSocket : NSObject
 {
-	CFSocketRef theSocket;			// IPv4/IPv6 accept or connect socket.
-	CFSocketRef theSocket6;			// IPv6 accept socket.
-	CFReadStreamRef theReadStream;
-	CFWriteStreamRef theWriteStream;
+  CFSocketRef theSocket;      // IPv4/IPv6 accept or connect socket.
+  CFSocketRef theSocket6;      // IPv6 accept socket.
+  CFReadStreamRef theReadStream;
+  CFWriteStreamRef theWriteStream;
 
-	CFRunLoopSourceRef theSource;	// For theSocket.
-	CFRunLoopSourceRef theSource6;	// For theSocket6.
-	CFRunLoopRef theRunLoop;
-	CFSocketContext theContext;
+  CFRunLoopSourceRef theSource;  // For theSocket.
+  CFRunLoopSourceRef theSource6;  // For theSocket6.
+  CFRunLoopRef theRunLoop;
+  CFSocketContext theContext;
 
-	NSMutableArray *theReadQueue;
-	AsyncReadPacket *theCurrentRead;
-	NSTimer *theReadTimer;
-	NSData *partialReadBuffer;
-	
-	NSMutableArray *theWriteQueue;
-	AsyncWritePacket *theCurrentWrite;
-	NSTimer *theWriteTimer;
+  NSMutableArray *theReadQueue;
+  AsyncReadPacket *theCurrentRead;
+  NSTimer *theReadTimer;
+  NSData *partialReadBuffer;
+  
+  NSMutableArray *theWriteQueue;
+  AsyncWritePacket *theCurrentWrite;
+  NSTimer *theWriteTimer;
 
-	NSTimer *thePollTimer;
-	id theDelegate;
-	Byte theFlags;
-	
-	long theUserData;
+  NSTimer *thePollTimer;
+  id theDelegate;
+  Byte theFlags;
+  
+  long theUserData;
 }
 
 - (id) init;
