@@ -1,5 +1,9 @@
 2007-06-15  Satoshi Nakagawa <artension@gmail.com>
 
+	Changed whois parameters to acquire detail information.
+
+2007-06-15  Satoshi Nakagawa <artension@gmail.com>
+
 	Added the nick changing dialog.
 
 2007-06-15  Satoshi Nakagawa <artension@gmail.com>

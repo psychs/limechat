@@ -227,7 +227,7 @@ class IRCUnit < OSX::NSObject
   
   
   def send_whois(nick)
-    send(:whois, nick)
+    send(:whois, nick, nick)
   end
   
   def send(command, *args)
