@@ -22,6 +22,8 @@
 
 /* Begin PBXBuildFile section */
 		781044FA0C21F11D0020F3B8 /* tableprogressindicator.rb in Resources */ = {isa = PBXBuildFile; fileRef = 781044F90C21F11D0020F3B8 /* tableprogressindicator.rb */; };
+		7867EA4B0C227AD40017B510 /* NickSheet.nib in Resources */ = {isa = PBXBuildFile; fileRef = 7867EA490C227AD40017B510 /* NickSheet.nib */; };
+		7867EA520C227CD50017B510 /* nicksheet.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7867EA510C227CD50017B510 /* nicksheet.rb */; };
 		78E572390C1C30BA00BDF7EC /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		78E5723A0C1C30BA00BDF7EC /* RubyCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5D3C7BF0AEB9FEB00C17985 /* RubyCocoa.framework */; };
 		78E5723B0C1C30BA00BDF7EC /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 788D56F00BB6872B00DDBF69 /* WebKit.framework */; };
@@ -100,6 +102,8 @@
 		783A3AA70BC8CB2000FD455A /* Splitter.m */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = sourcecode.c.objc; name = Splitter.m; path = objc/Splitter.m; sourceTree = "<group>"; };
 		785391480BFF174000606AB2 /* usermode.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = usermode.rb; sourceTree = "<group>"; };
 		78671AA00C095A2D008CDC20 /* unitnamecell.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = unitnamecell.rb; sourceTree = "<group>"; };
+		7867EA4A0C227AD40017B510 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/NickSheet.nib; sourceTree = "<group>"; };
+		7867EA510C227CD50017B510 /* nicksheet.rb */ = {isa = PBXFileReference; fileEncoding = "-2147483647"; lastKnownFileType = text.script.ruby; path = nicksheet.rb; sourceTree = "<group>"; };
 		786926F20BB6EC1B0081019B /* AsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = sourcecode.c.h; name = AsyncSocket.h; path = objc/AsyncSocket.h; sourceTree = "<group>"; };
 		786926F30BB6EC1B0081019B /* AsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = sourcecode.c.objc; name = AsyncSocket.m; path = objc/AsyncSocket.m; sourceTree = "<group>"; };
 		786926F40BB6EC1B0081019B /* main.m */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = sourcecode.c.objc; name = main.m; path = objc/main.m; sourceTree = "<group>"; };
@@ -231,6 +235,7 @@
 				78B869B90BF2D613007315AA /* ChannelDialog.nib */,
 				7817A0380BF6FFCD005C7737 /* DccDialog.nib */,
 				78A86AD90BFFD87500E28592 /* WhoisDialog.nib */,
+				7867EA490C227AD40017B510 /* NickSheet.nib */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -301,6 +306,7 @@
 		78A47CFF0BF6DE6B001C5B15 /* dialog */ = {
 			isa = PBXGroup;
 			children = (
+				7867EA510C227CD50017B510 /* nicksheet.rb */,
 				78A86AE70BFFE33F00E28592 /* whoisdialog.rb */,
 				78A47D000BF6DE6B001C5B15 /* channeldialog.rb */,
 				78A47D010BF6DE6B001C5B15 /* commentsheet.rb */,
@@ -438,6 +444,8 @@
 				78E5726D0C1C30CE00BDF7EC /* listview.rb in Resources */,
 				78E5726E0C1C30CE00BDF7EC /* unitnamecell.rb in Resources */,
 				781044FA0C21F11D0020F3B8 /* tableprogressindicator.rb in Resources */,
+				7867EA4B0C227AD40017B510 /* NickSheet.nib in Resources */,
+				7867EA520C227CD50017B510 /* nicksheet.rb in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -505,6 +513,14 @@
 				781E254C0BE9E8E20040F56E /* English */,
 			);
 			name = ModeSheet.nib;
+			sourceTree = "<group>";
+		};
+		7867EA490C227AD40017B510 /* NickSheet.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7867EA4A0C227AD40017B510 /* English */,
+			);
+			name = NickSheet.nib;
 			sourceTree = "<group>";
 		};
 		78785B570BEDCF6800456645 /* ServerDialog.nib */ = {

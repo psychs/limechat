@@ -60,6 +60,8 @@ class MenuController < OSX::NSObject
       connected
     when 503  # cancel reconnecting
       u && u.reconnecting?
+    when 511  # nick
+      login
     when 521  # add server
       true
     when 522  # copy server
@@ -176,6 +178,29 @@ class MenuController < OSX::NSObject
     u = @world.selunit
     return unless u
     u.cancel_reconnect
+  end
+  
+  
+  def onNick(sender)
+    u = @world.selunit
+    return unless u
+    unless @nick
+      @nick = NickSheet.alloc.init
+      @nick.window = window
+      @nick.delegate = self
+      @nick.loadNib
+    end
+    @nick.uid = u.id
+    @nick.start(u.mynick)
+  end
+  
+  def nickSheet_onOk(sender, nick)
+    u = @world.find_unit_by_id(sender.uid)
+    return unless u
+    u.change_nick(nick)
+  end
+  
+  def nickSheet_onCancel(sender)
   end
   
   

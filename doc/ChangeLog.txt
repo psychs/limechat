@@ -1,5 +1,9 @@
 2007-06-15  Satoshi Nakagawa <artension@gmail.com>
 
+	Added the nick changing dialog.
+
+2007-06-15  Satoshi Nakagawa <artension@gmail.com>
+
 	Changed colors of DCC file receiving items.
 
 2007-06-15  Satoshi Nakagawa <artension@gmail.com>

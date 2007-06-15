@@ -187,6 +187,12 @@ class IRCUnit < OSX::NSObject
     true
   end
   
+  def change_nick(tonick)
+    return if @mynick == tonick
+    @sentnick = @inputnick = tonick
+    send(:nick, @inputnick)
+  end
+  
   
   # model
   

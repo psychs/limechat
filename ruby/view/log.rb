@@ -278,6 +278,7 @@ class LogScriptEventSink < OSX::LogEventSinkBase
   end
 end
 
+
 class LogPolicy < OSX::NSObject
   include OSX
   attr_accessor :menu
@@ -287,7 +288,6 @@ class LogPolicy < OSX::NSObject
   end
   
   def webView_contextMenuItemsForElement_defaultMenuItems(sender, element, defaultMenu)
-    p element
     if @menu
       @menu.itemArray.to_a.map {|i| i.copy }
     else

@@ -47,6 +47,7 @@
                 onMemberTalk = id; 
                 onMemberWhois = id; 
                 onMode = id; 
+                onNick = id; 
                 onPaste = id; 
                 onSearchWeb = id; 
                 onServerProperties = id; 
