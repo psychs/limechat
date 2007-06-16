@@ -1,5 +1,9 @@
 2007-06-17  Satoshi Nakagawa <artension@gmail.com>
 
+	Reformed saving frames.
+
+2007-06-17  Satoshi Nakagawa <artension@gmail.com>
+
 	Changed to resolve my address using resolv.rb.
 
 2007-06-17  Satoshi Nakagawa <artension@gmail.com>

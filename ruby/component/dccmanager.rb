@@ -197,15 +197,9 @@ class DccManager < OSX::NSObject
   def load_window_state
     win = @pref.load('dcc_window')
     if win
-      f = @window.frame
-      f.origin.x = win[:x].to_f
-      f.origin.y = win[:y].to_f
-      f.size.width = win[:w].to_f
-      f.size.height = win[:h].to_f
-      f.size.width = 100 if f.size.width <= 10
-      f.size.height = 100 if f.size.height <= 10
+      f = NSRect.from_dic(win)
       @window.setFrame_display(f, true)
-      @splitter.setPosition(win[:split].to_f)
+      @splitter.setPosition(win[:split])
     else
       @splitter.setPosition(150)
     end
@@ -213,14 +207,8 @@ class DccManager < OSX::NSObject
 
   def save_window_state
     return unless @loaded
-    f = @window.frame
-    win = {
-      :x => f.origin.x,
-      :y => f.origin.y,
-      :w => f.size.width,
-      :h => f.size.height,
-      :split => @splitter.position,
-    }
+    win = @window.frame.to_dic
+    win.merge! :split => @splitter.position
     @pref.save('dcc_window', win)
   end
 end

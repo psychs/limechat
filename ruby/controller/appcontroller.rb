@@ -99,20 +99,14 @@ class AppController < OSX::NSObject
   def load_window_state
     win = @pref.load('window')
     if win
-      f = @window.frame
-      f.origin.x = win[:x].to_f
-      f.origin.y = win[:y].to_f
-      f.size.width = win[:w].to_f
-      f.size.height = win[:h].to_f
-      f.size.width = 100 if f.size.width <= 10
-      f.size.height = 100 if f.size.height <= 10
+      f = NSRect.from_dic(win)
       @window.setFrame_display(f, true)
     end
     split = @pref.load('splitter')
     if split
-      @root_split.setPosition(split[:root].to_f)
-      @log_split.setPosition(split[:log].to_f)
-      @info_split.setPosition(split[:info].to_f)
+      @root_split.setPosition(split[:root])
+      @log_split.setPosition(split[:log])
+      @info_split.setPosition(split[:info])
     else
       @root_split.setPosition(150.0)
       @log_split.setPosition(150.0)
@@ -121,14 +115,7 @@ class AppController < OSX::NSObject
   end
   
   def save_window_state
-    f = @window.frame
-    win = {
-      :x => f.origin.x,
-      :y => f.origin.y,
-      :w => f.size.width,
-      :h => f.size.height,
-    }
-    @pref.save('window', win)
+    @pref.save('window', @window.frame.to_dic)
     split = {
       :root => @root_split.position,
       :log => @log_split.position,

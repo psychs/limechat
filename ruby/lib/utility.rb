@@ -70,14 +70,23 @@ end
 
 module OSX
   class NSPoint
-    def dup; NSPoint.new(self.x, self.y); end
+    def dup; NSPoint.new(x, y); end
   end
   
   class NSSize
-    def dup; NSSize.new(self.width, self.height); end
+    def dup; NSSize.new(width, height); end
   end
   
   class NSRect
-    def dup; NSRect.new(self.origin, self.size); end
+    def dup; NSRect.new(origin, size); end
+    def self.from_dic(d); NSRect.new(d[:x], d[:y], d[:w], d[:h]); end
+    def to_dic
+      {
+        :x => origin.x,
+        :y => origin.y,
+        :w => size.width,
+        :h => size.height
+      }
+    end
   end
 end

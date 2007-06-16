@@ -403,6 +403,8 @@ class IRCUnit < OSX::NSObject
     return unless addr
     addr = addr.to_a.map {|i| i.to_s}
     @myaddress = addr[0]
+    # @@@ for debug
+    @myaddress = '192.168.1.3'
   end
   
   
