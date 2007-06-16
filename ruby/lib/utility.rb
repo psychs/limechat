@@ -38,6 +38,10 @@ class String
   def server?
     self.index('.') != nil
   end
+  
+  def expand_path
+    OSX::NSString.stringWithString(self).stringByExpandingTildeInPath.to_s
+  end
 end
 
 class True

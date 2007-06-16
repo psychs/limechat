@@ -1,10 +1,12 @@
 # Created by Satoshi Nakagawa.
 # You can redistribute it and/or modify it under the same terms as Ruby.
 
+require 'utility'
+
 class DccReceiver
   attr_accessor :delegate, :uid, :sender_nick
-  attr_accessor :host, :port, :path, :filename, :size, :version
-  attr_reader :received_size, :status, :error, :download_filename
+  attr_accessor :host, :port, :filename, :size, :version
+  attr_reader :path, :received_size, :status, :error, :download_filename
   attr_accessor :progress_bar
   
   # RS_WAIT, RS_ERROR, RS_STOP, RS_WAITSTART, RS_WAITCONNECT, 
@@ -23,6 +25,8 @@ class DccReceiver
     @records = []
     @rec = 0
   end
+  
+  def path=(v); @path = v.expand_path; end
   
   def speed
     return 0 if @records.empty? || @status != :receiving
@@ -113,17 +117,18 @@ class DccReceiver
     return if @file
     base = File.basename(@filename, '.*')
     ext = File.extname(@filename)
-    @download_filename = @path + PREFIX + @filename
+    @download_filename = @path + '/' + PREFIX + @filename
     i = 0
     while File.exist?(@download_filename)
-      @download_filename = @path + PREFIX + base + "_#{i}" + ext
+      @download_filename = @path + '/' + PREFIX + base + "_#{i}" + ext
       i += 1
     end
     begin
       @file = File.open(@download_filename, 'w+b')
     rescue
-      puts '*** file open error'
-      p $!
+      @status = :error
+      @error = 'Could not open file'
+      close
     end
   end
   

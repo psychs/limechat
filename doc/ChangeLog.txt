@@ -1,5 +1,9 @@
 2007-06-17  Satoshi Nakagawa <artension@gmail.com>
 
+	Changed DCC receiving path to user's desktop.
+
+2007-06-17  Satoshi Nakagawa <artension@gmail.com>
+
 	Added initial settings of the DCC window splitter.
 
 2007-06-15  Satoshi Nakagawa <artension@gmail.com>

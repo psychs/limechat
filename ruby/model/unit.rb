@@ -955,7 +955,7 @@ class IRCUnit < OSX::NSObject
     c.sender_nick = m.sender_nick
     c.host = host
     c.port = port
-    c.path = '/Users/psychs/Desktop/'
+    c.path = '~/Desktop/'
     c.filename = fname
     c.size = size
     c.version = ver
