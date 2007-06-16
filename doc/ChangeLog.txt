@@ -1,3 +1,7 @@
+2007-06-17  Satoshi Nakagawa <artension@gmail.com>
+
+	Added initial settings of the DCC window splitter.
+
 2007-06-15  Satoshi Nakagawa <artension@gmail.com>
 
 	Changed whois parameters to acquire detail information.

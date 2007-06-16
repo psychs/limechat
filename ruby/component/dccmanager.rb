@@ -206,6 +206,8 @@ class DccManager < OSX::NSObject
       f.size.height = 100 if f.size.height <= 10
       @window.setFrame_display(f, true)
       @splitter.setPosition(win[:split].to_f)
+    else
+      @splitter.setPosition(150)
     end
   end
 
