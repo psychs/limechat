@@ -4,7 +4,7 @@
 class IRCUnit < OSX::NSObject
   include OSX
   attr_accessor :world, :log, :id
-  attr_reader :config, :channels, :mynick, :mymode, :encoding
+  attr_reader :config, :channels, :mynick, :mymode, :encoding, :myaddress
   attr_accessor :property_dialog
   attr_accessor :keyword, :unread
   attr_accessor :last_selected_channel
@@ -19,6 +19,7 @@ class IRCUnit < OSX::NSObject
     @connected = false
     @login = false
     @mynick = @inputnick = @sentnick = ''
+    @myaddress = nil
     @encoding = NSISO2022JPStringEncoding
     @mymode = UserMode.new
     @in_whois = false
@@ -264,8 +265,8 @@ class IRCUnit < OSX::NSObject
       check_delayed_connect
     end
     
-    # broadcast to channels
-  end
+    @channels.each {|c| c.on_timer}
+  end  
   
   def check_reconnect
     if @reconnect && @reconnect_timer > 0
@@ -396,6 +397,12 @@ class IRCUnit < OSX::NSObject
   
   def ircsocket_on_error(err)
     print_error(err.localizedDescription.to_s)
+  end
+  
+  def Resolver_onResolve(addr)
+    return unless addr
+    addr = addr.to_a.map {|i| i.to_s}
+    @myaddress = addr[0]
   end
   
   
@@ -634,6 +641,7 @@ class IRCUnit < OSX::NSObject
     @conn = nil
     @connecting = @connected = @login = false
     @mynick = @sentnick = ''
+    @myaddress = nil
     @mymode.clear
     @in_whois = false
     @channels.each do |c|
@@ -720,6 +728,7 @@ class IRCUnit < OSX::NSObject
       c.activate
       reload_tree
       print_system(c, "You have joined the channel")
+      Resolver.resolve(self, m.sender_address) unless @myaddress
     end
     if c
       c.add_member(User.new(nick, m.sender_username, m.sender_address, njoin))

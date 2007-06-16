@@ -78,6 +78,7 @@
 		78E5726C0C1C30CE00BDF7EC /* stringvalidator.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78DF97CB0C05A214004E6053 /* stringvalidator.rb */; };
 		78E5726D0C1C30CE00BDF7EC /* listview.rb in Resources */ = {isa = PBXBuildFile; fileRef = 788475220C0958780086138A /* listview.rb */; };
 		78E5726E0C1C30CE00BDF7EC /* unitnamecell.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78671AA00C095A2D008CDC20 /* unitnamecell.rb */; };
+		78ECD92A0C24A41E009675C5 /* resolver.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78ECD9290C24A41E009675C5 /* resolver.rb */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -144,6 +145,7 @@
 		78DF97C30C05A114004E6053 /* urlopener.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = urlopener.rb; sourceTree = "<group>"; };
 		78DF97CB0C05A214004E6053 /* stringvalidator.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = stringvalidator.rb; sourceTree = "<group>"; };
 		78E570D00C1C306500BDF7EC /* LimeChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LimeChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		78ECD9290C24A41E009675C5 /* resolver.rb */ = {isa = PBXFileReference; fileEncoding = "-2147483647"; lastKnownFileType = text.script.ruby; path = resolver.rb; sourceTree = "<group>"; };
 		78F0849C0BFE91D100520D74 /* dialogwindow.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = dialogwindow.rb; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		A5D3C7BF0AEB9FEB00C17985 /* RubyCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RubyCocoa.framework; path = /Library/Frameworks/RubyCocoa.framework; sourceTree = "<absolute>"; };
@@ -282,6 +284,7 @@
 		78A47CF50BF6DE6B001C5B15 /* component */ = {
 			isa = PBXGroup;
 			children = (
+				78ECD9290C24A41E009675C5 /* resolver.rb */,
 				7817A0300BF6FEA2005C7737 /* dccmanager.rb */,
 				7817A0110BF6DFB6005C7737 /* dccsender.rb */,
 				7817A00F0BF6DF87005C7737 /* dccreceiver.rb */,
@@ -446,6 +449,7 @@
 				781044FA0C21F11D0020F3B8 /* tableprogressindicator.rb in Resources */,
 				7867EA4B0C227AD40017B510 /* NickSheet.nib in Resources */,
 				7867EA520C227CD50017B510 /* nicksheet.rb in Resources */,
+				78ECD92A0C24A41E009675C5 /* resolver.rb in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

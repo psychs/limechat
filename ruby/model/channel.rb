@@ -194,6 +194,11 @@ class IRCChannel < OSX::NSObject
     head + m.nick
   end
   
+  # timer
+  
+  def on_timer
+  end
+  
   
   private
   

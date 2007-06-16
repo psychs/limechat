@@ -4,7 +4,11 @@
 require 'resolv'
 
 class Resolver
-  def resolv(host)
-    Resolv.getaddress(host)
+  def self.resolve(sender, host)
+    Thread.new do
+      addr = Resolv.getaddresses(host)
+      sender.performSelectorOnMainThread_withObject_waitUntilDone('Resolver_onResolve:', addr, false)
+    end
+    nil
   end
 end
