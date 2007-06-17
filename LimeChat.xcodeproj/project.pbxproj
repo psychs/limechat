@@ -22,6 +22,8 @@
 
 /* Begin PBXBuildFile section */
 		781044FA0C21F11D0020F3B8 /* tableprogressindicator.rb in Resources */ = {isa = PBXBuildFile; fileRef = 781044F90C21F11D0020F3B8 /* tableprogressindicator.rb */; };
+		78432F2E0C25CD45009BBB36 /* asynctcpclient.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78432F2C0C25CD45009BBB36 /* asynctcpclient.rb */; };
+		78432F2F0C25CD45009BBB36 /* asynctcpserver.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78432F2D0C25CD45009BBB36 /* asynctcpserver.rb */; };
 		7867EA4B0C227AD40017B510 /* NickSheet.nib in Resources */ = {isa = PBXBuildFile; fileRef = 7867EA490C227AD40017B510 /* NickSheet.nib */; };
 		7867EA520C227CD50017B510 /* nicksheet.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7867EA510C227CD50017B510 /* nicksheet.rb */; };
 		78E572390C1C30BA00BDF7EC /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
@@ -101,6 +103,8 @@
 		781E254C0BE9E8E20040F56E /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/ModeSheet.nib; sourceTree = "<group>"; };
 		783A3AA60BC8CB2000FD455A /* Splitter.h */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = sourcecode.c.h; name = Splitter.h; path = objc/Splitter.h; sourceTree = "<group>"; };
 		783A3AA70BC8CB2000FD455A /* Splitter.m */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = sourcecode.c.objc; name = Splitter.m; path = objc/Splitter.m; sourceTree = "<group>"; };
+		78432F2C0C25CD45009BBB36 /* asynctcpclient.rb */ = {isa = PBXFileReference; fileEncoding = "-2147483647"; lastKnownFileType = text.script.ruby; path = asynctcpclient.rb; sourceTree = "<group>"; };
+		78432F2D0C25CD45009BBB36 /* asynctcpserver.rb */ = {isa = PBXFileReference; fileEncoding = "-2147483647"; lastKnownFileType = text.script.ruby; path = asynctcpserver.rb; sourceTree = "<group>"; };
 		785391480BFF174000606AB2 /* usermode.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = usermode.rb; sourceTree = "<group>"; };
 		78671AA00C095A2D008CDC20 /* unitnamecell.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = unitnamecell.rb; sourceTree = "<group>"; };
 		7867EA4A0C227AD40017B510 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/NickSheet.nib; sourceTree = "<group>"; };
@@ -284,6 +288,8 @@
 		78A47CF50BF6DE6B001C5B15 /* component */ = {
 			isa = PBXGroup;
 			children = (
+				78432F2C0C25CD45009BBB36 /* asynctcpclient.rb */,
+				78432F2D0C25CD45009BBB36 /* asynctcpserver.rb */,
 				78ECD9290C24A41E009675C5 /* resolver.rb */,
 				7817A0300BF6FEA2005C7737 /* dccmanager.rb */,
 				7817A0110BF6DFB6005C7737 /* dccsender.rb */,
@@ -450,6 +456,8 @@
 				7867EA4B0C227AD40017B510 /* NickSheet.nib in Resources */,
 				7867EA520C227CD50017B510 /* nicksheet.rb in Resources */,
 				78ECD92A0C24A41E009675C5 /* resolver.rb in Resources */,
+				78432F2E0C25CD45009BBB36 /* asynctcpclient.rb in Resources */,
+				78432F2F0C25CD45009BBB36 /* asynctcpserver.rb in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

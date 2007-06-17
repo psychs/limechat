@@ -4,11 +4,13 @@
 class TcpClient < OSX::NSObject
   include OSX
   attr_accessor :delegate, :host, :port
+  attr_reader :send_queue_size
   
   def initialize
     @tag = 0
     @host = ''
     @port = 0
+    @send_queue_size = 0
   end
   
   def init_with_existing_connection(socket)
@@ -28,6 +30,7 @@ class TcpClient < OSX::NSObject
     @sock = AsyncSocket.alloc.initWithDelegate_userData(self, @tag)
     @sock.connectToHost_onPort_error?(@host, @port, nil)
     @active = @connecting = true
+    @send_queue_size = 0
   end
   
   def close
@@ -36,6 +39,7 @@ class TcpClient < OSX::NSObject
     @sock.disconnect
     @sock = nil
     @active = @connecting = false
+    @send_queue_size = 0
   end
   
   def read
@@ -58,6 +62,7 @@ class TcpClient < OSX::NSObject
     data = NSData.dataWithRubyString(str)
     @sock.writeData_withTimeout_tag(data, -1.0, 0)
     wait_read
+    @send_queue_size += 1
   end
   
   def active?
@@ -102,6 +107,7 @@ class TcpClient < OSX::NSObject
   
   def onSocket_didWriteDataWithTag(sock, tag)
     return unless check_tag(sock)
+    @send_queue_size -= 1
     @delegate.tcpclient_on_write(self) if @delegate
   end
   

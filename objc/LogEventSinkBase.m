@@ -37,7 +37,7 @@
   return YES;
 }
 
-+ (NSString *)webScriptNameForKey:(const char*)name
++ (NSString*)webScriptNameForKey:(const char*)name
 {
   return nil;
 }

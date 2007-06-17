@@ -188,12 +188,6 @@ class IRCUnit < OSX::NSObject
     true
   end
   
-  def change_nick(tonick)
-    return if @mynick == tonick
-    @sentnick = @inputnick = tonick
-    send(:nick, @inputnick)
-  end
-  
   
   # model
   
@@ -227,8 +221,36 @@ class IRCUnit < OSX::NSObject
   end
   
   
+  def change_nick(tonick)
+    return if @mynick == tonick
+    @sentnick = @inputnick = tonick
+    send(:nick, @inputnick)
+  end
+  
   def send_whois(nick)
     send(:whois, nick, nick)
+  end
+  
+  def send_file(nick, port, fname, size)
+    morph_fname = fname.gsub(/ /, '_')
+    if /\A(\d+)\.(\d+)\.(\d+)\.(\d+)\z/ =~ @myaddress
+      w, x, y, z = $1.to_i, $2.to_i, $3.to_i, $4.to_i
+      addr = w; addr <<= 8
+      addr |= x; addr <<= 8
+      addr |= y; addr <<= 8
+      addr |= z
+    else
+      addr = @myaddress
+    end
+    send_ctcp_query(nick, 'DCC SEND', "#{morph_fname} #{addr} #{port} #{size} 2 :#{fname}")
+  end
+  
+  def send_ctcp_query(target, cmd, body)
+    send(:privmsg, target, ":\x01#{cmd} #{body}\x01")
+  end
+  
+  def send_ctcp_reply(target, cmd, body)
+    send(:notice, target, ":\x01#{cmd} #{body}\x01")
   end
   
   def send(command, *args)
@@ -948,8 +970,8 @@ class IRCUnit < OSX::NSObject
   end
   
   def receive_dcc_send(m, fname, addr, port, size, ver)
-    puts '*** dcc send'
-    puts "#{fname}, #{size}, #{addr}, #{port}, #{ver}"
+    #puts '*** dcc send'
+    #puts "#{fname}, #{size}, #{addr}, #{port}, #{ver}"
     if /^\d+$/ =~ addr
       a = addr.to_i
       w = a & 0xff; a >>= 8
@@ -960,19 +982,7 @@ class IRCUnit < OSX::NSObject
     else
       host = addr
     end
-    
-    c = DccReceiver.new
-    c.uid = @id
-    c.sender_nick = m.sender_nick
-    c.host = host
-    c.port = port
-    c.path = '~/Desktop/'
-    c.filename = fname
-    c.size = size
-    c.version = ver
-    @world.dcc.add_receiver(c)
-    #c.open
-    @world.dcc.show
+    @world.dcc.add_receiver(@id, m.sender_nick, host, port, '~/Desktop', fname, size, ver)
   end
   
   def receive_ctcp_reply(m, text)

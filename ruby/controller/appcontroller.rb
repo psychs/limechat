@@ -57,6 +57,7 @@ class AppController < OSX::NSObject
     
     @dcc = DccManager.alloc.init
     @dcc.pref = @pref
+    @dcc.world = @world
     @world.dcc = @dcc
   end
   

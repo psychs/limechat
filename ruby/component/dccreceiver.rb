@@ -18,8 +18,8 @@ class DccReceiver
   RECORDS_LEN = 10
   
   def initialize
-    @size = 0
     @version = 0
+    @size = 0
     @received_size = 0
     @status = :waiting
     @records = []
@@ -53,7 +53,7 @@ class DccReceiver
     end
     close_file
     @status = :stop if @status != :error && @status != :complete
-    @delegate.dccreceiver_on_close(self) if @delegate
+    @delegate.dccreceiver_on_close(self)
   end
   
   
@@ -61,24 +61,22 @@ class DccReceiver
     @received_size = 0
     @status = :receiving
     open_file
-    @delegate.dccreceiver_on_open(self) if @delegate
-    @delegate.dccreceiver_on_change(self) if @delegate
+    @delegate.dccreceiver_on_open(self)
+    @delegate.dccreceiver_on_change(self)
   end
   
   def tcpclient_on_disconnect(sender)
-    puts '*** disconnect'
     @status = :error
     @error = 'Disconnected'
     close
-    @delegate.dccreceiver_on_change(self) if @delegate
+    @delegate.dccreceiver_on_change(self)
   end
   
   def tcpclient_on_error(sender, err)
-    puts '*** error'
     @status = :error
     @error = err.localizedDescription.to_s
     close
-    @delegate.dccreceiver_on_change(self) if @delegate
+    @delegate.dccreceiver_on_change(self)
   end
   
   def tcpclient_on_read(sender)
@@ -89,12 +87,11 @@ class DccReceiver
       n = @file.write(s)
       s[0...n] = '' if n > 0
     end
-    @progress_bar.setDoubleValue(@received_size) if @progress_bar
+    @progress_bar.setDoubleValue(@received_size)
     if @received_size >= @size
-      puts '*** complete ' + @filename
       @status = :complete
       close
-      @delegate.dccreceiver_on_change(self) if @delegate
+      @delegate.dccreceiver_on_change(self)
     end
   end
   
@@ -133,20 +130,19 @@ class DccReceiver
   end
   
   def close_file
-    if @file
-      @file.close
-      @file = nil
-      if @status == :complete
-        base = File.basename(@filename, '.*')
-        ext = File.extname(@filename)
-        fname = @path + @filename
-        i = 0
-        while File.exist?(fname)
-          fname = @path + base + "_#{i}" + ext
-          i += 1
-        end
-        File.rename(@download_filename, fname)
+    return unless @file
+    @file.close
+    @file = nil
+    if @status == :complete
+      base = File.basename(@filename, '.*')
+      ext = File.extname(@filename)
+      fname = @path + '/' + @filename
+      i = 0
+      while File.exist?(fname)
+        fname = @path + '/' + base + "_#{i}" + ext
+        i += 1
       end
+      File.rename(@download_filename, fname)
     end
   end
 end

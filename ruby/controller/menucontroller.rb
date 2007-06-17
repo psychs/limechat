@@ -23,11 +23,11 @@ class MenuController < OSX::NSObject
   def validateMenuItem(i)
     u, c = @world.sel
     
-    connected = u && u.connected?
-    not_connected = u && !u.connected?
-    login = u && u.login?
-    active = login && c && c.active?
-    not_active = login && c && !c.active?
+    connected = !!u && u.connected?
+    not_connected = !!u && !u.connected?
+    login = !!u && u.login?
+    active = login && !!c && c.active?
+    not_active = login && !!c && !c.active?
     active_channel = active && c.channel?
     active_chtalk = active && (c.channel? || c.talk?)
     op = active_channel && c.op?
@@ -59,18 +59,18 @@ class MenuController < OSX::NSObject
     when 502  # disconnect
       connected
     when 503  # cancel reconnecting
-      u && u.reconnecting?
+      !!u && u.reconnecting?
     when 511  # nick
       login
     when 521  # add server
       true
     when 522  # copy server
-      u != nil
+      !!u
     when 523  # delete server
       not_connected
     when 541  # server property
-      u != nil
-      
+      !!u
+            
     when 601  # join
       login && not_active && c.channel?
     when 602  # leave
@@ -80,27 +80,29 @@ class MenuController < OSX::NSObject
     when 612  # topic
       active_channel
     when 651  # add channel
-      u != nil
+      !!u
     when 652  # delete channel
-      c != nil
+      !!c
     when 653  # channel property
-      c && c.channel?
+      !!c && c.channel?
       
     when 2001  # member whois
-      active_chtalk && count_selected_members
+      active_chtalk && count_selected_members?
     when 2002  # member talk
-      active_chtalk && count_selected_members
+      active_chtalk && count_selected_members?
     when 2003  # member giveop
-      op && count_selected_members
+      op && count_selected_members?
     when 2004  # member deop
-      op && count_selected_members
+      op && count_selected_members?
+    when 2011  # dcc send file
+      active_chtalk && count_selected_members? && !!u.myaddress
       
     else
       false
     end
   end
   
-  def count_selected_members
+  def count_selected_members?
     @member_list.countSelectedRows > 0
   end
   
@@ -444,5 +446,35 @@ class MenuController < OSX::NSObject
   
   def onMemberDeop(sender)
     change_op(:o, false)
+  end
+  
+  def onMemberSendFile(sender)
+    @send.cancel(nil) if @send
+    u = @world.selunit
+    return unless u
+    @send_targets = selected_members
+    return unless @send_targets && !@send_targets.empty?
+    @send_uid = u.id
+    @send = NSOpenPanel.openPanel
+    @send.setCanChooseDirectories(false)
+    @send.setResolvesAliases(true)
+    @send.setAllowsMultipleSelection(true)
+    @send.beginForDirectory_file_types_modelessDelegate_didEndSelector_contextInfo('~/Desktop', nil, nil, self, 'sendFilePanelDidEnd:returnCode:contextInfo:', nil)
+  end
+  
+  def sendFilePanelDidEnd_returnCode_contextInfo(panel, code, info)
+    targets = @send_targets
+    uid = @send_uid
+    @send_targets = nil
+    @send_uid = nil
+    @send = nil
+    return if code != NSOKButton
+    files = panel.filenames.to_a
+    files = files.map {|i| i.to_s}
+    targets.each do |t|
+      files.each do |f|
+        @world.dcc.add_sender(uid, t.nick, f)
+      end
+    end
   end
 end

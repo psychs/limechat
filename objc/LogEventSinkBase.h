@@ -8,6 +8,6 @@
 + (BOOL)isSelectorExcludedFromWebScript:(SEL)aSelector;
 + (NSString*)webScriptNameForSelector:(SEL)aSelector;
 + (BOOL)isKeyExcludedFromWebScript:(const char*)name;
-+ (NSString *)webScriptNameForKey:(const char*)name;
++ (NSString*)webScriptNameForKey:(const char*)name;
 
 @end

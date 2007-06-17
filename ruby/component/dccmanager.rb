@@ -6,7 +6,7 @@ require 'utility'
 class DccManager < OSX::NSObject
   include OSX
   ib_outlet :window, :splitter, :receiver_table, :sender_table
-  attr_accessor :pref
+  attr_accessor :pref, :world
   
   def initialize
     @receivers = []
@@ -61,7 +61,19 @@ class DccManager < OSX::NSObject
         false
       end
     else
-      false
+      return false if @sender_table.countSelectedRows == 0
+      sel = @sender_table.selectedRows
+      sel = sel.map {|e| @senders[e]}
+      case i.tag
+      when 3101 #start
+        !!sel.find {|e| e.status == :waiting}
+      when 3102 #stop
+        !!sel.find {|e| e.status == :listening || e.status == :sending}
+      when 3103 #delete
+        true
+      else
+        false
+      end
     end
   end
   
@@ -90,19 +102,71 @@ class DccManager < OSX::NSObject
     end
     reload_receiver_table
   end
+  
+  def startSender(sender)
+    sel = @sender_table.selectedRows
+    sel = sel.map {|i| @senders[i]}
+    sel.each do |i|
+      i.open
+    end
+    reload_sender_table
+  end
+  
+  def stopSender(sender)
+    sel = @sender_table.selectedRows
+    sel = sel.map {|i| @senders[i]}
+    sel.each {|i| i.close}
+    reload_sender_table
+  end
+  
+  def deleteSender(sender)
+    sel = @sender_table.selectedRows
+    sel = sel.map {|i| @senders[i]}
+    sel.each do |i|
+      i.close
+      bar = i.progress_bar
+      bar.removeFromSuperview if bar
+      @senders.delete(i)
+    end
+    reload_sender_table
+  end
 
   # items
   
-  def add_receiver(i)
-    i.delegate = self
-    @receivers.unshift(i)
+  def add_receiver(uid, nick, host, port, path, fname, size, ver)
+    c = DccReceiver.new
+    c.delegate = self
+    c.uid = uid
+    c.sender_nick = nick
+    c.host = host
+    c.port = port
+    c.path = path
+    c.filename = fname
+    c.size = size
+    c.version = ver
+    @receivers.unshift(c)
+    
+    #c.open
     reload_receiver_table
+    show
   end
   
-  def add_sender(i)
-    i.delegate = self
-    @senders.unshift(i)
+  def add_sender(uid, nick, file)
+    port = 11111
+    c = DccSender.new
+    c.delegate = self
+    c.uid = uid
+    c.receiver_nick = nick
+    c.full_filename = file
+    @senders.unshift(c)
+    c.port = port
+    while !c.open
+      port += 1
+      c.port = port
+    end
+    
     reload_sender_table
+    show
   end
   
   def reload_receiver_table
@@ -151,6 +215,23 @@ class DccManager < OSX::NSObject
       reload_receiver_table
     end
     reload_receiver_table
+  end
+  
+  
+  def dccsender_on_listen(s)
+    puts '+++listen'
+    puts s.port
+    u = @world.find_unit_by_id(s.uid)
+    return unless u
+    u.send_file(s.receiver_nick, s.port, s.filename, s.size)
+  end
+  
+  def dccsender_on_connect(sender)
+    puts 'dccsender_on_connect'
+  end
+  
+  def dccsender_on_close(sender)
+    puts 'dccsender_on_close'
   end
   
   

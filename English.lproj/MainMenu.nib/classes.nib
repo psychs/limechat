@@ -44,6 +44,7 @@
                 onLeave = id; 
                 onMemberDeop = id; 
                 onMemberGiveOp = id; 
+                onMemberSendFile = id; 
                 onMemberTalk = id; 
                 onMemberWhois = id; 
                 onMode = id; 
