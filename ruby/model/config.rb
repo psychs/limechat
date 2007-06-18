@@ -1,5 +1,5 @@
 # Created by Satoshi Nakagawa.
-# You can redistribute it and/or modify it under the same terms as Ruby.
+# You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
 class IRCWorldConfig
   attr_accessor :units
