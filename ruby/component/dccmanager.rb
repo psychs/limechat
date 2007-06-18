@@ -188,12 +188,14 @@ class DccManager < OSX::NSObject
   end
   
   def reload_receiver_table
-    @receiver_table.reloadData if @loaded && @window.isVisible
+    return unless @loaded && @window.isVisible
+    @receiver_table.reloadData
     update_clear_button
   end
   
   def reload_sender_table
-    @sender_table.reloadData if @loaded && @window.isVisible
+    return unless @loaded && @window.isVisible
+    @sender_table.reloadData
     update_clear_button
   end
   
