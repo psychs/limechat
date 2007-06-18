@@ -88,6 +88,7 @@ class DccReceiver
       s[0...n] = '' if n > 0
     end
     @progress_bar.setDoubleValue(@received_size)
+    @progress_bar.setNeedsDisplay(true)
     if @received_size >= @size
       @status = :complete
       close

@@ -6,7 +6,7 @@ require 'numberformat'
 
 class DccManager < OSX::NSObject
   include OSX
-  ib_outlet :window, :splitter, :receiver_table, :sender_table
+  ib_outlet :window, :splitter, :receiver_table, :sender_table, :clear_button
   attr_accessor :pref, :world
   
   def initialize
@@ -46,6 +46,29 @@ class DccManager < OSX::NSObject
   
   def close
     @window.orderOut(self)
+  end
+  
+  def onClear(sender)
+    sel = @receivers.select {|i| i.status == :error || i.status == :stop || i.status == :complete}
+    sel.each {|i| delete_receiver(i)}
+    sel = @senders.select {|i| i.status == :error || i.status == :stop || i.status == :complete}
+    sel.each {|i| delete_sender(i)}
+    reload_receiver_table
+    reload_sender_table
+  end
+  
+  def delete_receiver(i)
+    i.close
+    bar = i.progress_bar
+    bar.removeFromSuperview if bar
+    @receivers.delete(i)
+  end
+  
+  def delete_sender(i)
+    i.close
+    bar = i.progress_bar
+    bar.removeFromSuperview if bar
+    @senders.delete(i)
   end
 
   # menu
@@ -101,21 +124,14 @@ class DccManager < OSX::NSObject
   def deleteReceiver(sender)
     sel = @receiver_table.selectedRows
     sel = sel.map {|i| @receivers[i]}
-    sel.each do |i|
-      i.close
-      bar = i.progress_bar
-      bar.removeFromSuperview if bar
-      @receivers.delete(i)
-    end
+    sel.each {|i| delete_receiver(i)}
     reload_receiver_table
   end
   
   def startSender(sender)
     sel = @sender_table.selectedRows
     sel = sel.map {|i| @senders[i]}
-    sel.each do |i|
-      i.open
-    end
+    sel.each {|i| i.open}
     reload_sender_table
   end
   
@@ -129,12 +145,7 @@ class DccManager < OSX::NSObject
   def deleteSender(sender)
     sel = @sender_table.selectedRows
     sel = sel.map {|i| @senders[i]}
-    sel.each do |i|
-      i.close
-      bar = i.progress_bar
-      bar.removeFromSuperview if bar
-      @senders.delete(i)
-    end
+    sel.each {|i| delete_sender(i)}
     reload_sender_table
   end
 
@@ -153,7 +164,7 @@ class DccManager < OSX::NSObject
     c.version = ver
     @receivers.unshift(c)
     
-    #c.open
+    c.open
     reload_receiver_table
     show
   end
@@ -178,10 +189,18 @@ class DccManager < OSX::NSObject
   
   def reload_receiver_table
     @receiver_table.reloadData if @loaded && @window.isVisible
+    update_clear_button
   end
   
   def reload_sender_table
     @sender_table.reloadData if @loaded && @window.isVisible
+    update_clear_button
+  end
+  
+  def update_clear_button
+    rsel = @receivers.find {|i| i.status == :error || i.status == :stop || i.status == :complete}
+    ssel = @senders.find {|i| i.status == :error || i.status == :stop || i.status == :complete}
+    @clear_button.setEnabled(!!(rsel || ssel))
   end
   
   def on_timer
@@ -203,6 +222,7 @@ class DccManager < OSX::NSObject
     return unless @loaded
     unless sender.progress_bar
       bar = TableProgressIndicator.alloc.init
+      #bar.setUsesThreadedAnimation(true)
       bar.setIndeterminate(false)
       bar.setMinValue(0)
       bar.setMaxValue(sender.size)
@@ -236,6 +256,7 @@ class DccManager < OSX::NSObject
     return unless @loaded
     unless sender.progress_bar
       bar = TableProgressIndicator.alloc.init
+      #bar.setUsesThreadedAnimation(true)
       bar.setIndeterminate(false)
       bar.setMinValue(0)
       bar.setMaxValue(sender.size)
@@ -439,21 +460,6 @@ class FileSenderCell < OSX::NSCell
     NumberFormat.format_time(sec)
   end
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 class FileReceiverCell < OSX::NSCell

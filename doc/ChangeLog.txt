@@ -1,5 +1,9 @@
 2007-06-19  Satoshi Nakagawa <artension@gmail.com>
 
+	Added clear button on DCC dialog.
+
+2007-06-19  Satoshi Nakagawa <artension@gmail.com>
+
 	Added DCC file sending.
 
 2007-06-19  Satoshi Nakagawa <artension@gmail.com>

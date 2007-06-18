@@ -4,6 +4,7 @@
             ACTIONS = {
                 deleteReceiver = id; 
                 deleteSender = id; 
+                onClear = id; 
                 resumeReceiver = id; 
                 startReceiver = id; 
                 startSender = id; 
@@ -12,7 +13,13 @@
             }; 
             CLASS = DccManager; 
             LANGUAGE = ObjC; 
-            OUTLETS = {"receiver_table" = id; "sender_table" = id; splitter = id; window = id; }; 
+            OUTLETS = {
+                "clear_button" = id; 
+                "receiver_table" = id; 
+                "sender_table" = id; 
+                splitter = id; 
+                window = id; 
+            }; 
             SUPERCLASS = NSObject; 
         }, 
         {CLASS = DialogWindow; LANGUAGE = ObjC; SUPERCLASS = NSWindow; }, 

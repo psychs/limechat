@@ -121,6 +121,7 @@ class DccSender
       @rec += len
       @c.write(s)
       @progress_bar.setDoubleValue(@sent_size)
+      @progress_bar.setNeedsDisplay(true)
     end
   end
   

@@ -95,8 +95,7 @@ class MenuController < OSX::NSObject
     when 2004  # member deop
       op && count_selected_members?
     when 2011  # dcc send file
-      active_chtalk && count_selected_members? && !!u.myaddress
-      
+      active_chtalk && count_selected_members? && !!u.myaddress      
     else
       false
     end
