@@ -21,11 +21,17 @@ class DccManager < OSX::NSObject
     @loaded = true
     @splitter.setFixedViewIndex(1)
     @receiver_cell = FileReceiverCell.alloc.init
-    col = @receiver_table.tableColumns[0]
-    col.setDataCell(@receiver_cell)
+    @receiver_table.tableColumns[0].setDataCell(@receiver_cell)
+    @sender_cell = FileSenderCell.alloc.init
+    @sender_table.tableColumns[0].setDataCell(@sender_cell)
     @receivers.each do |r|
       if r.status == :receiving
         dccreceiver_on_open(r)
+      end
+    end
+    @senders.each do |s|
+      if s.status == :sending
+        dccsender_on_connect(s)
       end
     end
     load_window_state
@@ -220,19 +226,36 @@ class DccManager < OSX::NSObject
   
   
   def dccsender_on_listen(s)
-    puts '+++listen'
-    puts s.port
     u = @world.find_unit_by_id(s.uid)
     return unless u
     u.send_file(s.receiver_nick, s.port, s.filename, s.size)
   end
   
   def dccsender_on_connect(sender)
-    puts 'dccsender_on_connect'
+    puts '*** dccsender_on_connect'
+    return unless @loaded
+    unless sender.progress_bar
+      bar = TableProgressIndicator.alloc.init
+      bar.setIndeterminate(false)
+      bar.setMinValue(0)
+      bar.setMaxValue(sender.size)
+      bar.setDoubleValue(sender.sent_size)
+      @sender_table.addSubview(bar)
+      sender.progress_bar = bar
+      reload_sender_table
+    end
   end
   
   def dccsender_on_close(sender)
-    puts 'dccsender_on_close'
+    puts '*** dccsender_on_close'
+    return unless @loaded
+    bar = sender.progress_bar
+    if bar
+      sender.progress_bar = nil
+      bar.removeFromSuperview
+      reload_receiver_table
+    end
+    reload_sender_table
   end
   
   
@@ -266,7 +289,23 @@ class DccManager < OSX::NSObject
       cell.progress_bar = i.progress_bar
       i.filename
     else
-      ''
+      i = @senders[row.to_i]
+      cell = col.dataCell
+      cell.setStringValue(i.filename)
+      cell.setHighlighted(@sender_table.isRowSelected(row))
+      cell.receiver_nick = i.receiver_nick
+      cell.size = i.size
+      cell.sent_size = i.sent_size
+      cell.speed = i.speed
+      cell.time_remaining = i.speed > 0 ? (i.size - i.sent_size) / i.speed : nil
+      cell.status = i.status
+      cell.error = i.error
+      
+      ext = File.extname(i.filename)
+      ext = $1 if /\A\.?(.+)\z/ =~ ext
+      cell.setImage(NSWorkspace.sharedWorkspace.iconForFileType(ext))
+      cell.progress_bar = i.progress_bar
+      i.filename
     end
   end
   
@@ -294,6 +333,127 @@ class DccManager < OSX::NSObject
     @pref.save('dcc_window', win)
   end
 end
+
+
+class FileSenderCell < OSX::NSCell
+  include OSX
+  attr_accessor :receiver_nick, :sent_size, :size, :speed, :time_remaining, :status, :error
+  attr_accessor :progress_bar
+  
+  FILENAME_HEIGHT = 20
+  FILENAME_TOP_MARGIN = 1
+  PROGRESSBAR_HEIGHT = 12
+  STATUS_HEIGHT = 16
+  STATUS_TOP_MARGIN = 1
+  RIGHT_MARGIN = 10
+  IMAGE_SIZE = NSSize.new(32, 32)
+  
+  def drawInteriorWithFrame_inView(frame, view)
+    image = self.image
+    if image
+      size = IMAGE_SIZE
+      margin = (frame.size.height - size.height) / 2
+      pt = frame.origin.dup
+      pt.x += margin
+      pt.y += margin
+      pt.y += size.height if view.isFlipped
+      image.setSize(size)
+      image.compositeToPoint_operation(pt, NSCompositeSourceOver)
+    end
+    
+    offset = !!@progress_bar ? 0 : PROGRESSBAR_HEIGHT / 3
+    
+    fname = self.stringValue
+    rect = frame.dup
+    rect.origin.x += rect.size.height
+    rect.origin.y += FILENAME_TOP_MARGIN + offset
+    rect.size.width -= rect.size.height + RIGHT_MARGIN
+    rect.size.height = FILENAME_HEIGHT - FILENAME_TOP_MARGIN
+    style = NSMutableParagraphStyle.alloc.init
+    style.setAlignment(NSLeftTextAlignment)
+    style.setLineBreakMode(NSLineBreakByTruncatingMiddle)
+    attrs = {
+      NSParagraphStyleAttributeName => style,
+      NSFontAttributeName => NSFont.fontWithName_size('Helvetica', 12),
+      NSForegroundColorAttributeName => self.isHighlighted ? NSColor.whiteColor : NSColor.blackColor
+    }
+    fname.drawInRect_withAttributes(rect, attrs)
+
+    if @progress_bar
+      bar = @progress_bar
+      rect = frame.dup
+      rect.origin.x += rect.size.height
+      rect.origin.y += FILENAME_HEIGHT
+      rect.size.width -= rect.size.height + RIGHT_MARGIN
+      rect.size.height = PROGRESSBAR_HEIGHT
+      bar.setFrame(rect)
+    end
+    @progress_bar = nil
+    
+    rect = frame.dup
+    rect.origin.x += rect.size.height
+    rect.origin.y += FILENAME_HEIGHT + PROGRESSBAR_HEIGHT + STATUS_TOP_MARGIN - offset
+    rect.size.width -= rect.size.height + RIGHT_MARGIN
+    rect.size.height = STATUS_HEIGHT - STATUS_TOP_MARGIN
+    style = NSMutableParagraphStyle.alloc.init
+    style.setAlignment(NSLeftTextAlignment)
+    style.setLineBreakMode(NSLineBreakByTruncatingTail)
+    attrs = {
+      NSParagraphStyleAttributeName => style,
+      NSFontAttributeName => NSFont.fontWithName_size('Helvetica', 11),
+      NSForegroundColorAttributeName =>
+        if @status == :error
+          NSColor.redColor
+        elsif @status == :complete
+          NSColor.blueColor
+        elsif self.isHighlighted
+          NSColor.whiteColor
+        else
+          NSColor.grayColor
+        end
+    }
+    str = "To #{@receiver_nick}    "
+    case @status
+    when :waiting
+      str += "#{fsize(@size)}"
+    when :sending
+      str += "#{fsize(@sent_size)} / #{fsize(@size)} (#{fsize(@speed)}/s)"
+      if @time_remaining
+        str += "  -- #{ftime(@time_remaining)} remaining"
+      end
+    when :stop
+      str += "#{fsize(@sent_size)} / #{fsize(@size)}  -- Stopped"
+    when :error
+      str += "#{fsize(@sent_size)} / #{fsize(@size)}  -- Error: #{@error}"
+    when :complete
+      str += "#{fsize(@size)}  -- Complete"
+    end
+    NSString.stringWithString(str).drawInRect_withAttributes(rect, attrs)
+  end
+  
+  def fsize(size)
+    NumberFormat.format_size(size)
+  end
+  
+  def ftime(sec)
+    NumberFormat.format_time(sec)
+  end
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 class FileReceiverCell < OSX::NSCell

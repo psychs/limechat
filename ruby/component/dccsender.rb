@@ -3,8 +3,8 @@
 
 class DccSender
   attr_accessor :delegate, :uid, :receiver_nick
-  attr_accessor :port, :full_filename
-  attr_reader :filename, :size, :sent_size, :status, :error
+  attr_accessor :port
+  attr_reader :full_filename, :filename, :size, :sent_size, :status, :error
   attr_accessor :progress_bar
   
   RECORDS_LEN = 10
@@ -15,6 +15,17 @@ class DccSender
     @status = :waiting
     @records = []
     @rec = 0
+  end
+  
+  def full_filename=(v)
+    @full_filename = v
+    @size = File.size(@full_filename)
+    @filename = File.basename(@full_filename)
+  end
+  
+  def speed
+    return 0 if @records.empty? || @status != :sending
+    @records.inject(0) {|v,i| v += i }.to_f / @records.length.to_f
   end
   
   def open
@@ -109,14 +120,13 @@ class DccSender
       @sent_size += len
       @rec += len
       @c.write(s)
+      @progress_bar.setDoubleValue(@sent_size)
     end
   end
   
   def open_file
     close_file if @file
     begin
-      @size = File.size(@full_filename)
-      @filename = File.basename(@full_filename)
       @file = File.open(@full_filename, 'rb')
     rescue
       @status = :error

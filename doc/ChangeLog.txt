@@ -1,5 +1,9 @@
 2007-06-19  Satoshi Nakagawa <artension@gmail.com>
 
+	Added DCC file sending.
+
+2007-06-19  Satoshi Nakagawa <artension@gmail.com>
+
 	Changed licensing terms.
 
 2007-06-18  Satoshi Nakagawa <artension@gmail.com>
