@@ -1,3 +1,6 @@
+# Created by Satoshi Nakagawa.
+# You can redistribute it and/or modify it under the same terms as Ruby.
+
 require 'thread'
 require 'socket'
 require 'resolv-replace'

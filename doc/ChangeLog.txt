@@ -1,5 +1,10 @@
 2007-06-18  Satoshi Nakagawa <artension@gmail.com>
 
+	Moved NumberFormat to lib/numberformat.rb.
+	Added licensing term to all files.
+
+2007-06-18  Satoshi Nakagawa <artension@gmail.com>
+
 	Added prototype of DCC file sending.
 	Added AsyncTcpServer and AsyncTcpClient.
 	

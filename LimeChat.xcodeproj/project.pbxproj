@@ -26,6 +26,7 @@
 		78432F2F0C25CD45009BBB36 /* asynctcpserver.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78432F2D0C25CD45009BBB36 /* asynctcpserver.rb */; };
 		7867EA4B0C227AD40017B510 /* NickSheet.nib in Resources */ = {isa = PBXBuildFile; fileRef = 7867EA490C227AD40017B510 /* NickSheet.nib */; };
 		7867EA520C227CD50017B510 /* nicksheet.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7867EA510C227CD50017B510 /* nicksheet.rb */; };
+		78AA27170C26D2ED00E2C49A /* numberformat.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78AA27160C26D2ED00E2C49A /* numberformat.rb */; };
 		78E572390C1C30BA00BDF7EC /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		78E5723A0C1C30BA00BDF7EC /* RubyCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5D3C7BF0AEB9FEB00C17985 /* RubyCocoa.framework */; };
 		78E5723B0C1C30BA00BDF7EC /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 788D56F00BB6872B00DDBF69 /* WebKit.framework */; };
@@ -144,6 +145,7 @@
 		78A47D140BF6DE6B001C5B15 /* mainwindow.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = mainwindow.rb; sourceTree = "<group>"; };
 		78A86ADA0BFFD87500E28592 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/WhoisDialog.nib; sourceTree = "<group>"; };
 		78A86AE70BFFE33F00E28592 /* whoisdialog.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = whoisdialog.rb; sourceTree = "<group>"; };
+		78AA27160C26D2ED00E2C49A /* numberformat.rb */ = {isa = PBXFileReference; fileEncoding = "-2147483647"; lastKnownFileType = text.script.ruby; path = numberformat.rb; sourceTree = "<group>"; };
 		78B869BA0BF2D613007315AA /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/ChannelDialog.nib; sourceTree = "<group>"; };
 		78C5BAD40BE7B95100C4497A /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/CommentSheet.nib; sourceTree = "<group>"; };
 		78DF97C30C05A114004E6053 /* urlopener.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = urlopener.rb; sourceTree = "<group>"; };
@@ -328,6 +330,7 @@
 		78A47D040BF6DE6B001C5B15 /* lib */ = {
 			isa = PBXGroup;
 			children = (
+				78AA27160C26D2ED00E2C49A /* numberformat.rb */,
 				78DF97CB0C05A214004E6053 /* stringvalidator.rb */,
 				78DF97C30C05A114004E6053 /* urlopener.rb */,
 				78A47D050BF6DE6B001C5B15 /* dialoghelper.rb */,
@@ -458,6 +461,7 @@
 				78ECD92A0C24A41E009675C5 /* resolver.rb in Resources */,
 				78432F2E0C25CD45009BBB36 /* asynctcpclient.rb in Resources */,
 				78432F2F0C25CD45009BBB36 /* asynctcpserver.rb in Resources */,
+				78AA27170C26D2ED00E2C49A /* numberformat.rb in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
