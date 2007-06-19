@@ -16,12 +16,18 @@ module UserDefaultsAccess
   def convert_to_ruby_obj(v)
     return v if v == nil || v == false || v == true
     case v.class.to_s
-      when 'OSX::NSCFString'; return v.to_s
-      when 'OSX::NSCFNumber'; return v.to_i   # ignores float
-      when 'OSX::NSCFBoolean'; return v.to_i != 0
-      when 'OSX::NSCFDictionary'; return nsdictionary_to_hash(v)
-      when 'OSX::NSCFArray'; return nsarray_to_array(v)
-      else return v
+    when 'OSX::NSCFString'; v.to_s
+    when 'OSX::NSCFBoolean'; v.to_i != 0
+    when 'OSX::NSCFDictionary'; nsdictionary_to_hash(v)
+    when 'OSX::NSCFArray'; nsarray_to_array(v)
+    when 'OSX::NSCFNumber'
+      if v.isEqualToNumber(OSX::NSNumber.numberWithInt(v.to_i))
+        v.to_i
+      else
+        v.to_f
+      end
+    else
+      v
     end
   end
 
