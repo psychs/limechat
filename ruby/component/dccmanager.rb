@@ -20,9 +20,11 @@ class DccManager < OSX::NSObject
     @window.key_delegate = self
     @loaded = true
     @splitter.setFixedViewIndex(1)
-    @receiver_cell = FileReceiverCell.alloc.init
+    @receiver_cell = FileTransferCell.alloc.init
+    @receiver_cell.op = :receive
     @receiver_table.tableColumns[0].setDataCell(@receiver_cell)
-    @sender_cell = FileSenderCell.alloc.init
+    @sender_cell = FileTransferCell.alloc.init
+    @sender_cell.op = :send
     @sender_table.tableColumns[0].setDataCell(@sender_cell)
     @receivers.each do |r|
       if r.status == :receiving
@@ -131,7 +133,11 @@ class DccManager < OSX::NSObject
   def startSender(sender)
     sel = @sender_table.selectedRows
     sel = sel.map {|i| @senders[i]}
-    sel.each {|i| i.open}
+    sel.each {|i|
+      while !i.open
+        i.port += 1
+      end
+    }
     reload_sender_table
   end
   
@@ -167,12 +173,13 @@ class DccManager < OSX::NSObject
     c.icon = NSWorkspace.sharedWorkspace.iconForFileType(ext)
     @receivers.unshift(c)
     
-    c.open
+    #c.open
     reload_receiver_table
     show
   end
   
   def add_sender(uid, nick, file)
+    # @@@ hard coded
     port = 11111
     c = DccSender.new
     c.delegate = self
@@ -180,14 +187,14 @@ class DccManager < OSX::NSObject
     c.receiver_nick = nick
     c.full_filename = file
     c.port = port
-    while !c.open
-      port += 1
-      c.port = port
-    end
     ext = File.extname(c.filename)
     ext = $1 if /\A\.?(.+)\z/ =~ ext
     c.icon = NSWorkspace.sharedWorkspace.iconForFileType(ext)
     @senders.unshift(c)
+    while !c.open
+      c.port += 1
+    end
+    puts c.port
     
     reload_sender_table
     show
@@ -295,14 +302,14 @@ class DccManager < OSX::NSObject
   end
   
   def tableView_objectValueForTableColumn_row(sender, col, row)
-    if sender.__ocid__ == @receiver_table.__ocid__
+    if sender == @receiver_table
       i = @receivers[row.to_i]
       cell = col.dataCell
       cell.setStringValue(i.filename)
       cell.setHighlighted(@receiver_table.isRowSelected(row))
-      cell.sender_nick = i.sender_nick
+      cell.peer_nick = i.sender_nick
       cell.size = i.size
-      cell.received_size = i.received_size
+      cell.processed_size = i.received_size
       cell.speed = i.speed
       cell.time_remaining = i.speed > 0 ? (i.size - i.received_size) / i.speed : nil
       cell.status = i.status
@@ -315,9 +322,9 @@ class DccManager < OSX::NSObject
       cell = col.dataCell
       cell.setStringValue(i.filename)
       cell.setHighlighted(@sender_table.isRowSelected(row))
-      cell.receiver_nick = i.receiver_nick
+      cell.peer_nick = i.receiver_nick
       cell.size = i.size
-      cell.sent_size = i.sent_size
+      cell.processed_size = i.sent_size
       cell.speed = i.speed
       cell.time_remaining = i.speed > 0 ? (i.size - i.sent_size) / i.speed : nil
       cell.status = i.status
@@ -335,7 +342,7 @@ class DccManager < OSX::NSObject
   end
 
   def load_window_state
-    win = @pref.load('dcc_window')
+    win = @pref.load_window('dcc_window')
     if win
       f = NSRect.from_dic(win)
       @window.setFrame_display(f, true)
@@ -349,15 +356,15 @@ class DccManager < OSX::NSObject
     return unless @loaded
     win = @window.frame.to_dic
     win.merge! :split => @splitter.position
-    @pref.save('dcc_window', win)
+    @pref.save_window('dcc_window', win)
   end
 end
 
 
-class FileSenderCell < OSX::NSCell
+class FileTransferCell < OSX::NSCell
   include OSX
-  attr_accessor :receiver_nick, :sent_size, :size, :speed, :time_remaining, :status, :error
-  attr_accessor :progress_bar, :icon
+  attr_accessor :peer_nick, :processed_size, :size, :speed, :time_remaining, :status, :error
+  attr_accessor :progress_bar, :icon, :op
   
   FILENAME_HEIGHT = 20
   FILENAME_TOP_MARGIN = 1
@@ -432,126 +439,21 @@ class FileSenderCell < OSX::NSCell
           NSColor.grayColor
         end
     }
-    str = "To #{@receiver_nick}    "
+    str = "To #{@peer_nick}    "
     case @status
     when :waiting
       str += "#{fsize(@size)}"
-    when :sending
-      str += "#{fsize(@sent_size)} / #{fsize(@size)} (#{fsize(@speed)}/s)"
+    when :listening
+      str += "#{fsize(@size)}  -- Requesting"
+    when :sending,:receiving
+      str += "#{fsize(@processed_size)} / #{fsize(@size)} (#{fsize(@speed)}/s)"
       if @time_remaining
         str += "  -- #{ftime(@time_remaining)} remaining"
       end
     when :stop
-      str += "#{fsize(@sent_size)} / #{fsize(@size)}  -- Stopped"
+      str += "#{fsize(@processed_size)} / #{fsize(@size)}  -- Stopped"
     when :error
-      str += "#{fsize(@sent_size)} / #{fsize(@size)}  -- Error: #{@error}"
-    when :complete
-      str += "#{fsize(@size)}  -- Complete"
-    end
-    NSString.stringWithString(str).drawInRect_withAttributes(rect, attrs)
-  end
-  
-  def fsize(size)
-    NumberFormat.format_size(size)
-  end
-  
-  def ftime(sec)
-    NumberFormat.format_time(sec)
-  end
-end
-
-
-class FileReceiverCell < OSX::NSCell
-  include OSX
-  attr_accessor :sender_nick, :received_size, :size, :speed, :time_remaining, :status, :error
-  attr_accessor :progress_bar, :icon
-  
-  FILENAME_HEIGHT = 20
-  FILENAME_TOP_MARGIN = 1
-  PROGRESSBAR_HEIGHT = 12
-  STATUS_HEIGHT = 16
-  STATUS_TOP_MARGIN = 1
-  RIGHT_MARGIN = 10
-  IMAGE_SIZE = NSSize.new(32, 32)
-  
-  def drawInteriorWithFrame_inView(frame, view)
-    image = @icon
-    if image
-      size = IMAGE_SIZE
-      margin = (frame.size.height - size.height) / 2
-      pt = frame.origin.dup
-      pt.x += margin
-      pt.y += margin
-      pt.y += size.height if view.isFlipped
-      image.setSize(size)
-      image.compositeToPoint_operation(pt, NSCompositeSourceOver)
-      @icon = nil
-    end
-    
-    offset = !!@progress_bar ? 0 : PROGRESSBAR_HEIGHT / 3
-    
-    fname = self.stringValue
-    rect = frame.dup
-    rect.origin.x += rect.size.height
-    rect.origin.y += FILENAME_TOP_MARGIN + offset
-    rect.size.width -= rect.size.height + RIGHT_MARGIN
-    rect.size.height = FILENAME_HEIGHT - FILENAME_TOP_MARGIN
-    style = NSMutableParagraphStyle.alloc.init
-    style.setAlignment(NSLeftTextAlignment)
-    style.setLineBreakMode(NSLineBreakByTruncatingMiddle)
-    attrs = {
-      NSParagraphStyleAttributeName => style,
-      NSFontAttributeName => NSFont.fontWithName_size('Helvetica', 12),
-      NSForegroundColorAttributeName => self.isHighlighted ? NSColor.whiteColor : NSColor.blackColor
-    }
-    fname.drawInRect_withAttributes(rect, attrs)
-
-    if @progress_bar
-      bar = @progress_bar
-      rect = frame.dup
-      rect.origin.x += rect.size.height
-      rect.origin.y += FILENAME_HEIGHT
-      rect.size.width -= rect.size.height + RIGHT_MARGIN
-      rect.size.height = PROGRESSBAR_HEIGHT
-      bar.setFrame(rect)
-    end
-    @progress_bar = nil
-    
-    rect = frame.dup
-    rect.origin.x += rect.size.height
-    rect.origin.y += FILENAME_HEIGHT + PROGRESSBAR_HEIGHT + STATUS_TOP_MARGIN - offset
-    rect.size.width -= rect.size.height + RIGHT_MARGIN
-    rect.size.height = STATUS_HEIGHT - STATUS_TOP_MARGIN
-    style = NSMutableParagraphStyle.alloc.init
-    style.setAlignment(NSLeftTextAlignment)
-    style.setLineBreakMode(NSLineBreakByTruncatingTail)
-    attrs = {
-      NSParagraphStyleAttributeName => style,
-      NSFontAttributeName => NSFont.fontWithName_size('Helvetica', 11),
-      NSForegroundColorAttributeName =>
-        if @status == :error
-          NSColor.redColor
-        elsif @status == :complete
-          NSColor.blueColor
-        elsif self.isHighlighted
-          NSColor.whiteColor
-        else
-          NSColor.grayColor
-        end
-    }
-    str = "From #{@sender_nick}    "
-    case @status
-    when :waiting
-      str += "#{fsize(@size)}"
-    when :receiving
-      str += "#{fsize(@received_size)} / #{fsize(@size)} (#{fsize(@speed)}/s)"
-      if @time_remaining
-        str += "  -- #{ftime(@time_remaining)} remaining"
-      end
-    when :stop
-      str += "#{fsize(@received_size)} / #{fsize(@size)}  -- Stopped"
-    when :error
-      str += "#{fsize(@received_size)} / #{fsize(@size)}  -- Error: #{@error}"
+      str += "#{fsize(@processed_size)} / #{fsize(@size)}  -- Error: #{@error}"
     when :complete
       str += "#{fsize(@size)}  -- Complete"
     end

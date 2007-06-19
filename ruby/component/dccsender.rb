@@ -108,7 +108,7 @@ class DccSender
   private
   
   BUFSIZE = 1024 * 64
-  RATE_LIMIT = 1024 * 1024
+  RATE_LIMIT = 1024 * 1024 * 3
   
   def send
     return if @status == :complete

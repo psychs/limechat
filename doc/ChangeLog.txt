@@ -1,5 +1,10 @@
 2007-06-19  Satoshi Nakagawa <artension@gmail.com>
 
+	Unified cells into one class on the DCC dialog.
+	Reformed preference loading and saving.
+
+2007-06-19  Satoshi Nakagawa <artension@gmail.com>
+
 	Fixed a bug, cannot paste on dialogs.
 
 2007-06-19  Satoshi Nakagawa <artension@gmail.com>

@@ -13,19 +13,19 @@ class Preferences
   end
   
   def load_world
-    load('world')
+    read('world')
   end
   
   def save_world(c)
-    save('world', c)
+    write('world', c)
   end
   
-  def load(key)
-    convert(NSUserDefaults.standardUserDefaults.objectForKey(key))
+  def load_window(key)
+    read(key)
   end
   
-  def save(key, value)
-    NSUserDefaults.standardUserDefaults.setObject_forKey(value, key)
+  def save_window(key, value)
+    write(key, value)
   end
   
   def sync
@@ -34,6 +34,14 @@ class Preferences
   
   
   private
+
+  def read(key)
+    convert(NSUserDefaults.standardUserDefaults.objectForKey(key))
+  end
+  
+  def write(key, value)
+    NSUserDefaults.standardUserDefaults.setObject_forKey(value, key)
+  end
   
   def convert(v)
     return v if v == nil || v == false || v == true
