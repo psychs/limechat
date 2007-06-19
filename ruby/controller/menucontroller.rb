@@ -139,11 +139,13 @@ class MenuController < OSX::NSObject
   end
   
   def onPaste(sender)
-    t = @window.firstResponder
+    win = NSApp.keyWindow
+    return unless win
+    t = win.firstResponder
     return unless t
-    if t.class.name.to_s == 'OSX::WebHTMLView'
+    if win == @window && t.class.name.to_s == 'OSX::WebHTMLView'
       @world.select_text
-      editor = @window.fieldEditor_forObject(false, @text)
+      editor = win.fieldEditor_forObject(false, @text)
       editor.paste(sender) if editor
     elsif t.respondsToSelector('paste:')
       t.paste(sender) if !t.respondsToSelector('validateMenuItem:') || t.validateMenuItem(sender)
