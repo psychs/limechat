@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>doc/ChangeLog.txt</string>
+	<string>ruby/dcc/dccmanager.rb</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -21,54 +21,39 @@
 	<integer>261</integer>
 	<key>metaData</key>
 	<dict>
-		<key>doc/ChangeLog.txt</key>
+		<key>ruby/controller/appcontroller.rb</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>13</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>2</integer>
+				<integer>0</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>224</integer>
 		</dict>
-		<key>objc/LogEventSinkBase.h</key>
+		<key>ruby/dcc/dccmanager.rb</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>11</integer>
+				<integer>30</integer>
 				<key>line</key>
-				<integer>10</integer>
+				<integer>304</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>objc/LogEventSinkBase.m</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>11</integer>
-				<key>line</key>
-				<integer>39</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>156</integer>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>objc/LogEventSinkBase.h</string>
-		<string>objc/LogEventSinkBase.m</string>
-		<string>doc/ChangeLog.txt</string>
+		<string>ruby/controller/appcontroller.rb</string>
+		<string>ruby/dcc/dccmanager.rb</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>

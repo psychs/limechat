@@ -356,23 +356,22 @@ class FileTransferCell < OSX::NSCell
   STATUS_HEIGHT = 16
   STATUS_TOP_MARGIN = 1
   RIGHT_MARGIN = 10
-  IMAGE_SIZE = NSSize.new(32, 32)
+  ICON_SIZE = NSSize.new(32, 32)
   
   def drawInteriorWithFrame_inView(frame, view)
-    image = @icon
-    if image
-      size = IMAGE_SIZE
+    if @icon
+      size = ICON_SIZE
       margin = (frame.size.height - size.height) / 2
       pt = frame.origin.dup
       pt.x += margin
       pt.y += margin
       pt.y += size.height if view.isFlipped
-      image.setSize(size)
-      image.compositeToPoint_operation(pt, NSCompositeSourceOver)
+      @icon.setSize(size)
+      @icon.compositeToPoint_operation(pt, NSCompositeSourceOver)
       @icon = nil
     end
     
-    offset = !!@progress_bar ? 0 : PROGRESSBAR_HEIGHT / 3
+    offset = @progress_bar ? 0 : PROGRESSBAR_HEIGHT / 3
     
     fname = self.stringValue
     rect = frame.dup
@@ -398,8 +397,8 @@ class FileTransferCell < OSX::NSCell
       rect.size.width -= rect.size.height + RIGHT_MARGIN
       rect.size.height = PROGRESSBAR_HEIGHT
       bar.setFrame(rect)
+      @progress_bar = nil
     end
-    @progress_bar = nil
     
     rect = frame.dup
     rect.origin.x += rect.size.height
@@ -423,11 +422,13 @@ class FileTransferCell < OSX::NSCell
           NSColor.grayColor
         end
     }
+    
     if @op == :send
       str = "To #{@peer_nick}    "
     else
       str = "From #{@peer_nick}    "
     end
+    
     case @status
     when :waiting
       str += "#{fsize(@size)}"
@@ -445,6 +446,7 @@ class FileTransferCell < OSX::NSCell
     when :complete
       str += "#{fsize(@size)}  -- Complete"
     end
+    
     NSString.stringWithString(str).drawInRect_withAttributes(rect, attrs)
   end
   
