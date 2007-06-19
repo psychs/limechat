@@ -1,0 +1,13 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {onCancel = id; onOk = id; }; 
+            CLASS = PreferenceDialog; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {"dcc_first_port" = id; "dcc_last_port" = id; window = id; }; 
+            SUPERCLASS = NSObject; 
+        }
+    ); 
+    IBVersion = 1; 
+}

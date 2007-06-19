@@ -9,6 +9,7 @@ class AppController < OSX::NSObject
   
   def awakeFromNib
     @pref = Preferences.new
+    @pref.load
     
     @window.key_delegate = self
     @text.setFocusRingType(NSFocusRingTypeNone)
@@ -59,9 +60,6 @@ class AppController < OSX::NSObject
     @dcc.pref = @pref
     @dcc.world = @world
     @world.dcc = @dcc
-    
-    @pref.load
-    #@pref.save
   end
   
   def applicationDidFinishLaunching(sender)

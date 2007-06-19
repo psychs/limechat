@@ -57,6 +57,8 @@
 		78229BEB0C288188001DD4C3 /* tableprogressindicator.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BBF0C288188001DD4C3 /* tableprogressindicator.rb */; };
 		78229BEC0C288188001DD4C3 /* treeview.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BC00C288188001DD4C3 /* treeview.rb */; };
 		78229BED0C288188001DD4C3 /* unitnamecell.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BC10C288188001DD4C3 /* unitnamecell.rb */; };
+		78496EFA0C288B070084A836 /* PreferenceDialog.nib in Resources */ = {isa = PBXBuildFile; fileRef = 78496EF80C288B070084A836 /* PreferenceDialog.nib */; };
+		78496EFD0C2890200084A836 /* preferencedialog.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78496EFC0C2890200084A836 /* preferencedialog.rb */; };
 		7867EA4B0C227AD40017B510 /* NickSheet.nib in Resources */ = {isa = PBXBuildFile; fileRef = 7867EA490C227AD40017B510 /* NickSheet.nib */; };
 		78BF64AB0C2885E2004451B2 /* channel.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78BF64A30C2885E2004451B2 /* channel.rb */; };
 		78BF64AC0C2885E2004451B2 /* channelmode.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78BF64A40C2885E2004451B2 /* channelmode.rb */; };
@@ -139,6 +141,8 @@
 		78229BC10C288188001DD4C3 /* unitnamecell.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = unitnamecell.rb; sourceTree = "<group>"; };
 		783A3AA60BC8CB2000FD455A /* Splitter.h */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = sourcecode.c.h; name = Splitter.h; path = objc/Splitter.h; sourceTree = "<group>"; };
 		783A3AA70BC8CB2000FD455A /* Splitter.m */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = sourcecode.c.objc; name = Splitter.m; path = objc/Splitter.m; sourceTree = "<group>"; };
+		78496EF90C288B070084A836 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/PreferenceDialog.nib; sourceTree = "<group>"; };
+		78496EFC0C2890200084A836 /* preferencedialog.rb */ = {isa = PBXFileReference; fileEncoding = "-2147483647"; lastKnownFileType = text.script.ruby; path = preferencedialog.rb; sourceTree = "<group>"; };
 		7867EA4A0C227AD40017B510 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/NickSheet.nib; sourceTree = "<group>"; };
 		786926F20BB6EC1B0081019B /* AsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = sourcecode.c.h; name = AsyncSocket.h; path = objc/AsyncSocket.h; sourceTree = "<group>"; };
 		786926F30BB6EC1B0081019B /* AsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = sourcecode.c.objc; name = AsyncSocket.m; path = objc/AsyncSocket.m; sourceTree = "<group>"; };
@@ -250,6 +254,7 @@
 				7817A0380BF6FFCD005C7737 /* DccDialog.nib */,
 				78A86AD90BFFD87500E28592 /* WhoisDialog.nib */,
 				7867EA490C227AD40017B510 /* NickSheet.nib */,
+				78496EF80C288B070084A836 /* PreferenceDialog.nib */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -301,6 +306,7 @@
 		78229BA00C288188001DD4C3 /* dialog */ = {
 			isa = PBXGroup;
 			children = (
+				78496EFC0C2890200084A836 /* preferencedialog.rb */,
 				78229BA10C288188001DD4C3 /* channeldialog.rb */,
 				78229BA20C288188001DD4C3 /* commentsheet.rb */,
 				78229BA30C288188001DD4C3 /* modesheet.rb */,
@@ -482,6 +488,8 @@
 				78BF64B00C2885E2004451B2 /* user.rb in Resources */,
 				78BF64B10C2885E2004451B2 /* usermode.rb in Resources */,
 				78BF64B20C2885E2004451B2 /* world.rb in Resources */,
+				78496EFA0C288B070084A836 /* PreferenceDialog.nib in Resources */,
+				78496EFD0C2890200084A836 /* preferencedialog.rb in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -549,6 +557,14 @@
 				781E254C0BE9E8E20040F56E /* English */,
 			);
 			name = ModeSheet.nib;
+			sourceTree = "<group>";
+		};
+		78496EF80C288B070084A836 /* PreferenceDialog.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				78496EF90C288B070084A836 /* English */,
+			);
+			name = PreferenceDialog.nib;
 			sourceTree = "<group>";
 		};
 		7867EA490C227AD40017B510 /* NickSheet.nib */ = {

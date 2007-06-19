@@ -1,5 +1,9 @@
 2007-06-20  Satoshi Nakagawa <artension@gmail.com>
 
+	Added preferences dialog.
+
+2007-06-20  Satoshi Nakagawa <artension@gmail.com>
+
 	Refactoring.
 
 2007-06-19  Satoshi Nakagawa <artension@gmail.com>

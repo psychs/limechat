@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>ruby/dcc/dccmanager.rb</string>
+	<string>doc/ChangeLog.txt</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -21,43 +21,44 @@
 	<integer>261</integer>
 	<key>metaData</key>
 	<dict>
-		<key>ruby/controller/appcontroller.rb</key>
+		<key>doc/ChangeLog.txt</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>1</integer>
 				<key>line</key>
-				<integer>0</integer>
+				<integer>2</integer>
 			</dict>
+			<key>columnSelection</key>
+			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>224</integer>
-		</dict>
-		<key>ruby/dcc/dccmanager.rb</key>
-		<dict>
-			<key>caret</key>
+			<integer>0</integer>
+			<key>selectFrom</key>
 			<dict>
 				<key>column</key>
-				<integer>30</integer>
+				<integer>26</integer>
 				<key>line</key>
-				<integer>304</integer>
+				<integer>2</integer>
 			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>156</integer>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>1</integer>
+				<key>line</key>
+				<integer>2</integer>
+			</dict>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>ruby/controller/appcontroller.rb</string>
-		<string>ruby/dcc/dccmanager.rb</string>
+		<string>doc/ChangeLog.txt</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{581, 68}, {957, 1103}}</string>
+	<string>{{617, 78}, {1050, 1089}}</string>
 </dict>
 </plist>

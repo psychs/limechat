@@ -17,7 +17,7 @@ module PersistenceHelper
 
   def set_persistent_attrs(hash)
     return unless hash
-    return unless hash.empty?
+    return if hash.empty?
     return unless persistent_attrs
     persistent_attrs.each do |i|
       value = hash[i]

@@ -16,14 +16,14 @@ module DialogHelper
     receiver.extend(DialogHelperClassMethods)
   end
   
-  def load_mapped_outlets(model)
+  def load_mapped_outlets(model, nest=false)
     return unless mapped_outlets
-    mapped_outlets.each {|i| load_outlet_value(i, model) }
+    mapped_outlets.each {|i| load_outlet_value(i, model, nest) }
   end
   
-  def save_mapped_outlets(model)
+  def save_mapped_outlets(model, nest=false)
     return unless mapped_outlets
-    mapped_outlets.each {|i| save_outlet_value(i, model) }
+    mapped_outlets.each {|i| save_outlet_value(i, model, nest) }
   end
   
   
@@ -49,9 +49,26 @@ module DialogHelper
     end
   end
   
-  def load_outlet_value(outlet, model)
+  def outlet_to_nested_slot(sym)
+    s = sym.to_s
+    if /^([a-zA-Z\d]+)_([a-zA-Z\d_]+)$/ =~ s
+      [$1, $2]
+    else
+      nil
+    end
+  end
+  
+  def load_outlet_value(outlet, model, nest)
     t = instance_variable_get('@' + outlet.to_s)
-    v = model.__send__(outlet_to_slot(outlet))
+    if nest
+      category, slot = outlet_to_nested_slot(outlet)
+      raise ArgumentError unless category && slot
+      obj = model.__send__(category)
+      v = obj.__send__(slot)
+    else
+      v = model.__send__(outlet_to_slot(outlet))
+    end
+    
     case t.class.to_s
     when 'OSX::NSTextField','OSX::NSComboBox'
       t.setStringValue(v)
@@ -62,9 +79,17 @@ module DialogHelper
     end
   end
   
-  def save_outlet_value(outlet, model)
+  def save_outlet_value(outlet, model, nest)
     t = instance_variable_get('@' + outlet.to_s)
-    method = outlet_to_slot(outlet) + '='
+    if nest
+      category, slot = outlet_to_nested_slot(outlet)
+      raise ArgumentError unless category && slot
+      model = model.__send__(category)
+      method = slot + '='
+    else
+      method = outlet_to_slot(outlet) + '='
+    end
+    
     case t.class.to_s
     when 'OSX::NSTextField','OSX::NSComboBox'
       model.__send__(method, t.stringValue.to_s)

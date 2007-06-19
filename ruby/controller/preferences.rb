@@ -27,10 +27,10 @@ class Preferences
   
   class Dcc
     include PersistenceHelper
-    persistent_attr :port_begin, :port_end, :addr_method
+    persistent_attr :first_port, :last_port, :addr_method
     def initialize
-      @port_begin = 1096
-      @port_end = 1115
+      @first_port = 1096
+      @last_port = 1115
       @addr_method = 'nic'
     end
   end

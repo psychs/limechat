@@ -33,6 +33,8 @@ class MenuController < OSX::NSObject
     op = active_channel && c.op?
     
     case i.tag
+    when 102  # preferences
+      true
     when 201  # dcc
       true
     when 313  # paste
@@ -131,6 +133,28 @@ class MenuController < OSX::NSObject
     else
       nil
     end
+  end
+  
+  
+  def onPreferences(sender)
+    unless @pref_dialog
+      @pref_dialog = PreferenceDialog.alloc.init
+      @pref_dialog.delegate = self
+      @pref_dialog.start(@pref)
+    else
+      @pref_dialog.show
+    end
+  end
+  
+  def preferenceDialog_onOk(sender, m)
+    puts 'ok'
+    @pref.save
+    @pref.sync
+  end
+  
+  def preferenceDialog_onClose(sender)
+    puts 'close'
+    @pref_dialog = nil
   end
   
   
