@@ -59,6 +59,9 @@ class AppController < OSX::NSObject
     @dcc.pref = @pref
     @dcc.world = @world
     @world.dcc = @dcc
+    
+    @pref.load
+    #@pref.save
   end
   
   def applicationDidFinishLaunching(sender)
@@ -98,16 +101,13 @@ class AppController < OSX::NSObject
   end
       
   def load_window_state
-    win = @pref.load_window('window')
+    win = @pref.load_window('main_window')
     if win
       f = NSRect.from_dic(win)
       @window.setFrame_display(f, true)
-    end
-    split = @pref.load_window('splitter')
-    if split
-      @root_split.setPosition(split[:root])
-      @log_split.setPosition(split[:log])
-      @info_split.setPosition(split[:info])
+      @root_split.setPosition(win[:root])
+      @log_split.setPosition(win[:log])
+      @info_split.setPosition(win[:info])
     else
       @root_split.setPosition(150.0)
       @log_split.setPosition(150.0)
@@ -116,13 +116,14 @@ class AppController < OSX::NSObject
   end
   
   def save_window_state
-    @pref.save_window('window', @window.frame.to_dic)
+    win = @window.frame.to_dic
     split = {
       :root => @root_split.position,
       :log => @log_split.position,
       :info => @info_split.position,
     }
-    @pref.save_window('splitter', split)
+    win.merge!(split)
+    @pref.save_window('main_window', win)
   end
   
   def textEntered(sender)

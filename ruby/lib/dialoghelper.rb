@@ -2,7 +2,7 @@
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
 module DialogHelper
-  module ClassMethods
+  module DialogHelperClassMethods
     attr_reader :mapped_outlets
 
     def ib_mapped_outlet(*args)
@@ -13,7 +13,7 @@ module DialogHelper
   end
   
   def self.included(receiver)
-    receiver.extend(ClassMethods)
+    receiver.extend(DialogHelperClassMethods)
   end
   
   def load_mapped_outlets(model)
