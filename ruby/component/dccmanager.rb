@@ -161,7 +161,7 @@ class DccManager < OSX::NSObject
     c = DccReceiver.new
     c.delegate = self
     c.uid = uid
-    c.sender_nick = nick
+    c.peer_nick = nick
     c.host = host
     c.port = port
     c.path = path
@@ -184,7 +184,7 @@ class DccManager < OSX::NSObject
     c = DccSender.new
     c.delegate = self
     c.uid = uid
-    c.receiver_nick = nick
+    c.peer_nick = nick
     c.full_filename = file
     c.port = port
     ext = File.extname(c.filename)
@@ -241,7 +241,7 @@ class DccManager < OSX::NSObject
       bar.setIndeterminate(false)
       bar.setMinValue(0)
       bar.setMaxValue(sender.size)
-      bar.setDoubleValue(sender.received_size)
+      bar.setDoubleValue(sender.processed_size)
       @receiver_table.addSubview(bar)
       sender.progress_bar = bar
       reload_receiver_table
@@ -262,7 +262,7 @@ class DccManager < OSX::NSObject
   def dccsender_on_listen(s)
     u = @world.find_unit_by_id(s.uid)
     return unless u
-    u.send_file(s.receiver_nick, s.port, s.filename, s.size)
+    u.send_file(s.peer_nick, s.port, s.filename, s.size)
   end
   
   def dccsender_on_connect(sender)
@@ -273,7 +273,7 @@ class DccManager < OSX::NSObject
       bar.setIndeterminate(false)
       bar.setMinValue(0)
       bar.setMaxValue(sender.size)
-      bar.setDoubleValue(sender.sent_size)
+      bar.setDoubleValue(sender.processed_size)
       @sender_table.addSubview(bar)
       sender.progress_bar = bar
       reload_sender_table
@@ -294,7 +294,7 @@ class DccManager < OSX::NSObject
   # table
   
   def numberOfRowsInTableView(sender)
-    if sender.__ocid__ == @receiver_table.__ocid__
+    if sender == @receiver_table
       @receivers.length
     else
       @senders.length
@@ -302,37 +302,21 @@ class DccManager < OSX::NSObject
   end
   
   def tableView_objectValueForTableColumn_row(sender, col, row)
-    if sender == @receiver_table
-      i = @receivers[row.to_i]
-      cell = col.dataCell
-      cell.setStringValue(i.filename)
-      cell.setHighlighted(@receiver_table.isRowSelected(row))
-      cell.peer_nick = i.sender_nick
-      cell.size = i.size
-      cell.processed_size = i.received_size
-      cell.speed = i.speed
-      cell.time_remaining = i.speed > 0 ? (i.size - i.received_size) / i.speed : nil
-      cell.status = i.status
-      cell.error = i.error
-      cell.icon = i.icon
-      cell.progress_bar = i.progress_bar
-      i.filename
-    else
-      i = @senders[row.to_i]
-      cell = col.dataCell
-      cell.setStringValue(i.filename)
-      cell.setHighlighted(@sender_table.isRowSelected(row))
-      cell.peer_nick = i.receiver_nick
-      cell.size = i.size
-      cell.processed_size = i.sent_size
-      cell.speed = i.speed
-      cell.time_remaining = i.speed > 0 ? (i.size - i.sent_size) / i.speed : nil
-      cell.status = i.status
-      cell.error = i.error
-      cell.icon = i.icon
-      cell.progress_bar = i.progress_bar
-      i.filename
-    end
+    list = sender == @receiver_table ? @receivers : @senders
+    i = list[row.to_i]
+    cell = col.dataCell
+    cell.setStringValue(i.filename)
+    cell.setHighlighted(sender.isRowSelected(row))
+    cell.peer_nick = i.peer_nick
+    cell.size = i.size
+    cell.processed_size = i.processed_size
+    cell.speed = i.speed
+    cell.time_remaining = i.speed > 0 ? (i.size - i.processed_size) / i.speed : nil
+    cell.status = i.status
+    cell.error = i.error
+    cell.icon = i.icon
+    cell.progress_bar = i.progress_bar
+    i.filename
   end
   
   # window
@@ -439,7 +423,11 @@ class FileTransferCell < OSX::NSCell
           NSColor.grayColor
         end
     }
-    str = "To #{@peer_nick}    "
+    if @op == :send
+      str = "To #{@peer_nick}    "
+    else
+      str = "From #{@peer_nick}    "
+    end
     case @status
     when :waiting
       str += "#{fsize(@size)}"

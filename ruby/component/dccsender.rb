@@ -2,16 +2,22 @@
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
 class DccSender
-  attr_accessor :delegate, :uid, :receiver_nick
+  attr_accessor :delegate, :uid, :peer_nick
   attr_accessor :port
-  attr_reader :full_filename, :filename, :size, :sent_size, :status, :error
+  attr_reader :full_filename, :filename, :size, :processed_size, :status, :error
   attr_accessor :progress_bar, :icon
   
+	# SS_WAIT, SS_ERROR, SS_STOP, SS_WAITSTART, SS_WAITLISTEN,
+	# SS_READY, SS_SEND, SS_COMPLETE
+	
+	# waiting, error, stop
+	# listening, sending, complete
+
   RECORDS_LEN = 10
   
   def initialize
     @version = 0
-    @size = @sent_size = 0
+    @size = @processed_size = 0
     @status = :waiting
     @records = []
     @rec = 0
@@ -42,7 +48,7 @@ class DccSender
     @status = :listening
     open_file
     return false unless @file
-    @sent_size = 0
+    @processed_size = 0
     @delegate.dccsender_on_listen(self)
     true
   end
@@ -115,17 +121,17 @@ class DccSender
     return unless @c
     loop do
       return if @rec >= RATE_LIMIT
-      if @sent_size >= @size
+      if @processed_size >= @size
         @status = :complete
         close_file
         return
       end
       s = @file.read(BUFSIZE)
       len = s.length
-      @sent_size += len
+      @processed_size += len
       @rec += len
       @c.write(s)
-      @progress_bar.setDoubleValue(@sent_size)
+      @progress_bar.setDoubleValue(@processed_size)
       @progress_bar.setNeedsDisplay(true)
     end
   end

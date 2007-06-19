@@ -426,7 +426,8 @@ class IRCUnit < OSX::NSObject
     addr = addr.to_a.map {|i| i.to_s}
     @myaddress = addr[0]
     # @@@ for debug
-    @myaddress = '192.168.5.51'
+    #@myaddress = '192.168.5.51'
+    @myaddress = '192.168.1.3'
   end
   
   

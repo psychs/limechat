@@ -4,9 +4,9 @@
 require 'utility'
 
 class DccReceiver
-  attr_accessor :delegate, :uid, :sender_nick
+  attr_accessor :delegate, :uid, :peer_nick
   attr_accessor :host, :port, :filename, :size, :version
-  attr_reader :path, :received_size, :status, :error, :download_filename
+  attr_reader :path, :processed_size, :status, :error, :download_filename
   attr_accessor :progress_bar, :icon
   
   # RS_WAIT, RS_ERROR, RS_STOP, RS_WAITSTART, RS_WAITCONNECT, 
@@ -20,7 +20,7 @@ class DccReceiver
   def initialize
     @version = 0
     @size = 0
-    @received_size = 0
+    @processed_size = 0
     @status = :waiting
     @records = []
     @rec = 0
@@ -58,7 +58,7 @@ class DccReceiver
   
   
   def tcpclient_on_connect(sender)
-    @received_size = 0
+    @processed_size = 0
     @status = :receiving
     open_file
     @delegate.dccreceiver_on_open(self)
@@ -81,21 +81,21 @@ class DccReceiver
   
   def tcpclient_on_read(sender)
     s = @sock.read
-    @received_size += s.length
+    @processed_size += s.length
     @rec += s.length
     until s.empty? do
       n = @file.write(s)
       s[0...n] = '' if n > 0
     end
     if @version < 2
-      rsize = @received_size & 0xffffffff
+      rsize = @processed_size & 0xffffffff
       ack = sprintf("%c%c%c%c", (rsize >> 24) & 0xff, (rsize >> 16) & 0xff, (rsize >> 8) & 0xff, rsize & 0xff)
       @sock.write(ack)
     end
     
-    @progress_bar.setDoubleValue(@received_size)
+    @progress_bar.setDoubleValue(@processed_size)
     @progress_bar.setNeedsDisplay(true)
-    if @received_size >= @size
+    if @processed_size >= @size
       @status = :complete
       close
       @delegate.dccreceiver_on_change(self)
