@@ -4,16 +4,10 @@
 #import "Splitter.h"
 
 @interface Splitter (Private)
-- (void)setup;
 - (void)updatePosition;
 @end
 
 @implementation Splitter (Private)
-
-- (void)setup
-{
-//  [self setDelegate:self];
-}
 
 - (void)updatePosition
 {
@@ -29,14 +23,12 @@
 - (id)initWithFrame:(NSRect)frame
 {
   self = [super initWithFrame:frame];
-  [self setup];
   return self;
 }
 
 - (id)initWithCoder:(NSCoder*)coder
 {
   self = [super initWithCoder:coder];
-  [self setup];
   return self;
 }
 
