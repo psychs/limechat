@@ -162,6 +162,9 @@ class DccManager < OSX::NSObject
     c.filename = fname
     c.size = size
     c.version = ver
+    ext = File.extname(c.filename)
+    ext = $1 if /\A\.?(.+)\z/ =~ ext
+    c.icon = NSWorkspace.sharedWorkspace.iconForFileType(ext)
     @receivers.unshift(c)
     
     c.open
@@ -176,12 +179,15 @@ class DccManager < OSX::NSObject
     c.uid = uid
     c.receiver_nick = nick
     c.full_filename = file
-    @senders.unshift(c)
     c.port = port
     while !c.open
       port += 1
       c.port = port
     end
+    ext = File.extname(c.filename)
+    ext = $1 if /\A\.?(.+)\z/ =~ ext
+    c.icon = NSWorkspace.sharedWorkspace.iconForFileType(ext)
+    @senders.unshift(c)
     
     reload_sender_table
     show
@@ -241,7 +247,6 @@ class DccManager < OSX::NSObject
     if bar
       sender.progress_bar = nil
       bar.removeFromSuperview
-      reload_receiver_table
     end
     reload_receiver_table
   end
@@ -254,7 +259,6 @@ class DccManager < OSX::NSObject
   end
   
   def dccsender_on_connect(sender)
-    puts '*** dccsender_on_connect'
     return unless @loaded
     unless sender.progress_bar
       bar = TableProgressIndicator.alloc.init
@@ -270,13 +274,11 @@ class DccManager < OSX::NSObject
   end
   
   def dccsender_on_close(sender)
-    puts '*** dccsender_on_close'
     return unless @loaded
     bar = sender.progress_bar
     if bar
       sender.progress_bar = nil
       bar.removeFromSuperview
-      reload_receiver_table
     end
     reload_sender_table
   end
@@ -305,10 +307,7 @@ class DccManager < OSX::NSObject
       cell.time_remaining = i.speed > 0 ? (i.size - i.received_size) / i.speed : nil
       cell.status = i.status
       cell.error = i.error
-      
-      ext = File.extname(i.filename)
-      ext = $1 if /\A\.?(.+)\z/ =~ ext
-      cell.setImage(NSWorkspace.sharedWorkspace.iconForFileType(ext))
+      cell.icon = i.icon
       cell.progress_bar = i.progress_bar
       i.filename
     else
@@ -323,10 +322,7 @@ class DccManager < OSX::NSObject
       cell.time_remaining = i.speed > 0 ? (i.size - i.sent_size) / i.speed : nil
       cell.status = i.status
       cell.error = i.error
-      
-      ext = File.extname(i.filename)
-      ext = $1 if /\A\.?(.+)\z/ =~ ext
-      cell.setImage(NSWorkspace.sharedWorkspace.iconForFileType(ext))
+      cell.icon = i.icon
       cell.progress_bar = i.progress_bar
       i.filename
     end
@@ -361,7 +357,7 @@ end
 class FileSenderCell < OSX::NSCell
   include OSX
   attr_accessor :receiver_nick, :sent_size, :size, :speed, :time_remaining, :status, :error
-  attr_accessor :progress_bar
+  attr_accessor :progress_bar, :icon
   
   FILENAME_HEIGHT = 20
   FILENAME_TOP_MARGIN = 1
@@ -372,7 +368,7 @@ class FileSenderCell < OSX::NSCell
   IMAGE_SIZE = NSSize.new(32, 32)
   
   def drawInteriorWithFrame_inView(frame, view)
-    image = self.image
+    image = @icon
     if image
       size = IMAGE_SIZE
       margin = (frame.size.height - size.height) / 2
@@ -382,6 +378,7 @@ class FileSenderCell < OSX::NSCell
       pt.y += size.height if view.isFlipped
       image.setSize(size)
       image.compositeToPoint_operation(pt, NSCompositeSourceOver)
+      @icon = nil
     end
     
     offset = !!@progress_bar ? 0 : PROGRESSBAR_HEIGHT / 3
@@ -467,7 +464,7 @@ end
 class FileReceiverCell < OSX::NSCell
   include OSX
   attr_accessor :sender_nick, :received_size, :size, :speed, :time_remaining, :status, :error
-  attr_accessor :progress_bar
+  attr_accessor :progress_bar, :icon
   
   FILENAME_HEIGHT = 20
   FILENAME_TOP_MARGIN = 1
@@ -478,7 +475,7 @@ class FileReceiverCell < OSX::NSCell
   IMAGE_SIZE = NSSize.new(32, 32)
   
   def drawInteriorWithFrame_inView(frame, view)
-    image = self.image
+    image = @icon
     if image
       size = IMAGE_SIZE
       margin = (frame.size.height - size.height) / 2
@@ -488,6 +485,7 @@ class FileReceiverCell < OSX::NSCell
       pt.y += size.height if view.isFlipped
       image.setSize(size)
       image.compositeToPoint_operation(pt, NSCompositeSourceOver)
+      @icon = nil
     end
     
     offset = !!@progress_bar ? 0 : PROGRESSBAR_HEIGHT / 3

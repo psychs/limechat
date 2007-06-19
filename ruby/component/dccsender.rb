@@ -5,7 +5,7 @@ class DccSender
   attr_accessor :delegate, :uid, :receiver_nick
   attr_accessor :port
   attr_reader :full_filename, :filename, :size, :sent_size, :status, :error
-  attr_accessor :progress_bar
+  attr_accessor :progress_bar, :icon
   
   RECORDS_LEN = 10
   
@@ -69,12 +69,17 @@ class DccSender
   end
   
   def tcpserver_on_error(sender, c, err)
-    puts '*** error'
-    puts err
+    @status = :error
+    @error = err
+    close
+    @delegate.dccsender_on_change(self)
   end
   
   def tcpserver_on_disconnect(sender, c)
-    puts '*** disconnect'
+    @status = :error
+    @error = 'Disconnected'
+    close
+    @delegate.dccsender_on_change(self)
   end
   
   def tcpserver_on_read(sender, c)
@@ -133,6 +138,7 @@ class DccSender
       @status = :error
       @error = 'Could not open file'
       close
+      @delegate.dccsender_on_change(self)
     end
   end
   

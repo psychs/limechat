@@ -1,5 +1,9 @@
 2007-06-19  Satoshi Nakagawa <artension@gmail.com>
 
+	Fixed locked Image deallocation bug.
+
+2007-06-19  Satoshi Nakagawa <artension@gmail.com>
+
 	Added clear button on DCC dialog.
 
 2007-06-19  Satoshi Nakagawa <artension@gmail.com>

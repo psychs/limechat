@@ -7,7 +7,7 @@ class DccReceiver
   attr_accessor :delegate, :uid, :sender_nick
   attr_accessor :host, :port, :filename, :size, :version
   attr_reader :path, :received_size, :status, :error, :download_filename
-  attr_accessor :progress_bar
+  attr_accessor :progress_bar, :icon
   
   # RS_WAIT, RS_ERROR, RS_STOP, RS_WAITSTART, RS_WAITCONNECT, 
   # RS_RESUME, RS_RECEIVE, RS_COMPLETE
@@ -87,6 +87,12 @@ class DccReceiver
       n = @file.write(s)
       s[0...n] = '' if n > 0
     end
+    if @version < 2
+      rsize = @received_size & 0xffffffff
+      ack = sprintf("%c%c%c%c", (rsize >> 24) & 0xff, (rsize >> 16) & 0xff, (rsize >> 8) & 0xff, rsize & 0xff)
+      @sock.write(ack)
+    end
+    
     @progress_bar.setDoubleValue(@received_size)
     @progress_bar.setNeedsDisplay(true)
     if @received_size >= @size
