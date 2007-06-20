@@ -5,9 +5,9 @@ class CommentSheet < OSX::NSObject
   include OSX
   include DialogHelper
   attr_accessor :window, :delegate, :prefix
+  attr_accessor :uid, :cid
   attr_reader :modal
   ib_outlet :sheet, :label, :text
-  attr_accessor :uid, :cid
   
   def initialize
     @prefix = 'commentSheet'

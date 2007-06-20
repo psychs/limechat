@@ -6,7 +6,6 @@ require 'dialoghelper'
 class PreferenceDialog < OSX::NSObject
   include OSX
   include DialogHelper
-  
   attr_accessor :delegate
   attr_reader :m
   ib_outlet :window

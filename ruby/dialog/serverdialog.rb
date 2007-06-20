@@ -5,14 +5,13 @@ require 'dialoghelper'
 
 class ServerDialog < OSX::NSObject
   include OSX
-  include DialogHelper
-  
+  include DialogHelper  
   attr_accessor :window
+  attr_accessor :delegate, :prefix
+  attr_reader :uid
   ib_mapped_outlet :nameText, :hostCombo, :portText, :passwordText, :nickText, :usernameText, :realnameText, :encodingCombo, :auto_connectCheck
   ib_outlet :leaveCommentText, :userinfoText, :invisibleCheck, :loosenNickLengthCheck, :nickLengthText
   ib_outlet :okButton
-  attr_accessor :delegate, :prefix
-  attr_reader :uid
   
   def initialize
     @prefix = 'serverDialog'

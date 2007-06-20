@@ -4,8 +4,7 @@
 require 'utility'
 
 class DccReceiver
-  attr_accessor :delegate, :uid, :peer_nick
-  attr_accessor :host, :port, :filename, :size, :version
+  attr_accessor :delegate, :uid, :peer_nick, :host, :port, :filename, :size, :version
   attr_reader :path, :processed_size, :status, :error, :download_filename
   attr_accessor :progress_bar, :icon
   

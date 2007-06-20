@@ -6,8 +6,8 @@ require 'numberformat'
 
 class DccManager < OSX::NSObject
   include OSX
-  ib_outlet :window, :splitter, :receiver_table, :sender_table, :clear_button
   attr_accessor :pref, :world
+  ib_outlet :window, :splitter, :receiver_table, :sender_table, :clear_button
   
   def initialize
     @receivers = []
@@ -133,7 +133,14 @@ class DccManager < OSX::NSObject
   def startSender(sender)
     sel = @sender_table.selectedRows
     sel = sel.map {|i| @senders[i]}
-    sel.each {|i| i.open}
+    sel.each do |i|
+      u = @world.find_unit_by_id(i.uid)
+      unless u && u.myaddress
+        i.set_address_error
+        next
+      end
+      i.open
+    end
     reload_sender_table
   end
   
@@ -185,6 +192,12 @@ class DccManager < OSX::NSObject
     ext = $1 if /\A\.?(.+)\z/ =~ ext
     c.icon = NSWorkspace.sharedWorkspace.iconForFileType(ext)
     @senders.unshift(c)
+    
+    u = @world.find_unit_by_id(uid)
+    unless u && u.myaddress
+      c.set_address_error
+      return
+    end
     c.open
     
     reload_sender_table

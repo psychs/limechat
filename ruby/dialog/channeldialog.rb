@@ -8,10 +8,10 @@ class ChannelDialog < OSX::NSObject
   include DialogHelper
   
   attr_accessor :window
-  ib_mapped_outlet :nameText, :passwordText, :modeText, :topicText, :auto_joinCheck, :keywordCheck, :unreadCheck, :consoleCheck
-  ib_outlet :okButton
   attr_accessor :delegate, :prefix
   attr_reader :uid, :cid
+  ib_mapped_outlet :nameText, :passwordText, :modeText, :topicText, :auto_joinCheck, :keywordCheck, :unreadCheck, :consoleCheck
+  ib_outlet :okButton
   
   def initialize
     @prefix = 'channelDialog'

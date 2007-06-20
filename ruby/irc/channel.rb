@@ -3,12 +3,11 @@
 
 class IRCChannel < OSX::NSObject
   include OSX
-  attr_accessor :unit, :id, :topic, :names_init
-  attr_accessor :log
+  attr_accessor :unit, :id, :topic, :names_init, :log
   attr_reader :config, :members, :mode
   attr_writer :op
-  attr_accessor :property_dialog
   attr_accessor :keyword, :unread, :newtalk
+  attr_accessor :property_dialog
   
   def initialize
     @topic = ''

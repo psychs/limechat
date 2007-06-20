@@ -240,11 +240,6 @@ class IRCUnit < OSX::NSObject
   end
   
   def send_file(nick, port, fname, size)
-    unless @myaddress
-      # @@@ error message
-      return
-    end
-    
     morph_fname = fname.gsub(/ /, '_')
     if /\A(\d+)\.(\d+)\.(\d+)\.(\d+)\z/ =~ @myaddress
       w, x, y, z = $1.to_i, $2.to_i, $3.to_i, $4.to_i
@@ -256,6 +251,7 @@ class IRCUnit < OSX::NSObject
       addr = @myaddress
     end
     send_ctcp_query(nick, 'DCC SEND', "#{morph_fname} #{addr} #{port} #{size} 2 :#{fname}")
+    print_both(self, :dcc_send_send, "*Trying file transfer to #{nick}, #{fname} (#{size.grouped_by_comma} bytes) #{@myaddress}:#{port}")
   end
   
   def send_ctcp_query(target, cmd, body)
@@ -341,7 +337,9 @@ class IRCUnit < OSX::NSObject
   end
 
   def preferences_changed
-    if @address_detection_method != @pref.dcc.address_detection_method
+    if @address_detection_method == Preferences::Dcc::ADDR_DETECT_SPECIFY
+      Resolver.resolve(self, @pref.dcc.myaddress)
+    elsif @address_detection_method != @pref.dcc.address_detection_method
       @address_detection_method = @pref.dcc.address_detection_method
       @myaddress = nil
       case @address_detection_method
@@ -349,8 +347,6 @@ class IRCUnit < OSX::NSObject
         Resolver.resolve(self, @join_address) if @join_address
       when Preferences::Dcc::ADDR_DETECT_NIC
         detect_myaddress_from_nic
-      when Preferences::Dcc::ADDR_DETECT_SPECIFY
-        Resolver.resolve(self, @pref.dcc.myaddress)
       end
     end
       
@@ -1011,8 +1007,6 @@ class IRCUnit < OSX::NSObject
   end
   
   def receive_dcc_send(m, fname, addr, port, size, ver)
-    #puts '*** dcc send'
-    #puts "#{fname}, #{size}, #{addr}, #{port}, #{ver}"
     if /^\d+$/ =~ addr
       a = addr.to_i
       w = a & 0xff; a >>= 8
@@ -1023,6 +1017,7 @@ class IRCUnit < OSX::NSObject
     else
       host = addr
     end
+    print_both(self, :dcc_send_receive, "*Received file transfer request from #{m.sender_nick}, #{fname} (#{size.grouped_by_comma} bytes) #{host}:#{port}")
     @world.dcc.add_receiver(@id, m.sender_nick, host, port, '~/Desktop', fname, size, ver)
   end
   

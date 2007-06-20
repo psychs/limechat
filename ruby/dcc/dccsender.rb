@@ -47,25 +47,6 @@ class DccSender
     true
   end
   
-  def do_open
-    close if @sock
-    @records = []
-    @rec = 0
-    @status = :waiting
-    
-    @sock = TcpServer.alloc.init
-    @sock.delegate = self
-    @sock.port = @port
-    res = @sock.open
-    return false unless res
-    @status = :listening
-    open_file
-    return false unless @file
-    @processed_size = 0
-    @delegate.dccsender_on_listen(self)
-    true
-  end
-  
   def close
     if @sock
       @sock.close_all_clients
@@ -76,6 +57,12 @@ class DccSender
     close_file
     @status = :stop if @status != :error && @status != :complete
     @delegate.dccsender_on_close(self)
+  end
+  
+  def set_address_error
+    @status = :error
+    @error = 'Cannot detect your IP address'
+    @delegate.dccsender_on_change(self)
   end
   
   
@@ -130,7 +117,7 @@ class DccSender
   
   BUFSIZE = 1024 * 64
   RATE_LIMIT = 1024 * 1024 * 3
-  
+
   def send
     return if @status == :complete
     return unless @c
@@ -149,6 +136,25 @@ class DccSender
       @progress_bar.setDoubleValue(@processed_size)
       @progress_bar.setNeedsDisplay(true)
     end
+  end
+  
+  def do_open
+    close if @sock
+    @records = []
+    @rec = 0
+    @status = :waiting
+    
+    @sock = TcpServer.alloc.init
+    @sock.delegate = self
+    @sock.port = @port
+    res = @sock.open
+    return false unless res
+    @status = :listening
+    open_file
+    return false unless @file
+    @processed_size = 0
+    @delegate.dccsender_on_listen(self)
+    true
   end
   
   def open_file

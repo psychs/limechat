@@ -1,5 +1,11 @@
 2007-06-20  Satoshi Nakagawa <artension@gmail.com>
 
+	Changed to print DCC file transfer messages.
+	Changed to disable DCC file sending when my address is nil.
+	Refactoring.
+
+2007-06-20  Satoshi Nakagawa <artension@gmail.com>
+
 	Changed to use keyword settings.
 
 2007-06-20  Satoshi Nakagawa <artension@gmail.com>

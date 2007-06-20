@@ -4,11 +4,11 @@
 class WhoisDialog < OSX::NSObject
   include OSX
   include DialogHelper
+  attr_accessor :delegate, :prefix
+  attr_reader :nick
   ib_outlet :window, :nickText, :loginText, :realnameText, :addressText
   ib_outlet :serverText, :serverinfoText, :channelsCombo, :awayText, :idleText, :signonText
   ib_outlet :joinButton, :closeButton
-  attr_accessor :delegate, :prefix
-  attr_reader :nick
   
   def initialize
     @prefix = 'whoisDialog'

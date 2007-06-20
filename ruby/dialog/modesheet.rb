@@ -9,11 +9,10 @@ class ModeSheet < OSX::NSObject
   include DialogHelper
 
   attr_accessor :window, :delegate, :prefix
+  attr_accessor :mode, :uid, :cid
   attr_reader :modal
   ib_mapped_outlet :sCheck, :pCheck, :nCheck, :tCheck, :tCheck, :iCheck, :mCheck, :aCheck, :rCheck
   ib_outlet :sheet, :kCheck, :lCheck, :password, :limit
-  attr_accessor :mode
-  attr_accessor :uid, :cid
   
   def initialize
     @prefix = 'modeSheet'

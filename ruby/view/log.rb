@@ -255,6 +255,8 @@ class LogController < OSX::NSObject
         .error { color: #f00; font-weight: bold; }
         .reply { color: #088; }
         .error_reply { color: #f00; }
+        .dcc_send_send { color: #088; }
+        .dcc_send_receive { color: #00c; }
         .privmsg { color: #000; }
         .notice { color: #888; }
         .action { color: #080; }
