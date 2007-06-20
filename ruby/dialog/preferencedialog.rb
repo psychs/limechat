@@ -10,7 +10,8 @@ class PreferenceDialog < OSX::NSObject
   attr_accessor :delegate
   attr_reader :m
   ib_outlet :window
-  ib_mapped_outlet :dcc_first_port, :dcc_last_port
+  ib_mapped_outlet :key_words
+  ib_mapped_int_outlet :dcc_first_port, :dcc_last_port
   
   def initialize
     @prefix = 'preferenceDialog'
@@ -52,8 +53,7 @@ class PreferenceDialog < OSX::NSObject
   
   def save
     save_mapped_outlets(m, true)
-    
-    m.dcc.first_port = m.dcc.first_port.to_i
-    m.dcc.last_port = m.dcc.last_port.to_i
+    m.key.words.delete_if {|i| i.empty?}
+    m.key.words.sort! {|a,b| a.downcase <=> b.downcase}
   end
 end

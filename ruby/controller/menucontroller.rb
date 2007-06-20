@@ -147,13 +147,11 @@ class MenuController < OSX::NSObject
   end
   
   def preferenceDialog_onOk(sender, m)
-    puts 'ok'
     @pref.save
     @pref.sync
   end
   
   def preferenceDialog_onClose(sender)
-    puts 'close'
     @pref_dialog = nil
   end
   

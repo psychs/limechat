@@ -6,8 +6,20 @@ module DialogHelper
     attr_reader :mapped_outlets
 
     def ib_mapped_outlet(*args)
+      add_mapped_outlet(args, nil)
+    end
+
+    def ib_mapped_int_outlet(*args)
+      add_mapped_outlet(args, :int)
+    end
+    
+    private
+    
+    def add_mapped_outlet(args, type)
       @mapped_outlets ||= []
-      @mapped_outlets += args
+      args.each do |i|
+        @mapped_outlets << { :name => i, :type => type }
+      end
       ib_outlet(*args)
     end
   end
@@ -40,8 +52,7 @@ module DialogHelper
     self.class.mapped_outlets
   end
   
-  def outlet_to_slot(sym)
-    s = sym.to_s
+  def outlet_to_slot(s)
     if /^([a-zA-Z\d_]+)[A-Z][a-z]+$/ =~ s
       $1
     else
@@ -49,8 +60,7 @@ module DialogHelper
     end
   end
   
-  def outlet_to_nested_slot(sym)
-    s = sym.to_s
+  def outlet_to_nested_slot(s)
     if /^([a-zA-Z\d]+)_([a-zA-Z\d_]+)$/ =~ s
       [$1, $2]
     else
@@ -59,19 +69,24 @@ module DialogHelper
   end
   
   def load_outlet_value(outlet, model, nest)
-    t = instance_variable_get('@' + outlet.to_s)
+    name = outlet[:name].to_s
+    type = outlet[:type]
+    
     if nest
-      category, slot = outlet_to_nested_slot(outlet)
+      category, slot = outlet_to_nested_slot(name)
       raise ArgumentError unless category && slot
       obj = model.__send__(category)
       v = obj.__send__(slot)
     else
-      v = model.__send__(outlet_to_slot(outlet))
+      v = model.__send__(outlet_to_slot(name))
     end
     
+    t = instance_variable_get('@' + name)
     case t.class.to_s
     when 'OSX::NSTextField','OSX::NSComboBox'
       t.setStringValue(v)
+    when 'OSX::NSTextView'
+      t.textStorage.setAttributedString(OSX::NSAttributedString.alloc.initWithString(v.join("\n")))
     when 'OSX::NSButton'
       t.setState(v ? 1 : 0)
     when 'OSX::NSPopUpButton'
@@ -80,19 +95,28 @@ module DialogHelper
   end
   
   def save_outlet_value(outlet, model, nest)
-    t = instance_variable_get('@' + outlet.to_s)
+    name = outlet[:name].to_s
+    type = outlet[:type]
+    
     if nest
-      category, slot = outlet_to_nested_slot(outlet)
+      category, slot = outlet_to_nested_slot(name)
       raise ArgumentError unless category && slot
       model = model.__send__(category)
       method = slot + '='
     else
-      method = outlet_to_slot(outlet) + '='
+      method = outlet_to_slot(name) + '='
     end
     
+    t = instance_variable_get('@' + name)
     case t.class.to_s
     when 'OSX::NSTextField','OSX::NSComboBox'
-      model.__send__(method, t.stringValue.to_s)
+      s = t.stringValue.to_s
+      s = s.to_i if type == :int
+      model.__send__(method, s)
+    when 'OSX::NSTextView'
+      s = t.textStorage.string.to_s
+      s = s.split(/\n/)
+      model.__send__(method, s)
     when 'OSX::NSButton'
       model.__send__(method, t.state.to_i != 0)
     when 'OSX::NSPopUpButton'

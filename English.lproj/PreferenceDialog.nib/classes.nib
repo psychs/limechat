@@ -5,7 +5,7 @@
             ACTIONS = {onCancel = id; onOk = id; }; 
             CLASS = PreferenceDialog; 
             LANGUAGE = ObjC; 
-            OUTLETS = {"dcc_first_port" = id; "dcc_last_port" = id; window = id; }; 
+            OUTLETS = {"dcc_first_port" = id; "dcc_last_port" = id; "key_words" = id; window = id; }; 
             SUPERCLASS = NSObject; 
         }
     ); 

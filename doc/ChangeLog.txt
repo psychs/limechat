@@ -1,5 +1,9 @@
 2007-06-20  Satoshi Nakagawa <artension@gmail.com>
 
+	Added ib_mapped_int_outlet.
+
+2007-06-20  Satoshi Nakagawa <artension@gmail.com>
+
 	Supported loading float values in user defaults.
 
 2007-06-20  Satoshi Nakagawa <artension@gmail.com>
