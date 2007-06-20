@@ -466,6 +466,7 @@ class IRCWorld < OSX::NSObject
     log = LogController.alloc.init
     log.menu = console ? @console_menu : @log_menu
     log.world = self
+    log.keyword = @pref.key
     log.setup(console)
     log.view.setHostWindow(@window)
     log

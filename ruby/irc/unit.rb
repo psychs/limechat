@@ -519,14 +519,17 @@ class IRCUnit < OSX::NSObject
     end
     if !channel
       click = nil
+      key = true
     elsif channel.unit? || channel.kind_of?(String)
       click = "unit #{self.id}"
+      key = true
     else
       click = "channel #{self.id} #{channel.id}"
+      key = channel.config.keyword
     end
     
     line = LogLine.new(time, place, nickstr, text, kind, mtype, nick, click)
-    @world.console.print(line)
+    @world.console.print(line, key)
   end
   
   def print_channel(channel, kind, nick, text=nil)
@@ -556,10 +559,10 @@ class IRCUnit < OSX::NSObject
     
     line = LogLine.new(time, place, nickstr, text, kind, mtype, nick, click)
     if channel && !channel.unit?
-      key = channel.log.print(line)
+      key = channel.log.print(line, channel.config.keyword)
       set_keyword_state(channel) if key
     else
-      key = @log.print(line)
+      key = @log.print(line, true)
       set_keyword_state(self) if key
     end
   end
