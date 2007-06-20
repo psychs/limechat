@@ -2,9 +2,8 @@
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
 class DccSender
-  attr_accessor :delegate, :uid, :peer_nick
-  attr_accessor :port
-  attr_reader :full_filename, :filename, :size, :processed_size, :status, :error
+  attr_accessor :delegate, :pref, :uid, :peer_nick
+  attr_reader :port, :full_filename, :filename, :size, :processed_size, :status, :error
   attr_accessor :progress_bar, :icon
   
 	# SS_WAIT, SS_ERROR, SS_STOP, SS_WAITSTART, SS_WAITLISTEN,
@@ -35,6 +34,20 @@ class DccSender
   end
   
   def open
+    @port = @pref.dcc.first_port
+    while !do_open
+      @port += 1
+      if @pref.dcc.last_port < @port
+        @status = :error
+        @error = 'No available ports'
+        @delegate.dccsender_on_change(self)
+        return false
+      end
+    end
+    true
+  end
+  
+  def do_open
     close if @sock
     @records = []
     @rec = 0
@@ -75,6 +88,7 @@ class DccSender
   end
   
   def tcpserver_on_error(sender, c, err)
+    return if @status == :complete
     @status = :error
     @error = err
     close
@@ -82,6 +96,7 @@ class DccSender
   end
   
   def tcpserver_on_disconnect(sender, c)
+    return if @status == :complete
     @status = :error
     @error = 'Disconnected'
     close

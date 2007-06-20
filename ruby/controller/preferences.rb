@@ -27,11 +27,17 @@ class Preferences
   
   class Dcc
     include PersistenceHelper
-    persistent_attr :first_port, :last_port, :addr_method
+    persistent_attr :first_port, :last_port, :address_detection_method, :myaddress
+    
+    ADDR_DETECT_JOIN = 0
+    ADDR_DETECT_NIC = 1
+    ADDR_DETECT_SPECIFY = 2
+    
     def initialize
       @first_port = 1096
       @last_port = 1115
-      @addr_method = 'nic'
+      @address_detection_method = ADDR_DETECT_JOIN
+      @myaddress = ''
     end
   end
   

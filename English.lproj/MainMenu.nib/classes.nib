@@ -50,6 +50,7 @@
                 onMode = id; 
                 onNick = id; 
                 onPaste = id; 
+                onPasteMyAddress = id; 
                 onPreferences = id; 
                 onSearchWeb = id; 
                 onServerProperties = id; 

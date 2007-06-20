@@ -82,7 +82,7 @@ class DccManager < OSX::NSObject
       sel = sel.map {|e| @receivers[e]}
       case i.tag
       when 3001 #start
-        !!sel.find {|e| e.status == :waiting}
+        !!sel.find {|e| e.status == :waiting || e.status == :error}
       when 3002 #resume
         true
       when 3003 #stop
@@ -98,7 +98,7 @@ class DccManager < OSX::NSObject
       sel = sel.map {|e| @senders[e]}
       case i.tag
       when 3101 #start
-        !!sel.find {|e| e.status == :waiting}
+        !!sel.find {|e| e.status == :waiting || e.status == :error || e.status == :stop}
       when 3102 #stop
         !!sel.find {|e| e.status == :listening || e.status == :sending}
       when 3103 #delete
@@ -133,11 +133,7 @@ class DccManager < OSX::NSObject
   def startSender(sender)
     sel = @sender_table.selectedRows
     sel = sel.map {|i| @senders[i]}
-    sel.each {|i|
-      while !i.open
-        i.port += 1
-      end
-    }
+    sel.each {|i| i.open}
     reload_sender_table
   end
   
@@ -179,22 +175,17 @@ class DccManager < OSX::NSObject
   end
   
   def add_sender(uid, nick, file)
-    # @@@ hard coded
-    port = 11111
     c = DccSender.new
+    c.pref = @pref
     c.delegate = self
     c.uid = uid
     c.peer_nick = nick
     c.full_filename = file
-    c.port = port
     ext = File.extname(c.filename)
     ext = $1 if /\A\.?(.+)\z/ =~ ext
     c.icon = NSWorkspace.sharedWorkspace.iconForFileType(ext)
     @senders.unshift(c)
-    while !c.open
-      c.port += 1
-    end
-    puts c.port
+    c.open
     
     reload_sender_table
     show

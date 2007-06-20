@@ -199,6 +199,8 @@ class IRCChannel < OSX::NSObject
   def on_timer
   end
   
+  def preferences_changed
+  end
   
   private
   

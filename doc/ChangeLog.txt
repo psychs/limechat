@@ -1,5 +1,10 @@
 2007-06-20  Satoshi Nakagawa <artension@gmail.com>
 
+	Changed to use DCC port range.
+	Implemented address detection.
+
+2007-06-20  Satoshi Nakagawa <artension@gmail.com>
+
 	Added ib_mapped_int_outlet.
 
 2007-06-20  Satoshi Nakagawa <artension@gmail.com>

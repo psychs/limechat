@@ -3,7 +3,7 @@
 
 class IRCUnit < OSX::NSObject
   include OSX
-  attr_accessor :world, :log, :id
+  attr_accessor :world, :pref, :log, :id
   attr_reader :config, :channels, :mynick, :mymode, :encoding, :myaddress
   attr_accessor :property_dialog
   attr_accessor :keyword, :unread
@@ -20,6 +20,7 @@ class IRCUnit < OSX::NSObject
     @login = false
     @mynick = @inputnick = @sentnick = ''
     @myaddress = nil
+    @join_address = nil
     @encoding = NSISO2022JPStringEncoding
     @mymode = UserMode.new
     @in_whois = false
@@ -37,6 +38,13 @@ class IRCUnit < OSX::NSObject
   def setup(seed)
     @config = seed.dup
     @config.channels = nil
+    @address_detection_method = @pref.dcc.address_detection_method
+    case @address_detection_method
+    when Preferences::Dcc::ADDR_DETECT_NIC
+      detect_myaddress_from_nic
+    when Preferences::Dcc::ADDR_DETECT_SPECIFY
+      Resolver.resolve(self, @pref.dcc.myaddress)
+    end
   end
   
   def update_config(seed)
@@ -232,6 +240,11 @@ class IRCUnit < OSX::NSObject
   end
   
   def send_file(nick, port, fname, size)
+    unless @myaddress
+      # @@@ error message
+      return
+    end
+    
     morph_fname = fname.gsub(/ /, '_')
     if /\A(\d+)\.(\d+)\.(\d+)\.(\d+)\z/ =~ @myaddress
       w, x, y, z = $1.to_i, $2.to_i, $3.to_i, $4.to_i
@@ -325,6 +338,23 @@ class IRCUnit < OSX::NSObject
         connect
       end
     end
+  end
+
+  def preferences_changed
+    if @address_detection_method != @pref.dcc.address_detection_method
+      @address_detection_method = @pref.dcc.address_detection_method
+      @myaddress = nil
+      case @address_detection_method
+      when Preferences::Dcc::ADDR_DETECT_JOIN
+        Resolver.resolve(self, @join_address) if @join_address
+      when Preferences::Dcc::ADDR_DETECT_NIC
+        detect_myaddress_from_nic
+      when Preferences::Dcc::ADDR_DETECT_SPECIFY
+        Resolver.resolve(self, @pref.dcc.myaddress)
+      end
+    end
+      
+    @channels.each {|c| c.preferences_changed}
   end
 
   # whois dialogs
@@ -425,9 +455,6 @@ class IRCUnit < OSX::NSObject
     return unless addr
     addr = addr.to_a.map {|i| i.to_s}
     @myaddress = addr[0]
-    # @@@ for debug
-    #@myaddress = '192.168.5.51'
-    @myaddress = '192.168.1.3'
   end
   
   
@@ -446,6 +473,12 @@ class IRCUnit < OSX::NSObject
   
   def reload_tree
     @world.reload_tree
+  end
+  
+  def detect_myaddress_from_nic
+    addr = Socket.getaddrinfo(Socket.gethostname, nil)
+    addr = addr.find {|i| !(/\.local$/ =~ i[2])}
+    Resolver.resolve(self, addr[2]) if addr
   end
   
   # print
@@ -667,6 +700,7 @@ class IRCUnit < OSX::NSObject
     @connecting = @connected = @login = false
     @mynick = @sentnick = ''
     @myaddress = nil
+    @join_address = nil
     @mymode.clear
     @in_whois = false
     @channels.each do |c|
@@ -753,7 +787,10 @@ class IRCUnit < OSX::NSObject
       c.activate
       reload_tree
       print_system(c, "You have joined the channel")
-      Resolver.resolve(self, m.sender_address) unless @myaddress
+      @join_address = m.sender_address unless @join_address
+      if @address_detection_method == Preferences::Dcc::ADDR_DETECT_JOIN
+        Resolver.resolve(self, @join_address) unless @myaddress
+      end
     end
     if c
       c.add_member(User.new(nick, m.sender_username, m.sender_address, njoin))

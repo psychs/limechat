@@ -106,6 +106,7 @@ class IRCWorld < OSX::NSObject
     u = IRCUnit.alloc.init
     u.id = @unit_id
     u.world = self
+    u.pref = @pref
     u.log = create_log
     u.setup(seed)
     seed.channels.each {|c| create_channel(u, c) } if seed.channels
@@ -300,6 +301,9 @@ class IRCWorld < OSX::NSObject
     @dcc.on_timer
   end
   
+  def preferences_changed
+    @units.each {|u| u.preferences_changed}
+  end
   
   # delegate
   

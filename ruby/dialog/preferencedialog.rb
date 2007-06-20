@@ -11,6 +11,7 @@ class PreferenceDialog < OSX::NSObject
   attr_reader :m
   ib_outlet :window
   ib_mapped_outlet :key_words
+  ib_mapped_outlet :dcc_address_detection_method, :dcc_myaddress
   ib_mapped_int_outlet :dcc_first_port, :dcc_last_port
   
   def initialize
@@ -21,6 +22,7 @@ class PreferenceDialog < OSX::NSObject
     @m = pref
     NSBundle.loadNibNamed_owner('PreferenceDialog', self)
     load
+    update
     show
   end
   
@@ -47,6 +49,12 @@ class PreferenceDialog < OSX::NSObject
     @window.close
   end
   
+  def onDccAddressDetectionMethodChanged(sender)
+    update
+  end
+  
+  private
+  
   def load
     load_mapped_outlets(m, true)
   end
@@ -55,5 +63,10 @@ class PreferenceDialog < OSX::NSObject
     save_mapped_outlets(m, true)
     m.key.words.delete_if {|i| i.empty?}
     m.key.words.sort! {|a,b| a.downcase <=> b.downcase}
+    m.dcc.last_port = m.dcc.first_port if m.dcc.last_port < m.dcc.first_port
+  end
+  
+  def update
+    @dcc_myaddress.setEnabled(@dcc_address_detection_method.selectedItem.tag == Preferences::Dcc::ADDR_DETECT_SPECIFY)
   end
 end

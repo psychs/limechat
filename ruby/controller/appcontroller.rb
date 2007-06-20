@@ -45,6 +45,7 @@ class AppController < OSX::NSObject
     @tree.reloadData
     @world.setup_tree
     
+    @menu.app = self
     @menu.pref = @pref
     @menu.world = @world
     @menu.window = @window
@@ -97,7 +98,87 @@ class AppController < OSX::NSObject
   def windowWillClose(notification)
     NSApp.terminate(self)
   end
-      
+  
+  def preferences_changed
+    @world.preferences_changed
+  end
+  
+  def textEntered(sender)
+    s = @text.stringValue.to_s
+    unless s.empty?
+      if @world.input_text(s)
+        @text.setStringValue('')
+      end
+    end
+    @world.select_text
+  end
+  
+  def controlUp
+    move(:up)
+  end
+  
+  def controlDown
+    move(:down)
+  end
+  
+  def controlLeft
+    move(:left)
+  end
+  
+  def controlRight
+    move(:right)
+  end
+  
+  def commandUp
+    move(:up, :active)
+  end
+  
+  def commandDown
+    move(:down, :active)
+  end
+  
+  def commandLeft
+    move(:left, :active)
+  end
+  
+  def commandRight
+    move(:right, :active)
+  end
+  
+  def controlTab
+    move(:down, :unread)
+  end
+  
+  def controlShiftTab
+    move(:up, :unread)
+  end
+  
+  def scroll(direction)
+    if @window.firstResponder == @text.currentEditor
+      sel = @world.selected
+      if sel
+        log = sel.log
+        view = log.view
+        case direction
+        when :up; view.scrollPageUp(self)
+        when :down; view.scrollPageDown(self)
+        when :home; log.moveToTop
+        when :end; log.moveToBottom
+        end
+      end
+      true
+    else
+      false
+    end
+  end
+  
+  def number(n)
+    @world.select_channel_at(n)
+  end
+  
+  
+  private
+  
   def load_window_state
     win = @pref.load_window('main_window')
     if win
@@ -123,17 +204,7 @@ class AppController < OSX::NSObject
     win.merge!(split)
     @pref.save_window('main_window', win)
   end
-  
-  def textEntered(sender)
-    s = @text.stringValue.to_s
-    unless s.empty?
-      if @world.input_text(s)
-        @text.setStringValue('')
-      end
-    end
-    @world.select_text
-  end
-  
+
   def move(direction, target=:all)
     case direction
     when :up,:down
@@ -208,68 +279,5 @@ class AppController < OSX::NSObject
         end
       end
     end
-  end
-  
-  def controlUp
-    move(:up)
-  end
-  
-  def controlDown
-    move(:down)
-  end
-  
-  def controlLeft
-    move(:left)
-  end
-  
-  def controlRight
-    move(:right)
-  end
-  
-  def commandUp
-    move(:up, :active)
-  end
-  
-  def commandDown
-    move(:down, :active)
-  end
-  
-  def commandLeft
-    move(:left, :active)
-  end
-  
-  def commandRight
-    move(:right, :active)
-  end
-  
-  def controlTab
-    move(:down, :unread)
-  end
-  
-  def controlShiftTab
-    move(:up, :unread)
-  end
-  
-  def scroll(direction)
-    if @window.firstResponder == @text.currentEditor
-      sel = @world.selected
-      if sel
-        log = sel.log
-        view = log.view
-        case direction
-        when :up; view.scrollPageUp(self)
-        when :down; view.scrollPageDown(self)
-        when :home; log.moveToTop
-        when :end; log.moveToBottom
-        end
-      end
-      true
-    else
-      false
-    end
-  end
-  
-  def number(n)
-    @world.select_channel_at(n)
   end
 end

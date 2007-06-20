@@ -6,7 +6,7 @@ require 'cgi'
 
 class MenuController < OSX::NSObject
   include OSX
-  attr_accessor :world, :window, :text, :tree, :pref, :member_list
+  attr_accessor :app, :world, :window, :text, :tree, :pref, :member_list
   
   def initialize
     @server_dialogs = []
@@ -56,6 +56,8 @@ class MenuController < OSX::NSObject
       return false unless t
       sel = t.toString.to_s
       return sel && !sel.empty?
+    when 332  # paste my address
+      return !!u && !!u.myaddress
     when 501  # connect
       not_connected
     when 502  # disconnect
@@ -149,6 +151,7 @@ class MenuController < OSX::NSObject
   def preferenceDialog_onOk(sender, m)
     @pref.save
     @pref.sync
+    @app.preferences_changed
   end
   
   def preferenceDialog_onClose(sender)
@@ -174,6 +177,13 @@ class MenuController < OSX::NSObject
     end
   end
   
+  def onPasteMyAddress(sender)
+    u = @world.selunit
+    return unless u && u.myaddress
+    editor = @window.fieldEditor_forObject(false, @text)
+    editor.replaceCharactersInRange_withString(editor.selectedRange, u.myaddress)
+  end
+  
   def onSearchWeb(sender)
     t = current_webview
     return false unless t
@@ -186,6 +196,7 @@ class MenuController < OSX::NSObject
       UrlOpener::openUrl(url)
     end
   end
+  
   
   def onConnect(sender)
     u = @world.selunit

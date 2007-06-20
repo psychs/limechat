@@ -66,6 +66,7 @@ class DccReceiver
   end
   
   def tcpclient_on_disconnect(sender)
+    return if @status == :complete
     @status = :error
     @error = 'Disconnected'
     close
@@ -73,6 +74,7 @@ class DccReceiver
   end
   
   def tcpclient_on_error(sender, err)
+    return if @status == :complete
     @status = :error
     @error = err.localizedDescription.to_s
     close
