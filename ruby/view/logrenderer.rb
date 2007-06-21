@@ -194,12 +194,9 @@ module LogRenderer
       hash = {}
       effects.each do |i|
         case i[:type]
-        when :bold
-          bold = !bold
-        when :underline
-          underline = !underline
-        when :reverse
-          reverse = !reverse
+        when :bold; bold = !bold
+        when :underline; underline = !underline
+        when :reverse; reverse = !reverse
         when :stop
           next if !bold && !underline && !reverse && !text && !back
           bold = underline = reverse = false
