@@ -29,10 +29,7 @@ module PersistenceHelper
   def get_persistent_attrs
     return {} unless persistent_attrs
     r = {}
-    persistent_attrs.each do |i|
-      method = i.to_s
-      r[i] = self.__send__(method)
-    end
+    persistent_attrs.each {|i| r[i] = self.__send__(i)}
     r
   end
   
