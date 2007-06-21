@@ -1,4 +1,4 @@
-2007-06-20  Satoshi Nakagawa <artension@gmail.com>
+2007-06-21  Satoshi Nakagawa <artension@gmail.com>
 
 	Added dislike words.
 	Supported character attributes of mIRC.

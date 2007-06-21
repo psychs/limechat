@@ -149,7 +149,7 @@
 		786926F30BB6EC1B0081019B /* AsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = sourcecode.c.objc; name = AsyncSocket.m; path = objc/AsyncSocket.m; sourceTree = "<group>"; };
 		786926F40BB6EC1B0081019B /* main.m */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = sourcecode.c.objc; name = main.m; path = objc/main.m; sourceTree = "<group>"; };
 		7869272D0BB6ED9E0081019B /* rb_main.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; name = rb_main.rb; path = objc/rb_main.rb; sourceTree = "<group>"; };
-		78755D720C2AC0B30073FF42 /* logrenderer.rb */ = {isa = PBXFileReference; fileEncoding = "-2147483647"; lastKnownFileType = text.script.ruby; path = logrenderer.rb; sourceTree = "<group>"; };
+		78755D720C2AC0B30073FF42 /* logrenderer.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = logrenderer.rb; sourceTree = "<group>"; };
 		78785B580BEDCF6800456645 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/ServerDialog.nib; sourceTree = "<group>"; };
 		787FD46C0BFE960100F2F22D /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		788D56F00BB6872B00DDBF69 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
