@@ -204,6 +204,14 @@ class DccManager < OSX::NSObject
     show
   end
   
+  def nick_changed(unit, nick, tonick)
+    ary = (@receivers + @senders).select {|i| i.uid == unit.id && i.peer_nick == nick}
+    return if ary.empty?
+    ary.each {|i| i.peer_nick = tonick}
+    reload_sender_table
+    reload_receiver_table    
+  end
+  
   def reload_receiver_table
     return unless @loaded && @window.isVisible
     @receiver_table.reloadData

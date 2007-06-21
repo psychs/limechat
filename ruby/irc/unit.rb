@@ -887,6 +887,8 @@ class IRCUnit < OSX::NSObject
         update_channel_title(c)
       end
     end
+    @whois_dialogs.select {|i| i.nick == nick}.each {|i| i.nick = tonick}
+    @world.dcc.nick_changed(self, nick, tonick)
     print_console(nil, :nick, "*#{nick} is now known as #{tonick}")
   end
   
