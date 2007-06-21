@@ -9,7 +9,7 @@ class PreferenceDialog < OSX::NSObject
   attr_accessor :delegate
   attr_reader :m
   ib_outlet :window
-  ib_mapped_outlet :key_words
+  ib_mapped_outlet :key_words, :key_dislike_words
   ib_mapped_outlet :dcc_address_detection_method, :dcc_myaddress
   ib_mapped_int_outlet :dcc_first_port, :dcc_last_port
   
@@ -62,6 +62,10 @@ class PreferenceDialog < OSX::NSObject
     save_mapped_outlets(m, true)
     m.key.words.delete_if {|i| i.empty?}
     m.key.words.sort! {|a,b| a.downcase <=> b.downcase}
+    m.key.words.uniq!
+    m.key.dislike_words.delete_if {|i| i.empty?}
+    m.key.dislike_words.sort! {|a,b| a.downcase <=> b.downcase}
+    m.key.dislike_words.uniq!
     m.dcc.last_port = m.dcc.first_port if m.dcc.last_port < m.dcc.first_port
   end
   

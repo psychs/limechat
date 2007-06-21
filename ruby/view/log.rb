@@ -3,6 +3,7 @@
 
 require 'cgi'
 require 'uri'
+require 'logrenderer'
 
 class LogLine
   attr_accessor :time, :place, :nick, :body
@@ -203,34 +204,21 @@ class LogController < OSX::NSObject
   end
   
   def build_body(line, use_keyword)
-    key = false
-    body = h(line.body)
-    urlrex = /(h?ttps?|ftp):\/\/[-_a-zA-Z0-9.!~*':@%]+((\/[-_a-zA-Z0-9.!~*'%;\/?:@&=+$,#]*[-_a-zA-Z0-9\/?])|\/|)/i
-    body.gsub!(urlrex, '<a href="\0">\0</a>')
-
     if use_keyword
-      if line.line_type == :privmsg || line.line_type == :action
-        words = @keyword.words
-        words.map! {|i| h(i) }
-        words.each do |w|
-          rex = Regexp.new(w, true)
-          if rex =~ body
-            key = true
-            body.gsub!(rex, '<span class="keyword">\0</span>')
-          end
-        end
+      case line.line_type
+      when :privmsg,:action
+      else
+        use_keyword = false
       end
     end
-    
-    [body, key]
+    if use_keyword
+      like = @keyword.words
+      dislike = @keyword.dislike_words
+    else
+      like = dislike = nil
+    end
+    LogRenderer.render_body(line.body, like, dislike)
   end
-  
-=begin
-  unless @console
-    body.gsub!(/(https?:\/\/[-_.!~*'()a-zA-Z0-9;\/?:\@&=+\$,%#]+\.(jpe?g|gif|png|bmp|tiff))/i, '<img src="\1" title="\1"/>')
-    body.gsub!(/https?:\/\/www\.youtube\.com\/watch\?v=([a-zA-Z]+)/i, '<br/><object width="425" height="350"><param name="movie" value="http://www.youtube.com/v/ljKLoqKOEwE"></param><param name="wmode" value="transparent"></param><embed src="http://www.youtube.com/v/\1" type="application/x-shockwave-flash" wmode="transparent" width="425" height="350"></embed></object><br/><a href="\&">\&</a>')
-  end
-=end
   
   def initial_doc
     <<-EOM
@@ -245,13 +233,13 @@ class LogController < OSX::NSObject
         }
         img { border: 1px solid #aaa; vertical-align: top; }
         object { vertical-align: top; }
+        strong { color: #f0f; font-weight: bold; }
         .line { margin: 2px 0; }
         .time { color: #048; }
         .place { color: #008; }
         .nick_normal { color: #008; }
         .nick_myself { color: #66a; }
         .system { color: #080; }
-        .keyword { color: #f0f; font-weight: bold; }
         .error { color: #f00; font-weight: bold; }
         .reply { color: #088; }
         .error_reply { color: #f00; }

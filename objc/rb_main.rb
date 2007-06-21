@@ -1,5 +1,7 @@
 require 'osx/cocoa'
 
+$KCODE = 'u'
+
 def rb_main_init
   path = OSX::NSBundle.mainBundle.resourcePath.fileSystemRepresentation
   rbfiles = Dir.entries(path).select {|x| /\.rb\z/ =~ x}

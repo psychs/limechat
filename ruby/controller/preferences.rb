@@ -19,9 +19,10 @@ class Preferences
   
   class Keyword
     include PersistenceHelper
-    persistent_attr :words
+    persistent_attr :words, :dislike_words
     def initialize
       @words = []
+      @dislike_words = []
     end
   end
   

@@ -10,6 +10,7 @@
                 "dcc_first_port" = id; 
                 "dcc_last_port" = id; 
                 "dcc_myaddress" = id; 
+                "key_dislike_words" = id; 
                 "key_words" = id; 
                 window = id; 
             }; 

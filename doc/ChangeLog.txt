@@ -1,5 +1,10 @@
 2007-06-20  Satoshi Nakagawa <artension@gmail.com>
 
+	Added dislike words.
+	Supported character attributes of mIRC.
+
+2007-06-20  Satoshi Nakagawa <artension@gmail.com>
+
 	Changed whois dialogs and DCC file transfer items to follow nick changes.
 
 2007-06-20  Satoshi Nakagawa <artension@gmail.com>

@@ -44,6 +44,18 @@ class String
   end
 end
 
+class Array
+  alias :orginal_index :index
+  def index(*args)
+    if block_given?
+      each_with_index {|e,i| return i if yield e }
+      nil
+    else
+      orginal_index(*args)
+    end
+  end
+end
+
 class True
   def to_i; 1; end
 end
