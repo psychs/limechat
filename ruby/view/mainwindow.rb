@@ -90,6 +90,9 @@ class MainWindow < OSX::NSWindow
     super_sendEvent(e)
   end
   
+  
+  private
+  
   def keynum(keycode)
     case keycode
     when 29,82; 0

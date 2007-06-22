@@ -177,6 +177,10 @@ class LogController < OSX::NSObject
   
   private
   
+  def h(s)
+    s ? CGI.escapeHTML(s.to_s) : ''
+  end
+  
   def write(html, attrs)
     save_position
     
@@ -193,14 +197,6 @@ class LogController < OSX::NSObject
     body.removeChild_(body.firstChild) if @max_lines > 0 && @line_number > @max_lines
     
     restore_position
-  end
-  
-  def h(s)
-    s ? CGI.escapeHTML(s.to_s) : ''
-  end
-  
-  def uh(s)
-    s ? CGI.unescapeHTML(s.to_s) : ''
   end
   
   def build_body(line, use_keyword)

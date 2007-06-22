@@ -113,6 +113,19 @@ class AppController < OSX::NSObject
     @world.select_text
   end
   
+  def control_textView_doCommandBySelector(control, textview, selector)
+    case selector
+    when 'moveUp:'
+      puts 'up'
+      true
+    when 'moveDown:'
+      puts 'down'
+      true
+    else
+      false
+    end
+  end
+  
   def controlUp
     move(:up)
   end

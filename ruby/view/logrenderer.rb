@@ -340,7 +340,10 @@ module LogRenderer
         s[:pos] += s[:len]
         events << s
       end
-    
+      
+      # sort:
+      #   effect off < urlend == keyend < urlstart == keystart < effect on
+      #
       events.sort! do |a,b|
         cond = a[:pos] <=> b[:pos]
         if cond == 0
