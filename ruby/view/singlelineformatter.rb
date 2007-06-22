@@ -15,9 +15,9 @@ class SingleLineFormatter < OSX::NSFormatter
   end
   
   def isPartialStringValid_newEditingString_errorDescription(str, strp, err)
-    str = str.to_s
-    return true unless str =~ /[\r\n]/m
-    s = str.gsub(/[\r\n]/m, ' ')
+    s = str.to_s
+    return true unless s =~ /[\r\n]/m
+    s = s.gsub(/[\r\n]/m, ' ')
     strp.assign(NSString.stringWithString(s))
     false
   end

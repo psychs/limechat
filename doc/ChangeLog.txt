@@ -1,5 +1,9 @@
 2007-06-22  Satoshi Nakagawa <artension@gmail.com>
 
+	Improved paste behaviors.
+
+2007-06-22  Satoshi Nakagawa <artension@gmail.com>
+
 	Changed to render white spaces as &nbsp;.
 
 2007-06-22  Satoshi Nakagawa <artension@gmail.com>

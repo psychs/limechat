@@ -185,7 +185,9 @@ class IRCWorld < OSX::NSObject
   
   def select_text
     @window.makeFirstResponder(@text)
-    @text.currentEditor.setSelectedRange(NSRange.new(@text.stringValue.length,0))
+    e = @text.currentEditor
+    e.setSelectedRange(NSRange.new(@text.stringValue.length,0))
+    e.scrollRangeToVisible(e.selectedRange)
   end
   
   def select(item)
@@ -418,7 +420,7 @@ class IRCWorld < OSX::NSObject
   
   def log_keyDown(e)
     @window.makeFirstResponder(@text)
-    @text.currentEditor.setSelectedRange(NSRange.new(@text.stringValue.length, 0))
+    select_text
     case e.keyCode.to_i
     when 36,76  # enter / num_enter
       ;

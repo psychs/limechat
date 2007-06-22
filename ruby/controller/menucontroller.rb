@@ -43,11 +43,12 @@ class MenuController < OSX::NSObject
       return false unless win
       t = win.firstResponder
       return false unless t
-      if win == @window && t.class.name.to_s == 'OSX::WebHTMLView'
-        editor = win.fieldEditor_forObject(false, @text)
-        return true if editor
-      elsif t.respondsToSelector('paste:')
-        return true if !t.respondsToSelector('validateMenuItem:') || t.validateMenuItem(i)
+      if win == @window
+        return true
+      else
+        if t.respondsToSelector('paste:')
+          return true if !t.respondsToSelector('validateMenuItem:') || t.validateMenuItem(i)
+        end
       end
       false
     when 331  # search in google
@@ -58,7 +59,13 @@ class MenuController < OSX::NSObject
       sel = t.toString.to_s
       return sel && !sel.empty?
     when 332  # paste my address
-      return !!u && !!u.myaddress
+      win = NSApp.keyWindow
+      return false if !win || win != @window
+      t = win.firstResponder
+      return false unless t
+      u = @world.selunit
+      return false unless u && u.myaddress
+      true
     when 501  # connect
       not_connected
     when 502  # disconnect
@@ -169,20 +176,28 @@ class MenuController < OSX::NSObject
     return unless win
     t = win.firstResponder
     return unless t
-    if win == @window && t.class.name.to_s == 'OSX::WebHTMLView'
-      @world.select_text
-      editor = win.fieldEditor_forObject(false, @text)
-      editor.paste(sender) if editor
-    elsif t.respondsToSelector('paste:')
-      t.paste(sender) if !t.respondsToSelector('validateMenuItem:') || t.validateMenuItem(sender)
+    if win == @window
+      @world.select_text if t.class.name.to_s != 'OSX::NSTextView'
+      e = win.fieldEditor_forObject(false, @text)
+      e.paste(sender)
+    else
+      if t.respondsToSelector('paste:')
+        t.paste(sender) if !t.respondsToSelector('validateMenuItem:') || t.validateMenuItem(sender)
+      end
     end
   end
   
   def onPasteMyAddress(sender)
+    win = NSApp.keyWindow
+    return if !win || win != @window
+    t = win.firstResponder
+    return unless t
     u = @world.selunit
     return unless u && u.myaddress
-    editor = @window.fieldEditor_forObject(false, @text)
-    editor.replaceCharactersInRange_withString(editor.selectedRange, u.myaddress)
+    @world.select_text if t.class.name.to_s != 'OSX::NSTextView'
+    e = win.fieldEditor_forObject(false, @text)
+    e.replaceCharactersInRange_withString(e.selectedRange, u.myaddress)
+    e.scrollRangeToVisible(e.selectedRange)
   end
   
   def onSearchWeb(sender)
