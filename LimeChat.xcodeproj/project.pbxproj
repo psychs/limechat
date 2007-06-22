@@ -156,7 +156,7 @@
 		787FD46C0BFE960100F2F22D /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		788D56F00BB6872B00DDBF69 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
 		78A86ADA0BFFD87500E28592 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/WhoisDialog.nib; sourceTree = "<group>"; };
-		78AF96570C2C219A006D9E4D /* inputhistory.rb */ = {isa = PBXFileReference; fileEncoding = "-2147483647"; lastKnownFileType = text.script.ruby; path = inputhistory.rb; sourceTree = "<group>"; };
+		78AF96570C2C219A006D9E4D /* inputhistory.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = inputhistory.rb; sourceTree = "<group>"; };
 		78B063520C2BD19D00CDD242 /* singlelineformatter.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = singlelineformatter.rb; sourceTree = "<group>"; };
 		78B869BA0BF2D613007315AA /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/ChannelDialog.nib; sourceTree = "<group>"; };
 		78BF64A30C2885E2004451B2 /* channel.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = channel.rb; sourceTree = "<group>"; };

@@ -39,9 +39,13 @@ class DccManager < OSX::NSObject
     load_window_state
   end
   
-  def show
+  def show(key=true)
     loadNib
-    @window.makeKeyAndOrderFront(self)
+    if key
+      @window.makeKeyAndOrderFront(self)
+    else
+      @window.orderFront(self)
+    end
     reload_receiver_table
     reload_sender_table
   end
@@ -178,7 +182,7 @@ class DccManager < OSX::NSObject
     
     #c.open
     reload_receiver_table
-    show
+    show(false)
   end
   
   def add_sender(uid, nick, file)

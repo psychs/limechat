@@ -177,6 +177,26 @@ class LogController < OSX::NSObject
   
   private
   
+  def build_body(line, use_keyword)
+    if use_keyword
+      case line.line_type
+      when :privmsg,:action
+        use_keyword = false if line.member_type == :myself
+      else
+        use_keyword = false
+      end
+    end
+    
+    if use_keyword
+      like = @keyword.words
+      dislike = @keyword.dislike_words
+    else
+      like = dislike = nil
+    end
+    
+    LogRenderer.render_body(line.body, like, dislike)
+  end
+  
   def h(s)
     s ? CGI.escapeHTML(s.to_s) : ''
   end
@@ -197,23 +217,6 @@ class LogController < OSX::NSObject
     body.removeChild_(body.firstChild) if @max_lines > 0 && @line_number > @max_lines
     
     restore_position
-  end
-  
-  def build_body(line, use_keyword)
-    if use_keyword
-      case line.line_type
-      when :privmsg,:action
-      else
-        use_keyword = false
-      end
-    end
-    if use_keyword
-      like = @keyword.words
-      dislike = @keyword.dislike_words
-    else
-      like = dislike = nil
-    end
-    LogRenderer.render_body(line.body, like, dislike)
   end
   
   def initial_doc

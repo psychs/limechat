@@ -1,3 +1,7 @@
+2007-06-23  Satoshi Nakagawa <artension@gmail.com>
+
+	Changed not to show DCC window as key window when received DCC file transfer request.
+
 2007-06-22  Satoshi Nakagawa <artension@gmail.com>
 
 	Added input history.
