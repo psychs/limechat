@@ -60,6 +60,7 @@
             LANGUAGE = ObjC; 
             SUPERCLASS = NSObject; 
         }, 
+        {CLASS = SingleLineFormatter; LANGUAGE = ObjC; SUPERCLASS = NSFormatter; }, 
         {CLASS = Splitter; LANGUAGE = ObjC; SUPERCLASS = NSSplitView; }, 
         {CLASS = TreeView; LANGUAGE = ObjC; SUPERCLASS = NSOutlineView; }
     ); 

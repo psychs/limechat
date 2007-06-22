@@ -39,13 +39,14 @@ class MenuController < OSX::NSObject
       true
     when 313  # paste
       return false unless NSPasteboard.generalPasteboard.availableTypeFromArray([NSStringPboardType])
-      t = @window.firstResponder
+      win = NSApp.keyWindow
+      return false unless win
+      t = win.firstResponder
       return false unless t
-      if t.class.name.to_s == 'OSX::WebHTMLView'
-        t = @window.fieldEditor_forObject(false, @text)
-        return false unless t
-      end
-      if t.respondsToSelector('paste:')
+      if win == @window && t.class.name.to_s == 'OSX::WebHTMLView'
+        editor = win.fieldEditor_forObject(false, @text)
+        return true if editor
+      elsif t.respondsToSelector('paste:')
         return true if !t.respondsToSelector('validateMenuItem:') || t.validateMenuItem(i)
       end
       false

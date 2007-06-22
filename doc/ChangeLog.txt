@@ -1,3 +1,8 @@
+2007-06-22  Satoshi Nakagawa <artension@gmail.com>
+
+	Changed to force single line on the inputting edit.
+	Fixed a bug, cannot use paste menu on log views.
+
 2007-06-21  Satoshi Nakagawa <artension@gmail.com>
 
 	Added dislike words.
