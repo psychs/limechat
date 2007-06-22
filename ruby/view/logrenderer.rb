@@ -9,8 +9,11 @@ module LogRenderer
       urls = process_urls(body)
       keywords = process_keywords(body, urls, keywords, dislike_words)
       events = combine_events(effects, urls, keywords)
-    
-      return [body, false] if events.empty?
+      
+      if events.empty?
+        body = escape_str(body)
+        return [body, false]
+      end
 
       effect = nil
       url = nil
@@ -19,7 +22,7 @@ module LogRenderer
     
       s = ''
       pos = 0
-      body.scan(/./).each do |c|
+      body.each_char do |c|
         evs = events.select {|i| i[:pos] == pos}
         unless evs.empty?
           t = ''
@@ -82,14 +85,7 @@ module LogRenderer
         end
         
         pos += c.length
-        
-        case c
-        when '<'; c = '&lt;'
-        when '>'; c = '&gt;'
-        when '&'; c = '&amp;'
-        when '"'; c = '&quot;'
-        end
-        s += c
+        s += escape_char(c)
       end
     
       s += render_end_tag(:url) if url
@@ -100,6 +96,24 @@ module LogRenderer
     
     
     private
+    
+    def escape_str(s)
+      a = ''
+      s.each_char {|c| a += escape_char(c)}
+      a
+    end
+    
+    def escape_char(c)
+      case c
+      when '<'; '&lt;'
+      when '>'; '&gt;'
+      when '&'; '&amp;'
+      when '"'; '&quot;'
+      when ' '; '&nbsp;'
+      when "\t"; '&nbsp;&nbsp;&nbsp;&nbsp;'
+      else c
+      end
+    end
     
     def num_to_color(n)
       case n%16
