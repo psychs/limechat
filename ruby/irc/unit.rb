@@ -196,6 +196,16 @@ class IRCUnit < OSX::NSObject
     true
   end
   
+  def send_text(chan, cmd, str)
+    return false unless login? && chan
+    str.split(/\r?\n/).each do |s|
+      next if s.empty?
+      print_both(chan, cmd, @mynick, s)
+      send(cmd, chan.name, ":#{s}")
+    end
+    true
+  end
+  
   
   # model
   

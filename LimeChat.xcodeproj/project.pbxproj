@@ -21,6 +21,8 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		7821DBDE0C2C84EA00B3EF42 /* PasteSheet.nib in Resources */ = {isa = PBXBuildFile; fileRef = 7821DBDC0C2C84EA00B3EF42 /* PasteSheet.nib */; };
+		7821DBE40C2C875700B3EF42 /* pastesheet.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7821DBE30C2C875700B3EF42 /* pastesheet.rb */; };
 		78229BC20C288188001DD4C3 /* asynctcpclient.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229B900C288188001DD4C3 /* asynctcpclient.rb */; };
 		78229BC30C288188001DD4C3 /* asynctcpserver.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229B910C288188001DD4C3 /* asynctcpserver.rb */; };
 		78229BC40C288188001DD4C3 /* ircsocket.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229B920C288188001DD4C3 /* ircsocket.rb */; };
@@ -106,6 +108,8 @@
 		78189D1B0BB8D4A500AC17B2 /* LogEventSinkBase.h */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = sourcecode.c.h; name = LogEventSinkBase.h; path = objc/LogEventSinkBase.h; sourceTree = "<group>"; };
 		78189D1C0BB8D4A500AC17B2 /* LogEventSinkBase.m */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = sourcecode.c.objc; name = LogEventSinkBase.m; path = objc/LogEventSinkBase.m; sourceTree = "<group>"; };
 		781E254C0BE9E8E20040F56E /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/ModeSheet.nib; sourceTree = "<group>"; };
+		7821DBDD0C2C84EA00B3EF42 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/PasteSheet.nib; sourceTree = "<group>"; };
+		7821DBE30C2C875700B3EF42 /* pastesheet.rb */ = {isa = PBXFileReference; fileEncoding = "-2147483647"; lastKnownFileType = text.script.ruby; path = pastesheet.rb; sourceTree = "<group>"; };
 		78229B900C288188001DD4C3 /* asynctcpclient.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = asynctcpclient.rb; sourceTree = "<group>"; };
 		78229B910C288188001DD4C3 /* asynctcpserver.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = asynctcpserver.rb; sourceTree = "<group>"; };
 		78229B920C288188001DD4C3 /* ircsocket.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = ircsocket.rb; sourceTree = "<group>"; };
@@ -261,6 +265,7 @@
 				78A86AD90BFFD87500E28592 /* WhoisDialog.nib */,
 				7867EA490C227AD40017B510 /* NickSheet.nib */,
 				78496EF80C288B070084A836 /* PreferenceDialog.nib */,
+				7821DBDC0C2C84EA00B3EF42 /* PasteSheet.nib */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -313,6 +318,7 @@
 		78229BA00C288188001DD4C3 /* dialog */ = {
 			isa = PBXGroup;
 			children = (
+				7821DBE30C2C875700B3EF42 /* pastesheet.rb */,
 				78496EFC0C2890200084A836 /* preferencedialog.rb */,
 				78229BA10C288188001DD4C3 /* channeldialog.rb */,
 				78229BA20C288188001DD4C3 /* commentsheet.rb */,
@@ -502,6 +508,8 @@
 				78755D730C2AC0B30073FF42 /* logrenderer.rb in Resources */,
 				78B063530C2BD19D00CDD242 /* singlelineformatter.rb in Resources */,
 				78AF96580C2C219A006D9E4D /* inputhistory.rb in Resources */,
+				7821DBDE0C2C84EA00B3EF42 /* PasteSheet.nib in Resources */,
+				7821DBE40C2C875700B3EF42 /* pastesheet.rb in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -569,6 +577,14 @@
 				781E254C0BE9E8E20040F56E /* English */,
 			);
 			name = ModeSheet.nib;
+			sourceTree = "<group>";
+		};
+		7821DBDC0C2C84EA00B3EF42 /* PasteSheet.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7821DBDD0C2C84EA00B3EF42 /* English */,
+			);
+			name = PasteSheet.nib;
 			sourceTree = "<group>";
 		};
 		78496EF80C288B070084A836 /* PreferenceDialog.nib */ = {

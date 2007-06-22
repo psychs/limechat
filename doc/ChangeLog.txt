@@ -1,5 +1,9 @@
 2007-06-23  Satoshi Nakagawa <artension@gmail.com>
 
+	Added multi line paste sheet.
+
+2007-06-23  Satoshi Nakagawa <artension@gmail.com>
+
 	Changed not to show DCC window as key window when received DCC file transfer request.
 	Changed to stop highlighting for user's own messages.
 

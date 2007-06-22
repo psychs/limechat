@@ -181,10 +181,17 @@ class MenuController < OSX::NSObject
       s = NSPasteboard.generalPasteboard.stringForType(NSStringPboardType)
       return unless s
       s = s.to_s
-      if /.+\r?\n.+/ =~ s
-        # multiline
-        puts s
+      sel = @world.selected
+      if sel && !sel.unit? && /.+\r?\n.+/ =~ s
+        # multi line
+        @paste = PasteSheet.alloc.init
+        @paste.window = window
+        @paste.delegate = self
+        @paste.uid = sel.unit.id
+        @paste.cid = sel.id
+        @paste.start(s)
       else
+        # single line
         @world.select_text if t.class.name.to_s != 'OSX::NSTextView'
         e = win.fieldEditor_forObject(false, @text)
         e.paste(sender)
@@ -194,6 +201,17 @@ class MenuController < OSX::NSObject
         t.paste(sender) if !t.respondsToSelector('validateMenuItem:') || t.validateMenuItem(sender)
       end
     end
+  end
+  
+  def pasteSheet_onSend(sender, s)
+    @paste = nil
+    u, c = @world.find_by_id(sender.uid, sender.cid)
+    return unless u && c
+    u.send_text(c, :notice, s)
+  end
+  
+  def pasteSheet_onCancel(sender)
+    @paste = nil
   end
   
   def onPasteMyAddress(sender)
