@@ -172,14 +172,23 @@ class MenuController < OSX::NSObject
   end
   
   def onPaste(sender)
+    return unless NSPasteboard.generalPasteboard.availableTypeFromArray([NSStringPboardType])
     win = NSApp.keyWindow
     return unless win
     t = win.firstResponder
     return unless t
     if win == @window
-      @world.select_text if t.class.name.to_s != 'OSX::NSTextView'
-      e = win.fieldEditor_forObject(false, @text)
-      e.paste(sender)
+      s = NSPasteboard.generalPasteboard.stringForType(NSStringPboardType)
+      return unless s
+      s = s.to_s
+      if /.+\r?\n.+/ =~ s
+        # multiline
+        puts s
+      else
+        @world.select_text if t.class.name.to_s != 'OSX::NSTextView'
+        e = win.fieldEditor_forObject(false, @text)
+        e.paste(sender)
+      end
     else
       if t.respondsToSelector('paste:')
         t.paste(sender) if !t.respondsToSelector('validateMenuItem:') || t.validateMenuItem(sender)
