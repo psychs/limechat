@@ -61,6 +61,8 @@ class AppController < OSX::NSObject
     @dcc.pref = @pref
     @dcc.world = @world
     @world.dcc = @dcc
+    
+    @history = InputHistory.new
   end
   
   def applicationDidFinishLaunching(sender)
@@ -107,6 +109,7 @@ class AppController < OSX::NSObject
     s = @text.stringValue.to_s
     unless s.empty?
       if @world.input_text(s)
+        @history.add(s)
         @text.setStringValue('')
       end
     end
@@ -116,10 +119,12 @@ class AppController < OSX::NSObject
   def control_textView_doCommandBySelector(control, textview, selector)
     case selector
     when 'moveUp:'
-      puts 'up'
+      @text.setStringValue(@history.up)
+      @world.select_text
       true
     when 'moveDown:'
-      puts 'down'
+      @text.setStringValue(@history.down(@text.stringValue.to_s))
+      @world.select_text
       true
     else
       false
