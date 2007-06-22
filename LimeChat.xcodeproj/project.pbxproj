@@ -109,7 +109,7 @@
 		78189D1C0BB8D4A500AC17B2 /* LogEventSinkBase.m */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = sourcecode.c.objc; name = LogEventSinkBase.m; path = objc/LogEventSinkBase.m; sourceTree = "<group>"; };
 		781E254C0BE9E8E20040F56E /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/ModeSheet.nib; sourceTree = "<group>"; };
 		7821DBDD0C2C84EA00B3EF42 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/PasteSheet.nib; sourceTree = "<group>"; };
-		7821DBE30C2C875700B3EF42 /* pastesheet.rb */ = {isa = PBXFileReference; fileEncoding = "-2147483647"; lastKnownFileType = text.script.ruby; path = pastesheet.rb; sourceTree = "<group>"; };
+		7821DBE30C2C875700B3EF42 /* pastesheet.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = pastesheet.rb; sourceTree = "<group>"; };
 		78229B900C288188001DD4C3 /* asynctcpclient.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = asynctcpclient.rb; sourceTree = "<group>"; };
 		78229B910C288188001DD4C3 /* asynctcpserver.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = asynctcpserver.rb; sourceTree = "<group>"; };
 		78229B920C288188001DD4C3 /* ircsocket.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = ircsocket.rb; sourceTree = "<group>"; };
@@ -172,7 +172,7 @@
 		78BF64A90C2885E2004451B2 /* usermode.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = usermode.rb; sourceTree = "<group>"; };
 		78BF64AA0C2885E2004451B2 /* world.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = world.rb; sourceTree = "<group>"; };
 		78C5BAD40BE7B95100C4497A /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/CommentSheet.nib; sourceTree = "<group>"; };
-		78E570D00C1C306500BDF7EC /* LimeChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LimeChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		78E570D00C1C306500BDF7EC /* LimeChat.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = LimeChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		A5D3C7BF0AEB9FEB00C17985 /* RubyCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RubyCocoa.framework; path = /Library/Frameworks/RubyCocoa.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
