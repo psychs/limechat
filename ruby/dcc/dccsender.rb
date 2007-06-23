@@ -95,8 +95,9 @@ class DccSender
   end
   
   def tcpserver_on_write(sender, c)
-    if @status == :complete
+    if @processed_size >= @size
       if c.send_queue_size == 0 && !c.sending
+        @status = :complete
         close
       end
     else
@@ -114,17 +115,19 @@ class DccSender
   
   
   private
-  
+
+  MAX_QUEUE_SIZE = 2
   BUFSIZE = 1024 * 64
   RATE_LIMIT = 1024 * 1024 * 3
 
   def send
     return if @status == :complete
+    return if @processed_size >= @size
     return unless @c
     loop do
       return if @rec >= RATE_LIMIT
+      return if @c.send_queue_size >= MAX_QUEUE_SIZE
       if @processed_size >= @size
-        @status = :complete
         close_file
         return
       end
