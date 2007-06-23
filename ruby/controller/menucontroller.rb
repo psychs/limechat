@@ -145,6 +145,10 @@ class MenuController < OSX::NSObject
     end
   end
   
+  def menuNeedsUpdate(menu)
+    menu.update
+  end
+  
   
   def onPreferences(sender)
     unless @pref_dialog
