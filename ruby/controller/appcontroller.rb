@@ -55,6 +55,7 @@ class AppController < OSX::NSObject
     
     @member_list.setTarget(@menu)
     @member_list.setDoubleAction('memberList_doubleClicked:')
+    @member_list.key_delegate = @world
     #@member_list.tableColumnWithIdentifier('nick').setDataCell(MemberListCell.alloc.init)
     
     @dcc = DccManager.alloc.init

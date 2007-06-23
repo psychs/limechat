@@ -429,6 +429,19 @@ class IRCWorld < OSX::NSObject
     end
   end
   
+  # list view
+  
+  def listView_keyDown(e)
+    @window.makeFirstResponder(@text)
+    select_text
+    case e.keyCode.to_i
+    when 36,76  # enter / num_enter
+      ;
+    else
+      @window.sendEvent(e)
+    end
+  end
+  
   
   private
   

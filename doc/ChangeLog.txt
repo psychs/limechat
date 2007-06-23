@@ -1,5 +1,9 @@
 2007-06-23  Satoshi Nakagawa <artension@gmail.com>
 
+	Changed to select inputting edit on key down of member list.
+
+2007-06-23  Satoshi Nakagawa <artension@gmail.com>
+
 	Changed to update member menu explicitly.
 
 2007-06-23  Satoshi Nakagawa <artension@gmail.com>
