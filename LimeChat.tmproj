@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>ruby/lib/utility.rb</string>
+	<string>doc/ChangeLog.txt</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -18,31 +18,17 @@
 		</dict>
 	</array>
 	<key>fileHierarchyDrawerWidth</key>
-	<integer>249</integer>
+	<integer>207</integer>
 	<key>metaData</key>
 	<dict>
-		<key>ruby/lib/utility.rb</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>11</integer>
-				<key>line</key>
-				<integer>105</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>60</integer>
-		</dict>
-		<key>ruby/view/mainwindow.rb</key>
+		<key>doc/ChangeLog.txt</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>8</integer>
+				<integer>0</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
@@ -52,12 +38,11 @@
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>ruby/view/mainwindow.rb</string>
-		<string>ruby/lib/utility.rb</string>
+		<string>doc/ChangeLog.txt</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{538, 81}, {1030, 1084}}</string>
+	<string>{{599, 66}, {811, 1096}}</string>
 </dict>
 </plist>

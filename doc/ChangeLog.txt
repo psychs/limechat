@@ -1,3 +1,7 @@
+2007-06-25  Satoshi Nakagawa <artension@gmail.com>
+
+	Released 0.2.
+
 2007-06-23  Satoshi Nakagawa <artension@gmail.com>
 
 	Changed to select inputting edit on key down of member list.
