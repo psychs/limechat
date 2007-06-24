@@ -271,8 +271,33 @@ class LogScriptEventSink < OSX::LogEventSinkBase
   include OSX
   attr_accessor :owner
   
-  def on_doubleclick(info)
-    @owner.logView_onDoubleClick(info.to_s)
+  DELTA = 3
+  
+  def initialize
+    @last = 0.0
+    @x = -100
+    @y = -100
+  end
+  
+  def on_doubleclick(e)
+    @owner.logView_onDoubleClick(e.to_s)
+  end
+  
+  
+  def should_stop_doubleclick(e)
+    d = DELTA
+    cx = e.valueForKey('clientX').intValue
+    cy = e.valueForKey('clientY').intValue
+    res = false
+    
+    now = NSDate.timeIntervalSinceReferenceDate.to_f
+    if @x-d <= cx && cx <= @x+d && @y-d <= cy && cy <= @y+d
+      res = true if now < @last + (getDoubleClickTime / 60.0)
+    end
+    @last = now
+    @x = cx
+    @y = cy
+    res
   end
 end
 

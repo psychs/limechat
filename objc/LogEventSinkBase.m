@@ -5,6 +5,7 @@
 
 @interface LogEventSinkBase (RubyMethod)
 - (void)on_doubleclick:(id)e;
+- (BOOL)should_stop_doubleclick:(id)e;
 @end
 
 @implementation LogEventSinkBase
@@ -49,22 +50,12 @@
 
 - (BOOL)shouldStopDoubleClick:(id)event
 {
-  const int d = 3;
-  static double last = 0.0;
-  static int x = -100;
-  static int y = -100;
-  int cx = [[event valueForKey:@"clientX"] intValue];
-  int cy = [[event valueForKey:@"clientY"] intValue];
-  BOOL result = NO;
-  
-  double now = [NSDate timeIntervalSinceReferenceDate];
-  if (x-d <= cx && cx <= x+d && y-d <= cy && cy <= y+d) {
-    if (now < last + (GetDblTime() / 60.0)) result = YES;
-  }
-  last = now;
-  x = cx;
-  y = cy;
-  return result;
+  return [self should_stop_doubleclick:event];
+}
+
+- (float)getDoubleClickTime
+{
+  return GetDblTime();
 }
 
 - (void)print:(NSString*)s

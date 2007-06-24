@@ -1,5 +1,9 @@
 2007-06-25  Satoshi Nakagawa <artension@gmail.com>
 
+	Refactoring.
+
+2007-06-25  Satoshi Nakagawa <artension@gmail.com>
+
 	Ported Splitter to ruby.
 
 2007-06-25  Satoshi Nakagawa <artension@gmail.com>
