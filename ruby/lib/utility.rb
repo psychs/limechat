@@ -3,11 +3,11 @@
 
 class String
   def first_char
-    self.scan(/./)[0]
+    scan(/./)[0]
   end
   
   def each_char
-    self.scan(/./) {|c| yield c }
+    scan(/./) {|c| yield c }
   end
   
   def token!
@@ -15,7 +15,7 @@ class String
       self[0...$&.length] = ''
       $1
     else
-      self.replace('')
+      replace('')
     end
   end
   
@@ -36,7 +36,7 @@ class String
   end
   
   def server?
-    self.index('.') != nil
+    index('.') != nil
   end
   
   def expand_path
