@@ -1,5 +1,9 @@
 2007-06-25  Satoshi Nakagawa <artension@gmail.com>
 
+	Changed 'keywords' to 'highlight'.
+
+2007-06-25  Satoshi Nakagawa <artension@gmail.com>
+
 	Refactoring.
 
 2007-06-25  Satoshi Nakagawa <artension@gmail.com>
