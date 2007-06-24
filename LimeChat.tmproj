@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>doc/ChangeLog.txt</string>
+	<string>ruby/lib/utility.rb</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -21,55 +21,39 @@
 	<integer>249</integer>
 	<key>metaData</key>
 	<dict>
-		<key>doc/ChangeLog.txt</key>
+		<key>ruby/lib/utility.rb</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>61</integer>
+				<integer>11</integer>
 				<key>line</key>
-				<integer>2</integer>
+				<integer>105</integer>
 			</dict>
-			<key>columnSelection</key>
-			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
-			<key>selectFrom</key>
-			<dict>
-				<key>column</key>
-				<integer>1</integer>
-				<key>line</key>
-				<integer>2</integer>
-			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
-				<integer>61</integer>
-				<key>line</key>
-				<integer>2</integer>
-			</dict>
+			<integer>60</integer>
 		</dict>
-		<key>ruby/irc/world.rb</key>
+		<key>ruby/view/mainwindow.rb</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>442</integer>
+				<integer>8</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>408</integer>
+			<integer>0</integer>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>ruby/irc/world.rb</string>
-		<string>doc/ChangeLog.txt</string>
+		<string>ruby/view/mainwindow.rb</string>
+		<string>ruby/lib/utility.rb</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>

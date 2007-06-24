@@ -101,4 +101,55 @@ module OSX
       }
     end
   end
+  
+  class NSEvent
+    def printType
+      case oc_type
+      when NSLeftMouseDown
+        puts 'NSLeftMouseDown'
+      when NSLeftMouseUp
+        puts 'NSLeftMouseUp'
+      when NSRightMouseDown
+        puts 'NSRightMouseDown'
+      when NSRightMouseUp
+        puts 'NSRightMouseUp'
+      when NSOtherMouseDown
+        puts 'NSOtherMouseDown'
+      when NSOtherMouseUp
+        puts 'NSOtherMouseUp'
+      when NSMouseMoved
+        puts 'NSMouseMoved'
+      when NSLeftMouseDragged
+        puts 'NSLeftMouseDragged'
+      when NSRightMouseDragged
+        puts 'NSRightMouseDragged'
+      when NSOtherMouseDragged
+        puts 'NSOtherMouseDragged'
+      when NSMouseEntered
+        puts 'NSMouseEntered'
+      when NSMouseExited
+        puts 'NSMouseExited'
+      when NSKeyDown
+        puts 'NSKeyDown'
+      when NSKeyUp
+        puts 'NSKeyUp'
+      when NSFlagsChanged
+        puts 'NSFlagsChanged'
+      when NSAppKitDefined
+        puts 'NSAppKitDefined'
+      when NSSystemDefined
+        puts 'NSSystemDefined'
+      when NSApplicationDefined
+        puts 'NSApplicationDefined'
+      when NSPeriodic
+        puts 'NSPeriodic'
+      when NSCursorUpdate
+        puts 'NSCursorUpdate'
+      when NSScrollWheel
+        puts 'NSScrollWheel'
+      else
+        puts 'else'
+      end  
+    end
+  end
 end
