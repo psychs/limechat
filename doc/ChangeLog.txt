@@ -1,5 +1,9 @@
 2007-06-26  Satoshi Nakagawa <artension@gmail.com>
 
+	Released 0.3.
+
+2007-06-26  Satoshi Nakagawa <artension@gmail.com>
+
 	Added method type declarations of objc callback methods.
 	Simplified JavaScript bridge.
 
