@@ -269,9 +269,42 @@ class LogController < OSX::NSObject
 end
 
 
-class LogScriptEventSink < OSX::LogEventSinkBase
+class LogScriptEventSink < OSX::NSObject
   include OSX
   attr_accessor :owner
+  
+  EXPORTED_METHODS = %w|onDblClick: shouldStopDoubleClick: print:|
+
+  objc_class_method 'isSelectorExcludedFromWebScript:', 'i@::'
+  def self.isSelectorExcludedFromWebScript(sel)
+    case sel
+    when *EXPORTED_METHODS
+      false
+    else
+      true
+    end
+  end
+
+  objc_class_method 'webScriptNameForSelector:', '@@::'
+  def self.webScriptNameForSelector(sel)
+    case sel
+    when *EXPORTED_METHODS
+      sel[-1,1] = ''
+      sel
+    else
+      nil
+    end
+  end
+
+  objc_class_method :isKeyExcludedFromWebScript, 'i@:*'
+  def self.isKeyExcludedFromWebScript(name)
+    true
+  end
+  
+  objc_class_method :webScriptNameForKey, '@@:*'
+  def self.webScriptNameForKey(name)
+    nil
+  end
   
   DELTA = 3
   
@@ -295,12 +328,17 @@ class LogScriptEventSink < OSX::LogEventSinkBase
     
     now = NSDate.timeIntervalSinceReferenceDate.to_f
     if @x-d <= cx && cx <= @x+d && @y-d <= cy && cy <= @y+d
-      res = true if now < @last + (getDoubleClickTime / 60.0)
+      res = true if now < @last + (OldEventManager.getDoubleClickTime / 60.0)
     end
     @last = now
     @x = cx
     @y = cy
     res
+  end
+  
+  objc_method :print, 'v@:@'
+  def print(s)
+    NSLog("%@", s)
   end
 end
 

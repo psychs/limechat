@@ -1,5 +1,10 @@
 2007-06-26  Satoshi Nakagawa <artension@gmail.com>
 
+	Ported JavaScript bridge completely to ruby.
+	Added OldEventManager for GetDblTime.
+
+2007-06-26  Satoshi Nakagawa <artension@gmail.com>
+
 	Workaround for objc_method problem, must add ':' as suffix in some cases.
 
 2007-06-26  Satoshi Nakagawa <artension@gmail.com>
