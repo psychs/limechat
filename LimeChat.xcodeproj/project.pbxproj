@@ -171,7 +171,7 @@
 		78BF64A90C2885E2004451B2 /* usermode.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = usermode.rb; sourceTree = "<group>"; };
 		78BF64AA0C2885E2004451B2 /* world.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = world.rb; sourceTree = "<group>"; };
 		78C5BAD40BE7B95100C4497A /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/CommentSheet.nib; sourceTree = "<group>"; };
-		78E570D00C1C306500BDF7EC /* LimeChat.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = LimeChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		78E570D00C1C306500BDF7EC /* LimeChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LimeChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		A5D3C7BF0AEB9FEB00C17985 /* RubyCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RubyCocoa.framework; path = /Library/Frameworks/RubyCocoa.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */

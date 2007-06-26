@@ -23,11 +23,11 @@ extern NSString *const AsyncSocketErrorDomain;
 
 enum AsyncSocketError
 {
-  AsyncSocketCFSocketError = kCFSocketError,  // From CFSocketError enum.
-  AsyncSocketNoError = 0,            // Never used.
-  AsyncSocketCanceledError,          // onSocketWillConnect: returned NO.
-  AsyncSocketReadTimeoutError,
-  AsyncSocketWriteTimeoutError
+	AsyncSocketCFSocketError = kCFSocketError,	// From CFSocketError enum.
+	AsyncSocketNoError = 0,						// Never used.
+	AsyncSocketCanceledError,					// onSocketWillConnect: returned NO.
+	AsyncSocketReadTimeoutError,
+	AsyncSocketWriteTimeoutError
 };
 typedef enum AsyncSocketError AsyncSocketError;
 
@@ -49,42 +49,42 @@ typedef enum AsyncSocketError AsyncSocketError;
 -(BOOL) onSocketWillConnect:(AsyncSocket *)sock;
 
 /* Called when a socket connects and is ready for reading and writing. "host" will be an IP address, not a DNS name. */
--(void) onSocket:(AsyncSocket *)sock didConnectToHost:(NSString *)host port:(NSNumber*)port;
+-(void) onSocket:(AsyncSocket *)sock didConnectToHost:(NSString *)host port:(UInt16)port;
 
 /* Called when a socket has completed reading the requested data. Not called if there is an error. */
--(void) onSocket:(AsyncSocket *)sock didReadData:(NSData*)data withTag:(NSNumber*)tag;
+-(void) onSocket:(AsyncSocket *)sock didReadData:(NSData*)data withTag:(long)tag;
 
 /* Called when a socket has completed writing the requested data. Not called if there is an error. */
--(void) onSocket:(AsyncSocket *)sock didWriteDataWithTag:(NSNumber*)tag;
+-(void) onSocket:(AsyncSocket *)sock didWriteDataWithTag:(long)tag;
 
 @end
 
 @interface AsyncSocket : NSObject
 {
-  CFSocketRef theSocket;      // IPv4/IPv6 accept or connect socket.
-  CFSocketRef theSocket6;      // IPv6 accept socket.
-  CFReadStreamRef theReadStream;
-  CFWriteStreamRef theWriteStream;
+	CFSocketRef theSocket;			// IPv4/IPv6 accept or connect socket.
+	CFSocketRef theSocket6;			// IPv6 accept socket.
+	CFReadStreamRef theReadStream;
+	CFWriteStreamRef theWriteStream;
 
-  CFRunLoopSourceRef theSource;  // For theSocket.
-  CFRunLoopSourceRef theSource6;  // For theSocket6.
-  CFRunLoopRef theRunLoop;
-  CFSocketContext theContext;
+	CFRunLoopSourceRef theSource;	// For theSocket.
+	CFRunLoopSourceRef theSource6;	// For theSocket6.
+	CFRunLoopRef theRunLoop;
+	CFSocketContext theContext;
 
-  NSMutableArray *theReadQueue;
-  AsyncReadPacket *theCurrentRead;
-  NSTimer *theReadTimer;
-  NSData *partialReadBuffer;
-  
-  NSMutableArray *theWriteQueue;
-  AsyncWritePacket *theCurrentWrite;
-  NSTimer *theWriteTimer;
+	NSMutableArray *theReadQueue;
+	AsyncReadPacket *theCurrentRead;
+	NSTimer *theReadTimer;
+	NSData *partialReadBuffer;
+	
+	NSMutableArray *theWriteQueue;
+	AsyncWritePacket *theCurrentWrite;
+	NSTimer *theWriteTimer;
 
-  NSTimer *thePollTimer;
-  id theDelegate;
-  Byte theFlags;
-  
-  long theUserData;
+	NSTimer *thePollTimer;
+	id theDelegate;
+	Byte theFlags;
+	
+	long theUserData;
 }
 
 - (id) init;
@@ -101,7 +101,7 @@ typedef enum AsyncSocketError AsyncSocketError;
 - (void) setDelegate:(id)delegate;
 
 /* User data can be a long, or an id or void * cast to a long. */
-- (NSNumber*) userData;
+- (long) userData;
 - (void) setUserData:(long)userData;
 
 /* Don't use these to read or write. And don't close them, either! */

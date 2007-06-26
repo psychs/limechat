@@ -20,7 +20,7 @@ class MenuController < OSX::NSObject
     @channel_dialogs.clear
   end
   
-  addRubyMethod_withType 'validateMenuItem:', 'i@:@'
+  objc_method :validateMenuItem, 'i@:@'
   def validateMenuItem(i)
     u, c = @world.sel
     
@@ -544,7 +544,7 @@ class MenuController < OSX::NSObject
     @send.beginForDirectory_file_types_modelessDelegate_didEndSelector_contextInfo('~/Desktop', nil, nil, self, 'sendFilePanelDidEnd:returnCode:contextInfo:', nil)
   end
   
-  addRubyMethod_withType 'sendFilePanelDidEnd:returnCode:contextInfo:', 'v@:@i^v'
+  objc_method :sendFilePanelDidEnd_returnCode_contextInfo, 'v@:@i^v'
   def sendFilePanelDidEnd_returnCode_contextInfo(panel, code, info)
     targets = @send_targets
     uid = @send_uid

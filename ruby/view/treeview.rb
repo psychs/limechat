@@ -5,7 +5,7 @@ class TreeView < OSX::NSOutlineView
   include OSX
   attr_accessor :responder_delegate
   
-  addRubyMethod_withType 'acceptsFirstResponder:', 'i@:'
+  objc_method :acceptsFirstResponder, 'i@:'
   def acceptsFirstResponder
     @responder_delegate.tree_acceptFirstResponder if @responder_delegate
     false
@@ -16,7 +16,7 @@ class TreeView < OSX::NSOutlineView
     self.scrollRowToVisible(index) if scroll
   end
   
-  addRubyMethod_withType 'menuForEvent:', '@@:@'
+  objc_method :menuForEvent, '@@:@'
   def menuForEvent(event)
     p = convertPoint_fromView(event.locationInWindow, nil)
     i = rowAtPoint(p)
@@ -26,11 +26,12 @@ class TreeView < OSX::NSOutlineView
     self.menu
   end
   
-  addRubyMethod_withType '_highlightColorForCell:', '@@:@'
+  objc_method :_highlightColorForCell, '@@:@'
   def _highlightColorForCell(cell)
     nil
   end
   
+  objc_method :_highlightRow_clipRect, 'v@:i{_NSRect={_NSPoint=ff}{_NSSize=ff}}'
   def _highlightRow_clipRect(row, rect)
     return unless NSApp.isActive
     unless @gradient
@@ -49,6 +50,7 @@ class TreeView < OSX::NSOutlineView
     NSRectFill(bottom_line_rect)
   end
   
+  objc_method :drawBackgroundInClipRect, 'v@:{_NSRect={_NSPoint=ff}{_NSSize=ff}}'
   def drawBackgroundInClipRect(rect)
     unless @bgcolor
       @bgcolor = NSColor.colorWithCalibratedRed_green_blue_alpha(229.0/255.0, 237.0/255.0, 247.0/255.0, 1.0)

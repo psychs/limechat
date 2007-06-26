@@ -177,12 +177,12 @@ class IRCChannel < OSX::NSObject
   
   # table
   
-  addRubyMethod_withType 'numberOfRowsInTableView:', 'i@:@'
+  objc_method :numberOfRowsInTableView, 'i@:@'
   def numberOfRowsInTableView(sender)
     @members.length
   end
   
-  addRubyMethod_withType 'tableView:objectValueForTableColumn:row:', '@@:@@i'
+  objc_method :tableView_objectValueForTableColumn_row, '@@:@@i'
   def tableView_objectValueForTableColumn_row(sender, col, row)
     m = @members[row]
     head = if m.o

@@ -47,32 +47,32 @@ class TcpServer < OSX::NSObject
   end
 
 
-  addRubyMethod_withType 'tcpServerAccepted:', 'v@:@'
+  objc_method :tcpServerAccepted, 'v@:@'
   def tcpServerAccepted(sock)
   end
 
-  addRubyMethod_withType 'tcpServerClientConnected:', 'v@:@'
+  objc_method :tcpServerClientConnected, 'v@:@'
   def tcpServerClientConnected(c)
     @delegate.tcpserver_on_connect(self, c) if @delegate
   end
 
-  addRubyMethod_withType 'tcpServerClientDisconnected:', 'v@:@'
+  objc_method :tcpServerClientDisconnected, 'v@:@'
   def tcpServerClientDisconnected(c)
     @delegate.tcpserver_on_disconnect(self, c) if @delegate
     close_client(c)
   end
 
-  addRubyMethod_withType 'tcpServerClientReceived:', 'v@:@'
+  objc_method :tcpServerClientReceived, 'v@:@'
   def tcpServerClientReceived(c)
     @delegate.tcpserver_on_read(self, c) if @delegate
   end
 
-  addRubyMethod_withType 'tcpServerClientSent:', 'v@:@'
+  objc_method :tcpServerClientSent, 'v@:@'
   def tcpServerClientSent(c)
     @delegate.tcpserver_on_write(self, c) if @delegate
   end
 
-  addRubyMethod_withType 'tcpServerClientErrorOccured:', 'v@:@'
+  objc_method :tcpServerClientErrorOccured, 'v@:@'
   def tcpServerClientErrorOccured(c)
     @delegate.tcpserver_on_error(self, c, c.error) if @delegate
     close_client(c)

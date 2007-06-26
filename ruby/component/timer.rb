@@ -21,7 +21,7 @@ class Timer < OSX::NSObject
     @timer = nil
   end
   
-  addRubyMethod_withType 'onTimer:', 'v@:@'
+  objc_method :onTimer, 'v@:@'
   def onTimer(sender)
     if active? && @delegate
       @delegate.timer_onTimer(self)

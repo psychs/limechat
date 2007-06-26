@@ -80,7 +80,7 @@ class TcpClient < OSX::NSObject
   end
   
   
-  addRubyMethod_withType 'onSocket:didConnectToHost:port:', 'v@:@@i'
+  objc_method :onSocket_didConnectToHost_port, 'v@:@@i'
   def onSocket_didConnectToHost_port(sock, host, port)
     return unless check_tag(sock)
     wait_read
@@ -88,20 +88,20 @@ class TcpClient < OSX::NSObject
     @delegate.tcpclient_on_connect(self) if @delegate
   end
   
-  addRubyMethod_withType 'onSocket:willDisconnectWithError:', 'v@:@@'
+  objc_method :onSocket_willDisconnectWithError, 'v@:@@'
   def onSocket_willDisconnectWithError(sock, err)
     return unless check_tag(sock)
     @delegate.tcpclient_on_error(self, err) if @delegate && err
   end
   
-  addRubyMethod_withType 'onSocketDidDisconnect:', 'v@:@'
+  objc_method :onSocketDidDisconnect, 'v@:@'
   def onSocketDidDisconnect(sock)
     return unless check_tag(sock)
     close
     @delegate.tcpclient_on_disconnect(self) if @delegate
   end
   
-  addRubyMethod_withType 'onSocket:didReadData:withTag:', 'v@:@@i'
+  objc_method :onSocket_didReadData_withTag, 'v@:@@l'
   def onSocket_didReadData_withTag(sock, data, tag)
     return unless check_tag(sock)
     @buf += data.bytes.bytestr(data.length)
@@ -109,7 +109,7 @@ class TcpClient < OSX::NSObject
     @delegate.tcpclient_on_read(self) if @delegate
   end
   
-  addRubyMethod_withType 'onSocket:didWriteDataWithTag:', 'v@:@i'
+  objc_method :onSocket_didWriteDataWithTag, 'v@:@l'
   def onSocket_didWriteDataWithTag(sock, tag)
     return unless check_tag(sock)
     @send_queue_size -= 1

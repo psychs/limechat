@@ -113,7 +113,7 @@ class LogController < OSX::NSObject
   
   # delegate
   
-  addRubyMethod_withType 'webView:windowScriptObjectAvailable:', 'v@:@@'
+  objc_method :webView_windowScriptObjectAvailable, 'v@:@@'
   def webView_windowScriptObjectAvailable(sender, js)
     @js = js
     sink = LogScriptEventSink.alloc.init
@@ -121,7 +121,7 @@ class LogController < OSX::NSObject
     @js.setValue_forKey(sink, 'app')
   end
   
-  addRubyMethod_withType 'webView:didFinishLoadForFrame:', 'v@:@@'
+  objc_method :webView_didFinishLoadForFrame, 'v@:@@'
   def webView_didFinishLoadForFrame(sender, frame)
     @loaded = true
     @lines.each {|i| print(*i) }
@@ -281,12 +281,12 @@ class LogScriptEventSink < OSX::LogEventSinkBase
     @y = -100
   end
   
-  addRubyMethod_withType 'onDblClick:', 'v@:@'
+  objc_method :onDblClick, 'v@:@'
   def onDblClick(e)
     @owner.logView_onDoubleClick(e.to_s)
   end
   
-  addRubyMethod_withType 'shouldStopDoubleClick:', 'i@:@'
+  objc_method :shouldStopDoubleClick, 'i@:@'
   def shouldStopDoubleClick(e)
     d = DELTA
     cx = e.valueForKey('clientX').intValue
@@ -309,12 +309,12 @@ class LogPolicy < OSX::NSObject
   include OSX
   attr_accessor :menu
 
-  addRubyMethod_withType 'webView:dragDestinationActionMaskForDraggingInfo:', 'i@:@@'
+  objc_method :webView_dragDestinationActionMaskForDraggingInfo, 'i@:@@'
   def webView_dragDestinationActionMaskForDraggingInfo(sender, info)
     0 #WebDragDestinationActionNone
   end
   
-  addRubyMethod_withType 'webView:contextMenuItemsForElement:defaultMenuItems:', '@@:@@@'
+  objc_method :webView_contextMenuItemsForElement_defaultMenuItems, '@@:@@@'
   def webView_contextMenuItemsForElement_defaultMenuItems(sender, element, defaultMenu)
     if @menu
       @menu.itemArray.to_a.map {|i| i.copy }
@@ -323,7 +323,7 @@ class LogPolicy < OSX::NSObject
     end
   end
 
-  addRubyMethod_withType 'webView:decidePolicyForNavigationAction:request:frame:decisionListener:', 'v@:@@@@@'
+  objc_method :webView_decidePolicyForNavigationAction_request_frame_decisionListener, 'v@:@@@@@'
   def webView_decidePolicyForNavigationAction_request_frame_decisionListener(sender, action, request, frame, listener)
     case action.objectForKey(:WebActionNavigationTypeKey).intValue.to_i
     when 0  #WebNavigationTypeLinkClicked

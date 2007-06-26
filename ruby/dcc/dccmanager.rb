@@ -79,8 +79,9 @@ class DccManager < OSX::NSObject
 
   # menu
 
-  addRubyMethod_withType 'validateMenuItem:', 'i@:@'
+  objc_method :validateMenuItem, 'i@:@'
   def validateMenuItem(i)
+    puts 'validateMenuItem'
     if i.tag < 3100
       return false if @receiver_table.countSelectedRows == 0
       sel = @receiver_table.selectedRows
@@ -310,7 +311,7 @@ class DccManager < OSX::NSObject
   
   # table
   
-  addRubyMethod_withType 'numberOfRowsInTableView:', 'i@:@'
+  objc_method :numberOfRowsInTableView, 'i@:@'
   def numberOfRowsInTableView(sender)
     if sender == @receiver_table
       @receivers.length
@@ -319,7 +320,7 @@ class DccManager < OSX::NSObject
     end
   end
   
-  addRubyMethod_withType 'tableView:objectValueForTableColumn_row:', '@@:@@i'
+  objc_method :tableView_objectValueForTableColumn_row, '@@:@@i'
   def tableView_objectValueForTableColumn_row(sender, col, row)
     list = sender == @receiver_table ? @receivers : @senders
     i = list[row.to_i]
@@ -377,6 +378,7 @@ class FileTransferCell < OSX::NSCell
   RIGHT_MARGIN = 10
   ICON_SIZE = NSSize.new(32, 32)
   
+  objc_method :drawInteriorWithFrame_inView, 'v@:{_NSRect={_NSPoint=ff}{_NSSize=ff}}@'
   def drawInteriorWithFrame_inView(frame, view)
     if @icon
       size = ICON_SIZE

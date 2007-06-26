@@ -1,5 +1,10 @@
 2007-06-26  Satoshi Nakagawa <artension@gmail.com>
 
+	Converted addRubyMethod to objc_method.
+	Added objc_method to some methods.
+
+2007-06-26  Satoshi Nakagawa <artension@gmail.com>
+
 	Released 0.3.
 
 2007-06-26  Satoshi Nakagawa <artension@gmail.com>

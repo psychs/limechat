@@ -309,12 +309,12 @@ class IRCWorld < OSX::NSObject
   
   # delegate
   
-  addRubyMethod_withType 'outlineView:shouldEditTableColumn:item:', 'i@:@@@'
+  objc_method :outlineView_shouldEditTableColumn_item, 'i@:@@@'
   def outlineView_shouldEditTableColumn_item(sender, column, item)
     false
   end
   
-  addRubyMethod_withType 'outlineViewSelectionDidChange:', 'v@:@'
+  objc_method :outlineViewSelectionDidChange, 'v@:@'
   def outlineViewSelectionDidChange(notification)
     selitem = @tree.itemAtRow(@tree.selectedRow)
     unless selitem
@@ -342,7 +342,7 @@ class IRCWorld < OSX::NSObject
     update_title
   end
   
-  addRubyMethod_withType 'outlineViewItemDidCollapse:', 'v@:@'
+  objc_method :outlineViewItemDidCollapse, 'v@:@'
   def outlineViewItemDidCollapse(notification)
     item = notification.userInfo.objectForKey('NSObject')
     select(item) if item
@@ -350,24 +350,24 @@ class IRCWorld < OSX::NSObject
   
   # data source
   
-  addRubyMethod_withType 'outlineView:numberOfChildrenOfItem:', 'i@:@@'
+  objc_method :outlineView_numberOfChildrenOfItem, 'i@:@@'
   def outlineView_numberOfChildrenOfItem(sender, item)
     return @units.length unless item
     item.number_of_children
   end
   
-  addRubyMethod_withType 'outlineView:isItemExpandable:', 'i@:@@'
+  objc_method :outlineView_isItemExpandable, 'i@:@@'
   def outlineView_isItemExpandable(sender, item)
     item.number_of_children > 0
   end
   
-  addRubyMethod_withType 'outlineView:child:ofItem:', '@@:@i@'
+  objc_method :outlineView_child_ofItem, '@@:@i@'
   def outlineView_child_ofItem(sender, index, item)
     return @units[index] unless item
     item.child_at(index)
   end
   
-  addRubyMethod_withType 'outlineView:objectValueForTableColumn:byItem:', '@@:@@@'
+  objc_method :outlineView_objectValueForTableColumn_byItem, '@@:@@@'
   def outlineView_objectValueForTableColumn_byItem(sender, column, item)
     item.label
   end
@@ -378,7 +378,7 @@ class IRCWorld < OSX::NSObject
     select_text
   end
   
-  addRubyMethod_withType 'outlineView:willDisplayCell:forTableColumn:item:', 'v@:@@@@'
+  objc_method :outlineView_willDisplayCell_forTableColumn_item, 'v@:@@@@'
   def outlineView_willDisplayCell_forTableColumn_item(sender, cell, col, item)
     if item.keyword
       text = NSColor.magentaColor
