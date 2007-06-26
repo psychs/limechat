@@ -113,6 +113,7 @@ class LogController < OSX::NSObject
   
   # delegate
   
+  addRubyMethod_withType 'webView:windowScriptObjectAvailable:', 'v@:@@'
   def webView_windowScriptObjectAvailable(sender, js)
     @js = js
     sink = LogScriptEventSink.alloc.init
@@ -120,6 +121,7 @@ class LogController < OSX::NSObject
     @js.setValue_forKey(sink, 'app')
   end
   
+  addRubyMethod_withType 'webView:didFinishLoadForFrame:', 'v@:@@'
   def webView_didFinishLoadForFrame(sender, frame)
     @loaded = true
     @lines.each {|i| print(*i) }
@@ -279,12 +281,13 @@ class LogScriptEventSink < OSX::LogEventSinkBase
     @y = -100
   end
   
-  def on_doubleclick(e)
+  addRubyMethod_withType 'onDblClick:', 'v@:@'
+  def onDblClick(e)
     @owner.logView_onDoubleClick(e.to_s)
   end
   
-  
-  def should_stop_doubleclick(e)
+  addRubyMethod_withType 'shouldStopDoubleClick:', 'i@:@'
+  def shouldStopDoubleClick(e)
     d = DELTA
     cx = e.valueForKey('clientX').intValue
     cy = e.valueForKey('clientY').intValue
@@ -306,10 +309,12 @@ class LogPolicy < OSX::NSObject
   include OSX
   attr_accessor :menu
 
-  def webView_dragDestinationActionMaskForDraggingInfo(info)
+  addRubyMethod_withType 'webView:dragDestinationActionMaskForDraggingInfo:', 'i@:@@'
+  def webView_dragDestinationActionMaskForDraggingInfo(sender, info)
     0 #WebDragDestinationActionNone
   end
   
+  addRubyMethod_withType 'webView:contextMenuItemsForElement:defaultMenuItems:', '@@:@@@'
   def webView_contextMenuItemsForElement_defaultMenuItems(sender, element, defaultMenu)
     if @menu
       @menu.itemArray.to_a.map {|i| i.copy }
@@ -318,6 +323,7 @@ class LogPolicy < OSX::NSObject
     end
   end
 
+  addRubyMethod_withType 'webView:decidePolicyForNavigationAction:request:frame:decisionListener:', 'v@:@@@@@'
   def webView_decidePolicyForNavigationAction_request_frame_decisionListener(sender, action, request, frame, listener)
     case action.objectForKey(:WebActionNavigationTypeKey).intValue.to_i
     when 0  #WebNavigationTypeLinkClicked

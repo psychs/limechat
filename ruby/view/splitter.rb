@@ -82,13 +82,6 @@ class Splitter < OSX::NSSplitView
     updatePosition
   end
   
-  def splitView_constrainMinCoordinate_ofSubviewAt(sender, proposedMin, offset)
-    if vertical?
-      return 30.0 if offset == 0
-    end
-    proposedMin
-  end
-  
   def resizeSubviewsWithOldSize(oldSize)
     adjustSubviews
   end

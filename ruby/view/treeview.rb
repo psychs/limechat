@@ -5,6 +5,7 @@ class TreeView < OSX::NSOutlineView
   include OSX
   attr_accessor :responder_delegate
   
+  addRubyMethod_withType 'acceptsFirstResponder:', 'i@:'
   def acceptsFirstResponder
     @responder_delegate.tree_acceptFirstResponder if @responder_delegate
     false
@@ -15,6 +16,7 @@ class TreeView < OSX::NSOutlineView
     self.scrollRowToVisible(index) if scroll
   end
   
+  addRubyMethod_withType 'menuForEvent:', '@@:@'
   def menuForEvent(event)
     p = convertPoint_fromView(event.locationInWindow, nil)
     i = rowAtPoint(p)
@@ -24,6 +26,7 @@ class TreeView < OSX::NSOutlineView
     self.menu
   end
   
+  addRubyMethod_withType '_highlightColorForCell:', '@@:@'
   def _highlightColorForCell(cell)
     nil
   end

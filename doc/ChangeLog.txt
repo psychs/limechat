@@ -1,3 +1,8 @@
+2007-06-26  Satoshi Nakagawa <artension@gmail.com>
+
+	Added method type declarations of objc callback methods.
+	Simplified JavaScript bridge.
+
 2007-06-25  Satoshi Nakagawa <artension@gmail.com>
 
 	Changed 'keywords' to 'highlight'.

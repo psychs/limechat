@@ -3,11 +3,6 @@
 
 #import "LogEventSinkBase.h"
 
-@interface LogEventSinkBase (RubyMethod)
-- (void)on_doubleclick:(id)e;
-- (BOOL)should_stop_doubleclick:(id)e;
-@end
-
 @implementation LogEventSinkBase
 
 + (BOOL)isSelectorExcludedFromWebScript:(SEL)sel
@@ -41,16 +36,6 @@
 + (NSString*)webScriptNameForKey:(const char*)name
 {
   return nil;
-}
-
-- (void)onDblClick:(id)event
-{
-  [self on_doubleclick:event];
-}
-
-- (BOOL)shouldStopDoubleClick:(id)event
-{
-  return [self should_stop_doubleclick:event];
 }
 
 - (float)getDoubleClickTime

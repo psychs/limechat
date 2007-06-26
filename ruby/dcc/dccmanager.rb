@@ -79,6 +79,7 @@ class DccManager < OSX::NSObject
 
   # menu
 
+  addRubyMethod_withType 'validateMenuItem:', 'i@:@'
   def validateMenuItem(i)
     if i.tag < 3100
       return false if @receiver_table.countSelectedRows == 0
@@ -309,6 +310,7 @@ class DccManager < OSX::NSObject
   
   # table
   
+  addRubyMethod_withType 'numberOfRowsInTableView:', 'i@:@'
   def numberOfRowsInTableView(sender)
     if sender == @receiver_table
       @receivers.length
@@ -317,6 +319,7 @@ class DccManager < OSX::NSObject
     end
   end
   
+  addRubyMethod_withType 'tableView:objectValueForTableColumn_row:', '@@:@@i'
   def tableView_objectValueForTableColumn_row(sender, col, row)
     list = sender == @receiver_table ? @receivers : @senders
     i = list[row.to_i]
