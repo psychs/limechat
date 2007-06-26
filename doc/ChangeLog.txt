@@ -1,5 +1,9 @@
 2007-06-26  Satoshi Nakagawa <artension@gmail.com>
 
+	Workaround for objc_method problem, must add ':' as suffix in some cases.
+
+2007-06-26  Satoshi Nakagawa <artension@gmail.com>
+
 	Converted addRubyMethod to objc_method.
 	Added objc_method to some methods.
 
