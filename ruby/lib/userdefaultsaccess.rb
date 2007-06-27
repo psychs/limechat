@@ -15,31 +15,28 @@ module UserDefaultsAccess
   
   def convert_to_ruby_obj(v)
     return v if v == nil || v == false || v == true
-    case v.class.to_s
-    when 'OSX::NSCFString'; v.to_s
-    when 'OSX::NSCFBoolean'; v.to_i != 0
-    when 'OSX::NSCFDictionary'; nsdictionary_to_hash(v)
-    when 'OSX::NSCFArray'; nsarray_to_array(v)
-    when 'OSX::NSCFNumber'
-      if v.isEqualToNumber(OSX::NSNumber.numberWithInt(v.to_i))
-        v.to_i
-      else
-        v.to_f
-      end
+    case v
+    when OSX::NSCFString,OSX::NSString
+      v.to_s
+    when OSX::NSAttributedString
+      v.string.to_s
+    when OSX::NSCFBoolean
+      v.boolValue
+    when OSX::NSCFNumber,OSX::NSNumber
+      OSX::CFNumberIsFloatType(v) ? v.to_f : v.to_i
+    when OSX::NSDate
+      v.to_time
+    when OSX::NSCFDictionary
+      h = {}
+      v.each {|k,i| h[k.to_s.to_sym] = convert_to_ruby_obj(i) }
+      h
+    when OSX::NSCFArray
+      v.map {|i| convert_to_ruby_obj(i)}
     else
       v
     end
   end
 
   def nsdictionary_to_hash(d)
-    r = {}
-    d.each {|k,v| r[k.to_s.to_sym] = convert_to_ruby_obj(v) }
-    r
-  end
-
-  def nsarray_to_array(a)
-    r = []
-    a.each {|i| r << convert_to_ruby_obj(i) }
-    r
   end
 end
