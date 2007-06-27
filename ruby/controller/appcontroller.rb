@@ -117,7 +117,7 @@ class AppController < OSX::NSObject
     @world.select_text
   end
   
-  objc_method 'control:textView:doCommandBySelector:', 'i@:@@:'
+  objc_method 'control:textView:doCommandBySelector:', 'c@:@@:'
   def control_textView_doCommandBySelector(control, textview, selector)
     case selector
     when 'moveUp:'

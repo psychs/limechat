@@ -5,7 +5,7 @@ class TreeView < OSX::NSOutlineView
   include OSX
   attr_accessor :responder_delegate
   
-  objc_method :acceptsFirstResponder, 'i@:'
+  objc_method :acceptsFirstResponder, 'c@:'
   def acceptsFirstResponder
     @responder_delegate.tree_acceptFirstResponder if @responder_delegate
     false

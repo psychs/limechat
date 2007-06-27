@@ -9,14 +9,14 @@ class SingleLineFormatter < OSX::NSFormatter
     str.to_s.gsub(/\r?\n/m, ' ')
   end
   
-  objc_method :getObjectValue_forString_errorDescription, 'i@:^@@^@'
+  objc_method :getObjectValue_forString_errorDescription, 'c@:^@@^@'
   def getObjectValue_forString_errorDescription(objp, str, err)
     s = str.to_s.gsub(/\r?\n/m, ' ')
     objp.assign(NSString.stringWithString(s))
     true
   end
   
-  objc_method :isPartialStringValid_newEditingString_errorDescription, 'i@:@^@^@'
+  objc_method :isPartialStringValid_newEditingString_errorDescription, 'c@:@^@^@'
   def isPartialStringValid_newEditingString_errorDescription(str, strp, err)
     s = str.to_s
     return true unless s =~ /\r?\n/m

@@ -275,7 +275,7 @@ class LogScriptEventSink < OSX::NSObject
   
   EXPORTED_METHODS = %w|onDblClick: shouldStopDoubleClick: print:|
 
-  objc_class_method 'isSelectorExcludedFromWebScript:', 'i@::'
+  objc_class_method 'isSelectorExcludedFromWebScript:', 'c@::'
   def self.isSelectorExcludedFromWebScript(sel)
     case sel
     when *EXPORTED_METHODS
@@ -296,7 +296,7 @@ class LogScriptEventSink < OSX::NSObject
     end
   end
 
-  objc_class_method :isKeyExcludedFromWebScript, 'i@:*'
+  objc_class_method :isKeyExcludedFromWebScript, 'c@:*'
   def self.isKeyExcludedFromWebScript(name)
     true
   end
@@ -319,7 +319,7 @@ class LogScriptEventSink < OSX::NSObject
     @owner.logView_onDoubleClick(e.to_s)
   end
   
-  objc_method :shouldStopDoubleClick, 'i@:@'
+  objc_method :shouldStopDoubleClick, 'c@:@'
   def shouldStopDoubleClick(e)
     d = DELTA
     cx = e.valueForKey('clientX').intValue

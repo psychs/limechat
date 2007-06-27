@@ -20,7 +20,7 @@ class MenuController < OSX::NSObject
     @channel_dialogs.clear
   end
   
-  objc_method :validateMenuItem, 'i@:@'
+  objc_method :validateMenuItem, 'c@:@'
   def validateMenuItem(i)
     u, c = @world.sel
     

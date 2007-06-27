@@ -79,7 +79,7 @@ class DccManager < OSX::NSObject
 
   # menu
 
-  objc_method :validateMenuItem, 'i@:@'
+  objc_method :validateMenuItem, 'c@:@'
   def validateMenuItem(i)
     puts 'validateMenuItem'
     if i.tag < 3100

@@ -1,3 +1,7 @@
+2007-06-27  Satoshi Nakagawa <artension@gmail.com>
+
+	Changed type encoding of BOOL from 'i' to 'c' for objc_method.
+
 2007-06-26  Satoshi Nakagawa <artension@gmail.com>
 
 	Ported JavaScript bridge completely to ruby.

@@ -145,8 +145,8 @@
 		78229BBF0C288188001DD4C3 /* tableprogressindicator.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = tableprogressindicator.rb; sourceTree = "<group>"; };
 		78229BC00C288188001DD4C3 /* treeview.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = treeview.rb; sourceTree = "<group>"; };
 		78229BC10C288188001DD4C3 /* unitnamecell.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = unitnamecell.rb; sourceTree = "<group>"; };
-		784660230C3145850064140F /* OldEventManager.h */ = {isa = PBXFileReference; fileEncoding = "-2147483647"; lastKnownFileType = sourcecode.c.h; name = OldEventManager.h; path = objc/OldEventManager.h; sourceTree = "<group>"; };
-		784660240C3145850064140F /* OldEventManager.m */ = {isa = PBXFileReference; fileEncoding = "-2147483647"; lastKnownFileType = sourcecode.c.objc; name = OldEventManager.m; path = objc/OldEventManager.m; sourceTree = "<group>"; };
+		784660230C3145850064140F /* OldEventManager.h */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = sourcecode.c.h; name = OldEventManager.h; path = objc/OldEventManager.h; sourceTree = "<group>"; };
+		784660240C3145850064140F /* OldEventManager.m */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = sourcecode.c.objc; name = OldEventManager.m; path = objc/OldEventManager.m; sourceTree = "<group>"; };
 		78496EF90C288B070084A836 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/PreferenceDialog.nib; sourceTree = "<group>"; };
 		78496EFC0C2890200084A836 /* preferencedialog.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = preferencedialog.rb; sourceTree = "<group>"; };
 		7867EA4A0C227AD40017B510 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/NickSheet.nib; sourceTree = "<group>"; };
