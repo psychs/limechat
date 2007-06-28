@@ -84,7 +84,7 @@ module KanaSupport
         case enc
         when :jisroman
           if c == 0xe   # SO
-            enc = :jiskana if enc != :jiskana
+            enc = :jiskana
             i += 1
             next
           end
