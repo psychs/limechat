@@ -36,7 +36,4 @@ module UserDefaultsAccess
       v
     end
   end
-
-  def nsdictionary_to_hash(d)
-  end
 end
