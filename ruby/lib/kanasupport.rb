@@ -46,7 +46,7 @@ module KanaSupport
       s
     end
     
-    def native_to_iso2022(str)
+    def to_iso2022(str)
       enc = :other
       s = ''
       i = 0

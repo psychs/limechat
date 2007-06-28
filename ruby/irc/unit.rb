@@ -476,7 +476,7 @@ class IRCUnit < OSX::NSObject
   
   def to_local_encoding(s)
     return s.dup if @encoding == NSUTF8StringEncoding
-    s = KanaSupport::native_to_iso2022(s) if @encoding == NSISO2022JPStringEncoding
+    s = KanaSupport::to_iso2022(s) if @encoding == NSISO2022JPStringEncoding
     NSString.stringWithCString_encoding(s, @encoding).to_s
   end
   

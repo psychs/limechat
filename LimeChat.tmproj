@@ -18,31 +18,31 @@
 		</dict>
 	</array>
 	<key>fileHierarchyDrawerWidth</key>
-	<integer>235</integer>
+	<integer>295</integer>
 	<key>metaData</key>
 	<dict>
-		<key>doc/ChangeLog.txt</key>
+		<key>ruby/irc/unit.rb</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>31</integer>
 				<key>line</key>
-				<integer>3</integer>
+				<integer>478</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>445</integer>
 		</dict>
 		<key>ruby/lib/kanasupport.rb</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>26</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>86</integer>
+				<integer>6</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
@@ -52,12 +52,12 @@
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>doc/ChangeLog.txt</string>
 		<string>ruby/lib/kanasupport.rb</string>
+		<string>ruby/irc/unit.rb</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{656, 69}, {782, 1106}}</string>
+	<string>{{605, 63}, {782, 1108}}</string>
 </dict>
 </plist>
