@@ -9,10 +9,11 @@ class LogView < OSX::WebView
     @key_delegate.logView_keyDown(e) if @key_delegate
   end
   
-  #objc_method :setFrame, 'v@:{_NSRect={_NSPoint=ff}{_NSSize=ff}}'
+  objc_alias_method 'superSetFrame:', 'setFrame:'    
+  objc_method :setFrame, 'v@:{_NSRect={_NSPoint=ff}{_NSSize=ff}}'
   def setFrame(rect)
     @resize_delegate.logView_willResize(rect) if @resize_delegate
-    super_setFrame(rect)
+    superSetFrame(rect)
     @resize_delegate.logView_didResize(rect) if @resize_delegate
   end
 end

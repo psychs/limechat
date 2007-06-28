@@ -1,5 +1,9 @@
 2007-06-28  Satoshi Nakagawa <artension@gmail.com>
 
+	Changed to use objc_alias_method to override methods with objc_method.
+
+2007-06-28  Satoshi Nakagawa <artension@gmail.com>
+
 	Improved convert_to_ruby_obj in userdefaultsaccess.rb.
 
 2007-06-27  Satoshi Nakagawa <artension@gmail.com>
