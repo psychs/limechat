@@ -1,5 +1,9 @@
 2007-06-28  Satoshi Nakagawa <artension@gmail.com>
 
+	Added half-width kana support.
+
+2007-06-28  Satoshi Nakagawa <artension@gmail.com>
+
 	Changed to use objc_alias_method to override methods with objc_method.
 
 2007-06-28  Satoshi Nakagawa <artension@gmail.com>
