@@ -1,3 +1,7 @@
+2007-06-29  Satoshi Nakagawa <artension@gmail.com>
+
+	Changed to ignore empty input for input buffer.
+
 2007-06-28  Satoshi Nakagawa <artension@gmail.com>
 
 	Added half-width kana support.
