@@ -17,7 +17,7 @@ class UserMode
     plus = false
     while !str.empty?
       token = str.token!
-      if /^([\-+])(.+)$/ =~ token
+      if /^([-+])(.+)$/ =~ token
         plus = ($1 == '+')
         token = $2
         token.each_char do |char|
@@ -72,7 +72,7 @@ class UserMode
     plus = false
     while !str.empty?
       token = str.token!
-      if /^([\-+])(.+)$/ =~ token
+      if /^([-+])(.+)$/ =~ token
         plus = ($1 == '+')
         token = $2
         token.each_char do |char|
