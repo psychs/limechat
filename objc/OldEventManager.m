@@ -5,9 +5,9 @@
 
 @implementation OldEventManager
 
-+ (float)getDoubleClickTime
++ (NSNumber*)getDoubleClickTime
 {
-  return GetDblTime();
+  return [NSNumber numberWithFloat:GetDblTime()];
 }
 
 @end

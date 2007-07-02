@@ -328,7 +328,7 @@ class LogScriptEventSink < OSX::NSObject
     
     now = NSDate.timeIntervalSinceReferenceDate.to_f
     if @x-d <= cx && cx <= @x+d && @y-d <= cy && cy <= @y+d
-      res = true if now < @last + (OldEventManager.getDoubleClickTime / 60.0)
+      res = true if now < @last + (OldEventManager.getDoubleClickTime.to_f / 60.0)
     end
     @last = now
     @x = cx

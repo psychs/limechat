@@ -5,6 +5,6 @@
 
 @interface OldEventManager : NSObject
 
-+ (float)getDoubleClickTime;
++ (NSNumber*)getDoubleClickTime;
 
 @end
