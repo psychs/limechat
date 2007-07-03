@@ -1,6 +1,7 @@
 require 'osx/cocoa'
 
 $KCODE = 'u'
+ENV['RUBYCOCOA_THREAD_HOOK_DISABLE'] = 'true'
 
 def rb_main_init
   path = OSX::NSBundle.mainBundle.resourcePath.fileSystemRepresentation

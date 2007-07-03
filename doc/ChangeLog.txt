@@ -1,3 +1,7 @@
+2007-07-04  Satoshi Nakagawa <artension@gmail.com>
+
+	Changed to set ENV['RUBYCOCOA_THREAD_HOOK_DISABLE'] on init.
+
 2007-07-02  Satoshi Nakagawa <artension@gmail.com>
 
 	Changed to wrap float return value of getDblTime with NSNumber.
