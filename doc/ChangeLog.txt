@@ -1,5 +1,9 @@
 2007-07-04  Satoshi Nakagawa <artension@gmail.com>
 
+	Changed plist filename from _LimeChat.plist to LimeChat.plist on trunk.
+
+2007-07-04  Satoshi Nakagawa <artension@gmail.com>
+
 	Changed to set ENV['RUBYCOCOA_THREAD_HOOK_DISABLE'] on init.
 
 2007-07-02  Satoshi Nakagawa <artension@gmail.com>
