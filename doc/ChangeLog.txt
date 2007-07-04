@@ -1,3 +1,7 @@
+2007-07-05  Satoshi Nakagawa <artension@gmail.com>
+
+	Fixed a bug, application crushes when talk button on whois dialog is pushed two times.
+
 2007-07-04  Satoshi Nakagawa <artension@gmail.com>
 
 	Changed plist filename from _LimeChat.plist to LimeChat.plist on trunk.

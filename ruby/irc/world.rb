@@ -129,7 +129,7 @@ class IRCWorld < OSX::NSObject
   
   def create_channel(unit, seed, reload=true)
     c = unit.find_channel(seed.name)
-    return nil if c
+    return c if c
     
     @channel_id += 1
     c = IRCChannel.alloc.init
