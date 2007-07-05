@@ -1,5 +1,9 @@
 2007-07-05  Satoshi Nakagawa <artension@gmail.com>
 
+	Replaced all '...' to \U2026 in nib files.
+
+2007-07-05  Satoshi Nakagawa <artension@gmail.com>
+
 	Fixed a bug, application crushes when talk button on whois dialog is pushed two times.
 
 2007-07-04  Satoshi Nakagawa <artension@gmail.com>
