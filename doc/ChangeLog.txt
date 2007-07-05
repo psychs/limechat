@@ -1,3 +1,7 @@
+2007-07-06  Satoshi Nakagawa <artension@gmail.com>
+
+	Changed type encodings of TcpClient#onSocket_didConnectToHost_port.
+
 2007-07-05  Satoshi Nakagawa <artension@gmail.com>
 
 	Changed to view connecting status of DCC file receiver items.

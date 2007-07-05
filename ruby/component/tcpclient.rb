@@ -80,7 +80,7 @@ class TcpClient < OSX::NSObject
   end
   
   
-  objc_method :onSocket_didConnectToHost_port, 'v@:@@i'
+  objc_method :onSocket_didConnectToHost_port, 'v@:@@S'
   def onSocket_didConnectToHost_port(sock, host, port)
     return unless check_tag(sock)
     wait_read
