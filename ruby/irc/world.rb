@@ -314,7 +314,6 @@ class IRCWorld < OSX::NSObject
     false
   end
   
-  objc_method :outlineViewSelectionDidChange, 'v@:@'
   def outlineViewSelectionDidChange(notification)
     selitem = @tree.itemAtRow(@tree.selectedRow)
     unless selitem
@@ -342,7 +341,6 @@ class IRCWorld < OSX::NSObject
     update_title
   end
   
-  objc_method :outlineViewItemDidCollapse, 'v@:@'
   def outlineViewItemDidCollapse(notification)
     item = notification.userInfo.objectForKey('NSObject')
     select(item) if item
@@ -350,7 +348,6 @@ class IRCWorld < OSX::NSObject
   
   # data source
   
-  objc_method :outlineView_numberOfChildrenOfItem, 'i@:@@'
   def outlineView_numberOfChildrenOfItem(sender, item)
     return @units.length unless item
     item.number_of_children
@@ -361,13 +358,11 @@ class IRCWorld < OSX::NSObject
     item.number_of_children > 0
   end
   
-  objc_method :outlineView_child_ofItem, '@@:@i@'
   def outlineView_child_ofItem(sender, index, item)
     return @units[index] unless item
     item.child_at(index)
   end
   
-  objc_method :outlineView_objectValueForTableColumn_byItem, '@@:@@@'
   def outlineView_objectValueForTableColumn_byItem(sender, column, item)
     item.label
   end
@@ -378,7 +373,6 @@ class IRCWorld < OSX::NSObject
     select_text
   end
   
-  objc_method :outlineView_willDisplayCell_forTableColumn_item, 'v@:@@@@'
   def outlineView_willDisplayCell_forTableColumn_item(sender, cell, col, item)
     if item.keyword
       text = NSColor.magentaColor

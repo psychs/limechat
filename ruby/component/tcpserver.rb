@@ -4,6 +4,7 @@
 class TcpServer < OSX::NSObject
   include OSX
   attr_accessor :delegate, :port
+  attr_reader :clients
   
   def initialize
     @port = 0
@@ -11,19 +12,18 @@ class TcpServer < OSX::NSObject
   end
   
   def open
-    if @sock
-      @sock.close
-    else
-      @sock = AsyncTcpServer.alloc.init
-      @sock.delegate = self
-    end
-    @sock.port = port
-    @active = @sock.open
+    close if @sock
+    @buf = ''
+    @sock = AsyncSocket.alloc.initWithDelegate(self)
+    @active = @sock.acceptOnPort_error(@port, nil) != 0
+    @sock = nil unless @active
+    @active
   end
   
   def close
     return unless @sock
-    @sock.close
+    @sock.disconnect
+    @sock = nil
     @active = false
   end
   
@@ -31,50 +31,47 @@ class TcpServer < OSX::NSObject
     @active
   end
   
-  def clients
-    return nil unless @sock
-    @sock.clients
-  end
-  
   def close_client(client)
-    return unless @sock
-    @sock.close_client(client)
+    client.close
+    @clients.delete(client)
   end
   
   def close_all_clients
-    return unless @sock
-    @sock.close_all_clients
+    @clients.each {|c| c.close }
+    @clients.clear
   end
-
-
-  objc_method :tcpServerAccepted, 'v@:@'
-  def tcpServerAccepted(sock)
+  
+  def onSocket_didAcceptNewSocket(sock, conn)
+    c = TcpClient.alloc.init
+    c.init_with_existing_connection(conn)
+    c.delegate = self
+    @clients << c
+    @delegate.tcpserver_on_accept(self, c) if @delegate
   end
-
-  objc_method :tcpServerClientConnected, 'v@:@'
-  def tcpServerClientConnected(c)
-    @delegate.tcpserver_on_connect(self, c) if @delegate
+  
+  def onSocketDidDisconnect(sock)
+    #close
   end
-
-  objc_method :tcpServerClientDisconnected, 'v@:@'
-  def tcpServerClientDisconnected(c)
-    @delegate.tcpserver_on_disconnect(self, c) if @delegate
-    close_client(c)
+  
+  
+  def tcpclient_on_connect(sender)
+    @delegate.tcpserver_on_connect(self, sender) if @delegate
   end
-
-  objc_method :tcpServerClientReceived, 'v@:@'
-  def tcpServerClientReceived(c)
-    @delegate.tcpserver_on_read(self, c) if @delegate
+  
+  def tcpclient_on_disconnect(sender)
+    @delegate.tcpserver_on_disconnect(self, sender) if @delegate
+    close_client(sender)
   end
-
-  objc_method :tcpServerClientSent, 'v@:@'
-  def tcpServerClientSent(c)
-    @delegate.tcpserver_on_write(self, c) if @delegate
+  
+  def tcpclient_on_error(sender, err)
+    @delegate.tcpserver_on_error(self, sender, err) if @delegate
   end
-
-  objc_method :tcpServerClientErrorOccured, 'v@:@'
-  def tcpServerClientErrorOccured(c)
-    @delegate.tcpserver_on_error(self, c, c.error) if @delegate
-    close_client(c)
+  
+  def tcpclient_on_read(sender)
+    @delegate.tcpserver_on_read(self, sender) if @delegate
+  end
+  
+  def tcpclient_on_write(sender)
+    @delegate.tcpserver_on_write(self, sender) if @delegate
   end
 end

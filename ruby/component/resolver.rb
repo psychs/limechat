@@ -7,7 +7,7 @@ class Resolver
   def self.resolve(sender, host)
     Thread.new do
       addr = Resolv.getaddresses(host)
-      sender.performSelectorOnMainThread_withObject_waitUntilDone('Resolver_onResolve:', addr, false)
+      sender.performSelectorOnMainThread_withObject_waitUntilDone('ResolverOnResolve:', addr, false)
     end
     nil
   end

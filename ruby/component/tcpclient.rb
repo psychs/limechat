@@ -16,10 +16,10 @@ class TcpClient < OSX::NSObject
   def init_with_existing_connection(socket)
     close if @sock
     @buf = ''
-    @tag += 1
-    @sock = socket
-    @sock.setUserData(@tag)
+    @tag += 1000
+    @sock = socket.retain
     @sock.setDelegate(self)
+    @sock.setUserData(@tag)
     @active = @connecting = true
   end
   
@@ -80,7 +80,6 @@ class TcpClient < OSX::NSObject
   end
   
   
-  objc_method :onSocket_didConnectToHost_port, 'v@:@@S'
   def onSocket_didConnectToHost_port(sock, host, port)
     return unless check_tag(sock)
     wait_read
@@ -88,20 +87,17 @@ class TcpClient < OSX::NSObject
     @delegate.tcpclient_on_connect(self) if @delegate
   end
   
-  objc_method :onSocket_willDisconnectWithError, 'v@:@@'
   def onSocket_willDisconnectWithError(sock, err)
     return unless check_tag(sock)
     @delegate.tcpclient_on_error(self, err) if @delegate && err
   end
   
-  objc_method :onSocketDidDisconnect, 'v@:@'
   def onSocketDidDisconnect(sock)
     return unless check_tag(sock)
     close
     @delegate.tcpclient_on_disconnect(self) if @delegate
   end
   
-  objc_method :onSocket_didReadData_withTag, 'v@:@@l'
   def onSocket_didReadData_withTag(sock, data, tag)
     return unless check_tag(sock)
     @buf += data.bytes.bytestr(data.length)
@@ -109,7 +105,6 @@ class TcpClient < OSX::NSObject
     @delegate.tcpclient_on_read(self) if @delegate
   end
   
-  objc_method :onSocket_didWriteDataWithTag, 'v@:@l'
   def onSocket_didWriteDataWithTag(sock, tag)
     return unless check_tag(sock)
     @send_queue_size -= 1

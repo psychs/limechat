@@ -1,5 +1,10 @@
 2007-07-06  Satoshi Nakagawa <artension@gmail.com>
 
+	Changed to use AsyncSocket for DCC file sending.
+	Cut off needless objc_method.
+
+2007-07-06  Satoshi Nakagawa <artension@gmail.com>
+
 	Changed type encodings of TcpClient#onSocket_didConnectToHost_port.
 
 2007-07-05  Satoshi Nakagawa <artension@gmail.com>

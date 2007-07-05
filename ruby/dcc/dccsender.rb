@@ -66,6 +66,9 @@ class DccSender
   end
   
   
+  def tcpserver_on_accept(sender, c)
+  end
+  
   def tcpserver_on_connect(sender, c)
     @sock.close if @sock
     @c = c
@@ -83,7 +86,7 @@ class DccSender
   end
   
   def tcpserver_on_disconnect(sender, c)
-    return if @status == :complete
+    return if @status == :complete || @status == :error
     @status = :error
     @error = 'Disconnected'
     close

@@ -139,7 +139,7 @@ class IRCUnit < OSX::NSObject
     @conn = IRCSocket.new
     @conn.delegate = self
     @conn.host = @config.host
-    @conn.port = @config.port
+    @conn.port = @config.port.to_i
     @conn.open
   end
   
@@ -457,7 +457,7 @@ class IRCUnit < OSX::NSObject
     print_error(err.localizedDescription.to_s)
   end
   
-  def Resolver_onResolve(addr)
+  def ResolverOnResolve(addr)
     return unless addr
     addr = addr.to_a.map {|i| i.to_s}
     @myaddress = addr[0]

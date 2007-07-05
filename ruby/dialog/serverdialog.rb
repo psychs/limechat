@@ -9,7 +9,8 @@ class ServerDialog < OSX::NSObject
   attr_accessor :window
   attr_accessor :delegate, :prefix
   attr_reader :uid
-  ib_mapped_outlet :nameText, :hostCombo, :portText, :passwordText, :nickText, :usernameText, :realnameText, :encodingCombo, :auto_connectCheck
+  ib_mapped_outlet :nameText, :hostCombo, :passwordText, :nickText, :usernameText, :realnameText, :encodingCombo, :auto_connectCheck
+  ib_mapped_int_outlet :portText
   ib_outlet :leaveCommentText, :userinfoText, :invisibleCheck, :loosenNickLengthCheck, :nickLengthText
   ib_outlet :okButton
   

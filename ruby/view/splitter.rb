@@ -59,7 +59,6 @@ class Splitter < OSX::NSSplitView
     isVertical
   end
   
-  objc_method :drawDividerInRect, 'v@:{_NSRect={_NSPoint=ff}{_NSSize=ff}}'
   def drawDividerInRect(rect)
     if vertical?
       NSColor.colorWithCalibratedWhite_alpha(0.65, 1).set

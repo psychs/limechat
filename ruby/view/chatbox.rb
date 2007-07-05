@@ -4,8 +4,6 @@
 class ChatBox < OSX::NSBox
   include OSX
   
-  objc_alias_method 'superSetFrame:', 'setFrame:'    
-  objc_method :setFrame, 'v@:{_NSRect={_NSPoint=ff}{_NSSize=ff}}'
   def setFrame(rect)
     space = 3
     
@@ -27,6 +25,6 @@ class ChatBox < OSX::NSBox
     textframe.size.width = f.size.width
     text.setFrame(textframe)
     
-    superSetFrame(rect)
+    super_setFrame(rect)
   end
 end
