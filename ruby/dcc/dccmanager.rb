@@ -81,7 +81,6 @@ class DccManager < OSX::NSObject
 
   objc_method :validateMenuItem, 'c@:@'
   def validateMenuItem(i)
-    puts 'validateMenuItem'
     if i.tag < 3100
       return false if @receiver_table.countSelectedRows == 0
       sel = @receiver_table.selectedRows
@@ -455,6 +454,8 @@ class FileTransferCell < OSX::NSCell
       str += "#{fsize(@size)}"
     when :listening
       str += "#{fsize(@size)}  -- Requesting"
+    when :connecting
+      str += "#{fsize(@size)}  -- Connecting"
     when :sending,:receiving
       str += "#{fsize(@processed_size)} / #{fsize(@size)} (#{fsize(@speed)}/s)"
       if @time_remaining

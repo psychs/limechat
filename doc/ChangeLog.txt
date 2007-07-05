@@ -1,5 +1,9 @@
 2007-07-05  Satoshi Nakagawa <artension@gmail.com>
 
+	Changed to view connecting status of DCC file receiver items.
+
+2007-07-05  Satoshi Nakagawa <artension@gmail.com>
+
 	Replaced all '...' to \U2026 in nib files.
 
 2007-07-05  Satoshi Nakagawa <artension@gmail.com>
