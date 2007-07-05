@@ -2,6 +2,7 @@
 
 	Changed to use AsyncSocket for DCC file sending.
 	Cut off needless objc_method.
+	Fixed a bug, port should be stored as integer.
 
 2007-07-06  Satoshi Nakagawa <artension@gmail.com>
 
