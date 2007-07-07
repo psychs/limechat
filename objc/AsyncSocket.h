@@ -110,9 +110,9 @@ typedef enum AsyncSocketError AsyncSocketError;
 - (CFWriteStreamRef) getCFWriteStream;
 
 /* Once one of these methods is called, the AsyncSocket instance is locked in, and the rest can't be called without disconnecting the socket first. If the attempt times out or fails, these methods either return NO or call "onSocket:willDisconnectWithError:" and "onSockedDidDisconnect:". */
-- (BOOL) acceptOnPort:(NSNumber*)port error:(NSError **)errPtr;
-- (BOOL) acceptOnAddress:(NSString*)hostaddr port:(NSNumber*)port error:(NSError **)errPtr;
-- (BOOL) connectToHost:(NSString*)hostname onPort:(NSNumber*)port error:(NSError **)errPtr;
+- (BOOL) acceptOnPort:(NSNumber*)port error:(NSError**)errPtr;
+- (BOOL) acceptOnAddress:(NSString*)hostaddr port:(NSNumber*)port error:(NSError**)errPtr;
+- (BOOL) connectToHost:(NSString*)hostname onPort:(NSNumber*)port error:(NSError**)errPtr;
 
 /* Disconnects immediately. Any pending reads or writes are dropped. */
 - (void) disconnect;
@@ -125,10 +125,10 @@ typedef enum AsyncSocketError AsyncSocketError;
 
 /* Returns the local or remote host and port to which this socket is connected, or nil and 0 if not connected. The host will be an IP address. */
 - (NSString*) connectedHost;
-- (UInt16) connectedPort;
+- (NSNumber*) connectedPort;
 
 - (NSString*) localHost;
-- (UInt16) localPort;
+- (NSNumber*) localPort;
 
 /* The following methods won't block. To not time out, use a negative time interval. If they time out, "onSocket:disconnectWithError:" is called. The tag is for your convenience. You can use it as an array index, step number, state id, pointer, etc., just like the socket's user data. */
 

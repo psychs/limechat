@@ -952,9 +952,9 @@ Failed:;
   return [self connectedHost:theSocket];
 }
 
-- (UInt16) connectedPort
+- (NSNumber*) connectedPort
 {
-  return [self connectedPort:theSocket];
+  return [NSNumber numberWithInt:[self connectedPort:theSocket]];
 }
 
 - (NSString*) localHost
@@ -962,9 +962,9 @@ Failed:;
   return [self localHost:theSocket];
 }
 
-- (UInt16) localPort
+- (NSNumber*) localPort
 {
-  return [self localPort:theSocket];
+  return [NSNumber numberWithInt:[self localPort:theSocket]];
 }
 
 - (NSString*) connectedHost: (CFSocketRef)socket

@@ -37,6 +37,7 @@ class TcpClient < OSX::NSObject
     return unless @sock
     @tag += 1
     @sock.disconnect
+    @sock.release
     @sock = nil
     @active = @connecting = false
     @send_queue_size = 0

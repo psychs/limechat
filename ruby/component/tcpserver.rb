@@ -23,6 +23,7 @@ class TcpServer < OSX::NSObject
   def close
     return unless @sock
     @sock.disconnect
+    @sock.release
     @sock = nil
     @active = false
   end
@@ -47,10 +48,6 @@ class TcpServer < OSX::NSObject
     c.delegate = self
     @clients << c
     @delegate.tcpserver_on_accept(self, c) if @delegate
-  end
-  
-  def onSocketDidDisconnect(sock)
-    #close
   end
   
   
