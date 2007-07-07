@@ -32,6 +32,9 @@ class IRCWorld < OSX::NSObject
   end
   
   def setup_tree
+    @tree.setTarget(self)
+    @tree.setDoubleAction(:outlineViewOnDoubleClick)
+    
     unit = @units.find {|u| u.config.auto_connect }
     if unit
       expand_unit(unit)
@@ -308,6 +311,26 @@ class IRCWorld < OSX::NSObject
   end
   
   # delegate
+  
+  def outlineViewOnDoubleClick(sender)
+    return unless @selected
+    u, c = sel
+    unless c
+      if u.connecting? || u.connected? || u.login?
+        u.disconnect
+      else
+        u.connect
+      end
+    else
+      if u.login?
+        if c.active?
+          u.part_channel(c)
+        else
+          u.join_channel(c)
+        end
+      end
+    end
+  end
   
   objc_method :outlineView_shouldEditTableColumn_item, 'c@:@@@'
   def outlineView_shouldEditTableColumn_item(sender, column, item)

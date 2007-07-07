@@ -1,3 +1,8 @@
+2007-07-08  Satoshi Nakagawa <artension@gmail.com>
+
+	Added double click servers to connect or disconnect.
+	Added double click channels to join or part.
+
 2007-07-06  Satoshi Nakagawa <artension@gmail.com>
 
 	Changed to use AsyncSocket for DCC file sending.
