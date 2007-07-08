@@ -15,8 +15,6 @@ class MainWindow < OSX::NSWindow
         alt = m & NSAlternateKeyMask > 0
         cmd = m & NSCommandKeyMask > 0
         
-        #puts k
-        
         if !shift && !ctrl && !alt && !cmd
           # none
           case k
@@ -89,7 +87,6 @@ class MainWindow < OSX::NSWindow
     end
     super_sendEvent(e)
   end
-  
   
   private
   

@@ -13,9 +13,7 @@ class IRCWorldConfig
     end
     unitary = seed[:units]
     if unitary
-      unitary.each do |u|
-        @units << IRCUnitConfig.new(u)
-      end
+      unitary.each {|u| @units << IRCUnitConfig.new(u) }
     end
   end
   
@@ -49,17 +47,23 @@ class IRCUnitConfig
     @name = @host = @password = @nick = @username = @realname = ''
     @port = 6667
     @auto_connect = true
-    @encoding = OSX::NSISO2022JPStringEncoding
     @channels = []
+    
+    defaults = OSX::NSUserDefaults.standardUserDefaults
+    langs = defaults['AppleLanguages']
+    if langs && langs[0] && langs[0].to_s == 'ja'
+      @encoding = OSX::NSISO2022JPStringEncoding
+    else
+      @encoding = OSX::NSUTF8StringEncoding
+    end
+    
     seed.each do |k,v|
       next if k == :channels
-      self.instance_variable_set("@#{k.to_s}", v) if v != nil
+      instance_variable_set("@#{k.to_s}", v) if v != nil
     end
     channelary = seed[:channels]
     if channelary
-      channelary.each do |c|
-        @channels << IRCChannelConfig.new(c)
-      end
+      channelary.each {|c| @channels << IRCChannelConfig.new(c) }
     end
   end
   
@@ -104,7 +108,7 @@ class IRCChannelConfig
   
   def to_dic
     h = {}
-    self.instance_variables.each do |v|
+    instance_variables.each do |v|
       next if v == '@type'
       h[v[1..-1].to_sym] = self.instance_variable_get(v)
     end
