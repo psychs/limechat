@@ -12,6 +12,7 @@ class ServerDialog < OSX::NSObject
   ib_mapped_outlet :nameText, :hostCombo, :passwordText, :nickText, :usernameText, :realnameText, :encodingCombo, :auto_connectCheck
   ib_mapped_int_outlet :portText
   ib_outlet :leaveCommentText, :userinfoText, :invisibleCheck, :loosenNickLengthCheck, :nickLengthText
+  ib_outlet :channelsTable
   ib_outlet :okButton
   
   def initialize
@@ -23,9 +24,11 @@ class ServerDialog < OSX::NSObject
   end
   
   def start(config, uid)
-    @c = config.dup
+    @c = config
     @uid = uid
     NSBundle.loadNibNamed_owner('ServerDialog', self)
+    @channelsTable.setTarget(self)
+    @channelsTable.setDoubleAction('tableView_doubleClicked:')
     @window.setTitle("New Server") if uid < 0
     load
     update
@@ -75,5 +78,39 @@ class ServerDialog < OSX::NSObject
     username = @usernameText.stringValue.to_s
     realname = @realnameText.stringValue.to_s
     @okButton.setEnabled(!name.empty? && !host.empty? && port.to_i > 0 && !nick.empty? && !username.empty? && !realname.empty?)
+  end
+  
+  def numberOfRowsInTableView(sender)
+    @c.channels.length
+  end
+  
+  def tableView_objectValueForTableColumn_row(sender, col, row)
+    i = @c.channels[row]
+    col = col.identifier.to_s.to_sym
+    case col
+    when :name; i.name
+    when :pass; i.password
+    when :mode; i.mode
+    when :topic; i.topic
+    when :join; i.auto_join
+    when :console; i.console
+    when :highlight; i.keyword
+    when :unread; i.unread
+    end
+  end
+  
+  def tableView_setObjectValue_forTableColumn_row(sender, obj, col, row)
+    i = @c.channels[row]
+    col = col.identifier.to_s.to_sym
+    case col
+    when :join; i.auto_join = obj.intValue != 0
+    when :console; i.console = obj.intValue != 0
+    when :highlight; i.keyword = obj.intValue != 0
+    when :unread; i.unread = obj.intValue != 0
+    end
+  end
+  
+  def tableView_doubleClicked(sender)
+    puts 'double click'
   end
 end

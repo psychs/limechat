@@ -340,7 +340,7 @@ class MenuController < OSX::NSObject
     d = ServerDialog.alloc.init
     d.delegate = self
     u.property_dialog = d
-    d.start(u.config, u.id)
+    d.start(u.build_config, u.id)
   end
   
   def serverDialog_onClose(sender)

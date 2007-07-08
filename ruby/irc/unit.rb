@@ -52,6 +52,13 @@ class IRCUnit < OSX::NSObject
     @config.channels = nil
   end
   
+  def build_config
+    u = @config.dup
+    u.channels = []
+    @channels.each {|c| u.channels << c.config.dup }
+    u
+  end
+  
   def terminate
     quit
     close_dialog

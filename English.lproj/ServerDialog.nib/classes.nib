@@ -1,12 +1,15 @@
 {
     IBClasses = (
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = ListView; LANGUAGE = ObjC; SUPERCLASS = NSTableView; }, 
+        {CLASS = NSSegmentedControl; LANGUAGE = ObjC; SUPERCLASS = NSControl; }, 
         {
             ACTIONS = {onCancel = id; onOk = id; }; 
             CLASS = ServerDialog; 
             LANGUAGE = ObjC; 
             OUTLETS = {
                 "auto_connectCheck" = id; 
+                channelsTable = id; 
                 encodingCombo = id; 
                 hostCombo = id; 
                 invisibleCheck = id; 
