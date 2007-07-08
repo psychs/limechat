@@ -33,7 +33,7 @@ class IRCWorld < OSX::NSObject
   
   def setup_tree
     @tree.setTarget(self)
-    @tree.setDoubleAction(:outlineViewOnDoubleClick)
+    @tree.setDoubleAction('outlineView_doubleClicked:')
     
     unit = @units.find {|u| u.config.auto_connect }
     if unit
@@ -312,7 +312,7 @@ class IRCWorld < OSX::NSObject
   
   # delegate
   
-  def outlineViewOnDoubleClick(sender)
+  def outlineView_doubleClicked(sender)
     return unless @selected
     u, c = sel
     unless c

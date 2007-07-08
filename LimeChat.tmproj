@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>doc/ChangeLog.txt</string>
+	<string>ruby/irc/world.rb</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -21,40 +21,70 @@
 	<integer>313</integer>
 	<key>metaData</key>
 	<dict>
-		<key>doc/ChangeLog.txt</key>
+		<key>ruby/controller/appcontroller.rb</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>41</integer>
 				<key>line</key>
-				<integer>4</integer>
+				<integer>56</integer>
 			</dict>
 			<key>columnSelection</key>
 			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>29</integer>
 			<key>selectFrom</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>34</integer>
 				<key>line</key>
-				<integer>2</integer>
+				<integer>56</integer>
 			</dict>
 			<key>selectTo</key>
 			<dict>
 				<key>column</key>
+				<integer>58</integer>
+				<key>line</key>
+				<integer>56</integer>
+			</dict>
+		</dict>
+		<key>ruby/controller/menucontroller.rb</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>4</integer>
+				<integer>561</integer>
 			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>205</integer>
+		</dict>
+		<key>ruby/irc/world.rb</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>9</integer>
+				<key>line</key>
+				<integer>322</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>298</integer>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>doc/ChangeLog.txt</string>
+		<string>ruby/controller/appcontroller.rb</string>
+		<string>ruby/controller/menucontroller.rb</string>
+		<string>ruby/irc/world.rb</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>

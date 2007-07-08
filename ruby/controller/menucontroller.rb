@@ -555,9 +555,7 @@ class MenuController < OSX::NSObject
     files = panel.filenames.to_a
     files = files.map {|i| i.to_s}
     targets.each do |t|
-      files.each do |f|
-        @world.dcc.add_sender(uid, t.nick, f)
-      end
+      files.each {|f| @world.dcc.add_sender(uid, t.nick, f) }
     end
   end
 end
