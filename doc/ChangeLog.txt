@@ -1,5 +1,9 @@
 2007-07-09  Satoshi Nakagawa <artension@gmail.com>
 
+	Fixed a bug, application crushes when inputted irregular text on current encoding.
+
+2007-07-09  Satoshi Nakagawa <artension@gmail.com>
+
 	Changed encoding defaults, ISO-2022-JP for Japanese, UTF-8 for others.
 
 2007-07-08  Satoshi Nakagawa <artension@gmail.com>
