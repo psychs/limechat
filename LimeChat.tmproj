@@ -21,38 +21,23 @@
 	<integer>313</integer>
 	<key>metaData</key>
 	<dict>
-		<key>ruby/controller/menucontroller.rb</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>342</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>322</integer>
-		</dict>
 		<key>ruby/dialog/serverdialog.rb</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>26</integer>
+				<integer>14</integer>
 				<key>line</key>
-				<integer>91</integer>
+				<integer>154</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>63</integer>
+			<integer>128</integer>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>ruby/controller/menucontroller.rb</string>
 		<string>ruby/dialog/serverdialog.rb</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>

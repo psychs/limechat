@@ -4,12 +4,15 @@
         {CLASS = ListView; LANGUAGE = ObjC; SUPERCLASS = NSTableView; }, 
         {CLASS = NSSegmentedControl; LANGUAGE = ObjC; SUPERCLASS = NSControl; }, 
         {
-            ACTIONS = {onCancel = id; onOk = id; }; 
+            ACTIONS = {onAdd = id; onCancel = id; onDown = id; onEdit = id; onOk = id; onUp = id; }; 
             CLASS = ServerDialog; 
             LANGUAGE = ObjC; 
             OUTLETS = {
+                addButton = id; 
                 "auto_connectCheck" = id; 
                 channelsTable = id; 
+                downButton = id; 
+                editButton = id; 
                 encodingCombo = id; 
                 hostCombo = id; 
                 invisibleCheck = id; 
@@ -22,6 +25,7 @@
                 passwordText = id; 
                 portText = id; 
                 realnameText = id; 
+                upButton = id; 
                 userinfoText = id; 
                 usernameText = id; 
                 window = id; 
