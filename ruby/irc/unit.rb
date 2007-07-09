@@ -55,7 +55,9 @@ class IRCUnit < OSX::NSObject
   def build_config
     u = @config.dup
     u.channels = []
-    @channels.each {|c| u.channels << c.config.dup }
+    @channels.each do |c|
+      u.channels << c.config.dup if c.channel?
+    end
     u
   end
   
