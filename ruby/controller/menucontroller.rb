@@ -255,7 +255,7 @@ class MenuController < OSX::NSObject
   def onDisconnect(sender)
     u = @world.selunit
     return unless u
-    u.disconnect
+    u.quit
   end
   
   def onCancelReconnecting(sender)

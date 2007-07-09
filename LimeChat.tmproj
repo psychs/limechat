@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>currentDocument</key>
-	<string>ruby/dialog/serverdialog.rb</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -20,29 +18,10 @@
 	<key>fileHierarchyDrawerWidth</key>
 	<integer>313</integer>
 	<key>metaData</key>
-	<dict>
-		<key>ruby/dialog/serverdialog.rb</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>14</integer>
-				<key>line</key>
-				<integer>154</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>128</integer>
-		</dict>
-	</dict>
-	<key>openDocuments</key>
-	<array>
-		<string>ruby/dialog/serverdialog.rb</string>
-	</array>
+	<dict/>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{552, 57}, {1216, 1111}}</string>
+	<string>{{606, 59}, {1118, 1113}}</string>
 </dict>
 </plist>

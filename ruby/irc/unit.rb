@@ -12,12 +12,12 @@ class IRCUnit < OSX::NSObject
   RECONNECT_TIME = 20
   RETRY_TIME = 240
   PONG_TIME = 300
+  QUIT_TIME = 4
   
   def initialize
     @channels = []
     @whois_dialogs = []
-    @connected = false
-    @login = false
+    @connected = @login = @quitting = false
     @mynick = @inputnick = @sentnick = ''
     @myaddress = nil
     @join_address = nil
@@ -152,6 +152,7 @@ class IRCUnit < OSX::NSObject
   
   def disconnect
     return unless connected?
+    @quitting = false
     @reconnect = false
     @conn.close
     change_state_to_off
@@ -159,7 +160,10 @@ class IRCUnit < OSX::NSObject
   
   def quit
     return disconnect unless login?
-    send(:quit, ':Leaving...')
+    send(:quit, ":#{@config.leaving_comment}")
+    @quitting = true
+    @quit_timer = QUIT_TIME
+    @reconnect = false
   end
   
   def cancel_reconnect
@@ -180,6 +184,7 @@ class IRCUnit < OSX::NSObject
   def part_channel(channel, comment=nil)
     return unless login?
     return unless channel.active?
+    comment = ":#{@config.leaving_comment}" if !comment && @config.leaving_comment
     send(:part, channel.name, comment)
   end
   
@@ -303,6 +308,7 @@ class IRCUnit < OSX::NSObject
   
   def on_timer
     if login?
+      check_quitting
       # who manager
       # 437 rejoin
       check_pong
@@ -314,7 +320,16 @@ class IRCUnit < OSX::NSObject
     end
     
     @channels.each {|c| c.on_timer}
-  end  
+  end
+  
+  def check_quitting
+    if @quitting && @quit_timer > 0
+      @quit_timer -= 1
+      if @quit_timer <= 0
+        disconnect
+      end
+    end
+  end
   
   def check_reconnect
     if @reconnect && @reconnect_timer > 0
@@ -415,11 +430,11 @@ class IRCUnit < OSX::NSObject
     @login = false
     @encoding = @config.encoding
     @inputnick = @sentnick = @mynick = @config.nick
-    if @config.password && !@config.password.empty?
-      send(:pass, @config.password)
-    end
+    mymode = 0
+    mymode += 8 if @config.invisible
+    send(:pass, @config.password) if @config.password && !@config.password.empty?
     send(:nick, @sentnick)
-    send(:user, "#{@config.username} 8 * :#{@config.realname}")
+    send(:user, "#{@config.username} #{mymode} * :#{@config.realname}")
     update_unit_title
   end
   
@@ -716,7 +731,7 @@ class IRCUnit < OSX::NSObject
   
   def change_state_to_off
     @conn = nil
-    @connecting = @connected = @login = false
+    @connecting = @connected = @login = @quitting = false
     @mynick = @sentnick = ''
     @myaddress = nil
     @join_address = nil

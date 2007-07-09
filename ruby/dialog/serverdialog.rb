@@ -11,8 +11,8 @@ class ServerDialog < OSX::NSObject
   attr_reader :uid
   ib_mapped_outlet :nameText, :hostCombo, :passwordText, :nickText, :usernameText, :realnameText, :encodingCombo, :auto_connectCheck
   ib_mapped_int_outlet :portText
-  ib_outlet :leaveCommentText, :userinfoText, :invisibleCheck, :loosenNickLengthCheck, :nickLengthText
-  ib_outlet :channelsTable, :addButton, :editButton, :upButton, :downButton
+  ib_mapped_outlet :leaving_commentText, :userinfoText, :invisibleCheck
+  ib_outlet :channelsTable, :addButton, :editButton, :deleteButton, :upButton, :downButton
   ib_outlet :okButton
   
   def initialize
@@ -23,8 +23,8 @@ class ServerDialog < OSX::NSObject
     @c
   end
   
-  def start(config, uid)
-    @c = config
+  def start(conf, uid)
+    @c = conf
     @uid = uid
     NSBundle.loadNibNamed_owner('ServerDialog', self)
     @channelsTable.setTarget(self)
@@ -86,10 +86,12 @@ class ServerDialog < OSX::NSObject
     sel = t.selectedRows[0]
     unless sel
       @editButton.setEnabled(false)
+      @deleteButton.setEnabled(false)
       @upButton.setEnabled(false)
       @downButton.setEnabled(false)
     else
       @editButton.setEnabled(true)
+      @deleteButton.setEnabled(true)
       if sel == 0
         @upButton.setEnabled(false)
         @downButton.setEnabled(true)
@@ -146,13 +148,50 @@ class ServerDialog < OSX::NSObject
   end
   
   def onAdd(sender)
-    puts 'add'
+    sel = @channelsTable.selectedRows[0]
+    conf = sel ? @c.channels[sel] : IRCChannelConfig.new
+    @sheet = ChannelDialog.alloc.init
+    @sheet.delegate = self
+    @sheet.start_sheet(@window, conf, true)
   end
   
   def onEdit(sender)
     sel = @channelsTable.selectedRows[0]
     return unless sel
-    puts 'edit'
+    conf = @c.channels[sel]
+    @sheet = ChannelDialog.alloc.init
+    @sheet.delegate = self
+    @sheet.start_sheet(@window, conf)
+  end
+  
+  def channelDialog_onOk(sender, conf)
+    i = @c.channels.index {|t| t.name == conf.name }
+    if i
+      @c.channels[i] = conf
+    else
+      @c.channels << conf
+    end
+    reload_table
+    @sheet = nil
+  end
+  
+  def channelDialog_onCancel(sender)
+    @sheet = nil
+  end
+  
+  def onDelete(sender)
+    sel = @channelsTable.selectedRows[0]
+    return unless sel
+    @c.channels.delete_at(sel)
+    count = @c.channels.length
+    if count > 0
+      if count <= sel
+        @channelsTable.select(count - 1)
+      else
+        @channelsTable.select(sel)
+      end
+    end
+    reload_table
   end
   
   def onUp(sender)

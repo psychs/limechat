@@ -1,5 +1,11 @@
 2007-07-09  Satoshi Nakagawa <artension@gmail.com>
 
+	Implemented leaving comment.
+	Implemented invisible user mode.
+	Changed to use quit on disconnect from menu.
+
+2007-07-09  Satoshi Nakagawa <artension@gmail.com>
+
 	Fixed a bug, application crushes when inputted irregular text on current encoding.
 
 2007-07-09  Satoshi Nakagawa <artension@gmail.com>
