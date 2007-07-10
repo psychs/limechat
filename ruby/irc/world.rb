@@ -130,7 +130,7 @@ class IRCWorld < OSX::NSObject
     end
   end
   
-  def create_channel(unit, seed, reload=true)
+  def create_channel(unit, seed, reload=true, adjust=true)
     c = unit.find_channel(seed.name)
     return c if c
     
@@ -140,9 +140,28 @@ class IRCWorld < OSX::NSObject
     c.unit = unit
     c.log = create_log
     c.setup(seed)
-    unit.channels << c
+    
+    case seed.type
+    when :channel
+      n = unit.channels.index {|i| i.talk? }
+      if n
+        unit.channels.insert(n, c)
+      else
+        unit.channels << c
+      end
+    when :talk
+      n = unit.channels.index {|i| i.dccchat? }
+      if n
+        unit.channels.insert(n, c)
+      else
+        unit.channels << c
+      end
+    when :dccchat
+      unit.channels << c
+    end
+    
     reload_tree if reload
-    adjust_selection
+    adjust_selection if adjust
     c
   end
   

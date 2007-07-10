@@ -1,3 +1,9 @@
+2007-07-10  Satoshi Nakagawa <artension@gmail.com>
+
+	Completed channels tab on server dialog.
+	Fixed a bug, when a talk item is selected, starting add server will create a talk type channel.
+	Changed to insert new channel or talk items to an appropriate position.
+
 2007-07-09  Satoshi Nakagawa <artension@gmail.com>
 
 	Implemented leaving comment.

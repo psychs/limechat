@@ -49,7 +49,29 @@ class IRCUnit < OSX::NSObject
   
   def update_config(seed)
     @config = seed.dup
+    chans = @config.channels
     @config.channels = nil
+    
+    ary = []
+    chans.each do |i|
+      c = find_channel(i.name)
+      if c
+        c.update_config(i)
+        ary << c
+        @channels.delete(c)
+      else
+        c = @world.create_channel(self, i, false, false)
+        ary << c
+      end
+    end
+    
+    ary += @channels.select {|i| !i.channel? }
+    remains = @channels.select {|i| i.channel? }
+    remains.each {|i| part_channel(i) }
+    
+    @channels = ary
+    @world.reload_tree
+    @world.adjust_selection
   end
   
   def build_config

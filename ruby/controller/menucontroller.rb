@@ -292,6 +292,7 @@ class MenuController < OSX::NSObject
     u = @world.selunit
     config = u ? u.config.dup : IRCUnitConfig.new
     config.name = ''
+    config.channels = []
     d = ServerDialog.alloc.init
     d.prefix = 'newServerDialog'
     d.delegate = self
@@ -423,7 +424,7 @@ class MenuController < OSX::NSObject
   def onAddChannel(sender)
     u, c = @world.sel
     return unless u
-    config = c ? c.config.dup : IRCChannelConfig.new
+    config = c && c.channel? ? c.config.dup : IRCChannelConfig.new
     config.name = ''
     d = ChannelDialog.alloc.init
     d.delegate = self
