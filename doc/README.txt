@@ -1,6 +1,6 @@
 * What's LimeChat
 
-LimeChat is the IRC client written in RubyCocoa.
+LimeChat is an IRC client written in RubyCocoa.
 
 * The Author
 
