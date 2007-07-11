@@ -38,8 +38,8 @@ class ListView < OSX::NSTableView
   
   def selectRows(indices, extendSelection=false)
     set = NSMutableIndexSet.alloc.init
-    indicies.each {|i| set.addIndex(i) }
-    selectRowIndexes_byExtendingSelection(indices, extendSelection)
+    indices.each {|i| set.addIndex(i) }
+    selectRowIndexes_byExtendingSelection(set, extendSelection)
   end
   
   def countSelectedRows

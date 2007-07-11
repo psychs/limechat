@@ -15,6 +15,9 @@ class ServerDialog < OSX::NSObject
   ib_outlet :channelsTable, :addButton, :editButton, :deleteButton, :upButton, :downButton
   ib_outlet :okButton
   
+  TABLE_ROW_TYPE = 'row'
+  TABLE_ROW_TYPES = [TABLE_ROW_TYPE]
+  
   def initialize
     @prefix = 'serverDialog'
   end
@@ -29,6 +32,7 @@ class ServerDialog < OSX::NSObject
     NSBundle.loadNibNamed_owner('ServerDialog', self)
     @channelsTable.setTarget(self)
     @channelsTable.setDoubleAction('tableView_doubleClicked:')
+  	@channelsTable.registerForDraggedTypes(TABLE_ROW_TYPES);
     @window.setTitle("New Server") if uid < 0
     load
     update_connection_page
@@ -147,6 +151,44 @@ class ServerDialog < OSX::NSObject
     onEdit(sender)
   end
   
+  def tableView_writeRows_toPasteboard(sender, rows, pboard)
+    pboard.declareTypes_owner(TABLE_ROW_TYPES, self)
+    pboard.setPropertyList_forType(rows, TABLE_ROW_TYPE)
+    true
+  end
+  
+  def tableView_validateDrop_proposedRow_proposedDropOperation(sender, info, row, op)
+  	pboard = info.draggingPasteboard
+  	if op == NSTableViewDropAbove && pboard.availableTypeFromArray(TABLE_ROW_TYPES)
+  	  NSDragOperationGeneric
+	  else
+	    NSDragOperationNone
+    end
+  end
+  
+  def tableView_acceptDrop_row_dropOperation(sender, info, row, op)
+  	pboard = info.draggingPasteboard
+  	return false unless op == NSTableViewDropAbove && pboard.availableTypeFromArray(TABLE_ROW_TYPES)
+    ary = @c.channels
+    sel = @channelsTable.selectedRows.map {|i| ary[i.to_i] }
+    
+    targets = pboard.propertyListForType(TABLE_ROW_TYPE).to_a.map {|i| ary[i.to_i] }
+    up = ary[0...row] || []
+    low = ary[row...ary.length] || []
+    targets.each do |i|
+      up.delete(i)
+      low.delete(i)
+    end
+    @c.channels = up + targets + low
+
+    unless sel.empty?
+      sel = sel.map {|i| @c.channels.index(i) }
+      @channelsTable.selectRows(sel)
+    end
+    reload_table
+    true
+  end
+
   def onAdd(sender)
     sel = @channelsTable.selectedRows[0]
     conf = sel ? @c.channels[sel] : IRCChannelConfig.new
