@@ -381,6 +381,7 @@ class IRCWorld < OSX::NSObject
     @member_list.deselectAll(self)
     @member_list.scrollRowToVisible(0)
     update_title
+    reload_tree
   end
   
   def outlineViewItemDidCollapse(notification)
