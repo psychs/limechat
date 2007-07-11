@@ -12,7 +12,7 @@ class IRCUnit < OSX::NSObject
   RECONNECT_TIME = 20
   RETRY_TIME = 240
   PONG_TIME = 300
-  QUIT_TIME = 4
+  QUIT_TIME = 5
   
   def initialize
     @channels = []
