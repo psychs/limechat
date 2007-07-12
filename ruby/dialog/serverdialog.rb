@@ -45,6 +45,7 @@ class ServerDialog < OSX::NSObject
   end
   
   def close
+    @channelsTable.unregisterDraggedTypes
     @delegate = nil
     @window.close
   end
@@ -151,6 +152,7 @@ class ServerDialog < OSX::NSObject
     onEdit(sender)
   end
   
+  objc_method :tableView_writeRows_toPasteboard, 'c@:@@@'
   def tableView_writeRows_toPasteboard(sender, rows, pboard)
     pboard.declareTypes_owner(TABLE_ROW_TYPES, self)
     pboard.setPropertyList_forType(rows, TABLE_ROW_TYPE)
@@ -166,6 +168,7 @@ class ServerDialog < OSX::NSObject
     end
   end
   
+  objc_method :tableView_acceptDrop_row_dropOperation, 'c@:@@ii'
   def tableView_acceptDrop_row_dropOperation(sender, info, row, op)
   	pboard = info.draggingPasteboard
   	return false unless op == NSTableViewDropAbove && pboard.availableTypeFromArray(TABLE_ROW_TYPES)
@@ -173,13 +176,13 @@ class ServerDialog < OSX::NSObject
     sel = @channelsTable.selectedRows.map {|i| ary[i.to_i] }
     
     targets = pboard.propertyListForType(TABLE_ROW_TYPE).to_a.map {|i| ary[i.to_i] }
-    up = ary[0...row] || []
+    high = ary[0...row] || []
     low = ary[row...ary.length] || []
     targets.each do |i|
-      up.delete(i)
+      high.delete(i)
       low.delete(i)
     end
-    @c.channels = up + targets + low
+    @c.channels = high + targets + low
 
     unless sel.empty?
       sel = sel.map {|i| @c.channels.index(i) }

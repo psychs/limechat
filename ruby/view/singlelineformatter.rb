@@ -4,7 +4,6 @@
 class SingleLineFormatter < OSX::NSFormatter
   include OSX
   
-  objc_method :stringForObjectValue, '@@:@'
   def stringForObjectValue(str)
     str.to_s.gsub(/\r?\n/m, ' ')
   end

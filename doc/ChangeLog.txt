@@ -1,5 +1,9 @@
 2007-07-12  Satoshi Nakagawa <artension@gmail.com>
 
+	Completed reorder server tree dialog.
+
+2007-07-12  Satoshi Nakagawa <artension@gmail.com>
+
 	Working on reorder server tree dialog.
 
 2007-07-11  Satoshi Nakagawa <artension@gmail.com>
