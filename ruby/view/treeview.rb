@@ -25,10 +25,6 @@ class TreeView < OSX::NSOutlineView
     self.menu
   end
   
-  def doubleClick(sender)
-    p sender
-  end
-  
   def _highlightColorForCell(cell)
     nil
   end
