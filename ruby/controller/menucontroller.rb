@@ -184,7 +184,7 @@ class MenuController < OSX::NSObject
   end
   
   def treeDialog_onOk(sender, conf)
-    @world.update_tree(conf)
+    @world.update_order(conf)
   end
   
   def treeDialog_onClose(sender)

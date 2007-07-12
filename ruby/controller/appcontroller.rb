@@ -64,8 +64,6 @@ class AppController < OSX::NSObject
     @world.dcc = @dcc
     
     @history = InputHistory.new
-    
-    @menu.onServerTree(nil)
   end
   
   def applicationDidFinishLaunching(sender)

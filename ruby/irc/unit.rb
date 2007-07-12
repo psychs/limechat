@@ -74,6 +74,21 @@ class IRCUnit < OSX::NSObject
     @world.adjust_selection
   end
   
+  def update_order(conf)
+    chans = conf.channels
+    ary = []
+    chans.each do |i|
+      c = find_channel(i.name)
+      if c
+        ary << c
+        @channels.delete(c)
+      end
+    end
+    ary += @channels.select {|i| i.channel? }
+    ary += @channels.select {|i| !i.channel? }
+    @channels = ary
+  end
+  
   def store_config
     u = @config.dup
     u.channels = []

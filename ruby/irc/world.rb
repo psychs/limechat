@@ -51,8 +51,21 @@ class IRCWorld < OSX::NSObject
     @units.each {|u| u.terminate }
   end
   
-  def update_tree(conf)
-    puts 'update tree'
+  def update_order(conf)
+    ary = []
+    conf.each do |i|
+      u = find_unit(i.name)
+      if u
+        u.update_order(i)
+        ary << u
+        @units.delete(u)
+      end
+    end
+    ary += @units
+    @units = ary
+    reload_tree
+    adjust_selection
+    save
   end
   
   def store_tree
