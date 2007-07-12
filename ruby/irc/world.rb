@@ -51,6 +51,14 @@ class IRCWorld < OSX::NSObject
     @units.each {|u| u.terminate }
   end
   
+  def update_tree(conf)
+    puts 'update tree'
+  end
+  
+  def store_tree
+    @units.map {|u| u.store_config }
+  end
+  
   def auto_connect
     delay = 0
     @units.each do |u|

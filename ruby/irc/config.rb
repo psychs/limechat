@@ -99,6 +99,7 @@ end
 class IRCChannelConfig
   attr_accessor :name, :password, :mode, :topic, :auto_join, :console, :keyword, :unread
   attr_reader :type
+  attr_accessor :owner
   
   def initialize(seed={})
     @name = @password = @topic = ''

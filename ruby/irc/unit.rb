@@ -74,7 +74,7 @@ class IRCUnit < OSX::NSObject
     @world.adjust_selection
   end
   
-  def build_config
+  def store_config
     u = @config.dup
     u.channels = []
     @channels.each do |c|

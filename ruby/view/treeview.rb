@@ -3,12 +3,23 @@
 
 class TreeView < OSX::NSOutlineView
   include OSX
-  attr_accessor :responder_delegate
   
-  objc_method :acceptsFirstResponder, 'c@:'
-  def acceptsFirstResponder
-    @responder_delegate.tree_acceptFirstResponder if @responder_delegate
-    false
+  def countSelectedRows
+    selectedRowIndexes.count.to_i
+  end
+
+  def selectedRows
+    ary = []
+    set = selectedRowIndexes
+    i = set.firstIndex.to_i
+    return ary if i == NSNotFound
+    ary << i
+    (set.count.to_i-1).times do
+      i = set.indexGreaterThanIndex(i).to_i
+      break if i == NSNotFound
+      ary << i
+    end
+    ary
   end
   
   def select(index, scroll=true)
@@ -23,35 +34,5 @@ class TreeView < OSX::NSOutlineView
       select(i)
     end
     self.menu
-  end
-  
-  def _highlightColorForCell(cell)
-    nil
-  end
-  
-  def _highlightRow_clipRect(row, rect)
-    return unless NSApp.isActive
-    unless @gradient
-      begin_color = NSColor.colorWithCalibratedRed_green_blue_alpha(173.0/255.0, 187.0/255.0, 208.0/255.0, 1.0)
-      end_color = NSColor.colorWithCalibratedRed_green_blue_alpha(152.0/255.0, 170.0/255.0, 196.0/255.0, 1.0)
-      @gradient = GradientFill.gradientWithBeginColor_endColor(begin_color, end_color)
-    end
-    rect = self.rectOfRow(row)
-    @gradient.fillRect(rect)
-    
-    unless @bottom_line_color
-      @bottom_line_color = NSColor.colorWithCalibratedRed_green_blue_alpha(140.0/255.0, 152.0/255.0, 176.0/255.0, 1.0)
-    end
-    @bottom_line_color.set
-    bottom_line_rect = NSMakeRect(NSMinX(rect), NSMaxY(rect) - 1.0, NSWidth(rect), 1.0)
-    NSRectFill(bottom_line_rect)
-  end
-  
-  def drawBackgroundInClipRect(rect)
-    unless @bgcolor
-      @bgcolor = NSColor.colorWithCalibratedRed_green_blue_alpha(229.0/255.0, 237.0/255.0, 247.0/255.0, 1.0)
-    end
-    @bgcolor.set
-    NSRectFill(rect)
   end
 end

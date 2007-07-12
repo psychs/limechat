@@ -3,19 +3,9 @@
 
 class ListView < OSX::NSTableView
   include OSX
-  attr_accessor :key_delegate
   
-  def keyDown(e)
-    if @key_delegate
-      case e.keyCode
-      when 123..126 # cursor keys
-      when 116,121  # page up/down
-      else
-        @key_delegate.listView_keyDown(e)
-        return
-      end
-    end
-    super_keyDown(e)
+  def countSelectedRows
+    selectedRowIndexes.count.to_i
   end
 
   def selectedRows
@@ -40,10 +30,6 @@ class ListView < OSX::NSTableView
     set = NSMutableIndexSet.alloc.init
     indices.each {|i| set.addIndex(i) }
     selectRowIndexes_byExtendingSelection(set, extendSelection)
-  end
-  
-  def countSelectedRows
-    selectedRowIndexes.count.to_i
   end
   
   def rightMouseDown(event)

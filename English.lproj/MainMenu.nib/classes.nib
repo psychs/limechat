@@ -26,8 +26,8 @@
         }, 
         {CLASS = ChatBox; LANGUAGE = ObjC; SUPERCLASS = NSBox; }, 
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
-        {CLASS = ListView; LANGUAGE = ObjC; SUPERCLASS = NSTableView; }, 
         {CLASS = MainWindow; LANGUAGE = ObjC; SUPERCLASS = NSWindow; }, 
+        {CLASS = MemberListView; LANGUAGE = ObjC; SUPERCLASS = NSTableView; }, 
         {
             ACTIONS = {
                 onAddChannel = id; 
@@ -54,15 +54,16 @@
                 onPreferences = id; 
                 onSearchWeb = id; 
                 onServerProperties = id; 
+                onServerTree = id; 
                 onTopic = id; 
             }; 
             CLASS = MenuController; 
             LANGUAGE = ObjC; 
             SUPERCLASS = NSObject; 
         }, 
+        {CLASS = ServerTreeView; LANGUAGE = ObjC; SUPERCLASS = NSOutlineView; }, 
         {CLASS = SingleLineFormatter; LANGUAGE = ObjC; SUPERCLASS = NSFormatter; }, 
-        {CLASS = Splitter; LANGUAGE = ObjC; SUPERCLASS = NSSplitView; }, 
-        {CLASS = TreeView; LANGUAGE = ObjC; SUPERCLASS = NSOutlineView; }
+        {CLASS = Splitter; LANGUAGE = ObjC; SUPERCLASS = NSSplitView; }
     ); 
     IBVersion = 1; 
 }

@@ -1,0 +1,14 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {onCancel = id; onDown = id; onOk = id; onUp = id; }; 
+            CLASS = TreeDialog; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {downButton = id; tree = id; upButton = id; window = id; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = TreeView; LANGUAGE = ObjC; SUPERCLASS = NSOutlineView; }
+    ); 
+    IBVersion = 1; 
+}

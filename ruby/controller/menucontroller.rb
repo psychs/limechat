@@ -36,6 +36,8 @@ class MenuController < OSX::NSObject
     case i.tag
     when 102  # preferences
       true
+    when 103  # server tree
+      true
     when 201  # dcc
       true
     when 313  # paste
@@ -169,6 +171,24 @@ class MenuController < OSX::NSObject
   
   def preferenceDialog_onClose(sender)
     @pref_dialog = nil
+  end
+  
+  def onServerTree(sender)
+    unless @tree_dialog
+      @tree_dialog = TreeDialog.alloc.init
+      @tree_dialog.delegate = self
+      @tree_dialog.start(@world.store_tree)
+    else
+      @tree_dialog.show
+    end
+  end
+  
+  def treeDialog_onOk(sender, conf)
+    @world.update_tree(conf)
+  end
+  
+  def treeDialog_onClose(sender)
+    @tree_dialog = nil
   end
   
   
@@ -341,7 +361,7 @@ class MenuController < OSX::NSObject
     d = ServerDialog.alloc.init
     d.delegate = self
     u.property_dialog = d
-    d.start(u.build_config, u.id)
+    d.start(u.store_config, u.id)
   end
   
   def serverDialog_onClose(sender)
