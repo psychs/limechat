@@ -1,3 +1,7 @@
+2007-07-13  Satoshi Nakagawa <artension@gmail.com>
+
+	Fixed a bug, reporting an error even when DCC file sending completed successfully.
+
 2007-07-12  Satoshi Nakagawa <artension@gmail.com>
 
 	Implemented reordering servers and channels.
