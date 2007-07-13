@@ -240,8 +240,7 @@ class IRCUnit < OSX::NSObject
         c = s.token!
         send(c, s)
       else
-        print_both(sel, :privmsg, @mynick, s)
-        send(:privmsg, sel.name, ":#{s}")
+        send_text(sel, :privmsg, s)
       end
     end
     true
