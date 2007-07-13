@@ -46,7 +46,7 @@ class IRCSendMessage
     @raw = s
     
     if @penalty == Penalty::NORMAL
-      case @command
+      case @command.to_sym
       when :privmsg,:notice; @penalty += s.length / 100
       when :mode; @penalty = ChannelMode.calc_penalty(@trail)
       when :part; @penalty = Penalty::PART

@@ -197,12 +197,13 @@ class IRCUnit < OSX::NSObject
     change_state_to_off
   end
   
-  def quit
+  def quit(comment=nil)
     return disconnect unless login?
-    send(:quit, ":#{@config.leaving_comment}")
     @quitting = true
     @quit_timer = QUIT_TIME
     @reconnect = false
+    comment = @config.leaving_comment unless comment
+    send(:quit, ":#{comment}")
   end
   
   def cancel_reconnect
@@ -234,11 +235,9 @@ class IRCUnit < OSX::NSObject
       next if s.empty?
       if s[0] == ?/
         s[0] = ''
-        c = s.token!
-        send(c, s)
+        send_command(s)
       elsif sel == self
-        c = s.token!
-        send(c, s)
+        send_command(s)
       else
         send_text(sel, :privmsg, s)
       end
@@ -252,6 +251,35 @@ class IRCUnit < OSX::NSObject
       next if s.empty?
       print_both(chan, cmd, @mynick, s)
       send(cmd, chan.name, ":#{s}")
+    end
+    true
+  end
+  
+  def send_command(s)
+    return false unless connected?
+    command = s.token!
+    cmd = command.downcase.to_sym
+    case cmd
+    when :privmsg,:msg,:notice,:action
+      cmd = :privmsg if cmd == :msg
+      target = s.token!
+      c = find_channel(target)
+      print_both(c || target, cmd, @mynick, s)
+      if cmd == :action
+        cmd = :privmsg
+        s = "\x01ACTION #{s}\x01"
+      end
+      send(cmd, target, ":#{s}")
+    when :quit
+      quit(s)
+    when :nick
+      change_nick(s)
+    else
+      if cmd
+        send(cmd, s)
+      else
+        send(command, s)
+      end
     end
     true
   end
@@ -290,7 +318,6 @@ class IRCUnit < OSX::NSObject
   
   
   def change_nick(tonick)
-    return if @mynick == tonick
     @sentnick = @inputnick = tonick
     send(:nick, @inputnick)
   end
