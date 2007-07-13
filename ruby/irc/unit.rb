@@ -232,8 +232,8 @@ class IRCUnit < OSX::NSObject
     sel = @world.selected
     str.split(/\r?\n/).each do |s|
       next if s.empty?
-      if s[0,1] == '/'
-        s[0,1] = ''
+      if s[0] == ?/
+        s[0] = ''
         c = s.token!
         send(c, s)
       elsif sel == self
@@ -1070,7 +1070,7 @@ class IRCUnit < OSX::NSObject
         ver = text.token!.to_i
         lfname = text
         if ver >= 2
-          lfname[0] = '' if lfname[0,1] == ':'
+          lfname[0] = '' if lfname[0] == ?:
           fname = lfname if !lfname.empty?
         end
         receive_dcc_send(m, fname, addr, port, size, ver)
