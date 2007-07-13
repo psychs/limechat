@@ -201,11 +201,11 @@ class TreeDialog < OSX::NSObject
       sel = current_sel
       
       ary = @c
-      high = ary[0...index] || []
-      low = ary[index...ary.length] || []
-      high.delete(i)
+      low = ary[0...index] || []
+      high = ary[index...ary.length] || []
       low.delete(i)
-      @c = high + [i] + low
+      high.delete(i)
+      @c = low + [i] + high
       reload_tree
       
       set_sel(sel)
@@ -215,11 +215,11 @@ class TreeDialog < OSX::NSObject
       sel = current_sel
       
       ary = item.channels
-      high = ary[0...index] || []
-      low = ary[index...ary.length] || []
-      high.delete(i)
+      low = ary[0...index] || []
+      high = ary[index...ary.length] || []
       low.delete(i)
-      item.channels = high + [i] + low
+      high.delete(i)
+      item.channels = low + [i] + high
       reload_tree
       
       set_sel(sel)

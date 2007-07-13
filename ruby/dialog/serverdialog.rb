@@ -176,13 +176,13 @@ class ServerDialog < OSX::NSObject
     sel = @channelsTable.selectedRows.map {|i| ary[i.to_i] }
     
     targets = pboard.propertyListForType(TABLE_ROW_TYPE).to_a.map {|i| ary[i.to_i] }
-    high = ary[0...row] || []
-    low = ary[row...ary.length] || []
+    low = ary[0...row] || []
+    high = ary[row...ary.length] || []
     targets.each do |i|
-      high.delete(i)
       low.delete(i)
+      high.delete(i)
     end
-    @c.channels = high + targets + low
+    @c.channels = low + targets + high
 
     unless sel.empty?
       sel = sel.map {|i| @c.channels.index(i) }
