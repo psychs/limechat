@@ -111,6 +111,15 @@ class LogController < OSX::NSObject
     key
   end
   
+  def use_small_scroller(v)
+    subviews = @view.mainFrame.frameView.subviews
+    scrollView = subviews.find {|i| i.kind_of?(NSScrollView) }
+    if scrollView
+      scrollView.verticalScroller.setControlSize(v ? NSSmallControlSize : NSRegularControlSize)
+      scrollView.setAutohidesScrollers(true)
+    end
+  end
+  
   # delegate
   
   def webView_windowScriptObjectAvailable(sender, js)
