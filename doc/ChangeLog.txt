@@ -1,5 +1,9 @@
 2007-07-15  Satoshi Nakagawa <artension@gmail.com>
 
+	Changed to save preferences under 'pref' group.
+
+2007-07-15  Satoshi Nakagawa <artension@gmail.com>
+
 	Added encodings support:
 		Latin-3, Latin-4, Latin-7, Latin-9,
 		Korean CP949, GBK, GB18030, BIG5,

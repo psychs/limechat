@@ -50,19 +50,28 @@ class Preferences
   end
     
   def load
-    self.class.models.each do |i|
-      m = instance_variable_get('@' + i.to_s)
-      d = read_defaults(i.to_s)
-      m.set_persistent_attrs(d)
+    d = read_defaults('pref')
+    if d
+      self.class.models.each do |i|
+        m = instance_variable_get('@' + i.to_s)
+        m.set_persistent_attrs(d[i])
+      end
+    else
+      self.class.models.each do |i|
+        m = instance_variable_get('@' + i.to_s)
+        d = read_defaults(i.to_s)
+        m.set_persistent_attrs(d)
+      end
     end
   end
   
   def save
+    h = {}
     self.class.models.each do |i|
       m = instance_variable_get('@' + i.to_s)
-      h = m.get_persistent_attrs
-      write_defaults(i.to_s, h)
+      h[i] = m.get_persistent_attrs
     end
+    write_defaults('pref', h)
   end
   
   def load_world
