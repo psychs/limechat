@@ -1,3 +1,10 @@
+2007-07-15  Satoshi Nakagawa <artension@gmail.com>
+
+	Added encodings support:
+		Latin-3, Latin-4, Latin-7, Latin-9,
+		Korean CP949, GBK, GB18030, BIG5,
+		KOI-8R, ISO-8859-5, ISO-8859-8.
+
 2007-07-14  Satoshi Nakagawa <artension@gmail.com>
 
 	Added confirmation dialog on quitting.
