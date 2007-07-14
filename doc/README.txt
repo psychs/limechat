@@ -7,6 +7,12 @@ LimeChat is an IRC client written in RubyCocoa.
 Satoshi Nakagawa <artension@gmail.com>
 #limechat on irc.freenode.net
 
+* Thanks To
+
+Fujimoto Hisa       # RubyCocoa creator
+Laurent Sansonetti  # many requests
+Jun Morimoto        # bug fixes
+
 * License (Ruby's)
 
 LimeChat is copyrighted free software by Satoshi Nakagawa <artension@gmail.com>.
