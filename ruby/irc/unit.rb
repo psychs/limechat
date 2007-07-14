@@ -231,7 +231,7 @@ class IRCUnit < OSX::NSObject
   def input_text(str)
     return false unless login?
     sel = @world.selected
-    str.split(/\r?\n/).each do |s|
+    str.split(/\r\n|\r|\n/).each do |s|
       next if s.empty?
       if s[0] == ?/
         s[0] = ''
@@ -247,7 +247,7 @@ class IRCUnit < OSX::NSObject
   
   def send_text(chan, cmd, str)
     return false unless login? && chan
-    str.split(/\r?\n/).each do |s|
+    str.split(/\r\n|\r|\n/).each do |s|
       next if s.empty?
       print_both(chan, cmd, @mynick, s)
       send(cmd, chan.name, ":#{s}")

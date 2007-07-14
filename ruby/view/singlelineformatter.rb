@@ -5,12 +5,12 @@ class SingleLineFormatter < OSX::NSFormatter
   include OSX
   
   def stringForObjectValue(str)
-    str.to_s.gsub(/\r?\n/m, ' ')
+    str.to_s.gsub(/\r\n|\r|\n/, ' ')
   end
   
   objc_method :getObjectValue_forString_errorDescription, 'c@:^@@^@'
   def getObjectValue_forString_errorDescription(objp, str, err)
-    s = str.to_s.gsub(/\r?\n/m, ' ')
+    s = str.to_s.gsub(/\r\n|\r|\n/, ' ')
     objp.assign(NSString.stringWithString(s))
     true
   end
@@ -18,8 +18,8 @@ class SingleLineFormatter < OSX::NSFormatter
   objc_method :isPartialStringValid_newEditingString_errorDescription, 'c@:@^@^@'
   def isPartialStringValid_newEditingString_errorDescription(str, strp, err)
     s = str.to_s
-    return true unless s =~ /\r?\n/m
-    s = s.gsub(/\r?\n/m, ' ')
+    return true unless s =~ /\r\n|\r|\n/
+    s = s.gsub(/\r\n|\r|\n/, ' ')
     strp.assign(NSString.stringWithString(s))
     false
   end

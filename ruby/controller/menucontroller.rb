@@ -207,7 +207,7 @@ class MenuController < OSX::NSObject
       return unless s
       s = s.to_s
       sel = @world.selected
-      if sel && !sel.unit? && /.+\r?\n.+/ =~ s
+      if sel && !sel.unit? && /.+(\r\n|\r|\n).+/ =~ s
         # multi line
         @paste = PasteSheet.alloc.init
         @paste.window = window
@@ -232,6 +232,7 @@ class MenuController < OSX::NSObject
     @paste = nil
     u, c = @world.find_by_id(sender.uid, sender.cid)
     return unless u && c
+    s = s.gsub(/\r\n|\r|\n/, "\n")
     u.send_text(c, :notice, s)
   end
   

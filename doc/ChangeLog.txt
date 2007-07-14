@@ -1,3 +1,7 @@
+2007-07-14  Satoshi Nakagawa <artension@gmail.com>
+
+	Added support for \r as new line.
+
 2007-07-13  Satoshi Nakagawa <artension@gmail.com>
 
 	Changed to parse inputted commands: msg, privmsg, notice, action, nick, quit.
