@@ -1,5 +1,10 @@
 2007-07-15  Satoshi Nakagawa <artension@gmail.com>
 
+	Added an option, confirm to quit the application.
+	Changed to display 'specify address' caption in gray color when it is disabled.
+
+2007-07-15  Satoshi Nakagawa <artension@gmail.com>
+
 	Changed to save preferences under 'pref' group.
 
 2007-07-15  Satoshi Nakagawa <artension@gmail.com>

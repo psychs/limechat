@@ -10,6 +10,8 @@
                 "dcc_first_port" = id; 
                 "dcc_last_port" = id; 
                 "dcc_myaddress" = id; 
+                "dcc_myaddress_caption" = id; 
+                "gen_confirm_quit" = id; 
                 "key_dislike_words" = id; 
                 "key_words" = id; 
                 window = id; 

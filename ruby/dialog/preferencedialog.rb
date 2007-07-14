@@ -8,10 +8,11 @@ class PreferenceDialog < OSX::NSObject
   include DialogHelper
   attr_accessor :delegate
   attr_reader :m
-  ib_outlet :window
+  ib_outlet :window, :dcc_myaddress_caption
   ib_mapped_outlet :key_words, :key_dislike_words
   ib_mapped_outlet :dcc_address_detection_method, :dcc_myaddress
   ib_mapped_int_outlet :dcc_first_port, :dcc_last_port
+  ib_mapped_outlet :gen_confirm_quit
   
   def initialize
     @prefix = 'preferenceDialog'
@@ -21,7 +22,7 @@ class PreferenceDialog < OSX::NSObject
     @m = pref
     NSBundle.loadNibNamed_owner('PreferenceDialog', self)
     load
-    update
+    update_myaddress
     show
   end
   
@@ -49,7 +50,7 @@ class PreferenceDialog < OSX::NSObject
   end
   
   def onDccAddressDetectionMethodChanged(sender)
-    update
+    update_myaddress
   end
   
   private
@@ -69,7 +70,9 @@ class PreferenceDialog < OSX::NSObject
     m.dcc.last_port = m.dcc.first_port if m.dcc.last_port < m.dcc.first_port
   end
   
-  def update
-    @dcc_myaddress.setEnabled(@dcc_address_detection_method.selectedItem.tag == Preferences::Dcc::ADDR_DETECT_SPECIFY)
+  def update_myaddress
+    cond = @dcc_address_detection_method.selectedItem.tag == Preferences::Dcc::ADDR_DETECT_SPECIFY
+    @dcc_myaddress_caption.setTextColor(cond ? NSColor.textColor : NSColor.disabledControlTextColor)
+    @dcc_myaddress.setEnabled(cond)
   end
 end

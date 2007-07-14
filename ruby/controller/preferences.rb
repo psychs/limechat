@@ -42,11 +42,20 @@ class Preferences
     end
   end
   
-  model_attr :key, :dcc
+  class General
+    include PersistenceHelper
+    persistent_attr :confirm_quit
+    def initialize
+      @confirm_quit = true
+    end
+  end
+  
+  model_attr :key, :dcc, :gen
   
   def initialize
     @key = Keyword.new
     @dcc = Dcc.new
+    @gen = General.new
   end
     
   def load

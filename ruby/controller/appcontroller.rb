@@ -224,7 +224,11 @@ class AppController < OSX::NSObject
   private
 
   def queryTerminate
-    NSRunCriticalAlertPanel('LimeChat', 'Are you sure to quit?', 'OK', 'Cancel', nil) == NSAlertDefaultReturn
+    if @pref.gen.confirm_quit
+      NSRunCriticalAlertPanel('LimeChat', 'Are you sure to quit?', 'Quit', 'Cancel', nil) == NSAlertDefaultReturn
+    else
+      true
+    end
   end
   
   def load_window_state
