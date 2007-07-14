@@ -8,6 +8,10 @@ class AppController < OSX::NSObject
   ib_outlet :menu, :server_menu, :channel_menu, :member_menu, :tree_menu, :log_menu, :console_menu
   
   def awakeFromNib
+    app = NSApplication.sharedApplication
+    nc = NSWorkspace.sharedWorkspace.notificationCenter
+    nc.addObserver_selector_name_object(self, :terminateWithoutConfirm, NSWorkspaceWillPowerOffNotification, NSWorkspace.sharedWorkspace)
+    
     @pref = Preferences.new
     @pref.load
     
@@ -66,14 +70,23 @@ class AppController < OSX::NSObject
     @history = InputHistory.new
   end
   
+  def terminateWithoutConfirm(sender)
+    @terminating = true
+    NSApp.terminate(self)
+  end
+  
   def applicationDidFinishLaunching(sender)
     @world.start_timer
     @world.auto_connect
   end
   
   def applicationShouldTerminate(sender)
-    return NSTerminateNow;
-    #return NSTerminateCancel;
+    return NSTerminateNow if @terminating
+    if queryTerminate
+      NSTerminateNow
+    else
+      NSTerminateCancel
+    end
   end
   
   def applicationWillTerminate(notification)
@@ -95,11 +108,16 @@ class AppController < OSX::NSObject
   end
   
   def windowShouldClose(sender)
-    true
+    if queryTerminate
+      @terminating = true
+      true
+    else
+      false
+    end
   end
   
   def windowWillClose(notification)
-    NSApp.terminate(self)
+    terminateWithoutConfirm(self)
   end
   
   def preferences_changed
@@ -204,6 +222,10 @@ class AppController < OSX::NSObject
   
   
   private
+
+  def queryTerminate
+    NSRunCriticalAlertPanel('LimeChat', 'Are you sure to quit?', 'OK', 'Cancel', nil) == NSAlertDefaultReturn
+  end
   
   def load_window_state
     win = @pref.load_window('main_window')

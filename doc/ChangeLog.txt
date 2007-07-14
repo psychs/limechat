@@ -1,5 +1,9 @@
 2007-07-14  Satoshi Nakagawa <artension@gmail.com>
 
+	Added confirmation dialog on quitting.
+
+2007-07-14  Satoshi Nakagawa <artension@gmail.com>
+
 	Added small scroller support on the code level.
 
 2007-07-14  Satoshi Nakagawa <artension@gmail.com>
