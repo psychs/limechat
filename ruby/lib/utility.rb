@@ -83,14 +83,31 @@ end
 module OSX
   class NSPoint
     def dup; NSPoint.new(x, y); end
+    def +(v)
+      if v.kind_of?(NSSize)
+        NSPoint.new(x + v.width, y + v.height)
+      else
+        raise ArgumentException, "parameter should be NSSize"
+      end
+    end
+    def -(v)
+      if v.kind_of?(NSSize)
+        NSPoint.new(x - v.width, y - v.height)
+      else
+        raise ArgumentException, "parameter should be NSSize"
+      end
+    end
   end
   
   class NSSize
     def dup; NSSize.new(width, height); end
+    def /(v); NSSize.new(width / v, height / v); end
+    def *(v); NSSize.new(width * v, height * v); end
   end
   
   class NSRect
     def dup; NSRect.new(origin, size); end
+    def center; origin + (size / 2.0); end
     def self.from_dic(d); NSRect.new(d[:x], d[:y], d[:w], d[:h]); end
     def to_dic
       {

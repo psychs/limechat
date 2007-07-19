@@ -66,7 +66,22 @@ class WhoisDialog < OSX::NSObject
     update_nick
   end
   
+  ROTATE_COUNT = 10
+  OFFSET_SIZE = NSSize.new(20, -20)
+  @@place = 0
+  
   def show
+    unless @window.isVisible
+      scr = NSScreen.screens[0]
+      if scr
+        p = scr.visibleFrame.center
+        p -= @window.frame.size / 2.0
+        p += OFFSET_SIZE * (@@place - ROTATE_COUNT/2)
+        @window.setFrameOrigin(p)
+        @@place += 1
+        @@place = 0 if @@place >= ROTATE_COUNT
+      end
+    end
     @window.makeKeyAndOrderFront(self)
   end
   
