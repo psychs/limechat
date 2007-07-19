@@ -81,6 +81,19 @@ class Bignum
 end
 
 module OSX
+  class NSWindow
+    def moveToCenter
+      scr = OSX::NSScreen.screens[0]
+      if scr
+        p = scr.visibleFrame.center
+        p -= self.frame.size / 2
+        self.setFrameOrigin(p)
+      else
+        self.center
+      end
+    end
+  end
+  
   class NSPoint
     def dup; NSPoint.new(x, y); end
     def +(v)
@@ -107,7 +120,7 @@ module OSX
   
   class NSRect
     def dup; NSRect.new(origin, size); end
-    def center; origin + (size / 2.0); end
+    def center; origin + (size / 2); end
     def self.from_dic(d); NSRect.new(d[:x], d[:y], d[:w], d[:h]); end
     def to_dic
       {

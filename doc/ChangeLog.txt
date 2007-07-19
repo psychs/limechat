@@ -1,6 +1,6 @@
-2007-07-15  Satoshi Nakagawa <artension@gmail.com>
+2007-07-20  Satoshi Nakagawa <artension@gmail.com>
 
-	Changed to place whois dialogs on center of the screen.
+	Changed initial location of windows.
 
 2007-07-15  Satoshi Nakagawa <artension@gmail.com>
 

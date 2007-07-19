@@ -349,7 +349,24 @@ class DccManager < OSX::NSObject
       @window.setFrame_display(f, true)
       @splitter.setPosition(win[:split])
     else
-      @splitter.setPosition(150)
+      scr = NSScreen.screens[0]
+      if scr
+        p = scr.visibleFrame.center
+        w = 350
+        h = 300
+        x = p.x - w/2 - 450
+        x = 100 if x < 0
+        y = p.y - h/2
+        win = {
+          :x => x,
+          :y => y,
+          :w => w,
+          :h => h
+        }
+        f = NSRect.from_dic(win)
+        @window.setFrame_display(f, true)
+      end
+      @splitter.setPosition(100)
     end
   end
 

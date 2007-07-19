@@ -27,6 +27,7 @@ class PreferenceDialog < OSX::NSObject
   end
   
   def show
+    @window.center unless @window.isVisible
     @window.makeKeyAndOrderFront(self)
   end
   

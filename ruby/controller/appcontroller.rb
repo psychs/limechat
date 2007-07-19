@@ -240,9 +240,23 @@ class AppController < OSX::NSObject
       @log_split.setPosition(win[:log])
       @info_split.setPosition(win[:info])
     else
-      @root_split.setPosition(150.0)
-      @log_split.setPosition(150.0)
-      @info_split.setPosition(250.0)
+      scr = NSScreen.screens[0]
+      if scr
+        p = scr.visibleFrame.center
+        w = 500
+        h = 500
+        win = {
+          :x => p.x - w/2,
+          :y => p.y - h/2,
+          :w => w,
+          :h => h
+        }
+        f = NSRect.from_dic(win)
+        @window.setFrame_display(f, true)
+      end
+      @root_split.setPosition(150)
+      @log_split.setPosition(150)
+      @info_split.setPosition(250)
     end
   end
   

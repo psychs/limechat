@@ -75,7 +75,7 @@ class WhoisDialog < OSX::NSObject
       scr = NSScreen.screens[0]
       if scr
         p = scr.visibleFrame.center
-        p -= @window.frame.size / 2.0
+        p -= @window.frame.size / 2
         p += OFFSET_SIZE * (@@place - ROTATE_COUNT/2)
         @window.setFrameOrigin(p)
         @@place += 1
