@@ -1,3 +1,7 @@
+2007-07-21  Satoshi Nakagawa <artension@gmail.com>
+
+	Moved RUBYCOCOA_THREAD_HOOK_DISABLE = 1 to main.m.
+
 2007-07-20  Satoshi Nakagawa <artension@gmail.com>
 
 	Changed initial location of windows.
