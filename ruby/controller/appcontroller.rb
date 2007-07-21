@@ -100,11 +100,11 @@ class AppController < OSX::NSObject
   def applicationDidBecomeActive(notification)
     sel = @world.selected
     sel.reset_state if sel
-    @tree.reloadData
+    @tree.setNeedsDisplay(true)
   end
   
   def applicationDidResignActive(notification)
-    @tree.reloadData
+    @tree.setNeedsDisplay(true)
   end
   
   def windowShouldClose(sender)

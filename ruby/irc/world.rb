@@ -323,7 +323,13 @@ class IRCWorld < OSX::NSObject
   end
   
   def reload_tree
+    if @reloading_tree
+      @tree.setNeedsDisplay(true)
+      return
+    end
+    @reloading_tree = true
     @tree.reloadData
+    @reloading_tree = false
   end
   
   
