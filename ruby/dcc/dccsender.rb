@@ -86,6 +86,11 @@ class DccSender
   end
   
   def tcpserver_on_disconnect(sender, c)
+    if @processed_size >= @size
+      @status = :complete
+      close
+      return
+    end
     return if @status == :complete || @status == :error
     @status = :error
     @error = 'Disconnected'
@@ -101,7 +106,6 @@ class DccSender
     if @processed_size >= @size
       if c.send_queue_size == 0
         @status = :complete
-        close
       end
     else
       send

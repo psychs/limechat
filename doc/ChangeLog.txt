@@ -1,5 +1,9 @@
 2007-07-21  Satoshi Nakagawa <artension@gmail.com>
 
+	Fixed a bug, file sending maybe disconnected before complete.
+
+2007-07-21  Satoshi Nakagawa <artension@gmail.com>
+
 	Changed to avoid calling reloadData in reloadData.
 	Removed RUBYCOCOA_THREAD_HOOK_DISABLE = 1.
 
