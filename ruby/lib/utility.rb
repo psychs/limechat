@@ -82,7 +82,7 @@ end
 
 module OSX
   class NSWindow
-    def moveToCenter
+    def centerOfScreen
       scr = OSX::NSScreen.screens[0]
       if scr
         p = scr.visibleFrame.center
@@ -93,15 +93,26 @@ module OSX
       end
     end
     
-    def moveToCenterOf(win)
-      p = win.frame.center
+    def centerOfWindow(window)
+      p = window.frame.center
       p -= self.frame.size / 2
+      scr = window.screen
+      if scr
+        sf = scr.visibleFrame
+        f = self.frame
+        f.origin = p
+        unless sf.contain?(f)
+          f = f.adjustInRect(sf)
+          p = f.origin
+        end
+      end
       self.setFrameOrigin(p)
     end
   end
   
   class NSPoint
     def dup; NSPoint.new(x, y); end
+    def inRect(r); OSX::NSPointInRect(self, r); end
     def +(v)
       if v.kind_of?(NSSize)
         NSPoint.new(x + v.width, y + v.height)
@@ -122,11 +133,43 @@ module OSX
     def dup; NSSize.new(width, height); end
     def /(v); NSSize.new(width / v, height / v); end
     def *(v); NSSize.new(width * v, height * v); end
+    def +(v); NSSize.new(width + v, height + v); end
+    def -(v); NSSize.new(width - v, height - v); end
   end
   
   class NSRect
     def dup; NSRect.new(origin, size); end
+    def width; size.width; end
+    def height; size.height; end
+    def contain?(r)
+      if r.kind_of?(NSRect)
+        OSX::NSContainsRect(self, r)
+      elsif r.kind_of?(NSPoint)
+        OSX::NSPointInRect(r, self)
+      else
+        raise ArgumentException, "parameter should be NSRect or NSPoint"
+      end
+    end
+    def intersect?(r); OSX::NSIntersectsRect(self, r); end
+    def offset(x, y); NSRect.new(origin.x + x, origin.y + x, size.width, size.height); end
     def center; origin + (size / 2); end
+    def inflate(d); NSRect.new(origin.x - d, origin.y - d, size.width + d*2, size.height + d*2); end
+    def adjustInRect(r)
+      n = dup
+      if r.origin.x + r.size.width < n.origin.x + n.size.width
+        n.origin.x = r.origin.x + r.size.width - n.size.width
+      end
+      if r.origin.y + r.size.height < n.origin.y + n.size.height
+        n.origin.y = r.origin.y + r.size.height - n.size.height
+      end
+      if origin.x < r.origin.x
+        n.origin.x = r.origin.x
+      end
+      if origin.y < r.origin.y
+        n.origin.y = r.origin.y
+      end
+      n
+    end
     def self.from_dic(d); NSRect.new(d[:x], d[:y], d[:w], d[:h]); end
     def to_dic
       {

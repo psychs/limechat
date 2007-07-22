@@ -74,7 +74,7 @@ class ChannelDialog < OSX::NSObject
   end
   
   def show
-    @window.moveToCenterOf(@parent) unless @window.isVisible
+    @window.centerOfWindow(@parent) unless @window.isVisible
     @window.makeKeyAndOrderFront(self)
   end
   
