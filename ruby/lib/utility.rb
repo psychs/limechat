@@ -36,7 +36,7 @@ class String
   end
   
   def server?
-    !index('.')
+    !!index('.')
   end
   
   def expand_path

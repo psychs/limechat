@@ -1,3 +1,8 @@
+2007-07-23  Satoshi Nakagawa <artension@gmail.com>
+
+	Released 0.5.
+	Fixed a bug, talk messages are not printed in talk frames.
+
 2007-07-22  Satoshi Nakagawa <artension@gmail.com>
 
 	Released 0.4.
