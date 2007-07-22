@@ -54,6 +54,16 @@ class DccManager < OSX::NSObject
     @window.orderOut(self)
   end
   
+  def count_receiving_items
+    ary = @receivers.select {|i| i.status == :receiving }
+    ary.length
+  end
+  
+  def count_sending_items
+    ary = @senders.select {|i| i.status == :sending }
+    ary.length
+  end
+  
   def onClear(sender)
     sel = @receivers.select {|i| i.status == :error || i.status == :stop || i.status == :complete}
     sel.each {|i| delete_receiver(i)}

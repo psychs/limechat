@@ -224,7 +224,20 @@ class AppController < OSX::NSObject
   private
 
   def queryTerminate
-    if @pref.gen.confirm_quit
+    rec = @dcc.count_receiving_items
+    send = @dcc.count_sending_items
+    if rec > 0 || send > 0
+      msg = "Now you are "
+      if rec > 0
+        msg += "receiving #{rec} files"
+      end
+      if send > 0
+        msg += " and " if rec > 0
+        msg += "sending #{send} files"
+      end
+      msg += ".\nAre you sure to quit?"
+      return NSRunCriticalAlertPanel('LimeChat', msg, 'Anyway Quit', 'Cancel', nil) == NSAlertDefaultReturn
+    elsif @pref.gen.confirm_quit
       NSRunCriticalAlertPanel('LimeChat', 'Are you sure to quit?', 'Quit', 'Cancel', nil) == NSAlertDefaultReturn
     else
       true
