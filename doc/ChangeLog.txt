@@ -1,5 +1,9 @@
 2007-07-22  Satoshi Nakagawa <artension@gmail.com>
 
+	Changed to place server dialogs and channel dialogs in center of the main window.
+
+2007-07-22  Satoshi Nakagawa <artension@gmail.com>
+
 	Added quitting confirmation when there are some DCC file transfers.
 
 2007-07-21  Satoshi Nakagawa <artension@gmail.com>

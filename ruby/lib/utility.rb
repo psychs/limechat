@@ -92,6 +92,12 @@ module OSX
         self.center
       end
     end
+    
+    def moveToCenterOf(win)
+      p = win.frame.center
+      p -= self.frame.size / 2
+      self.setFrameOrigin(p)
+    end
   end
   
   class NSPoint

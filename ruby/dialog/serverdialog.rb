@@ -6,9 +6,9 @@ require 'dialoghelper'
 class ServerDialog < OSX::NSObject
   include OSX
   include DialogHelper  
-  attr_accessor :window
-  attr_accessor :delegate, :prefix
+  attr_accessor :delegate, :prefix, :parent
   attr_reader :uid
+  ib_outlet :window
   ib_mapped_outlet :nameText, :hostCombo, :passwordText, :nickText, :usernameText, :realnameText, :encodingCombo, :auto_connectCheck
   ib_mapped_int_outlet :portText
   ib_mapped_outlet :leaving_commentText, :userinfoText, :invisibleCheck
@@ -41,6 +41,7 @@ class ServerDialog < OSX::NSObject
   end
   
   def show
+    @window.moveToCenterOf(@parent) unless @window.isVisible
     @window.makeKeyAndOrderFront(self)
   end
   

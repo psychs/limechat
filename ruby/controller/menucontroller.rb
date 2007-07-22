@@ -315,8 +315,9 @@ class MenuController < OSX::NSObject
     config.name = ''
     config.channels = []
     d = ServerDialog.alloc.init
-    d.prefix = 'newServerDialog'
+    d.parent = @window
     d.delegate = self
+    d.prefix = 'newServerDialog'
     @server_dialogs << d
     d.start(config, -1)
   end
@@ -360,6 +361,7 @@ class MenuController < OSX::NSObject
       return
     end
     d = ServerDialog.alloc.init
+    d.parent = @window
     d.delegate = self
     u.property_dialog = d
     d.start(u.store_config, u.id)
@@ -448,6 +450,7 @@ class MenuController < OSX::NSObject
     config = c && c.channel? ? c.config.dup : IRCChannelConfig.new
     config.name = ''
     d = ChannelDialog.alloc.init
+    d.parent = @window
     d.delegate = self
     d.prefix = 'newChannelDialog'
     @channel_dialogs << d
@@ -483,6 +486,7 @@ class MenuController < OSX::NSObject
       return
     end
     d = ChannelDialog.alloc.init
+    d.parent = @window
     d.delegate = self
     c.property_dialog = d
     d.start(c.config, u.id, c.id)
