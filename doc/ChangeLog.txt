@@ -1,5 +1,10 @@
 2007-07-22  Satoshi Nakagawa <artension@gmail.com>
 
+	Released 0.4.
+	Added GPL.txt to dmg.
+
+2007-07-22  Satoshi Nakagawa <artension@gmail.com>
+
 	Added options of connect, disconnect, join and leave on double click.
 
 2007-07-22  Satoshi Nakagawa <artension@gmail.com>

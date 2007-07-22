@@ -17,7 +17,7 @@ Jun Morimoto        # bug fixes
 
 LimeChat is copyrighted free software by Satoshi Nakagawa <artension@gmail.com>.
 You can redistribute it and/or modify it under either the terms of the GPL
-version 2 (see the file GPL), or the conditions below:
+version 2 (see the file GPL.txt), or the conditions below:
 
   1. You may make and give away verbatim copies of the source form of the
      software without restriction, provided that you duplicate all of the
