@@ -45,8 +45,13 @@ class Preferences
   class General
     include PersistenceHelper
     persistent_attr :confirm_quit
+    persistent_attr :connect_on_doubleclick, :disconnect_on_doubleclick, :join_on_doubleclick, :leave_on_doubleclick
     def initialize
       @confirm_quit = true
+      @connect_on_doubleclick = false
+      @disconnect_on_doubleclick = false
+      @join_on_doubleclick = true
+      @leave_on_doubleclick = false
     end
   end
   

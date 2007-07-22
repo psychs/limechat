@@ -1,5 +1,9 @@
 2007-07-22  Satoshi Nakagawa <artension@gmail.com>
 
+	Added options of connect, disconnect, join and leave on double click.
+
+2007-07-22  Satoshi Nakagawa <artension@gmail.com>
+
 	Changed to ensure server dialogs and channel dialogs are in visibleRect of the screen.
 	Added utility functions to NSRect, NSSize and NSPoint.
 

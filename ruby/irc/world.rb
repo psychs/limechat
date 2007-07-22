@@ -363,16 +363,16 @@ class IRCWorld < OSX::NSObject
     u, c = sel
     unless c
       if u.connecting? || u.connected? || u.login?
-        u.disconnect
+        u.quit if @pref.gen.disconnect_on_doubleclick
       else
-        u.connect
+        u.connect if @pref.gen.connect_on_doubleclick
       end
     else
       if u.login?
         if c.active?
-          u.part_channel(c)
+          u.part_channel(c) if @pref.gen.leave_on_doubleclick
         else
-          u.join_channel(c)
+          u.join_channel(c) if @pref.gen.join_on_doubleclick
         end
       end
     end

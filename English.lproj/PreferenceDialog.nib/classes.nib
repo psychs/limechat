@@ -12,6 +12,10 @@
                 "dcc_myaddress" = id; 
                 "dcc_myaddress_caption" = id; 
                 "gen_confirm_quit" = id; 
+                "gen_connect_on_doubleclick" = id; 
+                "gen_disconnect_on_doubleclick" = id; 
+                "gen_join_on_doubleclick" = id; 
+                "gen_leave_on_doubleclick" = id; 
                 "key_dislike_words" = id; 
                 "key_words" = id; 
                 window = id; 
