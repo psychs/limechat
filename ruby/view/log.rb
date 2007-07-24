@@ -29,6 +29,48 @@ class LogController < OSX::NSObject
   attr_reader :view, :console, :bottom
   
   BOTTOM_EPSILON = 20
+  DEFAULT_CSS = <<-EOM
+    html {
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Osaka-Mono';
+      font-size: 10pt;
+      word-wrap: break-word;
+      margin: 3px 4px 10px 4px;
+      padding: 0;
+    }
+    img { border: 1px solid #aaa; vertical-align: top; }
+    object { vertical-align: top; }
+    .highlight { color: #f0f; font-weight: bold; }
+    .line { margin: 2px 0; }
+    .time { color: #048; }
+    .place { color: #008; }
+    .nick_normal { color: #008; }
+    .nick_myself { color: #66a; }
+    .system { color: #080; }
+    .error { color: #f00; font-weight: bold; }
+    .reply { color: #088; }
+    .error_reply { color: #f00; }
+    .dcc_send_send { color: #088; }
+    .dcc_send_receive { color: #00c; }
+    .privmsg { color: #000; }
+    .notice { color: #888; }
+    .action { color: #080; }
+    .join { color: #080; }
+    .part { color: #080; }
+    .kick { color: #080; }
+    .quit { color: #080; }
+    .kill { color: #080; }
+    .nick { color: #080; }
+    .mode { color: #080; }
+    .topic { color: #080; }
+    .invite { color: #080; }
+    .wallops { color: #080; }
+    .debug_send { color: #880; }
+    .debug_receive { color: #444; }
+  EOM
   
   def initialize
     @bottom = true
@@ -38,10 +80,12 @@ class LogController < OSX::NSObject
     @max_lines = 1000
   end
   
-  def setup(console=false)
+  def setup(console=false, styles=DEFAULT_CSS)
+    @loaded = false
     @console = console
     @policy = LogPolicy.alloc.init
     @policy.menu = @menu
+    @view.release if @view
     @view = LogView.alloc.initWithFrame(NSZeroRect)
     @view.setFrameLoadDelegate(self)
     @view.setUIDelegate(@policy)
@@ -50,7 +94,7 @@ class LogController < OSX::NSObject
     @view.key_delegate = self
     @view.resize_delegate = self
     @view.setAutoresizingMask(NSViewWidthSizable | NSViewHeightSizable)
-    @view.mainFrame.loadHTMLString_baseURL(initial_doc, nil)
+    @view.mainFrame.loadHTMLString_baseURL(initial_doc(styles), nil)
   end
   
   def moveToTop
@@ -107,7 +151,7 @@ class LogController < OSX::NSObject
     else
       attrs['nick'] = line.nick_info if line.nick_info
     end
-    write(s, attrs)
+    write_line(s, attrs)
     key
   end
   
@@ -120,6 +164,15 @@ class LogController < OSX::NSObject
     end
   end
   
+  def reset_style(style)
+    body = @view.mainFrame.DOMDocument.body
+    @html = body.innerHTML
+    @scroll_top = body.valueForKey('scrollTop').to_i
+    @scroll_bottom = viewing_bottom?
+    setup(@console, style)
+  end
+  
+  
   # delegate
   
   def webView_windowScriptObjectAvailable(sender, js)
@@ -131,6 +184,19 @@ class LogController < OSX::NSObject
   
   def webView_didFinishLoadForFrame(sender, frame)
     @loaded = true
+    if @html
+      body = @view.mainFrame.DOMDocument.body
+      body.innerHTML = @html
+      if @scroll_bottom
+        moveToBottom
+      elsif @scroll_top
+        body.setValue_forKey(@scroll_top, 'scrollTop')
+      end
+      @html = nil
+      @scroll_top = nil
+      @scroll_bottom = false
+    end
+    
     @lines.each {|i| print(*i) }
     @lines.clear
     
@@ -210,7 +276,7 @@ class LogController < OSX::NSObject
     s ? CGI.escapeHTML(s.to_s) : ''
   end
   
-  def write(html, attrs)
+  def write_line(html, attrs)
     save_position
     
     @line_number += 1
@@ -228,47 +294,10 @@ class LogController < OSX::NSObject
     restore_position
   end
   
-  def initial_doc
+  def initial_doc(styles)
     <<-EOM
       <html>
-      <style>
-        body {
-          font-family: 'Osaka-Mono';
-          font-size: 10pt;
-          word-wrap: break-word;
-          margin: 3px 4px 10px 4px;
-          padding: 0;
-        }
-        img { border: 1px solid #aaa; vertical-align: top; }
-        object { vertical-align: top; }
-        strong { color: #f0f; font-weight: bold; }
-        .line { margin: 2px 0; }
-        .time { color: #048; }
-        .place { color: #008; }
-        .nick_normal { color: #008; }
-        .nick_myself { color: #66a; }
-        .system { color: #080; }
-        .error { color: #f00; font-weight: bold; }
-        .reply { color: #088; }
-        .error_reply { color: #f00; }
-        .dcc_send_send { color: #088; }
-        .dcc_send_receive { color: #00c; }
-        .privmsg { color: #000; }
-        .notice { color: #888; }
-        .action { color: #080; }
-        .join { color: #080; }
-        .part { color: #080; }
-        .kick { color: #080; }
-        .quit { color: #080; }
-        .kill { color: #080; }
-        .nick { color: #080; }
-        .mode { color: #080; }
-        .topic { color: #080; }
-        .invite { color: #080; }
-        .wallops { color: #080; }
-        .debug_send { color: #880; }
-        .debug_receive { color: #444; }
-      </style>
+      <style>#{styles}</style>
       <body></body>
       </html>
     EOM

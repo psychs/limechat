@@ -138,10 +138,10 @@ module LogRenderer
   
     def render_start_tag(e)
       case e[:kind]
-      when :urlstart; %Q[<a href="#{e[:url]}">]
-      when :keystart; '<strong>'
+      when :urlstart; %Q[<a class="url" href="#{e[:url]}">]
+      when :keystart; '<strong class="highlight">'
       when :effect
-        s = '<span style="'
+        s = '<span class="effect" style="'
         s += 'font-weight:bold;' if e[:bold]
         s += 'text-decoration:underline;' if e[:underline]
         s += 'font-style:italic;' if e[:reverse]

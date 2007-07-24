@@ -30,6 +30,7 @@
         {CLASS = MemberListView; LANGUAGE = ObjC; SUPERCLASS = NSTableView; }, 
         {
             ACTIONS = {
+                changeStyle = id; 
                 onAddChannel = id; 
                 onAddServer = id; 
                 onCancelReconnecting = id; 

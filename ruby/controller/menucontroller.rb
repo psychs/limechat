@@ -100,6 +100,8 @@ class MenuController < OSX::NSObject
       !!c
     when 653  # channel property
       !!c && c.channel?
+    when 802
+      true
       
     when 2001  # member whois
       active_chtalk && count_selected_members?
@@ -503,6 +505,53 @@ class MenuController < OSX::NSObject
     return unless c
     c.update_config(config)
     @world.save
+  end
+  
+  
+  def changeStyle(sender)
+    style = <<-EOM
+      html {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: 'Osaka-Mono';
+        font-size: 14pt;
+        word-wrap: break-word;
+        margin: 3px 4px 10px 4px;
+        padding: 0;
+      }
+      img { border: 1px solid #aaa; vertical-align: top; }
+      object { vertical-align: top; }
+      .highlight { color: #f0f; font-weight: bold; }
+      .line { margin: 2px 0; }
+      .time { color: #048; }
+      .place { color: #008; }
+      .nick_normal { color: #008; }
+      .nick_myself { color: #66a; }
+      .system { color: #080; }
+      .error { color: #f00; font-weight: bold; }
+      .reply { color: #088; }
+      .error_reply { color: #f00; }
+      .dcc_send_send { color: #088; }
+      .dcc_send_receive { color: #00c; }
+      .privmsg { color: #000; }
+      .notice { color: #888; }
+      .action { color: #080; }
+      .join { color: #080; }
+      .part { color: #080; }
+      .kick { color: #080; }
+      .quit { color: #080; }
+      .kill { color: #080; }
+      .nick { color: #080; }
+      .mode { color: #080; }
+      .topic { color: #080; }
+      .invite { color: #080; }
+      .wallops { color: #080; }
+      .debug_send { color: #880; }
+      .debug_receive { color: #444; }
+    EOM
+    @world.change_log_style(style);
   end
   
   

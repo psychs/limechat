@@ -332,6 +332,19 @@ class IRCWorld < OSX::NSObject
     @reloading_tree = false
   end
   
+  def change_log_style(style)
+    @units.each do |u|
+      u.log.reset_style(style)
+      u.channels.each do |c|
+        c.log.reset_style(style)
+      end
+    end
+    @console.reset_style(style)
+    sel = selected
+    @log_base.setContentView(sel.log.view) if sel
+    @console_base.setContentView(@console.view)
+  end
+  
   
   # timer
   
@@ -386,6 +399,7 @@ class IRCWorld < OSX::NSObject
   def outlineViewSelectionDidChange(notification)
     selitem = @tree.itemAtRow(@tree.selectedRow)
     unless selitem
+      @log_base.setContentView(@dummylog.view)
       @tree.setMenu(@tree_menu)
       @member_list.setDataSource(nil)
       @member_list.reloadData
