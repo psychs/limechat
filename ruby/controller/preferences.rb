@@ -45,9 +45,15 @@ class Preferences
   class General
     include PersistenceHelper
     persistent_attr :confirm_quit
+    persistent_attr :tab_action
     persistent_attr :connect_on_doubleclick, :disconnect_on_doubleclick, :join_on_doubleclick, :leave_on_doubleclick
+    
+    TAB_COMPLEMENT_NICK = 0
+    TAB_UNREAD = 1
+
     def initialize
       @confirm_quit = true
+      @tab_action = TAB_COMPLEMENT_NICK
       @connect_on_doubleclick = false
       @disconnect_on_doubleclick = false
       @join_on_doubleclick = true

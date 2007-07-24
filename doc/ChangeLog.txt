@@ -1,5 +1,10 @@
 2007-07-24  Satoshi Nakagawa <artension@gmail.com>
 
+	Added nick completion settings to preferences dialog.
+	Added ib_mapped_radio_outlet to DialogHelper.
+
+2007-07-24  Satoshi Nakagawa <artension@gmail.com>
+
 	Implemented nick completion.
 	Added NSRange utility functions.
 

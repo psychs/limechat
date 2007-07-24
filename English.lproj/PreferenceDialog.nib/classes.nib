@@ -16,6 +16,7 @@
                 "gen_disconnect_on_doubleclick" = id; 
                 "gen_join_on_doubleclick" = id; 
                 "gen_leave_on_doubleclick" = id; 
+                "gen_tab_action" = id; 
                 "key_dislike_words" = id; 
                 "key_words" = id; 
                 window = id; 

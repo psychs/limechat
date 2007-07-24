@@ -12,6 +12,10 @@ module DialogHelper
     def ib_mapped_int_outlet(*args)
       add_mapped_outlet(args, :int)
     end
+
+    def ib_mapped_radio_outlet(*args)
+      add_mapped_outlet(args, :radio)
+    end
     
     private
     
@@ -82,15 +86,20 @@ module DialogHelper
     end
     
     t = instance_variable_get('@' + name)
-    case t.class.to_s
-    when 'OSX::NSTextField','OSX::NSComboBox'
+    case t
+    when OSX::NSTextField,OSX::NSComboBox
       t.setStringValue(v)
-    when 'OSX::NSTextView'
+    when OSX::NSTextView
       t.textStorage.setAttributedString(OSX::NSAttributedString.alloc.initWithString(v.join("\n")))
-    when 'OSX::NSButton'
+    when OSX::NSButton
       t.setState(v ? 1 : 0)
-    when 'OSX::NSPopUpButton'
+    when OSX::NSPopUpButton
       t.selectItemWithTag(v)
+    when OSX::NSMatrix
+      case type
+      when :radio
+        t.selectCellWithTag(v)
+      end
     end
   end
   
@@ -108,19 +117,23 @@ module DialogHelper
     end
     
     t = instance_variable_get('@' + name)
-    case t.class.to_s
-    when 'OSX::NSTextField','OSX::NSComboBox'
-      s = t.stringValue.to_s
-      s = s.to_i if type == :int
-      model.__send__(method, s)
-    when 'OSX::NSTextView'
-      s = t.textStorage.string.to_s
-      s = s.split(/\n/)
-      model.__send__(method, s)
-    when 'OSX::NSButton'
-      model.__send__(method, t.state.to_i != 0)
-    when 'OSX::NSPopUpButton'
-      model.__send__(method, t.selectedItem.tag)
+    case t
+    when OSX::NSTextField,OSX::NSComboBox
+      v = t.stringValue.to_s
+      v = v.to_i if type == :int
+    when OSX::NSTextView
+      v = t.textStorage.string.to_s
+      v = v.split(/\n/)
+    when OSX::NSButton
+      v = t.state.to_i != 0
+    when OSX::NSPopUpButton
+      v = t.selectedItem.tag
+    when OSX::NSMatrix
+      case type
+      when :radio
+        v = t.selectedCell.tag
+      end
     end
+    model.__send__(method, v)
   end
 end

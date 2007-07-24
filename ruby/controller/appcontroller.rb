@@ -190,8 +190,12 @@ class AppController < OSX::NSObject
   end
   
   def tab
-    #move(:down, :unread)
-    complement_nick
+    case @pref.gen.tab_action
+    when Preferences::General::TAB_UNREAD
+      move(:down, :unread)
+    when Preferences::General::TAB_COMPLEMENT_NICK
+      complement_nick
+    end
   end
   
   def controlTab
@@ -259,10 +263,6 @@ class AppController < OSX::NSObject
     downpre = pre.downcase
     downcur = current.downcase
     
-    p pre
-    p sel
-    p current
-    
     nicks = nicks.select {|i| i[0...pre.length].downcase == downpre }
     return if nicks.empty?
     
@@ -278,8 +278,7 @@ class AppController < OSX::NSObject
         s = nicks[0]
       end
     end
-    s += ':' if head
-    s += ' '
+    s += ': ' if head
     
     ps = NSString.stringWithString(pre)
     ns = NSString.stringWithString(s)
