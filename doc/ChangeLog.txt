@@ -2,6 +2,7 @@
 
 	Released 0.6.
 	Fixed a bug, NSPopupButton should be stored as int.
+	Fixed a bug, address detection method maybe not applied sometimes.
 
 2007-07-24  Satoshi Nakagawa <artension@gmail.com>
 

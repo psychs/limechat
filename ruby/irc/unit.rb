@@ -434,9 +434,7 @@ class IRCUnit < OSX::NSObject
   end
 
   def preferences_changed
-    if @address_detection_method == Preferences::Dcc::ADDR_DETECT_SPECIFY
-      Resolver.resolve(self, @pref.dcc.myaddress)
-    elsif @address_detection_method != @pref.dcc.address_detection_method
+    if @address_detection_method != @pref.dcc.address_detection_method
       @address_detection_method = @pref.dcc.address_detection_method
       @myaddress = nil
       case @address_detection_method
@@ -444,6 +442,8 @@ class IRCUnit < OSX::NSObject
         Resolver.resolve(self, @join_address) if @join_address
       when Preferences::Dcc::ADDR_DETECT_NIC
         detect_myaddress_from_nic
+      when Preferences::Dcc::ADDR_DETECT_SPECIFY
+        Resolver.resolve(self, @pref.dcc.myaddress)
       end
     end
       
