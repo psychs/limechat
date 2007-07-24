@@ -127,6 +127,11 @@ module OSX
         raise ArgumentException, "parameter should be NSSize"
       end
     end
+
+    alias :old_inspect :inspect
+    def inspect
+      "#<#{self.class} x=#{x}, y=#{y}>"
+    end
   end
   
   class NSSize
@@ -135,12 +140,15 @@ module OSX
     def *(v); NSSize.new(width * v, height * v); end
     def +(v); NSSize.new(width + v, height + v); end
     def -(v); NSSize.new(width - v, height - v); end
+    
+    alias :old_inspect :inspect
+    def inspect
+      "#<#{self.class} width=#{width}, height=#{height}>"
+    end
   end
   
   class NSRect
     def dup; NSRect.new(origin, size); end
-    def width; size.width; end
-    def height; size.height; end
     def contain?(r)
       if r.kind_of?(NSRect)
         OSX::NSContainsRect(self, r)
@@ -151,33 +159,38 @@ module OSX
       end
     end
     def intersect?(r); OSX::NSIntersectsRect(self, r); end
-    def offset(x, y); NSRect.new(origin.x + x, origin.y + x, size.width, size.height); end
-    def center; origin + (size / 2); end
-    def inflate(d); NSRect.new(origin.x - d, origin.y - d, size.width + d*2, size.height + d*2); end
+    def offset(dx, dy); OSX::NSOffsetRect(self, dx, dy); end
+    def center; origin + (size / 2.0); end
+    def inflate(d); NSRect.new(x - d, y - d, width + d*2, height + d*2); end
     def adjustInRect(r)
       n = dup
-      if r.origin.x + r.size.width < n.origin.x + n.size.width
-        n.origin.x = r.origin.x + r.size.width - n.size.width
+      if r.x + r.width < n.x + n.width
+        n.origin.x = r.x + r.width - n.width
       end
-      if r.origin.y + r.size.height < n.origin.y + n.size.height
-        n.origin.y = r.origin.y + r.size.height - n.size.height
+      if r.y + r.height < n.y + n.height
+        n.origin.y = r.y + r.height - n.height
       end
-      if origin.x < r.origin.x
-        n.origin.x = r.origin.x
+      if n.x < r.x
+        n.origin.x = r.x
       end
-      if origin.y < r.origin.y
-        n.origin.y = r.origin.y
+      if n.y < r.y
+        n.origin.y = r.y
       end
       n
     end
     def self.from_dic(d); NSRect.new(d[:x], d[:y], d[:w], d[:h]); end
     def to_dic
       {
-        :x => origin.x,
-        :y => origin.y,
-        :w => size.width,
-        :h => size.height
+        :x => x,
+        :y => y,
+        :w => width,
+        :h => height
       }
+    end
+
+    alias :old_inspect :inspect
+    def inspect
+      "#<#{self.class} x=#{x}, y=#{y}, width=#{width}, height=#{height}>"
     end
   end
   
