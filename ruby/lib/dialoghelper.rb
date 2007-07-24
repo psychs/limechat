@@ -87,19 +87,19 @@ module DialogHelper
     
     t = instance_variable_get('@' + name)
     case t
-    when OSX::NSTextField,OSX::NSComboBox
-      t.setStringValue(v)
-    when OSX::NSTextView
-      t.textStorage.setAttributedString(OSX::NSAttributedString.alloc.initWithString(v.join("\n")))
-    when OSX::NSButton
-      t.setState(v ? 1 : 0)
-    when OSX::NSPopUpButton
-      t.selectItemWithTag(v)
     when OSX::NSMatrix
       case type
       when :radio
         t.selectCellWithTag(v)
       end
+    when OSX::NSComboBox,OSX::NSTextField
+      t.setStringValue(v)
+    when OSX::NSTextView
+      t.textStorage.setAttributedString(OSX::NSAttributedString.alloc.initWithString(v.join("\n")))
+    when OSX::NSPopUpButton
+      t.selectItemWithTag(v)
+    when OSX::NSButton
+      t.setState(v ? 1 : 0)
     end
   end
   
@@ -116,24 +116,25 @@ module DialogHelper
       method = outlet_to_slot(name) + '='
     end
     
+    v = nil
     t = instance_variable_get('@' + name)
     case t
-    when OSX::NSTextField,OSX::NSComboBox
-      v = t.stringValue.to_s
-      v = v.to_i if type == :int
-    when OSX::NSTextView
-      v = t.textStorage.string.to_s
-      v = v.split(/\n/)
-    when OSX::NSButton
-      v = t.state.to_i != 0
-    when OSX::NSPopUpButton
-      v = t.selectedItem.tag
     when OSX::NSMatrix
       case type
       when :radio
         v = t.selectedCell.tag
       end
+    when OSX::NSComboBox,OSX::NSTextField
+      v = t.stringValue.to_s
+      v = v.to_i if type == :int
+    when OSX::NSTextView
+      v = t.textStorage.string.to_s
+      v = v.split(/\n/)
+    when OSX::NSPopUpButton
+      v = t.selectedItem.tag
+    when OSX::NSButton
+      v = t.state.to_i != 0
     end
-    model.__send__(method, v)
+    model.__send__(method, v) if v
   end
 end

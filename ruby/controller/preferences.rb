@@ -83,6 +83,14 @@ class Preferences
         m.set_persistent_attrs(d)
       end
     end
+
+    # workaround for the NSPopupButton problem
+    v = @dcc.address_detection_method
+    if v == true || v == false
+      @dcc.address_detection_method = v ? 2 : 0
+      puts @dcc.address_detection_method
+      save
+    end
   end
   
   def save
@@ -95,7 +103,24 @@ class Preferences
   end
   
   def load_world
-    read_defaults('world')
+    d = read_defaults('world')
+    
+    # workaround for the NSPopupButton problem
+    collect = false
+    units = d[:units]
+    units.each do |i|
+      v = i[:encoding]
+      if v == true || v == false
+        c = IRCUnitConfig.new
+        i[:encoding] = c.encoding
+        collect = true
+      end
+    end
+    if collect
+      save_world(d)
+    end
+    
+    d
   end
   
   def save_world(c)

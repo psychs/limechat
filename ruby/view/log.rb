@@ -4,6 +4,7 @@
 require 'cgi'
 require 'uri'
 require 'logrenderer'
+OSX.require_framework 'WebKit'
 
 class LogLine
   attr_accessor :time, :place, :nick, :body
@@ -80,7 +81,7 @@ class LogController < OSX::NSObject
     @max_lines = 1000
   end
   
-  def setup(console=false, styles=DEFAULT_CSS)
+  def setup(console=false, style=DEFAULT_CSS)
     @loaded = false
     @console = console
     @policy = LogPolicy.alloc.init
@@ -94,7 +95,7 @@ class LogController < OSX::NSObject
     @view.key_delegate = self
     @view.resize_delegate = self
     @view.setAutoresizingMask(NSViewWidthSizable | NSViewHeightSizable)
-    @view.mainFrame.loadHTMLString_baseURL(initial_doc(styles), nil)
+    @view.mainFrame.loadHTMLString_baseURL(initial_doc(style), nil)
   end
   
   def moveToTop
@@ -204,7 +205,7 @@ class LogController < OSX::NSObject
     e = body.firstChild
     while e
       n = e.nextSibling
-      body.removeChild_(e) if e.class.name.to_s != 'OSX::DOMHTMLDivElement'
+      body.removeChild_(e) unless OSX::DOMHTMLDivElement === e
       e = n
     end
     
@@ -297,7 +298,9 @@ class LogController < OSX::NSObject
   def initial_doc(styles)
     <<-EOM
       <html>
+      <head>
       <style>#{styles}</style>
+      </head>
       <body></body>
       </html>
     EOM
@@ -325,7 +328,7 @@ class LogScriptEventSink < OSX::NSObject
   def self.webScriptNameForSelector(sel)
     case sel
     when *EXPORTED_METHODS
-      sel[-1,1] = ''
+      sel[-1,1] = '' if sel[-1] == ?:
       sel
     else
       nil
@@ -383,9 +386,8 @@ class LogPolicy < OSX::NSObject
   include OSX
   attr_accessor :menu
 
-  objc_method :webView_dragDestinationActionMaskForDraggingInfo, 'i@:@@'
   def webView_dragDestinationActionMaskForDraggingInfo(sender, info)
-    0 #WebDragDestinationActionNone
+    WebDragDestinationActionNone
   end
   
   def webView_contextMenuItemsForElement_defaultMenuItems(sender, element, defaultMenu)
@@ -397,11 +399,11 @@ class LogPolicy < OSX::NSObject
   end
 
   def webView_decidePolicyForNavigationAction_request_frame_decisionListener(sender, action, request, frame, listener)
-    case action.objectForKey(:WebActionNavigationTypeKey).intValue.to_i
-    when 0  #WebNavigationTypeLinkClicked
+    case action.objectForKey(WebActionNavigationTypeKey).intValue.to_i
+    when WebNavigationTypeLinkClicked
       listener.ignore
-      UrlOpener::openUrl(action.objectForKey(:WebActionOriginalURLKey).absoluteString)
-    when 5  #WebNavigationTypeOther
+      UrlOpener::openUrl(action.objectForKey(WebActionOriginalURLKey).absoluteString)
+    when WebNavigationTypeOther
       listener.use
     else
       listener.ignore

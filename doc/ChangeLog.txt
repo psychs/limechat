@@ -1,3 +1,8 @@
+2007-07-25  Satoshi Nakagawa <artension@gmail.com>
+
+	Released 0.6.
+	Fixed a bug, NSPopupButton should be stored as int.
+
 2007-07-24  Satoshi Nakagawa <artension@gmail.com>
 
 	Changed captions on general tab, peferences dialog.

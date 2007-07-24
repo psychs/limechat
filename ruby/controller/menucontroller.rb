@@ -142,8 +142,8 @@ class MenuController < OSX::NSObject
   
   def current_webview
     t = @window.firstResponder
-    if t && t.class.name.to_s == 'OSX::WebHTMLView'
-      t = t.superview while t && t.class.name.to_s != 'LogView'
+    if t && OSX::WebHTMLView === t
+      t = t.superview while t && !(LogView === t)
       t
     else
       nil
@@ -219,7 +219,7 @@ class MenuController < OSX::NSObject
         @paste.start(s)
       else
         # single line
-        @world.select_text if t.class.name.to_s != 'OSX::NSTextView'
+        @world.select_text unless OSX::NSTextView === t
         e = win.fieldEditor_forObject(false, @text)
         e.paste(sender)
       end
@@ -249,7 +249,7 @@ class MenuController < OSX::NSObject
     return unless t
     u = @world.selunit
     return unless u && u.myaddress
-    @world.select_text if t.class.name.to_s != 'OSX::NSTextView'
+    @world.select_text unless OSX::NSTextView === t
     e = win.fieldEditor_forObject(false, @text)
     e.replaceCharactersInRange_withString(e.selectedRange, u.myaddress)
     e.scrollRangeToVisible(e.selectedRange)
