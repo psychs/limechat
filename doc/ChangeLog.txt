@@ -1,5 +1,10 @@
 2007-07-24  Satoshi Nakagawa <artension@gmail.com>
 
+	Implemented nick completion.
+	Added NSRange utility functions.
+
+2007-07-24  Satoshi Nakagawa <artension@gmail.com>
+
 	Fixed a bug, channel members may go missing in the member list when they change their nicks to identical ones.
 
 2007-07-24  Satoshi Nakagawa <artension@gmail.com>

@@ -190,7 +190,8 @@ class AppController < OSX::NSObject
   end
   
   def tab
-    move(:down, :unread)
+    #move(:down, :unread)
+    complement_nick
   end
   
   def controlTab
@@ -226,6 +227,75 @@ class AppController < OSX::NSObject
   
   
   private
+  
+  def complement_nick
+    u, c = @world.sel
+    return unless u && c
+    @world.select_text if @window.firstResponder != @window.fieldEditor_forObject(true, @text)
+    fe = @window.fieldEditor_forObject(true, @text)
+    return unless fe
+    r = fe.selectedRanges.to_a[0]
+    return unless r
+    r = r.rangeValue
+    nicks = c.members.map {|i| i.nick }
+    
+    s = @text.stringValue
+    pre = s.substringToIndex(r.location).to_s
+    sel = s.substringWithRange(r).to_s
+    if /\s([^\s]*)$/ =~ pre
+      pre = $1
+      head = false
+    else
+      head = true
+    end
+    return if pre.empty?
+    if /^[^\w\[\]\\`_^{}|](.+)$/ =~ pre
+      pre[0] = ''
+      head = false
+    end
+    
+    current = pre + sel
+    current = $1 if /([^:\s]+):?\s?$/ =~ current
+    downpre = pre.downcase
+    downcur = current.downcase
+    
+    p pre
+    p sel
+    p current
+    
+    nicks = nicks.select {|i| i[0...pre.length].downcase == downpre }
+    return if nicks.empty?
+    
+    if sel.empty?
+      s = nicks[0]
+    else
+      index = nicks.index {|i| i.downcase == downcur }
+      if index
+        index += 1
+        index = 0 if nicks.length <= index
+        s = nicks[index]
+      else
+        s = nicks[0]
+      end
+    end
+    s += ':' if head
+    s += ' '
+    
+    ps = NSString.stringWithString(pre)
+    ns = NSString.stringWithString(s)
+    range = r.dup
+    range.location -= ps.length
+    range.length += ps.length
+    fe.replaceCharactersInRange_withString(range, s)
+    
+    if nicks.length == 1
+      r.location = @text.stringValue.length
+      r.length = 0
+    else
+      r.length = ns.length
+    end
+    fe.setSelectedRange(r)
+  end
 
   def queryTerminate
     rec = @dcc.count_receiving_items

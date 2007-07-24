@@ -194,6 +194,21 @@ module OSX
     end
   end
   
+  class NSRange
+    def dup; NSRange.new(location, length); end
+    def inspect
+      "#<#{self.class} location=#{location}, length=#{length}>"
+    end
+  end
+  
+  class NSSelectionArray
+    def to_a
+      ary = []
+      0.upto(count-1) {|i| ary << objectAtIndex(i) }
+      ary
+    end
+  end
+  
   class NSEvent
     def printType
       s = case oc_type
