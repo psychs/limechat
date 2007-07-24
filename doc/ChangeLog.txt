@@ -1,5 +1,9 @@
 2007-07-24  Satoshi Nakagawa <artension@gmail.com>
 
+	Fixed a bug, channel members may go missing in the member list when they change their nicks to identical ones.
+
+2007-07-24  Satoshi Nakagawa <artension@gmail.com>
+
 	Changed conditions for enabling disconnect and cancel reconnecting menus.
 
 2007-07-24  Satoshi Nakagawa <artension@gmail.com>

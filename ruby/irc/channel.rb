@@ -122,10 +122,8 @@ class IRCChannel < OSX::NSObject
   def rename_member(nick, tonick)
     m = find_member(nick)
     return if !m
-    remove_member(tonick)
     m.nick = tonick
-    sort_members
-    reload_members
+    add_member(m)
   end
   
   def change_member_op(nick, type, value)
