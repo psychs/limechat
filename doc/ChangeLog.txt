@@ -1,5 +1,9 @@
 2007-07-24  Satoshi Nakagawa <artension@gmail.com>
 
+	Changed captions on general tab, peferences dialog.
+
+2007-07-24  Satoshi Nakagawa <artension@gmail.com>
+
 	Added nick completion settings to preferences dialog.
 	Added ib_mapped_radio_outlet to DialogHelper.
 
