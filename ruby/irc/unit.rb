@@ -134,7 +134,7 @@ class IRCUnit < OSX::NSObject
   end
   
   def reconnecting?
-    !connected? && @reconnect
+    !connected? && !connecting? && @reconnect
   end
   
   def eq(x, y)

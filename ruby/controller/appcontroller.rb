@@ -189,6 +189,10 @@ class AppController < OSX::NSObject
     move(:right, :active)
   end
   
+  def tab
+    move(:down, :unread)
+  end
+  
   def controlTab
     move(:down, :unread)
   end

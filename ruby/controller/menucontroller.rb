@@ -72,7 +72,7 @@ class MenuController < OSX::NSObject
     when 501  # connect
       not_connected
     when 502  # disconnect
-      connected
+      !!u && (u.connected? || u.connecting?)
     when 503  # cancel reconnecting
       !!u && u.reconnecting?
     when 511  # nick
