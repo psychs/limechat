@@ -50,6 +50,7 @@ class Preferences
     
     TAB_COMPLEMENT_NICK = 0
     TAB_UNREAD = 1
+    TAB_NONE = 100
 
     def initialize
       @confirm_quit = true

@@ -1,5 +1,9 @@
 2007-07-25  Satoshi Nakagawa <artension@gmail.com>
 
+	Added an option, no action when pushed tab key.
+
+2007-07-25  Satoshi Nakagawa <artension@gmail.com>
+
 	Added workaround for WebKit on Leopard.
 
 2007-07-25  Satoshi Nakagawa <artension@gmail.com>

@@ -193,8 +193,12 @@ class AppController < OSX::NSObject
     case @pref.gen.tab_action
     when Preferences::General::TAB_UNREAD
       move(:down, :unread)
+      true
     when Preferences::General::TAB_COMPLEMENT_NICK
       complement_nick
+      true
+    else
+      false
     end
   end
   

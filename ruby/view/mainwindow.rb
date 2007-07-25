@@ -19,8 +19,8 @@ class MainWindow < OSX::NSWindow
           # none
           case k
           when 48 #tab
-            @key_delegate.tab
-            return
+            res = @key_delegate.tab
+            return if res
           when 115 #home
             return if @key_delegate.scroll(:home)
           when 116 #pageup
