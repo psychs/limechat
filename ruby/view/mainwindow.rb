@@ -63,6 +63,20 @@ class MainWindow < OSX::NSWindow
             @key_delegate.controlShiftTab
             return
           end
+        elsif !shift && !ctrl && alt && !cmd
+          # alt
+          case k
+          when 49 #space
+            @key_delegate.altSpace
+            return
+          end
+        elsif shift && !ctrl && alt && !cmd
+          # alt-shift
+          case k
+          when 49 #space
+            @key_delegate.altShiftSpace
+            return
+          end
         elsif !shift && !ctrl && !alt && cmd
           # cmd
           case k

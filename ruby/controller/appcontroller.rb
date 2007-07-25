@@ -210,6 +210,14 @@ class AppController < OSX::NSObject
     move(:up, :unread)
   end
   
+  def altSpace
+    move(:down, :unread)
+  end
+  
+  def altShiftSpace
+    move(:up, :unread)
+  end
+  
   def scroll(direction)
     if @window.firstResponder == @text.currentEditor
       sel = @world.selected

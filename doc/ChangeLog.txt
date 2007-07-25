@@ -1,5 +1,10 @@
 2007-07-25  Satoshi Nakagawa <artension@gmail.com>
 
+	Added a short cut key, alt+space to go to next unread channel.
+	Added a short cut key, alt+shift+space to go to previous unread channel.
+
+2007-07-25  Satoshi Nakagawa <artension@gmail.com>
+
 	Added an option, no action when pushed tab key.
 
 2007-07-25  Satoshi Nakagawa <artension@gmail.com>
