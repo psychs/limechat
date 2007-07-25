@@ -175,7 +175,8 @@ class LogController < OSX::NSObject
   
   
   # delegate
-  
+
+  objc_method :webView_windowScriptObjectAvailable, 'v@:@@'
   def webView_windowScriptObjectAvailable(sender, js)
     @js = js
     sink = LogScriptEventSink.alloc.init
@@ -183,6 +184,7 @@ class LogController < OSX::NSObject
     @js.setValue_forKey(sink, 'app')
   end
   
+  objc_method :webView_didFinishLoadForFrame, 'v@:@@'
   def webView_didFinishLoadForFrame(sender, frame)
     @loaded = true
     if @html
@@ -386,10 +388,12 @@ class LogPolicy < OSX::NSObject
   include OSX
   attr_accessor :menu
 
+  objc_method :webView_dragDestinationActionMaskForDraggingInfo, 'I@:@@'
   def webView_dragDestinationActionMaskForDraggingInfo(sender, info)
     WebDragDestinationActionNone
   end
   
+  objc_method :webView_contextMenuItemsForElement_defaultMenuItems, '@@:@@@'
   def webView_contextMenuItemsForElement_defaultMenuItems(sender, element, defaultMenu)
     if @menu
       @menu.itemArray.to_a.map {|i| i.copy }
@@ -398,6 +402,7 @@ class LogPolicy < OSX::NSObject
     end
   end
 
+  objc_method :webView_decidePolicyForNavigationAction_request_frame_decisionListener, 'v@:@@@@@'
   def webView_decidePolicyForNavigationAction_request_frame_decisionListener(sender, action, request, frame, listener)
     case action.objectForKey(WebActionNavigationTypeKey).intValue.to_i
     when WebNavigationTypeLinkClicked

@@ -1,5 +1,9 @@
 2007-07-25  Satoshi Nakagawa <artension@gmail.com>
 
+	Added workaround for WebKit on Leopard.
+
+2007-07-25  Satoshi Nakagawa <artension@gmail.com>
+
 	Released 0.6.
 	Fixed a bug, NSPopupButton should be stored as int.
 	Fixed a bug, address detection method maybe not applied sometimes.
