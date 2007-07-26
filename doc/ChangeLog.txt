@@ -1,5 +1,9 @@
 2007-07-27  Satoshi Nakagawa <artension@gmail.com>
 
+	Implemented Growl notifier module.
+
+2007-07-27  Satoshi Nakagawa <artension@gmail.com>
+
 	Implementing Growl notifications.
 
 2007-07-25  Satoshi Nakagawa <artension@gmail.com>
