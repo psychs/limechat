@@ -13,6 +13,8 @@ class IRCWorld < OSX::NSObject
     @units = []
     @unit_id = 0
     @channel_id = 0
+    @growl = Growl.alloc.init
+    @growl.setup(:LimeChat, [:Highlight, :Unread, :NewTalk])
   end
   
   def setup(seed)
@@ -330,6 +332,28 @@ class IRCWorld < OSX::NSObject
     @reloading_tree = true
     @tree.reloadData
     @reloading_tree = false
+  end
+  
+  def on_keyword(u, c, text)
+    context = "#{u.id}"
+    context += ":#{c.id}" if c
+    notify_growl(:Highlight, c ? c.name : u.name, text, context)
+  end
+  
+  def on_unread(u, c, text)
+    context = "#{u.id}"
+    context += ":#{c.id}" if c
+    notify_growl(:Unread, c ? c.name : u.name, text, context)
+  end
+  
+  def on_newtalk(u, c, text)
+    context = "#{u.id}"
+    context += ":#{c.id}" if c
+    notify_growl(:NewTalk, c ? c.name : u.name, text, context)
+  end
+  
+  def notify_growl(kind, title, desc, context)
+    #@growl.notify(kind, title, desc, context)
   end
   
   def change_log_style(style)

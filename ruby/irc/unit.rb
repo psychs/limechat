@@ -708,8 +708,8 @@ class IRCUnit < OSX::NSObject
   
   def set_keyword_state(t)
     return if NSApp.isActive && @world.selected == t
-    return if t.keyword
     return if !t.unit? && !t.config.keyword
+    return if t.keyword
     t.keyword = true
     reload_tree
     NSApp.requestUserAttention(NSCriticalRequest) unless NSApp.isActive
@@ -847,6 +847,7 @@ class IRCUnit < OSX::NSObject
       c = find_channel(target)
       print_both(c || target, command, nick, text)
       set_unread_state(c || self) if command != :notice
+      @world.on_unread(self, c, "(#{nick}) #{text}")
     elsif eq(target, @mynick)
       if nick.server? || nick.empty?
         print_both(self, command, nick, text)
@@ -859,6 +860,7 @@ class IRCUnit < OSX::NSObject
         end
         print_both(c || self, command, nick, text)
         set_unread_state(c || self) if command != :notice
+        @world.on_unread(self, c, "(#{nick}) #{text}")
       end
     else
       print_both(target, command, nick, text)
