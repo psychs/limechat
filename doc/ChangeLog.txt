@@ -1,3 +1,7 @@
+2007-07-27  Satoshi Nakagawa <artension@gmail.com>
+
+	Implementing Growl notifications.
+
 2007-07-25  Satoshi Nakagawa <artension@gmail.com>
 
 	Added a short cut key, alt+space to go to next unread channel.

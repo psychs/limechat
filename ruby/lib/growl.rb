@@ -24,6 +24,7 @@ class Growl < OSX::NSObject
     
     dic = {
       :ApplicationName => @appname,
+      :ApplicationPID => NSProcessInfo.processInfo.processIdentifier,
       :NotificationName => notetype,
       :NotificationTitle => title,
       :NotificationDescription => desc,
@@ -55,21 +56,19 @@ class Growl < OSX::NSObject
   private
   
   def register
+    pid = NSProcessInfo.processInfo.processIdentifier.to_i
+    
+    c = NSDistributedNotificationCenter.defaultCenter
+    c.addObserver_selector_name_object(self, 'onReady:', GROWL_IS_READY, nil)
+    c.addObserver_selector_name_object(self, 'onClicked:', "#{@appname}-#{pid}-#{GROWL_NOTIFICATION_CLICKED}", nil)
+    c.addObserver_selector_name_object(self, 'onTimeout:', "#{@appname}-#{pid}-#{GROWL_NOTIFICATION_TIMED_OUT}", nil)
+
     dic = {
       :ApplicationName => @appname,
       :AllNotifications => @notes,
       :DefaultNotifications => @defnotes,
       :ApplicationIcon => @appicon.TIFFRepresentation
     }
-    
-    pid = NSProcessInfo.processInfo.processIdentifier.to_i
-    
-    c = NSDistributedNotificationCenter.defaultCenter
-    c.addObserver_selector_name_object(self, 'onReady:', GROWL_IS_READY, nil)
-    c.addObserver_selector_name_object(self, 'onClicked:', "#{@appname}#{GROWL_NOTIFICATION_CLICKED}", nil)
-    c.addObserver_selector_name_object(self, 'onClicked:', "#{@appname}-#{pid}-#{GROWL_NOTIFICATION_CLICKED}", nil)
-    c.addObserver_selector_name_object(self, 'onTimeout:', "#{@appname}#{GROWL_NOTIFICATION_TIMED_OUT}", nil)
-    c.addObserver_selector_name_object(self, 'onTimeout:', "#{@appname}-#{pid}-#{GROWL_NOTIFICATION_TIMED_OUT}", nil)
-    c.postNotificationName_object_userInfo_deliverImmediately_(:GrowlApplicationRegistrationNotification, nil, dic, true)
+    c.postNotificationName_object_userInfo_deliverImmediately(:GrowlApplicationRegistrationNotification, nil, dic, true)
   end
 end
