@@ -116,13 +116,14 @@ module DialogHelper
       method = outlet_to_slot(name) + '='
     end
     
-    v = nil
     t = instance_variable_get('@' + name)
     case t
     when OSX::NSMatrix
       case type
       when :radio
         v = t.selectedCell.tag
+      else
+        raise 'Outlet type is not supported'
       end
     when OSX::NSComboBox,OSX::NSTextField
       v = t.stringValue.to_s
@@ -134,7 +135,9 @@ module DialogHelper
       v = t.selectedItem.tag
     when OSX::NSButton
       v = t.state.to_i != 0
+    else
+      raise 'Outlet type is not supported'
     end
-    model.__send__(method, v) if v
+    model.__send__(method, v)
   end
 end
