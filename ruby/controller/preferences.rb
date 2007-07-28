@@ -89,7 +89,6 @@ class Preferences
     v = @dcc.address_detection_method
     if v == true || v == false
       @dcc.address_detection_method = v ? 2 : 0
-      puts @dcc.address_detection_method
       save
     end
   end
@@ -105,6 +104,7 @@ class Preferences
   
   def load_world
     d = read_defaults('world')
+    return unless d
     
     # workaround for the NSPopupButton problem
     collect = false

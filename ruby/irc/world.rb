@@ -13,8 +13,8 @@ class IRCWorld < OSX::NSObject
     @units = []
     @unit_id = 0
     @channel_id = 0
-    @growl = Growl::Notifier.alloc.initWithDelegate(self)
-    @growl.start(:LimeChat, [:Highlight, :Unread, :NewTalk])
+    #@growl = Growl::Notifier.alloc.initWithDelegate(self)
+    #@growl.start(:LimeChat, [:Highlight, :Unread, :NewTalk])
   end
   
   def setup(seed)

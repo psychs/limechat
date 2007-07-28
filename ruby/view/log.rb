@@ -4,7 +4,6 @@
 require 'cgi'
 require 'uri'
 require 'logrenderer'
-OSX.require_framework 'WebKit'
 
 class LogLine
   attr_accessor :time, :place, :nick, :body
@@ -234,6 +233,15 @@ class LogController < OSX::NSObject
       EOM
       @js.evaluateWebScript(script)
     end
+=begin
+    script = <<-EOM
+      function on_url_contextmenu() {
+        var t = event.target
+        app.print(t.toString())
+      }
+    EOM
+=end
+    @js.evaluateWebScript(script)
   end
   
   def logView_keyDown(e)

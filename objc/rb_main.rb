@@ -2,6 +2,8 @@ require 'osx/cocoa'
 
 $KCODE = 'u'
 
+OSX.require_framework 'WebKit'
+
 def rb_main_init
   path = OSX::NSBundle.mainBundle.resourcePath.fileSystemRepresentation
   rbfiles = Dir.entries(path).select {|x| /\.rb\z/ =~ x}

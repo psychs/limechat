@@ -138,6 +138,7 @@ module LogRenderer
   
     def render_start_tag(e)
       case e[:kind]
+#      when :urlstart; %Q[<a class="url" href="#{e[:url]}" oncontextmenu="on_url_contextmenu()">]
       when :urlstart; %Q[<a class="url" href="#{e[:url]}">]
       when :keystart; '<strong class="highlight">'
       when :effect

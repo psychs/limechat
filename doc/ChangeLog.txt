@@ -1,5 +1,11 @@
 2007-07-27  Satoshi Nakagawa <artension@gmail.com>
 
+	Released 0.7.
+	Fixed a bug, LimeChat.app won't start up at the first time.
+	Tweaked preferences dialog.
+
+2007-07-27  Satoshi Nakagawa <artension@gmail.com>
+
 	Implemented Growl notifier module.
 
 2007-07-27  Satoshi Nakagawa <artension@gmail.com>
