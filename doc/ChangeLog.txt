@@ -1,5 +1,9 @@
 2007-07-29  Satoshi Nakagawa <artension@gmail.com>
 
+	Added regexp escape to highlight words.
+
+2007-07-29  Satoshi Nakagawa <artension@gmail.com>
+
 	Added Growl notifications.
 	Added message length check for quick join.
 

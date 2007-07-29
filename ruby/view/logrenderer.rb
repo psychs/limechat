@@ -260,7 +260,7 @@ module LogRenderer
       words.each do |w|
         s = body.dup
         offset = 0
-        rex = Regexp.new(w, true)
+        rex = Regexp.new(Regexp.escape(w), true)
         while rex =~ s
           left = $~.begin(0)
           right = $~.end(0)
@@ -281,7 +281,7 @@ module LogRenderer
         dislike_words.each do |w|
           s = body.dup
           offset = 0
-          rex = Regexp.new(w, true)
+          rex = Regexp.new(Regexp.escape(w), true)
           while rex =~ s
             left = $~.begin(0)
             right = $~.end(0)
