@@ -123,7 +123,7 @@ class TreeDialog < OSX::NSObject
     item.name
   end
   
-  #objc_method :outlineView_shouldEditTableColumn_item, 'c@:@@@'
+  objc_method :outlineView_shouldEditTableColumn_item, 'c@:@@@'
   def outlineView_shouldEditTableColumn_item(sender, column, item)
     false
   end
@@ -132,7 +132,7 @@ class TreeDialog < OSX::NSObject
     update
   end
   
-  #objc_method :outlineView_writeItems_toPasteboard, 'c@:@@@'
+  objc_method :outlineView_writeItems_toPasteboard, 'c@:@@@'
   def outlineView_writeItems_toPasteboard(sender, items, pboard)
     i = items.to_a[0]
     if i.kind_of?(IRCUnitConfig)
