@@ -18,10 +18,6 @@ class IRCWorld < OSX::NSObject
     @units = []
     @unit_id = 0
     @channel_id = 0
-    @growl = Growl::Notifier.alloc.initWithDelegate(self)
-    all = [GROWL_HIGHLIGHT, GROWL_NEW_TALK, GROWL_CHANNEL_MSG, GROWL_TALK_MSG]
-    default = [GROWL_HIGHLIGHT, GROWL_NEW_TALK]
-    @growl.start(:LimeChat, all, default)
   end
   
   def setup(seed)
@@ -33,6 +29,8 @@ class IRCWorld < OSX::NSObject
     @config = seed.dup
     @config.units.each {|u| create_unit(u) } if @config.units
     @config.units = nil
+
+    register_growl if @pref.gen.use_growl
   end
   
   def save
@@ -341,7 +339,16 @@ class IRCWorld < OSX::NSObject
     @reloading_tree = false
   end
   
+  def register_growl
+    return if @growl
+    @growl = Growl::Notifier.alloc.initWithDelegate(self)
+    all = [GROWL_HIGHLIGHT, GROWL_NEW_TALK, GROWL_CHANNEL_MSG, GROWL_TALK_MSG]
+    default = [GROWL_HIGHLIGHT, GROWL_NEW_TALK]
+    @growl.start(:LimeChat, all, default)
+  end
+  
   def notify_on_growl(kind, title, desc, context)
+    return unless @growl
     return if NSApp.isActive?
     
     priority = 0
@@ -421,6 +428,8 @@ class IRCWorld < OSX::NSObject
   end
   
   def preferences_changed
+    register_growl if @pref.gen.use_growl
+    
     @units.each {|u| u.preferences_changed}
   end
   
