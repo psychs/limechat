@@ -22,7 +22,7 @@ module Growl
       @appname = appname
       @notifications = notifications
       @default_notifications = default_notifications
-      @appicon = appicon || NSApplication.sharedApplication.applicationIconImage
+      @appicon = appicon
       @default_notifications = @notifications unless @default_notifications
       register
     end
@@ -90,11 +90,12 @@ module Growl
       c.addObserver_selector_name_object(self, 'onClicked:', "#{@appname}-#{pid}-#{GROWL_NOTIFICATION_CLICKED}", nil)
       c.addObserver_selector_name_object(self, 'onTimeout:', "#{@appname}-#{pid}-#{GROWL_NOTIFICATION_TIMED_OUT}", nil)
 
+      icon = @appicon || NSApplication.sharedApplication.applicationIconImage
       dic = {
         :ApplicationName => @appname,
         :AllNotifications => @notifications,
         :DefaultNotifications => @default_notifications,
-        :ApplicationIcon => @appicon.TIFFRepresentation,
+        :ApplicationIcon => icon.TIFFRepresentation,
       }
       c.postNotificationName_object_userInfo_deliverImmediately(:GrowlApplicationRegistrationNotification, nil, dic, true)
     end

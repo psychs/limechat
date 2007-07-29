@@ -13,8 +13,8 @@ class IRCWorld < OSX::NSObject
     @units = []
     @unit_id = 0
     @channel_id = 0
-    #@growl = Growl::Notifier.alloc.initWithDelegate(self)
-    #@growl.start(:LimeChat, [:Highlight, :Unread, :NewTalk])
+    @growl = Growl::Notifier.alloc.initWithDelegate(self)
+    @growl.start(:LimeChat, [:Highlight, :Unread, :NewTalk])
   end
   
   def setup(seed)
@@ -334,34 +334,25 @@ class IRCWorld < OSX::NSObject
     @reloading_tree = false
   end
   
-  def on_keyword(u, c, text)
+  def notify_to_growl(u, c, text, level)
+    case level
+    when :highlight; kind = :Highlight
+    when :newtalk; kind = :NewTalk
+    else; kind = :Unread
+    end
     context = "#{u.id}"
     context += ":#{c.id}" if c
-    notify_growl(:Highlight, c ? c.name : u.name, text, context)
-  end
-  
-  def on_unread(u, c, text)
-    context = "#{u.id}"
-    context += ":#{c.id}" if c
-    notify_growl(:Unread, c ? c.name : u.name, text, context)
-  end
-  
-  def on_newtalk(u, c, text)
-    context = "#{u.id}"
-    context += ":#{c.id}" if c
-    notify_growl(:NewTalk, c ? c.name : u.name, text, context)
-  end
-  
-  def notify_growl(kind, title, desc, context)
-    #@growl.notify(kind, title, desc, context)
+    @growl.notify(kind, c ? c.name : u.name, text, context)
   end
   
   def growl_onClicked(sender, context)
-    puts 'clicked'
+    puts '+++clicked'
+    puts context
   end
   
   def growl_onTimeout(sender, context)
-    puts 'timeout'
+    puts '+++timeout'
+    puts context
   end
   
   def change_log_style(style)

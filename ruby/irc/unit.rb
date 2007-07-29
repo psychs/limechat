@@ -656,11 +656,10 @@ class IRCUnit < OSX::NSObject
     line = LogLine.new(time, place, nickstr, text, kind, mtype, nick, click)
     if channel && !channel.unit?
       key = channel.log.print(line, channel.config.keyword)
-      set_keyword_state(channel) if key
     else
       key = @log.print(line, true)
-      set_keyword_state(self) if key
     end
+    key
   end
   
   def print_both(channel, kind, nick, text=nil)
@@ -704,31 +703,6 @@ class IRCUnit < OSX::NSObject
   
   def now
     Time.now.strftime('%H:%M')
-  end
-  
-  def set_keyword_state(t)
-    return if NSApp.isActive && @world.selected == t
-    return if !t.unit? && !t.config.keyword
-    return if t.keyword
-    t.keyword = true
-    reload_tree
-    NSApp.requestUserAttention(NSCriticalRequest) unless NSApp.isActive
-  end
-  
-  def set_unread_state(t)
-    return if NSApp.isActive && @world.selected == t
-    return if t.unread
-    return if !t.unit? && !t.config.unread
-    t.unread = true
-    reload_tree
-  end
-  
-  def set_newtalk_state(t)
-    return if NSApp.isActive && @world.selected == t
-    return if t.newtalk
-    t.newtalk = true
-    reload_tree
-    NSApp.requestUserAttention(NSInformationalRequest) unless NSApp.isActive
   end
   
   # protocol
@@ -839,32 +813,67 @@ class IRCUnit < OSX::NSObject
     end
   end
   
+  def set_keyword_state(t)
+    return if NSApp.isActive && @world.selected == t
+    return if !t.unit? && !t.config.keyword
+    return if t.keyword
+    t.keyword = true
+    reload_tree
+    NSApp.requestUserAttention(NSCriticalRequest) unless NSApp.isActive
+  end
+  
+  def set_unread_state(t)
+    return if NSApp.isActive && @world.selected == t
+    return if !t.unit? && !t.config.unread
+    return if t.unread
+    t.unread = true
+    reload_tree
+  end
+  
+  def set_newtalk_state(t)
+    return if NSApp.isActive && @world.selected == t
+    return if t.newtalk
+    t.newtalk = true
+    reload_tree
+    NSApp.requestUserAttention(NSInformationalRequest) unless NSApp.isActive
+  end
+  
   def receive_text(m, command, text)
     nick = m.sender_nick
     target = m[0]
     
     if target.channelname?
+      # channel
       c = find_channel(target)
-      print_both(c || target, command, nick, text)
-      set_unread_state(c || self) if command != :notice
-      @world.on_unread(self, c, "(#{nick}) #{text}")
+      key = print_both(c || target, command, nick, text)
+      t = c || self
+      set_unread_state(t) if command != :notice
+      set_keyword_state(t) if key
+      ;;
+      #@world.notify_to_growl(self, c, "(#{nick}) #{text}")
     elsif eq(target, @mynick)
       if nick.server? || nick.empty?
+        # system
         print_both(self, command, nick, text)
       else
         # talk
         c = find_channel(nick)
+        newtalk = false
         if !c && command != :notice
           c = @world.create_talk(self, nick)
-          set_newtalk_state(c)
+          newtalk = true
         end
-        print_both(c || self, command, nick, text)
-        set_unread_state(c || self) if command != :notice
-        @world.on_unread(self, c, "(#{nick}) #{text}")
+        key = print_both(c || nick, command, nick, text)
+        t = c || self
+        set_unread_state(t) if command != :notice
+        set_newtalk_state(t) if newtalk
+        set_keyword_state(t) if key
+        ;;
+        #@world.notify_to_growl(self, c, "(#{nick}) #{text}")
       end
     else
+      # system
       print_both(target, command, nick, text)
-      set_unread_state(self) if command != :notice
     end
   end
   
