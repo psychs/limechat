@@ -731,7 +731,15 @@ class IRCUnit < OSX::NSObject
   end
   
   def notify_text(kind, c, nick, text)
-    title = c ? c.name : name
+    title = if c
+      if c.kind_of?(String)
+        c
+      else
+        c.name
+      end
+    else
+      name
+    end
     desc = "(#{nick}) #{text}"
     context = "#{@id}"
     context += ";#{c.id}" if c
@@ -870,11 +878,14 @@ class IRCUnit < OSX::NSObject
       # channel
       c = find_channel(target)
       key = print_both(c || target, command, nick, text)
-      t = c || self
-      set_unread_state(t) if command != :notice
-      set_keyword_state(t) if key
-      kind = key ? :highlight : :unread
-      notify_text(kind, c, nick, text)
+      if command != :notice
+        t = c || self
+        set_unread_state(t)
+        set_keyword_state(t) if key
+        kind = :channeltext
+        kind = :highlight if key
+        notify_text(kind, c || target, nick, text)
+      end
     elsif eq(target, @mynick)
       if nick.server? || nick.empty?
         # system
@@ -888,12 +899,19 @@ class IRCUnit < OSX::NSObject
           newtalk = true
         end
         key = print_both(c || nick, command, nick, text)
-        t = c || self
-        set_unread_state(t) if command != :notice
-        set_newtalk_state(t) if newtalk
-        set_keyword_state(t) if key
-        kind = key ? :highlight : (newtalk ? :newtalk : :unread)
-        notify_text(kind, c, nick, text)
+        if command != :notice
+          t = c || self
+          set_unread_state(t)
+          set_newtalk_state(t) if newtalk
+          set_keyword_state(t) if key
+          kind = :talktext
+          if key
+            kind = :highlight
+          elsif newtalk
+            kind = :newtalk
+          end
+          notify_text(kind, c || nick, nick, text)
+        end
       end
     else
       # system

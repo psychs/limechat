@@ -10,15 +10,18 @@ class IRCWorld < OSX::NSObject
   AUTO_CONNECT_DELAY = 1
   
   GROWL_HIGHLIGHT = "Highlight message received"
-  GROWL_NEWTALK = "New talk started"
-  GROWL_UNREAD = "Unread message received"
+  GROWL_NEW_TALK = "New talk started"
+  GROWL_CHANNEL_MSG = "Channel message received"
+  GROWL_TALK_MSG = "Talk message received"
   
   def initialize
     @units = []
     @unit_id = 0
     @channel_id = 0
     @growl = Growl::Notifier.alloc.initWithDelegate(self)
-    @growl.start(:LimeChat, [GROWL_HIGHLIGHT, GROWL_NEWTALK, GROWL_UNREAD])
+    all = [GROWL_HIGHLIGHT, GROWL_NEW_TALK, GROWL_CHANNEL_MSG, GROWL_TALK_MSG]
+    default = [GROWL_HIGHLIGHT, GROWL_NEW_TALK]
+    @growl.start(:LimeChat, all, default)
   end
   
   def setup(seed)
@@ -351,12 +354,15 @@ class IRCWorld < OSX::NSObject
       sticky = true
       title = "Highlight: #{title}"
     when :newtalk
-      kind = GROWL_NEWTALK
+      kind = GROWL_NEW_TALK
       priority = 1
       sticky = true
       title = "New Talk: #{title}"
-    when :unread
-      kind = GROWL_UNREAD
+    when :channeltext
+      kind = GROWL_CHANNEL_MSG
+    when :talktext
+      kind = GROWL_TALK_MSG
+      title = "Talk: #{title}"
     end
     
     @growl.notify(kind, title, desc, context, sticky, priority)
