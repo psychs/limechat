@@ -9,12 +9,16 @@ class IRCWorld < OSX::NSObject
   
   AUTO_CONNECT_DELAY = 1
   
+  GROWL_HIGHLIGHT = "Highlight message received"
+  GROWL_NEWTALK = "New talk started"
+  GROWL_UNREAD = "Unread message received"
+  
   def initialize
     @units = []
     @unit_id = 0
     @channel_id = 0
     @growl = Growl::Notifier.alloc.initWithDelegate(self)
-    @growl.start(:LimeChat, [:Highlight, :Unread, :NewTalk])
+    @growl.start(:LimeChat, [GROWL_HIGHLIGHT, GROWL_NEWTALK, GROWL_UNREAD])
   end
   
   def setup(seed)
@@ -334,25 +338,47 @@ class IRCWorld < OSX::NSObject
     @reloading_tree = false
   end
   
-  def notify_to_growl(u, c, text, level)
-    case level
-    when :highlight; kind = :Highlight
-    when :newtalk; kind = :NewTalk
-    else; kind = :Unread
+  def notify_on_growl(kind, title, desc, context)
+    return if NSApp.isActive?
+    
+    priority = 0
+    sticky = false
+    
+    case kind
+    when :highlight
+      kind = GROWL_HIGHLIGHT
+      priority = 2
+      sticky = true
+      title = "Highlight: #{title}"
+    when :newtalk
+      kind = GROWL_NEWTALK
+      priority = 1
+      sticky = true
+      title = "New Talk: #{title}"
+    when :unread
+      kind = GROWL_UNREAD
     end
-    context = "#{u.id}"
-    context += ":#{c.id}" if c
-    @growl.notify(kind, c ? c.name : u.name, text, context)
+    
+    @growl.notify(kind, title, desc, context, sticky, priority)
   end
   
   def growl_onClicked(sender, context)
-    puts '+++clicked'
-    puts context
-  end
-  
-  def growl_onTimeout(sender, context)
-    puts '+++timeout'
-    puts context
+    NSApp.activateIgnoringOtherApps(true)
+    
+    if /\A(\d+)[^\d](\d+)\z/ =~ context
+      uid = $1.to_i
+      cid = $2.to_i
+      u, c = find_by_id(uid, cid)
+      if c
+        select(c)
+      elsif u
+        select(u)
+      end
+    elsif /\A(\d+)\z/ =~ context
+      uid = $1.to_i
+      u = find_unit_by_id(uid)
+      select(u) if u
+    end
   end
   
   def change_log_style(style)

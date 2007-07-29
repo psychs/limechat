@@ -3,6 +3,8 @@
 
 module IRC
   NICKLEN = 9
+  BODY_LEN = 480
+  MSG_LEN = 510
 end
 
 module Penalty
@@ -41,7 +43,7 @@ class IRCSendMessage
       s += ' '
       s += @trail
     end
-    s = s[0...510] if s.length > 510
+    s = s[0...IRC::MSG_LEN] if s.length > IRC::MSG_LEN
     s += "\r\n"
     @raw = s
     

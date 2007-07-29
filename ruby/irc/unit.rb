@@ -705,6 +705,39 @@ class IRCUnit < OSX::NSObject
     Time.now.strftime('%H:%M')
   end
   
+  def set_keyword_state(t)
+    return if NSApp.isActive && @world.selected == t
+    return if !t.unit? && !t.config.keyword
+    return if t.keyword
+    t.keyword = true
+    reload_tree
+    NSApp.requestUserAttention(NSCriticalRequest) unless NSApp.isActive
+  end
+  
+  def set_unread_state(t)
+    return if NSApp.isActive && @world.selected == t
+    return if !t.unit? && !t.config.unread
+    return if t.unread
+    t.unread = true
+    reload_tree
+  end
+  
+  def set_newtalk_state(t)
+    return if NSApp.isActive && @world.selected == t
+    return if t.newtalk
+    t.newtalk = true
+    reload_tree
+    NSApp.requestUserAttention(NSInformationalRequest) unless NSApp.isActive
+  end
+  
+  def notify_text(kind, c, nick, text)
+    title = c ? c.name : name
+    desc = "(#{nick}) #{text}"
+    context = "#{@id}"
+    context += ";#{c.id}" if c
+    @world.notify_on_growl(kind, title, desc, context)
+  end
+  
   # protocol
   
   def receive_init(m)
@@ -760,12 +793,28 @@ class IRCUnit < OSX::NSObject
     target = ''
     pass = ''
     chans.each do |c|
+      org_target = target
+      org_pass = pass
+      
       target += ',' unless target.empty?
       target += c.name
       pass += ',' unless pass.empty?
       pass += c.password
+      
+      common = to_common_encoding(target + pass)
+      if common.length > IRC::BODY_LEN
+        unless org_target.empty?
+          send(:join, org_target, org_pass)
+          target = c.name
+          pass = c.password
+        else
+          send(:join, c.name, c.password)
+          target = ''
+          pass = ''
+        end
+      end
     end
-    send(:join, target, pass)
+    send(:join, target, pass) unless target.empty?
   end
   
   def change_state_to_off
@@ -813,31 +862,6 @@ class IRCUnit < OSX::NSObject
     end
   end
   
-  def set_keyword_state(t)
-    return if NSApp.isActive && @world.selected == t
-    return if !t.unit? && !t.config.keyword
-    return if t.keyword
-    t.keyword = true
-    reload_tree
-    NSApp.requestUserAttention(NSCriticalRequest) unless NSApp.isActive
-  end
-  
-  def set_unread_state(t)
-    return if NSApp.isActive && @world.selected == t
-    return if !t.unit? && !t.config.unread
-    return if t.unread
-    t.unread = true
-    reload_tree
-  end
-  
-  def set_newtalk_state(t)
-    return if NSApp.isActive && @world.selected == t
-    return if t.newtalk
-    t.newtalk = true
-    reload_tree
-    NSApp.requestUserAttention(NSInformationalRequest) unless NSApp.isActive
-  end
-  
   def receive_text(m, command, text)
     nick = m.sender_nick
     target = m[0]
@@ -849,8 +873,8 @@ class IRCUnit < OSX::NSObject
       t = c || self
       set_unread_state(t) if command != :notice
       set_keyword_state(t) if key
-      ;;
-      #@world.notify_to_growl(self, c, "(#{nick}) #{text}")
+      kind = key ? :highlight : :unread
+      notify_text(kind, c, nick, text)
     elsif eq(target, @mynick)
       if nick.server? || nick.empty?
         # system
@@ -868,8 +892,8 @@ class IRCUnit < OSX::NSObject
         set_unread_state(t) if command != :notice
         set_newtalk_state(t) if newtalk
         set_keyword_state(t) if key
-        ;;
-        #@world.notify_to_growl(self, c, "(#{nick}) #{text}")
+        kind = key ? :highlight : (newtalk ? :newtalk : :unread)
+        notify_text(kind, c, nick, text)
       end
     else
       # system
