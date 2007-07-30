@@ -898,7 +898,7 @@ class IRCUnit < OSX::NSObject
           c = @world.create_talk(self, nick)
           newtalk = true
         end
-        key = print_both(c || nick, command, nick, text)
+        key = print_both(c || self, command, nick, text)
         if command != :notice
           t = c || self
           set_unread_state(t)
@@ -915,7 +915,7 @@ class IRCUnit < OSX::NSObject
       end
     else
       # system
-      print_both(target, command, nick, text)
+      print_both(self, command, nick, text)
     end
   end
   
