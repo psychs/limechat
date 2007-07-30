@@ -122,7 +122,16 @@ module LogRenderer
     
     def escape_str(s)
       a = ''
-      s.each_char {|c| a += escape_char(c)}
+      prev = nil
+      s.each_char do |c|
+        if c == ' ' && prev == ' '
+          a += '&nbsp;'
+          prev = nil
+          next
+        end
+        prev = c
+        a += escape_char(c)
+      end
       a
     end
     
@@ -132,7 +141,6 @@ module LogRenderer
       when '>'; '&gt;'
       when '&'; '&amp;'
       when '"'; '&quot;'
-      when ' '; '&nbsp;'
       when "\t"; '&nbsp;&nbsp;&nbsp;&nbsp;'
       else c
       end
