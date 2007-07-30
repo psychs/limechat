@@ -7,6 +7,7 @@ require 'cgi'
 class MenuController < OSX::NSObject
   include OSX
   attr_accessor :app, :world, :window, :text, :tree, :pref, :member_list
+  attr_accessor :url
   
   def initialize
     @server_dialogs = []
@@ -112,7 +113,11 @@ class MenuController < OSX::NSObject
     when 2004  # member deop
       op && count_selected_members?
     when 2011  # dcc send file
-      active_chtalk && count_selected_members? && !!u.myaddress      
+      active_chtalk && count_selected_members? && !!u.myaddress
+    
+    when 3001  # copy url
+      true
+    
     else
       false
     end
@@ -632,5 +637,14 @@ class MenuController < OSX::NSObject
     targets.each do |t|
       files.each {|f| @world.dcc.add_sender(uid, t.nick, f) }
     end
+  end
+  
+  
+  def onCopyUrl(sender)
+    return unless @url
+    pb = NSPasteboard.generalPasteboard
+    pb.declareTypes_owner([NSStringPboardType], self)
+    pb.setString_forType(@url, NSStringPboardType)
+    @url = nil
   end
 end

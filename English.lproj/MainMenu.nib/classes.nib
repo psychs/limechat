@@ -20,6 +20,7 @@
                 text = id; 
                 tree = id; 
                 "tree_menu" = id; 
+                "url_menu" = id; 
                 window = id; 
             }; 
             SUPERCLASS = NSObject; 
@@ -37,6 +38,7 @@
                 onChannelProperties = id; 
                 onConnect = id; 
                 onCopyServer = id; 
+                onCopyUrl = id; 
                 onDcc = id; 
                 onDeleteChannel = id; 
                 onDeleteServer = id; 
@@ -50,6 +52,7 @@
                 onMemberWhois = id; 
                 onMode = id; 
                 onNick = id; 
+                onOpenUrl = id; 
                 onPaste = id; 
                 onPasteMyAddress = id; 
                 onPreferences = id; 

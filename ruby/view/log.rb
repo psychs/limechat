@@ -25,7 +25,7 @@ end
 
 class LogController < OSX::NSObject
   include OSX
-  attr_accessor :world, :menu, :max_lines, :keyword
+  attr_accessor :world, :menu, :url_menu, :max_lines, :keyword
   attr_reader :view, :console, :bottom
   
   BOTTOM_EPSILON = 20
@@ -84,7 +84,12 @@ class LogController < OSX::NSObject
     @loaded = false
     @console = console
     @policy = LogPolicy.alloc.init
+    @policy.owner = self
     @policy.menu = @menu
+    @policy.url_menu = @url_menu
+    @sink = LogScriptEventSink.alloc.init
+    @sink.owner = self
+    @sink.policy = @policy
     @view.release if @view
     @view = LogView.alloc.initWithFrame(NSZeroRect)
     @view.setFrameLoadDelegate(self)
@@ -178,9 +183,7 @@ class LogController < OSX::NSObject
   objc_method :webView_windowScriptObjectAvailable, 'v@:@@'
   def webView_windowScriptObjectAvailable(sender, js)
     @js = js
-    sink = LogScriptEventSink.alloc.init
-    sink.owner = self
-    @js.setValue_forKey(sink, 'app')
+    @js.setValue_forKey(@sink, 'app')
   end
   
   objc_method :webView_didFinishLoadForFrame, 'v@:@@'
@@ -228,20 +231,23 @@ class LogController < OSX::NSObject
           }
           event.stopPropagation()
         }
+        function on_url_contextmenu() {
+          var t = event.target
+          app.setUrl(t.toString())
+        }
         
         document.addEventListener('mousedown', on_mousedown, false)
       EOM
       @js.evaluateWebScript(script)
+    else
+      script = <<-EOM
+        function on_url_contextmenu() {
+          var t = event.target
+          app.setUrl(t.toString())
+        }
+      EOM
+      @js.evaluateWebScript(script)
     end
-=begin
-    script = <<-EOM
-      function on_url_contextmenu() {
-        var t = event.target
-        app.print(t.toString())
-      }
-    EOM
-=end
-    @js.evaluateWebScript(script)
   end
   
   def logView_keyDown(e)
@@ -320,9 +326,9 @@ end
 
 class LogScriptEventSink < OSX::NSObject
   include OSX
-  attr_accessor :owner
+  attr_accessor :owner, :policy
   
-  EXPORTED_METHODS = %w|onDblClick: shouldStopDoubleClick: print:|
+  EXPORTED_METHODS = %w|onDblClick: shouldStopDoubleClick: setUrl: print:|
 
   objc_class_method 'isSelectorExcludedFromWebScript:', 'c@::'
   def self.isSelectorExcludedFromWebScript(sel)
@@ -385,6 +391,12 @@ class LogScriptEventSink < OSX::NSObject
     res
   end
   
+  objc_method :setUrl, 'v@:@'
+  def setUrl(s)
+    return unless s
+    @policy.url = s.to_s
+  end
+  
   objc_method :print, 'v@:@'
   def print(s)
     NSLog("%@", s)
@@ -394,7 +406,8 @@ end
 
 class LogPolicy < OSX::NSObject
   include OSX
-  attr_accessor :menu
+  attr_accessor :owner, :menu, :url_menu
+  attr_accessor :url
 
   objc_method :webView_dragDestinationActionMaskForDraggingInfo, 'I@:@@'
   def webView_dragDestinationActionMaskForDraggingInfo(sender, info)
@@ -403,10 +416,21 @@ class LogPolicy < OSX::NSObject
   
   objc_method :webView_contextMenuItemsForElement_defaultMenuItems, '@@:@@@'
   def webView_contextMenuItemsForElement_defaultMenuItems(sender, element, defaultMenu)
-    if @menu
-      @menu.itemArray.to_a.map {|i| i.copy }
+    if @url
+      if @url_menu
+        @owner.world.menu_controller.url = @url
+        @url = nil
+        @url_menu.itemArray.to_a.map {|i| i.copy }
+      else
+        @url = nil
+        []
+      end
     else
-      []
+      if @menu
+        @menu.itemArray.to_a.map {|i| i.copy }
+      else
+        []
+      end
     end
   end
 
