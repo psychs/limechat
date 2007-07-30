@@ -341,6 +341,7 @@ class IRCWorld < OSX::NSObject
   end
   
   def register_growl
+    return unless @pref.gen.use_growl
     return if @growl
     @growl = Growl::Notifier.alloc.initWithDelegate(self)
     all = [GROWL_HIGHLIGHT, GROWL_NEW_TALK, GROWL_CHANNEL_MSG, GROWL_TALK_MSG]
@@ -349,6 +350,7 @@ class IRCWorld < OSX::NSObject
   end
   
   def notify_on_growl(kind, title, desc, context)
+    return unless @pref.gen.use_growl
     return unless @growl
     return if NSApp.isActive?
     
