@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>ruby/irc/world.rb</string>
+	<string>ruby/view/log.rb</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -33,16 +33,31 @@
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>332</integer>
+			<integer>325</integer>
+		</dict>
+		<key>ruby/view/log.rb</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>5</integer>
+				<key>line</key>
+				<integer>316</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>223</integer>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
 		<string>ruby/irc/world.rb</string>
+		<string>ruby/view/log.rb</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{572, 60}, {852, 963}}</string>
+	<string>{{597, 108}, {860, 1027}}</string>
 </dict>
 </plist>

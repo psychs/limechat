@@ -550,7 +550,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "imagename=\"build/$PROJECT_NAME.dmg\"\nif [ -e \"$imagename\" ]\nthen\nrm \"$imagename\"\nfi\n#hdiutil create -srcfolder $CONFIGURATION_BUILD_DIR -volname \"$PROJECT_NAME\" \"$imagename\"\nln -s /Applications build/Release\ncp -r doc build/Release/LimeChat.app/Contents/Resources/\ncp -r doc build/Release/\nhdiutil create -srcfolder build/Release -volname \"$PROJECT_NAME\" \"$imagename\"\n";
+			shellScript = "imagename=\"build/$PROJECT_NAME.dmg\"\nif [ -e \"$imagename\" ]\nthen\n  rm \"$imagename\"\nfi\n\ndir=\"build/Release\"\nif [ -e \"$dir\" ]\nthen\n  #hdiutil create -srcfolder $CONFIGURATION_BUILD_DIR -volname \"$PROJECT_NAME\" \"$imagename\"\n  ln -s /Applications build/Release\n  cp -r doc \"$dir\"/LimeChat.app/Contents/Resources/\n  cp -r doc \"$dir\"/\n  hdiutil create -srcfolder \"$dir\" -volname \"$PROJECT_NAME\" \"$imagename\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
