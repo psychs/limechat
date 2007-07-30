@@ -1,3 +1,7 @@
+2007-07-31  Satoshi Nakagawa <artension@gmail.com>
+
+	Changed spacing strategy of log view.
+
 2007-07-30  Satoshi Nakagawa <artension@gmail.com>
 
 	Added address detection.
