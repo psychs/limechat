@@ -5,6 +5,7 @@
             CLASS = AppController; 
             LANGUAGE = ObjC; 
             OUTLETS = {
+                "addr_menu" = id; 
                 "channel_menu" = id; 
                 "console_base" = id; 
                 "console_menu" = id; 
@@ -37,6 +38,7 @@
                 onCancelReconnecting = id; 
                 onChannelProperties = id; 
                 onConnect = id; 
+                onCopyAddress = id; 
                 onCopyServer = id; 
                 onCopyUrl = id; 
                 onDcc = id; 

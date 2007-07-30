@@ -7,7 +7,7 @@ require 'cgi'
 class MenuController < OSX::NSObject
   include OSX
   attr_accessor :app, :world, :window, :text, :tree, :pref, :member_list
-  attr_accessor :url
+  attr_accessor :url, :addr
   
   def initialize
     @server_dialogs = []
@@ -116,6 +116,8 @@ class MenuController < OSX::NSObject
       active_chtalk && count_selected_members? && !!u.myaddress
     
     when 3001  # copy url
+      true
+    when 3101  # copy address
       true
     
     else
@@ -528,6 +530,8 @@ class MenuController < OSX::NSObject
       }
       img { border: 1px solid #aaa; vertical-align: top; }
       object { vertical-align: top; }
+      .url {}
+      .address { text-decoration: underline; }
       .highlight { color: #f0f; font-weight: bold; }
       .line { margin: 2px 0; }
       .time { color: #048; }
@@ -646,5 +650,13 @@ class MenuController < OSX::NSObject
     pb.declareTypes_owner([NSStringPboardType], self)
     pb.setString_forType(@url, NSStringPboardType)
     @url = nil
+  end
+  
+  def onCopyAddress(sender)
+    return unless @addr
+    pb = NSPasteboard.generalPasteboard
+    pb.declareTypes_owner([NSStringPboardType], self)
+    pb.setString_forType(@addr, NSStringPboardType)
+    @addr = nil
   end
 end

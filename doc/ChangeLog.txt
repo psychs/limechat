@@ -1,5 +1,10 @@
 2007-07-30  Satoshi Nakagawa <artension@gmail.com>
 
+	Added address detection.
+	Added address menu.
+
+2007-07-30  Satoshi Nakagawa <artension@gmail.com>
+
 	Added url menu.
 
 2007-07-29  Satoshi Nakagawa <artension@gmail.com>

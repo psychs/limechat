@@ -25,7 +25,7 @@ end
 
 class LogController < OSX::NSObject
   include OSX
-  attr_accessor :world, :menu, :url_menu, :max_lines, :keyword
+  attr_accessor :world, :menu, :url_menu, :addr_menu, :max_lines, :keyword
   attr_reader :view, :console, :bottom
   
   BOTTOM_EPSILON = 20
@@ -43,6 +43,8 @@ class LogController < OSX::NSObject
     }
     img { border: 1px solid #aaa; vertical-align: top; }
     object { vertical-align: top; }
+    .url {}
+    .address { text-decoration: underline; }
     .highlight { color: #f0f; font-weight: bold; }
     .line { margin: 2px 0; }
     .time { color: #048; }
@@ -87,6 +89,7 @@ class LogController < OSX::NSObject
     @policy.owner = self
     @policy.menu = @menu
     @policy.url_menu = @url_menu
+    @policy.addr_menu = @addr_menu
     @sink = LogScriptEventSink.alloc.init
     @sink.owner = self
     @sink.policy = @policy
@@ -233,7 +236,11 @@ class LogController < OSX::NSObject
         }
         function on_url_contextmenu() {
           var t = event.target
-          app.setUrl(t.toString())
+          app.setUrl(t.innerHTML)
+        }
+        function on_address_contextmenu() {
+          var t = event.target
+          app.setAddr(t.innerHTML)
         }
         
         document.addEventListener('mousedown', on_mousedown, false)
@@ -243,7 +250,11 @@ class LogController < OSX::NSObject
       script = <<-EOM
         function on_url_contextmenu() {
           var t = event.target
-          app.setUrl(t.toString())
+          app.setUrl(t.innerHTML)
+        }
+        function on_address_contextmenu() {
+          var t = event.target
+          app.setAddr(t.innerHTML)
         }
       EOM
       @js.evaluateWebScript(script)
@@ -328,7 +339,7 @@ class LogScriptEventSink < OSX::NSObject
   include OSX
   attr_accessor :owner, :policy
   
-  EXPORTED_METHODS = %w|onDblClick: shouldStopDoubleClick: setUrl: print:|
+  EXPORTED_METHODS = %w|onDblClick: shouldStopDoubleClick: setUrl: setAddr: print:|
 
   objc_class_method 'isSelectorExcludedFromWebScript:', 'c@::'
   def self.isSelectorExcludedFromWebScript(sel)
@@ -397,6 +408,12 @@ class LogScriptEventSink < OSX::NSObject
     @policy.url = s.to_s
   end
   
+  objc_method :setAddr, 'v@:@'
+  def setAddr(s)
+    return unless s
+    @policy.addr = s.to_s
+  end
+  
   objc_method :print, 'v@:@'
   def print(s)
     NSLog("%@", s)
@@ -406,8 +423,8 @@ end
 
 class LogPolicy < OSX::NSObject
   include OSX
-  attr_accessor :owner, :menu, :url_menu
-  attr_accessor :url
+  attr_accessor :owner, :menu, :url_menu, :addr_menu
+  attr_accessor :url, :addr
 
   objc_method :webView_dragDestinationActionMaskForDraggingInfo, 'I@:@@'
   def webView_dragDestinationActionMaskForDraggingInfo(sender, info)
@@ -417,14 +434,13 @@ class LogPolicy < OSX::NSObject
   objc_method :webView_contextMenuItemsForElement_defaultMenuItems, '@@:@@@'
   def webView_contextMenuItemsForElement_defaultMenuItems(sender, element, defaultMenu)
     if @url
-      if @url_menu
-        @owner.world.menu_controller.url = @url
-        @url = nil
-        @url_menu.itemArray.to_a.map {|i| i.copy }
-      else
-        @url = nil
-        []
-      end
+      @owner.world.menu_controller.url = @url
+      @url = nil
+      @url_menu.itemArray.to_a.map {|i| i.copy }
+    elsif @addr
+      @owner.world.menu_controller.addr = @addr
+      @addr = nil
+      @addr_menu.itemArray.to_a.map {|i| i.copy }
     else
       if @menu
         @menu.itemArray.to_a.map {|i| i.copy }

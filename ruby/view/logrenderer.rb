@@ -7,8 +7,11 @@ module LogRenderer
     def render_body(body, keywords, dislike_words)
       effects, body = process_effects(body)
       urls = process_urls(body)
+      addrs = process_addresses(body)
+      addrs.delete_if {|a| urls.find {|u| intersect?(a,u)}} unless urls.empty?
       keywords = process_keywords(body, urls, keywords, dislike_words)
-      events = combine_events(effects, urls, keywords)
+      addrs.delete_if {|a| keywords.find {|k| intersect?(a,k)}} unless keywords.empty?
+      events = combine_events(effects, urls, addrs, keywords)
       
       if events.empty?
         body = escape_str(body)
@@ -17,6 +20,7 @@ module LogRenderer
 
       effect = nil
       url = nil
+      addr = nil
       key = nil
       pending_effect = nil
     
@@ -51,6 +55,16 @@ module LogRenderer
                 pending_effect = nil
                 t += render_start_tag(effect)
               end
+            when :addrend
+              if addr
+                addr = nil
+                t += render_end_tag(:address)
+              end
+              if !effect && pending_effect
+                effect = pending_effect
+                pending_effect = nil
+                t += render_start_tag(effect)
+              end
             when :keyend
               if key
                 key = nil
@@ -69,6 +83,15 @@ module LogRenderer
               end
               t += render_end_tag(:url) if url
               url = e
+              t += render_start_tag(e)
+            when :addrstart
+              if effect
+                pending_effect = effect
+                effect = nil
+                t += render_end_tag(:effect)
+              end
+              t += render_end_tag(:address) if addr
+              addr = e
               t += render_start_tag(e)
             when :keystart
               if effect
@@ -139,6 +162,7 @@ module LogRenderer
     def render_start_tag(e)
       case e[:kind]
       when :urlstart; %Q[<a class="url" href="#{e[:url]}" oncontextmenu="on_url_contextmenu()">]
+      when :addrstart; '<span class="address" oncontextmenu="on_address_contextmenu()">'
       when :keystart; '<strong class="highlight">'
       when :effect
         s = '<span class="effect" style="'
@@ -166,6 +190,7 @@ module LogRenderer
     def render_end_tag(kind)
       case kind
       when :url; '</a>'
+      when :address; '</span>'
       when :key; '</strong>'
       when :effect; '</span>'
       end
@@ -229,11 +254,13 @@ module LogRenderer
     end
   
     def process_urls(body)
-      urlrex = /(h?ttps?|ftp):\/\/[-_a-zA-Z0-9.!~*':@%]+((\/[-_a-zA-Z0-9.!~*'%;\/?:@&=+$,#]*[-_a-zA-Z0-9\/?])|\/|)/i
+      unless @urlrex
+        @urlrex = /(?:h?ttps?|ftp):\/\/[-_a-zA-Z0-9.!~*':@%]+(?:(?:\/[-_a-zA-Z0-9.!~*'%;\/?:@&=+$,#]*[-_a-zA-Z0-9\/?])|\/|)/i
+      end
       urls = []
       s = body.dup
       offset = 0
-      while urlrex =~ s
+      while @urlrex =~ s
         left = $~.begin(0)
         right = $~.end(0)
         url = s[left...right]
@@ -242,6 +269,24 @@ module LogRenderer
         offset += right
       end
       urls
+    end
+
+    def process_addresses(body)
+      unless @addrex
+    	  @addrex = /(([a-zA-Z0-9]([a-zA-Z0-9\-]*[a-zA-Z0-9])?\.)([a-zA-Z0-9]([a-zA-Z0-9\-]*[a-zA-Z0-9])?\.)+(com|net|org|edu|gov|mi|int|biz|pro|info|coop|name|aero|museum|ac|ad|ae|af|ag|ai|a|am|an|ao|aq|ar|as|at|au|aw|az|ba|bb|bd|be|bf|bg|bh|bi|bj|bm|bn|bo|br|bs|bt|bv|bw|by|bz|ca|cc|cd|cf|cg|ch|ci|ck|c|cm|cn|co|cr|cs|cu|cv|cx|cy|cz|de|dj|dk|dm|do|dz|ec|ee|eg|eh|er|es|et|fi|fj|fk|fm|fo|fr|fx|ga|gb|gd|ge|gf|gg|gh|gi|g|gm|gn|gp|gq|gr|gs|gt|gu|gw|gy|hk|hm|hn|hr|ht|hu|id|ie|i|im|in|io|iq|ir|is|it|je|jm|jo|jp|ke|kg|kh|ki|km|kn|kp|kr|kw|ky|kz|la|lb|lc|li|lk|lr|ls|lt|lu|lv|ly|ma|mc|md|mg|mh|mk|m|mm|mn|mo|mp|mq|mr|ms|mt|mu|mv|mw|mx|my|mz|na|ne|nf|ng|ni|n|no|np|nr|nt|nu|nz|om|pa|pe|pf|pg|ph|pk|p|pm|pn|pr|ps|pt|pw|py|qa|re|ro|ru|rw|sa|sb|sc|sd|se|sg|sh|si|sj|sk|s|sm|sn|so|sr|st|su|sv|sy|sz|tc|td|tf|tg|th|tj|tk|tm|tn|to|tp|tr|tt|tv|tw|tz|ua|ug|uk|um|us|uy|uz|va|vc|ve|vg|vi|vn|wf|wg|ws|ye|yt|yu|za|zm|zr|zw))|(((\d{1,3}\.){3}[\d]{1,3}))/i
+  	  end
+      addrs = []
+      s = body.dup
+      offset = 0
+      while @addrex =~ s
+        left = $~.begin(0)
+        right = $~.end(0)
+        addr = s[left...right]
+        addrs << { :address => addr, :pos => offset+left, :len => right-left }
+        s[0...right] = ''
+        offset += right
+      end
+      addrs
     end
   
     def intersect?(a, b)
@@ -318,7 +363,7 @@ module LogRenderer
       new_keywords
     end
   
-    def combine_events(effects, urls, keywords)
+    def combine_events(effects, urls, addrs, keywords)
       events = []
       events += effects.map {|i| i[:kind] = :effect; i }
       urls.each do |i|
@@ -327,6 +372,16 @@ module LogRenderer
         events << s
         s = i.dup
         s[:kind] = :urlend
+        s[:pos] += s[:len]
+        events << s
+      end
+    
+      addrs.each do |i|
+        s = i.dup
+        s[:kind] = :addrstart
+        events << s
+        s = i.dup
+        s[:kind] = :addrend
         s[:pos] += s[:len]
         events << s
       end
@@ -342,7 +397,7 @@ module LogRenderer
       end
       
       # sort:
-      #   effect off < urlend == keyend < urlstart == keystart < effect on
+      #   effect off < urlend == keyend == addrend < urlstart == keystart == addrstart < effect on
       #
       events.sort! do |a,b|
         cond = a[:pos] <=> b[:pos]
@@ -364,7 +419,7 @@ module LogRenderer
               1
             elsif y == :effect && !b[:off]
               -1
-            elsif x == :urlend || x == :keyend
+            elsif x == :urlend || x == :keyend || x == :addrend
               -1
             else
               1

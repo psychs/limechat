@@ -5,7 +5,7 @@ class AppController < OSX::NSObject
   include OSX
   ib_outlet :window, :tree, :log_base, :console_base, :member_list, :text
   ib_outlet :root_split, :log_split, :info_split
-  ib_outlet :menu, :server_menu, :channel_menu, :member_menu, :tree_menu, :log_menu, :console_menu, :url_menu
+  ib_outlet :menu, :server_menu, :channel_menu, :member_menu, :tree_menu, :log_menu, :console_menu, :url_menu, :addr_menu
   
   def awakeFromNib
     app = NSApplication.sharedApplication
@@ -37,6 +37,7 @@ class AppController < OSX::NSObject
     @world.log_menu = @log_menu
     @world.console_menu = @console_menu
     @world.url_menu = @url_menu
+    @world.addr_menu = @addr_menu
     @world.menu_controller = @menu
     @tree.setDataSource(@world)
     @tree.setDelegate(@world)

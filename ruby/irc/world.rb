@@ -4,7 +4,7 @@
 class IRCWorld < OSX::NSObject
   include OSX
   attr_accessor :tree, :log_base, :console_base, :member_list, :text, :window, :pref, :dcc
-  attr_accessor :tree_default_menu, :server_menu, :channel_menu, :tree_menu, :log_menu, :console_menu, :url_menu
+  attr_accessor :tree_default_menu, :server_menu, :channel_menu, :tree_menu, :log_menu, :console_menu, :url_menu, :addr_menu
   attr_accessor :menu_controller
   attr_reader :units, :selected, :console
   
@@ -632,6 +632,7 @@ class IRCWorld < OSX::NSObject
     log = LogController.alloc.init
     log.menu = console ? @console_menu : @log_menu
     log.url_menu = @url_menu
+    log.addr_menu = @addr_menu
     log.world = self
     log.keyword = @pref.key
     log.setup(console)
