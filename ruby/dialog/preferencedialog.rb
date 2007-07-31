@@ -61,7 +61,7 @@ class PreferenceDialog < OSX::NSObject
   # sound table
   
   EMPTY_SOUND = '-'
-  SOUNDS = [EMPTY_SOUND, 'Basso', 'Blow', 'Bottle', 'Frog', 'Funk', 'Glass', 'Hero', 'Morse', 'Ping', 'Pop', 'Purr', 'Sosumi', 'Submarine', 'Tink']
+  SOUNDS = [EMPTY_SOUND, 'Beep', 'Basso', 'Blow', 'Bottle', 'Frog', 'Funk', 'Glass', 'Hero', 'Morse', 'Ping', 'Pop', 'Purr', 'Sosumi', 'Submarine', 'Tink']
   SOUND_TITLES = ['Login', 'Disconnect', 'Highlight', 'New talk', 'Kicked', 'Invited', 'Channel text', 'Talk text']
   SOUND_ATTRS = [:login, :disconnect, :highlight, :newtalk, :kicked, :invited, :channeltext, :talktext]
   
@@ -88,14 +88,17 @@ class PreferenceDialog < OSX::NSObject
     #i = @c.channels[row]
     case col.identifier.to_s.to_sym
     when :sound
-      i = obj.to_i
-      value = SOUNDS[i]
+      value = SOUNDS[obj.to_i]
       value = '' if value == EMPTY_SOUND
       method = SOUND_ATTRS[row].to_s + '='
       @sound.__send__(method, value)
       if value != ''
-        s = NSSound.soundNamed(value)
-        s.play if s
+        if value == 'Beep'
+          OSX.NSBeep
+        else
+          s = NSSound.soundNamed(value)
+          s.play if s
+        end
       end
     end
   end
