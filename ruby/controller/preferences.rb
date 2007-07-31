@@ -20,6 +20,7 @@ class Preferences
   class Keyword
     include PersistenceHelper
     persistent_attr :words, :dislike_words
+    
     def initialize
       @words = []
       @dislike_words = []
@@ -64,12 +65,32 @@ class Preferences
     end
   end
   
-  model_attr :key, :dcc, :gen
+  class Sound
+    include PersistenceHelper
+    persistent_attr :login, :disconnect, :highlight, :newtalk, :kicked, :invited, :channeltext, :talktext
+    
+    def initialize
+      @login = @disconnect = @highlight = @newtalk = @kicked = @invited = @channeltext = @talktext = ''
+    end
+    
+    def assign(v)
+      set_persistent_attrs(v.get_persistent_attrs)
+    end
+    
+    def dup
+      n = Sound.new
+      n.set_persistent_attrs(get_persistent_attrs)
+      n
+    end
+  end
+  
+  model_attr :key, :dcc, :gen, :sound
   
   def initialize
     @key = Keyword.new
     @dcc = Dcc.new
     @gen = General.new
+    @sound = Sound.new
   end
     
   def load

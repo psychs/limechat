@@ -8,7 +8,7 @@ class PreferenceDialog < OSX::NSObject
   include DialogHelper
   attr_accessor :delegate
   attr_reader :m
-  ib_outlet :window, :dcc_myaddress_caption
+  ib_outlet :window, :dcc_myaddress_caption, :sound_table
   ib_mapped_outlet :key_words, :key_dislike_words
   ib_mapped_int_outlet :dcc_address_detection_method
   ib_mapped_outlet :dcc_myaddress
@@ -57,11 +57,55 @@ class PreferenceDialog < OSX::NSObject
   def onDccAddressDetectionMethodChanged(sender)
     update_myaddress
   end
+
+  # sound table
+  
+  EMPTY_SOUND = '-'
+  SOUNDS = [EMPTY_SOUND, 'Basso', 'Blow', 'Bottle', 'Frog', 'Funk', 'Glass', 'Hero', 'Morse', 'Ping', 'Pop', 'Purr', 'Sosumi', 'Submarine', 'Tink']
+  SOUND_TITLES = ['Login', 'Disconnect', 'Highlight', 'New talk', 'Kicked', 'Invited', 'Channel text', 'Talk text']
+  SOUND_ATTRS = [:login, :disconnect, :highlight, :newtalk, :kicked, :invited, :channeltext, :talktext]
+  
+  def numberOfRowsInTableView(sender)
+    SOUND_TITLES.length
+  end
+  
+  def tableView_objectValueForTableColumn_row(sender, col, row)
+    case col.identifier.to_s.to_sym
+    when :title
+      SOUND_TITLES[row]
+    when :sound
+      c = col.dataCell
+      c.removeAllItems
+      SOUNDS.each {|i| c.addItemWithTitle(i) }
+      method = SOUND_ATTRS[row]
+      value = @sound.__send__(method)
+      index = SOUNDS.index(value) || 0
+      index
+    end
+  end
+
+  def tableView_setObjectValue_forTableColumn_row(sender, obj, col, row)
+    #i = @c.channels[row]
+    case col.identifier.to_s.to_sym
+    when :sound
+      i = obj.to_i
+      value = SOUNDS[i]
+      value = '' if value == EMPTY_SOUND
+      method = SOUND_ATTRS[row].to_s + '='
+      @sound.__send__(method, value)
+      if value != ''
+        s = NSSound.soundNamed(value)
+        s.play if s
+      end
+    end
+  end
+  
   
   private
   
   def load
     load_mapped_outlets(m, true)
+    @sound = m.sound.dup
   end
   
   def save
@@ -73,6 +117,7 @@ class PreferenceDialog < OSX::NSObject
     m.key.dislike_words.sort! {|a,b| a.downcase <=> b.downcase}
     m.key.dislike_words.uniq!
     m.dcc.last_port = m.dcc.first_port if m.dcc.last_port < m.dcc.first_port
+    m.sound.assign(@sound)
   end
   
   def update_myaddress

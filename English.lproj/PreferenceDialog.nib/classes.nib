@@ -20,6 +20,7 @@
                 "gen_use_growl" = id; 
                 "key_dislike_words" = id; 
                 "key_words" = id; 
+                "sound_table" = id; 
                 window = id; 
             }; 
             SUPERCLASS = NSObject; 

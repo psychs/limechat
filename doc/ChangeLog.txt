@@ -1,5 +1,9 @@
 2007-07-31  Satoshi Nakagawa <artension@gmail.com>
 
+	Added sound settings.
+
+2007-07-31  Satoshi Nakagawa <artension@gmail.com>
+
 	Added flood protection.
 
 2007-07-31  Satoshi Nakagawa <artension@gmail.com>
