@@ -550,7 +550,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "imagename=\"build/$PROJECT_NAME.dmg\"\nif [ -e \"$imagename\" ]\nthen\n  rm \"$imagename\"\nfi\n\ndir=\"build/Release\"\nif [ -e \"$dir\" ]\nthen\n  #hdiutil create -srcfolder $CONFIGURATION_BUILD_DIR -volname \"$PROJECT_NAME\" \"$imagename\"\n  ln -s /Applications build/Release\n  cp -r doc \"$dir\"/LimeChat.app/Contents/Resources/\n  cp -r doc \"$dir\"/\n  hdiutil create -srcfolder \"$dir\" -volname \"$PROJECT_NAME\" \"$imagename\"\nfi\n";
+			shellScript = "imagename=\"build/$PROJECT_NAME.dmg\"\nif [ -e \"$imagename\" ]; then\n  rm \"$imagename\"\nfi\n\nroot=\"build/Release\"\nresdoc=\"$root\"/LimeChat.app/Contents/Resources/doc\nrootdoc=\"$root\"/doc\n\nif [ -e \"$root\"/LimeChat.app ]; then\n  ln -s /Applications build/Release\n\n  if [ ! -e \"$resdoc\" ]; then\n    mkdir \"$resdoc\"\n  fi\n  cp doc/* \"$resdoc\"/\n\n  if [ ! -e \"$rootdoc\" ]; then\n    mkdir \"$rootdoc\"\n  fi\n  cp doc/* \"$rootdoc\"/\n\n  #hdiutil create -srcfolder $CONFIGURATION_BUILD_DIR -volname \"$PROJECT_NAME\" \"$imagename\"\n  hdiutil create -srcfolder \"$root\" -volname \"$PROJECT_NAME\" \"$imagename\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
