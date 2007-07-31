@@ -7,9 +7,9 @@ module LogRenderer
     def render_body(body, keywords, dislike_words)
       effects, body = process_effects(body)
       urls = process_urls(body)
+      keywords = process_keywords(body, urls, keywords, dislike_words)
       addrs = process_addresses(body)
       addrs.delete_if {|a| urls.find {|u| intersect?(a,u)}} unless urls.empty?
-      keywords = process_keywords(body, urls, keywords, dislike_words)
       addrs.delete_if {|a| keywords.find {|k| intersect?(a,k)}} unless keywords.empty?
       events = combine_events(effects, urls, addrs, keywords)
       
