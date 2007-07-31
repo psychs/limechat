@@ -750,6 +750,28 @@ class IRCUnit < OSX::NSObject
     @world.notify_on_growl(kind, title, desc, context)
   end
   
+  def notify_event(kind, c=nil, nick=nil, text=nil)
+    case kind
+    when :login
+      title = "#{name}"
+      desc = "#{@conn.host}:#{@conn.port}"
+    when :disconnect
+      title = "#{name}"
+      desc = ''
+    when :kicked
+      title = "#{c.name}"
+      desc = "#{nick} has kicked out you from the channel: #{text}"
+    when :invited
+      title = "#{name}"
+      desc = "#{nick} has invited to #{text}"
+    else
+      return
+    end
+    context = "#{@id}"
+    context += ";#{c.id}" if c
+    @world.notify_on_growl(kind, title, desc, context)
+  end
+  
   # protocol
   
   def receive_init(m)
@@ -761,6 +783,9 @@ class IRCUnit < OSX::NSObject
     @mynick = m[0]
     @mymode.clear
     print_system(self, 'Logged in')
+    notify_event(:login)
+    SoundPlayer.play(@pref.sound.login)
+    
     @channels.each do |c|
       if c.talk?
         c.activate
@@ -773,7 +798,6 @@ class IRCUnit < OSX::NSObject
     end
     ary = @channels.select {|c| c.config.auto_join }
     join_channels(ary)
-    SoundPlayer.play(@pref.sound.login)
   end
   
   def join_channels(chans)
@@ -831,6 +855,7 @@ class IRCUnit < OSX::NSObject
   end
   
   def change_state_to_off
+    prev_connected = @connected
     @conn = nil
     @connecting = @connected = @login = @quitting = false
     @mynick = @sentnick = ''
@@ -849,7 +874,11 @@ class IRCUnit < OSX::NSObject
     update_unit_title
     reload_tree
     print_system_both(self, 'Disconnected')
-    SoundPlayer.play(@pref.sound.disconnect)
+    
+    if prev_connected
+      notify_event(:disconnect)
+      SoundPlayer.play(@pref.sound.disconnect)
+    end
   end
   
   def receive_privmsg(m)
@@ -997,6 +1026,7 @@ class IRCUnit < OSX::NSObject
         c.deactivate
         reload_tree
         print_system_both(c, "You have been kicked out from the channel")
+        notify_event(:kicked, c, nick, comment)
         SoundPlayer.play(@pref.sound.kicked)
       end
       c.remove_member(target)
@@ -1128,6 +1158,7 @@ class IRCUnit < OSX::NSObject
     sender = m.sender_nick
     chname = m[1]
     print_both(self, :invite, "*#{sender} has invited you to #{chname}")
+    notify_event(:invited, nil, sender, chname)
     SoundPlayer.play(@pref.sound.invited)
   end
   

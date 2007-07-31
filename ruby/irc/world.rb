@@ -19,6 +19,8 @@ class IRCWorld < OSX::NSObject
     @units = []
     @unit_id = 0
     @channel_id = 0
+    @growl = GrowlController.new
+    @growl.owner = self
   end
   
   def setup(seed)
@@ -31,7 +33,7 @@ class IRCWorld < OSX::NSObject
     @config.units.each {|u| create_unit(u) } if @config.units
     @config.units = nil
 
-    register_growl if @pref.gen.use_growl
+    register_growl
   end
   
   def save
@@ -341,60 +343,11 @@ class IRCWorld < OSX::NSObject
   end
   
   def register_growl
-    return unless @pref.gen.use_growl
-    return if @growl
-    @growl = Growl::Notifier.alloc.initWithDelegate(self)
-    all = [GROWL_HIGHLIGHT, GROWL_NEW_TALK, GROWL_CHANNEL_MSG, GROWL_TALK_MSG]
-    default = [GROWL_HIGHLIGHT, GROWL_NEW_TALK]
-    @growl.start(:LimeChat, all, default)
+    @growl.register if @pref.gen.use_growl
   end
   
   def notify_on_growl(kind, title, desc, context)
-    return unless @pref.gen.use_growl
-    return unless @growl
-    return if NSApp.isActive?
-    
-    priority = 0
-    sticky = false
-    
-    case kind
-    when :highlight
-      kind = GROWL_HIGHLIGHT
-      priority = 2
-      sticky = true
-      title = "Highlight: #{title}"
-    when :newtalk
-      kind = GROWL_NEW_TALK
-      priority = 1
-      sticky = true
-      title = "New Talk: #{title}"
-    when :channeltext
-      kind = GROWL_CHANNEL_MSG
-    when :talktext
-      kind = GROWL_TALK_MSG
-      title = "Talk: #{title}"
-    end
-    
-    @growl.notify(kind, title, desc, context, sticky, priority)
-  end
-  
-  def growl_onClicked(sender, context)
-    NSApp.activateIgnoringOtherApps(true)
-    
-    if /\A(\d+)[^\d](\d+)\z/ =~ context
-      uid = $1.to_i
-      cid = $2.to_i
-      u, c = find_by_id(uid, cid)
-      if c
-        select(c)
-      elsif u
-        select(u)
-      end
-    elsif /\A(\d+)\z/ =~ context
-      uid = $1.to_i
-      u = find_unit_by_id(uid)
-      select(u) if u
-    end
+    @growl.notify(kind, title, desc, context) if @pref.gen.use_growl
   end
   
   def change_log_style(style)
@@ -431,7 +384,7 @@ class IRCWorld < OSX::NSObject
   end
   
   def preferences_changed
-    register_growl if @pref.gen.use_growl
+    register_growl
     
     @units.each {|u| u.preferences_changed}
   end
