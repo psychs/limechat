@@ -1,5 +1,9 @@
 2007-07-31  Satoshi Nakagawa <artension@gmail.com>
 
+	Fixed a bug, kana characters in 0xd0-0xdf were ignored in receiving.
+
+2007-07-31  Satoshi Nakagawa <artension@gmail.com>
+
 	Changed spacing strategy of log view.
 
 2007-07-30  Satoshi Nakagawa <artension@gmail.com>

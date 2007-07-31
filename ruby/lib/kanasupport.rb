@@ -97,7 +97,7 @@ module KanaSupport
         end
         
         if enc == :jisroman
-          c &= 0x7f if 0xa1 <= c && c <= 0xcf
+          c &= 0x7f if 0xa1 <= c && c <= 0xdf
         end
         
         s += c.chr
