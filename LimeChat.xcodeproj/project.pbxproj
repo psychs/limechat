@@ -22,6 +22,7 @@
 
 /* Begin PBXBuildFile section */
 		780D09F00C2F2C20007C0F4F /* splitter.rb in Resources */ = {isa = PBXBuildFile; fileRef = 780D09EF0C2F2C20007C0F4F /* splitter.rb */; };
+		78211B530C5F3560004B47DA /* soundplayer.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78211B520C5F3560004B47DA /* soundplayer.rb */; };
 		7821DBDE0C2C84EA00B3EF42 /* PasteSheet.nib in Resources */ = {isa = PBXBuildFile; fileRef = 7821DBDC0C2C84EA00B3EF42 /* PasteSheet.nib */; };
 		7821DBE40C2C875700B3EF42 /* pastesheet.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7821DBE30C2C875700B3EF42 /* pastesheet.rb */; };
 		78229BC20C288188001DD4C3 /* asynctcpclient.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229B900C288188001DD4C3 /* asynctcpclient.rb */; };
@@ -113,6 +114,7 @@
 		780D09EF0C2F2C20007C0F4F /* splitter.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = splitter.rb; sourceTree = "<group>"; };
 		7817A0390BF6FFCD005C7737 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/DccDialog.nib; sourceTree = "<group>"; };
 		781E254C0BE9E8E20040F56E /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/ModeSheet.nib; sourceTree = "<group>"; };
+		78211B520C5F3560004B47DA /* soundplayer.rb */ = {isa = PBXFileReference; fileEncoding = "-2147483647"; lastKnownFileType = text.script.ruby; path = soundplayer.rb; sourceTree = "<group>"; };
 		7821DBDD0C2C84EA00B3EF42 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/PasteSheet.nib; sourceTree = "<group>"; };
 		7821DBE30C2C875700B3EF42 /* pastesheet.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = pastesheet.rb; sourceTree = "<group>"; };
 		78229B900C288188001DD4C3 /* asynctcpclient.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = asynctcpclient.rb; sourceTree = "<group>"; };
@@ -346,6 +348,7 @@
 		78229BA70C288188001DD4C3 /* lib */ = {
 			isa = PBXGroup;
 			children = (
+				78211B520C5F3560004B47DA /* soundplayer.rb */,
 				7831B94C0C589A7A00E1F931 /* growl.rb */,
 				78AFBCF40C33E314008A8FCD /* kanasupport.rb */,
 				78229BA80C288188001DD4C3 /* dialoghelper.rb */,
@@ -533,6 +536,7 @@
 				78DA4EC10C461D52008780C8 /* memberlistview.rb in Resources */,
 				78DA4EC20C461D52008780C8 /* servertreeview.rb in Resources */,
 				7831B94D0C589A7A00E1F931 /* growl.rb in Resources */,
+				78211B530C5F3560004B47DA /* soundplayer.rb in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

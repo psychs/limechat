@@ -85,21 +85,13 @@ class PreferenceDialog < OSX::NSObject
   end
 
   def tableView_setObjectValue_forTableColumn_row(sender, obj, col, row)
-    #i = @c.channels[row]
     case col.identifier.to_s.to_sym
     when :sound
       value = SOUNDS[obj.to_i]
       value = '' if value == EMPTY_SOUND
       method = SOUND_ATTRS[row].to_s + '='
       @sound.__send__(method, value)
-      if value != ''
-        if value == 'Beep'
-          OSX.NSBeep
-        else
-          s = NSSound.soundNamed(value)
-          s.play if s
-        end
-      end
+      SoundPlayer.play(value) unless value.empty?
     end
   end
   
