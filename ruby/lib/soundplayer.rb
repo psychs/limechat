@@ -2,13 +2,12 @@
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
 module SoundPlayer
-  include OSX
-  
   def self.play(name)
+    return if name == nil || name.empty?
     if name == 'Beep'
       OSX.NSBeep
     else
-      s = NSSound.soundNamed(name)
+      s = OSX::NSSound.soundNamed(name)
       s.play if s
     end
   end

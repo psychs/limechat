@@ -770,6 +770,7 @@ class IRCUnit < OSX::NSObject
     end
     ary = @channels.select {|c| c.config.auto_join }
     join_channels(ary)
+    SoundPlayer.play(@pref.sound.login)
   end
   
   def join_channels(chans)
@@ -845,6 +846,7 @@ class IRCUnit < OSX::NSObject
     update_unit_title
     reload_tree
     print_system_both(self, 'Disconnected')
+    SoundPlayer.play(@pref.sound.disconnect)
   end
   
   def receive_privmsg(m)
@@ -886,6 +888,8 @@ class IRCUnit < OSX::NSObject
         kind = :channeltext
         kind = :highlight if key
         notify_text(kind, c || target, nick, text)
+        sound = kind == :highlight ? @pref.sound.highlight : @pref.sound.channeltext
+        SoundPlayer.play(sound)
       end
     elsif eq(target, @mynick)
       if nick.server? || nick.empty?
@@ -912,6 +916,12 @@ class IRCUnit < OSX::NSObject
             kind = :newtalk
           end
           notify_text(kind, c || nick, nick, text)
+          sound = case kind
+          when :highlight; @pref.sound.highlight
+          when :newtalk; @pref.sound.newtalk
+          else; @pref.sound.talktext
+          end
+          SoundPlayer.play(sound)
         end
       end
     else
@@ -984,6 +994,7 @@ class IRCUnit < OSX::NSObject
         c.deactivate
         reload_tree
         print_system_both(c, "You have been kicked out from the channel")
+        SoundPlayer.play(@pref.sound.kicked)
       end
       c.remove_member(target)
       update_channel_title(c)
@@ -1114,6 +1125,7 @@ class IRCUnit < OSX::NSObject
     sender = m.sender_nick
     chname = m[1]
     print_both(self, :invite, "*#{sender} has invited you to #{chname}")
+    SoundPlayer.play(@pref.sound.invited)
   end
   
   def receive_ping(m)
