@@ -97,7 +97,12 @@ module DialogHelper
     when OSX::NSTextView
       t.textStorage.setAttributedString(OSX::NSAttributedString.alloc.initWithString(v.join("\n")))
     when OSX::NSPopUpButton
-      t.selectItemWithTag(v)
+      case type
+      when :int
+        t.selectItemWithTag(v)
+      else
+        t.selectItemWithTitle(v)
+      end
     when OSX::NSButton
       t.setState(v ? 1 : 0)
     end
@@ -132,7 +137,12 @@ module DialogHelper
       v = t.textStorage.string.to_s
       v = v.split(/\n/)
     when OSX::NSPopUpButton
-      v = t.selectedItem.tag
+      case type
+      when :int
+        v = t.selectedItem.tag
+      else
+        v = t.selectedItem.title
+      end
     when OSX::NSButton
       v = t.state.to_i != 0
     else
