@@ -265,6 +265,9 @@ class IRCUnit < OSX::NSObject
       cmd = :privmsg if cmd == :msg
       target = s.token!
       c = find_channel(target)
+      if !c && !target.channelname? && target != 'NickServ'
+        c = @world.create_talk(self, target)
+      end
       print_both(c || target, cmd, @mynick, s)
       if cmd == :action
         cmd = :privmsg

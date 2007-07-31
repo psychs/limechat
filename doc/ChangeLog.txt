@@ -1,5 +1,10 @@
 2007-07-31  Satoshi Nakagawa <artension@gmail.com>
 
+	Changed the default action for Tab key to going to next channel.
+	Changed to open new talk when sending a text message to unknown nick.
+
+2007-07-31  Satoshi Nakagawa <artension@gmail.com>
+
 	Implemented event sounds.
 
 2007-07-31  Satoshi Nakagawa <artension@gmail.com>

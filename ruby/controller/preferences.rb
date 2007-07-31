@@ -56,7 +56,7 @@ class Preferences
 
     def initialize
       @confirm_quit = true
-      @tab_action = TAB_COMPLEMENT_NICK
+      @tab_action = TAB_UNREAD
       @connect_on_doubleclick = false
       @disconnect_on_doubleclick = false
       @join_on_doubleclick = true
