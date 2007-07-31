@@ -82,7 +82,7 @@ class AsyncTcpServer < OSX::NSObject
   private
   
   def accept_loop
-    while true
+    loop do
       begin
         socket, addr = @sock.accept
         fire_accept_event(socket, addr)

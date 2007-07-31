@@ -352,7 +352,7 @@ module LogRenderer
       i = 0
       while i < keywords.length
         k = keywords[i]
-        while true
+        loop do
           n = keywords[i+1]
           unless n
             new_keywords << k

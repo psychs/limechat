@@ -202,6 +202,7 @@ class IRCUnit < OSX::NSObject
     @quitting = true
     @quit_timer = QUIT_TIME
     @reconnect = false
+    @conn.clear_send_queue
     comment = @config.leaving_comment unless comment
     send(:quit, ":#{comment}")
   end

@@ -97,7 +97,7 @@ class AsyncTcpClient < OSX::NSObject
   end
   
   def recv_loop
-    while true
+    loop do
       begin
         s = @sock.recv(1024 * 64)
         if !s || s.empty?
@@ -117,7 +117,7 @@ class AsyncTcpClient < OSX::NSObject
   end
   
   def send_loop
-    while true
+    loop do
       begin
         s = @sendq.pop
         @sending = true
