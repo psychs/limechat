@@ -12,6 +12,7 @@ class ServerDialog < OSX::NSObject
   ib_mapped_outlet :nameText, :hostCombo, :passwordText, :nickText, :usernameText, :realnameText, :auto_connectCheck
   ib_mapped_int_outlet :portText, :encodingCombo
   ib_mapped_outlet :leaving_commentText, :userinfoText, :invisibleCheck
+  ib_mapped_outlet :login_commandsText
   ib_outlet :channelsTable, :addButton, :editButton, :deleteButton, :upButton, :downButton
   ib_outlet :okButton
   
@@ -71,6 +72,7 @@ class ServerDialog < OSX::NSObject
   
   def save
     save_mapped_outlets(@c)
+    @c.login_commands.delete_if {|i| i =~ /^\s*$/ }
   end
   
   def controlTextDidChange(n)

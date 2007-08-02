@@ -42,7 +42,7 @@ class IRCUnitConfig
   attr_accessor :name, :host, :port, :password, :nick, :username, :realname
   attr_accessor :auto_connect, :encoding
   attr_accessor :channels
-  attr_accessor :leaving_comment, :userinfo, :invisible
+  attr_accessor :leaving_comment, :userinfo, :invisible, :login_commands
   
   def initialize(seed={})
     @name = @host = @password = @nick = @username = @realname = ''
@@ -51,6 +51,7 @@ class IRCUnitConfig
     @leaving_comment = 'Leaving...'
     @userinfo = ''
     @invisible = true
+    @login_commands = []
     @channels = []
     
     defaults = OSX::NSUserDefaults.standardUserDefaults

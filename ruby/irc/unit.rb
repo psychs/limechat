@@ -808,6 +808,12 @@ class IRCUnit < OSX::NSObject
     notify_event(:login)
     SoundPlayer.play(@pref.sound.login)
     
+    @config.login_commands.each do |s|
+      s = s.dup
+      s[0] = '' if /^\// =~ s
+      send_command(s)
+    end
+    
     @channels.each do |c|
       if c.channel?
         c.stored_topic = nil
@@ -817,9 +823,11 @@ class IRCUnit < OSX::NSObject
     end
     update_unit_title
     reload_tree
+    
     if !@last_selected_channel && !@channels.empty?
       @last_selected_channel = @channels[0]
     end
+    
     ary = @channels.select {|c| c.config.auto_join }
     join_channels(ary)
   end

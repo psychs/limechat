@@ -26,6 +26,7 @@
                 hostCombo = id; 
                 invisibleCheck = id; 
                 "leaving_commentText" = id; 
+                "login_commandsText" = id; 
                 nameText = id; 
                 nickText = id; 
                 okButton = id; 
