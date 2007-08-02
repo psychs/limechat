@@ -809,7 +809,9 @@ class IRCUnit < OSX::NSObject
     SoundPlayer.play(@pref.sound.login)
     
     @channels.each do |c|
-      if c.talk?
+      if c.channel?
+        c.stored_topic = nil
+      elsif c.talk?
         c.activate
       end
     end
