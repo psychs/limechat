@@ -1,6 +1,8 @@
 # Created by Satoshi Nakagawa.
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
+require 'date'
+
 class IRCUnit < OSX::NSObject
   include OSX
   attr_accessor :world, :pref, :log, :id
@@ -347,12 +349,20 @@ class IRCUnit < OSX::NSObject
     print_both(self, :dcc_send_send, "*Trying file transfer to #{nick}, #{fname} (#{size.grouped_by_comma} bytes) #{@myaddress}:#{port}")
   end
   
-  def send_ctcp_query(target, cmd, body)
-    send(:privmsg, target, ":\x01#{cmd} #{body}\x01")
+  def send_ctcp_query(target, cmd, body=nil)
+    cmd = cmd.to_s.upcase
+    s = ":\x01#{cmd}"
+    s += " #{body}" if body && !body.empty?
+    s += "\x01"
+    send(:privmsg, target, s)
   end
   
-  def send_ctcp_reply(target, cmd, body)
-    send(:notice, target, ":\x01#{cmd} #{body}\x01")
+  def send_ctcp_reply(target, cmd, body=nil)
+    cmd = cmd.to_s.upcase
+    s = ":\x01#{cmd}"
+    s += " #{body}" if body && !body.empty?
+    s += "\x01"
+    send(:notice, target, s)
   end
   
   def send(command, *args)
@@ -1221,15 +1231,17 @@ class IRCUnit < OSX::NSObject
   end
   
   def receive_ctcp_query(m, text)
+    nick = m.sender_nick
     text = text.dup
     command = text.token!
-    case command.downcase
-    when 'action'
+    cmd = command.downcase.to_sym
+    case cmd
+    when :action
       receive_text(m, :action, text)
-    when 'dcc'
+    when :dcc
       kind = text.token!
-      case kind.downcase
-      when 'send'
+      case kind.downcase.to_sym
+      when :send
         fname = text.token!
         addr = text.token!
         port = text.token!.to_i
@@ -1242,10 +1254,32 @@ class IRCUnit < OSX::NSObject
         end
         receive_dcc_send(m, fname, addr, port, size, ver)
       else
-        puts "dcc: #{kind} #{text}"
+        print_both(self, :reply, "*CTCP-query unknown(DCC #{kind}) from #{nick} : #{text}")
       end
     else
-      puts "ctcp_query: #{command} #{text}"
+      if @last_ctcp && (Time.now - @last_ctcp < 4)
+        @last_ctcp = Time.now
+        print_both(self, :reply, "*CTCP-query #{command} from #{nick} was ignored")
+        return
+      end
+      @last_ctcp = Time.now
+      
+      case cmd
+      when :ping
+        send_ctcp_reply(nick, command, text)
+      when :time
+        send_ctcp_reply(nick, command, Time.now.to_s)
+      when :version
+        send_ctcp_reply(nick, command, NSLocalizedString('AppVersion').to_s)
+      when :userinfo
+        send_ctcp_reply(nick, command, @config.userinfo)
+      when :clientinfo
+        send_ctcp_reply(nick, command, NSLocalizedString('CtcpClientInfo').to_s)
+      else
+        print_both(self, :reply, "*CTCP-query unknown(#{command}) from #{nick}")
+        return
+      end
+      print_both(self, :reply, "*CTCP-query #{command} from #{nick}")
     end
   end
   
@@ -1265,9 +1299,24 @@ class IRCUnit < OSX::NSObject
   end
   
   def receive_ctcp_reply(m, text)
+    nick = m.sender_nick
     text = text.dup
     command = text.token!
-    puts "ctcp_reply: #{command} #{text}"
+    case command.downcase.to_sym
+    when :ping
+      if /^\d+$/ =~ text
+        d = SystemTime.gettimeofday.to_i - text.to_i
+        d /= 1000
+        msec = d % 1000
+        sec = d / 1000
+        text = sprintf("%d.%2d", sec, msec/10)
+        print_both(self, :reply, "*CTCP-reply #{command} from #{nick} : #{text} sec")
+      else
+        print_both(self, :reply, "*CTCP-reply #{command} from #{nick} : #{text}")
+      end
+    else
+      print_both(self, :reply, "*CTCP-reply #{command} from #{nick} : #{text}")
+    end
   end
   
   def receive_numeric_reply(m)

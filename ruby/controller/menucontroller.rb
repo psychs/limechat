@@ -114,6 +114,8 @@ class MenuController < OSX::NSObject
       op && count_selected_members?
     when 2011  # dcc send file
       active_chtalk && count_selected_members? && !!u.myaddress
+    when 2101..2105  # ctcp
+      active_chtalk && count_selected_members?
     
     when 3001  # copy url
       true
@@ -643,6 +645,33 @@ class MenuController < OSX::NSObject
     end
   end
   
+  def send_ctcp_query(cmd, param=nil)
+    u = @world.selunit
+    return unless u && u.login?
+    selected_members.each do |m|
+      u.send_ctcp_query(m.nick, cmd, param)
+    end
+  end
+  
+  def onMemberPing(sender)
+    send_ctcp_query(:ping, SystemTime.gettimeofday.to_i.to_s)
+  end
+  
+  def onMemberTime(sender)
+    send_ctcp_query(:time)
+  end
+  
+  def onMemberVersion(sender)
+    send_ctcp_query(:version)
+  end
+  
+  def onMemberUserInfo(sender)
+    send_ctcp_query(:userinfo)
+  end
+  
+  def onMemberClientInfo(sender)
+    send_ctcp_query(:clientinfo)
+  end
   
   def onCopyUrl(sender)
     return unless @url

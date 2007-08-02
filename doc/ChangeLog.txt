@@ -1,5 +1,9 @@
 2007-08-02  Satoshi Nakagawa <artension@gmail.com>
 
+	Added CTCP.
+
+2007-08-02  Satoshi Nakagawa <artension@gmail.com>
+
 	Added commands performed on login.
 
 2007-08-02  Satoshi Nakagawa <artension@gmail.com>

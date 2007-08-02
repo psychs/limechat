@@ -47,10 +47,15 @@
                 onDisconnect = id; 
                 onJoin = id; 
                 onLeave = id; 
+                onMemberClientInfo = id; 
                 onMemberDeop = id; 
                 onMemberGiveOp = id; 
+                onMemberPing = id; 
                 onMemberSendFile = id; 
                 onMemberTalk = id; 
+                onMemberTime = id; 
+                onMemberUserInfo = id; 
+                onMemberVersion = id; 
                 onMemberWhois = id; 
                 onMode = id; 
                 onNick = id; 
