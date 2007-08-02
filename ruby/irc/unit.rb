@@ -219,7 +219,7 @@ class IRCUnit < OSX::NSObject
     unless force
       return if channel.active?
     end
-    pass = channel.config.password unless pass
+    pass = channel.config.password if !pass || pass.empty?
     pass = nil if pass.empty?
     send(:join, channel.name, pass)
   end
@@ -1053,6 +1053,9 @@ class IRCUnit < OSX::NSObject
         print_system_both(c, "You have been kicked out from the channel")
         notify_event(:kicked, c, nick, comment)
         SoundPlayer.play(@pref.sound.kicked)
+        
+        # rejoin
+        join_channel(c, c.mode.k) unless eq(nick, @mynick)
       end
       c.remove_member(target)
       update_channel_title(c)

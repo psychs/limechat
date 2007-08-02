@@ -1,5 +1,9 @@
 2007-08-02  Satoshi Nakagawa <artension@gmail.com>
 
+	Added automatic rejoin on kicked.
+
+2007-08-02  Satoshi Nakagawa <artension@gmail.com>
+
 	Added automatic rejoin to acquire op.
 
 2007-07-31  Satoshi Nakagawa <artension@gmail.com>
