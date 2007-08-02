@@ -1,6 +1,10 @@
+2007-08-02  Satoshi Nakagawa <artension@gmail.com>
+
+	Added automatic rejoin to acquire op.
+
 2007-07-31  Satoshi Nakagawa <artension@gmail.com>
 
-	Added growl notifications on logged in, disconnected, kicked, invited.
+	Added Growl notifications on logged in, disconnected, kicked, invited.
 
 2007-07-31  Satoshi Nakagawa <artension@gmail.com>
 

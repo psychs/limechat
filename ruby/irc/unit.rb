@@ -214,10 +214,12 @@ class IRCUnit < OSX::NSObject
     print_system(self, 'Stopped reconnecting')
   end
   
-  def join_channel(channel)
+  def join_channel(channel, pass=nil, force=false)
     return unless login?
-    return if channel.active?
-    pass = channel.config.password
+    unless force
+      return if channel.active?
+    end
+    pass = channel.config.password unless pass
     pass = nil if pass.empty?
     send(:join, channel.name, pass)
   end
@@ -772,6 +774,26 @@ class IRCUnit < OSX::NSObject
     @world.notify_on_growl(kind, title, desc, context)
   end
   
+  def check_rejoin(c)
+    return unless c
+    return unless c.channel?
+    return if c.op?
+    return if @mymode.r
+    return if c.count_members > 1
+    return unless c.name.modechannelname?
+    return if c.mode.a
+    
+    pass = c.mode.k
+    pass = nil if pass.empty?
+    topic = c.topic
+    topic = nil if topic.empty?
+    
+    part_channel(c)
+    c.stored_topic = topic
+    join_channel(c, pass, true)
+  end
+  
+  
   # protocol
   
   def receive_init(m)
@@ -1009,6 +1031,7 @@ class IRCUnit < OSX::NSObject
       end
       c.remove_member(nick)
       update_channel_title(c)
+      check_rejoin(c) unless myself
     end
     print_both(c || chname, :part, "*#{nick} has left (#{comment})")
     print_system(c, "You have left the channel") if myself
@@ -1020,9 +1043,11 @@ class IRCUnit < OSX::NSObject
     target = m[1]
     comment = m[2]
     
+    myself = false
     c = find_channel(chname)
     if c
       if eq(target, @mynick)
+        myself = true
         c.deactivate
         reload_tree
         print_system_both(c, "You have been kicked out from the channel")
@@ -1031,6 +1056,7 @@ class IRCUnit < OSX::NSObject
       end
       c.remove_member(target)
       update_channel_title(c)
+      check_rejoin(c) unless myself
     end
     print_both(c || chname, :kick, "*#{nick} has kicked #{target} (#{comment})")
   end
@@ -1044,6 +1070,7 @@ class IRCUnit < OSX::NSObject
         print_channel(c, :quit, "*#{nick} has left IRC (#{comment})")
         c.remove_member(nick)
         update_channel_title(c)
+        check_rejoin(c)
       end
     end
     print_console(nil, :quit, "*#{nick} has left IRC (#{comment})")
@@ -1060,6 +1087,7 @@ class IRCUnit < OSX::NSObject
         print_channel(c, :kill, "*#{sender} has made #{target} to leave IRC (#{comment})")
         c.remove_member(nick)
         update_channel_title(c)
+        check_rejoin(c)
       end
     end
     print_console(nil, :kill, "*#{sender} has made #{target} to leave IRC (#{comment})")
@@ -1414,9 +1442,15 @@ class IRCUnit < OSX::NSObject
           send(:mode, chname)
         end
         if c.count_members <= 1 && chname.modechannelname?
-          topic = c.config.topic
+          topic = c.stored_topic
           if topic && !topic.empty?
             send(:topic, chname, ":#{topic}")
+            c.stored_topic = nil
+          else
+            topic = c.config.topic
+            if topic && !topic.empty?
+              send(:topic, chname, ":#{topic}")
+            end
           end
         end
         update_channel_title(c)
