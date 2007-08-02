@@ -1,8 +1,6 @@
 # Created by Satoshi Nakagawa.
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
-require 'date'
-
 class IRCUnit < OSX::NSObject
   include OSX
   attr_accessor :world, :pref, :log, :id
@@ -1305,7 +1303,9 @@ class IRCUnit < OSX::NSObject
     case command.downcase.to_sym
     when :ping
       if /^\d+$/ =~ text
-        d = SystemTime.gettimeofday.to_i - text.to_i
+        n = Time.now
+        i = n.to_i * 1000000 + n.usec
+        d = i - text.to_i
         d /= 1000
         msec = d % 1000
         sec = d / 1000

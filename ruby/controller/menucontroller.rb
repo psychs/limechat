@@ -654,7 +654,9 @@ class MenuController < OSX::NSObject
   end
   
   def onMemberPing(sender)
-    send_ctcp_query(:ping, SystemTime.gettimeofday.to_i.to_s)
+    n = Time.now
+    i = n.to_i * 1000000 + n.usec
+    send_ctcp_query(:ping, i.to_s)
   end
   
   def onMemberTime(sender)

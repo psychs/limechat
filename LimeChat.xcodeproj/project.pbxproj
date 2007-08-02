@@ -69,7 +69,6 @@
 		788C5E660C5F4F5A0034C46E /* growlcontroller.rb in Resources */ = {isa = PBXBuildFile; fileRef = 788C5E650C5F4F5A0034C46E /* growlcontroller.rb */; };
 		78A808810C3DA6160073FF6B /* newtcpserver.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78A808800C3DA6160073FF6B /* newtcpserver.rb */; };
 		78AD78E40C61B8F8001E77F4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 78AD78E20C61B8F8001E77F4 /* Localizable.strings */; };
-		78AD79070C61C4CB001E77F4 /* SystemTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AD79060C61C4CB001E77F4 /* SystemTime.m */; };
 		78AF96580C2C219A006D9E4D /* inputhistory.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78AF96570C2C219A006D9E4D /* inputhistory.rb */; };
 		78AFBCF50C33E314008A8FCD /* kanasupport.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78AFBCF40C33E314008A8FCD /* kanasupport.rb */; };
 		78B063530C2BD19D00CDD242 /* singlelineformatter.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78B063520C2BD19D00CDD242 /* singlelineformatter.rb */; };
@@ -173,8 +172,6 @@
 		78A808800C3DA6160073FF6B /* newtcpserver.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = newtcpserver.rb; sourceTree = "<group>"; };
 		78A86ADA0BFFD87500E28592 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/WhoisDialog.nib; sourceTree = "<group>"; };
 		78AD78E30C61B8F8001E77F4 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
-		78AD79050C61C4CB001E77F4 /* SystemTime.h */ = {isa = PBXFileReference; fileEncoding = "-2147483647"; lastKnownFileType = sourcecode.c.h; name = SystemTime.h; path = objc/SystemTime.h; sourceTree = "<group>"; };
-		78AD79060C61C4CB001E77F4 /* SystemTime.m */ = {isa = PBXFileReference; fileEncoding = "-2147483647"; lastKnownFileType = sourcecode.c.objc; name = SystemTime.m; path = objc/SystemTime.m; sourceTree = "<group>"; };
 		78AF96570C2C219A006D9E4D /* inputhistory.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = inputhistory.rb; sourceTree = "<group>"; };
 		78AFBCF40C33E314008A8FCD /* kanasupport.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = kanasupport.rb; sourceTree = "<group>"; };
 		78B063520C2BD19D00CDD242 /* singlelineformatter.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = singlelineformatter.rb; sourceTree = "<group>"; };
@@ -395,8 +392,6 @@
 		786927470BB6EE130081019B /* objc */ = {
 			isa = PBXGroup;
 			children = (
-				78AD79050C61C4CB001E77F4 /* SystemTime.h */,
-				78AD79060C61C4CB001E77F4 /* SystemTime.m */,
 				784660230C3145850064140F /* OldEventManager.h */,
 				784660240C3145850064140F /* OldEventManager.m */,
 				786926F20BB6EC1B0081019B /* AsyncSocket.h */,
@@ -580,7 +575,6 @@
 				78E5723F0C1C30C300BDF7EC /* main.m in Sources */,
 				78E572420C1C30C300BDF7EC /* GradientFill.m in Sources */,
 				784660250C3145850064140F /* OldEventManager.m in Sources */,
-				78AD79070C61C4CB001E77F4 /* SystemTime.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
