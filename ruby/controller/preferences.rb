@@ -68,9 +68,12 @@ class Preferences
   class Sound
     include PersistenceHelper
     persistent_attr :login, :disconnect, :highlight, :newtalk, :kicked, :invited, :channeltext, :talktext
+    persistent_attr :file_receive_request, :file_receive_success, :file_receive_failure, :file_send_success, :file_send_failure
     
     def initialize
       @login = @disconnect = @highlight = @newtalk = @kicked = @invited = @channeltext = @talktext = ''
+      @file_receive_request = @file_receive_success = @file_receive_failure = ''
+      @file_send_success = @file_send_failure = ''
     end
   end
   

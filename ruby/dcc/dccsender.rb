@@ -40,7 +40,7 @@ class DccSender
       if @pref.dcc.last_port < @port
         @status = :error
         @error = 'No available ports'
-        @delegate.dccsender_on_change(self)
+        @delegate.dccsender_on_error(self)
         return false
       end
     end
@@ -62,7 +62,7 @@ class DccSender
   def set_address_error
     @status = :error
     @error = 'Cannot detect your IP address'
-    @delegate.dccsender_on_change(self)
+    @delegate.dccsender_on_error(self)
   end
   
   
@@ -78,11 +78,11 @@ class DccSender
   end
   
   def tcpserver_on_error(sender, c, err)
-    return if @status == :complete
+    return if @status == :complete || @status == :error
     @status = :error
     @error = err
     close
-    @delegate.dccsender_on_change(self)
+    @delegate.dccsender_on_error(self)
   end
   
   def tcpserver_on_disconnect(sender, c)
@@ -95,7 +95,7 @@ class DccSender
     @status = :error
     @error = 'Disconnected'
     close
-    @delegate.dccsender_on_change(self)
+    @delegate.dccsender_on_error(self)
   end
   
   def tcpserver_on_read(sender, c)
@@ -106,6 +106,7 @@ class DccSender
     if @processed_size >= @size
       if c.send_queue_size == 0
         @status = :complete
+        @delegate.dccsender_on_complete(self)
       end
     else
       send
@@ -175,7 +176,7 @@ class DccSender
       @status = :error
       @error = 'Could not open file'
       close
-      @delegate.dccsender_on_change(self)
+      @delegate.dccsender_on_error(self)
     end
   end
   

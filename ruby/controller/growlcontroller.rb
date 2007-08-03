@@ -13,16 +13,23 @@ class GrowlController
   GROWL_TALK_MSG = "Talk message received"
   GROWL_KICKED_MSG = "Kicked out from channel"
   GROWL_INVITED_MSG = "Invited to channel"
+  GROWL_FILE_RECEIVE_REQUEST_MSG = "File receive requested"
+  GROWL_FILE_RECEIVE_SUCCEEDED_MSG = "File receive succeeded"
+  GROWL_FILE_RECEIVE_FAILED_MSG = "File receive failed"
+  GROWL_FILE_SEND_SUCCEEDED_MSG = "File send succeeded"
+  GROWL_FILE_SEND_FAILED_MSG = "File send failed"
 
   def register
     return if @growl
     @growl = Growl::Notifier.alloc.initWithDelegate(self)
-    all = [GROWL_LOGIN_MSG, GROWL_DISCONNECT_MSG, GROWL_HIGHLIGHT, GROWL_NEW_TALK, GROWL_CHANNEL_MSG, GROWL_TALK_MSG, GROWL_KICKED_MSG, GROWL_INVITED_MSG]
+    all = [GROWL_LOGIN_MSG, GROWL_DISCONNECT_MSG, GROWL_HIGHLIGHT, GROWL_NEW_TALK, GROWL_CHANNEL_MSG, GROWL_TALK_MSG, GROWL_KICKED_MSG, GROWL_INVITED_MSG,
+            GROWL_FILE_RECEIVE_REQUEST_MSG, GROWL_FILE_RECEIVE_SUCCEEDED_MSG, GROWL_FILE_RECEIVE_FAILED_MSG,
+            GROWL_FILE_SEND_SUCCEEDED_MSG, GROWL_FILE_SEND_FAILED_MSG]
     default = [GROWL_HIGHLIGHT, GROWL_NEW_TALK]
     @growl.start(:LimeChat, all, default)
   end
   
-  def notify(kind, title, desc, context)
+  def notify(kind, title, desc, context=nil)
     return if NSApp.isActive?
     
     priority = 0
@@ -56,6 +63,33 @@ class GrowlController
     when :disconnect
       kind = GROWL_DISCONNECT_MSG
       title = "Disconnected: #{title}"
+    when :file_receive_request
+      kind = GROWL_FILE_RECEIVE_REQUEST_MSG
+      priority = 1
+      sticky = true
+      desc = "From #{title}\n#{desc}"
+      title = "File receive request"
+      context = 'dcc'
+    when :file_receive_succeeded
+      kind = GROWL_FILE_RECEIVE_SUCCEEDED_MSG
+      desc = "From #{title}\n#{desc}"
+      title = "File receive succeeded"
+      context = 'dcc'
+    when :file_receive_failed
+      kind = GROWL_FILE_RECEIVE_FAILED_MSG
+      desc = "From #{title}\n#{desc}"
+      title = "File receive failed"
+      context = 'dcc'
+    when :file_send_succeeded
+      kind = GROWL_FILE_SEND_SUCCEEDED_MSG
+      desc = "To #{title}\n#{desc}"
+      title = "File send succeeded"
+      context = 'dcc'
+    when :file_send_failed
+      kind = GROWL_FILE_SEND_FAILED_MSG
+      desc = "To #{title}\n#{desc}"
+      title = "File send failed"
+      context = 'dcc'
     end
     
     @growl.notify(kind, title, desc, context, sticky, priority)
@@ -64,7 +98,9 @@ class GrowlController
   def growl_onClicked(sender, context)
     NSApp.activateIgnoringOtherApps(true)
     
-    if /\A(\d+)[^\d](\d+)\z/ =~ context
+    if context == 'dcc'
+      @owner.dcc.show(true)
+    elsif /\A(\d+)[^\d](\d+)\z/ =~ context
       uid = $1.to_i
       cid = $2.to_i
       u, c = @owner.find_by_id(uid, cid)

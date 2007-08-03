@@ -61,23 +61,22 @@ class DccReceiver
     @status = :receiving
     open_file
     @delegate.dccreceiver_on_open(self)
-    @delegate.dccreceiver_on_change(self)
   end
   
   def tcpclient_on_disconnect(sender)
-    return if @status == :complete
+    return if @status == :complete || @status == :error
     @status = :error
     @error = 'Disconnected'
     close
-    @delegate.dccreceiver_on_change(self)
+    @delegate.dccreceiver_on_error(self)
   end
   
   def tcpclient_on_error(sender, err)
-    return if @status == :complete
+    return if @status == :complete || @status == :error
     @status = :error
     @error = err.localizedDescription.to_s
     close
-    @delegate.dccreceiver_on_change(self)
+    @delegate.dccreceiver_on_error(self)
   end
   
   def tcpclient_on_read(sender)
@@ -99,7 +98,7 @@ class DccReceiver
     if @processed_size >= @size
       @status = :complete
       close
-      @delegate.dccreceiver_on_change(self)
+      @delegate.dccreceiver_on_complete(self)
     end
   end
   

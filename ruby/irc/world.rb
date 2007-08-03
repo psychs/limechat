@@ -346,7 +346,7 @@ class IRCWorld < OSX::NSObject
     @growl.register if @pref.gen.use_growl
   end
   
-  def notify_on_growl(kind, title, desc, context)
+  def notify_on_growl(kind, title, desc, context=nil)
     @growl.notify(kind, title, desc, context) if @pref.gen.use_growl
   end
   

@@ -1294,6 +1294,9 @@ class IRCUnit < OSX::NSObject
     end
     print_both(self, :dcc_send_receive, "*Received file transfer request from #{m.sender_nick}, #{fname} (#{size.grouped_by_comma} bytes) #{host}:#{port}")
     @world.dcc.add_receiver(@id, m.sender_nick, host, port, '~/Desktop', fname, size, ver)
+    SoundPlayer.play(@pref.sound.file_receive_request)
+    @world.notify_on_growl(:file_receive_request, m.sender_nick, fname)
+    NSApp.requestUserAttention(NSInformationalRequest) unless NSApp.isActive
   end
   
   def receive_ctcp_reply(m, text)

@@ -252,12 +252,30 @@ class DccManager < OSX::NSObject
     reload_sender_table
   end
   
-  def dccreceiver_on_change(sender)
-    reload_receiver_table
+  
+  def dccsender_on_error(sender)
+    reload_sender_table
+    SoundPlayer.play(@pref.sound.file_send_failure)
+    @world.notify_on_growl(:file_send_failed, sender.peer_nick, sender.filename)
   end
   
-  def dccsender_on_change(sender)
+  def dccsender_on_complete(sender)
     reload_sender_table
+    SoundPlayer.play(@pref.sound.file_send_success)
+    @world.notify_on_growl(:file_send_succeeded, sender.peer_nick, sender.filename)
+  end
+  
+  
+  def dccreceiver_on_error(sender)
+    reload_receiver_table
+    SoundPlayer.play(@pref.sound.file_receive_failure)
+    @world.notify_on_growl(:file_receive_failed, sender.peer_nick, sender.filename)
+  end
+  
+  def dccreceiver_on_complete(sender)
+    reload_receiver_table
+    SoundPlayer.play(@pref.sound.file_receive_success)
+    @world.notify_on_growl(:file_receive_succeeded, sender.peer_nick, sender.filename)
   end
   
   def dccreceiver_on_open(sender)
@@ -271,8 +289,8 @@ class DccManager < OSX::NSObject
       bar.setDoubleValue(sender.processed_size)
       @receiver_table.addSubview(bar)
       sender.progress_bar = bar
-      reload_receiver_table
     end
+    reload_receiver_table
   end
   
   def dccreceiver_on_close(sender)

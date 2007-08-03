@@ -1,3 +1,8 @@
+2007-08-03  Satoshi Nakagawa <artension@gmail.com>
+
+	Added file transfer notifications on Growl.
+	Added sound events of file transfer.
+
 2007-08-02  Satoshi Nakagawa <artension@gmail.com>
 
 	Changed to use Time.now.usec for gettimeofday.

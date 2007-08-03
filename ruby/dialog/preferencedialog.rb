@@ -62,8 +62,10 @@ class PreferenceDialog < OSX::NSObject
   
   EMPTY_SOUND = '-'
   SOUNDS = [EMPTY_SOUND, 'Beep', 'Basso', 'Blow', 'Bottle', 'Frog', 'Funk', 'Glass', 'Hero', 'Morse', 'Ping', 'Pop', 'Purr', 'Sosumi', 'Submarine', 'Tink']
-  SOUND_TITLES = ['Login', 'Disconnect', 'Highlight', 'New talk', 'Channel text', 'Talk text', 'Kicked', 'Invited']
-  SOUND_ATTRS = [:login, :disconnect, :highlight, :newtalk, :channeltext, :talktext, :kicked, :invited]
+  SOUND_TITLES = ['Login', 'Disconnect', 'Highlight', 'New talk', 'Channel text', 'Talk text', 'Kicked', 'Invited',
+                  'DCC file receive request', 'DCC file receive success', 'DCC file receive failure', 'DCC file send success', 'DCC file send failure']
+  SOUND_ATTRS = [:login, :disconnect, :highlight, :newtalk, :channeltext, :talktext, :kicked, :invited,
+                  :file_receive_request, :file_receive_success, :file_receive_failure, :file_send_success, :file_send_failure]
   
   def numberOfRowsInTableView(sender)
     SOUND_TITLES.length
