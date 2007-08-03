@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>doc/ChangeLog.txt</string>
+	<string>ruby/lib/persistencehelper.rb</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -21,14 +21,56 @@
 	<integer>282</integer>
 	<key>metaData</key>
 	<dict>
-		<key>doc/ChangeLog.txt</key>
+		<key>ruby/controller/growlcontroller.rb</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>8</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>2</integer>
+				<integer>0</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
+		<key>ruby/controller/preferences.rb</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>74</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>51</integer>
+		</dict>
+		<key>ruby/lib/growl.rb</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>32</integer>
+				<key>line</key>
+				<integer>97</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
+		<key>ruby/lib/persistencehelper.rb</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>27</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
@@ -38,11 +80,14 @@
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>doc/ChangeLog.txt</string>
+		<string>ruby/lib/growl.rb</string>
+		<string>ruby/controller/growlcontroller.rb</string>
+		<string>ruby/controller/preferences.rb</string>
+		<string>ruby/lib/persistencehelper.rb</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{636, 149}, {953, 959}}</string>
+	<string>{{580, 66}, {998, 1097}}</string>
 </dict>
 </plist>

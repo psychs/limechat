@@ -15,6 +15,17 @@ module PersistenceHelper
     receiver.extend(PersistenceHelperClassMethods)
   end
 
+  
+  def assign(v)
+    set_persistent_attrs(v.get_persistent_attrs)
+  end
+  
+  def dup
+    n = self.class.new
+    n.set_persistent_attrs(get_persistent_attrs)
+    n
+  end
+
   def set_persistent_attrs(hash)
     return unless hash
     return if hash.empty?
@@ -32,6 +43,7 @@ module PersistenceHelper
     persistent_attrs.each {|i| r[i] = self.__send__(i)}
     r
   end
+  
   
   private
 

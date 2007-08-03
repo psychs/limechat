@@ -72,16 +72,6 @@ class Preferences
     def initialize
       @login = @disconnect = @highlight = @newtalk = @kicked = @invited = @channeltext = @talktext = ''
     end
-    
-    def assign(v)
-      set_persistent_attrs(v.get_persistent_attrs)
-    end
-    
-    def dup
-      n = Sound.new
-      n.set_persistent_attrs(get_persistent_attrs)
-      n
-    end
   end
   
   model_attr :key, :dcc, :gen, :sound
