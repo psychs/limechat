@@ -120,7 +120,7 @@ class Preferences
   
   def load_world
     d = read_defaults('world')
-    return unless d
+    return nil unless d
     
     # workaround for the NSPopupButton problem
     collect = false
