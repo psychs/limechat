@@ -17,6 +17,7 @@ class AutoOpDialog < OSX::NSObject
     @w = conf
     @c = @w.units
     @c.each {|u| u.owner = @w; u.channels.each {|c| c.owner = u }}
+    @sel = @w
     NSBundle.loadNibNamed_owner('AutoOpDialog', self)
     @edit.setFocusRingType(NSFocusRingTypeNone)
     @window.key_delegate = self
@@ -70,11 +71,9 @@ class AutoOpDialog < OSX::NSObject
   end
   
   def onAdd(sender)
-    sel = current_sel
-    return unless sel
-    masks = sel.autoop
     s = @edit.stringValue.to_s
     return if s.empty?
+    masks = @sel.autoop
     i = masks.index(s)
     return if i
     masks << s
@@ -86,11 +85,9 @@ class AutoOpDialog < OSX::NSObject
   end
   
   def onOverwrite(sender)
-    sel = current_sel
-    return unless sel
-    masks = sel.autoop
     s = @edit.stringValue.to_s
     return if s.empty?
+    masks = @sel.autoop
     i = masks.index(s)
     return if i
     i = @list.selectedRows[0]
@@ -104,11 +101,9 @@ class AutoOpDialog < OSX::NSObject
   end
   
   def onDelete(sender)
-    sel = current_sel
-    return unless sel
-    masks = sel.autoop
     i = @list.selectedRows[0]
     return unless i
+    masks = @sel.autoop
     masks.delete_at(i)
     i -= 1 if masks.length <= i
     if i >= 0
@@ -123,22 +118,14 @@ class AutoOpDialog < OSX::NSObject
   # window
   
   def dialogWindow_moveDown
-    sel = current_row
-    if sel
-      sel += 1
-      @tree.select(sel)
-    end
+    i = @tree.selectedRows[0]
+    @tree.select(i+1) if i
     @edit.focus
   end
   
   def dialogWindow_moveUp
-    sel = current_row
-    if sel
-      if sel > 0
-        sel -= 1
-        @tree.select(sel)
-      end
-    end
+    i = @tree.selectedRows[0]
+    @tree.select(i-1) if i && i > 0
     @edit.focus
   end
   
@@ -178,6 +165,8 @@ class AutoOpDialog < OSX::NSObject
   end
   
   def outlineViewSelectionDidChange(notification)
+    i = @tree.selectedRows[0]
+    @sel = i ? @tree.itemAtRow(i) : nil
     @list.deselectAll(self)
     @list.scrollRowToVisible(0)
     reload_list
@@ -192,34 +181,21 @@ class AutoOpDialog < OSX::NSObject
   # table
   
   def numberOfRowsInTableView(sender)
-    sel = current_sel
-    return 0 unless sel
-    sel.autoop.length
+    @sel.autoop.length
   end
   
   def tableView_objectValueForTableColumn_row(sender, column, row)
-    sel = current_sel
-    return '' unless sel
-    masks = sel.autoop
-    if masks.length > 0
-      s = sel.autoop[row]
-      s ? s : ''
-    end
+    s = @sel.autoop[row]
+    s || ''
   end
   
   def tableViewSelectionDidChange(n)
-    sel = current_sel
-    if sel
-      masks = sel.autoop
-      if masks.length > 0
-        sel = @list.selectedRows[0]
-        if sel
-          s = masks[sel]
-          @edit.setStringValue(s)
-        end
-      end
+    i = @list.selectedRows[0]
+    if i
+      s = @sel.autoop[i]
+      @edit.setStringValue(s)
     end
-    #update_buttons
+    update_buttons
   end
   
   def listView_moveUp(sender)
@@ -242,14 +218,10 @@ class AutoOpDialog < OSX::NSObject
   def control_textView_doCommandBySelector(control, textview, selector)
     case selector
     when 'moveDown:'
-      sel = current_sel
-      if sel
-        masks = sel.autoop
-        if masks.length > 0
-          sel = @list.selectedRows[0]
-          @list.select(0) unless sel
-          @window.makeFirstResponder(@list)
-        end
+      if @sel.autoop.length > 0
+        sel = @list.selectedRows[0]
+        @list.select(0) unless sel
+        @window.makeFirstResponder(@list)
       end
       true
     else
@@ -263,15 +235,6 @@ class AutoOpDialog < OSX::NSObject
   
   
   private
-
-  def current_sel
-    sel = @tree.selectedRows[0]
-    sel ? @tree.itemAtRow(sel) : nil
-  end
-  
-  def current_row
-    @tree.selectedRows[0]
-  end
   
   def update_buttons
     update_addButton
@@ -280,48 +243,32 @@ class AutoOpDialog < OSX::NSObject
   end
   
   def update_addButton
-    sel = current_sel
-    unless sel
-      @addButton.setEnabled(false)
-      return
-    end
     s = @edit.stringValue.to_s
     if s.empty?
       @addButton.setEnabled(false)
       return
     end
-    masks = sel.autoop
-    i = masks.index(s)
-    if i
-      @addButton.setEnabled(false)
-      return
-    end
-    @addButton.setEnabled(true)
+    i = @sel.autoop.index(s)
+    @addButton.setEnabled(!i)
   end
   
   def update_overwriteButton
-    sel = current_sel
-    unless sel
-      @overwriteButton.setEnabled(false)
-      return
-    end
     s = @edit.stringValue.to_s
     if s.empty?
       @overwriteButton.setEnabled(false)
       return
     end
-    masks = sel.autoop
-    i = masks.index(s)
+    i = @sel.autoop.index(s)
     if i
       @overwriteButton.setEnabled(false)
       return
     end
     i = @list.selectedRows[0]
-    @overwriteButton.setEnabled(i != nil)
+    @overwriteButton.setEnabled(!!i)
   end
   
   def update_deleteButton
     i = @list.selectedRows[0]
-    @deleteButton.setEnabled(i != nil)
+    @deleteButton.setEnabled(!!i)
   end
 end
