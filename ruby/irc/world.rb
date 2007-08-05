@@ -61,10 +61,10 @@ class IRCWorld < OSX::NSObject
     @units.each {|u| u.terminate }
   end
   
-  def update_order(conf)
+  def update_order(w)
     ary = []
-    conf.each do |i|
-      u = find_unit(i.name)
+    w.units.each do |i|
+      u = find_unit_by_id(i.id)
       if u
         u.update_order(i)
         ary << u
@@ -79,7 +79,9 @@ class IRCWorld < OSX::NSObject
   end
   
   def store_tree
-    @units.map {|u| u.store_config }
+    w = @config.dup
+    w.units = @units.map {|u| u.store_config }
+    w
   end
   
   def auto_connect

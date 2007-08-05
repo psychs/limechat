@@ -1,6 +1,8 @@
 # Created by Satoshi Nakagawa.
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
+require 'dialoghelper'
+
 class TreeDialog < OSX::NSObject
   include OSX
   include DialogHelper  
@@ -15,7 +17,8 @@ class TreeDialog < OSX::NSObject
   end
   
   def start(conf)
-    @c = conf
+    @w = conf
+    @c = @w.units
     @c.each {|u| u.channels.each {|c| c.owner = u }}
     NSBundle.loadNibNamed_owner('TreeDialog', self)
     reload_tree
@@ -30,6 +33,11 @@ class TreeDialog < OSX::NSObject
     @window.makeKeyAndOrderFront(self)
   end
   
+  def close
+    @delegate = nil
+    @window.close
+  end
+  
   def reload_tree
     @tree.reloadData
   end
@@ -41,7 +49,8 @@ class TreeDialog < OSX::NSObject
   
   def onOk(sender)
     @c.each {|u| u.channels.each {|c| c.owner = nil }}
-    fire_event('onOk', @c)
+    @w.units = @c
+    fire_event('onOk', @w)
     @window.close
   end
   

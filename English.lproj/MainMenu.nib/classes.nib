@@ -35,6 +35,7 @@
                 changeStyle = id; 
                 onAddChannel = id; 
                 onAddServer = id; 
+                onAutoOp = id; 
                 onCancelReconnecting = id; 
                 onChannelProperties = id; 
                 onConnect = id; 

@@ -3,9 +3,12 @@
 
 class IRCWorldConfig
   attr_accessor :units
+  attr_accessor :autoop
   
   def initialize(seed={})
     @units = []
+    @autoop = []
+    
     return unless seed
     seed.each do |k,v|
       next if k == :units
@@ -43,6 +46,8 @@ class IRCUnitConfig
   attr_accessor :auto_connect, :encoding
   attr_accessor :channels
   attr_accessor :leaving_comment, :userinfo, :invisible, :login_commands
+  attr_accessor :autoop
+  attr_accessor :owner, :id
   
   def initialize(seed={})
     @name = @host = @password = @nick = @username = @realname = ''
@@ -53,6 +58,7 @@ class IRCUnitConfig
     @invisible = true
     @login_commands = []
     @channels = []
+    @autoop = []
     
     defaults = OSX::NSUserDefaults.standardUserDefaults
     langs = defaults['AppleLanguages']
@@ -107,6 +113,7 @@ end
 class IRCChannelConfig
   attr_accessor :name, :password, :mode, :topic, :auto_join, :console, :keyword, :unread
   attr_reader :type
+  attr_accessor :autoop
   attr_accessor :owner
   
   def initialize(seed={})
@@ -114,6 +121,8 @@ class IRCChannelConfig
     @mode = '+sn'
     @auto_join = @console = @keyword = @unread = true
     @type = :channel
+    @autoop = []
+    
     seed.each do |k,v|
       self.instance_variable_set("@#{k.to_s}", v) if v != nil
     end

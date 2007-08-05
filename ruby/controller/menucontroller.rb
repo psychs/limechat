@@ -19,6 +19,9 @@ class MenuController < OSX::NSObject
     @channel_dialogs.each {|d| d.close }
     @server_dialogs.clear
     @channel_dialogs.clear
+    @tree_dialog.close if @tree_dialog
+    @pref_dialog.close if @pref_dialog
+    @autoop_dialog.close if @autoop_dialog
   end
   
   objc_method :validateMenuItem, 'c@:@'
@@ -38,6 +41,8 @@ class MenuController < OSX::NSObject
     when 102  # preferences
       true
     when 103  # server tree
+      true
+    when 104  # auto op
       true
     when 201  # dcc
       true
@@ -201,6 +206,29 @@ class MenuController < OSX::NSObject
   def treeDialog_onClose(sender)
     @tree_dialog = nil
   end
+  
+  
+  
+  def onAutoOp(sender)
+    unless @autoop_dialog
+      @autoop_dialog = AutoOpDialog.alloc.init
+      @autoop_dialog.delegate = self
+      @autoop_dialog.start(@world.store_tree)
+    else
+      @autoop_dialog.show
+    end
+  end
+  
+  def autoOpDialog_onOk(sender, conf)
+    puts 'ok'
+  end
+  
+  def autoOpDialog_onClose(sender)
+    @autoop_dialog = nil
+  end
+  
+  
+  
   
   
   def onDcc(sender)

@@ -91,6 +91,7 @@ class IRCUnit < OSX::NSObject
   
   def store_config
     u = @config.dup
+    u.id = @id
     u.channels = []
     @channels.each do |c|
       u.channels << c.config.dup if c.channel?

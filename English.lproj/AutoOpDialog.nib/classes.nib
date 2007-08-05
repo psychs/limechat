@@ -1,0 +1,24 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {onAdd = id; onCancel = id; onDelete = id; onOk = id; onOverwrite = id; }; 
+            CLASS = AutoOpDialog; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                addButton = id; 
+                deleteButton = id; 
+                edit = id; 
+                list = id; 
+                overwriteButton = id; 
+                tree = id; 
+                window = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = ListView; LANGUAGE = ObjC; SUPERCLASS = NSTableView; }, 
+        {CLASS = SingleLineFormatter; LANGUAGE = ObjC; SUPERCLASS = NSFormatter; }, 
+        {CLASS = TreeView; LANGUAGE = ObjC; SUPERCLASS = NSOutlineView; }
+    ); 
+    IBVersion = 1; 
+}

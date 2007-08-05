@@ -67,6 +67,8 @@
 		7867EA4B0C227AD40017B510 /* NickSheet.nib in Resources */ = {isa = PBXBuildFile; fileRef = 7867EA490C227AD40017B510 /* NickSheet.nib */; };
 		78755D730C2AC0B30073FF42 /* logrenderer.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78755D720C2AC0B30073FF42 /* logrenderer.rb */; };
 		788C5E660C5F4F5A0034C46E /* growlcontroller.rb in Resources */ = {isa = PBXBuildFile; fileRef = 788C5E650C5F4F5A0034C46E /* growlcontroller.rb */; };
+		7890B4E90C659E4700DF983F /* autoopdialog.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7890B4E80C659E4700DF983F /* autoopdialog.rb */; };
+		7890B4ED0C659E5D00DF983F /* AutoOpDialog.nib in Resources */ = {isa = PBXBuildFile; fileRef = 7890B4EB0C659E5D00DF983F /* AutoOpDialog.nib */; };
 		78A808810C3DA6160073FF6B /* newtcpserver.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78A808800C3DA6160073FF6B /* newtcpserver.rb */; };
 		78AD78E40C61B8F8001E77F4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 78AD78E20C61B8F8001E77F4 /* Localizable.strings */; };
 		78AF96580C2C219A006D9E4D /* inputhistory.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78AF96570C2C219A006D9E4D /* inputhistory.rb */; };
@@ -169,6 +171,8 @@
 		787FD46C0BFE960100F2F22D /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		788C5E650C5F4F5A0034C46E /* growlcontroller.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = growlcontroller.rb; sourceTree = "<group>"; };
 		788D56F00BB6872B00DDBF69 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
+		7890B4E80C659E4700DF983F /* autoopdialog.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = autoopdialog.rb; sourceTree = "<group>"; };
+		7890B4EC0C659E5D00DF983F /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/AutoOpDialog.nib; sourceTree = "<group>"; };
 		78A808800C3DA6160073FF6B /* newtcpserver.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = newtcpserver.rb; sourceTree = "<group>"; };
 		78A86ADA0BFFD87500E28592 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/WhoisDialog.nib; sourceTree = "<group>"; };
 		78AD78E30C61B8F8001E77F4 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -285,6 +289,7 @@
 				78496EF80C288B070084A836 /* PreferenceDialog.nib */,
 				7821DBDC0C2C84EA00B3EF42 /* PasteSheet.nib */,
 				78DA4E910C460DAC008780C8 /* TreeDialog.nib */,
+				7890B4EB0C659E5D00DF983F /* AutoOpDialog.nib */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -338,6 +343,7 @@
 		78229BA00C288188001DD4C3 /* dialog */ = {
 			isa = PBXGroup;
 			children = (
+				7890B4E80C659E4700DF983F /* autoopdialog.rb */,
 				78DA4EA40C46180F008780C8 /* treedialog.rb */,
 				7821DBE30C2C875700B3EF42 /* pastesheet.rb */,
 				78496EFC0C2890200084A836 /* preferencedialog.rb */,
@@ -545,6 +551,8 @@
 				78211B530C5F3560004B47DA /* soundplayer.rb in Resources */,
 				788C5E660C5F4F5A0034C46E /* growlcontroller.rb in Resources */,
 				78AD78E40C61B8F8001E77F4 /* Localizable.strings in Resources */,
+				7890B4E90C659E4700DF983F /* autoopdialog.rb in Resources */,
+				7890B4ED0C659E5D00DF983F /* AutoOpDialog.nib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -643,6 +651,14 @@
 				78785B580BEDCF6800456645 /* English */,
 			);
 			name = ServerDialog.nib;
+			sourceTree = "<group>";
+		};
+		7890B4EB0C659E5D00DF983F /* AutoOpDialog.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7890B4EC0C659E5D00DF983F /* English */,
+			);
+			name = AutoOpDialog.nib;
 			sourceTree = "<group>";
 		};
 		78A86AD90BFFD87500E28592 /* WhoisDialog.nib */ = {
