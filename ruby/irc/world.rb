@@ -78,6 +78,15 @@ class IRCWorld < OSX::NSObject
     save
   end
   
+  def update_autoop(w)
+    @config.autoop = w.autoop
+    w.units.each do |i|
+      u = find_unit_by_id(i.id)
+      u.update_autoop(i) if u
+    end
+    save
+  end
+  
   def store_tree
     w = @config.dup
     w.units = @units.map {|u| u.store_config }
@@ -239,10 +248,7 @@ class IRCWorld < OSX::NSObject
   end
   
   def select_text
-    @window.makeFirstResponder(@text)
-    e = @text.currentEditor
-    e.setSelectedRange(NSRange.new(@text.stringValue.length,0))
-    e.scrollRangeToVisible(e.selectedRange)
+    @text.focus
   end
   
   def select(item)

@@ -50,7 +50,7 @@ class Preferences
     persistent_attr :connect_on_doubleclick, :disconnect_on_doubleclick, :join_on_doubleclick, :leave_on_doubleclick
     persistent_attr :use_growl
     
-    TAB_COMPLEMENT_NICK = 0
+    TAB_COMPLETE_NICK = 0
     TAB_UNREAD = 1
     TAB_NONE = 100
 

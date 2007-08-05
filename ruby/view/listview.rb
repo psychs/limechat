@@ -3,6 +3,7 @@
 
 class ListView < OSX::NSTableView
   include OSX
+  attr_accessor :key_delegate
   
   def countSelectedRows
     selectedRowIndexes.count.to_i
@@ -43,5 +44,25 @@ class ListView < OSX::NSTableView
       #deselectAll(self)
     end
     super_rightMouseDown(event)
+  end
+  
+  def keyDown(e)
+    if @key_delegate
+      case e.keyCode
+      when 51,117
+        sel = selectedRows[0]
+        if sel
+          @key_delegate.listView_onDelete(self)
+          return
+        end
+      when 126
+        sel = selectedRows[0]
+        if sel && sel == 0
+          @key_delegate.listView_onMoveUp(self)
+          return
+        end
+      end
+    end
+    super_keyDown(e)
   end
 end

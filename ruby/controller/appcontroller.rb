@@ -197,8 +197,8 @@ class AppController < OSX::NSObject
     when Preferences::General::TAB_UNREAD
       move(:down, :unread)
       true
-    when Preferences::General::TAB_COMPLEMENT_NICK
-      complement_nick
+    when Preferences::General::TAB_COMPLETE_NICK
+      complete_nick
       true
     else
       false
@@ -247,7 +247,7 @@ class AppController < OSX::NSObject
   
   private
   
-  def complement_nick
+  def complete_nick
     u, c = @world.sel
     return unless u && c
     @world.select_text if @window.firstResponder != @window.fieldEditor_forObject(true, @text)

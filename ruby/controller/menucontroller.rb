@@ -207,8 +207,6 @@ class MenuController < OSX::NSObject
     @tree_dialog = nil
   end
   
-  
-  
   def onAutoOp(sender)
     unless @autoop_dialog
       @autoop_dialog = AutoOpDialog.alloc.init
@@ -220,15 +218,12 @@ class MenuController < OSX::NSObject
   end
   
   def autoOpDialog_onOk(sender, conf)
-    puts 'ok'
+    @world.update_autoop(conf)
   end
   
   def autoOpDialog_onClose(sender)
     @autoop_dialog = nil
   end
-  
-  
-  
   
   
   def onDcc(sender)

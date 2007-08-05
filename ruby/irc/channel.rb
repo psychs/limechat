@@ -31,6 +31,10 @@ class IRCChannel < OSX::NSObject
   def update_config(seed)
     @config = seed.dup
   end
+
+  def update_autoop(conf)
+    @config.autoop = conf.autoop
+  end
   
   def terminate
     close_dialog

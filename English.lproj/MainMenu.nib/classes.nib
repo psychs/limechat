@@ -75,7 +75,8 @@
         }, 
         {CLASS = ServerTreeView; LANGUAGE = ObjC; SUPERCLASS = NSOutlineView; }, 
         {CLASS = SingleLineFormatter; LANGUAGE = ObjC; SUPERCLASS = NSFormatter; }, 
-        {CLASS = Splitter; LANGUAGE = ObjC; SUPERCLASS = NSSplitView; }
+        {CLASS = Splitter; LANGUAGE = ObjC; SUPERCLASS = NSSplitView; }, 
+        {CLASS = TextField; LANGUAGE = ObjC; SUPERCLASS = NSTextField; }
     ); 
     IBVersion = 1; 
 }

@@ -89,6 +89,14 @@ class IRCUnit < OSX::NSObject
     @channels = ary
   end
   
+  def update_autoop(conf)
+    @config.autoop = conf.autoop
+    conf.channels.each do |i|
+      c = find_channel(i.name)
+      c.update_autoop(i) if c
+    end
+  end
+  
   def store_config
     u = @config.dup
     u.id = @id

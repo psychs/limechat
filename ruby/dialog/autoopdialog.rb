@@ -18,12 +18,14 @@ class AutoOpDialog < OSX::NSObject
     @c = @w.units
     @c.each {|u| u.owner = @w; u.channels.each {|c| c.owner = u }}
     NSBundle.loadNibNamed_owner('AutoOpDialog', self)
+    @window.key_delegate = self
+    @list.key_delegate = self
     reload_tree
     reload_list
     @tree.expandItem(@w)
     @c.each {|i| @tree.expandItem(i) }
-    update
     @window.makeFirstResponder(@edit)
+    update_buttons
     show
   end
   
@@ -42,7 +44,6 @@ class AutoOpDialog < OSX::NSObject
   end
   
   def reload_list
-    @list.deselectAll(self)
     @list.reloadData
   end
   
@@ -51,8 +52,14 @@ class AutoOpDialog < OSX::NSObject
   end
   
   def onOk(sender)
+    s = @edit.stringValue.to_s
+    unless s.empty?
+      onAdd(sender)
+      return
+    end
+    
     @c.each {|u| u.owner = nil; u.channels.each {|c| c.owner = nil }}
-    fire_event('onOk', @c)
+    fire_event('onOk', @w)
     @window.close
   end
   
@@ -65,19 +72,33 @@ class AutoOpDialog < OSX::NSObject
     return unless sel
     masks = sel.autoop
     s = @edit.stringValue.to_s
+    return if s.empty?
     i = masks.index(s)
-    if i
-      masks[i] = s
-    else
-      masks << s
-    end
+    return if i
+    masks << s
     masks.sort!
     reload_list
+    i = masks.index(s)
+    @list.select(i)
     @edit.setStringValue('')
   end
   
   def onOverwrite(sender)
-    onAdd(sender)
+    sel = current_sel
+    return unless sel
+    masks = sel.autoop
+    s = @edit.stringValue.to_s
+    return if s.empty?
+    i = masks.index(s)
+    return if i
+    i = @list.selectedRows[0]
+    return unless i
+    masks[i] = s
+    masks.sort!
+    reload_list
+    i = masks.index(s)
+    @list.select(i)
+    @edit.setStringValue('')
   end
   
   def onDelete(sender)
@@ -88,10 +109,36 @@ class AutoOpDialog < OSX::NSObject
     return unless i
     masks.delete_at(i)
     i -= 1 if masks.length <= i
-    @list.select(i)
+    if i >= 0
+      @list.select(i)
+    else
+      @edit.focus
+    end
     reload_list
   end
   
+  
+  # window
+  
+  def dialogWindow_onDown
+    sel = current_row
+    if sel
+      sel += 1
+      @tree.select(sel)
+    end
+    @edit.focus
+  end
+  
+  def dialogWindow_onUp
+    sel = current_row
+    if sel
+      if sel > 0
+        sel -= 1
+        @tree.select(sel)
+      end
+    end
+    @edit.focus
+  end
   
   # tree
   
@@ -128,6 +175,7 @@ class AutoOpDialog < OSX::NSObject
   end
   
   def outlineViewSelectionDidChange(notification)
+    @list.deselectAll(self)
     reload_list
   end
   
@@ -146,18 +194,104 @@ class AutoOpDialog < OSX::NSObject
     sel.autoop[row]
   end
   
-  
-  def outlineViewSelectionDidChange(n)
-    reload_list
+  def tableViewSelectionDidChange(n)
+    update_buttons
   end
   
-  def current_sel
-    sel = @tree.selectedRows
-    sel.empty? ? nil : @tree.itemAtRow(sel[0])
+  def listView_onMoveUp(sender)
+    @edit.focus
   end
+  
+  def listView_onDelete(sender)
+    onDelete(sender)
+  end
+  
+  
+  # edit
+  
+  objc_method 'control:textView:doCommandBySelector:', 'c@:@@:'
+  def control_textView_doCommandBySelector(control, textview, selector)
+    case selector
+    when 'moveDown:'
+      sel = current_sel
+      if sel
+        masks = sel.autoop
+        if masks.length > 0
+          @list.select(0)
+          @window.makeFirstResponder(@list)
+        end
+      end
+      true
+    else
+      false
+    end
+  end
+  
+  def controlTextDidChange(sender)
+    update_buttons
+  end
+  
   
   private
+
+  def current_sel
+    sel = @tree.selectedRows[0]
+    sel ? @tree.itemAtRow(sel) : nil
+  end
   
-  def update
+  def current_row
+    @tree.selectedRows[0]
+  end
+  
+  def update_buttons
+    update_addButton
+    update_overwriteButton
+    update_deleteButton
+  end
+  
+  def update_addButton
+    sel = current_sel
+    unless sel
+      @addButton.setEnabled(false)
+      return
+    end
+    s = @edit.stringValue.to_s
+    if s.empty?
+      @addButton.setEnabled(false)
+      return
+    end
+    masks = sel.autoop
+    i = masks.index(s)
+    if i
+      @addButton.setEnabled(false)
+      return
+    end
+    @addButton.setEnabled(true)
+  end
+  
+  def update_overwriteButton
+    sel = current_sel
+    unless sel
+      @overwriteButton.setEnabled(false)
+      return
+    end
+    s = @edit.stringValue.to_s
+    if s.empty?
+      @overwriteButton.setEnabled(false)
+      return
+    end
+    masks = sel.autoop
+    i = masks.index(s)
+    if i
+      @overwriteButton.setEnabled(false)
+      return
+    end
+    i = @list.selectedRows[0]
+    @overwriteButton.setEnabled(i != nil)
+  end
+  
+  def update_deleteButton
+    i = @list.selectedRows[0]
+    @deleteButton.setEnabled(i != nil)
   end
 end

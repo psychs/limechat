@@ -15,9 +15,11 @@
             }; 
             SUPERCLASS = NSObject; 
         }, 
+        {CLASS = DialogWindow; LANGUAGE = ObjC; SUPERCLASS = NSWindow; }, 
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
         {CLASS = ListView; LANGUAGE = ObjC; SUPERCLASS = NSTableView; }, 
         {CLASS = SingleLineFormatter; LANGUAGE = ObjC; SUPERCLASS = NSFormatter; }, 
+        {CLASS = TextField; LANGUAGE = ObjC; SUPERCLASS = NSTextField; }, 
         {CLASS = TreeView; LANGUAGE = ObjC; SUPERCLASS = NSOutlineView; }
     ); 
     IBVersion = 1; 
