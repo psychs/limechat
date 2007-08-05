@@ -80,6 +80,7 @@ class AutoOpDialog < OSX::NSObject
     reload_list
     i = masks.index(s)
     @list.select(i)
+    @list.scrollRowToVisible(i)
     @edit.setStringValue('')
   end
   
@@ -98,6 +99,7 @@ class AutoOpDialog < OSX::NSObject
     reload_list
     i = masks.index(s)
     @list.select(i)
+    @list.scrollRowToVisible(i)
     @edit.setStringValue('')
   end
   
@@ -111,6 +113,7 @@ class AutoOpDialog < OSX::NSObject
     i -= 1 if masks.length <= i
     if i >= 0
       @list.select(i)
+      @list.scrollRowToVisible(i)
     else
       @edit.focus
     end
@@ -139,6 +142,7 @@ class AutoOpDialog < OSX::NSObject
     end
     @edit.focus
   end
+  
   
   # tree
   
@@ -218,6 +222,7 @@ class AutoOpDialog < OSX::NSObject
         masks = sel.autoop
         if masks.length > 0
           @list.select(0)
+          @list.scrollRowToVisible(0)
           @window.makeFirstResponder(@list)
         end
       end
