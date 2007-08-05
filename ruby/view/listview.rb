@@ -12,6 +12,9 @@ class ListView < OSX::NSTableView
   def selectedRows
     ary = []
     set = selectedRowIndexes
+    unless OSX::NSIndexSet === set
+      p set
+    end
     i = set.firstIndex.to_i
     return ary if i == NSNotFound
     ary << i
@@ -23,8 +26,9 @@ class ListView < OSX::NSTableView
     ary
   end
   
-  def select(index, extendSelection=false)
-    selectRowIndexes_byExtendingSelection(NSIndexSet.indexSetWithIndex(index), extendSelection)
+  def select(index, scroll=true)
+    selectRowIndexes_byExtendingSelection(NSIndexSet.indexSetWithIndex(index), false)
+    scrollRowToVisible(index)
   end
   
   def selectRows(indices, extendSelection=false)
@@ -50,15 +54,26 @@ class ListView < OSX::NSTableView
     if @key_delegate
       case e.keyCode
       when 51,117
-        sel = selectedRows[0]
-        if sel
-          @key_delegate.listView_onDelete(self)
-          return
+        if @key_delegate.respond_to?(:listView_delete)
+          sel = selectedRows[0]
+          if sel
+            @key_delegate.listView_delete(self)
+            return
+          end
         end
       when 126
-        sel = selectedRows[0]
-        if sel && sel == 0
-          @key_delegate.listView_onMoveUp(self)
+        if @key_delegate.respond_to?(:listView_moveUp)
+          sel = selectedRows[0]
+          if sel && sel == 0
+            @key_delegate.listView_moveUp(self)
+            return
+          end
+        end
+      when 123..125 # cursor keys
+      when 116,121  # page up/down
+      else
+        if @key_delegate.respond_to?(:listView_keyDown)
+          @key_delegate.listView_keyDown(e)
           return
         end
       end

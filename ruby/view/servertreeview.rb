@@ -9,8 +9,12 @@ class ServerTreeView < TreeView
   
   objc_method :acceptsFirstResponder, 'c@:'
   def acceptsFirstResponder
-    @responder_delegate.tree_acceptFirstResponder if @responder_delegate
-    false
+    if @responder_delegate
+      @responder_delegate.serverTreeView_acceptFirstResponder
+      false
+    else
+      true
+    end
   end
   
   def _highlightColorForCell(cell)

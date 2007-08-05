@@ -13,7 +13,7 @@ class MemberListView < ListView
       when 123..126 # cursor keys
       when 116,121  # page up/down
       else
-        @key_delegate.listView_keyDown(e)
+        @key_delegate.memberListView_keyDown(e)
         return
       end
     end

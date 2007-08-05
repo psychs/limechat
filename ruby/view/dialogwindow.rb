@@ -19,8 +19,8 @@ class DialogWindow < OSX::NSWindow
           # none
           case k
           when 53 # esc
-            if @key_delegate.respond_to?(:dialogWindow_onEscape)
-              @key_delegate.dialogWindow_onEscape
+            if @key_delegate.respond_to?(:dialogWindow_escape)
+              @key_delegate.dialogWindow_escape
               return
             end
           end
@@ -28,13 +28,13 @@ class DialogWindow < OSX::NSWindow
           # cmd or ctrl
           case k
           when 125 #down
-            if @key_delegate.respond_to?(:dialogWindow_onDown)
-              @key_delegate.dialogWindow_onDown
+            if @key_delegate.respond_to?(:dialogWindow_moveDown)
+              @key_delegate.dialogWindow_moveDown
               return
             end
           when 126 #up
-            if @key_delegate.respond_to?(:dialogWindow_onUp)
-              @key_delegate.dialogWindow_onUp
+            if @key_delegate.respond_to?(:dialogWindow_moveUp)
+              @key_delegate.dialogWindow_moveUp
               return
             end
           end

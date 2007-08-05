@@ -18,7 +18,9 @@ class AutoOpDialog < OSX::NSObject
     @c = @w.units
     @c.each {|u| u.owner = @w; u.channels.each {|c| c.owner = u }}
     NSBundle.loadNibNamed_owner('AutoOpDialog', self)
+    @edit.setFocusRingType(NSFocusRingTypeNone)
     @window.key_delegate = self
+    @tree.key_delegate = self
     @list.key_delegate = self
     reload_tree
     reload_list
@@ -80,7 +82,6 @@ class AutoOpDialog < OSX::NSObject
     reload_list
     i = masks.index(s)
     @list.select(i)
-    @list.scrollRowToVisible(i)
     @edit.setStringValue('')
   end
   
@@ -99,7 +100,6 @@ class AutoOpDialog < OSX::NSObject
     reload_list
     i = masks.index(s)
     @list.select(i)
-    @list.scrollRowToVisible(i)
     @edit.setStringValue('')
   end
   
@@ -113,7 +113,6 @@ class AutoOpDialog < OSX::NSObject
     i -= 1 if masks.length <= i
     if i >= 0
       @list.select(i)
-      @list.scrollRowToVisible(i)
     else
       @edit.focus
     end
@@ -123,7 +122,7 @@ class AutoOpDialog < OSX::NSObject
   
   # window
   
-  def dialogWindow_onDown
+  def dialogWindow_moveDown
     sel = current_row
     if sel
       sel += 1
@@ -132,7 +131,7 @@ class AutoOpDialog < OSX::NSObject
     @edit.focus
   end
   
-  def dialogWindow_onUp
+  def dialogWindow_moveUp
     sel = current_row
     if sel
       if sel > 0
@@ -180,7 +179,13 @@ class AutoOpDialog < OSX::NSObject
   
   def outlineViewSelectionDidChange(notification)
     @list.deselectAll(self)
+    @list.scrollRowToVisible(0)
     reload_list
+  end
+  
+  def treeView_keyDown(e)
+    @edit.focus
+    @window.sendEvent(e)
   end
   
   
@@ -195,19 +200,39 @@ class AutoOpDialog < OSX::NSObject
   def tableView_objectValueForTableColumn_row(sender, column, row)
     sel = current_sel
     return '' unless sel
-    sel.autoop[row]
+    masks = sel.autoop
+    if masks.length > 0
+      s = sel.autoop[row]
+      s ? s : ''
+    end
   end
   
   def tableViewSelectionDidChange(n)
-    update_buttons
+    sel = current_sel
+    if sel
+      masks = sel.autoop
+      if masks.length > 0
+        sel = @list.selectedRows[0]
+        if sel
+          s = masks[sel]
+          @edit.setStringValue(s)
+        end
+      end
+    end
+    #update_buttons
   end
   
-  def listView_onMoveUp(sender)
+  def listView_moveUp(sender)
     @edit.focus
   end
   
-  def listView_onDelete(sender)
+  def listView_delete(sender)
     onDelete(sender)
+  end
+  
+  def listView_keyDown(e)
+    @edit.focus
+    @window.sendEvent(e)
   end
   
   
@@ -221,8 +246,8 @@ class AutoOpDialog < OSX::NSObject
       if sel
         masks = sel.autoop
         if masks.length > 0
-          @list.select(0)
-          @list.scrollRowToVisible(0)
+          sel = @list.selectedRows[0]
+          @list.select(0) unless sel
           @window.makeFirstResponder(@list)
         end
       end

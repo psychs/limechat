@@ -366,7 +366,7 @@ class DccManager < OSX::NSObject
   
   # window
   
-  def dialogWindow_onEscape
+  def dialogWindow_escape
     @window.orderOut(self)
   end
 

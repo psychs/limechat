@@ -481,7 +481,7 @@ class IRCWorld < OSX::NSObject
   
   # tree
   
-  def tree_acceptFirstResponder
+  def serverTreeView_acceptFirstResponder
     select_text
   end
   
@@ -545,7 +545,7 @@ class IRCWorld < OSX::NSObject
   
   # list view
   
-  def listView_keyDown(e)
+  def memberListView_keyDown(e)
     @window.makeFirstResponder(@text)
     select_text
     case e.keyCode.to_i

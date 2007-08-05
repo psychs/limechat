@@ -3,6 +3,7 @@
 
 class TreeView < OSX::NSOutlineView
   include OSX
+  attr_accessor :key_delegate
   
   def countSelectedRows
     selectedRowIndexes.count.to_i
@@ -11,6 +12,9 @@ class TreeView < OSX::NSOutlineView
   def selectedRows
     ary = []
     set = selectedRowIndexes
+    unless OSX::NSIndexSet === set
+      p set
+    end
     i = set.firstIndex.to_i
     return ary if i == NSNotFound
     ary << i
@@ -23,8 +27,8 @@ class TreeView < OSX::NSOutlineView
   end
   
   def select(index, scroll=true)
-    self.selectRowIndexes_byExtendingSelection(NSIndexSet.indexSetWithIndex(index), false)
-    self.scrollRowToVisible(index) if scroll
+    selectRowIndexes_byExtendingSelection(NSIndexSet.indexSetWithIndex(index), false)
+    scrollRowToVisible(index) if scroll
   end
   
   def menuForEvent(event)
@@ -33,6 +37,21 @@ class TreeView < OSX::NSOutlineView
     if i >= 0
       select(i)
     end
-    self.menu
+    menu
+  end
+
+  def keyDown(e)
+    if @key_delegate
+      case e.keyCode
+      when 123..126 # cursor keys
+      when 116,121  # page up/down
+      else
+        if @key_delegate.respond_to?(:treeView_keyDown)
+          @key_delegate.treeView_keyDown(e)
+          return
+        end
+      end
+    end
+    super_keyDown(e)
   end
 end
