@@ -1,3 +1,7 @@
+2007-08-06  Satoshi Nakagawa <artension@gmail.com>
+
+	Changed password text field on the server dialog to NSSecureTextField.
+
 2007-08-03  Satoshi Nakagawa <artension@gmail.com>
 
 	Added file transfer notifications on Growl.
