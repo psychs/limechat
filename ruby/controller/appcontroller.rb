@@ -110,6 +110,7 @@ class AppController < OSX::NSObject
     @tree.setNeedsDisplay(true)
   end
   
+  objc_method :windowShouldClose, 'c@:@'
   def windowShouldClose(sender)
     if queryTerminate
       @terminating = true

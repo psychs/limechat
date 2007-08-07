@@ -1,5 +1,10 @@
+2007-08-07  Satoshi Nakagawa <artension@gmail.com>
+
+	Fixed a bug, windowShouldClose needs objc_method in RubyCocoa 0.11.1p1 for PPC.
+
 2007-08-06  Satoshi Nakagawa <artension@gmail.com>
 
+	Implementing AutoOpDialog.
 	Changed password text field on the server dialog to NSSecureTextField.
 
 2007-08-03  Satoshi Nakagawa <artension@gmail.com>
