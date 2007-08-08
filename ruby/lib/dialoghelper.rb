@@ -132,10 +132,11 @@ module DialogHelper
       end
     when OSX::NSComboBox,OSX::NSTextField
       v = t.stringValue.to_s
+      v = v.gsub(/\r\n|\r|\n/, ' ')
       v = v.to_i if type == :int
     when OSX::NSTextView
       v = t.textStorage.string.to_s
-      v = v.split(/\n/)
+      v = v.split(/\r\n|\r|\n/)
     when OSX::NSPopUpButton
       case type
       when :int

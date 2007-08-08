@@ -1,3 +1,7 @@
+2007-08-09  Satoshi Nakagawa <artension@gmail.com>
+
+	Fixed a bug, text value on dialogs should be stored as single line string.
+
 2007-08-07  Satoshi Nakagawa <artension@gmail.com>
 
 	Fixed a bug, windowShouldClose needs objc_method in RubyCocoa 0.11.1p1 for PPC.
