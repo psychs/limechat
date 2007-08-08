@@ -173,7 +173,7 @@
 		78755D720C2AC0B30073FF42 /* logrenderer.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = logrenderer.rb; sourceTree = "<group>"; };
 		7877E0610C65B84E002F13C7 /* textfield.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = textfield.rb; sourceTree = "<group>"; };
 		78785B580BEDCF6800456645 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/ServerDialog.nib; sourceTree = "<group>"; };
-		787A36A10C6A392600DDB70D /* fieldeditortextview.rb */ = {isa = PBXFileReference; fileEncoding = "-2147483647"; lastKnownFileType = text.script.ruby; path = fieldeditortextview.rb; sourceTree = "<group>"; };
+		787A36A10C6A392600DDB70D /* fieldeditortextview.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = fieldeditortextview.rb; sourceTree = "<group>"; };
 		787FD46C0BFE960100F2F22D /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		788C5E650C5F4F5A0034C46E /* growlcontroller.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = growlcontroller.rb; sourceTree = "<group>"; };
 		788D56F00BB6872B00DDBF69 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
