@@ -243,12 +243,7 @@ class MenuController < OSX::NSObject
       sel = @world.selected
       if sel && !sel.unit? && /.+(\r\n|\r|\n).+/ =~ s
         # multi line
-        @paste = PasteSheet.alloc.init
-        @paste.window = window
-        @paste.delegate = self
-        @paste.uid = sel.unit.id
-        @paste.cid = sel.id
-        @paste.start(s)
+        start_paste_dialog(sel.unit.id, sel.id, s)
       else
         # single line
         @world.select_text unless OSX::NSTextView === t
@@ -260,6 +255,15 @@ class MenuController < OSX::NSObject
         t.paste(sender) if !t.respondsToSelector('validateMenuItem:') || t.validateMenuItem(sender)
       end
     end
+  end
+  
+  def start_paste_dialog(uid, cid, s)
+    @paste = PasteSheet.alloc.init
+    @paste.window = window
+    @paste.delegate = self
+    @paste.uid = uid
+    @paste.cid = cid
+    @paste.start(s)
   end
   
   def pasteSheet_onSend(sender, s)

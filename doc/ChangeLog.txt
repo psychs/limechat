@@ -1,6 +1,10 @@
 2007-08-09  Satoshi Nakagawa <artension@gmail.com>
 
-	Fixed a bug, text value on dialogs should be stored as single line string.
+	Fixed a bug, multi line paste from context menu of text field should open multi line paste sheet.
+
+2007-08-09  Satoshi Nakagawa <artension@gmail.com>
+
+	Fixed a bug, text value on dialogs should be stored as a single line string.
 
 2007-08-07  Satoshi Nakagawa <artension@gmail.com>
 

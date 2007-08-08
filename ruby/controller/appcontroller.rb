@@ -124,6 +124,28 @@ class AppController < OSX::NSObject
     terminateWithoutConfirm(self)
   end
   
+  def windowWillReturnFieldEditor_toObject(sender, obj)
+    unless @field_editor
+      @field_editor = FieldEditorTextView.alloc.initWithFrame(NSRect.new(0,0,0,0))
+      @field_editor.setFieldEditor(true)
+      @field_editor.paste_delegate = self
+    end
+    @field_editor
+  end
+  
+  def fieldEditorTextView_paste(sender)
+    s = NSPasteboard.generalPasteboard.stringForType(NSStringPboardType)
+    return false unless s
+    s = s.to_s
+    sel = @world.selected
+    if sel && !sel.unit? && /.+(\r\n|\r|\n).+/ =~ s
+      @menu.start_paste_dialog(sel.unit.id, sel.id, s)
+      true
+    else
+      false
+    end
+  end
+  
   def preferences_changed
     @world.preferences_changed
   end
