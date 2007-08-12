@@ -1,3 +1,8 @@
+2007-08-12  Satoshi Nakagawa <artension@gmail.com>
+
+	Added support for jobs, travel, mobi, cat, tel, asia gTLDs.
+	Changed to support urls missing the first 'h'.
+
 2007-08-09  Satoshi Nakagawa <artension@gmail.com>
 
 	Fixed a bug, multi line paste from context menu of text field should open multi line paste sheet.

@@ -263,7 +263,7 @@ module LogRenderer
   
     def process_urls(body)
       unless @urlrex
-        @urlrex = /(?:h?ttps?|ftp):\/\/[-_a-zA-Z\d.!~*':@%]+(?:(?:\/[-_a-zA-Z\d.!~*'%;\/?:@&=+$,#]*[-_a-zA-Z\d\/?])|\/|)/i
+        @urlrex = /(h?ttps?|ftp):\/\/[-_a-zA-Z\d.!~*':@%]+((\/[-_a-zA-Z\d.!~*'%;\/?:@&=+$,#]*[-_a-zA-Z\d\/?])|\/|)/i
       end
       urls = []
       s = body.dup
@@ -272,6 +272,7 @@ module LogRenderer
         left = $~.begin(0)
         right = $~.end(0)
         url = s[left...right]
+        url = 'h' + url if /^ttp/ =~ url
         urls << { :url => url, :pos => offset+left, :len => right-left }
         s[0...right] = ''
         offset += right
@@ -281,7 +282,7 @@ module LogRenderer
 
     def process_addresses(body)
       unless @addrex
-    	  @addrex = /(([a-zA-Z\d]([a-zA-Z\d\-]*[a-zA-Z\d])?\.)([a-zA-Z\d]([a-zA-Z\d\-]*[a-zA-Z\d])?\.)+(com|net|org|edu|gov|mi|int|biz|pro|info|coop|name|aero|museum|ac|ad|ae|af|ag|ai|a|am|an|ao|aq|ar|as|at|au|aw|az|ba|bb|bd|be|bf|bg|bh|bi|bj|bm|bn|bo|br|bs|bt|bv|bw|by|bz|ca|cc|cd|cf|cg|ch|ci|ck|c|cm|cn|co|cr|cs|cu|cv|cx|cy|cz|de|dj|dk|dm|do|dz|ec|ee|eg|eh|er|es|et|fi|fj|fk|fm|fo|fr|fx|ga|gb|gd|ge|gf|gg|gh|gi|g|gm|gn|gp|gq|gr|gs|gt|gu|gw|gy|hk|hm|hn|hr|ht|hu|id|ie|i|im|in|io|iq|ir|is|it|je|jm|jo|jp|ke|kg|kh|ki|km|kn|kp|kr|kw|ky|kz|la|lb|lc|li|lk|lr|ls|lt|lu|lv|ly|ma|mc|md|mg|mh|mk|m|mm|mn|mo|mp|mq|mr|ms|mt|mu|mv|mw|mx|my|mz|na|ne|nf|ng|ni|n|no|np|nr|nt|nu|nz|om|pa|pe|pf|pg|ph|pk|p|pm|pn|pr|ps|pt|pw|py|qa|re|ro|ru|rw|sa|sb|sc|sd|se|sg|sh|si|sj|sk|s|sm|sn|so|sr|st|su|sv|sy|sz|tc|td|tf|tg|th|tj|tk|tm|tn|to|tp|tr|tt|tv|tw|tz|ua|ug|uk|um|us|uy|uz|va|vc|ve|vg|vi|vn|wf|wg|ws|ye|yt|yu|za|zm|zr|zw))|(((\d{1,3}\.){3}[\d]{1,3}))/i
+    	  @addrex = /(([a-zA-Z\d]([a-zA-Z\d\-]*[a-zA-Z\d])?\.)([a-zA-Z\d]([a-zA-Z\d\-]*[a-zA-Z\d])?\.)+(com|net|org|edu|gov|mil|int|biz|pro|info|coop|name|aero|museum|jobs|travel|mobi|cat|tel|asia|ac|ad|ae|af|ag|ai|a|am|an|ao|aq|ar|as|at|au|aw|az|ba|bb|bd|be|bf|bg|bh|bi|bj|bm|bn|bo|br|bs|bt|bv|bw|by|bz|ca|cc|cd|cf|cg|ch|ci|ck|c|cm|cn|co|cr|cs|cu|cv|cx|cy|cz|de|dj|dk|dm|do|dz|ec|ee|eg|eh|er|es|et|fi|fj|fk|fm|fo|fr|fx|ga|gb|gd|ge|gf|gg|gh|gi|g|gm|gn|gp|gq|gr|gs|gt|gu|gw|gy|hk|hm|hn|hr|ht|hu|id|ie|i|im|in|io|iq|ir|is|it|je|jm|jo|jp|ke|kg|kh|ki|km|kn|kp|kr|kw|ky|kz|la|lb|lc|li|lk|lr|ls|lt|lu|lv|ly|ma|mc|md|mg|mh|mk|m|mm|mn|mo|mp|mq|mr|ms|mt|mu|mv|mw|mx|my|mz|na|ne|nf|ng|ni|n|no|np|nr|nt|nu|nz|om|pa|pe|pf|pg|ph|pk|p|pm|pn|pr|ps|pt|pw|py|qa|re|ro|ru|rw|sa|sb|sc|sd|se|sg|sh|si|sj|sk|s|sm|sn|so|sr|st|su|sv|sy|sz|tc|td|tf|tg|th|tj|tk|tm|tn|to|tp|tr|tt|tv|tw|tz|ua|ug|uk|um|us|uy|uz|va|vc|ve|vg|vi|vn|wf|wg|ws|ye|yt|yu|za|zm|zr|zw))|(((\d{1,3}\.){3}[\d]{1,3}))/i
   	  end
       addrs = []
       s = body.dup
