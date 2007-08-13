@@ -397,6 +397,10 @@ class IRCWorld < OSX::NSObject
     @units.each {|u| u.preferences_changed}
   end
   
+  def check_autoop(mask)
+    @config.match_autoop(mask)
+  end
+  
   # delegate
   
   def outlineView_doubleClicked(sender)

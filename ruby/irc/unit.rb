@@ -509,6 +509,10 @@ class IRCUnit < OSX::NSObject
     send(:join, channel)
   end
   
+  def check_autoop(mask)
+    @config.match_autoop(mask) || @world.check_autoop(mask)
+  end
+  
   # socket
   
   def ircsocket_on_connect
@@ -1039,6 +1043,7 @@ class IRCUnit < OSX::NSObject
     if c
       c.add_member(User.new(nick, m.sender_username, m.sender_address, njoin))
       update_channel_title(c)
+      send(:mode, chname, "+o #{m.sender_nick}") if c.op? && c.check_autoop(m.sender)
     end
     print_both(c || chname, :join, "*#{nick} has joined (#{m.sender_username}@#{m.sender_address})")
   end

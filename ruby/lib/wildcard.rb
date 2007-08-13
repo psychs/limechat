@@ -2,9 +2,15 @@
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
 class Wildcard < Regexp
+  attr_reader :pattern
+  
   def initialize(*args)
-    pattern = to_wildcard(args.shift)
-    super(pattern, *args)
+    @pattern = args.shift
+    super(to_wildcard(@pattern), *args)
+  end
+  
+  def to_s
+    @pattern
   end
   
   private

@@ -1,7 +1,18 @@
 # Created by Satoshi Nakagawa.
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
+module AutoOpMatchable
+  def match_autoop(mask)
+    @autoop.each do |i|
+      return true if Wildcard.new(i) =~ mask
+    end
+    false
+  end
+end
+
+
 class IRCWorldConfig
+  include AutoOpMatchable
   attr_accessor :units
   attr_accessor :autoop
   
@@ -12,7 +23,7 @@ class IRCWorldConfig
     return unless seed
     seed.each do |k,v|
       next if k == :units
-      self.instance_variable_set("@#{k.to_s}", v) if v != nil
+      instance_variable_set("@#{k.to_s}", v) if v != nil
     end
     unitary = seed[:units]
     if unitary
@@ -22,9 +33,9 @@ class IRCWorldConfig
   
   def to_dic
     h = {}
-    self.instance_variables.each do |v|
+    instance_variables.each do |v|
       next if v == '@units'
-      h[v[1..-1].to_sym] = self.instance_variable_get(v)
+      h[v[1..-1].to_sym] = instance_variable_get(v)
     end
     h
   end
@@ -42,6 +53,7 @@ end
 
 
 class IRCUnitConfig
+  include AutoOpMatchable
   attr_accessor :name, :host, :port, :password, :nick, :username, :realname
   attr_accessor :auto_connect, :encoding
   attr_accessor :channels
@@ -87,16 +99,16 @@ class IRCUnitConfig
   
   def to_dic
     h = {}
-    self.instance_variables.each do |v|
+    instance_variables.each do |v|
       next if v == '@channels'
-      h[v[1..-1].to_sym] = self.instance_variable_get(v)
+      h[v[1..-1].to_sym] = instance_variable_get(v)
     end
     h
   end
   
   def to_s
     s = "  =Unit\n"
-    self.instance_variables.each do |i|
+    instance_variables.each do |i|
       next if i == '@channels'
       s += "    #{i} = #{instance_variable_get(i)}\n"
     end
@@ -111,6 +123,7 @@ end
 
 
 class IRCChannelConfig
+  include AutoOpMatchable
   attr_accessor :name, :password, :mode, :topic, :auto_join, :console, :keyword, :unread
   attr_reader :type
   attr_accessor :autoop
@@ -124,7 +137,7 @@ class IRCChannelConfig
     @autoop = []
     
     seed.each do |k,v|
-      self.instance_variable_set("@#{k.to_s}", v) if v != nil
+      instance_variable_set("@#{k.to_s}", v) if v != nil
     end
   end
   
@@ -132,14 +145,14 @@ class IRCChannelConfig
     h = {}
     instance_variables.each do |v|
       next if v == '@type'
-      h[v[1..-1].to_sym] = self.instance_variable_get(v)
+      h[v[1..-1].to_sym] = instance_variable_get(v)
     end
     h
   end
   
   def to_s
     s = "    =Channel\n"
-    self.instance_variables.each {|i| s += "      #{i} = #{instance_variable_get(i)}\n" }
+    instance_variables.each {|i| s += "      #{i} = #{instance_variable_get(i)}\n" }
     s
   end
   

@@ -164,6 +164,10 @@ class IRCChannel < OSX::NSObject
     @members.sort! {|a,b| a.nick.downcase <=> b.nick.downcase }
   end
   
+  def check_autoop(mask)
+    @config.match_autoop(mask) || @unit.check_autoop(mask)
+  end
+  
   # model
   
   def number_of_children
