@@ -83,7 +83,7 @@ class DccReceiver
     s = @sock.read
     @processed_size += s.length
     @rec += s.length
-    until s.empty? do
+    until s.empty?
       n = @file.write(s)
       s[0...n] = '' if n > 0
     end
