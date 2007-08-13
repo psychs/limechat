@@ -1046,16 +1046,9 @@ class IRCUnit < OSX::NSObject
       update_channel_title(c)
     end
     print_both(c || chname, :join, "*#{nick} has joined (#{m.sender_username}@#{m.sender_address})")
-<<<<<<< .mine
     if !myself && c && c.op? && c.check_autoop(m.sender)
       send(:mode, chname, "+o #{m.sender_nick}")
     end
-=======
-    if !myself && c && c.op? && c.check_autoop(m.sender)
-      puts "!!!autoop: #{m.sender_nick}"
-      send(:mode, chname, "+o #{m.sender_nick}")
-    end
->>>>>>> .r206
   end
   
   def receive_part(m)
