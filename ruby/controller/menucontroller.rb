@@ -627,7 +627,7 @@ class MenuController < OSX::NSObject
     return unless u && u.login? && c && c.active? && c.channel? && c.op?
     members = selected_members.select {|m| m.__send__(mode) != plus }
     members = members.map {|m| m.nick }
-    unless members.empty?
+    until members.empty?
       t = members[0..2]
       u.send(:mode, c.name, (plus ? '+' : '-') + mode.to_s * t.length + ' ' + t.join(' '))
       members[0..2] = nil

@@ -26,7 +26,7 @@ class ChannelMode
   def update(modestr)
     str = modestr.dup
     plus = false
-    unless str.empty?
+    until str.empty?
       token = str.token!
       if /^([-+])(.+)$/ =~ token
         plus = ($1 == '+')
@@ -119,7 +119,7 @@ class ChannelMode
     penalty = Penalty::MODEBASE
     str = modestr.dup
     plus = false
-    unless str.empty?
+    until str.empty?
       token = str.token!
       if /^([-+])(.+)$/ =~ token
         plus = ($1 == '+')

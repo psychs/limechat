@@ -36,6 +36,16 @@ class IRCChannel < OSX::NSObject
     @config.autoop = conf.autoop
   end
   
+<<<<<<< .mine
+  def check_autoop(mask)
+    @config.match_autoop(mask) || @unit.check_autoop(mask)
+  end
+  
+  def check_all_autoop(mask)
+    @members.select {|i| check_autoop("#{i.nick}!#{i.username}@#{i.address}") }
+  end
+  
+=======
   def check_autoop(mask)
     @config.match_autoop(mask) || @unit.check_autoop(mask)
   end
@@ -44,6 +54,7 @@ class IRCChannel < OSX::NSObject
     @members.select {|i| check_autoop("#{i.nick}!#{i.username}@#{i.address}") }
   end
   
+>>>>>>> .r206
   def terminate
     close_dialog
   end
