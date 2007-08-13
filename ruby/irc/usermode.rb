@@ -15,7 +15,7 @@ class UserMode
   def update(modestr)
     str = modestr.dup
     plus = false
-    while !str.empty?
+    unless str.empty?
       token = str.token!
       if /^([-+])(.+)$/ =~ token
         plus = ($1 == '+')
@@ -70,7 +70,7 @@ class UserMode
     penalty = Penalty::MODEBASE
     str = modestr.dup
     plus = false
-    while !str.empty?
+    unless str.empty?
       token = str.token!
       if /^([-+])(.+)$/ =~ token
         plus = ($1 == '+')

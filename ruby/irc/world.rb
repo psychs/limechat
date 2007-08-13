@@ -87,6 +87,10 @@ class IRCWorld < OSX::NSObject
     save
   end
   
+  def check_autoop(mask)
+    @config.match_autoop(mask)
+  end
+  
   def store_tree
     w = @config.dup
     w.units = @units.map {|u| u.store_config }
@@ -395,10 +399,6 @@ class IRCWorld < OSX::NSObject
     register_growl
     
     @units.each {|u| u.preferences_changed}
-  end
-  
-  def check_autoop(mask)
-    @config.match_autoop(mask)
   end
   
   # delegate

@@ -36,6 +36,14 @@ class IRCChannel < OSX::NSObject
     @config.autoop = conf.autoop
   end
   
+  def check_autoop(mask)
+    @config.match_autoop(mask) || @unit.check_autoop(mask)
+  end
+  
+  def check_all_autoop
+    @members.select {|i| check_autoop("#{i.nick}!#{i.username}@#{i.address}") }
+  end
+  
   def terminate
     close_dialog
   end
@@ -126,14 +134,14 @@ class IRCChannel < OSX::NSObject
   
   def rename_member(nick, tonick)
     m = find_member(nick)
-    return if !m
+    return unless m
     m.nick = tonick
     add_member(m)
   end
   
   def change_member_op(nick, type, value)
     m = find_member(nick)
-    return if !m
+    return unless m
     case type
     when :o; m.o = value
     when :v; m.v = value
@@ -162,10 +170,6 @@ class IRCChannel < OSX::NSObject
   
   def sort_members
     @members.sort! {|a,b| a.nick.downcase <=> b.nick.downcase }
-  end
-  
-  def check_autoop(mask)
-    @config.match_autoop(mask) || @unit.check_autoop(mask)
   end
   
   # model

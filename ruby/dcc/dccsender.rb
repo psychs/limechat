@@ -35,7 +35,7 @@ class DccSender
   
   def open
     @port = @pref.dcc.first_port
-    while !do_open
+    unless do_open
       @port += 1
       if @pref.dcc.last_port < @port
         @status = :error

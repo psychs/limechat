@@ -97,6 +97,10 @@ class IRCUnit < OSX::NSObject
     end
   end
   
+  def check_autoop(mask)
+    @config.match_autoop(mask) || @world.check_autoop(mask)
+  end
+  
   def store_config
     u = @config.dup
     u.id = @id
@@ -509,10 +513,6 @@ class IRCUnit < OSX::NSObject
     send(:join, channel)
   end
   
-  def check_autoop(mask)
-    @config.match_autoop(mask) || @world.check_autoop(mask)
-  end
-  
   # socket
   
   def ircsocket_on_connect
@@ -640,7 +640,7 @@ class IRCUnit < OSX::NSObject
     else
       mtype = :normal
     end
-    if !channel
+    unless channel
       click = nil
       key = true
     elsif channel.unit? || channel.kind_of?(String)
@@ -1018,6 +1018,7 @@ class IRCUnit < OSX::NSObject
   def receive_join(m)
     nick = m.sender_nick
     chname = m[0]
+    myself = eq(nick, @mynick)
     
     # workaround for ircd 2.9.5 NJOIN
     njoin = false
@@ -1027,7 +1028,7 @@ class IRCUnit < OSX::NSObject
     end
     
     c = find_channel(chname)
-    if eq(nick, @mynick)
+    if myself
       unless c
         c = @world.create_channel(self, IRCChannelConfig.new({:name => chname}))
         @world.save
@@ -1043,9 +1044,12 @@ class IRCUnit < OSX::NSObject
     if c
       c.add_member(User.new(nick, m.sender_username, m.sender_address, njoin))
       update_channel_title(c)
-      send(:mode, chname, "+o #{m.sender_nick}") if c.op? && c.check_autoop(m.sender)
     end
     print_both(c || chname, :join, "*#{nick} has joined (#{m.sender_username}@#{m.sender_address})")
+    if !myself && c && c.op? && c.check_autoop(m.sender)
+      puts "!!!autoop: #{m.sender_nick}"
+      send(:mode, chname, "+o #{m.sender_nick}")
+    end
   end
   
   def receive_part(m)
@@ -1167,7 +1171,7 @@ class IRCUnit < OSX::NSObject
         c.clear_members if !a && c.mode.a
         str = modestr.dup
         plus = false
-        while !str.empty?
+        unless str.empty?
           token = str.token!
           if /^([-+])(.+)$/ =~ token
             plus = ($1 == '+')
@@ -1262,7 +1266,7 @@ class IRCUnit < OSX::NSObject
         lfname = text
         if ver >= 2
           lfname[0] = '' if lfname[0] == ?:
-          fname = lfname if !lfname.empty?
+          fname = lfname unless lfname.empty?
         end
         receive_dcc_send(m, fname, addr, port, size, ver)
       else

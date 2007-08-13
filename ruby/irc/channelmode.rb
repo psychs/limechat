@@ -26,7 +26,7 @@ class ChannelMode
   def update(modestr)
     str = modestr.dup
     plus = false
-    while !str.empty?
+    unless str.empty?
       token = str.token!
       if /^([-+])(.+)$/ =~ token
         plus = ($1 == '+')
@@ -75,7 +75,7 @@ class ChannelMode
       str += "+l"
       trail += " #{@l}"
     end
-    if !@k.empty?
+    unless @k.empty?
       str += '+k'
       trail += " #{@k}"
     end
@@ -107,7 +107,7 @@ class ChannelMode
       else
         str += '-k'
         trail += " #{@k}"
-        if !mode.k.empty?
+        unless mode.k.empty?
           return [str + trail, "+k #{mode.k}"]
         end
       end
@@ -119,7 +119,7 @@ class ChannelMode
     penalty = Penalty::MODEBASE
     str = modestr.dup
     plus = false
-    while !str.empty?
+    unless str.empty?
       token = str.token!
       if /^([-+])(.+)$/ =~ token
         plus = ($1 == '+')
