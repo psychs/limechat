@@ -640,7 +640,7 @@ class IRCUnit < OSX::NSObject
     else
       mtype = :normal
     end
-    unless channel
+    if !channel
       click = nil
       key = true
     elsif channel.unit? || channel.kind_of?(String)
