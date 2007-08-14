@@ -625,13 +625,7 @@ class MenuController < OSX::NSObject
   def change_op(mode, plus)
     u, c = @world.sel
     return unless u && u.login? && c && c.active? && c.channel? && c.op?
-    members = selected_members.select {|m| m.__send__(mode) != plus }
-    members = members.map {|m| m.nick }
-    until members.empty?
-      t = members[0..2]
-      u.send(:mode, c.name, (plus ? '+' : '-') + mode.to_s * t.length + ' ' + t.join(' '))
-      members[0..2] = nil
-    end
+    u.change_op(c, selected_members, mode, plus)
     deselect_members
   end
   

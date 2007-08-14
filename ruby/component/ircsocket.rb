@@ -6,6 +6,8 @@ require 'timer'
 class IRCSocket
   attr_accessor :delegate, :host, :port
   
+  PENALTY_THREASHOLD = 3
+  
   def initialize
     @sock = TcpClient.alloc.init
     @sock.delegate = self
@@ -27,15 +29,6 @@ class IRCSocket
     @sock.close
   end
   
-  def send(m)
-    @sendq << m
-    try_to_send
-  end
-  
-  def clear_send_queue
-    @sendq = []
-  end
-  
   def active?
     @sock.active?
   end
@@ -48,6 +41,18 @@ class IRCSocket
     @sock.connected?
   end
   
+  def send(m)
+    @sendq << m
+    try_to_send
+  end
+  
+  def clear_send_queue
+    @sendq = []
+  end
+  
+  def ready_to_send?
+    !@sending && @penalty == 0 && @sendq.empty?
+  end
   
   def timer_onTimer(sender)
     @penalty -= 1 if @penalty > 0
@@ -89,8 +94,6 @@ class IRCSocket
   
   
   private
-  
-  PENALTY_THREASHOLD = 3
   
   def try_to_send
     return if @sending

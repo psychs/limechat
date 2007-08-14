@@ -6,7 +6,7 @@ class IRCWorld < OSX::NSObject
   attr_accessor :tree, :log_base, :console_base, :member_list, :text, :window, :pref, :dcc
   attr_accessor :tree_default_menu, :server_menu, :channel_menu, :tree_menu, :log_menu, :console_menu, :url_menu, :addr_menu
   attr_accessor :menu_controller
-  attr_reader :units, :selected, :console
+  attr_reader :units, :selected, :console, :config
   
   AUTO_CONNECT_DELAY = 1
   
@@ -85,10 +85,6 @@ class IRCWorld < OSX::NSObject
       u.update_autoop(i) if u
     end
     save
-  end
-  
-  def check_autoop(mask)
-    @config.match_autoop(mask)
   end
   
   def store_tree

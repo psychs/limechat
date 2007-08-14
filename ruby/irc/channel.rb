@@ -3,7 +3,7 @@
 
 class IRCChannel < OSX::NSObject
   include OSX
-  attr_accessor :unit, :id, :topic, :names_init, :log
+  attr_accessor :unit, :id, :topic, :names_init, :who_init, :log
   attr_reader :config, :members, :mode
   attr_writer :op
   attr_accessor :keyword, :unread, :newtalk
@@ -17,6 +17,9 @@ class IRCChannel < OSX::NSObject
     @op = false
     @active = false
     @names_init = false
+    @who_init = false
+    @op_queue = []
+    @op_wait = 0
     reset_state
   end
   
@@ -34,14 +37,6 @@ class IRCChannel < OSX::NSObject
 
   def update_autoop(conf)
     @config.autoop = conf.autoop
-  end
-  
-  def check_autoop(mask)
-    @config.match_autoop(mask) || @unit.check_autoop(mask)
-  end
-  
-  def check_all_autoop
-    @members.select {|i| check_autoop("#{i.nick}!#{i.username}@#{i.address}") }
   end
   
   def terminate
@@ -100,6 +95,9 @@ class IRCChannel < OSX::NSObject
     @op = false
     @topic = ''
     @names_init = false
+    @who_init = false
+    @op_queue = []
+    @op_wait = 0
     reload_members
   end
   
@@ -108,6 +106,7 @@ class IRCChannel < OSX::NSObject
     @members.clear
     @op = false
     @mode.clear
+    @op_queue = []
     reload_members
   end
   
@@ -130,6 +129,7 @@ class IRCChannel < OSX::NSObject
   def remove_member(nick)
     @members.delete_if {|m| m.nick.downcase == nick.downcase }
     reload_members
+    @op_queue.delete_if {|i| i.downcase == nick.downcase }
   end
   
   def rename_member(nick, tonick)
@@ -137,6 +137,12 @@ class IRCChannel < OSX::NSObject
     return unless m
     m.nick = tonick
     add_member(m)
+    
+    index = @op_queue.index {|i| i.downcase == nick.downcase }
+    if index
+      @op_queue.delete_at(index)
+      @op_queue << tonick
+    end
   end
   
   def change_member_op(nick, type, value)
@@ -148,6 +154,10 @@ class IRCChannel < OSX::NSObject
     end
     sort_members
     reload_members
+    
+    if type == :o && value
+      @op_queue.delete_if {|i| i.downcase == nick.downcase }
+    end
   end
   
   def clear_members
@@ -170,6 +180,26 @@ class IRCChannel < OSX::NSObject
   
   def sort_members
     @members.sort! {|a,b| a.nick.downcase <=> b.nick.downcase }
+  end
+  
+  def check_autoop(nick, mask)
+    if @config.match_autoop(mask) || @unit.config.match_autoop(mask) || @unit.world.config.match_autoop(mask)
+      add_to_op_queue(nick)
+    end
+  end
+  
+  def check_all_autoop
+    @members.each do |m|
+      if !m.nick.empty? && !m.username.empty? && !m.address.empty?
+        check_autoop(m.nick, "#{m.nick}!#{m.username}@#{m.address}")
+      end
+    end
+  end
+  
+  def add_to_op_queue(nick)
+    unless @op_queue.find {|i| i.downcase == nick.downcase }
+      @op_queue << nick.dup
+    end
   end
   
   # model
@@ -207,6 +237,18 @@ class IRCChannel < OSX::NSObject
   # timer
   
   def on_timer
+    if active?
+      @op_wait -= 1 if @op_wait > 0
+      if @unit.ready_to_send? && @op_wait == 0 && @op_queue.length > 0
+        ary = @op_queue[0..2]
+        @op_queue[0..2] = nil
+        ary = ary.select {|i| m = find_member(i); m && !m.o }
+        unless ary.empty?
+          @op_wait = ary.length * 3 + 1
+          @unit.change_op(self, ary, :o, true)
+        end
+      end
+    end
   end
   
   def preferences_changed

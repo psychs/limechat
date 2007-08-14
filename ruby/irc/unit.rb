@@ -97,10 +97,6 @@ class IRCUnit < OSX::NSObject
     end
   end
   
-  def check_autoop(mask)
-    @config.match_autoop(mask) || @world.check_autoop(mask)
-  end
-  
   def store_config
     u = @config.dup
     u.id = @id
@@ -148,6 +144,10 @@ class IRCUnit < OSX::NSObject
   
   def reconnecting?
     !connected? && !connecting? && @reconnect
+  end
+  
+  def ready_to_send?
+    login? && @conn.ready_to_send?
   end
   
   def eq(x, y)
@@ -242,6 +242,29 @@ class IRCUnit < OSX::NSObject
     return unless channel.active?
     comment = ":#{@config.leaving_comment}" if !comment && @config.leaving_comment
     send(:part, channel.name, comment)
+  end
+  
+  def change_op(channel, members, mode, plus)
+    return unless login? && channel && channel.active? && channel.channel? && channel.op?
+    members = members.map {|n| String === n ? channel.find_member(n) : n }
+    members = members.compact
+    members = members.select {|m| m.__send__(mode) != plus }
+    members = members.map {|m| m.nick }
+    until members.empty?
+      t = members[0..2]
+      send(:mode, channel.name, (plus ? '+' : '-') + mode.to_s * t.length + ' ' + t.join(' '))
+      members[0..2] = nil
+    end
+  end
+  
+  def check_all_autoop(channel)
+    return unless login? && channel && channel.active? && channel.channel? && channel.op?
+    channel.check_all_autoop
+  end
+  
+  def check_autoop(channel, nick, mask)
+    return unless login? && channel && channel.active? && channel.channel? && channel.op?
+    channel.check_autoop(nick, mask)
   end
   
   def input_text(str)
@@ -1046,9 +1069,8 @@ class IRCUnit < OSX::NSObject
       update_channel_title(c)
     end
     print_both(c || chname, :join, "*#{nick} has joined (#{m.sender_username}@#{m.sender_address})")
-    if !myself && c && c.op? && c.check_autoop(m.sender)
-      send(:mode, chname, "+o #{m.sender_nick}")
-    end
+    
+    check_autoop(c, m.sender_nick, m.sender) unless myself
   end
   
   def receive_part(m)
@@ -1183,8 +1205,10 @@ class IRCUnit < OSX::NSObject
                 t = str.token!
                 c.change_member_op(t, :o, plus)
                 if t == @mynick
+                  prev = c.op?
                   c.op = plus
                   update_channel_title(c)
+                  check_all_autoop(c) if c.op? && !prev
                 end
               when 'v'
                 t = str.token!
