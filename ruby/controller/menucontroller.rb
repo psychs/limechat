@@ -739,7 +739,6 @@ class MenuController < OSX::NSObject
   end
   
   
-  
   def onCopyUrl(sender)
     return unless @url
     pb = NSPasteboard.generalPasteboard

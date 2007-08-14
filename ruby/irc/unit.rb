@@ -13,6 +13,7 @@ class IRCUnit < OSX::NSObject
   RETRY_TIME = 240
   PONG_TIME = 300
   QUIT_TIME = 5
+  WHO_TIME = 10
   
   def initialize
     @channels = []
@@ -24,6 +25,8 @@ class IRCUnit < OSX::NSObject
     @encoding = NSISO2022JPStringEncoding
     @mymode = UserMode.new
     @in_whois = false
+    @who_queue = []
+    @who_wait = 0
     reset_state
   end
   
@@ -424,9 +427,19 @@ class IRCUnit < OSX::NSObject
   def on_timer
     if login?
       check_quitting
-      # who manager
-      # 437 rejoin
       check_pong
+      # 437 rejoin
+      unless @who_queue.empty?
+        @who_wait -= 1 if @who_wait > 0
+        if @who_wait == 0 && ready_to_send?
+          chname = @who_queue.shift
+          c = find_channel(chname)
+          if c && c.active?
+            send(:who, c.name)
+            @who_wait = WHO_TIME
+          end
+        end
+      end
     elsif connecting? || connected?
       check_retry
     else
@@ -848,6 +861,8 @@ class IRCUnit < OSX::NSObject
     @server_hostname = m.sender
     @mynick = m[0]
     @mymode.clear
+    @who_queue = []
+    @who_wait = 0
     print_system(self, 'Logged in')
     notify_event(:login)
     SoundPlayer.play(@pref.sound.login)
@@ -1563,7 +1578,7 @@ class IRCUnit < OSX::NSObject
         end
         
         if c.count_members > 1
-          send(:who, c.name)
+          @who_queue << chname
         else
           c.who_init = true
         end
@@ -1591,7 +1606,7 @@ class IRCUnit < OSX::NSObject
         c.who_init = true
         c.sort_members
         c.reload_members
-        print_both(c, :reply, "*Who Init")
+        print_system(c, "Members list has been initialized")
         check_all_autoop(c) if c.op?
       else
         print_unknown_reply(m)
