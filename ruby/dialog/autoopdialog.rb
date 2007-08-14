@@ -42,6 +42,38 @@ class AutoOpDialog < OSX::NSObject
     @window.close
   end
   
+  def select_item(uid, chname=nil)
+    u = @c.find {|i| i.id == uid }
+    if u
+      if chname
+        c = u.channels.find {|i| i.name == chname }
+        if c
+          @tree.select(@tree.rowForItem(c))
+          return
+        end
+      end
+      @tree.select(@tree.rowForItem(u))
+    end
+  end
+  
+  def set_mask(str)
+    @edit.setStringValue(str)
+    update_buttons
+  end
+  
+  def add_masks(ary)
+    masks = @sel.autoop
+    ary.each do |s|
+      next if s.empty?
+      i = masks.index(s)
+      next if i
+      masks << s
+    end
+    masks.sort!
+    reload_list
+    update_buttons
+  end
+  
   def reload_tree
     @tree.reloadData
   end

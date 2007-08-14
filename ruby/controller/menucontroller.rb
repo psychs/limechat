@@ -91,7 +91,9 @@ class MenuController < OSX::NSObject
       not_connected
     when 541  # server property
       !!u
-            
+    when 542  # server auto op
+      !!u
+
     when 601  # join
       login && not_active && c.channel?
     when 602  # leave
@@ -106,6 +108,9 @@ class MenuController < OSX::NSObject
       !!c
     when 653  # channel property
       !!c && c.channel?
+    when 654  # channel auto op
+      !!c && c.channel?
+
     when 802
       true
       
@@ -121,6 +126,8 @@ class MenuController < OSX::NSObject
       active_chtalk && count_selected_members? && !!u.myaddress
     when 2101..2105  # ctcp
       active_chtalk && count_selected_members?
+    when 2021  # register to auto op
+      active_channel && count_selected_members?
     
     when 3001  # copy url
       true
@@ -420,6 +427,14 @@ class MenuController < OSX::NSObject
   end
   
   
+  def onServerAutoOp(sender)
+    u = @world.selunit
+    return unless u
+    onAutoOp(sender)
+    @autoop_dialog.select_item(u.id)
+  end
+  
+  
   def onJoin(sender)
     u, c = @world.sel
     return unless u && u.login? && c && !c.active? && c.channel?
@@ -541,6 +556,14 @@ class MenuController < OSX::NSObject
     return unless c
     c.update_config(config)
     @world.save
+  end
+  
+  
+  def onChannelAutoOp(sender)
+    u, c = @world.sel
+    return unless u && c
+    onAutoOp(sender)
+    @autoop_dialog.select_item(u.id, c.name)
   end
   
   
@@ -695,6 +718,27 @@ class MenuController < OSX::NSObject
   def onMemberClientInfo(sender)
     send_ctcp_query(:clientinfo)
   end
+  
+  def onMemberAutoOp(sender)
+    u = @world.selunit
+    return unless u && u.login?
+    members = selected_members
+    return if members.empty?
+    onChannelAutoOp(sender)
+    return unless @autoop_dialog
+    if members.length == 1
+      m = members[0]
+      s = "#{m.nick}!#{m.username.empty? ? '*' : m.username}@#{m.address.empty? ? '*' : m.address}"
+      @autoop_dialog.set_mask(s)
+    else
+      ary = members.map do |m|
+        "#{m.nick}!#{m.username.empty? ? '*' : m.username}@#{m.address.empty? ? '*' : m.address}"
+      end
+      @autoop_dialog.add_masks(ary)
+    end
+  end
+  
+  
   
   def onCopyUrl(sender)
     return unless @url

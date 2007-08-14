@@ -118,31 +118,49 @@ class IRCChannel < OSX::NSObject
   end
   
   def add_member(member, autoreload=true)
-    remove_member(member.nick) if find_member(member.nick)
-    @members << member
+    if m = find_member(member.nick)
+      m.username = member.username unless member.username.empty?
+      m.address = member.username unless member.address.empty?
+      m.o = member.o
+      m.v = member.v
+    else
+      @members << member
+    end
     if autoreload
       sort_members
       reload_members
     end
   end
   
-  def remove_member(nick)
+  def remove_member(nick, autoreload=true)
     @members.delete_if {|m| m.nick.downcase == nick.downcase }
-    reload_members
+    reload_members if autoreload
     @op_queue.delete_if {|i| i.downcase == nick.downcase }
   end
   
   def rename_member(nick, tonick)
     m = find_member(nick)
     return unless m
-    m.nick = tonick
-    add_member(m)
-    
+    remove_member(tonick, false)
+
     index = @op_queue.index {|i| i.downcase == nick.downcase }
     if index
       @op_queue.delete_at(index)
       @op_queue << tonick
     end
+
+    remove_member(nick, false)
+    m.nick = tonick
+    add_member(m)
+  end
+  
+  def update_member(nick, username, address, o=nil, v=nil)
+    m = find_member(nick)
+    return unless m
+    m.username = username
+    m.address = address
+    m.o = o if o != nil
+    m.v = v if v != nil
   end
   
   def change_member_op(nick, type, value)

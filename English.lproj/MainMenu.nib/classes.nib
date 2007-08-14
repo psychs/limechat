@@ -37,6 +37,7 @@
                 onAddServer = id; 
                 onAutoOp = id; 
                 onCancelReconnecting = id; 
+                onChannelAutoOp = id; 
                 onChannelProperties = id; 
                 onConnect = id; 
                 onCopyAddress = id; 
@@ -48,6 +49,7 @@
                 onDisconnect = id; 
                 onJoin = id; 
                 onLeave = id; 
+                onMemberAutoOp = id; 
                 onMemberClientInfo = id; 
                 onMemberDeop = id; 
                 onMemberGiveOp = id; 
@@ -65,6 +67,7 @@
                 onPasteMyAddress = id; 
                 onPreferences = id; 
                 onSearchWeb = id; 
+                onServerAutoOp = id; 
                 onServerProperties = id; 
                 onServerTree = id; 
                 onTopic = id; 

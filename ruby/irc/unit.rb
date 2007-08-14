@@ -1208,7 +1208,7 @@ class IRCUnit < OSX::NSObject
                   prev = c.op?
                   c.op = plus
                   update_channel_title(c)
-                  check_all_autoop(c) if c.op? && !prev
+                  check_all_autoop(c) if c.op? && !prev && c.who_init
                 end
               when 'v'
                 t = str.token!
@@ -1537,6 +1537,7 @@ class IRCUnit < OSX::NSObject
       c = find_channel(chname)
       if c && c.active? && !c.names_init
         c.names_init = true
+        
         if c.count_members <= 1 && c.op?
           if chname.modechannelname?
             m = c.config.mode
@@ -1547,6 +1548,7 @@ class IRCUnit < OSX::NSObject
         else
           send(:mode, chname)
         end
+        
         if c.count_members <= 1 && chname.modechannelname?
           topic = c.stored_topic
           if topic && !topic.empty?
@@ -1559,7 +1561,40 @@ class IRCUnit < OSX::NSObject
             end
           end
         end
+        
+        if c.count_members > 1
+          send(:who, c.name)
+        else
+          c.who_init = true
+        end
+        
         update_channel_title(c)
+      end
+    when 352	# RPL_WHOREPLY
+      chname = m[1]
+      username = m[2]
+      address = m[3]
+      nick = m[5]
+      mode = m[6]
+      c = find_channel(chname)
+      if c && c.active? && !c.who_init
+        o = !!mode.index('@')
+        v = !!mode.index('+')
+        c.update_member(nick, username, address, o, v)
+      else
+        print_unknown_reply(m)
+      end
+    when 315	# RPL_ENDOFWHO
+      chname = m[1]
+      c = find_channel(chname)
+      if c && c.active? && !c.who_init
+        c.who_init = true
+        c.sort_members
+        c.reload_members
+        print_both(c, :reply, "*Who Init")
+        check_all_autoop(c) if c.op?
+      else
+        print_unknown_reply(m)
       end
     else
       print_unknown_reply(m)
@@ -1585,8 +1620,6 @@ when 347	# RPL_ENDOFINVITELIST
 when 344	# RPL_REOPLIST
 when 345	# RPL_ENDOFREOPLIST
   
-when 352	# RPL_WHOREPLY
-when 315	# RPL_ENDOFWHO
 when 403	# ERR_NOSUCHCHANNEL 
 =end
   
