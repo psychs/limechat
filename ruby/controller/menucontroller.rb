@@ -175,6 +175,47 @@ class MenuController < OSX::NSObject
     menu.update
   end
   
+  def make_mask(nick, username, address)
+    if !nick || nick.empty?
+      nick = '*'
+    elsif /^(.+)[\d_]+$/ =~ nick
+      nick = $1 + '*'
+    else
+      nick += '*'
+    end
+    
+    if !username || username.empty?
+      username = '*'
+    else
+      if /^([^\d_]+)([\d_]+)$/ =~ username
+        username = $1 + '*'
+      end
+    end
+    
+    if !address || address.empty?
+      address = '*'
+    else
+      if /^(\d{1,3}\.){3}[\d]{1,3}$/ =~ address || /^([a-f\d]{0,4}:){7}[a-f\d]{0,4}$/ =~ address
+        ;
+      else
+        #if /^[^\.]+\.(.+)$/ =~ address
+        #  address = '*.' + $1
+        #end
+        
+        ary = address.split('.')
+        if ary.length >= 3
+          reserve = ary[-1].length == 2 ? 3 : 2
+          left = ary[0...-reserve]
+          right = ary[-reserve..-1]
+          left = left.map {|i| i.gsub(/\d+/, '*') }
+          address = left.join('.') + '.' + right.join('.')
+        end
+      end
+    end
+    
+    "#{nick}!#{username}@#{address}"
+  end
+  
   
   def onPreferences(sender)
     unless @pref_dialog
@@ -728,12 +769,9 @@ class MenuController < OSX::NSObject
     return unless @autoop_dialog
     if members.length == 1
       m = members[0]
-      s = "#{m.nick}!#{m.username.empty? ? '*' : m.username}@#{m.address.empty? ? '*' : m.address}"
-      @autoop_dialog.set_mask(s)
+      @autoop_dialog.set_mask(make_mask(m.nick, m.username, m.address))
     else
-      ary = members.map do |m|
-        "#{m.nick}!#{m.username.empty? ? '*' : m.username}@#{m.address.empty? ? '*' : m.address}"
-      end
+      ary = members.map {|m| make_mask(m.nick, m.username, m.address) }
       @autoop_dialog.add_masks(ary)
     end
   end

@@ -1,5 +1,9 @@
 2007-08-14  Satoshi Nakagawa <artension@gmail.com>
 
+	Added auto masking for registering auto op.
+
+2007-08-14  Satoshi Nakagawa <artension@gmail.com>
+
 	Changed to delay sending who commands.
 
 2007-08-14  Satoshi Nakagawa <artension@gmail.com>
