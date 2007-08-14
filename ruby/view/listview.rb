@@ -12,10 +12,6 @@ class ListView < OSX::NSTableView
   def selectedRows
     ary = []
     set = selectedRowIndexes
-    unless OSX::NSIndexSet === set
-      p set
-      raise 'Different Class'
-    end
     i = set.firstIndex.to_i
     return ary if i == NSNotFound
     ary << i

@@ -12,11 +12,6 @@ class TreeView < OSX::NSOutlineView
   def selectedRows
     ary = []
     set = selectedRowIndexes
-    unless OSX::NSIndexSet === set
-      p set
-      puts set.className.to_s
-      raise 'Different Class'
-    end
     i = set.firstIndex.to_i
     return ary if i == NSNotFound
     ary << i
