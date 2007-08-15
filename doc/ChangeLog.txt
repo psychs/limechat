@@ -1,5 +1,9 @@
 2007-08-15  Satoshi Nakagawa <artension@gmail.com>
 
+	Released 0.9.
+
+2007-08-15  Satoshi Nakagawa <artension@gmail.com>
+
 	Commented needless objc_method and objc_class_method.
 
 2007-08-14  Satoshi Nakagawa <artension@gmail.com>
