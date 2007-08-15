@@ -155,7 +155,7 @@ class ServerDialog < OSX::NSObject
     onEdit(sender)
   end
   
-  objc_method :tableView_writeRows_toPasteboard, 'c@:@@@'
+  #objc_method :tableView_writeRows_toPasteboard, 'c@:@@@'
   def tableView_writeRows_toPasteboard(sender, rows, pboard)
     pboard.declareTypes_owner(TABLE_ROW_TYPES, self)
     pboard.setPropertyList_forType(rows, TABLE_ROW_TYPE)
@@ -171,7 +171,7 @@ class ServerDialog < OSX::NSObject
     end
   end
   
-  objc_method :tableView_acceptDrop_row_dropOperation, 'c@:@@ii'
+  #objc_method :tableView_acceptDrop_row_dropOperation, 'c@:@@ii'
   def tableView_acceptDrop_row_dropOperation(sender, info, row, op)
   	pboard = info.draggingPasteboard
   	return false unless op == NSTableViewDropAbove && pboard.availableTypeFromArray(TABLE_ROW_TYPES)

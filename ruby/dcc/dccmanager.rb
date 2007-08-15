@@ -89,7 +89,7 @@ class DccManager < OSX::NSObject
 
   # menu
 
-  objc_method :validateMenuItem, 'c@:@'
+  #objc_method :validateMenuItem, 'c@:@'
   def validateMenuItem(i)
     if i.tag < 3100
       return false if @receiver_table.countSelectedRows == 0

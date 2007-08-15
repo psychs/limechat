@@ -110,7 +110,7 @@ class AppController < OSX::NSObject
     @tree.setNeedsDisplay(true)
   end
   
-  objc_method :windowShouldClose, 'c@:@'
+  #objc_method :windowShouldClose, 'c@:@'
   def windowShouldClose(sender)
     if queryTerminate
       @terminating = true
@@ -161,7 +161,7 @@ class AppController < OSX::NSObject
     @world.select_text
   end
   
-  objc_method 'control:textView:doCommandBySelector:', 'c@:@@:'
+  #objc_method 'control:textView:doCommandBySelector:', 'c@:@@:'
   def control_textView_doCommandBySelector(control, textview, selector)
     case selector
     when 'moveUp:'

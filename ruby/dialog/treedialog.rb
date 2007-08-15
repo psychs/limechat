@@ -111,7 +111,7 @@ class TreeDialog < OSX::NSObject
     end
   end
   
-  objc_method :outlineView_isItemExpandable, 'c@:@@'
+  #objc_method :outlineView_isItemExpandable, 'c@:@@'
   def outlineView_isItemExpandable(sender, item)
     if item.kind_of?(IRCUnitConfig)
       item.channels.length > 0
@@ -132,7 +132,7 @@ class TreeDialog < OSX::NSObject
     item.name
   end
   
-  objc_method :outlineView_shouldEditTableColumn_item, 'c@:@@@'
+  #objc_method :outlineView_shouldEditTableColumn_item, 'c@:@@@'
   def outlineView_shouldEditTableColumn_item(sender, column, item)
     false
   end
@@ -141,7 +141,7 @@ class TreeDialog < OSX::NSObject
     update
   end
   
-  objc_method :outlineView_writeItems_toPasteboard, 'c@:@@@'
+  #objc_method :outlineView_writeItems_toPasteboard, 'c@:@@@'
   def outlineView_writeItems_toPasteboard(sender, items, pboard)
     i = items.to_a[0]
     if i.kind_of?(IRCUnitConfig)
@@ -197,7 +197,7 @@ class TreeDialog < OSX::NSObject
     @tree.select(index) if index >= 0
   end
   
-  objc_method :outlineView_acceptDrop_item_childIndex, 'c@:@@@i'
+  #objc_method :outlineView_acceptDrop_item_childIndex, 'c@:@@@i'
   def outlineView_acceptDrop_item_childIndex(sender, info, item, index)
     return false if index < 0
   	pboard = info.draggingPasteboard
