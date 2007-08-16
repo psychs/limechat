@@ -1,3 +1,7 @@
+2007-08-16  Satoshi Nakagawa <artension@gmail.com>
+
+	Fixed a bug, channel password should be kept after kicked out for rejoining.
+
 2007-08-15  Satoshi Nakagawa <artension@gmail.com>
 
 	Released 0.9.

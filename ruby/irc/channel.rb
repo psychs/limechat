@@ -105,7 +105,6 @@ class IRCChannel < OSX::NSObject
     @active = false
     @members.clear
     @op = false
-    @mode.clear
     @op_queue = []
     reload_members
   end
