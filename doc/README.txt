@@ -9,6 +9,7 @@ Satoshi Nakagawa <artension@gmail.com>
 
 * Thanks To
 
+Yohei Endo			# application icon
 Fujimoto Hisa       # RubyCocoa creator
 Laurent Sansonetti  # many requests
 Jun Morimoto        # bug fixes
