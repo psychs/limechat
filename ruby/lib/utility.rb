@@ -196,6 +196,7 @@ module OSX
   
   class NSRange
     def dup; NSRange.new(location, length); end
+    alias :old_inspect :inspect
     def inspect
       "#<#{self.class} location=#{location}, length=#{length}>"
     end
