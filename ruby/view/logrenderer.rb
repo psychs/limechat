@@ -169,7 +169,19 @@ module LogRenderer
     
     def render_start_tag(e)
       case e[:kind]
-      when :urlstart; %Q[<a class="url" href="#{e[:url]}" oncontextmenu="on_url_contextmenu()">]
+      when :urlstart
+        %Q[<a class="url" href="#{e[:url]}" oncontextmenu="on_url_contextmenu()">]
+=begin
+        url = e[:url]
+        if /^http:\/\/[a-z]+\.youtube\.com\/watch\?v=([a-zA-Z0-9]+)$/ =~ url
+          id = $1
+          %Q[<object width="425" height="350"><param name="movie" value="#{url}"></param><param name="wmode" value="transparent"></param><embed src="http://www.youtube.com/v/#{id}" type="application/x-shockwave-flash" wmode="transparent" width="425" height="350"></embed></object>]
+        elsif /\.(jpg|jpeg|gif|png)$/ =~ url
+          %Q[<a class="url" href="#{e[:url]}" oncontextmenu="on_url_contextmenu()"><img src="#{url}"/>]
+        else
+          %Q[<a class="url" href="#{e[:url]}" oncontextmenu="on_url_contextmenu()">]
+        end
+=end
       when :addrstart; '<span class="address" oncontextmenu="on_address_contextmenu()">'
       when :keystart; '<strong class="highlight">'
       when :effect
