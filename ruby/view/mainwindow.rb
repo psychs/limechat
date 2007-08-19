@@ -80,7 +80,7 @@ class MainWindow < OSX::NSWindow
         elsif !shift && !ctrl && !alt && cmd
           # cmd
           case k
-          when 18..23,25..29,82..89,91,92
+          when 18..23,25,26,28,29,82..89,91,92
             @key_delegate.number(keynum(k))
             return
           when 123 #left
