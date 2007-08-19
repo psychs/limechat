@@ -179,6 +179,7 @@ class IRCChannel < OSX::NSObject
   
   def clear_members
     @members.clear
+    reload_members
   end
   
   def find_member(nick)

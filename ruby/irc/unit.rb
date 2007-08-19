@@ -1204,7 +1204,7 @@ class IRCUnit < OSX::NSObject
       if c
         a = c.mode.a
         c.mode.update(modestr)
-        c.clear_members if !a && c.mode.a
+        #c.clear_members if !a && c.mode.a
         str = modestr.dup
         plus = false
         until str.empty?
@@ -1491,7 +1491,7 @@ class IRCUnit < OSX::NSObject
         c.mode.clear
         c.mode.update(modestr)
         if c.mode.a && !a
-          c.clear_members
+          #c.clear_members
         end
         update_channel_title(c)
       end
