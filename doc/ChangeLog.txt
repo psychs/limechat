@@ -1,3 +1,8 @@
+2007-08-24  Satoshi Nakagawa <artension@gmail.com>
+
+	Added menus, mark and clear scrollback.
+	Changed max lines of log view to 3000.
+
 2007-08-19  Satoshi Nakagawa <artension@gmail.com>
 
 	Fixed a bug, application crashes when pushed Command + -.

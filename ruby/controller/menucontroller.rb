@@ -75,6 +75,12 @@ class MenuController < OSX::NSObject
       u = @world.selunit
       return false unless u && u.myaddress
       true
+    
+    when 411  # mark scrollback
+      true
+    when 412  # clear scrollback
+      true
+      
     when 501  # connect
       not_connected
     when 502  # disconnect
@@ -350,6 +356,19 @@ class MenuController < OSX::NSObject
       url = "http://www.google.com/search?ie=UTF-8&q=#{sel}"
       UrlOpener::openUrl(url)
     end
+  end
+  
+  
+  def onMarkScrollback(sender)
+    sel = @world.selected
+    return unless sel
+    sel.log.mark
+  end
+  
+  def onClearScrollback(sender)
+    sel = @world.selected
+    return unless sel
+    sel.log.unmark
   end
   
   

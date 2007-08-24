@@ -43,6 +43,7 @@ class LogController < OSX::NSObject
     }
     img { border: 1px solid #aaa; vertical-align: top; }
     object { vertical-align: top; }
+    hr { margin: 0.5em 2em; }
     .url {}
     .address { text-decoration: underline; }
     .highlight { color: #f0f; font-weight: bold; }
@@ -79,7 +80,7 @@ class LogController < OSX::NSObject
     @lines = []
     @line_number = 0
     @loaded = false
-    @max_lines = 1000
+    @max_lines = 3000
   end
   
   def setup(console=false, style=DEFAULT_CSS)
@@ -161,6 +162,22 @@ class LogController < OSX::NSObject
     end
     write_line(s, attrs)
     key
+  end
+  
+  def mark
+    save_position
+    unmark
+    doc = @view.mainFrame.DOMDocument
+    e = doc.createElement('hr')
+    e.setAttribute__('id', 'mark')
+    doc.body.appendChild(e)
+    restore_position
+  end
+  
+  def unmark
+    doc = @view.mainFrame.DOMDocument
+    e = doc.getElementById('mark')
+    doc.body.removeChild(e) if e
   end
   
   def use_small_scroller(v)
@@ -317,7 +334,7 @@ class LogController < OSX::NSObject
     div.setAttribute__('id', "line#{@line_number}")
     body.appendChild(div)
     
-    body.removeChild_(body.firstChild) if @max_lines > 0 && @line_number > @max_lines
+    body.removeChild(body.firstChild) if @max_lines > 0 && @line_number > @max_lines
     
     restore_position
   end
