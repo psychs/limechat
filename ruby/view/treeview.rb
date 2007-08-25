@@ -10,17 +10,8 @@ class TreeView < OSX::NSOutlineView
   end
 
   def selectedRows
-    ary = []
-    set = selectedRowIndexes
-    i = set.firstIndex.to_i
-    return ary if i == NSNotFound
-    ary << i
-    (set.count.to_i-1).times do
-      i = set.indexGreaterThanIndex(i).to_i
-      break if i == NSNotFound
-      ary << i
-    end
-    ary
+    ary = selectedRowIndexes.to_a
+    ary.map {|i| i.to_i }
   end
   
   def select(index, scroll=true)
