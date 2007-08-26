@@ -1,3 +1,7 @@
+2007-08-26  Satoshi Nakagawa <artension@gmail.com>
+
+	Replaced NSData#bytes.bytestr for NSData#rubyString.
+
 2007-08-24  Satoshi Nakagawa <artension@gmail.com>
 
 	Added menus, mark and clear scrollback.
