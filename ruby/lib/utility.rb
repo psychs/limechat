@@ -64,15 +64,7 @@ class False
   def to_i; 0; end
 end
 
-class Fixnum
-  def grouped_by_comma
-    s = to_s
-    nil while s.gsub!(/(.*\d)(\d\d\d)/, '\1,\2')
-    s
-  end
-end
-
-class Bignum
+class Numeric
   def grouped_by_comma
     s = to_s
     nil while s.gsub!(/(.*\d)(\d\d\d)/, '\1,\2')
