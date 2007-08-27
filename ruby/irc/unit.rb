@@ -1593,8 +1593,8 @@ class IRCUnit < OSX::NSObject
       mode = m[6]
       c = find_channel(chname)
       if c && c.active? && !c.who_init
-        o = !!mode.index('@')
-        v = !!mode.index('+')
+        o = mode.include?('@')
+        v = mode.include?('+')
         c.update_member(nick, username, address, o, v)
       else
         print_unknown_reply(m)
