@@ -11,6 +11,7 @@ class AutoOpDialog < OSX::NSObject
   
   def initialize
     @prefix = 'autoOpDialog'
+    @world_label = NSString.stringWithString('World')
   end
   
   def start(conf)
@@ -192,8 +193,8 @@ class AutoOpDialog < OSX::NSObject
   end
   
   def outlineView_objectValueForTableColumn_byItem(sender, column, item)
-    return 'World' if item == @w
-    item.name
+    return @world_label if item == @w
+    item.label
   end
   
   def outlineViewSelectionDidChange(notification)

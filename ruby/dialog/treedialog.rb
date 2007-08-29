@@ -129,7 +129,7 @@ class TreeDialog < OSX::NSObject
   end
   
   def outlineView_objectValueForTableColumn_byItem(sender, column, item)
-    item.name
+    item.label
   end
   
   #objc_method :outlineView_shouldEditTableColumn_item, 'c@:@@@'

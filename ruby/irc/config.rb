@@ -101,9 +101,17 @@ class IRCUnitConfig
     h = {}
     instance_variables.each do |v|
       next if v == '@channels'
+      next if k == '@cached_label'
       h[v[1..-1].to_sym] = instance_variable_get(v)
     end
     h
+  end
+  
+  def label
+    if !@cached_label || !@cached_label.isEqualToString?(@name)
+      @cached_label = OSX::NSString.stringWithString(@name)
+    end
+    @cached_label
   end
   
   def to_s
@@ -145,9 +153,17 @@ class IRCChannelConfig
     h = {}
     instance_variables.each do |v|
       next if v == '@type'
+      next if k == '@cached_label'
       h[v[1..-1].to_sym] = instance_variable_get(v)
     end
     h
+  end
+  
+  def label
+    if !@cached_label || !@cached_label.isEqualToString?(@name)
+      @cached_label = OSX::NSString.stringWithString(@name)
+    end
+    @cached_label
   end
   
   def to_s
