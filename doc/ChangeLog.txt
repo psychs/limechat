@@ -1,5 +1,10 @@
 2007-08-29  Satoshi Nakagawa <artension@gmail.com>
 
+	Added confirmation on deleting a server from menu.
+	Fixed a bug, application crashes when clicking copy menu item in context menus.
+
+2007-08-29  Satoshi Nakagawa <artension@gmail.com>
+
 	Fixed a bug, the server item in the tree should be open when created the first child.
 	Fixed a bug, log view should scroll to the bottom when it finished loading.
 

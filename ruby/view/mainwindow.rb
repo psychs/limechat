@@ -5,6 +5,9 @@ class MainWindow < OSX::NSWindow
   include OSX
   attr_accessor :key_delegate
   
+  def copy(sender)
+  end
+  
   def sendEvent(e)
     if @key_delegate
       if e.oc_type == NSKeyDown

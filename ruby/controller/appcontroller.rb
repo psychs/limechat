@@ -347,7 +347,7 @@ class AppController < OSX::NSObject
         msg += "sending #{send} files"
       end
       msg += ".\nAre you sure to quit?"
-      return NSRunCriticalAlertPanel('LimeChat', msg, 'Anyway Quit', 'Cancel', nil) == NSAlertDefaultReturn
+      NSRunCriticalAlertPanel('LimeChat', msg, 'Anyway Quit', 'Cancel', nil) == NSAlertDefaultReturn
     elsif @pref.gen.confirm_quit
       NSRunCriticalAlertPanel('LimeChat', 'Are you sure to quit?', 'Quit', 'Cancel', nil) == NSAlertDefaultReturn
     else

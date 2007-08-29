@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>currentDocument</key>
+	<string>doc/ChangeLog.txt</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -16,12 +18,47 @@
 		</dict>
 	</array>
 	<key>fileHierarchyDrawerWidth</key>
-	<integer>271</integer>
+	<integer>275</integer>
 	<key>metaData</key>
-	<dict/>
+	<dict>
+		<key>doc/ChangeLog.txt</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>4</integer>
+			</dict>
+			<key>columnSelection</key>
+			<false/>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>2</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>4</integer>
+			</dict>
+		</dict>
+	</dict>
+	<key>openDocuments</key>
+	<array>
+		<string>doc/ChangeLog.txt</string>
+	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{616, 68}, {941, 1101}}</string>
+	<string>{{569, 66}, {952, 1109}}</string>
 </dict>
 </plist>

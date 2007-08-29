@@ -451,6 +451,7 @@ class MenuController < OSX::NSObject
   end
   
   def onDeleteServer(sender)
+    return unless NSRunAlertPanel('LimeChat', 'Do you want to delete the server?', 'Delete', 'Cancel', nil) == NSAlertDefaultReturn
     u = @world.selunit
     return unless u && !u.connected?
     @world.destroy_unit(u)
@@ -584,6 +585,7 @@ class MenuController < OSX::NSObject
   
   
   def onDeleteChannel(sender)
+    #return unless NSRunAlertPanel('LimeChat', 'Do you want to delete the channel?', 'Delete', 'Cancel', nil) == NSAlertDefaultReturn
     c = @world.selchannel
     return unless c
     @world.destroy_channel(c)
