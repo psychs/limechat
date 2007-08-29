@@ -1,3 +1,8 @@
+2007-08-29  Satoshi Nakagawa <artension@gmail.com>
+
+	Fixed a bug, the server item in the tree should be open when created the first child.
+	Fixed a bug, log view should scroll to the bottom when it finished loading.
+
 2007-08-26  Satoshi Nakagawa <artension@gmail.com>
 
 	Replaced NSData#bytes.bytestr for NSData#rubyString.

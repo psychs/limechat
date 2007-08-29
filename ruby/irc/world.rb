@@ -204,6 +204,7 @@ class IRCWorld < OSX::NSObject
     
     reload_tree if reload
     adjust_selection if adjust
+    expand_unit(unit) if unit.login? && unit.channels.length == 1
     c
   end
   

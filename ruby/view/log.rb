@@ -107,11 +107,13 @@ class LogController < OSX::NSObject
   end
   
   def moveToTop
+    return unless @loaded
     body = @view.mainFrame.DOMDocument.body
     body.setValue_forKey(0, 'scrollTop')
   end
   
   def moveToBottom
+    return unless @loaded
     body = @view.mainFrame.DOMDocument.body
     scrollheight = body.valueForKey('scrollHeight').to_i
     body.setValue_forKey(scrollheight, 'scrollTop')
@@ -132,7 +134,6 @@ class LogController < OSX::NSObject
   end
   
   def restore_position
-    return unless @loaded
     moveToBottom if @bottom
   end
   
@@ -192,8 +193,8 @@ class LogController < OSX::NSObject
   def reset_style(style)
     body = @view.mainFrame.DOMDocument.body
     @html = body.innerHTML
-    @scroll_top = body.valueForKey('scrollTop').to_i
     @scroll_bottom = viewing_bottom?
+    @scroll_top = body.valueForKey('scrollTop').to_i
     setup(@console, style)
   end
   
@@ -218,8 +219,11 @@ class LogController < OSX::NSObject
         body.setValue_forKey(@scroll_top, 'scrollTop')
       end
       @html = nil
+      @scroll_bottom = nil
       @scroll_top = nil
-      @scroll_bottom = false
+    else
+      moveToBottom
+      @bottom = true
     end
     
     @lines.each {|i| print(*i) }
