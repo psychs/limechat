@@ -4,7 +4,7 @@
 
 2007-08-30  Satoshi Nakagawa <artension@gmail.com>
 
-	Changed to return the same object in NSOutlineView datasource.
+	Changed to return the same objects in NSOutlineView datasource.
 
 2007-08-29  Satoshi Nakagawa <artension@gmail.com>
 
