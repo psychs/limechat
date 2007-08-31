@@ -10,11 +10,6 @@ class IRCWorld < OSX::NSObject
   
   AUTO_CONNECT_DELAY = 1
   
-  GROWL_HIGHLIGHT = "Highlight message received"
-  GROWL_NEW_TALK = "New talk started"
-  GROWL_CHANNEL_MSG = "Channel message received"
-  GROWL_TALK_MSG = "Talk message received"
-  
   def initialize
     @units = []
     @unit_id = 0
