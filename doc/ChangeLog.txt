@@ -1,3 +1,7 @@
+2007-09-02  Satoshi Nakagawa <artension@gmail.com>
+
+	Fixed a bug, application crashes on pushed ok button on a server properties dialog.
+
 2007-09-01  Satoshi Nakagawa <artension@gmail.com>
 
 	Changed to try RUBYCOCOA_THREAD_HOOK_DISABLE = 1.

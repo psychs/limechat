@@ -101,7 +101,7 @@ class IRCUnitConfig
     h = {}
     instance_variables.each do |v|
       next if v == '@channels'
-      next if k == '@cached_label'
+      next if v == '@cached_label'
       h[v[1..-1].to_sym] = instance_variable_get(v)
     end
     h
@@ -153,7 +153,7 @@ class IRCChannelConfig
     h = {}
     instance_variables.each do |v|
       next if v == '@type'
-      next if k == '@cached_label'
+      next if v == '@cached_label'
       h[v[1..-1].to_sym] = instance_variable_get(v)
     end
     h
