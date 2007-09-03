@@ -1,3 +1,7 @@
+2007-09-03  Satoshi Nakagawa <artension@gmail.com>
+
+	Changed to support new implementation of NSArray and NSDictionary.
+
 2007-09-02  Satoshi Nakagawa <artension@gmail.com>
 
 	Fixed a bug, application crashes on pushed ok button on a server properties dialog.

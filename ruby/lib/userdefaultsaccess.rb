@@ -28,10 +28,10 @@ module UserDefaultsAccess
       v.to_time
     when OSX::NSCFDictionary,OSX::NSDictionary
       h = {}
-      v.each {|k,i| h[k.to_s.to_sym] = convert_to_ruby_obj(i) }
+      v.to_hash.each {|k,i| h[k.to_s.to_sym] = convert_to_ruby_obj(i) }
       h
     when OSX::NSCFArray,OSX::NSArray
-      v.map {|i| convert_to_ruby_obj(i)}
+      v.to_a.map {|i| convert_to_ruby_obj(i)}
     else
       v
     end

@@ -73,6 +73,14 @@ class Numeric
 end
 
 module OSX
+  class NSDictionary
+    def to_hash
+      h = {}
+      each {|k,v| h[k] = v }
+      h
+    end
+  end
+  
   class NSWindow
     def centerOfScreen
       scr = OSX::NSScreen.screens[0]
