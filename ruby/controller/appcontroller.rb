@@ -38,6 +38,7 @@ class AppController < OSX::NSObject
     @world.console_menu = @console_menu
     @world.url_menu = @url_menu
     @world.addr_menu = @addr_menu
+    @world.member_menu = @member_menu
     @world.menu_controller = @menu
     @tree.setDataSource(@world)
     @tree.setDelegate(@world)

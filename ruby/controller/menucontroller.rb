@@ -7,7 +7,7 @@ require 'cgi'
 class MenuController < OSX::NSObject
   include OSX
   attr_accessor :app, :world, :window, :text, :tree, :pref, :member_list
-  attr_accessor :url, :addr
+  attr_accessor :url, :addr, :nick
   
   def initialize
     @server_dialogs = []

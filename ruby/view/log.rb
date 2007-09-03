@@ -25,7 +25,7 @@ end
 
 class LogController < OSX::NSObject
   include OSX
-  attr_accessor :world, :menu, :url_menu, :addr_menu, :max_lines, :keyword
+  attr_accessor :world, :menu, :url_menu, :addr_menu, :member_menu, :max_lines, :keyword
   attr_reader :view, :console, :bottom
   
   BOTTOM_EPSILON = 20
@@ -91,6 +91,7 @@ class LogController < OSX::NSObject
     @policy.menu = @menu
     @policy.url_menu = @url_menu
     @policy.addr_menu = @addr_menu
+    @policy.member_menu = @member_menu
     @sink = LogScriptEventSink.alloc.init
     @sink.owner = self
     @sink.policy = @policy
@@ -148,7 +149,13 @@ class LogController < OSX::NSObject
     s = ''
     s += %Q[<span class="time">#{h(line.time)}</span>] if line.time
     s += %Q[<span class="place">#{h(line.place)}</span>] if line.place
-    s += %Q[<span class="nick_#{line.member_type}">#{h(line.nick)}</span>] if line.nick
+    if line.nick
+      if @console
+        s += %Q[<span class="nick_#{line.member_type}">#{h(line.nick)}</span>]
+      else
+        s += %Q[<span class="nick_#{line.member_type}" oncontextmenu="on_nick_contextmenu()">#{h(line.nick)}</span>]
+      end
+    end
     s += %Q[<span class="#{line.line_type}">#{body}</span>]
     attrs = {}
     attrs['class'] = 'line'
@@ -277,6 +284,10 @@ class LogController < OSX::NSObject
           var t = event.target
           app.setAddr(t.innerHTML)
         }
+        function on_nick_contextmenu() {
+          var t = event.target
+          app.setNick(t.parentNode.getAttribute('nick'))
+        }
       EOM
       @js.evaluateWebScript(script)
     end
@@ -360,7 +371,7 @@ class LogScriptEventSink < OSX::NSObject
   include OSX
   attr_accessor :owner, :policy
   
-  EXPORTED_METHODS = %w|onDblClick: shouldStopDoubleClick: setUrl: setAddr: print:|
+  EXPORTED_METHODS = %w|onDblClick: shouldStopDoubleClick: setUrl: setAddr: setNick: print:|
 
   objc_class_method 'isSelectorExcludedFromWebScript:', 'c@::'
   def self.isSelectorExcludedFromWebScript(sel)
@@ -435,6 +446,12 @@ class LogScriptEventSink < OSX::NSObject
     @policy.addr = s.to_s
   end
   
+  objc_method :setNick, 'v@:@'
+  def setNick(s)
+    return unless s
+    @policy.nick = s.to_s
+  end
+  
   objc_method :print, 'v@:@'
   def print(s)
     NSLog("%@", s)
@@ -444,8 +461,8 @@ end
 
 class LogPolicy < OSX::NSObject
   include OSX
-  attr_accessor :owner, :menu, :url_menu, :addr_menu
-  attr_accessor :url, :addr
+  attr_accessor :owner, :menu, :url_menu, :addr_menu, :member_menu
+  attr_accessor :url, :addr, :nick
 
   objc_method :webView_dragDestinationActionMaskForDraggingInfo, 'I@:@@'
   def webView_dragDestinationActionMaskForDraggingInfo(sender, info)
@@ -462,6 +479,14 @@ class LogPolicy < OSX::NSObject
       @owner.world.menu_controller.addr = @addr
       @addr = nil
       @addr_menu.itemArray.to_a.map {|i| i.copy }
+    elsif @nick
+      target = @nick
+      @nick = nil
+      @owner.world.menu_controller.nick = target
+      ary = []
+      ary << NSMenuItem.alloc.initWithTitle_action_keyEquivalent(target, nil, '')
+      ary << NSMenuItem.separatorItem
+      ary + @member_menu.itemArray.to_a.map {|i| i.copy }
     else
       if @menu
         @menu.itemArray.to_a.map {|i| i.copy }
