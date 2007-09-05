@@ -486,13 +486,28 @@ class LogPolicy < OSX::NSObject
       ary = []
       ary << NSMenuItem.alloc.initWithTitle_action_keyEquivalent(target, nil, '')
       ary << NSMenuItem.separatorItem
-      ary + @member_menu.itemArray.to_a.map {|i| i.copy }
+      ary + @member_menu.itemArray.to_a.map do |i|
+        i = i.copy
+        modify_member_menu_item(i)
+        i
+      end
     else
       if @menu
         @menu.itemArray.to_a.map {|i| i.copy }
       else
         []
       end
+    end
+  end
+  
+  def modify_member_menu_item(i)
+    i.setTag(i.tag.to_i + 500)
+    modify_member_menu(i.submenu) if i.hasSubmenu
+  end
+  
+  def modify_member_menu(menu)
+    menu.itemArray.to_a.each do |i|
+      modify_member_menu_item(i)
     end
   end
 

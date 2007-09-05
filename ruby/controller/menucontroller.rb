@@ -37,7 +37,10 @@ class MenuController < OSX::NSObject
     active_chtalk = active && (c.channel? || c.talk?)
     op = active_channel && c.op?
     
-    case i.tag
+    tag = i.tag
+    tag -= 500 if nick_menu?(i)
+    
+    case tag
     when 102  # preferences
       true
     when 103  # server tree
@@ -121,19 +124,19 @@ class MenuController < OSX::NSObject
       true
       
     when 2001  # member whois
-      active_chtalk && count_selected_members?
+      active_chtalk && count_selected_members?(i)
     when 2002  # member talk
-      active_chtalk && count_selected_members?
+      active_chtalk && count_selected_members?(i)
     when 2003  # member giveop
-      op && count_selected_members?
+      op && count_selected_members?(i)
     when 2004  # member deop
-      op && count_selected_members?
+      op && count_selected_members?(i)
     when 2011  # dcc send file
-      active_chtalk && count_selected_members? && !!u.myaddress
+      active_chtalk && count_selected_members?(i) && !!u.myaddress
     when 2101..2105  # ctcp
-      active_chtalk && count_selected_members?
+      active_chtalk && count_selected_members?(i)
     when 2021  # register to auto op
-      active_channel && count_selected_members?
+      active_channel && count_selected_members?(i)
     
     when 3001  # copy url
       true
@@ -145,18 +148,33 @@ class MenuController < OSX::NSObject
     end
   end
   
-  def count_selected_members?
-    @member_list.countSelectedRows > 0
+  def count_selected_members?(sender)
+    if nick_menu?(sender)
+      !!@nick
+    else
+      @member_list.countSelectedRows > 0
+    end
   end
   
-  def selected_members
+  def selected_members(sender)
     c = @world.selchannel
     return [] unless c
-    @member_list.selectedRows.map {|i| c.members[i.to_i] }
+    if nick_menu?(sender)
+      m = c.find_member(@nick)
+      m ? [m] : []
+    else
+      @member_list.selectedRows.map {|i| c.members[i.to_i] }
+    end
   end
   
-  def deselect_members
-    @member_list.deselectAll(nil)
+  def deselect_members(sender)
+    unless nick_menu?(sender)
+      @member_list.deselectAll(nil)
+    end
+  end
+  
+  def nick_menu?(sender)
+    sender && (2500...3000) === sender.tag.to_i
   end
   
   def alloc_comment_sheet
@@ -678,55 +696,55 @@ class MenuController < OSX::NSObject
   end
   
   
-  def whois_selected_members(deselect)
+  def whois_selected_members(sender, deselect)
     u = @world.selunit
     return unless u
-    selected_members.each {|m| u.send_whois(m.nick) }
-    deselect_members if deselect
+    selected_members(sender).each {|m| u.send_whois(m.nick) }
+    deselect_members(sender) if deselect
   end
   
   def memberList_doubleClicked(sender)
-    whois_selected_members(false)
+    whois_selected_members(nil, false)
   end
   
   def onMemberWhois(sender)
-    whois_selected_members(true)
+    whois_selected_members(sender, true)
   end
   
   def onMemberTalk(sender)
     u = @world.selunit
     return unless u
-    selected_members.each do |m|
+    selected_members(sender).each do |m|
       c = u.find_channel(m.nick)
       unless c
         c = @world.create_talk(u, m.nick)
         @world.select(c)
       end
     end
-    deselect_members
+    deselect_members(sender)
   end
   
   
-  def change_op(mode, plus)
+  def change_op(sender, mode, plus)
     u, c = @world.sel
     return unless u && u.login? && c && c.active? && c.channel? && c.op?
-    u.change_op(c, selected_members, mode, plus)
-    deselect_members
+    u.change_op(c, selected_members(sender), mode, plus)
+    deselect_members(sender)
   end
   
   def onMemberGiveOp(sender)
-    change_op(:o, true)
+    change_op(sender, :o, true)
   end
   
   def onMemberDeop(sender)
-    change_op(:o, false)
+    change_op(sender, :o, false)
   end
   
   def onMemberSendFile(sender)
     @send.cancel(nil) if @send
     u = @world.selunit
     return unless u
-    @send_targets = selected_members
+    @send_targets = selected_members(sender)
     return unless @send_targets && !@send_targets.empty?
     @send_uid = u.id
     @send = NSOpenPanel.openPanel
@@ -751,40 +769,41 @@ class MenuController < OSX::NSObject
     end
   end
   
-  def send_ctcp_query(cmd, param=nil)
+  def send_ctcp_query(sender, cmd, param=nil)
     u = @world.selunit
     return unless u && u.login?
-    selected_members.each do |m|
+    selected_members(sender).each do |m|
       u.send_ctcp_query(m.nick, cmd, param)
     end
+    deselect_members(sender)
   end
   
   def onMemberPing(sender)
     n = Time.now
     i = n.to_i * 1000000 + n.usec
-    send_ctcp_query(:ping, i.to_s)
+    send_ctcp_query(sender, :ping, i.to_s)
   end
   
   def onMemberTime(sender)
-    send_ctcp_query(:time)
+    send_ctcp_query(sender, :time)
   end
   
   def onMemberVersion(sender)
-    send_ctcp_query(:version)
+    send_ctcp_query(sender, :version)
   end
   
   def onMemberUserInfo(sender)
-    send_ctcp_query(:userinfo)
+    send_ctcp_query(sender, :userinfo)
   end
   
   def onMemberClientInfo(sender)
-    send_ctcp_query(:clientinfo)
+    send_ctcp_query(sender, :clientinfo)
   end
   
   def onMemberAutoOp(sender)
     u = @world.selunit
     return unless u && u.login?
-    members = selected_members
+    members = selected_members(sender)
     return if members.empty?
     onChannelAutoOp(sender)
     return unless @autoop_dialog

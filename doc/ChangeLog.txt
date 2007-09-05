@@ -1,3 +1,7 @@
+2007-09-05  Satoshi Nakagawa <artension@gmail.com>
+
+ 	Completed nick right-click menu on log views.
+
 2007-09-04  Satoshi Nakagawa <artension@gmail.com>
 
 	Implementing nick right-click menu on log views.
