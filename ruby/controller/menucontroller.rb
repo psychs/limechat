@@ -313,7 +313,7 @@ class MenuController < OSX::NSObject
       return unless s
       s = s.to_s
       sel = @world.selected
-      if sel && !sel.unit? && /.+(\r\n|\r|\n).+/ =~ s
+      if sel && !sel.unit? && /\r\n|\r|\n/ =~ s
         # multi line
         start_paste_dialog(sel.unit.id, sel.id, s)
       else

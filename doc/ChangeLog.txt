@@ -1,3 +1,7 @@
+2007-09-07  Satoshi Nakagawa <artension@gmail.com>
+
+	Fixed a bug, paste dialog should be showed when clipboard has multi-line text.
+
 2007-09-05  Satoshi Nakagawa <artension@gmail.com>
 
  	Completed nick right-click menu on log views.
