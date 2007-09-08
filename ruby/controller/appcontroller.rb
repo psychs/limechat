@@ -139,7 +139,7 @@ class AppController < OSX::NSObject
     return false unless s
     s = s.to_s
     sel = @world.selected
-    if sel && !sel.unit? && /\r\n|\r|\n/ =~ s
+    if sel && !sel.unit? && /(\r\n|\r|\n)[^\r\n]/ =~ s
       @menu.start_paste_dialog(sel.unit.id, sel.id, s)
       true
     else

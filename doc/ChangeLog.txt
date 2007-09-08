@@ -1,5 +1,9 @@
 2007-09-08  Satoshi Nakagawa <artension@gmail.com>
 
+	Fixed a bug, single-line text with a new line on the tail should be treated as single-line text in pasting.
+
+2007-09-08  Satoshi Nakagawa <artension@gmail.com>
+
 	Fixed a bug, URL should be unescaped on copy from right click menu.
 
 2007-09-07  Satoshi Nakagawa <artension@gmail.com>
