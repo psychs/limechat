@@ -1,3 +1,7 @@
+2007-09-08  Satoshi Nakagawa <artension@gmail.com>
+
+	Fixed a bug, URL should be unescaped on copy from right click menu.
+
 2007-09-07  Satoshi Nakagawa <artension@gmail.com>
 
 	Fixed a bug, paste dialog should be showed when clipboard has multi-line text.

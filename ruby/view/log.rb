@@ -436,25 +436,28 @@ class LogScriptEventSink < OSX::NSObject
   
   objc_method :setUrl, 'v@:@'
   def setUrl(s)
-    return unless s
-    @policy.url = s.to_s
+    @policy.url = uh(s)
   end
   
   objc_method :setAddr, 'v@:@'
   def setAddr(s)
-    return unless s
-    @policy.addr = s.to_s
+    @policy.addr = uh(s)
   end
   
   objc_method :setNick, 'v@:@'
   def setNick(s)
-    return unless s
-    @policy.nick = s.to_s
+    @policy.nick = uh(s)
   end
   
   objc_method :print, 'v@:@'
   def print(s)
     NSLog("%@", s)
+  end
+  
+  private
+  
+  def uh(s)
+    s ? CGI.unescapeHTML(s.to_s) : ''
   end
 end
 
