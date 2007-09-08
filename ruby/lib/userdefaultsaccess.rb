@@ -15,25 +15,6 @@ module UserDefaultsAccess
   
   def convert_to_ruby_obj(v)
     return v if v == nil || v == false || v == true
-    case v
-    when OSX::NSAttributedString
-      v.string.to_s
-    when OSX::NSCFString,OSX::NSString
-      v.to_s
-    when OSX::NSCFBoolean
-      v.boolValue
-    when OSX::NSCFNumber,OSX::NSNumber
-      v.is_float? ? v.to_f : v.to_i
-    when OSX::NSDate
-      v.to_time
-    when OSX::NSCFDictionary,OSX::NSDictionary
-      h = {}
-      v.to_hash.each {|k,i| h[k.to_s.to_sym] = convert_to_ruby_obj(i) }
-      h
-    when OSX::NSCFArray,OSX::NSArray
-      v.to_a.map {|i| convert_to_ruby_obj(i)}
-    else
-      v
-    end
+    v.is_a?(OSX::NSObject) ? v.to_ruby : v
   end
 end

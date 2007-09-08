@@ -71,6 +71,36 @@ module OSX
     end
   end
   
+  class NSObject
+    def to_ruby
+      case self 
+      when OSX::NSDate
+        to_time
+      when OSX::NSCFBoolean
+        boolValue
+      when OSX::NSNumber
+        is_float? ? to_f : to_i
+      when OSX::NSString
+        to_s
+      when OSX::NSAttributedString
+        string.to_s
+      when OSX::NSArray
+        to_a.map { |x| x.is_a?(OSX::NSObject) ? x.to_ruby : x }
+      when OSX::NSDictionary
+        h = {}
+        each do |x, y| 
+          x = x.to_ruby if x.is_a?(OSX::NSObject)
+          y = y.to_ruby if y.is_a?(OSX::NSObject)
+          x = x.to_sym if x.is_a?(String)
+          h[x] = y
+        end
+        h
+      else
+        self
+      end
+    end
+  end
+  
   class NSDictionary
     def to_hash
       h = {}
