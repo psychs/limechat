@@ -99,7 +99,7 @@ module OSX
       when OSX::NSAttributedString
         string.to_s
       when OSX::NSArray,OSX::NSIndexSet
-        to_a.map { |x| x.is_a?(OSX::NSObject) ? x.to_ruby : x }
+        to_a.map {|x| x.is_a?(OSX::NSObject) ? x.to_ruby : x }
       when OSX::NSDictionary
         h = {}
         each do |x, y| 
@@ -159,7 +159,7 @@ module OSX
   
   class NSIndexSet
     def inspect
-      s = '#<NSIndexSet:'
+      s = "#<NSIndexSet:"
       s += to_a.map{|i| i.inspect }.join(', ')
       s += '>'
       s
