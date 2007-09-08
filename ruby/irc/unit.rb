@@ -559,6 +559,7 @@ class IRCUnit < OSX::NSObject
     @connecting = false
     @connected = true
     @login = false
+    @reconnect = true
     @encoding = @config.encoding
     @inputnick = @sentnick = @mynick = @config.nick
     mymode = 0

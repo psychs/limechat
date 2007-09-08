@@ -1,6 +1,10 @@
 2007-09-08  Satoshi Nakagawa <artension@gmail.com>
 
-	Released 0.9.5.
+	Fixed a bug, cancel reconnecting should be enabled in connecting.
+
+2007-09-08  Satoshi Nakagawa <artension@gmail.com>
+
+	Released 0.9.6.
 
 2007-09-08  Satoshi Nakagawa <artension@gmail.com>
 
