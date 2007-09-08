@@ -69,6 +69,42 @@ module OSX
     def is_float?
       OSX::CFNumberIsFloatType(self)
     end
+    
+    def inspect
+      "NS:#{to_ruby}"
+    end
+  end
+  
+  class NSString
+    def inspect
+      %Q[NS:#{to_ruby.inspect}]
+    end
+  end
+  
+  class NSArray
+    def inspect
+      s = 'NS['
+      s += to_a.map{|i| i.inspect }.join(', ')
+      s += ']'
+      s
+    end
+  end
+  
+  class NSDictionary
+    def to_hash
+      h = {}
+      each {|k,v| h[k] = v }
+      h
+    end
+    
+    def inspect
+      s = 'NS{'
+      ary = []
+      each {|k,v| ary << "#{k.inspect} => #{v.inspect}" }
+      s += ary.join(', ')
+      s += '}'
+      s
+    end
   end
   
   class NSObject
@@ -101,43 +137,6 @@ module OSX
     end
   end
   
-  class NSDictionary
-    def to_hash
-      h = {}
-      each {|k,v| h[k] = v }
-      h
-    end
-  end
-  
-  class NSWindow
-    def centerOfScreen
-      scr = OSX::NSScreen.screens[0]
-      if scr
-        p = scr.visibleFrame.center
-        p -= frame.size / 2
-        setFrameOrigin(p)
-      else
-        center
-      end
-    end
-    
-    def centerOfWindow(window)
-      p = window.frame.center
-      p -= frame.size / 2
-      scr = window.screen
-      if scr
-        sf = scr.visibleFrame
-        f = frame
-        f.origin = p
-        unless sf.contain?(f)
-          f = f.adjustInRect(sf)
-          p = f.origin
-        end
-      end
-      setFrameOrigin(p)
-    end
-  end
-  
   class NSPoint
     def in(r); OSX::NSPointInRect(self, r); end
     alias_method :inRect, :in
@@ -157,7 +156,7 @@ module OSX
     end
 
     def inspect
-      "#<#{self.class} x=#{x}, y=#{y}>"
+      "#<NSPoint (#{x}, #{y})>"
     end
   end
   
@@ -168,7 +167,7 @@ module OSX
     def -(v); NSSize.new(width - v, height - v); end
     
     def inspect
-      "#<#{self.class} width=#{width}, height=#{height}>"
+      "#<NSSize (#{width}, #{height})>"
     end
   end
   
@@ -212,13 +211,13 @@ module OSX
     end
 
     def inspect
-      "#<#{self.class} x=#{x}, y=#{y}, width=#{width}, height=#{height}>"
+      "#<NSRect (#{x}, #{y}, #{width}, #{height}>"
     end
   end
   
   class NSRange
     def inspect
-      "#<#{self.class} location=#{location}, length=#{length}>"
+      "#<NSRange (#{location}, #{length})>"
     end
   end
   
@@ -227,6 +226,35 @@ module OSX
       ary = []
       0.upto(count-1) {|i| ary << objectAtIndex(i) }
       ary
+    end
+  end
+  
+  class NSWindow
+    def centerOfScreen
+      scr = OSX::NSScreen.screens[0]
+      if scr
+        p = scr.visibleFrame.center
+        p -= frame.size / 2
+        setFrameOrigin(p)
+      else
+        center
+      end
+    end
+    
+    def centerOfWindow(window)
+      p = window.frame.center
+      p -= frame.size / 2
+      scr = window.screen
+      if scr
+        sf = scr.visibleFrame
+        f = frame
+        f.origin = p
+        unless sf.contain?(f)
+          f = f.adjustInRect(sf)
+          p = f.origin
+        end
+      end
+      setFrameOrigin(p)
     end
   end
   
