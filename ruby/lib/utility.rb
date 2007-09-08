@@ -42,6 +42,10 @@ class String
   def expand_path
     OSX::NSString.stringWithString(self).stringByExpandingTildeInPath.to_s
   end
+  
+  def to_nsstr
+    OSX::NSMutableString.stringWithString(self)
+  end
 end
 
 class Array
@@ -54,6 +58,22 @@ class Array
       orginal_index(*args)
     end
   end
+  
+  def to_indexset
+    set = OSX::NSMutableIndexSet.alloc.init
+    each {|i| set.addIndex(i) }
+    set
+  end
+  
+  def to_nsary
+    OSX::NSMutableArray.arrayWithArray(self)
+  end
+end
+
+class Hash
+  def to_nsdic
+    OSX::NSMutableDictionary.dictionaryWithDictionary(self)
+  end
 end
 
 class Numeric
@@ -65,6 +85,36 @@ class Numeric
 end
 
 module OSX
+  class NSObject
+    def to_ruby
+      case self 
+      when OSX::NSDate
+        to_time
+      when OSX::NSCFBoolean
+        boolValue
+      when OSX::NSNumber
+        is_float? ? to_f : to_i
+      when OSX::NSString
+        to_s
+      when OSX::NSAttributedString
+        string.to_s
+      when OSX::NSArray,OSX::NSIndexSet
+        to_a.map { |x| x.is_a?(OSX::NSObject) ? x.to_ruby : x }
+      when OSX::NSDictionary
+        h = {}
+        each do |x, y| 
+          x = x.to_ruby if x.is_a?(OSX::NSObject)
+          y = y.to_ruby if y.is_a?(OSX::NSObject)
+          x = x.to_sym if x.is_a?(String)
+          h[x] = y
+        end
+        h
+      else
+        self
+      end
+    end
+  end
+  
   class NSNumber
     def is_float?
       OSX::CFNumberIsFloatType(self)
@@ -107,33 +157,12 @@ module OSX
     end
   end
   
-  class NSObject
-    def to_ruby
-      case self 
-      when OSX::NSDate
-        to_time
-      when OSX::NSCFBoolean
-        boolValue
-      when OSX::NSNumber
-        is_float? ? to_f : to_i
-      when OSX::NSString
-        to_s
-      when OSX::NSAttributedString
-        string.to_s
-      when OSX::NSArray
-        to_a.map { |x| x.is_a?(OSX::NSObject) ? x.to_ruby : x }
-      when OSX::NSDictionary
-        h = {}
-        each do |x, y| 
-          x = x.to_ruby if x.is_a?(OSX::NSObject)
-          y = y.to_ruby if y.is_a?(OSX::NSObject)
-          x = x.to_sym if x.is_a?(String)
-          h[x] = y
-        end
-        h
-      else
-        self
-      end
+  class NSIndexSet
+    def inspect
+      s = '#<NSIndexSet:'
+      s += to_a.map{|i| i.inspect }.join(', ')
+      s += '>'
+      s
     end
   end
   
@@ -141,14 +170,14 @@ module OSX
     def in(r); OSX::NSPointInRect(self, r); end
     alias_method :inRect, :in
     def +(v)
-      if v.kind_of?(NSSize)
+      if v.kind_of?(OSX::NSSize)
         NSPoint.new(x + v.width, y + v.height)
       else
         raise ArgumentException, "parameter should be NSSize"
       end
     end
     def -(v)
-      if v.kind_of?(NSSize)
+      if v.kind_of?(OSX::NSSize)
         NSPoint.new(x - v.width, y - v.height)
       else
         raise ArgumentException, "parameter should be NSSize"

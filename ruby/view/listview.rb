@@ -10,19 +10,16 @@ class ListView < OSX::NSTableView
   end
 
   def selectedRows
-    ary = selectedRowIndexes.to_a
-    ary.map {|i| i.to_i }
+    selectedRowIndexes.to_a
   end
   
   def select(index, scroll=true)
-    selectRowIndexes_byExtendingSelection(NSIndexSet.indexSetWithIndex(index), false)
+    selectRowIndexes_byExtendingSelection([index].to_indexset, false)
     scrollRowToVisible(index)
   end
   
   def selectRows(indices, extendSelection=false)
-    set = NSMutableIndexSet.alloc.init
-    indices.each {|i| set.addIndex(i) }
-    selectRowIndexes_byExtendingSelection(set, extendSelection)
+    selectRowIndexes_byExtendingSelection(indices.to_indexset, extendSelection)
   end
   
   def rightMouseDown(event)

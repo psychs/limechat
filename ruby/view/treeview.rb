@@ -10,12 +10,11 @@ class TreeView < OSX::NSOutlineView
   end
 
   def selectedRows
-    ary = selectedRowIndexes.to_a
-    ary.map {|i| i.to_i }
+    selectedRowIndexes.to_a
   end
   
   def select(index, scroll=true)
-    selectRowIndexes_byExtendingSelection(NSIndexSet.indexSetWithIndex(index), false)
+    selectRowIndexes_byExtendingSelection([index].to_indexset, false)
     scrollRowToVisible(index) if scroll
   end
   
