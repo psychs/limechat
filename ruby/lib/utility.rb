@@ -56,14 +56,6 @@ class Array
   end
 end
 
-class True
-  def to_i; 1; end
-end
-
-class False
-  def to_i; 0; end
-end
-
 class Numeric
   def grouped_by_comma
     s = to_s
@@ -73,6 +65,12 @@ class Numeric
 end
 
 module OSX
+  class NSNumber
+    def is_float?
+      OSX::CFNumberIsFloatType(self)
+    end
+  end
+  
   class NSDictionary
     def to_hash
       h = {}
@@ -86,33 +84,33 @@ module OSX
       scr = OSX::NSScreen.screens[0]
       if scr
         p = scr.visibleFrame.center
-        p -= self.frame.size / 2
-        self.setFrameOrigin(p)
+        p -= frame.size / 2
+        setFrameOrigin(p)
       else
-        self.center
+        center
       end
     end
     
     def centerOfWindow(window)
       p = window.frame.center
-      p -= self.frame.size / 2
+      p -= frame.size / 2
       scr = window.screen
       if scr
         sf = scr.visibleFrame
-        f = self.frame
+        f = frame
         f.origin = p
         unless sf.contain?(f)
           f = f.adjustInRect(sf)
           p = f.origin
         end
       end
-      self.setFrameOrigin(p)
+      setFrameOrigin(p)
     end
   end
   
   class NSPoint
-    def dup; NSPoint.new(x, y); end
-    def inRect(r); OSX::NSPointInRect(self, r); end
+    def in(r); OSX::NSPointInRect(self, r); end
+    alias_method :inRect, :in
     def +(v)
       if v.kind_of?(NSSize)
         NSPoint.new(x + v.width, y + v.height)
@@ -128,27 +126,23 @@ module OSX
       end
     end
 
-    alias :old_inspect :inspect
     def inspect
       "#<#{self.class} x=#{x}, y=#{y}>"
     end
   end
   
   class NSSize
-    def dup; NSSize.new(width, height); end
     def /(v); NSSize.new(width / v, height / v); end
     def *(v); NSSize.new(width * v, height * v); end
     def +(v); NSSize.new(width + v, height + v); end
     def -(v); NSSize.new(width - v, height - v); end
     
-    alias :old_inspect :inspect
     def inspect
       "#<#{self.class} width=#{width}, height=#{height}>"
     end
   end
   
   class NSRect
-    def dup; NSRect.new(origin, size); end
     def contain?(r)
       if r.kind_of?(NSRect)
         OSX::NSContainsRect(self, r)
@@ -161,7 +155,6 @@ module OSX
     def intersect?(r); OSX::NSIntersectsRect(self, r); end
     def offset(dx, dy); OSX::NSOffsetRect(self, dx, dy); end
     def center; origin + (size / 2.0); end
-    def inflate(d); NSRect.new(x - d, y - d, width + d*2, height + d*2); end
     def adjustInRect(r)
       n = dup
       if r.x + r.width < n.x + n.width
@@ -188,15 +181,12 @@ module OSX
       }
     end
 
-    alias :old_inspect :inspect
     def inspect
       "#<#{self.class} x=#{x}, y=#{y}, width=#{width}, height=#{height}>"
     end
   end
   
   class NSRange
-    def dup; NSRange.new(location, length); end
-    alias :old_inspect :inspect
     def inspect
       "#<#{self.class} location=#{location}, length=#{length}>"
     end

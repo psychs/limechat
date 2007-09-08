@@ -23,7 +23,7 @@ module UserDefaultsAccess
     when OSX::NSCFBoolean
       v.boolValue
     when OSX::NSCFNumber,OSX::NSNumber
-      OSX::CFNumberIsFloatType(v) ? v.to_f : v.to_i
+      v.is_float? ? v.to_f : v.to_i
     when OSX::NSDate
       v.to_time
     when OSX::NSCFDictionary,OSX::NSDictionary
