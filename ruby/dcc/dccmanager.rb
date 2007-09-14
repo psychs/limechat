@@ -341,13 +341,21 @@ class DccManager < OSX::NSObject
   def numberOfRowsInTableView(sender)
     if sender == @receiver_table
       @receivers.length
-    else
+    elsif sender == @sender_table
       @senders.length
+    else
+      raise "sender isn't receiver_table or sender_table."
     end
   end
   
   def tableView_objectValueForTableColumn_row(sender, col, row)
-    list = sender == @receiver_table ? @receivers : @senders
+    if sender == @receiver_table
+      list = @receivers
+    elsif sender == @sender_table
+      list = @senders
+    else
+      raise "sender isn't receiver_table or sender_table."
+    end
     i = list[row.to_i]
     cell = col.dataCell
     cell.setStringValue(i.filename)

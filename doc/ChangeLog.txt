@@ -1,3 +1,7 @@
+2007-09-14  Satoshi Nakagawa <artension@gmail.com>
+
+	Changed to raise RunTimeError when passed objects different from original objects in calling back dataSource methods.
+
 2007-09-08  Satoshi Nakagawa <artension@gmail.com>
 
 	Fixed a bug, cancel reconnecting should be enabled in connecting.
