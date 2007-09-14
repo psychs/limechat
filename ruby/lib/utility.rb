@@ -93,7 +93,7 @@ module OSX
       when OSX::NSCFBoolean
         boolValue
       when OSX::NSNumber
-        is_float? ? to_f : to_i
+        float? ? to_f : to_i
       when OSX::NSString
         to_s
       when OSX::NSAttributedString
@@ -116,7 +116,7 @@ module OSX
   end
   
   class NSNumber
-    def is_float?
+    def float?
       OSX::CFNumberIsFloatType(self)
     end
     
@@ -127,16 +127,13 @@ module OSX
   
   class NSString
     def inspect
-      %Q[NS:#{to_ruby.inspect}]
+      "NS:#{to_s.inspect}"
     end
   end
   
   class NSArray
     def inspect
-      s = 'NS['
-      s += to_a.map{|i| i.inspect }.join(', ')
-      s += ']'
-      s
+      "NS:#{to_a.inspect}"
     end
   end
   
@@ -148,21 +145,13 @@ module OSX
     end
     
     def inspect
-      s = 'NS{'
-      ary = []
-      each {|k,v| ary << "#{k.inspect} => #{v.inspect}" }
-      s += ary.join(', ')
-      s += '}'
-      s
+      "NS:#{to_hash.inspect}"
     end
   end
   
   class NSIndexSet
     def inspect
-      s = "#<NSIndexSet:"
-      s += to_a.map{|i| i.inspect }.join(', ')
-      s += '>'
-      s
+      "#<#{self.class.to_s.gsub(/^OSX::/, '')} #{to_a.inspect}>"
     end
   end
   
@@ -185,7 +174,7 @@ module OSX
     end
 
     def inspect
-      "#<NSPoint (#{x}, #{y})>"
+      "#<#{self.class.to_s.gsub(/^OSX::/, '')} (#{x}, #{y})>"
     end
   end
   
@@ -196,7 +185,7 @@ module OSX
     def -(v); NSSize.new(width - v, height - v); end
     
     def inspect
-      "#<NSSize (#{width}, #{height})>"
+      "#<#{self.class.to_s.gsub(/^OSX::/, '')} (#{width}, #{height})>"
     end
   end
   
@@ -240,13 +229,13 @@ module OSX
     end
 
     def inspect
-      "#<NSRect (#{x}, #{y}, #{width}, #{height}>"
+      "#<#{self.class.to_s.gsub(/^OSX::/, '')} (#{x}, #{y}, #{width}, #{height}>"
     end
   end
   
   class NSRange
     def inspect
-      "#<NSRange (#{location}, #{length})>"
+      "#<#{self.class.to_s.gsub(/^OSX::/, '')} (#{location}, #{length})>"
     end
   end
   
