@@ -13,7 +13,7 @@ class ServerDialog < OSX::NSObject
   ib_mapped_int_outlet :portText, :encodingCombo
   ib_mapped_outlet :leaving_commentText, :userinfoText, :invisibleCheck
   ib_mapped_outlet :login_commandsText
-  ib_outlet :channelsTable, :addButton, :editButton, :deleteButton, :upButton, :downButton
+  ib_outlet :channelsTable, :addButton, :editButton, :deleteButton
   ib_outlet :okButton
   
   TABLE_ROW_TYPE = 'row'
@@ -95,21 +95,9 @@ class ServerDialog < OSX::NSObject
     unless sel
       @editButton.setEnabled(false)
       @deleteButton.setEnabled(false)
-      @upButton.setEnabled(false)
-      @downButton.setEnabled(false)
     else
       @editButton.setEnabled(true)
       @deleteButton.setEnabled(true)
-      if sel == 0
-        @upButton.setEnabled(false)
-        @downButton.setEnabled(true)
-      elsif sel == @c.channels.length - 1
-        @upButton.setEnabled(true)
-        @downButton.setEnabled(false)
-      else
-        @upButton.setEnabled(true)
-        @downButton.setEnabled(true)
-      end
     end
   end
   
@@ -127,12 +115,7 @@ class ServerDialog < OSX::NSObject
     case col
     when :name; i.name
     when :pass; i.password
-    when :mode; i.mode
-    when :topic; i.topic
     when :join; i.auto_join
-    when :console; i.console
-    when :highlight; i.keyword
-    when :unread; i.unread
     end
   end
   
@@ -141,9 +124,6 @@ class ServerDialog < OSX::NSObject
     col = col.identifier.to_s.to_sym
     case col
     when :join; i.auto_join = obj.intValue != 0
-    when :console; i.console = obj.intValue != 0
-    when :highlight; i.keyword = obj.intValue != 0
-    when :unread; i.unread = obj.intValue != 0
     end
   end
   
@@ -239,28 +219,6 @@ class ServerDialog < OSX::NSObject
         @channelsTable.select(sel)
       end
     end
-    reload_table
-  end
-  
-  def onUp(sender)
-    sel = @channelsTable.selectedRows[0]
-    return unless sel
-    return if sel == 0
-    i = @c.channels.delete_at(sel)
-    sel -= 1
-    @c.channels.insert(sel, i)
-    @channelsTable.select(sel)
-    reload_table
-  end
-  
-  def onDown(sender)
-    sel = @channelsTable.selectedRows[0]
-    return unless sel
-    return if sel == @c.channels.length - 1
-    i = @c.channels.delete_at(sel)
-    sel += 1
-    @c.channels.insert(sel, i)
-    @channelsTable.select(sel)
     reload_table
   end
 end
