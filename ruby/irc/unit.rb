@@ -293,6 +293,13 @@ class IRCUnit < OSX::NSObject
       next if s.empty?
       print_both(chan, cmd, @mynick, s)
       send(cmd, chan.name, ":#{s}")
+      # only watch private messages
+      if cmd==:privmsg
+        if s =~ /([a-zA-Z0-9]*): /
+          recipient=chan.find_member($1)
+          recipient.incoming_conversation! if recipient
+        end
+      end
     end
     true
   end
@@ -309,6 +316,19 @@ class IRCUnit < OSX::NSObject
         target = @world.selchannel.name
         s = target + ' ' + s
       end
+    when :weights
+      sel = @world.selchannel
+      if sel
+        print_both(self, :reply, "WEIGHTS: ") 
+        sel.members.each do |m|
+          if m.weight>0
+            out="#{m.nick} - sent: #{m.incoming_weight} received: #{m.outgoing_weight} total: #{m.weight}" 
+            print_both(self, :reply, out) 
+          end
+        end
+      end
+      # TODO: is this right?
+      return true
     end
     
     case cmd
@@ -1025,6 +1045,11 @@ class IRCUnit < OSX::NSObject
         kind = :channeltext
         kind = :highlight if key
         notify_text(kind, c || target, nick, text)
+        # if we're being directly spoken too then track the conversation to auto-complete
+        if text =~ /#{@mynick}: /i
+          sender=c.find_member(nick)
+          sender.outgoing_conversation! if sender
+        end
         sound = kind == :highlight ? @pref.sound.highlight : @pref.sound.channeltext
         SoundPlayer.play(sound)
       end

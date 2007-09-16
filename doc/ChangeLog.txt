@@ -1,5 +1,9 @@
 2007-09-16  Satoshi Nakagawa <artension@gmail.com>
 
+	Introduced priority for nickname completion. A patch from Dreamer3.
+
+2007-09-16  Satoshi Nakagawa <artension@gmail.com>
+
 	Added /me support.
 
 2007-09-14  Satoshi Nakagawa <artension@gmail.com>
