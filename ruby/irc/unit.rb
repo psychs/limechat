@@ -717,7 +717,8 @@ class IRCUnit < OSX::NSObject
       key = true
     else
       click = "channel #{self.id} #{channel.id}"
-      key = channel.config.keyword
+      #key = channel.config.keyword
+      key = true
     end
     
     line = LogLine.new(time, place, nickstr, text, kind, mtype, nick, click)
@@ -751,7 +752,8 @@ class IRCUnit < OSX::NSObject
     
     line = LogLine.new(time, place, nickstr, text, kind, mtype, nick, click)
     if channel && !channel.unit?
-      key = channel.log.print(line, channel.config.keyword)
+      #key = channel.log.print(line, channel.config.keyword)
+      key = channel.log.print(line, true)
     else
       key = @log.print(line, true)
     end
@@ -803,7 +805,7 @@ class IRCUnit < OSX::NSObject
   
   def set_keyword_state(t)
     return if NSApp.isActive && @world.selected == t
-    return if !t.unit? && !t.config.keyword
+    return if !t.unit? #&& !t.config.keyword
     return if t.keyword
     t.keyword = true
     reload_tree
@@ -812,7 +814,7 @@ class IRCUnit < OSX::NSObject
   
   def set_unread_state(t)
     return if NSApp.isActive && @world.selected == t
-    return if !t.unit? && !t.config.unread
+    return if !t.unit? #&& !t.config.unread
     return if t.unread
     t.unread = true
     reload_tree
