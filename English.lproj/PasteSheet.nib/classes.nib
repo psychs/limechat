@@ -5,7 +5,7 @@
             ACTIONS = {onCancel = id; onSend = id; }; 
             CLASS = PasteSheet; 
             LANGUAGE = ObjC; 
-            OUTLETS = {sendButton = id; sheet = id; text = id; }; 
+            OUTLETS = {sendButton = id; sheet = id; text = id; usePastieCheck = id; }; 
             SUPERCLASS = NSObject; 
         }
     ); 
