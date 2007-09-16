@@ -11,7 +11,8 @@ Satoshi Nakagawa <artension@gmail.com>
 
 Yohei Endo			# application icon
 Fujimoto Hisa       # RubyCocoa creator
-Laurent Sansonetti  # many requests
+Laurent Sansonetti  # many requests and suggestions
+Josh Goebel			# CocoaSheet, many improvements of code and UIs
 Jun Morimoto        # bug fixes
 
 * License (Ruby's)

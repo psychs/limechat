@@ -1,5 +1,10 @@
 2007-09-17  Satoshi Nakagawa <artension@gmail.com>
 
+	Added CocoaSheet to clean up code around sheets.
+	Contributed by Josh Goebel.
+
+2007-09-17  Satoshi Nakagawa <artension@gmail.com>
+
 	Improved channel dialog.
 
 2007-09-17  Satoshi Nakagawa <artension@gmail.com>
@@ -12,7 +17,7 @@
 
 2007-09-16  Satoshi Nakagawa <artension@gmail.com>
 
-	Introduced priority for nickname completion. A patch from Dreamer3.
+	Introduced priority for nickname completion. A patch from Josh Goebel.
 
 2007-09-16  Satoshi Nakagawa <artension@gmail.com>
 

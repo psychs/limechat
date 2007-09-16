@@ -1,43 +1,23 @@
 # Created by Satoshi Nakagawa.
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
-require 'dialoghelper'
+require 'cocoasheet'
 
-class PasteSheet < OSX::NSObject
-  include OSX
-  include DialogHelper
-  attr_accessor :window, :delegate, :prefix, :uid, :cid
-  attr_reader :modal
+class PasteSheet < CocoaSheet
+  attr_accessor :uid, :cid
   ib_outlet :sheet, :text, :sendButton
+  first_responder :sendButton
+  buttons "Send", "Cancel"
   
-  def initialize
-    @prefix = 'pasteSheet'
-  end
-  
-  def start(str)
-    NSBundle.loadNibNamed_owner('PasteSheet', self)
-    @modal = true
-    @sheet.makeFirstResponder(@sendButton)
+  def startup(str)
     @text.textStorage.setAttributedString(NSAttributedString.alloc.initWithString(str))
-    NSApp.beginSheet_modalForWindow_modalDelegate_didEndSelector_contextInfo(@sheet, @window, self, 'sheetDidEnd:returnCode:contextInfo:', nil)
   end
   
-  #objc_method :sheetDidEnd_returnCode_contextInfo, 'v@:@i^v'
-  def sheetDidEnd_returnCode_contextInfo(sender, code, info)
-    @sheet.orderOut(self)
-    @modal = false
-    if code != 0
+  def shutdown(result)
+    if result == :send
       fire_event('onSend', @text.textStorage.string.to_s)
     else
       fire_event('onCancel')
     end
-  end
-  
-  def onSend(sender)
-    NSApp.endSheet_returnCode(@sheet, 1)
-  end
-  
-  def onCancel(sender)
-    NSApp.endSheet_returnCode(@sheet, 0)
   end
 end
