@@ -301,6 +301,16 @@ class IRCUnit < OSX::NSObject
     return false unless connected?
     command = s.token!
     cmd = command.downcase.to_sym
+    
+    case cmd
+    when :me
+      cmd = :action
+      if @world.selunit == self && @world.selchannel
+        target = @world.selchannel.name
+        s = target + ' ' + s
+      end
+    end
+    
     case cmd
     when :privmsg,:msg,:notice,:action
       cmd = :privmsg if cmd == :msg
