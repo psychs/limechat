@@ -1044,13 +1044,13 @@ class IRCUnit < OSX::NSObject
         kind = :channeltext
         kind = :highlight if key
         notify_text(kind, c || target, nick, text)
+        sound = kind == :highlight ? @pref.sound.highlight : @pref.sound.channeltext
+        SoundPlayer.play(sound)
         # if we're being directly spoken too then track the conversation to auto-complete
-        if text =~ /#{@mynick}: /i
+        if text =~ /^#{@mynick}: /i
           sender = c.find_member(nick)
           sender.outgoing_conversation! if sender
         end
-        sound = kind == :highlight ? @pref.sound.highlight : @pref.sound.channeltext
-        SoundPlayer.play(sound)
       end
     elsif eq(target, @mynick)
       if nick.server? || nick.empty?

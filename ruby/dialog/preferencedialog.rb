@@ -14,7 +14,7 @@ class PreferenceDialog < OSX::NSObject
   ib_mapped_outlet :dcc_myaddress
   ib_mapped_int_outlet :dcc_first_port, :dcc_last_port
   ib_mapped_outlet :gen_confirm_quit
-  ib_mapped_radio_outlet :gen_tab_action
+  ib_mapped_int_outlet :gen_tab_action
   ib_mapped_outlet :gen_connect_on_doubleclick, :gen_disconnect_on_doubleclick, :gen_join_on_doubleclick, :gen_leave_on_doubleclick
   ib_mapped_outlet :gen_use_growl
   

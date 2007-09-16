@@ -1,5 +1,9 @@
 2007-09-16  Satoshi Nakagawa <artension@gmail.com>
 
+	Improved settings of tab key actions on preference dialog.
+
+2007-09-16  Satoshi Nakagawa <artension@gmail.com>
+
 	Introduced priority for nickname completion. A patch from Dreamer3.
 
 2007-09-16  Satoshi Nakagawa <artension@gmail.com>
