@@ -9,7 +9,7 @@ class User
     @nick = nick
     @outgoing_weight = 0
     @incoming_weight = 0
-    @last_faded_weights=Time.now
+    @last_faded_weights = Time.now
     @username = args[0] || ''
     @address = args[1] || ''
     @o = args[2] || false
@@ -44,12 +44,12 @@ class User
   # make our conversations decay overtime based on a half-life of one minute
   def decay_conversation
     # we half-life the conversation every minute
-    units=(Time.now - @last_faded_weights)/60
-    if units>1 
-      @last_faded_weights=Time.now      
-      if incoming_weight>0 or outgoing_weight>0
-        @outgoing_weight/=(2**units) if outgoing_weight > 0
-        @incoming_weight/=(2**units) if incoming_weight > 0
+    units = (Time.now - @last_faded_weights)/60
+    if units > 1 
+      @last_faded_weights = Time.now      
+      if incoming_weight > 0 or outgoing_weight > 0
+        @outgoing_weight /= (2**units) if outgoing_weight > 0
+        @incoming_weight /= (2**units) if incoming_weight > 0
       end
     end
   end
