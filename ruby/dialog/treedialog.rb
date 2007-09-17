@@ -7,7 +7,7 @@ class TreeDialog < OSX::NSObject
   include OSX
   include DialogHelper  
   attr_accessor :delegate, :prefix
-  ib_outlet :window, :tree, :upButton, :downButton
+  ib_outlet :window, :tree
   
   TREE_ITEM_TYPE = 'item'
   TREE_ITEM_TYPES = [TREE_ITEM_TYPE]
@@ -239,31 +239,5 @@ class TreeDialog < OSX::NSObject
   end
   
   def update
-    sel = current_sel
-    unless sel
-      @upButton.setEnabled(false)
-      @downButton.setEnabled(false)
-    else
-      if sel.kind_of?(IRCUnitConfig)
-        i = @c.index(sel)
-        if i
-          @upButton.setEnabled(i > 0)
-          @downButton.setEnabled(i != @c.length - 1)
-        else
-          @upButton.setEnabled(false)
-          @downButton.setEnabled(false)
-        end
-      else
-        u = sel.owner
-        i = u.channels.index(sel)
-        if i
-          @upButton.setEnabled(i > 0)
-          @downButton.setEnabled(i != u.channels.length - 1)
-        else
-          @upButton.setEnabled(false)
-          @downButton.setEnabled(false)
-        end
-      end
-    end
   end
 end

@@ -1,5 +1,9 @@
 2007-09-17  Satoshi Nakagawa <artension@gmail.com>
 
+	Improved channel dialog and reorder server tree dialog.
+
+2007-09-17  Satoshi Nakagawa <artension@gmail.com>
+
 	Added CocoaSheet to clean up code around sheets.
 	Contributed by Josh Goebel.
 
