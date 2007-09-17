@@ -177,14 +177,6 @@ class MenuController < OSX::NSObject
     sender && (2500...3000) === sender.tag.to_i
   end
   
-  def alloc_comment_sheet
-    return if @comment
-    @comment = CommentSheet.alloc.init
-    @comment.window = window
-    @comment.delegate = self
-    @comment.loadNib
-  end
-  
   def current_webview
     t = @window.firstResponder
     if t && OSX::WebHTMLView === t
@@ -412,23 +404,23 @@ class MenuController < OSX::NSObject
   def onNick(sender)
     u = @world.selunit
     return unless u
-    unless @nick
-      @nick = NickSheet.alloc.init
-      @nick.window = window
-      @nick.delegate = self
-      @nick.loadNib
-    end
+    return if @nick
+    @nick = NickSheet.alloc.init
+    @nick.window = window
+    @nick.delegate = self
     @nick.uid = u.id
     @nick.start(u.mynick)
   end
   
   def nickSheet_onOk(sender, nick)
+    @nick = nil
     u = @world.find_unit_by_id(sender.uid)
     return unless u
     u.change_nick(nick)
   end
   
   def nickSheet_onCancel(sender)
+    @nick = nil
   end
   
   
@@ -534,7 +526,10 @@ class MenuController < OSX::NSObject
   def onTopic(sender)
     u, c = @world.sel
     return unless u && c
-    alloc_comment_sheet
+    return if @comment
+    @comment = CommentSheet.alloc.init
+    @comment.window = window
+    @comment.delegate = self
     @comment.uid = u.id
     @comment.cid = c.id
     @comment.prefix = 'topicPrompt'
@@ -542,30 +537,31 @@ class MenuController < OSX::NSObject
   end
   
   def topicPrompt_onOk(sender, str)
+    @comment = nil
     u, c = @world.find_by_id(sender.uid, sender.cid)
     return unless u && c
     u.send(:topic, c.name, ":#{str}")
   end
   
   def topicPrompt_onCancel(sender)
+    @comment = nil
   end
   
   
   def onMode(sender)
     u, c = @world.sel
     return unless u && c
-    unless @mode
-      @mode = ModeSheet.alloc.init
-      @mode.window = window
-      @mode.delegate = self
-      @mode.loadNib
-    end
+    return if @mode
+    @mode = ModeSheet.alloc.init
+    @mode.window = window
+    @mode.delegate = self
     @mode.uid = u.id
     @mode.cid = c.id
     @mode.start(c.name, c.mode)
   end
   
   def modeSheet_onOk(sender, newmode)
+    @mode = nil
     u, c = @world.find_by_id(sender.uid, sender.cid)
     return unless u && c
     ary = c.mode.get_change_str(newmode)
@@ -573,6 +569,7 @@ class MenuController < OSX::NSObject
   end
   
   def modeSheet_onCancel(sender)
+    @mode = nil
   end
   
   

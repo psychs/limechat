@@ -1,31 +1,17 @@
 # Created by Satoshi Nakagawa.
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
-require 'dialoghelper'
-require 'utility'
+require 'cocoasheet'
 
-class ModeSheet < OSX::NSObject
-  include OSX
-  include DialogHelper
-
-  attr_accessor :window, :delegate, :prefix
+class ModeSheet < CocoaSheet
   attr_accessor :mode, :uid, :cid
-  attr_reader :modal
   ib_mapped_outlet :sCheck, :pCheck, :nCheck, :tCheck, :tCheck, :iCheck, :mCheck, :aCheck, :rCheck
-  ib_outlet :sheet, :kCheck, :lCheck, :password, :limit
+  ib_outlet :kCheck, :lCheck, :password, :limit
+  first_responder :sCheck
+  buttons :Ok, :Cancel
   
-  def initialize
-    @prefix = 'modeSheet'
-  end
-  
-  def loadNib
-    NSBundle.loadNibNamed_owner('ModeSheet', self)
-  end
-  
-  def start(chname, mode)
+  def startup(chname, mode)
     @mode = mode.dup
-    @modal = true
-    @sheet.makeFirstResponder(@sCheck)
     load
     update
     
@@ -40,16 +26,11 @@ class ModeSheet < OSX::NSObject
       @aCheck.setEnabled(false)
       @rCheck.setEnabled(false)
     end
-    
-    NSApp.beginSheet_modalForWindow_modalDelegate_didEndSelector_contextInfo(@sheet, @window, self, 'sheetDidEnd:returnCode:contextInfo:', nil)
   end
   
-  #objc_method :sheetDidEnd_returnCode_contextInfo, 'v@:@i^v'
-  def sheetDidEnd_returnCode_contextInfo(sender, code, info)
-    @sheet.orderOut(self)
-    @modal = false
-    save
-    if code != 0
+  def shutdown(result)
+    if result == :ok
+      save
       fire_event('onOk', @mode)
     else
       fire_event('onCancel')
@@ -81,14 +62,6 @@ class ModeSheet < OSX::NSObject
   def update
     @password.setEnabled(@kCheck.state == 1)
     @limit.setEnabled(@lCheck.state == 1)
-  end
-  
-  def onOk(sender)
-    NSApp.endSheet_returnCode(@sheet, 1)
-  end
-  
-  def onCancel(sender)
-    NSApp.endSheet_returnCode(@sheet, 0)
   end
   
   def onChangeChecks(sender)

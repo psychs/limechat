@@ -5,9 +5,9 @@ require 'cocoasheet'
 
 class PasteSheet < CocoaSheet
   attr_accessor :uid, :cid
-  ib_outlet :sheet, :text, :sendButton
+  ib_outlet :text, :sendButton
   first_responder :sendButton
-  buttons "Send", "Cancel"
+  buttons :Send, :Cancel
   
   def startup(str)
     @text.textStorage.setAttributedString(NSAttributedString.alloc.initWithString(str))

@@ -1,5 +1,13 @@
 2007-09-17  Satoshi Nakagawa <artension@gmail.com>
 
+	Applied CocoaSheet to all sheet dialogs.
+
+2007-09-17  Satoshi Nakagawa <artension@gmail.com>
+
+	Fixed a bug, buttons of CocoaSheet should not be class variable, but class instance variable.
+
+2007-09-17  Satoshi Nakagawa <artension@gmail.com>
+
 	Improved channel dialog and reorder server tree dialog.
 
 2007-09-17  Satoshi Nakagawa <artension@gmail.com>
