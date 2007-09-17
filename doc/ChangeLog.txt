@@ -1,5 +1,9 @@
 2007-09-17  Satoshi Nakagawa <artension@gmail.com>
 
+	Limited length of channel topic for window title.
+
+2007-09-17  Satoshi Nakagawa <artension@gmail.com>
+
 	Applied CocoaSheet to all sheet dialogs.
 
 2007-09-17  Satoshi Nakagawa <artension@gmail.com>

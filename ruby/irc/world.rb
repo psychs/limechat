@@ -310,8 +310,11 @@ class IRCWorld < OSX::NSObject
         nick = u.mynick
         chname = c.name
         count = c.count_members
-        topic = c.topic
         mode = c.mode.to_s
+        topic = c.topic
+        if topic =~ /\A(.{25})/
+          topic = $1 + '...'
+        end
         title =
           if c.channel?
             op = c.op? ? '@' : ''
