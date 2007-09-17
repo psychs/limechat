@@ -280,7 +280,7 @@ class AppController < OSX::NSObject
     r = fe.selectedRanges.to_a[0]
     return unless r
     r = r.rangeValue
-    nicks = c.members.sort { |b,a| a.weight <=> b.weight }.map {|i| i.nick }
+    nicks = c.members.sort {|b,a| a.weight <=> b.weight }.map {|i| i.nick }
     
     s = @text.stringValue
     pre = s.substringToIndex(r.location).to_s
@@ -319,8 +319,8 @@ class AppController < OSX::NSObject
     end
     s += ': ' if head
     
-    ps = NSString.stringWithString(pre)
-    ns = NSString.stringWithString(s)
+    ps = pre.to_nsstr
+    ns = s.to_nsstr
     range = r.dup
     range.location -= ps.length
     range.length += ps.length
