@@ -162,6 +162,14 @@ class AppController < OSX::NSObject
     @world.select_text
   end
   
+  def addToHistory
+    s = @text.stringValue.to_s
+    unless s.empty?
+      @history.add(s)
+      @text.setStringValue('')
+    end
+  end
+  
   #objc_method 'control:textView:doCommandBySelector:', 'c@:@@:'
   def control_textView_doCommandBySelector(control, textview, selector)
     case selector
@@ -420,15 +428,18 @@ class AppController < OSX::NSObject
           case target
           when :active
             if !i.unit? && i.active?
+              addToHistory
               @world.select(i)
               break
             end
           when :unread
             if i.unread
+              addToHistory
               @world.select(i)
               break
             end
           else
+            addToHistory
             @world.select(i)
             break
           end
@@ -458,12 +469,14 @@ class AppController < OSX::NSObject
             if unit.login?
               t = unit.last_selected_channel
               t = unit unless t
+              addToHistory
               @world.select(t)
               break
             end
           else
             t = unit.last_selected_channel
             t = unit unless t
+            addToHistory
             @world.select(t)
             break
           end
