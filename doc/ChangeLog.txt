@@ -1,5 +1,9 @@
 2007-09-22  Satoshi Nakagawa <artension@gmail.com>
 
+	Fixed a bug, unread and keyword state were not working.
+
+2007-09-22  Satoshi Nakagawa <artension@gmail.com>
+
 	Changed to push text in the input buffer on moving channels.
 
 2007-09-17  Satoshi Nakagawa <artension@gmail.com>

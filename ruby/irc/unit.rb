@@ -805,7 +805,7 @@ class IRCUnit < OSX::NSObject
   
   def set_keyword_state(t)
     return if NSApp.isActive && @world.selected == t
-    return if !t.unit? #&& !t.config.keyword
+    #return if !t.unit? && !t.config.keyword
     return if t.keyword
     t.keyword = true
     reload_tree
@@ -814,7 +814,7 @@ class IRCUnit < OSX::NSObject
   
   def set_unread_state(t)
     return if NSApp.isActive && @world.selected == t
-    return if !t.unit? #&& !t.config.unread
+    #return if !t.unit? && !t.config.unread
     return if t.unread
     t.unread = true
     reload_tree
