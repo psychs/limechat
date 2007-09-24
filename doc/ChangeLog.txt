@@ -1,3 +1,7 @@
+2007-09-24  Satoshi Nakagawa <artension@gmail.com>
+
+	Changed sort order of the nick list to myself, op, non-op.
+
 2007-09-22  Satoshi Nakagawa <artension@gmail.com>
 
 	Fixed a bug, unread and keyword state were not working.

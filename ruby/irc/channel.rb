@@ -197,7 +197,19 @@ class IRCChannel < OSX::NSObject
   end
   
   def sort_members
-    @members.sort! {|a,b| a.nick.downcase <=> b.nick.downcase }
+    @members.sort! do |a,b|
+      if unit.mynick == a.nick
+        -1
+      elsif unit.mynick == b.nick
+        1
+      elsif a.o != b.o
+        a.o ? -1 : 1
+      elsif a.v != b.v
+        a.v ? -1 : 1
+      else
+        a.nick.downcase <=> b.nick.downcase
+      end
+    end
   end
   
   def check_autoop(nick, mask)
