@@ -1,5 +1,10 @@
 2007-09-24  Satoshi Nakagawa <artension@gmail.com>
 
+	Released 0.10.
+	Added scripts to automate release build.
+
+2007-09-24  Satoshi Nakagawa <artension@gmail.com>
+
 	Changed sort order of the nick list to myself, op, non-op.
 
 2007-09-22  Satoshi Nakagawa <artension@gmail.com>

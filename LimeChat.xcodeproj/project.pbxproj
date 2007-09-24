@@ -7,15 +7,15 @@
 	objects = {
 
 /* Begin PBXAggregateTarget section */
-		78DB8A8E0C1C3216000C27D9 /* dmg */ = {
+		78DB8A8E0C1C3216000C27D9 /* dmg&srczip */ = {
 			isa = PBXAggregateTarget;
-			buildConfigurationList = 78DB8A8F0C1C3234000C27D9 /* Build configuration list for PBXAggregateTarget "dmg" */;
+			buildConfigurationList = 78DB8A8F0C1C3234000C27D9 /* Build configuration list for PBXAggregateTarget "dmg&srczip" */;
 			buildPhases = (
 				78DB8A8D0C1C3216000C27D9 /* ShellScript */,
 			);
 			dependencies = (
 			);
-			name = dmg;
+			name = "dmg&srczip";
 			productName = dmg;
 		};
 /* End PBXAggregateTarget section */
@@ -203,7 +203,7 @@
 		78DA4EA40C46180F008780C8 /* treedialog.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = treedialog.rb; sourceTree = "<group>"; };
 		78DA4EBF0C461D52008780C8 /* memberlistview.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = memberlistview.rb; sourceTree = "<group>"; };
 		78DA4EC00C461D52008780C8 /* servertreeview.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = servertreeview.rb; sourceTree = "<group>"; };
-		78E570D00C1C306500BDF7EC /* LimeChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LimeChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		78E570D00C1C306500BDF7EC /* LimeChat.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = LimeChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		A5D3C7BF0AEB9FEB00C17985 /* RubyCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RubyCocoa.framework; path = /Library/Frameworks/RubyCocoa.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
@@ -485,7 +485,7 @@
 			projectDirPath = "";
 			targets = (
 				78E570CF0C1C306500BDF7EC /* LimeChat */,
-				78DB8A8E0C1C3216000C27D9 /* dmg */,
+				78DB8A8E0C1C3216000C27D9 /* dmg&srczip */,
 			);
 		};
 /* End PBXProject section */
@@ -590,7 +590,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "imagename=\"build/$PROJECT_NAME.dmg\"\nif [ -e \"$imagename\" ]; then\n  rm \"$imagename\"\nfi\n\nroot=\"build/Release\"\nresdoc=\"$root\"/LimeChat.app/Contents/Resources/doc\nrootdoc=\"$root\"/doc\n\nif [ -e \"$root\"/LimeChat.app ]; then\n  ln -s /Applications build/Release\n\n  if [ ! -e \"$resdoc\" ]; then\n    mkdir \"$resdoc\"\n  fi\n  cp doc/* \"$resdoc\"/\n\n  if [ ! -e \"$rootdoc\" ]; then\n    mkdir \"$rootdoc\"\n  fi\n  cp doc/* \"$rootdoc\"/\n\n  #hdiutil create -srcfolder $CONFIGURATION_BUILD_DIR -volname \"$PROJECT_NAME\" \"$imagename\"\n  hdiutil create -srcfolder \"$root\" -volname \"$PROJECT_NAME\" \"$imagename\"\nfi\n";
+			shellScript = "ver=`ruby script/getver.rb`\nimagename=~/Desktop/\"$PROJECT_NAME\"_\"$ver\".dmg\n\nrm -f ~/Desktop/\"$PROJECT_NAME\"_*.dmg\n\nroot=\"build/Release\"\nresdoc=\"$root\"/LimeChat.app/Contents/Resources/doc\nrootdoc=\"$root\"/doc\n\nif [ -e \"$root\"/LimeChat.app ]; then\n  ln -s /Applications build/Release\n\n  if [ ! -e \"$resdoc\" ]; then\n    mkdir \"$resdoc\"\n  fi\n  cp doc/* \"$resdoc\"/\n\n  if [ ! -e \"$rootdoc\" ]; then\n    mkdir \"$rootdoc\"\n  fi\n  cp doc/* \"$rootdoc\"/\n\n  #hdiutil create -srcfolder $CONFIGURATION_BUILD_DIR -volname \"$PROJECT_NAME\" \"$imagename\"\n  hdiutil create -srcfolder \"$root\" -volname \"$PROJECT_NAME\" \"$imagename\"\n\n  ruby script/packsource.rb\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -824,7 +824,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		78DB8A8F0C1C3234000C27D9 /* Build configuration list for PBXAggregateTarget "dmg" */ = {
+		78DB8A8F0C1C3234000C27D9 /* Build configuration list for PBXAggregateTarget "dmg&srczip" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				78DB8A900C1C3234000C27D9 /* Debug */,
