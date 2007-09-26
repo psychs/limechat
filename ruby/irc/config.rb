@@ -73,7 +73,7 @@ class IRCUnitConfig
     @autoop = []
     
     defaults = OSX::NSUserDefaults.standardUserDefaults
-    langs = defaults['AppleLanguages']
+    langs = defaults[:AppleLanguages]
     if langs && langs[0]
       @encoding = case langs[0].to_s
       when 'ja'; OSX::NSISO2022JPStringEncoding
@@ -85,6 +85,8 @@ class IRCUnitConfig
         #OSX::NSISOLatin1StringEncoding
         OSX::NSUTF8StringEncoding
       end
+    else
+      @encoding = OSX::NSUTF8StringEncoding
     end
     
     seed.each do |k,v|

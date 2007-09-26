@@ -56,7 +56,16 @@ class Preferences
 
     def initialize
       @confirm_quit = true
-      @tab_action = TAB_UNREAD
+      @tab_action = TAB_COMPLETE_NICK
+      
+      defaults = OSX::NSUserDefaults.standardUserDefaults
+      langs = defaults[:AppleLanguages]
+      if langs && langs[0]
+        if langs[0].to_s == 'ja'
+          @tab_action = TAB_UNREAD
+        end
+      end
+      
       @connect_on_doubleclick = false
       @disconnect_on_doubleclick = false
       @join_on_doubleclick = true
