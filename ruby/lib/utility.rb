@@ -20,7 +20,7 @@ class String
   end
   
   def downcase_first
-    self[0..0].downcase + self[1..-1]
+    length == 0 ? '' : self[0..0].downcase + self[1..-1]
   end
   
   def underscorize
