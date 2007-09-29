@@ -59,27 +59,11 @@ class ChannelMode
   SIMPLE_MODES = [:p, :s, :m, :n, :t, :i, :a, :q, :r]
   
   def to_s
-    str = ''
-    trail = ''
-    plus = false
-    SIMPLE_MODES.each do |name|
-      if instance_variable_get('@' + name.to_s)
-        unless plus
-          plus = true
-          str += '+'
-        end
-        str += name.to_s
-      end
-    end
-    if @l > 0
-      str += "+l"
-      trail += " #{@l}"
-    end
-    unless @k.empty?
-      str += '+k'
-      trail += " #{@k}"
-    end
-    str + trail
+    _to_s
+  end
+  
+  def masked_str
+    _to_s(true)
   end
   
   def get_change_str(mode)
@@ -145,5 +129,31 @@ class ChannelMode
   
   def dup
     Marshal::load(Marshal::dump(self))
+  end
+  
+  private
+  
+  def _to_s(mask=false)
+    str = ''
+    trail = ''
+    plus = false
+    SIMPLE_MODES.each do |name|
+      if instance_variable_get('@' + name.to_s)
+        unless plus
+          plus = true
+          str += '+'
+        end
+        str += name.to_s
+      end
+    end
+    if @l > 0
+      str += "+l"
+      trail += " #{@l}"
+    end
+    unless @k.empty?
+      str += '+k'
+      trail += " #{@k}" unless mask
+    end
+    str + trail
   end
 end

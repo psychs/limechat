@@ -310,7 +310,7 @@ class IRCWorld < OSX::NSObject
         nick = u.mynick
         chname = c.name
         count = c.count_members
-        mode = c.mode.to_s
+        mode = c.mode.masked_str
         topic = c.topic
         if topic =~ /\A(.{25})/
           topic = $1 + '...'
