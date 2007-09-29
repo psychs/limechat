@@ -107,7 +107,7 @@ module LogRenderer
           s += t
         end
         
-        pos += c.length
+        pos += c.size
         s += escape_char(c)
       end
     
@@ -363,7 +363,7 @@ module LogRenderer
     
       new_keywords = []
       i = 0
-      while i < keywords.length
+      while i < keywords.size
         k = keywords[i]
         loop do
           n = keywords[i+1]

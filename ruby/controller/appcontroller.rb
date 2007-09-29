@@ -318,7 +318,7 @@ class AppController < OSX::NSObject
     downpre = pre.downcase
     downcur = current.downcase
     
-    nicks = nicks.select {|i| i[0...pre.length].downcase == downpre }
+    nicks = nicks.select {|i| i[0...pre.size].downcase == downpre }
     return if nicks.empty?
     
     if sel.empty?
@@ -327,7 +327,7 @@ class AppController < OSX::NSObject
       index = nicks.index {|i| i.downcase == downcur }
       if index
         index += 1
-        index = 0 if nicks.length <= index
+        index = 0 if nicks.size <= index
         s = nicks[index]
       else
         s = nicks[0]
@@ -338,15 +338,15 @@ class AppController < OSX::NSObject
     ps = pre.to_nsstr
     ns = s.to_nsstr
     range = r.dup
-    range.location -= ps.length
-    range.length += ps.length
+    range.location -= ps.size
+    range.length += ps.size
     fe.replaceCharactersInRange_withString(range, s)
     
-    if nicks.length == 1
+    if nicks.size == 1
       r.location = @text.stringValue.length
       r.length = 0
     else
-      r.length = ns.length
+      r.length = ns.size
     end
     fe.setSelectedRange(r)
   end
@@ -460,7 +460,7 @@ class AppController < OSX::NSObject
       n = @world.units.index(unit)
       return unless n
       start = n
-      size = @world.units.length
+      size = @world.units.size
       loop do
         if direction == :left
           n -= 1

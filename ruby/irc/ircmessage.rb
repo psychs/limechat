@@ -43,13 +43,13 @@ class IRCSendMessage
       s += ' '
       s += @trail
     end
-    s = s[0...IRC::MSG_LEN] if s.length > IRC::MSG_LEN
+    s = s[0...IRC::MSG_LEN] if s.size > IRC::MSG_LEN
     s += "\r\n"
     @raw = s
     
     if @penalty == Penalty::NORMAL
       case @command.to_sym
-      when :privmsg,:notice; @penalty += s.length / 100
+      when :privmsg,:notice; @penalty += s.size / 100
       when :mode; @penalty = ChannelMode.calc_penalty(@trail)
       when :part; @penalty = Penalty::PART
       when :topic; @penalty = Penalty::TOPIC
@@ -128,7 +128,7 @@ class IRCReceiveMessage
   end
   
   def count_params
-    @params.length
+    @params.size
   end
   
   def params
@@ -138,7 +138,7 @@ class IRCReceiveMessage
   end
   
   def param(i)
-    if i < @params.length
+    if i < @params.size
       @params[i]
     else
       ''

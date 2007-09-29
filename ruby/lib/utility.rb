@@ -12,7 +12,7 @@ class String
   
   def token!
     if / *([^ ]+) */ =~ self
-      self[0...$&.length] = ''
+      self[0...$&.size] = ''
       $1
     else
       replace('')
@@ -20,7 +20,7 @@ class String
   end
   
   def downcase_first
-    length == 0 ? '' : self[0..0].downcase + self[1..-1]
+    empty? ? '' : self[0..0].downcase + self[1..-1]
   end
   
   def underscorize
@@ -242,6 +242,8 @@ module OSX
   end
   
   class NSRange
+    def size; length; end
+    def size=(v); length = v; end
     def inspect
       "#<#{self.class.to_s.gsub(/^OSX::/, '')} (#{location}, #{length})>"
     end

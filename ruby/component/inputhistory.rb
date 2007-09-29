@@ -11,12 +11,12 @@ class InputHistory
   end
   
   def add(s)
-    @pos = @buf.length
+    @pos = @buf.size
     return if s.empty?
     return if @buf[-1] == s
     @buf << s
-    @buf.shift if @buf.length > MAX_SIZE
-    @pos = @buf.length
+    @buf.shift if @buf.size > MAX_SIZE
+    @pos = @buf.size
   end
   
   def up

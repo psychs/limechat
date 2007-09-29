@@ -187,7 +187,7 @@ class IRCChannel < OSX::NSObject
   end
   
   def count_members
-    @members.length
+    @members.size
   end
   
   def reload_members
@@ -252,7 +252,7 @@ class IRCChannel < OSX::NSObject
   # table
   
   def numberOfRowsInTableView(sender)
-    @members.length
+    @members.size
   end
   
   def tableView_objectValueForTableColumn_row(sender, col, row)
@@ -272,12 +272,12 @@ class IRCChannel < OSX::NSObject
   def on_timer
     if active?
       @op_wait -= 1 if @op_wait > 0
-      if @unit.ready_to_send? && @op_wait == 0 && @op_queue.length > 0
+      if @unit.ready_to_send? && @op_wait == 0 && @op_queue.size > 0
         ary = @op_queue[0..2]
         @op_queue[0..2] = nil
         ary = ary.select {|i| m = find_member(i); m && !m.o }
         unless ary.empty?
-          @op_wait = ary.length * 3 + 1
+          @op_wait = ary.size * 3 + 1
           @unit.change_op(self, ary, :o, true)
         end
       end

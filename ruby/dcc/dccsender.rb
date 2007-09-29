@@ -30,7 +30,7 @@ class DccSender
   
   def speed
     return 0 if @records.empty? || @status != :sending
-    @records.inject(0) {|v,i| v += i }.to_f / @records.length.to_f
+    @records.inject(0) {|v,i| v += i }.to_f / @records.size.to_f
   end
   
   def open
@@ -116,7 +116,7 @@ class DccSender
   def on_timer
     return if @status != :sending
     @records << @rec
-    @records.shift if @records.length > RECORDS_LEN
+    @records.shift if @records.size > RECORDS_LEN
     @rec = 0
     send
   end
@@ -140,7 +140,7 @@ class DccSender
         return
       end
       s = @file.read(BUFSIZE)
-      len = s.length
+      len = s.size
       @processed_size += len
       @rec += len
       @c.write(s)

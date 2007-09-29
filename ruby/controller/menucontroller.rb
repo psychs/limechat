@@ -221,8 +221,8 @@ class MenuController < OSX::NSObject
         #end
         
         ary = address.split('.')
-        if ary.length >= 3
-          reserve = ary[-1].length == 2 ? 3 : 2
+        if ary.size >= 3
+          reserve = ary[-1].size == 2 ? 3 : 2
           left = ary[0...-reserve]
           right = ary[-reserve..-1]
           left = left.map {|i| i.gsub(/\d+/, '*') }
@@ -813,7 +813,7 @@ class MenuController < OSX::NSObject
     return if members.empty?
     onChannelAutoOp(sender)
     return unless @autoop_dialog
-    if members.length == 1
+    if members.size == 1
       m = members[0]
       @autoop_dialog.set_mask(make_mask(m.nick, m.username, m.address))
     else

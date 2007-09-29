@@ -199,7 +199,7 @@ class IRCWorld < OSX::NSObject
     
     reload_tree if reload
     adjust_selection if adjust
-    expand_unit(unit) if unit.login? && unit.channels.length == 1
+    expand_unit(unit) if unit.login? && unit.channels.size == 1
     c
   end
   
@@ -460,7 +460,7 @@ class IRCWorld < OSX::NSObject
   # data source
   
   def outlineView_numberOfChildrenOfItem(sender, item)
-    return @units.length unless item
+    return @units.size unless item
     item.number_of_children
   end
   

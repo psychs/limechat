@@ -255,7 +255,7 @@ class IRCUnit < OSX::NSObject
     members = members.map {|m| m.nick }
     until members.empty?
       t = members[0..2]
-      send(:mode, channel.name, (plus ? '+' : '-') + mode.to_s * t.length + ' ' + t.join(' '))
+      send(:mode, channel.name, (plus ? '+' : '-') + mode.to_s * t.size + ' ' + t.join(' '))
       members[0..2] = nil
     end
   end
@@ -366,7 +366,7 @@ class IRCUnit < OSX::NSObject
   # model
   
   def number_of_children
-    @channels.length
+    @channels.size
   end
   
   def child_at(index)
@@ -443,7 +443,7 @@ class IRCUnit < OSX::NSObject
     m = IRCSendMessage.new
     m.command = command if command
     args = args.select {|i| i }
-    case args.length
+    case args.size
     when 0
       ;
     when 1
@@ -947,7 +947,7 @@ class IRCUnit < OSX::NSObject
         state = haspass ? :pass : :nopass
         ary << c
       end
-      if ary.length >= 10
+      if ary.size >= 10
         do_quick_join(ary)
         ary = []
         state = :pass
@@ -969,7 +969,7 @@ class IRCUnit < OSX::NSObject
       pass += c.password
       
       common = to_common_encoding(target + pass)
-      if common.length > IRC::BODY_LEN
+      if common.size > IRC::BODY_LEN
         unless org_target.empty?
           send(:join, org_target, org_pass)
           target = c.name
@@ -1708,7 +1708,7 @@ when 437	# ERR_UNAVAILRESOURCE 2.10
 =end
   
   def receive_nick_collision(m)
-    if @sentnick.length >= IRC::NICKLEN
+    if @sentnick.size >= IRC::NICKLEN
       if /^(.+)[^_](_*)$/ =~ @sentnick
         head, tail = $1, $2
         @sentnick = head + tail + '_'

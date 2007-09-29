@@ -68,7 +68,7 @@ class PreferenceDialog < OSX::NSObject
                   :file_receive_request, :file_receive_success, :file_receive_failure, :file_send_success, :file_send_failure]
   
   def numberOfRowsInTableView(sender)
-    SOUND_TITLES.length
+    SOUND_TITLES.size
   end
   
   def tableView_objectValueForTableColumn_row(sender, col, row)

@@ -138,7 +138,7 @@ class AutoOpDialog < OSX::NSObject
     return unless i
     masks = @sel.autoop
     masks.delete_at(i)
-    i -= 1 if masks.length <= i
+    i -= 1 if masks.size <= i
     if i >= 0
       @list.select(i)
     else
@@ -168,8 +168,8 @@ class AutoOpDialog < OSX::NSObject
   def outlineView_numberOfChildrenOfItem(sender, item)
     return 1 unless item
     case item
-    when IRCWorldConfig; item.units.length
-    when IRCUnitConfig; item.channels.length
+    when IRCWorldConfig; item.units.size
+    when IRCUnitConfig; item.channels.size
     else 0
     end
   end
@@ -177,8 +177,8 @@ class AutoOpDialog < OSX::NSObject
   #objc_method :outlineView_isItemExpandable, 'c@:@@'
   def outlineView_isItemExpandable(sender, item)
     case item
-    when IRCWorldConfig; item.units.length > 0
-    when IRCUnitConfig; item.channels.length > 0
+    when IRCWorldConfig; item.units.size > 0
+    when IRCUnitConfig; item.channels.size > 0
     else false
     end
   end
@@ -214,7 +214,7 @@ class AutoOpDialog < OSX::NSObject
   # table
   
   def numberOfRowsInTableView(sender)
-    @sel.autoop.length
+    @sel.autoop.size
   end
   
   def tableView_objectValueForTableColumn_row(sender, column, row)
@@ -251,7 +251,7 @@ class AutoOpDialog < OSX::NSObject
   def control_textView_doCommandBySelector(control, textview, selector)
     case selector
     when 'moveDown:'
-      if @sel.autoop.length > 0
+      if @sel.autoop.size > 0
         sel = @list.selectedRows[0]
         @list.select(0) unless sel
         @window.makeFirstResponder(@list)

@@ -7,7 +7,7 @@ module KanaSupport
       enc = :other
       s = ''
       i = 0
-      len = str.length
+      len = str.size
       while i < len
         c = str[i]
         if c == 0x1b
@@ -50,7 +50,7 @@ module KanaSupport
       enc = :other
       s = ''
       i = 0
-      len = str.length
+      len = str.size
       while i < len
         c = str[i]
         if c == 0x1b

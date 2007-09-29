@@ -29,7 +29,7 @@ class DccReceiver
   
   def speed
     return 0 if @records.empty? || @status != :receiving
-    @records.inject(0) {|v,i| v += i }.to_f / @records.length.to_f
+    @records.inject(0) {|v,i| v += i }.to_f / @records.size.to_f
   end
   
   def open
@@ -81,8 +81,8 @@ class DccReceiver
   
   def tcpclient_on_read(sender)
     s = @sock.read
-    @processed_size += s.length
-    @rec += s.length
+    @processed_size += s.size
+    @rec += s.size
     until s.empty?
       n = @file.write(s)
       s[0...n] = '' if n > 0
@@ -108,7 +108,7 @@ class DccReceiver
   def on_timer
     return if @status != :receiving
     @records << @rec
-    @records.shift if @records.length > RECORDS_LEN
+    @records.shift if @records.size > RECORDS_LEN
     @rec = 0
   end
   

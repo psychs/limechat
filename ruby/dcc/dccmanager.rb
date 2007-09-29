@@ -56,12 +56,12 @@ class DccManager < OSX::NSObject
   
   def count_receiving_items
     ary = @receivers.select {|i| i.status == :receiving }
-    ary.length
+    ary.size
   end
   
   def count_sending_items
     ary = @senders.select {|i| i.status == :sending }
-    ary.length
+    ary.size
   end
   
   def onClear(sender)
@@ -340,9 +340,9 @@ class DccManager < OSX::NSObject
   
   def numberOfRowsInTableView(sender)
     if sender == @receiver_table
-      @receivers.length
+      @receivers.size
     elsif sender == @sender_table
-      @senders.length
+      @senders.size
     else
       raise "sender isn't receiver_table or sender_table."
     end

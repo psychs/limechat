@@ -106,7 +106,7 @@ class ServerDialog < OSX::NSObject
   end
   
   def numberOfRowsInTableView(sender)
-    @c.channels.length
+    @c.channels.size
   end
   
   def tableView_objectValueForTableColumn_row(sender, col, row)
@@ -160,7 +160,7 @@ class ServerDialog < OSX::NSObject
     
     targets = pboard.propertyListForType(TABLE_ROW_TYPE).to_a.map {|i| ary[i.to_i] }
     low = ary[0...row] || []
-    high = ary[row...ary.length] || []
+    high = ary[row...ary.size] || []
     targets.each do |i|
       low.delete(i)
       high.delete(i)
@@ -211,7 +211,7 @@ class ServerDialog < OSX::NSObject
     sel = @channelsTable.selectedRows[0]
     return unless sel
     @c.channels.delete_at(sel)
-    count = @c.channels.length
+    count = @c.channels.size
     if count > 0
       if count <= sel
         @channelsTable.select(count - 1)

@@ -85,14 +85,14 @@ class TreeDialog < OSX::NSObject
     return unless sel
     if sel.kind_of?(IRCUnitConfig)
       i = @c.index(sel)
-      if i && i < @c.length - 1
+      if i && i < @c.size - 1
         @c.delete_at(i)
         @c.insert(i+1, sel)
       end
     else
       u = sel.owner
       i = u.channels.index(sel)
-      if i && i < u.channels.length - 1
+      if i && i < u.channels.size - 1
         u.channels.delete_at(i)
         u.channels.insert(i+1, sel)
       end
@@ -103,9 +103,9 @@ class TreeDialog < OSX::NSObject
   end
   
   def outlineView_numberOfChildrenOfItem(sender, item)
-    return @c.length unless item
+    return @c.size unless item
     if item.kind_of?(IRCUnitConfig)
-      item.channels.length
+      item.channels.size
     else
       0
     end
@@ -114,7 +114,7 @@ class TreeDialog < OSX::NSObject
   #objc_method :outlineView_isItemExpandable, 'c@:@@'
   def outlineView_isItemExpandable(sender, item)
     if item.kind_of?(IRCUnitConfig)
-      item.channels.length > 0
+      item.channels.size > 0
     else
       false
     end
@@ -212,7 +212,7 @@ class TreeDialog < OSX::NSObject
       
       ary = @c
       low = ary[0...index] || []
-      high = ary[index...ary.length] || []
+      high = ary[index...ary.size] || []
       low.delete(i)
       high.delete(i)
       @c = low + [i] + high
@@ -226,7 +226,7 @@ class TreeDialog < OSX::NSObject
       
       ary = item.channels
       low = ary[0...index] || []
-      high = ary[index...ary.length] || []
+      high = ary[index...ary.size] || []
       low.delete(i)
       high.delete(i)
       item.channels = low + [i] + high

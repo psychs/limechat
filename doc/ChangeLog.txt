@@ -1,5 +1,9 @@
 2007-09-30  Satoshi Nakagawa <artension@gmail.com>
 
+	Replaced #length to #size for NSString, NSArray and NSDictionary.
+
+2007-09-30  Satoshi Nakagawa <artension@gmail.com>
+
 	Assigned ctrl+enter to send Notice message.
 	Added a menu item to show paste dialog.
 

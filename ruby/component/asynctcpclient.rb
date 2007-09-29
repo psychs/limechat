@@ -54,7 +54,7 @@ class AsyncTcpClient < OSX::NSObject
   end
   
   def send_queue_size
-    @sendq.length
+    @sendq.size
   end
   
   def read
@@ -121,7 +121,7 @@ class AsyncTcpClient < OSX::NSObject
       begin
         s = @sendq.pop
         @sending = true
-        slen = s.length
+        slen = s.size
         until s.empty?
           len = @sock.send(s, 0)
           s[0...len] = ''
