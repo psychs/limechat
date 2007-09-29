@@ -1,5 +1,10 @@
 2007-09-30  Satoshi Nakagawa <artension@gmail.com>
 
+	Assigned ctrl+enter to send Notice message.
+	Added a menu item to show paste dialog.
+
+2007-09-30  Satoshi Nakagawa <artension@gmail.com>
+
 	Changed to hide channel passwords in title bar of the main window.
 
 2007-09-27  Satoshi Nakagawa <artension@gmail.com>

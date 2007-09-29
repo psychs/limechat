@@ -238,9 +238,9 @@ class IRCWorld < OSX::NSObject
     end
   end
   
-  def input_text(s)
+  def input_text(s, cmd)
     return false unless @selected
-    @selected.unit.input_text(s)
+    @selected.unit.input_text(s, cmd)
   end
   
   def select_text

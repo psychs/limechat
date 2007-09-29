@@ -78,6 +78,8 @@ class MenuController < OSX::NSObject
       u = @world.selunit
       return false unless u && u.myaddress
       true
+    when 333  # paste dialog
+      true
     
     when 411  # mark scrollback
       true
@@ -321,13 +323,13 @@ class MenuController < OSX::NSObject
     end
   end
   
-  def start_paste_dialog(uid, cid, s)
+  def start_paste_dialog(uid, cid, s, mode=:paste)
     @paste = PasteSheet.alloc.init
     @paste.window = window
     @paste.delegate = self
     @paste.uid = uid
     @paste.cid = cid
-    @paste.start(s)
+    @paste.start(s, mode)
   end
   
   def pasteSheet_onSend(sender, s)
@@ -340,6 +342,13 @@ class MenuController < OSX::NSObject
   
   def pasteSheet_onCancel(sender)
     @paste = nil
+  end
+  
+  def onPasteDialog(sender)
+    sel = @world.selected
+    return unless sel
+    s = NSPasteboard.generalPasteboard.stringForType(NSStringPboardType) || ''
+    start_paste_dialog(sel.unit.id, sel.id, s, :edit)
   end
   
   def onPasteMyAddress(sender)

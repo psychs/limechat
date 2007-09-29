@@ -152,9 +152,13 @@ class AppController < OSX::NSObject
   end
   
   def textEntered(sender)
+    sendText(:privmsg)
+  end
+  
+  def sendText(cmd)
     s = @text.stringValue.to_s
     unless s.empty?
-      if @world.input_text(s)
+      if @world.input_text(s, cmd)
         @history.add(s)
         @text.setStringValue('')
       end
@@ -190,6 +194,10 @@ class AppController < OSX::NSObject
     else
       false
     end
+  end
+  
+  def controlEnter
+    sendText(:notice)
   end
   
   def controlUp

@@ -66,6 +66,7 @@
                 onNick = id; 
                 onOpenUrl = id; 
                 onPaste = id; 
+                onPasteDialog = id; 
                 onPasteMyAddress = id; 
                 onPreferences = id; 
                 onSearchWeb = id; 

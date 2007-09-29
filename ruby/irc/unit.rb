@@ -270,7 +270,7 @@ class IRCUnit < OSX::NSObject
     channel.check_autoop(nick, mask)
   end
   
-  def input_text(str)
+  def input_text(str, cmd)
     return false unless login?
     sel = @world.selected
     str.split(/\r\n|\r|\n/).each do |s|
@@ -281,7 +281,7 @@ class IRCUnit < OSX::NSObject
       elsif sel == self
         send_command(s)
       else
-        send_text(sel, :privmsg, s)
+        send_text(sel, cmd, s)
       end
     end
     true
@@ -292,6 +292,10 @@ class IRCUnit < OSX::NSObject
     str.split(/\r\n|\r|\n/).each do |s|
       next if s.empty?
       print_both(chan, cmd, @mynick, s)
+      if cmd == :action
+        cmd = :privmsg
+        s = "\x01ACTION #{s}\x01"
+      end
       send(cmd, chan.name, ":#{s}")
       # only watch private messages
       if cmd == :privmsg

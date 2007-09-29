@@ -43,6 +43,9 @@ class MainWindow < OSX::NSWindow
         elsif !shift && ctrl && !alt && !cmd
           # ctrl
           case k
+          when 36 #enter
+            @key_delegate.controlEnter
+            return
           when 48 #tab
             @key_delegate.controlTab
             return

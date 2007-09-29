@@ -9,7 +9,10 @@ class PasteSheet < CocoaSheet
   first_responder :sendButton
   buttons :Send, :Cancel
   
-  def startup(str)
+  def startup(str, mode)
+    if mode == :edit
+      @sheet.makeFirstResponder(@text)
+    end
     @text.textStorage.setAttributedString(NSAttributedString.alloc.initWithString(str))
   end
   
