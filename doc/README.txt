@@ -10,8 +10,9 @@ Satoshi Nakagawa <artension@gmail.com>
 * Thanks To
 
 Yohei Endo			# application icon
+Eloy Duran			# RubyCocoa developer, a patch for bundling RubyCocoa.framework
 Fujimoto Hisa       # RubyCocoa creator
-Laurent Sansonetti  # many requests and suggestions
+Laurent Sansonetti  # RubyCocoa developer, many requests and suggestions
 Josh Goebel			# CocoaSheet, many improvements of code and UIs
 Jun Morimoto        # bug fixes
 
