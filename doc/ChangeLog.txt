@@ -1,3 +1,7 @@
+2007-10-04  Satoshi Nakagawa <artension@gmail.com>
+
+	Changed to use sort_by.
+
 2007-10-03  Satoshi Nakagawa <artension@gmail.com>
 
 	Added a build target to bundling RubyCocoa.framework.

@@ -296,7 +296,7 @@ class AppController < OSX::NSObject
     r = fe.selectedRanges.to_a[0]
     return unless r
     r = r.rangeValue
-    nicks = c.members.sort {|b,a| a.weight <=> b.weight }.map {|i| i.nick }
+    nicks = c.members.sort_by {|i| i.weight }.map {|i| i.nick }
     
     s = @text.stringValue
     pre = s.substringToIndex(r.location).to_s
