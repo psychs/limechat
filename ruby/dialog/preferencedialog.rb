@@ -2,6 +2,7 @@
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
 require 'dialoghelper'
+require 'pathname'
 
 class PreferenceDialog < OSX::NSObject
   include OSX
@@ -17,6 +18,8 @@ class PreferenceDialog < OSX::NSObject
   ib_mapped_int_outlet :gen_tab_action
   ib_mapped_outlet :gen_connect_on_doubleclick, :gen_disconnect_on_doubleclick, :gen_join_on_doubleclick, :gen_leave_on_doubleclick
   ib_mapped_outlet :gen_use_growl
+  ib_mapped_outlet :gen_log_transcript
+  ib_outlet :transcript_folder
   
   def initialize
     @prefix = 'preferenceDialog'
@@ -27,6 +30,8 @@ class PreferenceDialog < OSX::NSObject
     NSBundle.loadNibNamed_owner('PreferenceDialog', self)
     load
     update_myaddress
+    update_transcript_folder
+    onLogTranscriptChanged(nil)
     show
   end
   
@@ -41,6 +46,7 @@ class PreferenceDialog < OSX::NSObject
   end
   
   def windowWillClose(sender)
+    @log_dialog.cancel(nil) if @log_dialog
     fire_event('onClose')
   end
   
@@ -56,6 +62,46 @@ class PreferenceDialog < OSX::NSObject
   
   def onDccAddressDetectionMethodChanged(sender)
     update_myaddress
+  end
+  
+  def onTranscriptFolderChanged(sender)
+    if @transcript_folder.selectedItem.tag == 2
+      return if @log_dialog
+      @log_dialog = NSOpenPanel.openPanel
+      @log_dialog.setCanChooseFiles(false)
+      @log_dialog.setCanChooseDirectories(true)
+      @log_dialog.setResolvesAliases(true)
+      @log_dialog.setAllowsMultipleSelection(false)
+      path = Pathname.new(@m.gen.transcript_folder.expand_path)
+      dir = path.parent.to_s
+      @log_dialog.beginForDirectory_file_types_modelessDelegate_didEndSelector_contextInfo(dir, nil, nil, self, 'transcriptFilePanelDidEnd:returnCode:contextInfo:', nil)
+    end
+  end
+  
+  def transcriptFilePanelDidEnd_returnCode_contextInfo(panel, code, info)
+    @log_dialog = nil
+    @transcript_folder.selectItem(@transcript_folder.itemAtIndex(0))
+    return if code != NSOKButton
+    path = panel.filenames.to_a[0].to_s
+    FileUtils.mkpath(path) rescue nil
+    @m.gen.transcript_folder = path.collapse_path
+    update_transcript_folder
+  end
+  
+  def update_transcript_folder
+    path = @m.gen.transcript_folder.expand_path
+    path = Pathname.new(path)
+    title = path.basename.to_s
+    i = @transcript_folder.itemAtIndex(0)
+    i.setTitle(title)
+    icon = NSWorkspace.sharedWorkspace.iconForFile(path.to_s)
+    icon.setSize(NSSize.new(16,16))
+    i.setImage(icon)
+  end
+  
+  def onLogTranscriptChanged(sender)
+    state = @gen_log_transcript.state == 1
+    @transcript_folder.setEnabled(state)
   end
 
   # sound table

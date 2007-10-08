@@ -754,6 +754,7 @@ class MenuController < OSX::NSObject
     return unless @send_targets && !@send_targets.empty?
     @send_uid = u.id
     @send = NSOpenPanel.openPanel
+    @send.setCanChooseFiles(true)
     @send.setCanChooseDirectories(false)
     @send.setResolvesAliases(true)
     @send.setAllowsMultipleSelection(true)

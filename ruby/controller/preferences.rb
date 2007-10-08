@@ -49,6 +49,7 @@ class Preferences
     persistent_attr :tab_action
     persistent_attr :connect_on_doubleclick, :disconnect_on_doubleclick, :join_on_doubleclick, :leave_on_doubleclick
     persistent_attr :use_growl
+    persistent_attr :log_transcript, :transcript_folder
     
     TAB_COMPLETE_NICK = 0
     TAB_UNREAD = 1
@@ -71,6 +72,8 @@ class Preferences
       @join_on_doubleclick = true
       @leave_on_doubleclick = false
       @use_growl = true
+      @log_transcript = false
+      @transcript_folder = '~/Documents/LimeChat Transcripts'
     end
   end
   

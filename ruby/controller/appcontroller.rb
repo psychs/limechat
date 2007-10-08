@@ -1,6 +1,8 @@
 # Created by Satoshi Nakagawa.
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
+require 'fileutils'
+
 class AppController < OSX::NSObject
   include OSX
   ib_outlet :window, :tree, :log_base, :console_base, :member_list, :text
@@ -14,6 +16,7 @@ class AppController < OSX::NSObject
     
     @pref = Preferences.new
     @pref.load
+    FileUtils.mkpath(@pref.gen.transcript_folder.expand_path) rescue nil
     
     @window.key_delegate = self
     @text.setFocusRingType(NSFocusRingTypeNone)

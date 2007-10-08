@@ -51,6 +51,10 @@ class String
     OSX::NSString.stringWithString(self).stringByExpandingTildeInPath.to_s
   end
   
+  def collapse_path
+    OSX::NSString.stringWithString(self).stringByAbbreviatingWithTildeInPath.to_s
+  end
+  
   def to_nsstr
     OSX::NSMutableString.stringWithString(self)
   end

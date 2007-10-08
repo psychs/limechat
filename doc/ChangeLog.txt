@@ -1,3 +1,7 @@
+2007-10-08  Satoshi Nakagawa <artension@gmail.com>
+
+	Added transcript tab on the preference dialog.
+
 2007-10-04  Satoshi Nakagawa <artension@gmail.com>
 
 	Changed to use sort_by.
