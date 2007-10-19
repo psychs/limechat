@@ -35,6 +35,7 @@ class MenuController < OSX::NSObject
     not_active = login && !!c && !c.active?
     active_channel = active && c.channel?
     active_chtalk = active && (c.channel? || c.talk?)
+    login_unit_chtalk = login && (!c || c.channel? || c.talk?)
     op = active_channel && c.op?
     
     tag = i.tag
@@ -126,17 +127,17 @@ class MenuController < OSX::NSObject
       true
       
     when 2001  # member whois
-      active_chtalk && count_selected_members?(i)
+      login_unit_chtalk && count_selected_members?(i)
     when 2002  # member talk
-      active_chtalk && count_selected_members?(i)
+      login_unit_chtalk && count_selected_members?(i)
     when 2003  # member giveop
       op && count_selected_members?(i)
     when 2004  # member deop
       op && count_selected_members?(i)
     when 2011  # dcc send file
-      active_chtalk && count_selected_members?(i) && !!u.myaddress
+      login_unit_chtalk && count_selected_members?(i) && !!u.myaddress
     when 2101..2105  # ctcp
-      active_chtalk && count_selected_members?(i)
+      login_unit_chtalk && count_selected_members?(i)
     when 2021  # register to auto op
       active_channel && count_selected_members?(i)
     
@@ -160,7 +161,14 @@ class MenuController < OSX::NSObject
   
   def selected_members(sender)
     c = @world.selchannel
-    return [] unless c
+    unless c
+      if nick_menu?(sender)
+        m = User.new(@nick)
+        return [m]
+      else
+        return []
+      end
+    end
     if nick_menu?(sender)
       m = c.find_member(@nick)
       m ? [m] : []
