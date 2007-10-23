@@ -9,6 +9,8 @@ class AppController < OSX::NSObject
   ib_outlet :root_split, :log_split, :info_split
   ib_outlet :menu, :server_menu, :channel_menu, :member_menu, :tree_menu, :log_menu, :console_menu, :url_menu, :addr_menu
   
+  GC_TIME = 600
+  
   def awakeFromNib
     app = NSApplication.sharedApplication
     nc = NSWorkspace.sharedWorkspace.notificationCenter
@@ -75,6 +77,7 @@ class AppController < OSX::NSObject
     @world.dcc = @dcc
     
     @history = InputHistory.new
+    @gc_count = 0
   end
   
   def terminateWithoutConfirm(sender)
@@ -83,7 +86,7 @@ class AppController < OSX::NSObject
   end
   
   def applicationDidFinishLaunching(sender)
-    @world.start_timer
+    start_timer
     @world.auto_connect
   end
   
@@ -97,6 +100,7 @@ class AppController < OSX::NSObject
   end
   
   def applicationWillTerminate(notification)
+    stop_timer
     @menu.terminate
     @world.terminate
     @dcc.save_window_state
@@ -156,6 +160,7 @@ class AppController < OSX::NSObject
   
   def textEntered(sender)
     sendText(:privmsg)
+    @gc_count = 0
   end
   
   def sendText(cmd)
@@ -285,6 +290,29 @@ class AppController < OSX::NSObject
   
   def number(n)
     @world.select_channel_at(n)
+  end
+  
+  # timer
+  
+  def start_timer
+    stop_timer if @timer
+    @timer = Timer.alloc.init
+    @timer.start(1.0)
+    @timer.delegate = self
+  end
+  
+  def stop_timer
+    @timer.stop
+    @timer = nil
+  end
+  
+  def timer_onTimer(sender)
+    @world.on_timer
+    @gc_count += 1
+    if @gc_count >= GC_TIME
+      GC.start
+      @gc_count = 0
+    end
   end
   
   

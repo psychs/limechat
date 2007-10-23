@@ -1,5 +1,10 @@
 2007-10-24  Satoshi Nakagawa <artension@gmail.com>
 
+	Changed to run GC after 10 minutes idle.
+	Fixed a bug, scrollback mark in the head of log should be erased when the number of log lines are larger than threshold.
+
+2007-10-24  Satoshi Nakagawa <artension@gmail.com>
+
 	Fixed a bug, sheet windows should be closed in sheetDidEnd_returnCode_contextInfo.
 
 2007-10-19  Satoshi Nakagawa <artension@gmail.com>

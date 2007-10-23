@@ -349,7 +349,16 @@ class LogController < OSX::NSObject
     div.setAttribute__('id', "line#{@line_number}")
     body.appendChild(div)
     
-    body.removeChild(body.firstChild) if @max_lines > 0 && @line_number > @max_lines
+    if @max_lines > 0 && @line_number > @max_lines
+      node = body.firstChild
+      if node.tagName.to_s.downcase == 'hr'
+        # the first node is the mark
+        hr = node
+        node = node.nextSibling
+        body.removeChild(hr)
+      end
+      body.removeChild(node)
+    end
     
     restore_position
   end

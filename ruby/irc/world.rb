@@ -52,7 +52,6 @@ class IRCWorld < OSX::NSObject
   end
   
   def terminate
-    stop_timer
     @units.each {|u| u.terminate }
   end
   
@@ -370,26 +369,6 @@ class IRCWorld < OSX::NSObject
     @console_base.setContentView(@console.view)
   end
   
-  
-  # timer
-  
-  def start_timer
-    stop_timer if @timer
-    @timer = Timer.alloc.init
-    @timer.start(1.0)
-    @timer.delegate = self
-  end
-  
-  def stop_timer
-    @timer.stop
-    @timer = nil
-  end
-  
-  def timer_onTimer(sender)
-    @units.each {|u| u.on_timer }
-    @dcc.on_timer
-  end
-  
   def preferences_changed
     register_growl
     
@@ -555,6 +534,12 @@ class IRCWorld < OSX::NSObject
     end
   end
   
+  # timer
+  
+  def on_timer
+    @units.each {|u| u.on_timer }
+    @dcc.on_timer
+  end
   
   private
   
