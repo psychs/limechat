@@ -63,7 +63,7 @@ class ChannelDialog < OSX::NSObject
   
   #objc_method :sheetDidEnd_returnCode_contextInfo, 'v@:@i^v'
   def sheetDidEnd_returnCode_contextInfo(sender, code, info)
-    @window.orderOut(self)
+    @window.close
     @modal = false
     if code != 0
       save
