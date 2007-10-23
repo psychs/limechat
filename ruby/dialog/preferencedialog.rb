@@ -154,10 +154,10 @@ class PreferenceDialog < OSX::NSObject
   def save
     save_mapped_outlets(m, true)
     m.key.words.delete_if {|i| i.empty?}
-    m.key.words.sort! {|a,b| a.downcase <=> b.downcase}
+    m.key.words = m.key.words.sort_by {|i| i.downcase}
     m.key.words.uniq!
     m.key.dislike_words.delete_if {|i| i.empty?}
-    m.key.dislike_words.sort! {|a,b| a.downcase <=> b.downcase}
+    m.key.dislike_words = m.key.dislike_words.sort_by {|i| i.downcase}
     m.key.dislike_words.uniq!
     m.dcc.last_port = m.dcc.first_port if m.dcc.last_port < m.dcc.first_port
     m.sound.assign(@sound)

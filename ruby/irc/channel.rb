@@ -132,9 +132,10 @@ class IRCChannel < OSX::NSObject
   end
   
   def remove_member(nick, autoreload=true)
-    @members.delete_if {|m| m.nick.downcase == nick.downcase }
+    t = nick.downcase
+    @members.delete_if {|m| m.nick.downcase == t }
     reload_members if autoreload
-    @op_queue.delete_if {|i| i.downcase == nick.downcase }
+    @op_queue.delete_if {|i| i.downcase == t }
   end
   
   def rename_member(nick, tonick)
@@ -142,7 +143,8 @@ class IRCChannel < OSX::NSObject
     return unless m
     remove_member(tonick, false)
 
-    index = @op_queue.index {|i| i.downcase == nick.downcase }
+    t = nick.downcase
+    index = @op_queue.index {|i| i.downcase == t }
     if index
       @op_queue.delete_at(index)
       @op_queue << tonick
@@ -173,7 +175,8 @@ class IRCChannel < OSX::NSObject
     reload_members
     
     if type == :o && value
-      @op_queue.delete_if {|i| i.downcase == nick.downcase }
+      t = nick.downcase
+      @op_queue.delete_if {|i| i.downcase == t }
     end
   end
   
@@ -183,7 +186,8 @@ class IRCChannel < OSX::NSObject
   end
   
   def find_member(nick)
-    @members.find {|m| m.nick.downcase == nick.downcase }
+    t = nick.downcase
+    @members.find {|m| m.nick.downcase == t }
   end
   
   def count_members
@@ -207,7 +211,7 @@ class IRCChannel < OSX::NSObject
       elsif a.v != b.v
         a.v ? -1 : 1
       else
-        a.nick.downcase <=> b.nick.downcase
+        a.nick.casecmp(b.nick)
       end
     end
   end
@@ -227,7 +231,8 @@ class IRCChannel < OSX::NSObject
   end
   
   def add_to_op_queue(nick)
-    unless @op_queue.find {|i| i.downcase == nick.downcase }
+    t = nick.downcase
+    unless @op_queue.find {|i| i.downcase == t }
       @op_queue << nick.dup
     end
   end
