@@ -291,12 +291,13 @@ class IRCUnit < OSX::NSObject
     return false unless login? && chan
     str.split(/\r\n|\r|\n/).each do |s|
       next if s.empty?
-      print_both(chan, cmd, @mynick, s)
+      print_both(chan, cmd, @mynick, to_local_encoding(to_common_encoding(s)))
       if cmd == :action
         cmd = :privmsg
         s = "\x01ACTION #{s}\x01"
       end
       send(cmd, chan.name, ":#{s}")
+      
       # only watch private messages
       if cmd == :privmsg
         if s =~ /^([a-zA-Z^_`][a-zA-Z^_`-]*): /
@@ -342,7 +343,7 @@ class IRCUnit < OSX::NSObject
       if !c && !target.channelname? && target != 'NickServ'
         c = @world.create_talk(self, target)
       end
-      print_both(c || target, cmd, @mynick, s)
+      print_both(c || target, cmd, @mynick, to_local_encoding(to_common_encoding(s)))
       if cmd == :action
         cmd = :privmsg
         s = "\x01ACTION #{s}\x01"
@@ -655,7 +656,7 @@ class IRCUnit < OSX::NSObject
   
   def to_common_encoding(s)
     return s.dup if @encoding == NSUTF8StringEncoding
-    data = NSString.stringWithString(s).dataUsingEncoding(@encoding)
+    data = NSString.stringWithString(s).dataUsingEncoding_allowLossyConversion(@encoding, true)
     s = data ? data.rubyString : ''
     s = KanaSupport::iso2022_to_native(s) if @encoding == NSISO2022JPStringEncoding
     s
