@@ -1,7 +1,7 @@
 2007-10-24  Satoshi Nakagawa <artension@gmail.com>
 
 	Changed to run GC after 10 minutes idle.
-	Fixed a bug, scrollback mark in the head of log should be erased when the number of log lines are larger than threshold.
+	Fixed a bug, a scrollback mark in the head of log should be erased when the number of log lines gets greater than threshold.
 
 2007-10-24  Satoshi Nakagawa <artension@gmail.com>
 
