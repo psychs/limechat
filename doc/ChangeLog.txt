@@ -1,3 +1,7 @@
+2007-10-26  Satoshi Nakagawa <artension@gmail.com>
+
+	Fixed a bug, regex pattern for IP addresses passed over .al, .cl, .gl, .il, .ml, .nl, .pl, .sl.
+
 2007-10-24  Satoshi Nakagawa <artension@gmail.com>
 
 	Changed to allow lossy encoding conversions.
