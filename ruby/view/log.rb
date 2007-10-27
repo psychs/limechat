@@ -47,7 +47,12 @@ class LogController < OSX::NSObject
     .url {}
     .address { text-decoration: underline; }
     .highlight { color: #f0f; font-weight: bold; }
-    .line { margin: 2px 0; }
+    .line { padding: 1px 0; }
+    /*
+    .even_line { background-color: #fff; margin: 0 -3px 0 -3px; }
+    .odd_line { background-color: #eef; margin: 0 -3px 0 -3px; }
+    .even_line, .odd_line { margin: 0 -3px 0 -3px; padding: 1px 3px; }
+    */
     .time { color: #048; }
     .place { color: #008; }
     .nick_normal { color: #008; }
@@ -158,7 +163,8 @@ class LogController < OSX::NSObject
     end
     s += %Q[<span class="#{line.line_type}">#{body}</span>]
     attrs = {}
-    attrs['class'] = 'line'
+    alternate = @line_number % 2 == 0 ? 'even_line' : 'odd_line'
+    attrs['class'] = "line #{alternate}"
     attrs['type'] = line.line_type.to_s
     if @console
       if line.click_info
