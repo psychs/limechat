@@ -90,6 +90,10 @@ class MainWindow < OSX::NSWindow
             return if @key_delegate.commandAltLeft
           when 124 #right
             return if @key_delegate.commandAltRight
+          when 125 #down
+            return if @key_delegate.commandDown
+          when 126 #up
+            return if @key_delegate.commandUp
           end
         end
       end

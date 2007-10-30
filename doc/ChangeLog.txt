@@ -1,5 +1,9 @@
 2007-10-31  Satoshi Nakagawa <artension@gmail.com>
 
+	Added cmd+alt+(up|down) as shortcut keys for moving channels.
+
+2007-10-31  Satoshi Nakagawa <artension@gmail.com>
+
 	Changed shortcut keys for moving servers from cmd+(left|right) to cmd+alt+(left|right).
 
 2007-10-31  Satoshi Nakagawa <artension@gmail.com>
