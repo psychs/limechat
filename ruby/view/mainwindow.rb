@@ -78,14 +78,18 @@ class MainWindow < OSX::NSWindow
           case k
           when 18..23,25,26,28,29,82..89,91,92
             return if @key_delegate.number(keynum(k))
-          when 123 #left
-            return if @key_delegate.commandLeft
-          when 124 #right
-            return if @key_delegate.commandRight
           when 125 #down
             return if @key_delegate.commandDown
           when 126 #up
             return if @key_delegate.commandUp
+          end
+        elsif !shift && !ctrl && alt && cmd
+          # cmd-alt
+          case k
+          when 123 #left
+            return if @key_delegate.commandAltLeft
+          when 124 #right
+            return if @key_delegate.commandAltRight
           end
         end
       end

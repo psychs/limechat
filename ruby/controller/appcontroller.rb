@@ -233,11 +233,11 @@ class AppController < OSX::NSObject
     move(:down, :active)
   end
   
-  def commandLeft
+  def commandAltLeft
     move(:left, :active)
   end
   
-  def commandRight
+  def commandAltRight
     move(:right, :active)
   end
   
@@ -495,7 +495,6 @@ class AppController < OSX::NSObject
       return unless n
       start = n
       size = @world.units.size
-      return false if size <= 1
       loop do
         if direction == :left
           n -= 1
@@ -504,7 +503,6 @@ class AppController < OSX::NSObject
           n += 1
           n = 0 if n >= size
         end
-        return false if n == start
         unit = @world.units[n]
         if unit
           case target

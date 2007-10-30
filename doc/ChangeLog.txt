@@ -1,5 +1,9 @@
 2007-10-31  Satoshi Nakagawa <artension@gmail.com>
 
+	Changed shortcut keys for moving servers from cmd+(left|right) to cmd+alt+(left|right).
+
+2007-10-31  Satoshi Nakagawa <artension@gmail.com>
+
 	Fixed a bug, location of the caret is out of range after pushed up and down keys on the edit.
 	Changed regex patterns for URLs and addresses.
 	Changed to make cmd+left and cmd+right working for moving the cursor when there is only a server.

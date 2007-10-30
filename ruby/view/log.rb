@@ -429,6 +429,7 @@ class LogScriptEventSink < OSX::NSObject
   
   objc_method :onDblClick, 'v@:@'
   def onDblClick(e)
+    puts 'onDblClick'
     @owner.logView_onDoubleClick(e.to_s)
   end
   
