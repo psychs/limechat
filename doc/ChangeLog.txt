@@ -1,5 +1,9 @@
 2007-10-31  Satoshi Nakagawa <artension@gmail.com>
 
+	Fixed a bug, double clicks on the console log didn't working.
+
+2007-10-31  Satoshi Nakagawa <artension@gmail.com>
+
 	Added cmd+alt+(up|down) as shortcut keys for moving channels.
 
 2007-10-31  Satoshi Nakagawa <artension@gmail.com>

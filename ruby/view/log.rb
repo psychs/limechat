@@ -254,7 +254,7 @@ class LogController < OSX::NSObject
       script = <<-EOM
         function on_dblclick() {
           var t = event.target
-          while (t && !(t.tagName == 'DIV' && t.className == 'line')) {
+          while (t && !(t.tagName == 'DIV' && (t.className == 'line even_line' || t.className == 'line odd_line'))) {
             t = t.parentNode
           }
           if (t) {
