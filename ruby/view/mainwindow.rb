@@ -22,8 +22,7 @@ class MainWindow < OSX::NSWindow
           # none
           case k
           when 48 #tab
-            res = @key_delegate.tab
-            return if res
+            return if @key_delegate.tab
           when 115 #home
             return if @key_delegate.scroll(:home)
           when 116 #pageup
@@ -44,63 +43,49 @@ class MainWindow < OSX::NSWindow
           # ctrl
           case k
           when 36 #enter
-            @key_delegate.controlEnter
-            return
+            return if @key_delegate.controlEnter
           when 48 #tab
-            @key_delegate.controlTab
-            return
+            return if @key_delegate.controlTab
           when 123 #left
-            @key_delegate.controlLeft
-            return
+            return if @key_delegate.controlLeft
           when 124 #right
-            @key_delegate.controlRight
-            return
+            return if @key_delegate.controlRight
           when 125 #down
-            @key_delegate.controlDown
-            return
+            return if @key_delegate.controlDown
           when 126 #up
-            @key_delegate.controlUp
-            return
+            return if @key_delegate.controlUp
           end
         elsif shift && ctrl && !alt && !cmd
           # ctrl-shift
           case k
           when 48 #tab
-            @key_delegate.controlShiftTab
-            return
+            return if @key_delegate.controlShiftTab
           end
         elsif !shift && !ctrl && alt && !cmd
           # alt
           case k
           when 49 #space
-            @key_delegate.altSpace
-            return
+            return if @key_delegate.altSpace
           end
         elsif shift && !ctrl && alt && !cmd
           # alt-shift
           case k
           when 49 #space
-            @key_delegate.altShiftSpace
-            return
+            return if @key_delegate.altShiftSpace
           end
         elsif !shift && !ctrl && !alt && cmd
           # cmd
           case k
           when 18..23,25,26,28,29,82..89,91,92
-            @key_delegate.number(keynum(k))
-            return
+            return if @key_delegate.number(keynum(k))
           when 123 #left
-            @key_delegate.commandLeft
-            return
+            return if @key_delegate.commandLeft
           when 124 #right
-            @key_delegate.commandRight
-            return
+            return if @key_delegate.commandRight
           when 125 #down
-            @key_delegate.commandDown
-            return
+            return if @key_delegate.commandDown
           when 126 #up
-            @key_delegate.commandUp
-            return
+            return if @key_delegate.commandUp
           end
         end
       end

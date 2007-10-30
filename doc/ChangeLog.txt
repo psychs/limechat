@@ -1,3 +1,9 @@
+2007-10-31  Satoshi Nakagawa <artension@gmail.com>
+
+	Fixed a bug, location of the caret is out of range after pushed up and down keys on the edit.
+	Changed regex patterns for URLs and addresses.
+	Changed to make cmd+left and cmd+right working for moving the cursor when there is only a server.
+
 2007-10-28  Satoshi Nakagawa <artension@gmail.com>
 
 	Prepared to alternate lines.

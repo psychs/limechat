@@ -7,7 +7,7 @@ class TextField < OSX::NSTextField
   def focus
     window.makeFirstResponder(self)
     e = currentEditor
-    e.setSelectedRange(NSRange.new(stringValue.size, 0))
+    e.setSelectedRange(NSRange.new(stringValue.length, 0))
     e.scrollRangeToVisible(e.selectedRange)
   end
 end

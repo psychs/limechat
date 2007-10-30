@@ -1,38 +1,85 @@
-{
-    IBClasses = (
-        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
-        {
-            ACTIONS = {
-                onCancel = id; 
-                onDccAddressDetectionMethodChanged = id; 
-                onLogTranscriptChanged = id; 
-                onOk = id; 
-                onTranscriptFolderChanged = id; 
-            }; 
-            CLASS = PreferenceDialog; 
-            LANGUAGE = ObjC; 
-            OUTLETS = {
-                "dcc_address_detection_method" = id; 
-                "dcc_first_port" = id; 
-                "dcc_last_port" = id; 
-                "dcc_myaddress" = id; 
-                "dcc_myaddress_caption" = id; 
-                "gen_confirm_quit" = id; 
-                "gen_connect_on_doubleclick" = id; 
-                "gen_disconnect_on_doubleclick" = id; 
-                "gen_join_on_doubleclick" = id; 
-                "gen_leave_on_doubleclick" = id; 
-                "gen_log_transcript" = id; 
-                "gen_tab_action" = id; 
-                "gen_use_growl" = id; 
-                "key_dislike_words" = id; 
-                "key_words" = id; 
-                "sound_table" = id; 
-                "transcript_folder" = id; 
-                window = id; 
-            }; 
-            SUPERCLASS = NSObject; 
-        }
-    ); 
-    IBVersion = 1; 
-}
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IBClasses</key>
+	<array>
+		<dict>
+			<key>CLASS</key>
+			<string>FirstResponder</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSObject</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>NSObject</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+		</dict>
+		<dict>
+			<key>ACTIONS</key>
+			<dict>
+				<key>onCancel</key>
+				<string>id</string>
+				<key>onDccAddressDetectionMethodChanged</key>
+				<string>id</string>
+				<key>onLogTranscriptChanged</key>
+				<string>id</string>
+				<key>onOk</key>
+				<string>id</string>
+				<key>onTranscriptFolderChanged</key>
+				<string>id</string>
+			</dict>
+			<key>CLASS</key>
+			<string>PreferenceDialog</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>OUTLETS</key>
+			<dict>
+				<key>dcc_address_detection_method</key>
+				<string>id</string>
+				<key>dcc_first_port</key>
+				<string>id</string>
+				<key>dcc_last_port</key>
+				<string>id</string>
+				<key>dcc_myaddress</key>
+				<string>id</string>
+				<key>dcc_myaddress_caption</key>
+				<string>id</string>
+				<key>gen_confirm_quit</key>
+				<string>id</string>
+				<key>gen_connect_on_doubleclick</key>
+				<string>id</string>
+				<key>gen_disconnect_on_doubleclick</key>
+				<string>id</string>
+				<key>gen_join_on_doubleclick</key>
+				<string>id</string>
+				<key>gen_leave_on_doubleclick</key>
+				<string>id</string>
+				<key>gen_log_transcript</key>
+				<string>id</string>
+				<key>gen_tab_action</key>
+				<string>id</string>
+				<key>gen_use_growl</key>
+				<string>id</string>
+				<key>key_dislike_words</key>
+				<string>id</string>
+				<key>key_words</key>
+				<string>id</string>
+				<key>sound_table</key>
+				<string>id</string>
+				<key>transcript_folder</key>
+				<string>id</string>
+				<key>window</key>
+				<string>id</string>
+			</dict>
+			<key>SUPERCLASS</key>
+			<string>NSObject</string>
+		</dict>
+	</array>
+	<key>IBVersion</key>
+	<string>1</string>
+</dict>
+</plist>

@@ -206,6 +206,7 @@ class AppController < OSX::NSObject
   
   def controlEnter
     sendText(:notice)
+    true
   end
   
   def controlUp
@@ -290,6 +291,7 @@ class AppController < OSX::NSObject
   
   def number(n)
     @world.select_channel_at(n)
+    true
   end
   
   # timer
@@ -377,7 +379,7 @@ class AppController < OSX::NSObject
       r.location = @text.stringValue.length
       r.length = 0
     else
-      r.length = ns.size
+      r.length = ns.length
     end
     fe.setSelectedRange(r)
   end
@@ -484,6 +486,7 @@ class AppController < OSX::NSObject
           end
         end
       end
+      true
     when :left,:right
       sel = @world.selected
       return unless sel
@@ -492,6 +495,7 @@ class AppController < OSX::NSObject
       return unless n
       start = n
       size = @world.units.size
+      return false if size <= 1
       loop do
         if direction == :left
           n -= 1
@@ -500,7 +504,7 @@ class AppController < OSX::NSObject
           n += 1
           n = 0 if n >= size
         end
-        break if n == start
+        return false if n == start
         unit = @world.units[n]
         if unit
           case target
@@ -521,6 +525,7 @@ class AppController < OSX::NSObject
           end
         end
       end
+      true
     end
   end
 end
