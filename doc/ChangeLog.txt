@@ -1,6 +1,6 @@
 2007-10-31  Satoshi Nakagawa <artension@gmail.com>
 
-	Fixed a bug, double clicks on the console log didn't working.
+	Fixed a bug, double clicks on the console log didn't work.
 
 2007-10-31  Satoshi Nakagawa <artension@gmail.com>
 
