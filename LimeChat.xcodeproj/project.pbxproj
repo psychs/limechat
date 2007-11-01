@@ -71,6 +71,8 @@
 		78755D730C2AC0B30073FF42 /* logrenderer.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78755D720C2AC0B30073FF42 /* logrenderer.rb */; };
 		7877E0620C65B84E002F13C7 /* textfield.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7877E0610C65B84E002F13C7 /* textfield.rb */; };
 		787A36A20C6A392600DDB70D /* fieldeditortextview.rb in Resources */ = {isa = PBXBuildFile; fileRef = 787A36A10C6A392600DDB70D /* fieldeditortextview.rb */; };
+		7884E54E0CDA91F500AF3678 /* SACrashReporter in Resources */ = {isa = PBXBuildFile; fileRef = 7884E5450CDA91F500AF3678 /* SACrashReporter */; };
+		7884E54F0CDA91F500AF3678 /* SACrashReporter in Resources */ = {isa = PBXBuildFile; fileRef = 7884E5450CDA91F500AF3678 /* SACrashReporter */; };
 		788C5E660C5F4F5A0034C46E /* growlcontroller.rb in Resources */ = {isa = PBXBuildFile; fileRef = 788C5E650C5F4F5A0034C46E /* growlcontroller.rb */; };
 		7890B4E90C659E4700DF983F /* autoopdialog.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7890B4E80C659E4700DF983F /* autoopdialog.rb */; };
 		7890B4ED0C659E5D00DF983F /* AutoOpDialog.nib in Resources */ = {isa = PBXBuildFile; fileRef = 7890B4EB0C659E5D00DF983F /* AutoOpDialog.nib */; };
@@ -280,6 +282,7 @@
 		78785B580BEDCF6800456645 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/ServerDialog.nib; sourceTree = "<group>"; };
 		787A36A10C6A392600DDB70D /* fieldeditortextview.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = fieldeditortextview.rb; sourceTree = "<group>"; };
 		787FD46C0BFE960100F2F22D /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
+		7884E5450CDA91F500AF3678 /* SACrashReporter */ = {isa = PBXFileReference; lastKnownFileType = folder; name = SACrashReporter; path = vendor/SACrashReporter; sourceTree = "<group>"; };
 		788C5E650C5F4F5A0034C46E /* growlcontroller.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = growlcontroller.rb; sourceTree = "<group>"; };
 		788D56F00BB6872B00DDBF69 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
 		7890B4E80C659E4700DF983F /* autoopdialog.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = autoopdialog.rb; sourceTree = "<group>"; };
@@ -400,6 +403,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				7884E5450CDA91F500AF3678 /* SACrashReporter */,
 				78084BF50C7604410005D700 /* application.icns */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 				78AD78E20C61B8F8001E77F4 /* Localizable.strings */,
@@ -709,6 +713,7 @@
 				787A36A20C6A392600DDB70D /* fieldeditortextview.rb in Resources */,
 				78084BF60C7604410005D700 /* application.icns in Resources */,
 				78208C1A0C9D97CD004472E9 /* cocoasheet.rb in Resources */,
+				7884E54E0CDA91F500AF3678 /* SACrashReporter in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -794,6 +799,7 @@
 				78E7F24D0CB2B9D20069E9ED /* fieldeditortextview.rb in Resources */,
 				78E7F24E0CB2B9D20069E9ED /* application.icns in Resources */,
 				78E7F24F0CB2B9D20069E9ED /* cocoasheet.rb in Resources */,
+				7884E54F0CDA91F500AF3678 /* SACrashReporter in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

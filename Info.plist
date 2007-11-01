@@ -24,5 +24,9 @@
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>SACrashReporterDeveloperName</key>
+	<string>Psychs</string>
+	<key>SACrashReporterPostURL</key>
+	<string>http://limechat.net/app/crash_reporter.php</string>
 </dict>
 </plist>

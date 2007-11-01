@@ -12,6 +12,8 @@ class AppController < OSX::NSObject
   GC_TIME = 600
   
   def awakeFromNib
+    #SACrashReporter.submit
+    
     app = NSApplication.sharedApplication
     nc = NSWorkspace.sharedWorkspace.notificationCenter
     nc.addObserver_selector_name_object(self, :terminateWithoutConfirm, NSWorkspaceWillPowerOffNotification, NSWorkspace.sharedWorkspace)

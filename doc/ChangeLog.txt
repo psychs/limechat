@@ -1,5 +1,10 @@
 2007-11-01  Satoshi Nakagawa <artension@gmail.com>
 
+	Trying to integrate SACrashReporter.
+	Thanks to Eloy Duran.
+
+2007-11-01  Satoshi Nakagawa <artension@gmail.com>
+
 	Fixed a bug, data source of OutlineView should return kind of NSObject.
 
 2007-10-31  Satoshi Nakagawa <artension@gmail.com>
