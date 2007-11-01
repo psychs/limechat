@@ -178,3 +178,89 @@ class IRCChannelConfig
     Marshal::load(Marshal::dump(self))
   end
 end
+
+
+module ModelTreeItem
+  
+  def config_to_item(c)
+    case c
+      when IRCWorldConfig
+        m = WorldTreeItem.alloc.init
+        m.config = c
+        m.units = c.units.map do |i|
+          i = config_to_item(i)
+          i.owner = m
+          i
+        end
+        m
+      when IRCUnitConfig
+        m = UnitTreeItem.alloc.init
+        m.config = c
+        m.channels = c.channels.map do |i|
+          i = config_to_item(i)
+          i.owner = m
+          i
+        end
+        m
+      when IRCChannelConfig
+        m = ChannelTreeItem.alloc.init
+        m.config = c
+        m
+    end
+  end
+  
+  def item_to_config(m)
+    case m
+      when WorldTreeItem
+        c = m.config
+        c.units = m.units.map {|i| item_to_config(i)}
+        c
+      when UnitTreeItem
+        c = m.config
+        c.channels = m.channels.map {|i| item_to_config(i)}
+        c
+      when ChannelTreeItem
+        m.config
+    end
+  end
+  
+  extend self
+end
+
+class ModelTreeItemBase < OSX::NSObject
+  attr_accessor :config, :owner
+  
+  def autoop
+    @config.autoop
+  end
+  
+  def name
+    @config.name
+  end
+  
+  def label
+    if !@cached_label || !@cached_label.isEqualToString?(name)
+      @cached_label = OSX::NSString.stringWithString(name)
+    end
+    @cached_label
+  end
+end
+
+class WorldTreeItem < ModelTreeItemBase
+  attr_accessor :units
+  
+  def name
+    'World'
+  end
+end
+
+class UnitTreeItem < ModelTreeItemBase
+  attr_accessor :channels
+  
+  def id
+    @config.id
+  end
+end
+
+class ChannelTreeItem < ModelTreeItemBase
+end

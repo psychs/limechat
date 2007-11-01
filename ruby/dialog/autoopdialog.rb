@@ -2,6 +2,7 @@
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
 require 'dialoghelper'
+require 'config.rb'
 
 class AutoOpDialog < OSX::NSObject
   include OSX
@@ -11,13 +12,11 @@ class AutoOpDialog < OSX::NSObject
   
   def initialize
     @prefix = 'autoOpDialog'
-    @world_label = NSString.stringWithString('World')
   end
   
   def start(conf)
-    @w = conf
+    @w = ModelTreeItem.config_to_item(conf)
     @c = @w.units
-    @c.each {|u| u.owner = @w; u.channels.each {|c| c.owner = u }}
     @sel = @w
     NSBundle.loadNibNamed_owner('AutoOpDialog', self)
     @edit.setFocusRingType(NSFocusRingTypeNone)
@@ -88,14 +87,20 @@ class AutoOpDialog < OSX::NSObject
   end
   
   def onOk(sender)
+=begin
     s = @edit.stringValue.to_s
     unless s.empty?
-      onAdd(sender)
-      return
+      s = @edit.stringValue.to_s
+      unless s.empty?
+        unless @sel.autoop.index(s)
+          onAdd(sender)
+          return
+        end
+      end
     end
+=end
     
-    @c.each {|u| u.owner = nil; u.channels.each {|c| c.owner = nil }}
-    fire_event('onOk', @w)
+    fire_event('onOk', ModelTreeItem.item_to_config(@w))
     @window.close
   end
   
@@ -166,34 +171,33 @@ class AutoOpDialog < OSX::NSObject
   # tree
   
   def outlineView_numberOfChildrenOfItem(sender, item)
-    return 1 unless item
     case item
-    when IRCWorldConfig; item.units.size
-    when IRCUnitConfig; item.channels.size
-    else 0
+      when nil; 1
+      when WorldTreeItem; item.units.size
+      when UnitTreeItem; item.channels.size
+      else 0
     end
   end
   
   #objc_method :outlineView_isItemExpandable, 'c@:@@'
   def outlineView_isItemExpandable(sender, item)
     case item
-    when IRCWorldConfig; item.units.size > 0
-    when IRCUnitConfig; item.channels.size > 0
-    else false
+      when WorldTreeItem; item.units.size > 0
+      when UnitTreeItem; item.channels.size > 0
+      else false
     end
   end
   
   def outlineView_child_ofItem(sender, index, item)
-    return @w unless item
     case item
-    when IRCWorldConfig; item.units[index]
-    when IRCUnitConfig; item.channels[index]
-    else nil
+      when nil; @w
+      when WorldTreeItem; item.units[index]
+      when UnitTreeItem; item.channels[index]
+      else nil
     end
   end
   
   def outlineView_objectValueForTableColumn_byItem(sender, column, item)
-    return @world_label if item == @w
     item.label
   end
   

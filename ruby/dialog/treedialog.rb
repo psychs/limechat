@@ -17,9 +17,8 @@ class TreeDialog < OSX::NSObject
   end
   
   def start(conf)
-    @w = conf
+    @w = ModelTreeItem.config_to_item(conf)
     @c = @w.units
-    @c.each {|u| u.channels.each {|c| c.owner = u }}
     NSBundle.loadNibNamed_owner('TreeDialog', self)
     reload_tree
     @c.each {|i| @tree.expandItem(i) }
@@ -48,9 +47,8 @@ class TreeDialog < OSX::NSObject
   end
   
   def onOk(sender)
-    @c.each {|u| u.channels.each {|c| c.owner = nil }}
     @w.units = @c
-    fire_event('onOk', @w)
+    fire_event('onOk', ModelTreeItem.item_to_config(@w))
     @window.close
   end
   
@@ -61,7 +59,7 @@ class TreeDialog < OSX::NSObject
   def onUp(sender)
     sel = current_sel
     return unless sel
-    if sel.kind_of?(IRCUnitConfig)
+    if sel.kind_of?(UnitTreeItem)
       i = @c.index(sel)
       if i && i > 0
         @c.delete_at(i)
@@ -83,7 +81,7 @@ class TreeDialog < OSX::NSObject
   def onDown(sender)
     sel = current_sel
     return unless sel
-    if sel.kind_of?(IRCUnitConfig)
+    if sel.kind_of?(UnitTreeItem)
       i = @c.index(sel)
       if i && i < @c.size - 1
         @c.delete_at(i)
@@ -103,28 +101,27 @@ class TreeDialog < OSX::NSObject
   end
   
   def outlineView_numberOfChildrenOfItem(sender, item)
-    return @c.size unless item
-    if item.kind_of?(IRCUnitConfig)
-      item.channels.size
-    else
-      0
+    case item
+      when nil; @c.size
+      when UnitTreeItem; item.channels.size
+      else 0
     end
   end
   
   #objc_method :outlineView_isItemExpandable, 'c@:@@'
   def outlineView_isItemExpandable(sender, item)
-    if item.kind_of?(IRCUnitConfig)
-      item.channels.size > 0
-    else
-      false
+    case item
+      when nil; true
+      when UnitTreeItem; item.channels.size > 0
+      else false
     end
   end
   
   def outlineView_child_ofItem(sender, index, item)
-    unless item
-      @c[index]
-    else
-      item.channels[index]
+    case item
+      when nil; @c[index]
+      when UnitTreeItem; item.channels[index]
+      else nil
     end
   end
   
@@ -144,7 +141,7 @@ class TreeDialog < OSX::NSObject
   #objc_method :outlineView_writeItems_toPasteboard, 'c@:@@@'
   def outlineView_writeItems_toPasteboard(sender, items, pboard)
     i = items.to_a[0]
-    if i.kind_of?(IRCUnitConfig)
+    if i.kind_of?(UnitTreeItem)
       unit_index = @c.index(i)
       s = "#{unit_index}"
     else
@@ -177,7 +174,8 @@ class TreeDialog < OSX::NSObject
     return NSDragOperationNone unless target
     i = find_item_from_pboard(target.to_s)
     return NSDragOperationNone unless i
-    if i.kind_of?(IRCUnitConfig)
+    
+    if i.kind_of?(UnitTreeItem)
       return NSDragOperationNone if item
     else
       return NSDragOperationNone unless item
@@ -206,7 +204,8 @@ class TreeDialog < OSX::NSObject
     return false unless target
     i = find_item_from_pboard(target.to_s)
     return false unless i
-    if i.kind_of?(IRCUnitConfig)
+    
+    if i.kind_of?(UnitTreeItem)
       return false if item
       sel = current_sel
       

@@ -1,3 +1,7 @@
+2007-11-01  Satoshi Nakagawa <artension@gmail.com>
+
+	Fixed a bug, data source of OutlineView should return kind of NSObject.
+
 2007-10-31  Satoshi Nakagawa <artension@gmail.com>
 
 	Fixed a bug, double clicks on the console log didn't work.
