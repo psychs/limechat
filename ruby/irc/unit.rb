@@ -673,9 +673,13 @@ class IRCUnit < OSX::NSObject
   end
   
   def detect_myaddress_from_nic
-    addr = Socket.getaddrinfo(Socket.gethostname, nil)
-    addr = addr.find {|i| !(/\.local$/ =~ i[2])}
-    Resolver.resolve(self, addr[2]) if addr
+    begin
+      addr = Socket.getaddrinfo(Socket.gethostname, nil)
+      addr = addr.find {|i| !(/\.local$/ =~ i[2])}
+      Resolver.resolve(self, addr[2]) if addr
+    rescue
+      @myaddress = nil
+    end
   end
   
   # print
