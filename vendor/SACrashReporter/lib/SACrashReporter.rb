@@ -80,7 +80,7 @@ class SACrashReporter < OSX::NSWindowController
     rescue Exception => exception
       # write backtrace to crash log so it can be reported on next launch
       report.exception = exception
-      File.open(crash_log_path, "a") { |file| file.write report.message }
+      File.open(new_crash_log_path, "a") { |file| file.write report.message }
       # re-raise the exception
       raise exception
     end
@@ -98,7 +98,24 @@ class SACrashReporter < OSX::NSWindowController
   
   # Returns the full path to the crash log for the current application.
   def self.crash_log_path
-    @@crash_log_path ||= File.expand_path("~/Library/Logs/CrashReporter/#{app_name}.crash.log")
+    return @@crash_log_path if defined? @@crash_log_path
+    
+    crash_log_dir = File.expand_path("~/Library/Logs/CrashReporter/")
+    log_files = Dir.entries(crash_log_dir).select {|f| f[0..(app_name.length - 1)] == app_name }
+    return new_crash_log_path if log_files.empty?
+    
+    @@crash_log_path = File.join(crash_log_dir, log_files.sort.last)
+    @@crash_log_path
+  end
+  
+  def self.new_crash_log_path
+    if SAFoundation::OS.os_version.to_f < 10.5
+      File.expand_path("~/Library/Logs/CrashReporter/#{app_name}.crash.log")
+    else
+      time = Time.now
+      time_str = format("%02d-%02d-%02d-%02d%02d%02d", time.year, time.month, time.day, time.hour, time.min, time.sec)
+      File.expand_path("~/Library/Logs/CrashReporter/#{app_name}_#{time_str}_#{SAFoundation::OS.host_name.sub(/\.(\w)+$/, '')}.crash")
+    end
   end
   
   # Returns the SHA1 checksum for the crash log of the current application.
@@ -126,10 +143,20 @@ class SACrashReporter < OSX::NSWindowController
   #     end
   #   end
   def self.submit
-    if new_crash_log_exists?
-      @@crash_reporter_controller = SACrashReporter.alloc.init
-      @@crash_reporter_controller.showWindow(self)
-      OSX::NSUserDefaults.standardUserDefaults['SACrashReporterLastCheckSum'] = crash_log_checksum
+    defaults = OSX::NSUserDefaults.standardUserDefaults
+    unless defaults['SACrashReporterInitialized']
+      defaults['SACrashReporterInitialized'] = true
+      if new_crash_log_exists?
+        defaults['SACrashReporterLastCheckSum'] = crash_log_checksum
+      end
+      defaults.synchronize
+    else
+      if new_crash_log_exists?
+        @@crash_reporter_controller = SACrashReporter.alloc.init
+        @@crash_reporter_controller.showWindow(self)
+        defaults['SACrashReporterLastCheckSum'] = crash_log_checksum
+        defaults.synchronize
+      end
     end
   end
   
@@ -139,6 +166,8 @@ class SACrashReporter < OSX::NSWindowController
   ib_outlet :commentTextfield
   ib_outlet :footnoteTextfield
   ib_outlet :sendReportButton
+  ib_outlet :statusSpinner
+  ib_outlet :statusTextField
   
   def init
     return self if self.initWithWindowNibPath_owner(File.expand_path('../SACrashReporter.nib', __FILE__), self)
@@ -164,15 +193,31 @@ class SACrashReporter < OSX::NSWindowController
   end
   
   def sendReport(sender)
-    params = {
+    @statusTextField.hidden = false
+    @statusSpinner.startAnimation(self)
+    
+    params_hash = {
      'app_name' => SACrashReporter.app_name,
      'crash_log' => SACrashReporter.crash_log_data,
      'comment' => @commentTextfield.string
     }
-    uri = URI.parse(OSX::NSBundle.mainBundle.infoDictionary['SACrashReporterPostURL'])
-    data = params.inject('') {|v,i| v << "#{i[0].to_s}=#{CGI.escape(i[1].to_s)}&"}.chop
-    res = Net::HTTP.new(uri.host, uri.port).post(uri.path, data)
+    params = params_hash.inject('') {|v,i| v << "#{i[0].to_s}=#{CGI.escape(i[1].to_s)}&"}.chop
+    params_data = OSX::NSString.stringWithString(params).dataUsingEncoding(OSX::NSASCIIStringEncoding)
     
-    self.close
+    url = OSX::NSURL.URLWithString(OSX::NSBundle.mainBundle.infoDictionary['SACrashReporterPostURL'])
+    
+    request = OSX::NSMutableURLRequest.requestWithURL_cachePolicy_timeoutInterval(url, OSX::NSURLRequestUseProtocolCachePolicy, 30.0)
+    request.setHTTPMethod('POST')
+    request.setHTTPBody(params_data)
+    
+    OSX::NSURLConnection.alloc.initWithRequest_delegate(request, self)
+  end
+  
+  def connectionDidFinishLoading(connection)
+    close
+  end
+  
+  def connection_didFailWithError(connection, error)
+    close
   end
 end

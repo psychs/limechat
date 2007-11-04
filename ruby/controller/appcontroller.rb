@@ -12,7 +12,7 @@ class AppController < OSX::NSObject
   GC_TIME = 600
   
   def awakeFromNib
-    #SACrashReporter.submit
+    SACrashReporter.submit
     
     app = NSApplication.sharedApplication
     nc = NSWorkspace.sharedWorkspace.notificationCenter
