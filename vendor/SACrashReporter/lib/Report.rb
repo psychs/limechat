@@ -2,6 +2,10 @@ require 'osx/cocoa'
 
 module SAFoundation
   module OS
+    def self.host_name
+      `hostname`.chomp
+    end
+    
     # Returns the OS version.
     def self.os_version
       os_version_and_build.first

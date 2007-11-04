@@ -113,7 +113,7 @@ class SACrashReporter < OSX::NSWindowController
       File.expand_path("~/Library/Logs/CrashReporter/#{app_name}.crash.log")
     else
       time = Time.now
-      time_str = format("%02d-%02d-%02d-%02d%02d%02d", time.year, time.month, time.day, time.hour, time.min, time.sec)
+      time_str = format("%02d-%02d-%02d_%02d%02d%02d", time.year, time.month, time.day, time.hour, time.min, time.sec)
       File.expand_path("~/Library/Logs/CrashReporter/#{app_name}_#{time_str}_#{SAFoundation::OS.host_name.sub(/\.(\w)+$/, '')}.crash")
     end
   end
@@ -147,15 +147,15 @@ class SACrashReporter < OSX::NSWindowController
     unless defaults['SACrashReporterInitialized']
       defaults['SACrashReporterInitialized'] = true
       if new_crash_log_exists?
-        defaults['SACrashReporterLastCheckSum'] = crash_log_checksum
+       defaults['SACrashReporterLastCheckSum'] = crash_log_checksum
       end
       defaults.synchronize
     else
       if new_crash_log_exists?
-        @@crash_reporter_controller = SACrashReporter.alloc.init
-        @@crash_reporter_controller.showWindow(self)
-        defaults['SACrashReporterLastCheckSum'] = crash_log_checksum
-        defaults.synchronize
+       @@crash_reporter_controller = SACrashReporter.alloc.init
+       @@crash_reporter_controller.showWindow(self)
+       defaults['SACrashReporterLastCheckSum'] = crash_log_checksum
+       defaults.synchronize
       end
     end
   end

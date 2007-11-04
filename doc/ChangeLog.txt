@@ -1,5 +1,9 @@
 2007-11-04  Satoshi Nakagawa <artension@gmail.com>
 
+	Updated SACrashReporter.
+
+2007-11-04  Satoshi Nakagawa <artension@gmail.com>
+
 	Updated and enabled SACrashReporter.
 	Thanks to Eloy Duran.
 

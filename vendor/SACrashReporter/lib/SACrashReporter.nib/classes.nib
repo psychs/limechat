@@ -32,6 +32,10 @@
 				<string>id</string>
 				<key>sendReportButton</key>
 				<string>id</string>
+				<key>statusSpinner</key>
+				<string>id</string>
+				<key>statusTextField</key>
+				<string>id</string>
 			</dict>
 			<key>SUPERCLASS</key>
 			<string>NSWindowController</string>
