@@ -1,3 +1,7 @@
+2007-11-10  Satoshi Nakagawa <artension@gmail.com>
+
+	Fixed a bug, SACrashReporter should make the directory if it doesn't exist.
+
 2007-11-09  Satoshi Nakagawa <artension@gmail.com>
 
 	Fixed a bug, SACrashReporter crashes when Library/CrashReporter directory doesn't exist.

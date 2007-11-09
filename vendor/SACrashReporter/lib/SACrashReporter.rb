@@ -1,6 +1,7 @@
 require 'osx/cocoa'
 require 'net/http'
 require 'cgi'
+require 'fileutils'
 
 require File.expand_path('../Report', __FILE__)
 
@@ -80,7 +81,10 @@ class SACrashReporter < OSX::NSWindowController
     rescue Exception => exception
       # write backtrace to crash log so it can be reported on next launch
       report.exception = exception
-      File.open(new_crash_log_path, "a") { |file| file.write report.message }
+      path = new_crash_log_path
+      dir = File.dirname(path)
+      FileUtils.mkpath(dir) unless File.exist?(dir)
+      File.open(path, "a") { |file| file.write report.message }
       # re-raise the exception
       raise exception
     end
@@ -113,7 +117,7 @@ class SACrashReporter < OSX::NSWindowController
       File.expand_path("~/Library/Logs/CrashReporter/#{app_name}.crash.log")
     else
       time = Time.now
-      time_str = format("%02d-%02d-%02d_%02d%02d%02d", time.year, time.month, time.day, time.hour, time.min, time.sec)
+      time_str = format("%02d-%02d-%02d-%02d%02d%02d", time.year, time.month, time.day, time.hour, time.min, time.sec)
       File.expand_path("~/Library/Logs/CrashReporter/#{app_name}_#{time_str}_#{SAFoundation::OS.host_name.sub(/\.(\w)+$/, '')}.crash")
     end
   end

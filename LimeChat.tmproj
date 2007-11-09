@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>currentDocument</key>
+	<string>vendor/SACrashReporter/lib/SACrashReporter.rb</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -18,10 +20,59 @@
 	<key>fileHierarchyDrawerWidth</key>
 	<integer>296</integer>
 	<key>metaData</key>
-	<dict/>
+	<dict>
+		<key>objc/rb_main.rb</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>21</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
+		<key>ruby/controller/appcontroller.rb</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>5</integer>
+				<key>line</key>
+				<integer>16</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
+		<key>vendor/SACrashReporter/lib/SACrashReporter.rb</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>27</integer>
+				<key>line</key>
+				<integer>27</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
+	</dict>
+	<key>openDocuments</key>
+	<array>
+		<string>vendor/SACrashReporter/lib/SACrashReporter.rb</string>
+		<string>ruby/controller/appcontroller.rb</string>
+		<string>objc/rb_main.rb</string>
+	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{592, 62}, {1027, 966}}</string>
+	<string>{{595, 84}, {1056, 1091}}</string>
 </dict>
 </plist>
