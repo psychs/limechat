@@ -99,11 +99,12 @@ class SACrashReporter < OSX::NSWindowController
   def self.developer
     OSX::NSBundle.mainBundle.infoDictionary['SACrashReporterDeveloperName']
   end
-  
+
+  @@crash_log_path = nil
   # Returns the full path to the crash log for the current application.
   def self.crash_log_path
-    return @@crash_log_path if defined? @@crash_log_path
-    
+    return @@crash_log_path if @@crash_log_path
+
     crash_log_dir = File.expand_path("~/Library/Logs/CrashReporter/")
     log_files = Dir.entries(crash_log_dir).select {|f| f[0..(app_name.length - 1)] == app_name } rescue []
     return new_crash_log_path if log_files.empty?
