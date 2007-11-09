@@ -101,7 +101,7 @@ class SACrashReporter < OSX::NSWindowController
     return @@crash_log_path if defined? @@crash_log_path
     
     crash_log_dir = File.expand_path("~/Library/Logs/CrashReporter/")
-    log_files = Dir.entries(crash_log_dir).select {|f| f[0..(app_name.length - 1)] == app_name }
+    log_files = Dir.entries(crash_log_dir).select {|f| f[0..(app_name.length - 1)] == app_name } rescue []
     return new_crash_log_path if log_files.empty?
     
     @@crash_log_path = File.join(crash_log_dir, log_files.sort.last)

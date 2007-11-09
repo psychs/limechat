@@ -1,3 +1,7 @@
+2007-11-09  Satoshi Nakagawa <artension@gmail.com>
+
+	Fixed a bug, SACrashReporter crashes when Library/CrashReporter directory doesn't exist.
+
 2007-11-05  Satoshi Nakagawa <artension@gmail.com>
 
 	Fixed a bug, exceptions from Socket.getaddrinfo should be caught.
