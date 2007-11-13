@@ -1,3 +1,7 @@
+2007-11-13  Satoshi Nakagawa <artension@gmail.com>
+
+	Enabled ruby thread hooks.
+
 2007-11-10  Satoshi Nakagawa <artension@gmail.com>
 
 	Fixed a bug, SACrashReporter should make the directory if it doesn't exist.
