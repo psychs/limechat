@@ -204,7 +204,11 @@ class IRCWorld < OSX::NSObject
   
   def create_talk(unit, nick)
     c = create_channel(unit, IRCChannelConfig.new({:name => nick, :type => :talk}))
-    c.activate if unit.login?
+    if unit.login?
+      c.activate
+      c.add_member(User.new(unit.mynick))
+      c.add_member(User.new(nick))
+    end
     c
   end
   

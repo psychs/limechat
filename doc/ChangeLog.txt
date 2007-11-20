@@ -1,3 +1,7 @@
+2007-11-21  Satoshi Nakagawa <artension@gmail.com>
+
+	Changed to add self and peer to the member list.
+
 2007-11-13  Satoshi Nakagawa <artension@gmail.com>
 
 	Enabled ruby thread hooks.

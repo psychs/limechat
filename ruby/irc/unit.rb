@@ -922,6 +922,8 @@ class IRCUnit < OSX::NSObject
         c.stored_topic = nil
       elsif c.talk?
         c.activate
+        c.add_member(User.new(@mynick))
+        c.add_member(User.new(c.name))
       end
     end
     update_unit_title
