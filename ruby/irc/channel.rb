@@ -3,7 +3,7 @@
 
 class IRCChannel < OSX::NSObject
   include OSX
-  attr_accessor :unit, :id, :topic, :names_init, :who_init, :log
+  attr_accessor :unit, :pref, :id, :topic, :names_init, :who_init, :log
   attr_reader :config, :members, :mode
   attr_writer :op
   attr_accessor :keyword, :unread, :newtalk
@@ -20,6 +20,7 @@ class IRCChannel < OSX::NSObject
     @who_init = false
     @op_queue = []
     @op_wait = 0
+    @terminating = false
     reset_state
   end
   
@@ -40,7 +41,9 @@ class IRCChannel < OSX::NSObject
   end
   
   def terminate
+    @terminating = true
     close_dialog
+    close_logfile
   end
   
   def name
@@ -237,6 +240,21 @@ class IRCChannel < OSX::NSObject
     end
   end
   
+  def print(line, key)
+    @log.print(line, key)
+    
+    # open log file
+    unless @terminating
+      if @pref.gen.log_transcript
+        unless @logfile
+          @logfile = FileLogger.new(@pref, @unit, self)
+        end
+        s = "#{line.time}#{line.nick}#{line.body}"
+        @logfile.write_line(s)
+      end
+    end
+  end
+  
   # model
   
   def number_of_children
@@ -290,11 +308,29 @@ class IRCChannel < OSX::NSObject
   end
   
   def preferences_changed
+    if @logfile
+      if @pref.gen.log_transcript
+        @logfile.reopen_if_needed
+      else
+        close_logfile
+      end
+    end
+  end
+  
+  def date_changed
+    @logfile.reopen_if_needed if @logfile
   end
   
   private
   
   def update_channel_title
     @unit.update_channel_title(self)
+  end
+  
+  def close_logfile
+    if @logfile
+      @logfile.close
+      @logfile = nil
+    end
   end
 end

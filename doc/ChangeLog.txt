@@ -1,6 +1,10 @@
 2007-11-21  Satoshi Nakagawa <artension@gmail.com>
 
-	Changed to add self and peer to the member list.
+	Implemented log transcripts.
+
+2007-11-21  Satoshi Nakagawa <artension@gmail.com>
+
+	Changed to add self and peer to the member list in a talk.
 
 2007-11-13  Satoshi Nakagawa <artension@gmail.com>
 

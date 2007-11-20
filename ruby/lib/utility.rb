@@ -47,6 +47,10 @@ class String
     include?('.')
   end
   
+  def safe_filename
+    gsub(/[:\/]/, '_')
+  end
+  
   def expand_path
     OSX::NSString.stringWithString(self).stringByExpandingTildeInPath.to_s
   end

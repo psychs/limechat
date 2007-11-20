@@ -73,7 +73,7 @@ class Preferences
       @leave_on_doubleclick = false
       @use_growl = true
       @log_transcript = false
-      @transcript_folder = '~/Documents/LimeChat Transcripts'
+      @transcript_folder = '~/Documents/LimeChatTranscripts'
     end
   end
   

@@ -1,6 +1,8 @@
 # Created by Satoshi Nakagawa.
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
+require 'date'
+
 class IRCWorld < OSX::NSObject
   include OSX
   attr_accessor :tree, :log_base, :console_base, :member_list, :text, :window, :pref, :dcc
@@ -16,6 +18,7 @@ class IRCWorld < OSX::NSObject
     @channel_id = 0
     @growl = GrowlController.new
     @growl.owner = self
+    @today = Date.today
   end
   
   def setup(seed)
@@ -174,6 +177,7 @@ class IRCWorld < OSX::NSObject
     c = IRCChannel.alloc.init
     c.id = @channel_id
     c.unit = unit
+    c.pref = @pref
     c.log = create_log
     c.setup(seed)
     
@@ -379,6 +383,10 @@ class IRCWorld < OSX::NSObject
     @units.each {|u| u.preferences_changed}
   end
   
+  def date_changed
+    @units.each {|u| u.date_changed}
+  end
+  
   # delegate
   
   def outlineView_doubleClicked(sender)
@@ -543,6 +551,12 @@ class IRCWorld < OSX::NSObject
   def on_timer
     @units.each {|u| u.on_timer }
     @dcc.on_timer
+    
+    date = Date.today
+    if @today != date
+      @today = date
+      date_changed
+    end
   end
   
   private

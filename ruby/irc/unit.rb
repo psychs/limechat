@@ -549,6 +549,10 @@ class IRCUnit < OSX::NSObject
       
     @channels.each {|c| c.preferences_changed}
   end
+  
+  def date_changed
+    @channels.each {|c| c.date_changed}
+  end
 
   # whois dialogs
   
@@ -761,8 +765,7 @@ class IRCUnit < OSX::NSObject
     
     line = LogLine.new(time, place, nickstr, text, kind, mtype, nick, click)
     if channel && !channel.unit?
-      #key = channel.log.print(line, channel.config.keyword)
-      key = channel.log.print(line, true)
+      key = channel.print(line, true)
     else
       key = @log.print(line, true)
     end
