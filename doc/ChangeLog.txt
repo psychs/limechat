@@ -1,5 +1,9 @@
 2007-11-21  Satoshi Nakagawa <artension@gmail.com>
 
+	Changed the url regex to allow IDNs.
+
+2007-11-21  Satoshi Nakagawa <artension@gmail.com>
+
 	Implemented log transcripts.
 
 2007-11-21  Satoshi Nakagawa <artension@gmail.com>
