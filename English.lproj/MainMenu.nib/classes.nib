@@ -1,88 +1,238 @@
-{
-    IBClasses = (
-        {
-            ACTIONS = {textEntered = id; }; 
-            CLASS = AppController; 
-            LANGUAGE = ObjC; 
-            OUTLETS = {
-                "addr_menu" = id; 
-                "channel_menu" = id; 
-                "console_base" = id; 
-                "console_menu" = id; 
-                "info_split" = id; 
-                "log_base" = id; 
-                "log_menu" = id; 
-                "log_split" = id; 
-                "member_list" = id; 
-                "member_menu" = id; 
-                menu = id; 
-                "root_split" = id; 
-                "server_menu" = id; 
-                text = id; 
-                tree = id; 
-                "tree_menu" = id; 
-                "url_menu" = id; 
-                window = id; 
-            }; 
-            SUPERCLASS = NSObject; 
-        }, 
-        {CLASS = ChatBox; LANGUAGE = ObjC; SUPERCLASS = NSBox; }, 
-        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
-        {CLASS = MainWindow; LANGUAGE = ObjC; SUPERCLASS = NSWindow; }, 
-        {CLASS = MemberListView; LANGUAGE = ObjC; SUPERCLASS = NSTableView; }, 
-        {
-            ACTIONS = {
-                changeStyle = id; 
-                onAddChannel = id; 
-                onAddServer = id; 
-                onAutoOp = id; 
-                onCancelReconnecting = id; 
-                onChannelAutoOp = id; 
-                onChannelProperties = id; 
-                onClearScrollback = id; 
-                onConnect = id; 
-                onCopyAddress = id; 
-                onCopyServer = id; 
-                onCopyUrl = id; 
-                onDcc = id; 
-                onDeleteChannel = id; 
-                onDeleteServer = id; 
-                onDisconnect = id; 
-                onJoin = id; 
-                onLeave = id; 
-                onMarkScrollback = id; 
-                onMemberAutoOp = id; 
-                onMemberClientInfo = id; 
-                onMemberDeop = id; 
-                onMemberGiveOp = id; 
-                onMemberPing = id; 
-                onMemberSendFile = id; 
-                onMemberTalk = id; 
-                onMemberTime = id; 
-                onMemberUserInfo = id; 
-                onMemberVersion = id; 
-                onMemberWhois = id; 
-                onMode = id; 
-                onNick = id; 
-                onOpenUrl = id; 
-                onPaste = id; 
-                onPasteDialog = id; 
-                onPasteMyAddress = id; 
-                onPreferences = id; 
-                onSearchWeb = id; 
-                onServerAutoOp = id; 
-                onServerProperties = id; 
-                onServerTree = id; 
-                onTopic = id; 
-            }; 
-            CLASS = MenuController; 
-            LANGUAGE = ObjC; 
-            SUPERCLASS = NSObject; 
-        }, 
-        {CLASS = ServerTreeView; LANGUAGE = ObjC; SUPERCLASS = NSOutlineView; }, 
-        {CLASS = SingleLineFormatter; LANGUAGE = ObjC; SUPERCLASS = NSFormatter; }, 
-        {CLASS = Splitter; LANGUAGE = ObjC; SUPERCLASS = NSSplitView; }, 
-        {CLASS = TextField; LANGUAGE = ObjC; SUPERCLASS = NSTextField; }
-    ); 
-    IBVersion = 1; 
-}
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IBClasses</key>
+	<array>
+		<dict>
+			<key>CLASS</key>
+			<string>MainWindow</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSWindow</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>SingleLineFormatter</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSFormatter</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>ServerTreeView</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSOutlineView</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>FirstResponder</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSObject</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>NSObject</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+		</dict>
+		<dict>
+			<key>ACTIONS</key>
+			<dict>
+				<key>changeStyle</key>
+				<string>id</string>
+				<key>onAddChannel</key>
+				<string>id</string>
+				<key>onAddServer</key>
+				<string>id</string>
+				<key>onAutoOp</key>
+				<string>id</string>
+				<key>onCancelReconnecting</key>
+				<string>id</string>
+				<key>onChannelAutoOp</key>
+				<string>id</string>
+				<key>onChannelList</key>
+				<string>id</string>
+				<key>onChannelProperties</key>
+				<string>id</string>
+				<key>onClearScrollback</key>
+				<string>id</string>
+				<key>onConnect</key>
+				<string>id</string>
+				<key>onCopyAddress</key>
+				<string>id</string>
+				<key>onCopyServer</key>
+				<string>id</string>
+				<key>onCopyUrl</key>
+				<string>id</string>
+				<key>onDcc</key>
+				<string>id</string>
+				<key>onDeleteChannel</key>
+				<string>id</string>
+				<key>onDeleteServer</key>
+				<string>id</string>
+				<key>onDisconnect</key>
+				<string>id</string>
+				<key>onJoin</key>
+				<string>id</string>
+				<key>onLeave</key>
+				<string>id</string>
+				<key>onMarkScrollback</key>
+				<string>id</string>
+				<key>onMemberAutoOp</key>
+				<string>id</string>
+				<key>onMemberClientInfo</key>
+				<string>id</string>
+				<key>onMemberDeop</key>
+				<string>id</string>
+				<key>onMemberGiveOp</key>
+				<string>id</string>
+				<key>onMemberPing</key>
+				<string>id</string>
+				<key>onMemberSendFile</key>
+				<string>id</string>
+				<key>onMemberTalk</key>
+				<string>id</string>
+				<key>onMemberTime</key>
+				<string>id</string>
+				<key>onMemberUserInfo</key>
+				<string>id</string>
+				<key>onMemberVersion</key>
+				<string>id</string>
+				<key>onMemberWhois</key>
+				<string>id</string>
+				<key>onMode</key>
+				<string>id</string>
+				<key>onNick</key>
+				<string>id</string>
+				<key>onOpenUrl</key>
+				<string>id</string>
+				<key>onPaste</key>
+				<string>id</string>
+				<key>onPasteDialog</key>
+				<string>id</string>
+				<key>onPasteMyAddress</key>
+				<string>id</string>
+				<key>onPreferences</key>
+				<string>id</string>
+				<key>onSearchWeb</key>
+				<string>id</string>
+				<key>onServerAutoOp</key>
+				<string>id</string>
+				<key>onServerProperties</key>
+				<string>id</string>
+				<key>onServerTree</key>
+				<string>id</string>
+				<key>onTopic</key>
+				<string>id</string>
+			</dict>
+			<key>CLASS</key>
+			<string>MenuController</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSObject</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>ListView</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSTableView</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>MemberListView</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>ListView</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>Splitter</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSSplitView</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>ChatBox</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSBox</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>TextField</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSTextField</string>
+		</dict>
+		<dict>
+			<key>ACTIONS</key>
+			<dict>
+				<key>textEntered</key>
+				<string>id</string>
+			</dict>
+			<key>CLASS</key>
+			<string>AppController</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>OUTLETS</key>
+			<dict>
+				<key>addr_menu</key>
+				<string>id</string>
+				<key>channel_menu</key>
+				<string>id</string>
+				<key>console_base</key>
+				<string>id</string>
+				<key>console_menu</key>
+				<string>id</string>
+				<key>info_split</key>
+				<string>id</string>
+				<key>log_base</key>
+				<string>id</string>
+				<key>log_menu</key>
+				<string>id</string>
+				<key>log_split</key>
+				<string>id</string>
+				<key>member_list</key>
+				<string>id</string>
+				<key>member_menu</key>
+				<string>id</string>
+				<key>menu</key>
+				<string>id</string>
+				<key>root_split</key>
+				<string>id</string>
+				<key>server_menu</key>
+				<string>id</string>
+				<key>text</key>
+				<string>id</string>
+				<key>tree</key>
+				<string>id</string>
+				<key>tree_menu</key>
+				<string>id</string>
+				<key>url_menu</key>
+				<string>id</string>
+				<key>window</key>
+				<string>id</string>
+			</dict>
+			<key>SUPERCLASS</key>
+			<string>NSObject</string>
+		</dict>
+	</array>
+	<key>IBVersion</key>
+	<string>1</string>
+</dict>
+</plist>

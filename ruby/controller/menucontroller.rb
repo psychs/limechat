@@ -95,6 +95,8 @@ class MenuController < OSX::NSObject
       !!u && (u.connecting? || u.reconnecting?)
     when 511  # nick
       login
+    when 519  # channel list
+      login
     when 521  # add server
       true
     when 522  # copy server
@@ -440,6 +442,12 @@ class MenuController < OSX::NSObject
     @nick = nil
   end
   
+  def onChannelList(sender)
+    u = @world.selunit
+    return unless u
+    u.create_channel_list_dialog
+  end
+  
   
   def onAddServer(sender)
     u = @world.selunit
@@ -706,7 +714,7 @@ class MenuController < OSX::NSObject
       .debug_send { color: #880; }
       .debug_receive { color: #444; }
     EOM
-    @world.change_log_style(style);
+    #@world.change_log_style(style);
   end
   
   

@@ -581,7 +581,7 @@ class IRCWorld < OSX::NSObject
       end
     end
     if target.unit?
-      target.channels.each {|c| c.close_dialog }
+      target.channels.each {|c| c.close_dialogs }
       @units.delete(target)
     else
       target.unit.channels.delete(target)

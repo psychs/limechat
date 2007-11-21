@@ -112,7 +112,7 @@ class IRCUnit < OSX::NSObject
   
   def terminate
     quit
-    close_dialog
+    close_dialogs
     @channels.each {|c| c.terminate }
     disconnect
   end
@@ -166,13 +166,17 @@ class IRCUnit < OSX::NSObject
     h
   end
   
-  def close_dialog
+  def close_dialogs
     if @property_dialog
       @property_dialog.close
       @property_dialog = nil
     end
     @whois_dialogs.each {|d| d.close }
     @whois_dialogs.clear
+    if @list_dialog
+      @list_dialog.close
+      @list_dialog = nil
+    end
   end
   
   def auto_connect(delay)
@@ -588,6 +592,31 @@ class IRCUnit < OSX::NSObject
   
   def whoisDialog_onJoin(sender, channel)
     send(:join, channel)
+  end
+  
+  # channel list dialog
+  
+  def create_channel_list_dialog
+    unless @list_dialog
+      @list_dialog = ListDialog.alloc.init
+      @list_dialog.delegate = self
+      @list_dialog.start
+    else
+      @list_dialog.show
+    end
+  end
+  
+  def listDialog_onClose(sender)
+    puts 'closed'
+    @list_dialog = nil
+  end
+  
+  def listDialog_onUpdate(sender)
+    puts 'update'
+  end
+  
+  def listDialog_onJoin(sender)
+    puts 'join'
   end
   
   # socket
@@ -1599,8 +1628,9 @@ class IRCUnit < OSX::NSObject
         c.reload_members
         c.sort_members
         update_channel_title(c)
+      else
+        print_both(c || chname, :reply, "*Names: #{trail}")
       end
-      print_both(c || chname, :reply, "*Names: #{trail}")
     when 366  # RPL_ENDOFNAMES
       chname = m[1]
       c = find_channel(chname)

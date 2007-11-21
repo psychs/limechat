@@ -42,7 +42,7 @@ class IRCChannel < OSX::NSObject
   
   def terminate
     @terminating = true
-    close_dialog
+    close_dialogs
     close_logfile
   end
   
@@ -112,7 +112,7 @@ class IRCChannel < OSX::NSObject
     reload_members
   end
   
-  def close_dialog
+  def close_dialogs
     if @property_dialog
       @property_dialog.close
       @property_dialog = nil
