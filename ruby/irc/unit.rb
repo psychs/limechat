@@ -607,12 +607,12 @@ class IRCUnit < OSX::NSObject
   end
   
   def listDialog_onClose(sender)
-    puts 'closed'
     @list_dialog = nil
   end
   
   def listDialog_onUpdate(sender)
-    puts 'update'
+    @list_dialog.clear if @list_dialog
+    send(:list)
   end
   
   def listDialog_onJoin(sender)
@@ -939,6 +939,7 @@ class IRCUnit < OSX::NSObject
     @mymode.clear
     @who_queue = []
     @who_wait = 0
+    @in_list = false
     print_system(self, 'Logged in')
     notify_event(:login)
     SoundPlayer.play(@pref.sound.login)
@@ -1695,6 +1696,26 @@ class IRCUnit < OSX::NSObject
       else
         print_unknown_reply(m)
       end
+    when 322	# RPL_LIST
+      unless @in_list
+        @in_list = true
+        @list_dialog.clear if @list_dialog
+      end
+      chname = m[1]
+      count = m[2]
+      topic = m.sequence(3)
+      unless @list_dialog
+        create_channel_list_dialog
+      end
+      if @list_dialog
+        @list_dialog.add_item([chname, count.to_i, topic])
+      end
+    when 323	# RPL_LISTEND
+      @in_list = false
+      if @list_dialog
+        @list_dialog.sort
+        @list_dialog.reload_table 
+      end
     else
       print_unknown_reply(m)
     end
@@ -1706,8 +1727,6 @@ when 305	# RPL_UNAWAY
 when 306	# RPL_NOWAWAY
 when 314	# RPL_WHOWASUSER
 when 369	# RPL_ENDOFWHOWAS
-when 322	# RPL_LIST
-when 323	# RPL_LISTEND
 when 341	# RPL_INVITING
 
 when 367	# RPL_BANLIST

@@ -412,12 +412,12 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				783D0B1E0CF45BC6002CC2FB /* ListDialog.nib */,
 				7884E5450CDA91F500AF3678 /* SACrashReporter */,
 				78084BF50C7604410005D700 /* application.icns */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 				78AD78E20C61B8F8001E77F4 /* Localizable.strings */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
+				783D0B1E0CF45BC6002CC2FB /* ListDialog.nib */,
 				29B97318FDCFA39411CA2CEA /* MainMenu.nib */,
 				78C5BAD30BE7B95100C4497A /* CommentSheet.nib */,
 				781E254B0BE9E8E20040F56E /* ModeSheet.nib */,

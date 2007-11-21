@@ -32,6 +32,7 @@ class ListDialog < OSX::NSObject
         #@@place = 0 if @@place >= ROTATE_COUNT
       end
     end
+    @window.setTitle("Channel List - #{@delegate.name}")
     @window.makeKeyAndOrderFront(self)
   end
   
@@ -65,10 +66,29 @@ class ListDialog < OSX::NSObject
   
   def clear
     @list = []
+    reload_table
+  end
+  
+  def sort
+    @list = @list.sort do |a,b|
+      res = a[1] <=> b[1]
+      if res != 0
+        -res
+      else
+        a[0].downcase <=> b[0].downcase
+      end
+    end
   end
   
   def add_item(item)
     @list << item
+    if @list.size % 100 == 0
+      sort
+      reload_table
+    end
+  end
+  
+  def reload_table
     @table.reloadData
   end
   
@@ -80,7 +100,7 @@ class ListDialog < OSX::NSObject
     m = @list[row]
     case col.identifier
     when 'chname'; m[0]
-    when 'number'; m[1].to_s
+    when 'count'; m[1].to_s
     else; m[2]
     end
   end

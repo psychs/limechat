@@ -50,11 +50,11 @@ class TcpClient < OSX::NSObject
   end
   
   def readline
-    n = @buf.index(/\r?\n/)
+    n = @buf.index("\n")
     return nil unless n
     s = @buf[0...n]
-    @buf[0...n] = ''
-    @buf.sub!(/\A\r?\n/, '')
+    s[-1] = '' if s[-1] == ?\r
+    @buf[0..n] = ''
     s
   end
   

@@ -1,6 +1,10 @@
 2007-11-21  Satoshi Nakagawa <artension@gmail.com>
 
 	Implementing the channel list dialog.
+
+2007-11-21  Satoshi Nakagawa <artension@gmail.com>
+
+	Implementing the channel list dialog.
 	Changed to stop printing names when the client joined a channel.
 
 2007-11-21  Satoshi Nakagawa <artension@gmail.com>
