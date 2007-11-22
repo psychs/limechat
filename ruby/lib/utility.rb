@@ -243,6 +243,9 @@ module OSX
         :h => height
       }
     end
+    def self.from_center(p, width, height)
+      NSRect.new(p.x - width/2, p.y - height/2, width, height)
+    end
 
     def inspect
       "#<#{self.class.to_s.gsub(/^OSX::/, '')} (#{x}, #{y}, #{width}, #{height}>"

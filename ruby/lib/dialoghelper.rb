@@ -45,6 +45,19 @@ module DialogHelper
   
   private
   
+  def set_table_header_settings(table, ary)
+    table.tableColumns.to_a.each_with_index do |i,n|
+      w = ary[n]
+      i.setWidth(w) if w
+    end
+  end
+  
+  def get_table_header_settings(table)
+    ary = []
+    table.tableColumns.to_a.each {|i| ary << i.width}
+    ary
+  end
+  
   def fire_event(name, *args)
     method = @prefix + '_' + name
     if @delegate && @delegate.respond_to?(method)

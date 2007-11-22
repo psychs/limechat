@@ -1,5 +1,9 @@
 2007-11-22  Satoshi Nakagawa <artension@gmail.com>
 
+	Changed to load and save the condition of the channel list dialog.
+
+2007-11-22  Satoshi Nakagawa <artension@gmail.com>
+
 	Added a check box on the paste sheet, use Notice command.
 
 2007-11-22  Satoshi Nakagawa <artension@gmail.com>

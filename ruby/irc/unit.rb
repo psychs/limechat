@@ -601,6 +601,7 @@ class IRCUnit < OSX::NSObject
     unless @list_dialog
       @list_dialog = ListDialog.alloc.init
       @list_dialog.delegate = self
+      @list_dialog.pref = @pref
       @list_dialog.start
     else
       @list_dialog.show

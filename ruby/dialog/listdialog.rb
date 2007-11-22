@@ -6,32 +6,24 @@ require 'dialoghelper'
 class ListDialog < OSX::NSObject
   include OSX
   include DialogHelper
-  attr_accessor :delegate, :prefix
+  attr_accessor :delegate, :prefix, :pref
   ib_outlet :window, :table, :updateButton, :closeButton
   
   def initialize
     @prefix = 'listDialog'
     @list = []
+    @sort_key = 1
+    @sort_order = :descent
   end
   
   def start
     NSBundle.loadNibNamed_owner('ListDialog', self)
+    load_window_state
     @window.makeFirstResponder(@updateButton)
     show
   end
   
   def show
-    unless @window.isVisible
-      scr = NSScreen.screens[0]
-      if scr
-        p = scr.visibleFrame.center
-        p -= @window.frame.size / 2
-        #p += OFFSET_SIZE * (@@place - ROTATE_COUNT/2)
-        @window.setFrameOrigin(p)
-        #@@place += 1
-        #@@place = 0 if @@place >= ROTATE_COUNT
-      end
-    end
     @window.setTitle("Channel List - #{@delegate.name}")
     @window.makeKeyAndOrderFront(self)
   end
@@ -42,6 +34,7 @@ class ListDialog < OSX::NSObject
   end
   
   def windowWillClose(sender)
+    save_window_state
     fire_event('onClose')
   end
   
@@ -60,6 +53,22 @@ class ListDialog < OSX::NSObject
   end
   ib_action :onJoin
   
+  def tableView_didClickTableColumn(table, col)
+    i = case col.identifier
+      when 'chname'; 0
+      when 'count'; 1
+      else; 2
+    end
+    if @sort_key == i
+      @sort_order = @sort_order == :ascent ? :descent : :ascent
+    else
+      @sort_key = i
+      @sort_order = :ascent
+    end
+    sort
+    reload_table
+  end
+  
   def update
     #@joinButton.setEnabled(false)
   end
@@ -71,11 +80,23 @@ class ListDialog < OSX::NSObject
   
   def sort
     @list = @list.sort do |a,b|
-      res = a[1] <=> b[1]
-      if res != 0
-        -res
+      if @sort_key == 1
+        res = a[1] <=> b[1]
       else
-        a[0].downcase <=> b[0].downcase
+        res = a[@sort_key].downcase <=> b[@sort_key].downcase
+      end
+      if res == 0
+        if @sort_key == 0
+          res = a[1] <=> b[1]
+        else
+          res = a[0].downcase <=> b[0].downcase
+        end
+      else
+        if @sort_order == :ascent
+          res
+        else
+          - res
+        end
       end
     end
   end
@@ -99,9 +120,32 @@ class ListDialog < OSX::NSObject
   def tableView_objectValueForTableColumn_row(sender, col, row)
     m = @list[row]
     case col.identifier
-    when 'chname'; m[0]
-    when 'count'; m[1].to_s
-    else; m[2]
+      when 'chname'; m[0]
+      when 'count'; m[1].to_s
+      else; m[2]
+    end
+  end
+  
+  private
+
+  def load_window_state
+    c = @pref.load_window('channel_list_window')
+    if c
+      frame = NSRect.from_dic(c[:window])
+      set_table_header_settings(@table, c[:tablecols])
+    else
+      frame = NSRect.from_center(NSScreen.screens[0].visibleFrame.center, 500, 400)
+    end
+    @window.setFrame_display(frame, false)
+  end
+
+  def save_window_state
+    if @window
+      c = {
+        :window => @window.frame.to_dic,
+        :tablecols => get_table_header_settings(@table),
+      }
+      @pref.save_window('channel_list_window', c)
     end
   end
 end
