@@ -53,17 +53,17 @@ class TcpClient < OSX::NSObject
     n = @buf.index("\n")
     return nil unless n
     s = @buf[0...n]
-    s[-1] = '' if s[-1] == ?\r
+    s[-1] = '' if s[-1,1] == "\r"
     @buf[0..n] = ''
     s
   end
   
   def write(str)
     return unless connected?
+    @send_queue_size += 1
     data = NSData.dataWithRubyString(str)
     @sock.writeData_withTimeout_tag(data, -1.0, 0)
     wait_read
-    @send_queue_size += 1
   end
   
   def active?
