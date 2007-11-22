@@ -1,3 +1,8 @@
+2007-11-22  Satoshi Nakagawa <artension@gmail.com>
+
+	Improved sending a text message started with "/".
+	Now a message started with "//" is to send a message started with "/".
+
 2007-11-21  Satoshi Nakagawa <artension@gmail.com>
 
 	Implementing the channel list dialog.

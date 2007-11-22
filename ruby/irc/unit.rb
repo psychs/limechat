@@ -279,12 +279,13 @@ class IRCUnit < OSX::NSObject
     sel = @world.selected
     str.split(/\r\n|\r|\n/).each do |s|
       next if s.empty?
-      if s[0] == ?/
+      if s[0] == ?/ && s[1] != ?/
         s[0] = ''
         send_command(s)
       elsif sel == self
         send_command(s)
       else
+        s[0] = '' if s[0] == ?/
         send_text(sel, cmd, s)
       end
     end
