@@ -36,7 +36,6 @@ class IRCWorld < OSX::NSObject
   
   def save
     @pref.save_world(to_dic)
-    @pref.sync
   end
   
   def setup_tree

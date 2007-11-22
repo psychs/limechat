@@ -1,5 +1,9 @@
 2007-11-22  Satoshi Nakagawa <artension@gmail.com>
 
+	Added a check box on the paste sheet, use Notice command.
+
+2007-11-22  Satoshi Nakagawa <artension@gmail.com>
+
 	Added options, highlight a whole line and highlight your current nickname.
 
 2007-11-22  Satoshi Nakagawa <artension@gmail.com>

@@ -52,6 +52,7 @@ class Preferences
     persistent_attr :connect_on_doubleclick, :disconnect_on_doubleclick, :join_on_doubleclick, :leave_on_doubleclick
     persistent_attr :use_growl
     persistent_attr :log_transcript, :transcript_folder
+    persistent_attr :notice_on_paste
     
     TAB_COMPLETE_NICK = 0
     TAB_UNREAD = 1
@@ -76,6 +77,7 @@ class Preferences
       @use_growl = true
       @log_transcript = false
       @transcript_folder = '~/Documents/LimeChatTranscripts'
+      @notice_on_paste = true
     end
   end
   
@@ -130,6 +132,7 @@ class Preferences
       h[i] = m.get_persistent_attrs
     end
     write_defaults('pref', h)
+    sync
   end
   
   def load_world
@@ -156,6 +159,7 @@ class Preferences
   
   def save_world(c)
     write_defaults('world', c)
+    sync
   end
   
   def load_window(key)
@@ -164,7 +168,10 @@ class Preferences
   
   def save_window(key, value)
     write_defaults(key, value)
+    sync
   end
+  
+  private
   
   def sync
     NSUserDefaults.standardUserDefaults.synchronize

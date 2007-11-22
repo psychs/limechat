@@ -257,7 +257,6 @@ class MenuController < OSX::NSObject
   
   def preferenceDialog_onOk(sender, m)
     @pref.save
-    @pref.sync
     @app.preferences_changed
   end
   
@@ -339,18 +338,22 @@ class MenuController < OSX::NSObject
     @paste.delegate = self
     @paste.uid = uid
     @paste.cid = cid
-    @paste.start(s, mode)
+    @paste.start(s, mode, @pref.gen.notice_on_paste)
   end
   
-  def pasteSheet_onSend(sender, s)
+  def pasteSheet_onSend(sender, s, notice)
+    @pref.gen.notice_on_paste = notice
+    @pref.save
     @paste = nil
     u, c = @world.find_by_id(sender.uid, sender.cid)
     return unless u && c
     s = s.gsub(/\r\n|\r|\n/, "\n")
-    u.send_text(c, :notice, s)
+    u.send_text(c, notice ? :notice : :privmsg, s)
   end
   
-  def pasteSheet_onCancel(sender)
+  def pasteSheet_onCancel(sender, notice)
+    @pref.gen.notice_on_paste = notice
+    @pref.save
     @paste = nil
   end
   
