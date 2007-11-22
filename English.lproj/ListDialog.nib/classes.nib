@@ -20,6 +20,14 @@
 		</dict>
 		<dict>
 			<key>CLASS</key>
+			<string>ListView</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSTableView</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
 			<string>DialogWindow</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>

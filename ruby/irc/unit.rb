@@ -617,8 +617,8 @@ class IRCUnit < OSX::NSObject
     send(:list)
   end
   
-  def listDialog_onJoin(sender)
-    puts 'join'
+  def listDialog_onJoin(sender, chname)
+    send(:join, chname)
   end
   
   # socket

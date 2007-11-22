@@ -19,6 +19,7 @@ class ListDialog < OSX::NSObject
   def start
     NSBundle.loadNibNamed_owner('ListDialog', self)
     load_window_state
+    @table.setDoubleAction(:onJoin)
     @window.makeFirstResponder(@updateButton)
     show
   end
@@ -49,9 +50,14 @@ class ListDialog < OSX::NSObject
   ib_action :onUpdate
   
   def onJoin(sender)
-    fire_event('onJoin')
+    i = @table.selectedRows[0]
+    if i
+      item = @list[i]
+      if item
+        fire_event('onJoin', item[0])
+      end
+    end
   end
-  ib_action :onJoin
   
   def tableView_didClickTableColumn(table, col)
     i = case col.identifier
