@@ -1,5 +1,9 @@
 2007-11-22  Satoshi Nakagawa <artension@gmail.com>
 
+	Added options, highlight a whole line and highlight your current nickname.
+
+2007-11-22  Satoshi Nakagawa <artension@gmail.com>
+
 	Improved sending a text message started with "/".
 	Now a message started with "//" is to send a message started with "/".
 

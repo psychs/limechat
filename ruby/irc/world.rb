@@ -22,9 +22,9 @@ class IRCWorld < OSX::NSObject
   end
   
   def setup(seed)
-    @console = create_log(true)
+    @console = create_log(nil, true)
     @console_base.setContentView(@console.view)
-    @dummylog = create_log(true)
+    @dummylog = create_log(nil, true)
     @log_base.setContentView(@dummylog.view)
     
     @config = seed.dup
@@ -149,7 +149,7 @@ class IRCWorld < OSX::NSObject
     u.id = @unit_id
     u.world = self
     u.pref = @pref
-    u.log = create_log
+    u.log = create_log(u)
     u.setup(seed)
     seed.channels.each {|c| create_channel(u, c) } if seed.channels
     @units << u
@@ -178,7 +178,7 @@ class IRCWorld < OSX::NSObject
     c.id = @channel_id
     c.unit = unit
     c.pref = @pref
-    c.log = create_log
+    c.log = create_log(unit)
     c.setup(seed)
     
     case seed.type
@@ -593,13 +593,14 @@ class IRCWorld < OSX::NSObject
     end
   end
   
-  def create_log(console=false)
+  def create_log(unit, console=false)
     log = LogController.alloc.init
     log.menu = console ? @console_menu : @log_menu
     log.url_menu = @url_menu
     log.addr_menu = @addr_menu
     log.member_menu = @member_menu
     log.world = self
+    log.unit = unit
     log.keyword = @pref.key
     log.setup(console)
     log.view.setHostWindow(@window)

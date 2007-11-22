@@ -4,13 +4,34 @@
 module LogRenderer
   class << self
     
-    def render_body(body, keywords, dislike_words)
+    def render_body(body, keywords, dislike_words, whole_line)
       effects, body = process_effects(body)
       urls = process_urls(body)
       keywords = process_keywords(body, urls, keywords, dislike_words)
-      addrs = process_addresses(body)
-      addrs.delete_if {|a| urls.find {|u| intersect?(a,u)}} unless urls.empty?
-      addrs.delete_if {|a| keywords.find {|k| intersect?(a,k)}} unless keywords.empty?
+      
+      if whole_line && !keywords.empty?
+        addrs = []
+        keywords = []
+        
+        if urls.empty?
+          keywords << { :pos => 0, :len => body.size }
+        else
+          # build keywords to cover the rest parts of the urls
+          start = 0
+          urls.each do |u|
+            len = u[:pos] - start
+            keywords << { :pos => start, :len => len } if len > 0
+            start = u[:pos] + u[:len]
+          end
+          if start < body.size
+            keywords << { :pos => start, :len => body.size - start }
+          end
+        end
+      else
+        addrs = process_addresses(body)
+        addrs.delete_if {|a| urls.find {|u| intersect?(a,u)}} unless urls.empty?
+        addrs.delete_if {|a| keywords.find {|k| intersect?(a,k)}} unless keywords.empty?
+      end
       events = combine_events(effects, urls, addrs, keywords)
       
       if events.empty?

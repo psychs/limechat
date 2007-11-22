@@ -25,7 +25,7 @@ end
 
 class LogController < OSX::NSObject
   include OSX
-  attr_accessor :world, :menu, :url_menu, :addr_menu, :member_menu, :max_lines, :keyword
+  attr_accessor :world, :unit, :menu, :url_menu, :addr_menu, :member_menu, :max_lines, :keyword
   attr_reader :view, :console, :bottom
   
   BOTTOM_EPSILON = 20
@@ -329,13 +329,16 @@ class LogController < OSX::NSObject
     end
     
     if use_keyword
-      like = @keyword.words
       dislike = @keyword.dislike_words
+      like = @keyword.words
+      if @unit && @keyword.current_nick
+        like = [@unit.mynick] + like
+      end
     else
       like = dislike = nil
     end
     
-    LogRenderer.render_body(line.body, like, dislike)
+    LogRenderer.render_body(line.body, like, dislike, @keyword.whole_line)
   end
   
   def h(s)

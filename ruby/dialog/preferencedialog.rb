@@ -10,7 +10,7 @@ class PreferenceDialog < OSX::NSObject
   attr_accessor :delegate
   attr_reader :m
   ib_outlet :window, :dcc_myaddress_caption, :sound_table
-  ib_mapped_outlet :key_words, :key_dislike_words
+  ib_mapped_outlet :key_words, :key_dislike_words, :key_whole_line, :key_current_nick
   ib_mapped_int_outlet :dcc_address_detection_method
   ib_mapped_outlet :dcc_myaddress
   ib_mapped_int_outlet :dcc_first_port, :dcc_last_port

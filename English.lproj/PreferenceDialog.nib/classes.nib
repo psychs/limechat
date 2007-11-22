@@ -64,7 +64,11 @@
 				<string>id</string>
 				<key>gen_use_growl</key>
 				<string>id</string>
+				<key>key_current_nick</key>
+				<string>id</string>
 				<key>key_dislike_words</key>
+				<string>id</string>
+				<key>key_whole_line</key>
 				<string>id</string>
 				<key>key_words</key>
 				<string>id</string>

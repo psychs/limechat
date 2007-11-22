@@ -19,11 +19,13 @@ class Preferences
   
   class Keyword
     include PersistenceHelper
-    persistent_attr :words, :dislike_words
+    persistent_attr :words, :dislike_words, :whole_line, :current_nick
     
     def initialize
       @words = []
       @dislike_words = []
+      @whole_line = false
+      @current_nick = true
     end
   end
   
