@@ -6,7 +6,8 @@ require 'fileutils'
 class AppController < OSX::NSObject
   include OSX
   ib_outlet :window, :tree, :log_base, :console_base, :member_list, :text
-  ib_outlet :root_split, :log_split, :info_split
+  ib_outlet :tree_scroller, :left_tree_base, :right_tree_base
+  ib_outlet :root_split, :log_split, :info_split, :tree_split
   ib_outlet :menu, :server_menu, :channel_menu, :member_menu, :tree_menu, :log_menu, :console_menu, :url_menu, :addr_menu
   
   GC_TIME = 600
@@ -28,6 +29,8 @@ class AppController < OSX::NSObject
     @root_split.setFixedViewIndex(1)
     @log_split.setFixedViewIndex(1)
     @info_split.setFixedViewIndex(1)
+    @tree_split.setHidden(true)
+    
     load_window_state
     
     @world = IRCWorld.alloc.init
@@ -153,6 +156,27 @@ class AppController < OSX::NSObject
       true
     else
       false
+    end
+  end
+  
+  def set_alt_layout(value)
+    return if @info_split.hidden? == !!value
+    if value
+      @info_split.setHidden(true)
+      @info_split.setInverted(true)
+      @left_tree_base.addSubview(@tree_scroller)
+      @tree_split.setHidden(false)
+      @tree_split.setPosition(120.0) if @tree_split.position < 1.0
+      f = @left_tree_base.frame
+      @tree_scroller.setFrame(NSRect.new(0,0,f.width,f.height))
+    else
+      @tree_split.setHidden(true)
+      @right_tree_base.addSubview(@tree_scroller)
+      @info_split.setInverted(false)
+      @info_split.setHidden(false)
+      @info_split.setPosition(100.0) if @info_split.position < 1.0
+      f = @right_tree_base.frame
+      @tree_scroller.setFrame(NSRect.new(0,0,f.width,f.height))
     end
   end
   
@@ -415,6 +439,7 @@ class AppController < OSX::NSObject
       @root_split.setPosition(win[:root])
       @log_split.setPosition(win[:log])
       @info_split.setPosition(win[:info])
+      @tree_split.setPosition(win[:tree] || 120)
     else
       scr = NSScreen.screens[0]
       if scr
@@ -433,6 +458,7 @@ class AppController < OSX::NSObject
       @root_split.setPosition(150)
       @log_split.setPosition(150)
       @info_split.setPosition(250)
+      @tree_split.setPosition(120)
     end
   end
   
@@ -442,6 +468,7 @@ class AppController < OSX::NSObject
       :root => @root_split.position,
       :log => @log_split.position,
       :info => @info_split.position,
+      :tree => @tree_split.position,
     }
     win.merge!(split)
     @pref.save_window('main_window', win)

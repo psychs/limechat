@@ -673,6 +673,8 @@ class MenuController < OSX::NSObject
   
   
   def changeStyle(sender)
+    @app.set_alt_layout(true)
+=begin
     style = <<-EOM
       html {
         margin: 0;
@@ -718,6 +720,7 @@ class MenuController < OSX::NSObject
       .debug_receive { color: #444; }
     EOM
     #@world.change_log_style(style);
+=end
   end
   
   

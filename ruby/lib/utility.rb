@@ -206,6 +206,10 @@ module OSX
   end
   
   class NSRect
+    def x=(v); origin.x = v; end
+    def y=(v); origin.y = v; end
+    def width=(v); size.width = v; end
+    def height=(v); size.height = v; end
     def contain?(r)
       if r.kind_of?(NSRect)
         OSX::NSContainsRect(self, r)

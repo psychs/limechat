@@ -10,6 +10,7 @@ class Splitter < OSX::NSSplitView
     @fixedViewIndex = 0
     @dividerThickness = 1
     @inverted = false
+    @hidden = false
   end
   
   def awakeFromNib
@@ -42,7 +43,7 @@ class Splitter < OSX::NSSplitView
     w.removeFromSuperviewWithoutNeedingDisplay
     self.addSubview(w)
     self.addSubview(v)
-    @fixedViewIndex = @fixedViewIndex ? 0 : 1 if inverted?
+    @fixedViewIndex = @fixedViewIndex != 0 ? 0 : 1
     adjustSubviews
   end
   
@@ -59,20 +60,32 @@ class Splitter < OSX::NSSplitView
     isVertical
   end
   
+  def setHidden(value)
+    return if @hidden == !!value
+    @hidden = !!value
+    adjustSubviews
+  end
+  
+  def hidden?
+    @hidden
+  end
+  
   def drawDividerInRect(rect)
-    if vertical?
+    if hidden?
+      ;
+    elsif vertical?
       NSColor.colorWithCalibratedWhite_alpha(0.65, 1).set
       NSRectFill(rect);
     else
       NSColor.colorWithCalibratedWhite_alpha(0.65, 1).set
       sp = rect.origin.dup
       ep = sp.dup
-      ep.x += NSWidth(rect)
+      ep.x += rect.width
       NSBezierPath.strokeLineFromPoint_toPoint(sp, ep)
       sp = rect.origin.dup
-      sp.y += NSHeight(rect)
+      sp.y += rect.height
       ep = sp.dup
-      ep.x += NSWidth(rect)
+      ep.x += rect.width
       NSBezierPath.strokeLineFromPoint_toPoint(sp, ep)
     end
   end
@@ -92,40 +105,56 @@ class Splitter < OSX::NSSplitView
       return
     end
     
+    frame = self.frame
+    
     w = @dividerThickness
     fixedView = self.subviews.objectAtIndex(@fixedViewIndex)
     flyingView = self.subviews.objectAtIndex(@fixedViewIndex == 0 ? 1 : 0)
     fixedFrame = fixedView.frame
     flyingFrame = flyingView.frame
     
-    if vertical?
-      flyingFrame.size.width = NSWidth(frame) - w - @position
-      flyingFrame.size.height = NSHeight(frame)
-      flyingFrame.origin.x = @fixedViewIndex == 0 ? @position + w : 0.0
-      flyingFrame.origin.y = 0.0
-      flyingFrame.size.width = 0.0 if flyingFrame.size.width < 0.0
-      fixedFrame.size.width = @position
-      fixedFrame.size.height = NSHeight(frame)
-      fixedFrame.size.width = @position
-      fixedFrame.size.height = NSHeight(frame)
-      fixedFrame.origin.x = @fixedViewIndex == 0 ? 0.0 : NSWidth(flyingFrame) + w
-      fixedFrame.origin.y = 0.0
-      fixedFrame.size.width = NSWidth(frame) - w if fixedFrame.size.width > NSWidth(frame) - w
+    if hidden?
+      if vertical?
+        fixedFrame = NSRect.new(0,0,0,frame.height)
+        flyingFrame.x = 0
+        flyingFrame.y = 0
+        flyingFrame.width = frame.width
+        flyingFrame.height = frame.height
+      else
+        fixedFrame = NSRect.new(0,0,frame.width,0)
+        flyingFrame.x = 0
+        flyingFrame.y = 0
+        flyingFrame.width = frame.width
+        flyingFrame.height = frame.height
+      end
+    elsif vertical?
+      flyingFrame.width = frame.width - w - @position
+      flyingFrame.height = frame.height
+      flyingFrame.x = @fixedViewIndex == 0 ? @position + w : 0.0
+      flyingFrame.y = 0.0
+      flyingFrame.width = 0.0 if flyingFrame.width < 0.0
+      fixedFrame.width = @position
+      fixedFrame.height = frame.height
+      fixedFrame.width = @position
+      fixedFrame.height = frame.height
+      fixedFrame.x = @fixedViewIndex == 0 ? 0.0 : flyingFrame.width + w
+      fixedFrame.y = 0.0
+      fixedFrame.width = frame.width - w if fixedFrame.width > frame.width - w
     else
-      flyingFrame.size.width = NSWidth(frame)
-      flyingFrame.size.height = NSHeight(frame) - w - @position
-      flyingFrame.origin.x = 0.0;
-      flyingFrame.origin.y = @fixedViewIndex == 0 ? @position + w : 0.0;
-      flyingFrame.size.height = 0.0 if flyingFrame.size.height < 0.0
-      fixedFrame.size.width = NSWidth(frame);
-      fixedFrame.size.height = @position;
-      fixedFrame.origin.x = 0.0;
-      fixedFrame.origin.y = @fixedViewIndex == 0 ? 0.0 : NSHeight(flyingFrame) + w
-      fixedFrame.size.height = NSHeight(frame) - w if fixedFrame.size.height > NSHeight(frame) - w
+      flyingFrame.width = frame.width
+      flyingFrame.height = frame.height - w - @position
+      flyingFrame.x = 0.0;
+      flyingFrame.y = @fixedViewIndex == 0 ? @position + w : 0.0;
+      flyingFrame.height = 0.0 if flyingFrame.height < 0.0
+      fixedFrame.width = frame.width;
+      fixedFrame.height = @position;
+      fixedFrame.x = 0.0;
+      fixedFrame.y = @fixedViewIndex == 0 ? 0.0 : flyingFrame.height + w
+      fixedFrame.height = frame.height - w if fixedFrame.height > frame.height - w
     end
-    
-    flyingView.setFrame(flyingFrame)
+
     fixedView.setFrame(fixedFrame)
+    flyingView.setFrame(flyingFrame)
     self.setNeedsDisplay(true)
     self.window.invalidateCursorRectsForView(self) if self.window
   end
@@ -134,6 +163,6 @@ class Splitter < OSX::NSSplitView
   
   def updatePosition
     frame = self.subviews.objectAtIndex(@fixedViewIndex).frame
-    @position = self.vertical? ? NSWidth(frame) : NSHeight(frame)
+    @position = self.vertical? ? frame.width : frame.height
   end
 end

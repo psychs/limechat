@@ -26,7 +26,7 @@
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
 			<key>SUPERCLASS</key>
-			<string>NSOutlineView</string>
+			<string>TreeView</string>
 		</dict>
 		<dict>
 			<key>CLASS</key>
@@ -41,6 +41,14 @@
 			<string>NSObject</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>TreeView</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSOutlineView</string>
 		</dict>
 		<dict>
 			<key>ACTIONS</key>
@@ -201,6 +209,8 @@
 				<string>id</string>
 				<key>info_split</key>
 				<string>id</string>
+				<key>left_tree_base</key>
+				<string>id</string>
 				<key>log_base</key>
 				<string>id</string>
 				<key>log_menu</key>
@@ -213,6 +223,8 @@
 				<string>id</string>
 				<key>menu</key>
 				<string>id</string>
+				<key>right_tree_base</key>
+				<string>id</string>
 				<key>root_split</key>
 				<string>id</string>
 				<key>server_menu</key>
@@ -222,6 +234,10 @@
 				<key>tree</key>
 				<string>id</string>
 				<key>tree_menu</key>
+				<string>id</string>
+				<key>tree_scroller</key>
+				<string>id</string>
+				<key>tree_split</key>
 				<string>id</string>
 				<key>url_menu</key>
 				<string>id</string>

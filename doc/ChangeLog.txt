@@ -1,3 +1,7 @@
+2007-11-24  Satoshi Nakagawa <artension@gmail.com>
+
+	Preparing for a layout change option.
+
 2007-11-22  Satoshi Nakagawa <artension@gmail.com>
 
 	Added a double click event handler on the channel list to join a selected channel.
