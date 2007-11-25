@@ -273,7 +273,20 @@ class AppController < OSX::NSObject
       move(:down, :unread)
       true
     when Preferences::General::TAB_COMPLETE_NICK
-      complete_nick
+      complete_nick(true)
+      true
+    else
+      false
+    end
+  end
+  
+  def shiftTab
+    case @pref.gen.tab_action
+    when Preferences::General::TAB_UNREAD
+      move(:up, :unread)
+      true
+    when Preferences::General::TAB_COMPLETE_NICK
+      complete_nick(false)
       true
     else
       false
@@ -346,7 +359,7 @@ class AppController < OSX::NSObject
   
   private
   
-  def complete_nick
+  def complete_nick(forward)
     u, c = @world.sel
     return unless u && c
     @world.select_text if @window.firstResponder != @window.fieldEditor_forObject(true, @text)
@@ -370,6 +383,7 @@ class AppController < OSX::NSObject
     if /^[^\w\[\]\\`_^{}|](.+)$/ =~ pre
       pre[0] = ''
       head = false
+      return if pre.empty?
     end
     
     current = pre + sel
@@ -380,17 +394,18 @@ class AppController < OSX::NSObject
     nicks = nicks.select {|i| i[0...pre.size].downcase == downpre }
     return if nicks.empty?
     
-    if sel.empty?
-      s = nicks[0]
-    else
-      index = nicks.index {|i| i.downcase == downcur }
-      if index
+    index = nicks.index {|i| i.downcase == downcur }
+    if index
+      if forward
         index += 1
         index = 0 if nicks.size <= index
-        s = nicks[index]
       else
-        s = nicks[0]
+        index -= 1
+        index = nicks.size - 1 if index < 0
       end
+      s = nicks[index]
+    else
+      s = nicks[0]
     end
     s += ': ' if head
     

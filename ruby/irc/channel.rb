@@ -241,7 +241,7 @@ class IRCChannel < OSX::NSObject
   end
   
   def print(line, key)
-    @log.print(line, key)
+    result = @log.print(line, key)
     
     # open log file
     unless @terminating
@@ -253,6 +253,8 @@ class IRCChannel < OSX::NSObject
         @logfile.write_line(s)
       end
     end
+    
+    result
   end
   
   # model

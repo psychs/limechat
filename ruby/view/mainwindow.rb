@@ -36,7 +36,7 @@ class MainWindow < OSX::NSWindow
           # shift
           case k
           when 48 #tab
-            return if @key_delegate.controlShiftTab
+            return if @key_delegate.shiftTab
           end
         elsif !shift && ctrl && !alt && !cmd
           # ctrl

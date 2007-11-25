@@ -1,3 +1,8 @@
+2007-11-26  Satoshi Nakagawa <artension@gmail.com>
+
+	Changed the logic of the nickname completion.
+	Fixed a bug, highlight events were missing.
+
 2007-11-24  Satoshi Nakagawa <artension@gmail.com>
 
 	Preparing for a layout change option.
