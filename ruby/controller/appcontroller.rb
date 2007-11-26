@@ -380,9 +380,11 @@ class AppController < OSX::NSObject
       head = true
     end
     return if pre.empty?
-    if /^[^\w\[\]\\`_^{}|](.+)$/ =~ pre
+
+    c = pre[0]
+    if /^[^\w\[\]\\`_^{}|].+$/ =~ pre
+      head = c == ?@ if head
       pre[0] = ''
-      head = false
       return if pre.empty?
     end
     
@@ -407,7 +409,14 @@ class AppController < OSX::NSObject
     else
       s = nicks[0]
     end
-    s += ': ' if head
+    
+    if head
+      if c == ?@
+        s += ' '
+      else
+        s += ': '
+      end
+    end
     
     ps = pre.to_nsstr
     ns = s.to_nsstr

@@ -1,5 +1,9 @@
 2007-11-26  Satoshi Nakagawa <artension@gmail.com>
 
+	Changed to append a space for the nickname completion when the first character is '@' and a word to complete is following it.
+
+2007-11-26  Satoshi Nakagawa <artension@gmail.com>
+
 	Changed the logic of the nickname completion.
 	Fixed a bug, highlight events were missing.
 
