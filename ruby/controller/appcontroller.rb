@@ -13,18 +13,19 @@ class AppController < OSX::NSObject
   GC_TIME = 600
   
   def awakeFromNib
+    NSApplication.sharedApplication
+    
     SACrashReporter.submit
     
-    app = NSApplication.sharedApplication
-    nc = NSWorkspace.sharedWorkspace.notificationCenter
-    nc.addObserver_selector_name_object(self, :terminateWithoutConfirm, NSWorkspaceWillPowerOffNotification, NSWorkspace.sharedWorkspace)
+    ws = NSWorkspace.sharedWorkspace
+    nc = ws.notificationCenter
+    nc.addObserver_selector_name_object(self, :terminateWithoutConfirm, NSWorkspaceWillPowerOffNotification, ws)
     
     @pref = Preferences.new
-    @pref.load
     FileUtils.mkpath(@pref.gen.transcript_folder.expand_path) rescue nil
     
-    @window.key_delegate = self
     @text.setFocusRingType(NSFocusRingTypeNone)
+    @window.key_delegate = self
     @window.makeFirstResponder(@text)
     @root_split.setFixedViewIndex(1)
     @log_split.setFixedViewIndex(1)
@@ -50,16 +51,10 @@ class AppController < OSX::NSObject
     @world.addr_menu = @addr_menu
     @world.member_menu = @member_menu
     @world.menu_controller = @menu
+    @world.setup(IRCWorldConfig.new(@pref.load_world))
     @tree.setDataSource(@world)
     @tree.setDelegate(@world)
     @tree.responder_delegate = @world
-    #cell = UnitNameCell.alloc.init
-    #cell.view = @tree
-    #@tree.tableColumnWithIdentifier('name').setDataCell(cell)
-    #@tree.setIndentationPerLevel(0.0)
-    #seed = {:units => {}}
-    #@world.setup(IRCWorldConfig.new(seed))
-    @world.setup(IRCWorldConfig.new(@pref.load_world))
     @tree.reloadData
     @world.setup_tree
     
@@ -139,7 +134,7 @@ class AppController < OSX::NSObject
   
   def windowWillReturnFieldEditor_toObject(sender, obj)
     unless @field_editor
-      @field_editor = FieldEditorTextView.alloc.initWithFrame(NSRect.new(0,0,0,0))
+      @field_editor = FieldEditorTextView.alloc.initWithFrame(NSZeroRect)
       @field_editor.setFieldEditor(true)
       @field_editor.paste_delegate = self
     end

@@ -100,6 +100,8 @@ class Preferences
     @dcc = Dcc.new
     @gen = General.new
     @sound = Sound.new
+    
+    load
   end
     
   def load
