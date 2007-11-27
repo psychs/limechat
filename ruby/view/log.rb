@@ -44,7 +44,7 @@ class LogController < OSX::NSObject
     img { border: 1px solid #aaa; vertical-align: top; }
     object { vertical-align: top; }
     hr { margin: 0.5em 2em; }
-    .url {}
+    .url { word-break: break-all; }
     .address { text-decoration: underline; }
     .highlight { color: #f0f; font-weight: bold; }
     .line { padding: 1px 0; }

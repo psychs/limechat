@@ -1,5 +1,9 @@
 2007-11-27  Satoshi Nakagawa <artension@gmail.com>
 
+	Set break-word: break-all for urls.
+
+2007-11-27  Satoshi Nakagawa <artension@gmail.com>
+
 	Changed to not select a candidate while completing nicks.
 
 2007-11-26  Satoshi Nakagawa <artension@gmail.com>
