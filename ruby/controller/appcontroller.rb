@@ -198,6 +198,7 @@ class AppController < OSX::NSObject
       end
     end
     @world.select_text
+    @comletion_status.clear if @comletion_status
   end
   
   def addToHistory
@@ -359,6 +360,19 @@ class AppController < OSX::NSObject
   
   private
   
+  class NickCompletionStatus
+    attr_reader :text, :range
+    
+    def clear
+      @text = @range = nil
+    end
+    
+    def store(text, range)
+      @text = text
+      @range = range
+    end
+  end
+  
   def complete_nick(forward)
     u, c = @world.sel
     return unless u && c
@@ -368,7 +382,12 @@ class AppController < OSX::NSObject
     r = fe.selectedRanges.to_a[0]
     return unless r
     r = r.rangeValue
-    nicks = c.members.sort_by {|i| i.weight }.map {|i| i.nick }
+    
+    @comletion_status ||= NickCompletionStatus.new
+    status = @comletion_status
+    if status.text == @text.stringValue.to_s && status.range && status.range.max == r.location && r.length == 0
+      r = status.range.dup
+    end
     
     s = @text.stringValue
     pre = s.substringToIndex(r.location).to_s
@@ -381,9 +400,9 @@ class AppController < OSX::NSObject
     end
     return if pre.empty?
 
-    c = pre[0]
+    headchar = pre[0]
     if /^[^\w\[\]\\`_^{}|].+$/ =~ pre
-      head = c == ?@ if head
+      head = headchar == ?@ if head
       pre[0] = ''
       return if pre.empty?
     end
@@ -393,7 +412,9 @@ class AppController < OSX::NSObject
     downpre = pre.downcase
     downcur = current.downcase
     
+    nicks = c.members.sort_by {|i| i.weight }.map {|i| i.nick }
     nicks = nicks.select {|i| i[0...pre.size].downcase == downpre }
+    nicks -= [u.mynick]
     return if nicks.empty?
     
     index = nicks.index {|i| i.downcase == downcur }
@@ -411,7 +432,7 @@ class AppController < OSX::NSObject
     end
     
     if head
-      if c == ?@
+      if headchar == ?@
         s += ' '
       else
         s += ': '
@@ -421,17 +442,19 @@ class AppController < OSX::NSObject
     ps = pre.to_nsstr
     ns = s.to_nsstr
     range = r.dup
-    range.location -= ps.size
-    range.length += ps.size
-    fe.replaceCharactersInRange_withString(range, s)
+    range.location -= ps.length
+    range.length += ps.length
+    fe.replaceCharactersInRange_withString(range, ns)
+    range.location += ns.length
+    range.length = 0
+    fe.setSelectedRange(range)
     
     if nicks.size == 1
-      r.location = @text.stringValue.length
-      r.length = 0
+      status.clear
     else
-      r.length = ns.length
+      r.length = ns.length - ps.length
+      status.store(@text.stringValue.to_s, r)
     end
-    fe.setSelectedRange(r)
   end
 
   def queryTerminate

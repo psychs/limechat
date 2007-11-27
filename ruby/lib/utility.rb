@@ -259,6 +259,7 @@ module OSX
   class NSRange
     def size; length; end
     def size=(v); length = v; end
+    def max; location + length; end
     def inspect
       "#<#{self.class.to_s.gsub(/^OSX::/, '')} (#{location}, #{length})>"
     end
