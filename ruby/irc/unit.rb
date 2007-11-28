@@ -686,6 +686,10 @@ class IRCUnit < OSX::NSObject
     @myaddress = addr[0]
   end
   
+  def print_error(text)
+    print_both(self, :error, text)
+  end
+  
   
   private
   
@@ -817,10 +821,6 @@ class IRCUnit < OSX::NSObject
   
   def print_system_both(channel, text)
     print_both(channel, :system, text)
-  end
-  
-  def print_error(text)
-    print_both(self, :error, text)
   end
   
   def print_reply(m)

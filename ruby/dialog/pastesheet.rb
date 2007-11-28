@@ -5,12 +5,12 @@ require 'cocoasheet'
 
 class PasteSheet < CocoaSheet
   attr_accessor :uid, :cid
-  ib_outlet :text, :sendButton, :notice_check
+  ib_outlet :text, :sendButton, :syntaxPopup
   first_responder :sendButton
   buttons :Send, :Cancel
   
-  def startup(str, mode, notice)
-    @notice_check.setState(notice ? 1 : 0)
+  def startup(str, mode, syntax)
+    @syntaxPopup.selectItemWithTag(syntax_to_tag(syntax))
     if mode == :edit
       @sheet.makeFirstResponder(@text)
     end
@@ -18,11 +18,28 @@ class PasteSheet < CocoaSheet
   end
   
   def shutdown(result)
-    notice = @notice_check.state.to_i != 0
+    syntax = tag_to_syntax(@syntaxPopup.selectedItem.tag)
     if result == :send
-      fire_event('onSend', @text.textStorage.string.to_s, notice)
+      fire_event('onSend', @text.textStorage.string.to_s, syntax)
     else
-      fire_event('onCancel', notice)
+      fire_event('onCancel', syntax)
     end
+  end
+  
+  private
+  
+  SYNTAXES = [
+    'privmsg', 'notice', 'c++', 'css', 'diff',
+    'html_rails', 'html', 'java', 'javascript', 'php',
+    'plain_text', 'python', 'ruby', 'ruby_on_rails', 'sql',
+    'shell-unix-generic',
+  ]
+  
+  def syntax_to_tag(syntax)
+    SYNTAXES.index(syntax)
+  end
+  
+  def tag_to_syntax(tag)
+    SYNTAXES[tag]
   end
 end

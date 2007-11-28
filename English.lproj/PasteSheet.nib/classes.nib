@@ -18,15 +18,13 @@
 			<string>ObjC</string>
 			<key>OUTLETS</key>
 			<dict>
-				<key>notice_check</key>
-				<string>id</string>
 				<key>sendButton</key>
 				<string>id</string>
 				<key>sheet</key>
 				<string>id</string>
-				<key>text</key>
+				<key>syntaxPopup</key>
 				<string>id</string>
-				<key>usePastieCheck</key>
+				<key>text</key>
 				<string>id</string>
 			</dict>
 			<key>SUPERCLASS</key>

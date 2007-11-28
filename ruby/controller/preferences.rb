@@ -52,7 +52,7 @@ class Preferences
     persistent_attr :connect_on_doubleclick, :disconnect_on_doubleclick, :join_on_doubleclick, :leave_on_doubleclick
     persistent_attr :use_growl
     persistent_attr :log_transcript, :transcript_folder
-    persistent_attr :notice_on_paste
+    persistent_attr :paste_syntax
     
     TAB_COMPLETE_NICK = 0
     TAB_UNREAD = 1
@@ -77,7 +77,7 @@ class Preferences
       @use_growl = true
       @log_transcript = false
       @transcript_folder = '~/Documents/LimeChatTranscripts'
-      @notice_on_paste = true
+      @paste_syntax = 'notice'
     end
   end
   

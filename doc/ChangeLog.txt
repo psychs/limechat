@@ -1,3 +1,7 @@
+2007-11-29  Satoshi Nakagawa <artension@gmail.com>
+
+	Integrated Pastie support.
+
 2007-11-28  Satoshi Nakagawa <artension@gmail.com>
 
 	Fixed a bug, users could not input more than one characters through an input source.

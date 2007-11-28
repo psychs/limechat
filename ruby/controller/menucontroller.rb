@@ -338,21 +338,40 @@ class MenuController < OSX::NSObject
     @paste.delegate = self
     @paste.uid = uid
     @paste.cid = cid
-    @paste.start(s, mode, @pref.gen.notice_on_paste)
+    @paste.start(s, mode, @pref.gen.paste_syntax)
   end
   
-  def pasteSheet_onSend(sender, s, notice)
-    @pref.gen.notice_on_paste = notice
+  def pasteSheet_onSend(sender, s, syntax)
+    @pref.gen.paste_syntax = syntax
     @pref.save
     @paste = nil
+    
     u, c = @world.find_by_id(sender.uid, sender.cid)
     return unless u && c
-    s = s.gsub(/\r\n|\r|\n/, "\n")
-    u.send_text(c, notice ? :notice : :privmsg, s)
+    
+    case syntax
+    when 'privmsg','notice'
+      u, c = @world.find_by_id(sender.uid, sender.cid)
+      return unless u && c
+      s = s.gsub(/\r\n|\r|\n/, "\n")
+      u.send_text(c, notice ? :notice : :privmsg, s)
+    else
+      begin
+        conn = PastieClient.new
+        res = conn.paste(s, syntax)
+        if res != true
+          u.send_text(c, :privmsg, res)
+        else
+          u.print_error("pastie accepted your paste, but couldn't get url")
+        end
+      rescue => e
+        u.print_error("pastie failed: #{e.to_s}")
+      end
+    end
   end
   
-  def pasteSheet_onCancel(sender, notice)
-    @pref.gen.notice_on_paste = notice
+  def pasteSheet_onCancel(sender, syntax)
+    @pref.gen.paste_syntax = syntax
     @pref.save
     @paste = nil
   end
