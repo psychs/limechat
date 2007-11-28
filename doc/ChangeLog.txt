@@ -1,3 +1,7 @@
+2007-11-28  Satoshi Nakagawa <artension@gmail.com>
+
+	Refactoring around key event handlers.
+
 2007-11-27  Satoshi Nakagawa <artension@gmail.com>
 
 	Set break-word: break-all for urls.

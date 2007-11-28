@@ -78,6 +78,8 @@ class AppController < OSX::NSObject
     
     @history = InputHistory.new
     @gc_count = 0
+    
+    register_key_handlers
   end
   
   def terminateWithoutConfirm(sender)
@@ -226,108 +228,37 @@ class AppController < OSX::NSObject
     end
   end
   
-  def controlEnter
-    sendText(:notice)
-    true
+  # key commands
+  
+  def handler(*args, &block)
+    @window.register_key_handler(*args, &block)
   end
   
-  def controlUp
-    move(:up)
+  def register_key_handlers
+    handler(:home) { scroll(:home) }
+    handler(:end) { scroll(:end) }
+    handler(:pageup) { scroll(:up) }
+    handler(:pagedown) { scroll(:down) }
+    handler(:tab) { tab }
+    handler(:tab, :shift) { shiftTab }
+    handler(:enter, :ctrl) { sendText(:notice); true }
+    handler(:up, :ctrl) { move(:up); true }
+    handler(:down, :ctrl) { move(:down); true }
+    handler(:left, :ctrl) { move(:left); true }
+    handler(:right, :ctrl) { move(:right); true }
+    handler(:up, :cmd) { move(:up, :active); true }
+    handler(:down, :cmd) { move(:down, :active); true }
+    handler(:up, :cmd, :alt) { move(:up, :active); true }
+    handler(:down, :cmd, :alt) { move(:down, :active); true }
+    handler(:left, :cmd, :alt) { move(:left, :active); true }
+    handler(:right, :cmd, :alt) { move(:right, :active); true }
+    handler(:tab, :ctrl) { move(:down, :unread); true }
+    handler(:tab, :ctrl, :shift) { move(:up, :unread); true }
+    handler(:space, :alt) { move(:down, :unread); true }
+    handler(:space, :alt, :shift) { move(:up, :unread); true }
+    handler('0'..'9', :cmd) {|n| @world.select_channel_at(n.to_i); true }
   end
   
-  def controlDown
-    move(:down)
-  end
-  
-  def controlLeft
-    move(:left)
-  end
-  
-  def controlRight
-    move(:right)
-  end
-  
-  def commandUp
-    move(:up, :active)
-  end
-  
-  def commandDown
-    move(:down, :active)
-  end
-  
-  def commandAltLeft
-    move(:left, :active)
-  end
-  
-  def commandAltRight
-    move(:right, :active)
-  end
-  
-  def tab
-    case @pref.gen.tab_action
-    when Preferences::General::TAB_UNREAD
-      move(:down, :unread)
-      true
-    when Preferences::General::TAB_COMPLETE_NICK
-      complete_nick(true)
-      true
-    else
-      false
-    end
-  end
-  
-  def shiftTab
-    case @pref.gen.tab_action
-    when Preferences::General::TAB_UNREAD
-      move(:up, :unread)
-      true
-    when Preferences::General::TAB_COMPLETE_NICK
-      complete_nick(false)
-      true
-    else
-      false
-    end
-  end
-  
-  def controlTab
-    move(:down, :unread)
-  end
-  
-  def controlShiftTab
-    move(:up, :unread)
-  end
-  
-  def altSpace
-    move(:down, :unread)
-  end
-  
-  def altShiftSpace
-    move(:up, :unread)
-  end
-  
-  def scroll(direction)
-    if @window.firstResponder == @text.currentEditor
-      sel = @world.selected
-      if sel
-        log = sel.log
-        view = log.view
-        case direction
-        when :up; view.scrollPageUp(self)
-        when :down; view.scrollPageDown(self)
-        when :home; log.moveToTop
-        when :end; log.moveToBottom
-        end
-      end
-      true
-    else
-      false
-    end
-  end
-  
-  def number(n)
-    @world.select_channel_at(n)
-    true
-  end
   
   # timer
   
@@ -515,14 +446,59 @@ class AppController < OSX::NSObject
     win.merge!(split)
     @pref.save_window('main_window', win)
   end
-
+  
+  def scroll(direction)
+    if @window.firstResponder == @text.currentEditor
+      sel = @world.selected
+      if sel
+        log = sel.log
+        view = log.view
+        case direction
+        when :up; view.scrollPageUp(self)
+        when :down; view.scrollPageDown(self)
+        when :home; log.moveToTop
+        when :end; log.moveToBottom
+        end
+      end
+      true
+    else
+      false
+    end
+  end
+  
+  def tab
+    case @pref.gen.tab_action
+    when Preferences::General::TAB_UNREAD
+      move(:down, :unread)
+      true
+    when Preferences::General::TAB_COMPLETE_NICK
+      complete_nick(true)
+      true
+    else
+      false
+    end
+  end
+  
+  def shiftTab
+    case @pref.gen.tab_action
+    when Preferences::General::TAB_UNREAD
+      move(:up, :unread)
+      true
+    when Preferences::General::TAB_COMPLETE_NICK
+      complete_nick(false)
+      true
+    else
+      false
+    end
+  end
+  
   def move(direction, target=:all)
     case direction
     when :up,:down
       sel = @world.selected
-      return unless sel
+      return false unless sel
       n = @tree.rowForItem(sel)
-      return unless n
+      return false unless n
       n = n.to_i
       start = n
       size = @tree.numberOfRows.to_i
@@ -560,10 +536,10 @@ class AppController < OSX::NSObject
       true
     when :left,:right
       sel = @world.selected
-      return unless sel
+      return false unless sel
       unit = sel.unit
       n = @world.units.index(unit)
-      return unless n
+      return false unless n
       start = n
       size = @world.units.size
       loop do
