@@ -227,38 +227,6 @@ class AppController < OSX::NSObject
     end
   end
   
-  # key commands
-  
-  def handler(*args, &block)
-    @window.register_key_handler(*args, &block)
-  end
-  
-  def register_key_handlers
-    handler(:home) { scroll(:home) }
-    handler(:end) { scroll(:end) }
-    handler(:pageup) { scroll(:up) }
-    handler(:pagedown) { scroll(:down) }
-    handler(:tab) { tab }
-    handler(:tab, :shift) { shiftTab }
-    handler(:enter, :ctrl) { sendText(:notice); true }
-    handler(:up, :ctrl) { move(:up); true }
-    handler(:down, :ctrl) { move(:down); true }
-    handler(:left, :ctrl) { move(:left); true }
-    handler(:right, :ctrl) { move(:right); true }
-    handler(:up, :cmd) { move(:up, :active); true }
-    handler(:down, :cmd) { move(:down, :active); true }
-    handler(:up, :cmd, :alt) { move(:up, :active); true }
-    handler(:down, :cmd, :alt) { move(:down, :active); true }
-    handler(:left, :cmd, :alt) { move(:left, :active); true }
-    handler(:right, :cmd, :alt) { move(:right, :active); true }
-    handler(:tab, :ctrl) { move(:down, :unread); true }
-    handler(:tab, :ctrl, :shift) { move(:up, :unread); true }
-    handler(:space, :alt) { move(:down, :unread); true }
-    handler(:space, :alt, :shift) { move(:up, :unread); true }
-    handler('0'..'9', :cmd) {|n| @world.select_channel_at(n.to_i); true }
-  end
-  
-  
   # timer
   
   def start_timer
@@ -444,6 +412,37 @@ class AppController < OSX::NSObject
     }
     win.merge!(split)
     @pref.save_window('main_window', win)
+  end
+  
+  # key commands
+  
+  def handler(*args, &block)
+    @window.register_key_handler(*args, &block)
+  end
+  
+  def register_key_handlers
+    handler(:home) { scroll(:home) }
+    handler(:end) { scroll(:end) }
+    handler(:pageup) { scroll(:up) }
+    handler(:pagedown) { scroll(:down) }
+    handler(:tab) { tab }
+    handler(:tab, :shift) { shiftTab }
+    handler(:enter, :ctrl) { sendText(:notice); true }
+    handler(:up, :ctrl) { move(:up); true }
+    handler(:down, :ctrl) { move(:down); true }
+    handler(:left, :ctrl) { move(:left); true }
+    handler(:right, :ctrl) { move(:right); true }
+    handler(:up, :cmd) { move(:up, :active); true }
+    handler(:down, :cmd) { move(:down, :active); true }
+    handler(:up, :cmd, :alt) { move(:up, :active); true }
+    handler(:down, :cmd, :alt) { move(:down, :active); true }
+    handler(:left, :cmd, :alt) { move(:left, :active); true }
+    handler(:right, :cmd, :alt) { move(:right, :active); true }
+    handler(:tab, :ctrl) { move(:down, :unread); true }
+    handler(:tab, :ctrl, :shift) { move(:up, :unread); true }
+    handler(:space, :alt) { move(:down, :unread); true }
+    handler(:space, :alt, :shift) { move(:up, :unread); true }
+    handler('0'..'9', :cmd) {|n| @world.select_channel_at(n.to_i); true }
   end
   
   def scroll(direction)
