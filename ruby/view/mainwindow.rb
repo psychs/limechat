@@ -3,18 +3,15 @@
 
 class MainWindow < OSX::NSWindow
   include OSX
-  attr_accessor :key_delegate
   
   def initialize
     @handlermap = {}
   end
   
   def sendEvent(e)
-    if @key_delegate
-      if e.oc_type == NSKeyDown
-        if NSInputManager.currentInputManager
-          return false unless NSInputManager.currentInputManager.markedRange.empty?
-        end
+    if e.oc_type == NSKeyDown
+      im = NSInputManager.currentInputManager
+      if !im || im.markedRange.empty?
         return if process_key_event(e)
       end
     end

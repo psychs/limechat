@@ -25,7 +25,6 @@ class AppController < OSX::NSObject
     FileUtils.mkpath(@pref.gen.transcript_folder.expand_path) rescue nil
     
     @text.setFocusRingType(NSFocusRingTypeNone)
-    @window.key_delegate = self
     @window.makeFirstResponder(@text)
     @root_split.setFixedViewIndex(1)
     @log_split.setFixedViewIndex(1)
