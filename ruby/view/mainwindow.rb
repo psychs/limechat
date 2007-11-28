@@ -22,10 +22,10 @@ class MainWindow < OSX::NSWindow
     m = 0
     mods.each do |i|
       case i
-      when :ctrl,:control; m |= 1
-      when :alt,:opt;      m |= 2
-      when :shift;         m |= 4
-      when :cmd,:command;  m |= 8
+      when :ctrl;     m |= 1
+      when :alt,:opt; m |= 2
+      when :shift;    m |= 4
+      when :cmd;      m |= 8
       end
     end
     
