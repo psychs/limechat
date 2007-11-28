@@ -60,6 +60,8 @@
 				<string>id</string>
 				<key>gen_log_transcript</key>
 				<string>id</string>
+				<key>gen_main_window_layout</key>
+				<string>id</string>
 				<key>gen_tab_action</key>
 				<string>id</string>
 				<key>gen_use_growl</key>

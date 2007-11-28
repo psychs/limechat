@@ -1,5 +1,11 @@
 2007-11-29  Satoshi Nakagawa <artension@gmail.com>
 
+	Released 0.11.
+	Added settings for 3 pane layout.
+	Changed the default settings for a tab key event to complete nickname.
+
+2007-11-29  Satoshi Nakagawa <artension@gmail.com>
+
 	Integrated Pastie support.
 
 2007-11-28  Satoshi Nakagawa <artension@gmail.com>

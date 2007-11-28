@@ -49,6 +49,7 @@ class Preferences
     include PersistenceHelper
     persistent_attr :confirm_quit
     persistent_attr :tab_action
+    persistent_attr :main_window_layout
     persistent_attr :connect_on_doubleclick, :disconnect_on_doubleclick, :join_on_doubleclick, :leave_on_doubleclick
     persistent_attr :use_growl
     persistent_attr :log_transcript, :transcript_folder
@@ -57,19 +58,14 @@ class Preferences
     TAB_COMPLETE_NICK = 0
     TAB_UNREAD = 1
     TAB_NONE = 100
+    
+    LAYOUT_2_COLUMNS = 0
+    LAYOUT_3_COLUMNS = 1
 
     def initialize
       @confirm_quit = true
       @tab_action = TAB_COMPLETE_NICK
-      
-      defaults = OSX::NSUserDefaults.standardUserDefaults
-      langs = defaults[:AppleLanguages]
-      if langs && langs[0]
-        if langs[0].to_s == 'ja'
-          @tab_action = TAB_UNREAD
-        end
-      end
-      
+      @main_window_layout = LAYOUT_2_COLUMNS
       @connect_on_doubleclick = false
       @disconnect_on_doubleclick = false
       @join_on_doubleclick = true

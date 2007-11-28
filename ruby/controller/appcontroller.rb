@@ -32,6 +32,7 @@ class AppController < OSX::NSObject
     @tree_split.setHidden(true)
     
     load_window_state
+    set_alternative_layout(@pref.gen.main_window_layout == 1)
     
     @world = IRCWorld.alloc.init
     @world.pref = @pref
@@ -155,7 +156,7 @@ class AppController < OSX::NSObject
     end
   end
   
-  def set_alt_layout(value)
+  def set_alternative_layout(value)
     return if @info_split.hidden? == !!value
     if value
       @info_split.setHidden(true)
@@ -177,6 +178,7 @@ class AppController < OSX::NSObject
   end
   
   def preferences_changed
+    set_alternative_layout(@pref.gen.main_window_layout == 1)
     @world.preferences_changed
   end
   
