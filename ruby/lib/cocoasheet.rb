@@ -48,9 +48,9 @@ class CocoaSheet < OSX::NSObject
   end
   
   def sheetDidEnd_returnCode_contextInfo(sender, code, info)
-    @sheet.close
     @modal = false
     shutdown(self.class._buttons[code].to_s.underscorize.to_sym)
+    @sheet.close
   end
   
 end

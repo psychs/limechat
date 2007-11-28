@@ -12,6 +12,7 @@ class MenuController < OSX::NSObject
   def initialize
     @server_dialogs = []
     @channel_dialogs = []
+    @pastie_clients = []
   end
   
   def terminate
@@ -19,6 +20,8 @@ class MenuController < OSX::NSObject
     @channel_dialogs.each {|d| d.close }
     @server_dialogs.clear
     @channel_dialogs.clear
+    @pastie_clients.each {|c| c.cancel }
+    @pastie_clients.clear
     @tree_dialog.close if @tree_dialog
     @pref_dialog.close if @pref_dialog
     @autoop_dialog.close if @autoop_dialog
@@ -333,15 +336,20 @@ class MenuController < OSX::NSObject
   end
   
   def start_paste_dialog(uid, cid, s, mode=:paste)
+    size = nil
+    hash = @pref.load_window('paste_sheet')
+    size = NSSize.from_dic(hash) if hash
+
     @paste = PasteSheet.alloc.init
     @paste.window = window
     @paste.delegate = self
     @paste.uid = uid
     @paste.cid = cid
-    @paste.start(s, mode, @pref.gen.paste_syntax)
+    @paste.start(s, mode, @pref.gen.paste_syntax, size)
   end
   
-  def pasteSheet_onSend(sender, s, syntax)
+  def pasteSheet_onSend(sender, s, syntax, size)
+    @pref.save_window('paste_sheet', size.to_dic)
     @pref.gen.paste_syntax = syntax
     @pref.save
     @paste = nil
@@ -351,30 +359,47 @@ class MenuController < OSX::NSObject
     
     case syntax
     when 'privmsg','notice'
-      u, c = @world.find_by_id(sender.uid, sender.cid)
-      return unless u && c
       s = s.gsub(/\r\n|\r|\n/, "\n")
       u.send_text(c, notice ? :notice : :privmsg, s)
     else
-      begin
-        conn = PastieClient.new
-        res = conn.paste(s, syntax)
-        if res != true
-          u.send_text(c, :privmsg, res)
-        else
-          u.print_error("pastie accepted your paste, but couldn't get url")
-        end
-      rescue => e
-        u.print_error("pastie failed: #{e.to_s}")
-      end
+      conn = PastieClient.alloc.init
+      conn.delegate = self
+      conn.uid = sender.uid
+      conn.cid = sender.cid
+      @pastie_clients << conn
+      conn.start(s, syntax)
     end
   end
   
-  def pasteSheet_onCancel(sender, syntax)
+  def pasteSheet_onCancel(sender, syntax, size)
+    @pref.save_window('paste_sheet', size.to_dic)
     @pref.gen.paste_syntax = syntax
     @pref.save
     @paste = nil
   end
+  
+  def pastie_on_success(sender, s)
+    return unless @pastie_clients.include?(sender)
+    @pastie_clients.delete(sender)
+    
+    u, c = @world.find_by_id(sender.uid, sender.cid)
+    return unless u && c
+    if s.empty?
+      u.print_error("Pastie accepted your request, but couldn't get an URL")
+    else
+      u.send_text(c, :privmsg, s)
+    end
+  end
+  
+  def pastie_on_error(sender, e)
+    return unless @pastie_clients.include?(sender)
+    @pastie_clients.delete(sender)
+    
+    u, c = @world.find_by_id(sender.uid, sender.cid)
+    return unless u && c
+    u.print_error("Pastie failed: #{e}")
+  end
+  
   
   def onPasteDialog(sender)
     sel = @world.selected

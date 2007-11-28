@@ -9,7 +9,8 @@ class PasteSheet < CocoaSheet
   first_responder :sendButton
   buttons :Send, :Cancel
   
-  def startup(str, mode, syntax)
+  def startup(str, mode, syntax, size)
+    @sheet.setFrame_display(NSRect.new(NSPoint.new(0,0), size), false) if size
     @syntaxPopup.selectItemWithTag(syntax_to_tag(syntax))
     if mode == :edit
       @sheet.makeFirstResponder(@text)
@@ -20,9 +21,9 @@ class PasteSheet < CocoaSheet
   def shutdown(result)
     syntax = tag_to_syntax(@syntaxPopup.selectedItem.tag)
     if result == :send
-      fire_event('onSend', @text.textStorage.string.to_s, syntax)
+      fire_event('onSend', @text.textStorage.string.to_s, syntax, @sheet.frame.size)
     else
-      fire_event('onCancel', syntax)
+      fire_event('onCancel', syntax, @sheet.frame.size)
     end
   end
   

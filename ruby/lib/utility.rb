@@ -200,6 +200,9 @@ module OSX
     def +(v); NSSize.new(width + v, height + v); end
     def -(v); NSSize.new(width - v, height - v); end
     
+    def self.from_dic(d); NSSize.new(d[:w], d[:h]); end
+    def to_dic; { :w => width, :h => height }; end
+    
     def inspect
       "#<#{self.class.to_s.gsub(/^OSX::/, '')} (#{width}, #{height})>"
     end
