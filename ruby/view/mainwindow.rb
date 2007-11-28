@@ -56,7 +56,7 @@ class MainWindow < OSX::NSWindow
     k = e.keyCode
     handler = map[k]
     return false unless handler
-    handler.call(KEYMAP[k])
+    handler.call(CODEMAP[k])
   end
   
   def keynames_to_keycodes(keys)
@@ -76,7 +76,7 @@ class MainWindow < OSX::NSWindow
     result
   end
   
-  KEYMAP = {
+  CODEMAP = {
       0 => 'a',
       1 => 's',
       2 => 'd',
