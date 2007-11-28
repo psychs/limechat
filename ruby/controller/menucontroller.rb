@@ -360,7 +360,7 @@ class MenuController < OSX::NSObject
     case syntax
     when 'privmsg','notice'
       s = s.gsub(/\r\n|\r|\n/, "\n")
-      u.send_text(c, notice ? :notice : :privmsg, s)
+      u.send_text(c, syntax.to_sym, s)
     else
       conn = PastieClient.alloc.init
       conn.delegate = self

@@ -1,5 +1,9 @@
 2007-11-29  Satoshi Nakagawa <artension@gmail.com>
 
+	Fixed a bug, pasting by notice or privmsg didn't work.
+
+2007-11-29  Satoshi Nakagawa <artension@gmail.com>
+
 	Made the paste sheet resizable.
 	Reformed PastieClient to use NSURLConnection.
 
