@@ -15,7 +15,7 @@ Eloy Duran			# RubyCocoa developer, a patch for bundling RubyCocoa.framework
 					# and SACrashReporter
 Fujimoto Hisa       # RubyCocoa creator
 Laurent Sansonetti  # RubyCocoa developer, many requests and suggestions
-Josh Goebel			# CocoaSheet, many improvements of code and UIs
+Josh Goebel			# CocoaSheet, many improvements of code and UIs, Pastie creator
 Jun Morimoto        # bug fixes
 
 * License (Ruby's)
