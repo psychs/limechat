@@ -4,7 +4,7 @@
 require 'cocoasheet'
 
 class PasteSheet < CocoaSheet
-  attr_accessor :uid, :cid
+  attr_accessor :uid, :cid, :nick
   ib_outlet :text, :sendButton, :syntaxPopup, :progressIndicator, :errorLabel
   first_responder :sendButton
   buttons :Cancel
@@ -45,7 +45,7 @@ class PasteSheet < CocoaSheet
       @result = nil
       @conn = PastieClient.alloc.init
       @conn.delegate = self
-      @conn.start(@text.textStorage.string.to_s, syntax)
+      @conn.start(@text.textStorage.string.to_s, @nick, syntax)
     end
   end
   

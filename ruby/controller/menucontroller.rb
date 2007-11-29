@@ -327,7 +327,7 @@ class MenuController < OSX::NSObject
       sel = @world.selected
       if sel && !sel.unit? && /(\r\n|\r|\n)[^\r\n]/ =~ s
         # multi line
-        start_paste_dialog(sel.unit.id, sel.id, s)
+        start_paste_dialog(sel.unit.mynick, sel.unit.id, sel.id, s)
       else
         # single line
         @world.select_text unless OSX::NSTextView === t
@@ -341,7 +341,7 @@ class MenuController < OSX::NSObject
     end
   end
   
-  def start_paste_dialog(uid, cid, s, mode=:paste)
+  def start_paste_dialog(mynick, uid, cid, s, mode=:paste)
     size = nil
     hash = @pref.load_window('paste_sheet')
     size = NSSize.from_dic(hash) if hash
@@ -351,6 +351,7 @@ class MenuController < OSX::NSObject
     @paste.delegate = self
     @paste.uid = uid
     @paste.cid = cid
+    @paste.nick = mynick
     @paste.start(s, mode, @pref.gen.paste_syntax, size)
   end
   
@@ -370,21 +371,6 @@ class MenuController < OSX::NSObject
     else
       u.send_text(c, :privmsg, s)
     end
-
-=begin
-    case syntax
-    when 'privmsg','notice'
-      s = s.gsub(/\r\n|\r|\n/, "\n")
-      u.send_text(c, syntax.to_sym, s)
-    else
-      conn = PastieClient.alloc.init
-      conn.delegate = self
-      conn.uid = sender.uid
-      conn.cid = sender.cid
-      @pastie_clients << conn
-      conn.start(s, syntax)
-    end
-=end
   end
   
   def pasteSheet_onCancel(sender, syntax, size)
@@ -393,36 +379,12 @@ class MenuController < OSX::NSObject
     @pref.save
     @paste = nil
   end
-
-=begin
-  def pastie_on_success(sender, s)
-    return unless @pastie_clients.include?(sender)
-    @pastie_clients.delete(sender)
-    
-    u, c = @world.find_by_id(sender.uid, sender.cid)
-    return unless u && c
-    if s.empty?
-      u.print_error("Pastie accepted your request, but couldn't get an URL")
-    else
-      u.send_text(c, :privmsg, s)
-    end
-  end
-  
-  def pastie_on_error(sender, e)
-    return unless @pastie_clients.include?(sender)
-    @pastie_clients.delete(sender)
-    
-    u, c = @world.find_by_id(sender.uid, sender.cid)
-    return unless u && c
-    u.print_error("Pastie failed: #{e}")
-  end
-=end  
   
   def onPasteDialog(sender)
     sel = @world.selected
     return unless sel
     s = NSPasteboard.generalPasteboard.stringForType(NSStringPboardType) || ''
-    start_paste_dialog(sel.unit.id, sel.id, s, :edit)
+    start_paste_dialog(sel.unit.mynick, sel.unit.id, sel.id, s, :edit)
   end
   
   def onPasteMyAddress(sender)

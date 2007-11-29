@@ -10,13 +10,14 @@ class PastieClient < OSX::NSObject
   TIMEOUT = 10
   REQUEST_URL = 'http://pastie.caboo.se/pastes/'
   
-  def start(content, syntax='ruby', is_private=true)
+  def start(content, nick, syntax='ruby', is_private=true)
     @buf = ''
     body = hash_to_query_string({ :paste => {
       :body => CGI.escape(content),
+      :display_name => CGI.escape(nick),
       :parser => syntax,
       :restricted => is_private ? 1 : 0,
-      :authorization => 'burger'
+      :authorization => 'burger',
     }})
     
     url = NSURL.URLWithString(REQUEST_URL)

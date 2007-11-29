@@ -1,5 +1,9 @@
 2007-11-29  Satoshi Nakagawa <artension@gmail.com>
 
+	Changed to indicate current nickname for Pastie.
+
+2007-11-29  Satoshi Nakagawa <artension@gmail.com>
+
 	Changed error messages on a paste dialog.
 	Changed to not show number of count down on a paste dialog.
 
