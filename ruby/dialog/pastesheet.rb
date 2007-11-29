@@ -39,7 +39,7 @@ class PasteSheet < CocoaSheet
       @result = @text.textStorage.string.to_s
       close
     else
-      @interval = 9
+      @interval = 10
       set_requesting
       syntax = tag_to_syntax(@syntaxPopup.selectedItem.tag)
       @result = nil
@@ -52,7 +52,7 @@ class PasteSheet < CocoaSheet
   def pastie_on_success(sender, s)
     @conn = nil
     if s.empty?
-      @errorLabel.setStringValue("Couldn't get an URL")
+      @errorLabel.setStringValue("Could not get an URL from Pastie")
       set_waiting
     else
       @errorLabel.setStringValue('')
@@ -73,10 +73,8 @@ class PasteSheet < CocoaSheet
       if @interval <= 0
         @conn.cancel
         @conn = nil
-        @errorLabel.setStringValue("Pastie timeout")
+        @errorLabel.setStringValue("Unable to reach Pastie at this moment")
         set_waiting
-      else
-        @errorLabel.setStringValue("Sending... #{@interval}")
       end
     end
   end
@@ -85,7 +83,7 @@ class PasteSheet < CocoaSheet
   private
   
   def set_requesting
-    @errorLabel.setStringValue("Sending... #{@interval}")
+    @errorLabel.setStringValue("Sending...")
     @progressIndicator.startAnimation(nil)
     @sendButton.setEnabled(false)
     @syntaxPopup.setEnabled(false)
