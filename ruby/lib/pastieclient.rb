@@ -6,9 +6,8 @@ require 'cgi'
 class PastieClient < OSX::NSObject
   include OSX
   attr_accessor :delegate
-  attr_accessor :uid, :cid
   
-  TIMEOUT = 10.0
+  TIMEOUT = 10
   REQUEST_URL = 'http://pastie.caboo.se/pastes/'
   
   def start(content, syntax='ruby', is_private=true)
@@ -66,6 +65,8 @@ class PastieClient < OSX::NSObject
       req
     end
   end
+  
+  private
   
   def hash_to_query_string(hash)
     hash.map {|k,v|

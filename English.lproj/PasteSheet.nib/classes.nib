@@ -18,6 +18,10 @@
 			<string>ObjC</string>
 			<key>OUTLETS</key>
 			<dict>
+				<key>errorLabel</key>
+				<string>id</string>
+				<key>progressIndicator</key>
+				<string>id</string>
 				<key>sendButton</key>
 				<string>id</string>
 				<key>sheet</key>

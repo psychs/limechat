@@ -1,5 +1,9 @@
 2007-11-29  Satoshi Nakagawa <artension@gmail.com>
 
+	Changed a paste dialog to remain showed while requesting to Pastie.
+
+2007-11-29  Satoshi Nakagawa <artension@gmail.com>
+
 	Changed PastieClient to send form-encoded.
 	Added Perl, Haskell and Scheme for pastie syntax.
 

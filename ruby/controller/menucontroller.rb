@@ -247,6 +247,12 @@ class MenuController < OSX::NSObject
     "#{nick}!#{username}@#{address}"
   end
   
+  def on_timer
+    if @paste
+      @paste.on_timer
+    end
+  end
+  
   
   def onPreferences(sender)
     unless @pref_dialog
@@ -356,7 +362,16 @@ class MenuController < OSX::NSObject
     
     u, c = @world.find_by_id(sender.uid, sender.cid)
     return unless u && c
-    
+    s = s.gsub(/\r\n|\r|\n/, "\n")
+    case syntax
+    when 'privmsg','notice'
+      s = s.gsub(/\r\n|\r|\n/, "\n")
+      u.send_text(c, syntax.to_sym, s)
+    else
+      u.send_text(c, :privmsg, s)
+    end
+
+=begin
     case syntax
     when 'privmsg','notice'
       s = s.gsub(/\r\n|\r|\n/, "\n")
@@ -369,6 +384,7 @@ class MenuController < OSX::NSObject
       @pastie_clients << conn
       conn.start(s, syntax)
     end
+=end
   end
   
   def pasteSheet_onCancel(sender, syntax, size)
@@ -377,7 +393,8 @@ class MenuController < OSX::NSObject
     @pref.save
     @paste = nil
   end
-  
+
+=begin
   def pastie_on_success(sender, s)
     return unless @pastie_clients.include?(sender)
     @pastie_clients.delete(sender)
@@ -399,7 +416,7 @@ class MenuController < OSX::NSObject
     return unless u && c
     u.print_error("Pastie failed: #{e}")
   end
-  
+=end  
   
   def onPasteDialog(sender)
     sel = @world.selected

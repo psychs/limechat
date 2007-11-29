@@ -245,6 +245,7 @@ class AppController < OSX::NSObject
   
   def timer_onTimer(sender)
     @world.on_timer
+    @menu.on_timer
     @gc_count += 1
     if @gc_count >= GC_TIME
       GC.start

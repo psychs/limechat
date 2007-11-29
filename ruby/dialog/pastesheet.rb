@@ -5,9 +5,9 @@ require 'cocoasheet'
 
 class PasteSheet < CocoaSheet
   attr_accessor :uid, :cid
-  ib_outlet :text, :sendButton, :syntaxPopup
+  ib_outlet :text, :sendButton, :syntaxPopup, :progressIndicator, :errorLabel
   first_responder :sendButton
-  buttons :Send, :Cancel
+  buttons :Cancel
   
   def startup(str, mode, syntax, size)
     @sheet.setContentSize(size) if size
@@ -18,16 +18,84 @@ class PasteSheet < CocoaSheet
     @text.textStorage.setAttributedString(NSAttributedString.alloc.initWithString(str))
   end
   
-  def shutdown(result)
+  def shutdown(button)
     syntax = tag_to_syntax(@syntaxPopup.selectedItem.tag)
-    if result == :send
-      fire_event('onSend', @text.textStorage.string.to_s, syntax, @sheet.frame.size)
+    if @result
+      fire_event('onSend', @result, syntax, @sheet.frame.size)
     else
+      @conn.cancel if @conn
       fire_event('onCancel', syntax, @sheet.contentView.frame.size)
     end
   end
   
+  def close
+    NSApp.endSheet_returnCode(@sheet, 0)
+  end
+  
+  def onSend(sender)
+    syntax = tag_to_syntax(@syntaxPopup.selectedItem.tag)
+    case syntax
+    when 'privmsg','notice'
+      @result = @text.textStorage.string.to_s
+      close
+    else
+      @interval = 9
+      set_requesting
+      syntax = tag_to_syntax(@syntaxPopup.selectedItem.tag)
+      @result = nil
+      @conn = PastieClient.alloc.init
+      @conn.delegate = self
+      @conn.start(@text.textStorage.string.to_s, syntax)
+    end
+  end
+  
+  def pastie_on_success(sender, s)
+    @conn = nil
+    if s.empty?
+      @errorLabel.setStringValue("Couldn't get an URL")
+      set_waiting
+    else
+      @errorLabel.setStringValue('')
+      @result = s
+      close
+    end
+  end
+  
+  def pastie_on_error(sender, e)
+    @conn = nil
+    @errorLabel.setStringValue("Pastie failed: #{e}")
+    set_waiting
+  end
+  
+  def on_timer
+    if @conn
+      @interval -= 1
+      if @interval <= 0
+        @conn.cancel
+        @conn = nil
+        @errorLabel.setStringValue("Pastie timeout")
+        set_waiting
+      else
+        @errorLabel.setStringValue("Sending... #{@interval}")
+      end
+    end
+  end
+  
+  
   private
+  
+  def set_requesting
+    @errorLabel.setStringValue("Sending... #{@interval}")
+    @progressIndicator.startAnimation(nil)
+    @sendButton.setEnabled(false)
+    @syntaxPopup.setEnabled(false)
+  end
+  
+  def set_waiting
+    @progressIndicator.stopAnimation(nil)
+    @sendButton.setEnabled(true)
+    @syntaxPopup.setEnabled(true)
+  end
   
   SYNTAXES = [
     'privmsg', 'notice', 'c++', 'css', 'diff',
