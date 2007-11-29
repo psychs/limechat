@@ -67,6 +67,16 @@ class SACrashReporter < OSX::NSWindowController
       "SACrashReporter version #{SACrashReporter::VERSION}"
     end
     
+    # Returns the Ruby intepreter version
+    def ruby_version
+      "Ruby version: #{RUBY_VERSION}"
+    end
+    
+    # Returns the RubyCocoa version
+    def rubycocoa_version
+      "RubyCocoa version: #{OSX::RUBYCOCOA_VERSION}"
+    end
+    
     # Returns the application executable: ["Command:", "MyApp"]
     def command
       OSX::NSBundle.mainBundle.infoDictionary['CFBundleExecutable'].to_s
@@ -129,7 +139,8 @@ class SACrashReporter < OSX::NSWindowController
     private
     
     # The default layout of an Apple crash log
-    DEFAULT_APPLE_STYLE_CRASH_LOG = [[:host_name, :date_time, :os_version, :report_version], [:command, :path], [:version], [:pid]]
+    # DEFAULT_APPLE_STYLE_CRASH_LOG = [[:host_name, :date_time, :os_version, :report_version], [:command, :path], [:version], [:pid]]
+    DEFAULT_APPLE_STYLE_CRASH_LOG = [[:host_name, :date_time, :os_version, :ruby_version, :rubycocoa_version, :report_version], [:command, :path], [:version], [:pid]]
     def ordered_logs
       @order || DEFAULT_APPLE_STYLE_CRASH_LOG
     end

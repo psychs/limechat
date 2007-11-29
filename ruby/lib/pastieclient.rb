@@ -21,7 +21,8 @@ class PastieClient < OSX::NSObject
     }})
     
     url = NSURL.URLWithString(REQUEST_URL)
-    req = NSMutableURLRequest.requestWithURL_cachePolicy_timeoutInterval(url, NSURLRequestReloadIgnoringLocalCacheData, TIMEOUT)
+    policy = 1  # NSURLRequestReloadIgnoringLocalCacheData
+    req = NSMutableURLRequest.requestWithURL_cachePolicy_timeoutInterval(url, policy, TIMEOUT)
     req.setHTTPMethod('POST')
     req.setHTTPBody(NSData.dataWithRubyString(body))
     @conn = NSURLConnection.alloc.initWithRequest_delegate(req, self)

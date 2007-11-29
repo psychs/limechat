@@ -1,6 +1,11 @@
+2007-11-30  Satoshi Nakagawa <artension@gmail.com>
+
+	Changed to use 1 instead of NSURLRequestReloadIgnoringLocalCacheData.
+	Improved SACrashReporter to send a ruby version and a RubyCocoa version.
+
 2007-11-29  Satoshi Nakagawa <artension@gmail.com>
 
-	Changed to indicate current nickname for Pastie.
+	Changed to send current nickname for Pastie.
 
 2007-11-29  Satoshi Nakagawa <artension@gmail.com>
 
