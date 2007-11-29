@@ -33,7 +33,7 @@ class PasteSheet < CocoaSheet
     'privmsg', 'notice', 'c++', 'css', 'diff',
     'html_rails', 'html', 'java', 'javascript', 'php',
     'plain_text', 'python', 'ruby', 'ruby_on_rails', 'sql',
-    'shell-unix-generic',
+    'shell-unix-generic', 'perl', 'haskell', 'scheme',
   ]
   
   def syntax_to_tag(syntax)

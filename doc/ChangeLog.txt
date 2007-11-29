@@ -1,5 +1,10 @@
 2007-11-29  Satoshi Nakagawa <artension@gmail.com>
 
+	Changed PastieClient to send form-encoded.
+	Added Perl, Haskell and Scheme for pastie syntax.
+
+2007-11-29  Satoshi Nakagawa <artension@gmail.com>
+
 	Fixed a bug, a size of a paste sheet should be stored in a content size not a frame.
 
 2007-11-29  Satoshi Nakagawa <artension@gmail.com>

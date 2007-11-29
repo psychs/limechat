@@ -1,0 +1,81 @@
+# Created by Satoshi Nakagawa.
+# You can redistribute it and/or modify it under the Ruby's license or the GPL2.
+
+require 'cgi'
+
+class PastieClient < OSX::NSObject
+  include OSX
+  attr_accessor :delegate
+  attr_accessor :uid, :cid
+  
+  TIMEOUT = 10.0
+  REQUEST_URL = 'http://pastie.caboo.se/pastes/'
+  
+  def start(content, syntax='ruby', is_private=true)
+    @buf = ''
+    body = hash_to_query_string({ :paste => {
+      :body => CGI.escape(content),
+      :parser => syntax,
+      :restricted => is_private ? 1 : 0,
+      :authorization => 'burger'
+    }})
+    
+    url = NSURL.URLWithString(REQUEST_URL)
+    req = NSMutableURLRequest.requestWithURL_cachePolicy_timeoutInterval(url, NSURLRequestReloadIgnoringLocalCacheData, TIMEOUT)
+    req.setHTTPMethod('POST')
+    req.setHTTPBody(NSData.dataWithRubyString(body))
+    @conn = NSURLConnection.alloc.initWithRequest_delegate(req, self)
+  end
+  
+  def cancel
+    @conn.cancel if @conn
+  end
+  
+  def connection_didReceiveResponse(conn, res)
+    @response = res
+  end
+
+  def connectionDidFinishLoading(conn)
+    code = @response.statusCode
+    if code.to_s =~ /^20[01]$/
+      #unless @buf.empty?
+      #  @buf = PRIVATE_URL + @buf
+      #end
+      @delegate.pastie_on_success(self, @buf)
+    else
+      @delegate.pastie_on_error(self, "#{code} #{@response.oc_class.localizedStringForStatusCode(code)}")
+    end
+    @conn = nil
+  end
+  
+  def connection_didReceiveData(conn, data)
+    @buf << data.rubyString
+  end
+  
+  def connection_didFailWithError(conn, err)
+    @delegate.pastie_on_error(self, "#{err.userInfo[:NSLocalizedDescription]}")
+    @conn = nil
+  end
+  
+  def connection_willSendRequest_redirectResponse(conn, req, res)
+    if res && res.statusCode == 302
+      @delegate.pastie_on_success(self, req.URL.to_s)
+      @conn = nil
+      nil
+    else
+      req
+    end
+  end
+  
+  def hash_to_query_string(hash)
+    hash.map {|k,v|
+      if v.instance_of?(Hash)
+        v.map {|sk, sv|
+          "#{k}[#{sk}]=#{sv}"
+        }.join('&')
+      else
+        "#{k}=#{v}"
+      end
+    }.join('&')
+  end
+end
