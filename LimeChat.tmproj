@@ -16,12 +16,12 @@
 		</dict>
 	</array>
 	<key>fileHierarchyDrawerWidth</key>
-	<integer>290</integer>
+	<integer>266</integer>
 	<key>metaData</key>
 	<dict/>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{596, 83}, {942, 1089}}</string>
+	<string>{{660, 84}, {823, 1086}}</string>
 </dict>
 </plist>

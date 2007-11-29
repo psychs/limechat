@@ -73,7 +73,11 @@ class Preferences
       @use_growl = true
       @log_transcript = false
       @transcript_folder = '~/Documents/LimeChatTranscripts'
-      @paste_syntax = 'notice'
+      if OSX::LanguageSupport.primary_language == 'ja'
+        @paste_syntax = 'notice'
+      else
+        @paste_syntax = 'privmsg'
+      end
     end
   end
   

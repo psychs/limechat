@@ -305,6 +305,18 @@ module OSX
     end
   end
   
+  module LanguageSupport
+    def primary_language
+      langs = OSX::NSUserDefaults.standardUserDefaults[:AppleLanguages]
+      if langs
+        langs[0].to_ruby
+      else
+        nil
+      end
+    end
+    module_function :primary_language
+  end
+  
   class NSEvent
     def printType
       s = case oc_type

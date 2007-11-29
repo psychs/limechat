@@ -1,5 +1,9 @@
 2007-11-30  Satoshi Nakagawa <artension@gmail.com>
 
+	Now privmsg command is the default setting for pasting on non-Japanese environment.
+
+2007-11-30  Satoshi Nakagawa <artension@gmail.com>
+
 	Changed to use 1 instead of NSURLRequestReloadIgnoringLocalCacheData.
 	Improved SACrashReporter to send a ruby version and a RubyCocoa version.
 

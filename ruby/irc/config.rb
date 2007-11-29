@@ -72,21 +72,14 @@ class IRCUnitConfig
     @channels = []
     @autoop = []
     
-    defaults = OSX::NSUserDefaults.standardUserDefaults
-    langs = defaults[:AppleLanguages]
-    if langs && langs[0]
-      @encoding = case langs[0].to_s
-      when 'ja'; OSX::NSISO2022JPStringEncoding
-      when 'ko'; -2147482590
-      when 'zh-Hans'; -2147482063
-      when 'zh-Hant'; -2147481085
-      #when 'ru'; -2147481086
-      else
-        #OSX::NSISOLatin1StringEncoding
-        OSX::NSUTF8StringEncoding
-      end
+    @encoding = case OSX::LanguageSupport.primary_language
+    when 'ja'; OSX::NSISO2022JPStringEncoding
+    when 'ko'; -2147482590
+    when 'zh-Hans'; -2147482063
+    when 'zh-Hant'; -2147481085
+    #when 'ru'; -2147481086
     else
-      @encoding = OSX::NSUTF8StringEncoding
+      OSX::NSUTF8StringEncoding
     end
     
     seed.each do |k,v|
