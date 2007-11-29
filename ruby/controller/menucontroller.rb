@@ -734,7 +734,7 @@ class MenuController < OSX::NSObject
   
   
   def changeStyle(sender)
-    @app.set_alt_layout(true)
+    #@app.set_alt_layout(true)
 =begin
     style = <<-EOM
       html {
