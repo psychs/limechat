@@ -445,7 +445,7 @@ class AppController < OSX::NSObject
     handler(:tab, :ctrl, :shift) { move(:up, :unread); true }
     handler(:space, :alt) { move(:down, :unread); true }
     handler(:space, :alt, :shift) { move(:up, :unread); true }
-    handler('0'..'9', :cmd) {|n| @world.select_channel_at(n.to_i); true }
+    handler('0'..'9', :cmd) {|n| @world.select_channel_at(n.to_s.to_i); true }
   end
   
   def scroll(direction)

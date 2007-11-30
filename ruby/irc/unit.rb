@@ -317,6 +317,7 @@ class IRCUnit < OSX::NSObject
   def send_command(s)
     return false unless connected?
     command = s.token!
+    return if command.empty? || command.include?("\0")
     cmd = command.downcase.to_sym
     
     case cmd
