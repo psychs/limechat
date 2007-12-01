@@ -143,7 +143,7 @@ class LogController < OSX::NSObject
     moveToBottom if @bottom
   end
   
-  def print(line, use_keyword)
+  def print(line, use_keyword=true)
     body, key = build_body(line, use_keyword)
     
     unless @loaded
@@ -331,8 +331,8 @@ class LogController < OSX::NSObject
     if use_keyword
       dislike = @keyword.dislike_words
       like = @keyword.words
-      if @unit && @keyword.current_nick
-        like = [@unit.mynick] + like
+      if @unit && @keyword.current_nick && !@unit.mynick.empty?
+        like += [@unit.mynick]
       end
     else
       like = dislike = nil

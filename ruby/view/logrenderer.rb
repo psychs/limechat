@@ -296,7 +296,6 @@ module LogRenderer
   
     #URL_REGEX = /(?:h?ttps?|ftp):\/\/[-_a-zA-Z\d.!~*':@%]+(?:\/[-_a-zA-Z\d.!~*'%;\/?:@&=+$,#()]*)?/
     #URL_REGEX = /(?:h?ttps?|ftp):\/\/[-_a-zA-Z\d.!~*':@%]+(?:\/[-_a-zA-Z\d.!~*'%;\/?:@&=+$,#()¡-⿻、-힣-￿]*)?/
-  	#ADDRESS_REGEX = /(([a-zA-Z\d]([a-zA-Z\d\-]*[a-zA-Z\d])?\.)([a-zA-Z\d]([a-zA-Z\d\-]*[a-zA-Z\d])?\.)+(com|net|org|edu|gov|mil|int|biz|pro|info|coop|name|aero|museum|jobs|travel|mobi|cat|tel|asia|ac|ad|ae|af|ag|ai|al|am|an|ao|aq|ar|as|at|au|aw|az|ba|bb|bd|be|bf|bg|bh|bi|bj|bm|bn|bo|br|bs|bt|bv|bw|by|bz|ca|cc|cd|cf|cg|ch|ci|ck|cl|cm|cn|co|cr|cs|cu|cv|cx|cy|cz|de|dj|dk|dm|do|dz|ec|ee|eg|eh|er|es|et|fi|fj|fk|fm|fo|fr|fx|ga|gb|gd|ge|gf|gg|gh|gi|gl|gm|gn|gp|gq|gr|gs|gt|gu|gw|gy|hk|hm|hn|hr|ht|hu|id|ie|il|im|in|io|iq|ir|is|it|je|jm|jo|jp|ke|kg|kh|ki|km|kn|kp|kr|kw|ky|kz|la|lb|lc|li|lk|lr|ls|lt|lu|lv|ly|ma|mc|md|mg|mh|mk|ml|mm|mn|mo|mp|mq|mr|ms|mt|mu|mv|mw|mx|my|mz|na|ne|nf|ng|ni|nl|no|np|nr|nt|nu|nz|om|pa|pe|pf|pg|ph|pk|pl|pm|pn|pr|ps|pt|pw|py|qa|re|ro|ru|rw|sa|sb|sc|sd|se|sg|sh|si|sj|sk|sl|sm|sn|so|sr|st|su|sv|sy|sz|tc|td|tf|tg|th|tj|tk|tm|tn|to|tp|tr|tt|tv|tw|tz|ua|ug|uk|um|us|uy|uz|va|vc|ve|vg|vi|vn|wf|wg|ws|ye|yt|yu|za|zm|zr|zw))|(([a-f\d]{0,4}:){7}[a-f\d]{0,4})|((\d{1,3}\.){3}[\d]{1,3})/i
     
     URL_REGEX = /(?:h?ttps?|ftp):\/\/[^\s　]+/
   	ADDRESS_REGEX = /(?:[a-zA-Z\d](?:[-a-zA-Z\d]*[a-zA-Z\d])?\.)(?:[a-zA-Z\d](?:[-a-zA-Z\d]*[a-zA-Z\d])?\.)+[a-zA-Z]{2,6}|(?:[a-f\d]{0,4}:){7}[a-f\d]{0,4}|(?:\d{1,3}\.){3}[\d]{1,3}/
@@ -345,6 +344,7 @@ module LogRenderer
       
       keywords = []
       words.each do |w|
+        next if w.empty?
         s = body.dup
         offset = 0
         rex = Regexp.new(Regexp.escape(w), true)
@@ -366,6 +366,7 @@ module LogRenderer
       if dislike_words && !dislike_words.empty?
         dislike_matches = []
         dislike_words.each do |w|
+          next if w.empty?
           s = body.dup
           offset = 0
           rex = Regexp.new(Regexp.escape(w), true)
@@ -380,9 +381,9 @@ module LogRenderer
         # eliminate keywords intersect one of dislike_words
         keywords.delete_if {|k| dislike_matches.find {|u| intersect?(k,u)}} unless dislike_matches.empty?
       end
-    
+      
       # combine keyword ranges
-    
+      
       new_keywords = []
       i = 0
       while i < keywords.size

@@ -68,6 +68,7 @@ class IRCSendMessage
       @trail = yield @trail
       @raw = yield @raw
     end
+    self
   end
   
   def to_s
@@ -127,30 +128,17 @@ class IRCReceiveMessage
     @params << str unless str.empty?
   end
   
-  def count_params
-    @params.size
-  end
-  
-  def params
-    ary = []
-    15.times {|i| ary << param(i) }
-    ary
-  end
-  
-  def param(i)
-    if i < @params.size
-      @params[i]
-    else
-      ''
-    end
-  end
-  
   def [](n)
-    param(n)
+    @params[n] || ''
   end
   
   def sequence(n=0)
-    @params[n..-1].join(' ')
+    ary = @params[n..-1]
+    if ary
+      ary.join(' ')
+    else
+      ''
+    end
   end
   
   def map!
@@ -163,6 +151,7 @@ class IRCReceiveMessage
       #@command = yield @command
       @params.map! {|i| yield i }
     end
+    self
   end
   
   def to_s

@@ -240,7 +240,7 @@ class IRCChannel < OSX::NSObject
     end
   end
   
-  def print(line, key)
+  def print(line, key=true)
     result = @log.print(line, key)
     
     # open log file

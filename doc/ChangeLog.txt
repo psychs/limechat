@@ -1,3 +1,7 @@
+2007-12-01  Satoshi Nakagawa <artension@gmail.com>
+
+	Changed to highlight a current nickname in priority.
+
 2007-11-30  Satoshi Nakagawa <artension@gmail.com>
 
 	Fixed a bug, an empty string should be rejected for a raw command.

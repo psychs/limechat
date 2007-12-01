@@ -647,8 +647,6 @@ class IRCUnit < OSX::NSObject
   def ircsocket_on_receive(m)
     m.map! {|i| to_local_encoding(i) }
     m.map! {|i| StringValidator::validate_utf8(i, 0x3f) }
-    #puts m
-    #puts m.params
     
     if m.numeric_reply > 0
       receive_numeric_reply(m)
@@ -760,18 +758,14 @@ class IRCUnit < OSX::NSObject
     end
     if !channel
       click = nil
-      key = true
     elsif channel.unit? || channel.kind_of?(String)
       click = "unit #{self.id}"
-      key = true
     else
       click = "channel #{self.id} #{channel.id}"
-      #key = channel.config.keyword
-      key = true
     end
     
     line = LogLine.new(time, place, nickstr, text, kind, mtype, nick, click)
-    @world.console.print(line, key)
+    @world.console.print(line)
   end
   
   def print_channel(channel, kind, nick, text=nil)
@@ -801,9 +795,9 @@ class IRCUnit < OSX::NSObject
     
     line = LogLine.new(time, place, nickstr, text, kind, mtype, nick, click)
     if channel && !channel.unit?
-      key = channel.print(line, true)
+      key = channel.print(line)
     else
-      key = @log.print(line, true)
+      key = @log.print(line)
     end
     key
   end
