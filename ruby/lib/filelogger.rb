@@ -1,4 +1,7 @@
-require 'fileutils'
+# Created by Satoshi Nakagawa.
+# You can redistribute it and/or modify it under the Ruby's license or the GPL2.
+
+require 'pathname'
 
 class FileLogger
   include OSX
@@ -32,11 +35,11 @@ class FileLogger
   def open
     close if @file
     @fname = build_filename
-    FileUtils.mkpath(File.dirname(@fname))
-    unless File.exist?(@fname)
-      NSFileManager.defaultManager.createFileAtPath_contents_attributes(@fname, NSData.data, nil)
+    @fname.dirname.mkpath unless @fname.dirname.exist?
+    unless @fname.exist?
+      NSFileManager.defaultManager.createFileAtPath_contents_attributes(@fname.to_s, NSData.data, nil)
     end
-    @file = NSFileHandle.fileHandleForUpdatingAtPath(@fname)
+    @file = NSFileHandle.fileHandleForUpdatingAtPath(@fname.to_s)
     if @file
       @file.seekToEndOfFile
     end
@@ -55,6 +58,6 @@ class FileLogger
     else
       c = @channel.name.safe_filename
     end
-    "#{base}/#{c}/#{pre}#{date}_#{u}.txt"
+    Pathname.new("#{base}/#{c}/#{pre}#{date}_#{u}.txt")
   end
 end
