@@ -51,16 +51,16 @@ class String
     gsub(/[:\/]/, '_')
   end
   
+  def to_ns
+    OSX::NSMutableString.stringWithString(self)
+  end
+  
   def expand_path
-    OSX::NSString.stringWithString(self).stringByExpandingTildeInPath.to_s
+    to_ns.stringByExpandingTildeInPath.to_s
   end
   
   def collapse_path
-    OSX::NSString.stringWithString(self).stringByAbbreviatingWithTildeInPath.to_s
-  end
-  
-  def to_ns
-    OSX::NSMutableString.stringWithString(self)
+    to_ns.stringByAbbreviatingWithTildeInPath.to_s
   end
 end
 
