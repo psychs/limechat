@@ -3,14 +3,10 @@
 
 class DccSender
   attr_accessor :delegate, :pref, :uid, :peer_nick
-  attr_reader :port, :full_filename, :filename, :size, :processed_size, :status, :error
-  attr_accessor :progress_bar, :icon
-  
-	# SS_WAIT, SS_ERROR, SS_STOP, SS_WAITSTART, SS_WAITLISTEN,
-	# SS_READY, SS_SEND, SS_COMPLETE
+  attr_reader :port, :full_filename, :filename, :size, :processed_size, :status, :error, :icon
+  attr_accessor :progress_bar
 	
-	# waiting, error, stop
-	# listening, sending, complete
+	# status: waiting, error, stop, listening, sending, complete
 
   RECORDS_LEN = 10
   
@@ -26,6 +22,9 @@ class DccSender
     @full_filename = v
     @size = File.size(@full_filename)
     @filename = File.basename(@full_filename)
+    ext = File.extname(@filename)
+    ext[0] = '' if ext[0..0] == '.'
+    @icon = OSX::NSWorkspace.sharedWorkspace.iconForFileType(ext)
   end
   
   def speed

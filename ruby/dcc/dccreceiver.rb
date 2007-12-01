@@ -4,15 +4,11 @@
 require 'utility'
 
 class DccReceiver
-  attr_accessor :delegate, :uid, :peer_nick, :host, :port, :filename, :size, :version
-  attr_reader :path, :processed_size, :status, :error, :download_filename
-  attr_accessor :progress_bar, :icon
+  attr_accessor :delegate, :uid, :peer_nick, :host, :port, :size, :version
+  attr_reader :path, :processed_size, :status, :error, :download_filename, :icon, :filename
+  attr_accessor :progress_bar
   
-  # RS_WAIT, RS_ERROR, RS_STOP, RS_WAITSTART, RS_WAITCONNECT, 
-  # RS_RESUME, RS_RECEIVE, RS_COMPLETE
-  
-  # waiting, error, stop, connecting
-  # receiving, complete
+  # status: waiting, error, stop, connecting, receiving, complete
   
   RECORDS_LEN = 10
   
@@ -25,7 +21,16 @@ class DccReceiver
     @rec = 0
   end
   
-  def path=(v); @path = v.expand_path; end
+  def path=(v)
+    @path = v.expand_path
+  end
+  
+  def filename=(v)
+    @filename = v
+    ext = File.extname(@filename)
+    ext[0] = '' if ext[0..0] == '.'
+    @icon = OSX::NSWorkspace.sharedWorkspace.iconForFileType(ext)
+  end
   
   def speed
     return 0 if @records.empty? || @status != :receiving

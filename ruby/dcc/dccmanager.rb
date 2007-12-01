@@ -186,9 +186,6 @@ class DccManager < OSX::NSObject
     c.filename = fname
     c.size = size
     c.version = ver
-    ext = File.extname(c.filename)
-    ext = $1 if /\A\.?(.+)\z/ =~ ext
-    c.icon = NSWorkspace.sharedWorkspace.iconForFileType(ext)
     @receivers.unshift(c)
     
     #c.open
@@ -203,9 +200,6 @@ class DccManager < OSX::NSObject
     c.uid = uid
     c.peer_nick = nick
     c.full_filename = file
-    ext = File.extname(c.filename)
-    ext = $1 if /\A\.?(.+)\z/ =~ ext
-    c.icon = NSWorkspace.sharedWorkspace.iconForFileType(ext)
     @senders.unshift(c)
     
     u = @world.find_unit_by_id(uid)
