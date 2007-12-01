@@ -15,7 +15,6 @@ appshortname = 'LimeChat'
 appname = appshortname + '.app'
 appver = Pathname.new(__FILE__).dirname + 'appversion.rb'
 ver = `ruby #{appver}`
-imagename = "#{appshortname}_#{ver}.dmg"
 
 root = Pathname.new(__FILE__).dirname.parent
 app = root + 'build/Release' + appname
@@ -23,7 +22,7 @@ doc = root + 'doc'
 desktop = Pathname.new('~/Desktop').expand_path
 tmp = desktop + 'build_dmg_tmp'
 appdoc = tmp + appname + 'Contents'
-image = desktop + imagename
+image = desktop + "#{appshortname}_#{ver}.dmg"
 
 image.rmtree
 tmp.rmtree
