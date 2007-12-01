@@ -1,25 +1,37 @@
+require 'pathname'
 require 'fileutils'
 
-source_path = File.join(File.dirname(__FILE__), '../')
-dest_path = File.expand_path('~/Desktop') + '/'
-tmp_path = dest_path + 'limechat_tmp/'
+class Pathname
+  def rmtree
+    FileUtils.rm_rf(to_s)
+  end
+  
+  def cptree(to)
+    FileUtils.cp_r(to_s, to.to_s)
+  end
+end
 
-FileUtils.rm_rf(tmp_path)
-FileUtils.cp_r(source_path, tmp_path)
+def rmglob(path)
+  FileUtils.rm_rf(Dir.glob(path.to_s))
+end
 
-FileUtils.rm_rf(Dir.glob(tmp_path + '**/*~.nib'))
-FileUtils.rm_rf(Dir.glob(tmp_path + '**/._*'))
-FileUtils.rm_rf(Dir.glob(tmp_path + 'build'))
-FileUtils.rm_rf(Dir.glob(tmp_path + '**/.svn'))
-FileUtils.rm_rf(Dir.glob(tmp_path + '**/.DS_Store'))
+source = Pathname.new(__FILE__).dirname.parent
+dest = Pathname.new('~/Desktop').expand_path
+tmp = dest + 'limechat_tmp'
 
-vercmd = File.join(File.dirname(__FILE__), 'getver.rb')
+tmp.rmtree
+source.cptree(tmp)
+
+rmglob(tmp + 'build')
+rmglob(tmp + '**/.svn')
+rmglob(tmp + '**/.DS_Store')
+rmglob(tmp + '**/*~.nib')
+rmglob(tmp + '**/._*')
+
+vercmd = Pathname.new(__FILE__).dirname + 'getver.rb'
 ver = `ruby #{vercmd}`
-file = "#{dest_path}LimeChat_#{ver}.zip"
-FileUtils.rm_f(file)
+file = dest + "LimeChat_#{ver}.zip"
+Dir.chdir(tmp)
+system("zip -qr #{file} *")
 
-Dir.chdir(tmp_path)
-cmd = "zip -qr #{file} *"
-system(cmd)
-
-FileUtils.rm_rf(tmp_path)
+tmp.rmtree

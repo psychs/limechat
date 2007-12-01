@@ -1,6 +1,8 @@
-file = File.join(File.dirname(__FILE__), '../Info.plist')
+require 'pathname'
 
-open(file) do |f|
+file = Pathname.new(__FILE__).dirname + '../Info.plist'
+
+file.open do |f|
   next_line = false
   while s = f.gets
     if next_line

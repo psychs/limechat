@@ -1,5 +1,9 @@
 2007-12-01  Satoshi Nakagawa <artension@gmail.com>
 
+	Refactoring utility scripts.
+
+2007-12-01  Satoshi Nakagawa <artension@gmail.com>
+
 	Changed to use pathname in filelogger.rb.
 
 2007-12-01  Satoshi Nakagawa <artension@gmail.com>
