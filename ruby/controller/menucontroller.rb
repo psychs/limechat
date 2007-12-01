@@ -27,7 +27,6 @@ class MenuController < OSX::NSObject
     @autoop_dialog.close if @autoop_dialog
   end
   
-  #objc_method :validateMenuItem, 'c@:@'
   def validateMenuItem(i)
     u, c = @world.sel
     
@@ -806,7 +805,6 @@ class MenuController < OSX::NSObject
     @send.beginForDirectory_file_types_modelessDelegate_didEndSelector_contextInfo('~/Desktop', nil, nil, self, 'sendFilePanelDidEnd:returnCode:contextInfo:', nil)
   end
   
-  #objc_method :sendFilePanelDidEnd_returnCode_contextInfo, 'v@:@i^v'
   def sendFilePanelDidEnd_returnCode_contextInfo(panel, code, info)
     targets = @send_targets
     uid = @send_uid

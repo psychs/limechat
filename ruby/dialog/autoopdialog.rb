@@ -179,7 +179,6 @@ class AutoOpDialog < OSX::NSObject
     end
   end
   
-  #objc_method :outlineView_isItemExpandable, 'c@:@@'
   def outlineView_isItemExpandable(sender, item)
     case item
       when WorldTreeItem; item.units.size > 0
@@ -251,7 +250,6 @@ class AutoOpDialog < OSX::NSObject
   
   # edit
   
-  #objc_method 'control:textView:doCommandBySelector:', 'c@:@@:'
   def control_textView_doCommandBySelector(control, textview, selector)
     case selector
     when 'moveDown:'

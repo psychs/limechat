@@ -408,7 +408,6 @@ class IRCWorld < OSX::NSObject
     end
   end
   
-  #objc_method :outlineView_shouldEditTableColumn_item, 'c@:@@@'
   def outlineView_shouldEditTableColumn_item(sender, column, item)
     false
   end
@@ -454,7 +453,6 @@ class IRCWorld < OSX::NSObject
     item.number_of_children
   end
   
-  #objc_method :outlineView_isItemExpandable, 'c@:@@'
   def outlineView_isItemExpandable(sender, item)
     item.number_of_children > 0
   end

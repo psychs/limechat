@@ -7,7 +7,6 @@ class ServerTreeView < TreeView
   include OSX
   attr_accessor :responder_delegate
   
-  #objc_method :acceptsFirstResponder, 'c@:'
   def acceptsFirstResponder
     if @responder_delegate
       @responder_delegate.serverTreeView_acceptFirstResponder
