@@ -2,6 +2,7 @@
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
 require 'numberformat'
+require 'utility'
 
 class DccManager < OSX::NSObject
   include OSX
@@ -423,7 +424,7 @@ class FileTransferCell < OSX::NSCell
   def drawInteriorWithFrame_inView(frame, view)
     if @icon
       size = ICON_SIZE
-      margin = (frame.size.height - size.height) / 2
+      margin = (frame.height - size.height) / 2
       pt = frame.origin.dup
       pt.x += margin
       pt.y += margin
@@ -437,10 +438,10 @@ class FileTransferCell < OSX::NSCell
     
     fname = self.stringValue
     rect = frame.dup
-    rect.origin.x += rect.size.height
-    rect.origin.y += FILENAME_TOP_MARGIN + offset
-    rect.size.width -= rect.size.height + RIGHT_MARGIN
-    rect.size.height = FILENAME_HEIGHT - FILENAME_TOP_MARGIN
+    rect.x += rect.height
+    rect.y += FILENAME_TOP_MARGIN + offset
+    rect.width -= rect.height + RIGHT_MARGIN
+    rect.height = FILENAME_HEIGHT - FILENAME_TOP_MARGIN
     style = NSMutableParagraphStyle.alloc.init
     style.setAlignment(NSLeftTextAlignment)
     style.setLineBreakMode(NSLineBreakByTruncatingMiddle)
@@ -454,19 +455,19 @@ class FileTransferCell < OSX::NSCell
     if @progress_bar
       bar = @progress_bar
       rect = frame.dup
-      rect.origin.x += rect.size.height
-      rect.origin.y += FILENAME_HEIGHT
-      rect.size.width -= rect.size.height + RIGHT_MARGIN
-      rect.size.height = PROGRESSBAR_HEIGHT
+      rect.x += rect.height
+      rect.y += FILENAME_HEIGHT
+      rect.width -= rect.height + RIGHT_MARGIN
+      rect.height = PROGRESSBAR_HEIGHT
       bar.setFrame(rect)
       @progress_bar = nil
     end
     
     rect = frame.dup
-    rect.origin.x += rect.size.height
-    rect.origin.y += FILENAME_HEIGHT + PROGRESSBAR_HEIGHT + STATUS_TOP_MARGIN - offset
-    rect.size.width -= rect.size.height + RIGHT_MARGIN
-    rect.size.height = STATUS_HEIGHT - STATUS_TOP_MARGIN
+    rect.x += rect.height
+    rect.y += FILENAME_HEIGHT + PROGRESSBAR_HEIGHT + STATUS_TOP_MARGIN - offset
+    rect.width -= rect.height + RIGHT_MARGIN
+    rect.height = STATUS_HEIGHT - STATUS_TOP_MARGIN
     style = NSMutableParagraphStyle.alloc.init
     style.setAlignment(NSLeftTextAlignment)
     style.setLineBreakMode(NSLineBreakByTruncatingTail)
@@ -493,25 +494,25 @@ class FileTransferCell < OSX::NSCell
     
     case @status
     when :waiting
-      str += "#{fsize(@size)}"
+      str << "#{fsize(@size)}"
     when :listening
-      str += "#{fsize(@size)}  — Requesting"
+      str << "#{fsize(@size)}  — Requesting"
     when :connecting
-      str += "#{fsize(@size)}  — Connecting"
+      str << "#{fsize(@size)}  — Connecting"
     when :sending,:receiving
-      str += "#{fsize(@processed_size)} / #{fsize(@size)} (#{fsize(@speed)}/s)"
+      str << "#{fsize(@processed_size)} / #{fsize(@size)} (#{fsize(@speed)}/s)"
       if @time_remaining
-        str += "  — #{ftime(@time_remaining)} remaining"
+        str << "  — #{ftime(@time_remaining)} remaining"
       end
     when :stop
-      str += "#{fsize(@processed_size)} / #{fsize(@size)}  — Stopped"
+      str << "#{fsize(@processed_size)} / #{fsize(@size)}  — Stopped"
     when :error
-      str += "#{fsize(@processed_size)} / #{fsize(@size)}  — Error: #{@error}"
+      str << "#{fsize(@processed_size)} / #{fsize(@size)}  — Error: #{@error}"
     when :complete
-      str += "#{fsize(@size)}  — Complete"
+      str << "#{fsize(@size)}  — Complete"
     end
     
-    NSString.stringWithString(str).drawInRect_withAttributes(rect, attrs)
+    str.to_ns.drawInRect_withAttributes(rect, attrs)
   end
   
   def fsize(size)

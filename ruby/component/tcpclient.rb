@@ -101,7 +101,7 @@ class TcpClient < OSX::NSObject
   
   def onSocket_didReadData_withTag(sock, data, tag)
     return unless check_tag(sock)
-    @buf += data.rubyString
+    @buf << data.rubyString
     wait_read
     @delegate.tcpclient_on_read(self) if @delegate
   end

@@ -1,6 +1,8 @@
 # Created by Satoshi Nakagawa.
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
+require 'utility'
+
 class SingleLineFormatter < OSX::NSFormatter
   include OSX
   
@@ -10,7 +12,7 @@ class SingleLineFormatter < OSX::NSFormatter
   
   def getObjectValue_forString_errorDescription(objp, str, err)
     s = str.to_s.gsub(/\r\n|\r|\n/, ' ')
-    objp.assign(NSString.stringWithString(s))
+    objp.assign(s.to_ns)
     true
   end
   
@@ -18,7 +20,7 @@ class SingleLineFormatter < OSX::NSFormatter
     s = str.to_s
     return true unless s =~ /\r\n|\r|\n/
     s = s.gsub(/\r\n|\r|\n/, ' ')
-    strp.assign(NSString.stringWithString(s))
+    strp.assign(s.to_ns)
     false
   end
 end

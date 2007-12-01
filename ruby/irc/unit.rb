@@ -1,6 +1,8 @@
 # Created by Satoshi Nakagawa.
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
+require 'utility'
+
 class IRCUnit < OSX::NSObject
   include OSX
   attr_accessor :world, :pref, :log, :id
@@ -382,7 +384,7 @@ class IRCUnit < OSX::NSObject
   
   def label
     if !@cached_label || !@cached_label.isEqualToString?(name)
-      @cached_label = NSString.stringWithString(name)
+      @cached_label = name.to_ns
     end
     @cached_label
   end
@@ -694,7 +696,7 @@ class IRCUnit < OSX::NSObject
   
   def to_common_encoding(s)
     return s.dup if @encoding == NSUTF8StringEncoding
-    data = NSString.stringWithString(s).dataUsingEncoding_allowLossyConversion(@encoding, true)
+    data = s.to_ns.dataUsingEncoding_allowLossyConversion(@encoding, true)
     s = data ? data.rubyString : ''
     s = KanaSupport::iso2022_to_native(s) if @encoding == NSISO2022JPStringEncoding
     s

@@ -154,12 +154,6 @@ module OSX
   end
   
   class NSDictionary
-    def to_hash
-      h = {}
-      each {|k,v| h[k] = v }
-      h
-    end
-    
     def inspect
       "NS:#{to_hash.inspect}"
     end
@@ -173,7 +167,6 @@ module OSX
   
   class NSPoint
     def in(r); OSX::NSPointInRect(self, r); end
-    alias_method :inRect, :in
     def +(v)
       if v.kind_of?(OSX::NSSize)
         NSPoint.new(x + v.width, y + v.height)
@@ -222,22 +215,20 @@ module OSX
         raise ArgumentException, "parameter should be NSRect or NSPoint"
       end
     end
-    def intersect?(r); OSX::NSIntersectsRect(self, r); end
-    def offset(dx, dy); OSX::NSOffsetRect(self, dx, dy); end
     def center; origin + (size / 2.0); end
     def adjustInRect(r)
       n = dup
       if r.x + r.width < n.x + n.width
-        n.origin.x = r.x + r.width - n.width
+        n.x = r.x + r.width - n.width
       end
       if r.y + r.height < n.y + n.height
-        n.origin.y = r.y + r.height - n.height
+        n.y = r.y + r.height - n.height
       end
       if n.x < r.x
-        n.origin.x = r.x
+        n.x = r.x
       end
       if n.y < r.y
-        n.origin.y = r.y
+        n.y = r.y
       end
       n
     end

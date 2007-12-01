@@ -105,7 +105,7 @@ class AsyncTcpClient < OSX::NSObject
           close
           return
         end
-        Thread.exclusive { @recvbuf += s }
+        Thread.exclusive { @recvbuf << s }
         fire_event(:recv)
       rescue
         @error = $!.to_s

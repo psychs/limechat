@@ -1,6 +1,8 @@
 # Created by Satoshi Nakagawa.
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
+require 'utility'
+
 module AutoOpMatchable
   def match_autoop(mask)
     @autoop.each do |i|
@@ -104,7 +106,7 @@ class IRCUnitConfig
   
   def label
     if !@cached_label || !@cached_label.isEqualToString?(@name)
-      @cached_label = OSX::NSString.stringWithString(@name)
+      @cached_label = @name.to_ns
     end
     @cached_label
   end
@@ -156,7 +158,7 @@ class IRCChannelConfig
   
   def label
     if !@cached_label || !@cached_label.isEqualToString?(@name)
-      @cached_label = OSX::NSString.stringWithString(@name)
+      @cached_label = @name.to_ns
     end
     @cached_label
   end
@@ -174,7 +176,6 @@ end
 
 
 module ModelTreeItem
-  
   def config_to_item(c)
     case c
       when IRCWorldConfig
@@ -233,7 +234,7 @@ class ModelTreeItemBase < OSX::NSObject
   
   def label
     if !@cached_label || !@cached_label.isEqualToString?(name)
-      @cached_label = OSX::NSString.stringWithString(name)
+      @cached_label = name.to_ns
     end
     @cached_label
   end

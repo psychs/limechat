@@ -269,7 +269,7 @@ class IRCChannel < OSX::NSObject
 
   def label
     if !@cached_label || !@cached_label.isEqualToString?(name)
-      @cached_label = NSString.stringWithString(name)
+      @cached_label = name.to_ns
     end
     @cached_label
   end
