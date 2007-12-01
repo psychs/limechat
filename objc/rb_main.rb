@@ -8,9 +8,9 @@ def rb_main_init
   path = OSX::NSBundle.mainBundle.resourcePath.fileSystemRepresentation
   rbfiles = Dir.entries(path).select {|i| /\.rb\z/ =~ i}
   rbfiles -= [ File.basename(__FILE__) ]
-  rbfiles.each do |file|
-    require File.basename(file)
-  end
+  rbfiles -= [ 'utility.rb' ]
+  require 'utility'
+  rbfiles.each {|file| require File.basename(file)}
 end
 
 #if $0 == __FILE__ then

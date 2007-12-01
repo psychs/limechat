@@ -2,6 +2,7 @@
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
 require 'pathname'
+require 'utility'
 
 class FileLogger
   include OSX
@@ -46,7 +47,7 @@ class FileLogger
   end
   
   def build_filename
-    base = File.expand_path(@pref.gen.transcript_folder)
+    base = Pathname.new(@pref.gen.transcript_folder).expand_path
     u = @unit.name.safe_filename
     date = Time.now.strftime('%Y-%m-%d')
     pre = ''
@@ -58,6 +59,6 @@ class FileLogger
     else
       c = @channel.name.safe_filename
     end
-    Pathname.new("#{base}/#{c}/#{pre}#{date}_#{u}.txt")
+    base + "#{c}/#{pre}#{date}_#{u}.txt"
   end
 end

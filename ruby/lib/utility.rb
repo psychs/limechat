@@ -59,7 +59,7 @@ class String
     OSX::NSString.stringWithString(self).stringByAbbreviatingWithTildeInPath.to_s
   end
   
-  def to_nsstr
+  def to_ns
     OSX::NSMutableString.stringWithString(self)
   end
 end
@@ -81,13 +81,13 @@ class Array
     set
   end
   
-  def to_nsary
+  def to_ns
     OSX::NSMutableArray.arrayWithArray(self)
   end
 end
 
 class Hash
-  def to_nsdic
+  def to_ns
     OSX::NSMutableDictionary.dictionaryWithDictionary(self)
   end
 end
@@ -271,7 +271,7 @@ module OSX
   class NSSelectionArray
     def to_a
       ary = []
-      0.upto(count-1) {|i| ary << objectAtIndex(i) }
+      (0...count).each {|i| ary << objectAtIndex(i) }
       ary
     end
   end

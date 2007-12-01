@@ -335,8 +335,8 @@ class AppController < OSX::NSObject
       end
     end
     
-    ps = pre.to_nsstr
-    ns = s.to_nsstr
+    ps = pre.to_ns
+    ns = s.to_ns
     range = r.dup
     range.location -= ps.length
     range.length += ps.length

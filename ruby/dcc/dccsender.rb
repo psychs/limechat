@@ -1,9 +1,11 @@
 # Created by Satoshi Nakagawa.
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
+require 'pathname'
+
 class DccSender
   attr_accessor :delegate, :pref, :uid, :peer_nick
-  attr_reader :port, :full_filename, :filename, :size, :processed_size, :status, :error, :icon
+  attr_reader :port, :filename, :size, :processed_size, :status, :error, :icon
   attr_accessor :progress_bar
 	
 	# status: waiting, error, stop, listening, sending, complete
@@ -19,12 +21,16 @@ class DccSender
   end
   
   def full_filename=(v)
-    @full_filename = v
-    @size = File.size(@full_filename)
-    @filename = File.basename(@full_filename)
-    ext = File.extname(@filename)
+    @full_filename = Pathname.new(v)
+    @size = @full_filename.size?
+    @filename = @full_filename.basename.to_s
+    ext = @full_filename.extname
     ext[0] = '' if ext[0..0] == '.'
     @icon = OSX::NSWorkspace.sharedWorkspace.iconForFileType(ext)
+  end
+  
+  def full_filename
+    @full_filename.to_s
   end
   
   def speed
@@ -170,7 +176,7 @@ class DccSender
   def open_file
     close_file if @file
     begin
-      @file = File.open(@full_filename, 'rb')
+      @file = @full_filename.open('rb')
     rescue
       @status = :error
       @error = 'Could not open file'

@@ -1,11 +1,11 @@
 # Created by Satoshi Nakagawa.
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
-require 'utility'
+require 'pathname'
 
 class DccReceiver
   attr_accessor :delegate, :uid, :peer_nick, :host, :port, :size, :version
-  attr_reader :path, :processed_size, :status, :error, :download_filename, :icon, :filename
+  attr_reader :processed_size, :status, :error, :icon
   attr_accessor :progress_bar
   
   # status: waiting, error, stop, connecting, receiving, complete
@@ -22,14 +22,18 @@ class DccReceiver
   end
   
   def path=(v)
-    @path = v.expand_path
+    @path = Pathname.new(v).expand_path
   end
   
   def filename=(v)
-    @filename = v
-    ext = File.extname(@filename)
+    @filename = Pathname.new(v)
+    ext = @filename.extname
     ext[0] = '' if ext[0..0] == '.'
     @icon = OSX::NSWorkspace.sharedWorkspace.iconForFileType(ext)
+  end
+  
+  def filename
+    @filename.to_s
   end
   
   def speed
@@ -124,16 +128,16 @@ class DccReceiver
   
   def open_file
     return if @file
-    base = File.basename(@filename, '.*')
-    ext = File.extname(@filename)
-    @download_filename = @path + '/' + PREFIX + @filename
+    base = @filename.basename('.*')
+    ext = @filename.extname
+    @download_filename = @path + (PREFIX + @filename.to_s)
     i = 0
-    while File.exist?(@download_filename)
-      @download_filename = @path + '/' + PREFIX + base + "_#{i}" + ext
+    while @download_filename.exist?
+      @download_filename = @path + (PREFIX + base.to_s + "_#{i}" + ext)
       i += 1
     end
     begin
-      @file = File.open(@download_filename, 'w+b')
+      @file = @download_filename.open('w+b')
     rescue
       @status = :error
       @error = 'Could not open file'
@@ -146,15 +150,15 @@ class DccReceiver
     @file.close
     @file = nil
     if @status == :complete
-      base = File.basename(@filename, '.*')
-      ext = File.extname(@filename)
-      fname = @path + '/' + @filename
+      base = @filename.basename('.*')
+      ext = @filename.extname
+      fname = @path + @filename
       i = 0
-      while File.exist?(fname)
-        fname = @path + '/' + base + "_#{i}" + ext
+      while fname.exist?
+        fname = @path + (base.to_s + "_#{i}" + ext)
         i += 1
       end
-      File.rename(@download_filename, fname)
+      @download_filename.rename(fname)
     end
   end
 end

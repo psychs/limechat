@@ -1,7 +1,6 @@
 # Created by Satoshi Nakagawa.
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
-require 'utility'
 require 'numberformat'
 
 class DccManager < OSX::NSObject
@@ -497,20 +496,20 @@ class FileTransferCell < OSX::NSCell
     when :waiting
       str += "#{fsize(@size)}"
     when :listening
-      str += "#{fsize(@size)}  -- Requesting"
+      str += "#{fsize(@size)}  — Requesting"
     when :connecting
-      str += "#{fsize(@size)}  -- Connecting"
+      str += "#{fsize(@size)}  — Connecting"
     when :sending,:receiving
       str += "#{fsize(@processed_size)} / #{fsize(@size)} (#{fsize(@speed)}/s)"
       if @time_remaining
-        str += "  -- #{ftime(@time_remaining)} remaining"
+        str += "  — #{ftime(@time_remaining)} remaining"
       end
     when :stop
-      str += "#{fsize(@processed_size)} / #{fsize(@size)}  -- Stopped"
+      str += "#{fsize(@processed_size)} / #{fsize(@size)}  — Stopped"
     when :error
-      str += "#{fsize(@processed_size)} / #{fsize(@size)}  -- Error: #{@error}"
+      str += "#{fsize(@processed_size)} / #{fsize(@size)}  — Error: #{@error}"
     when :complete
-      str += "#{fsize(@size)}  -- Complete"
+      str += "#{fsize(@size)}  — Complete"
     end
     
     NSString.stringWithString(str).drawInRect_withAttributes(rect, attrs)
