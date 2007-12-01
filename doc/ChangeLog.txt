@@ -1,3 +1,7 @@
+2007-12-02  Satoshi Nakagawa <artension@gmail.com>
+
+	Fixed a bug, the nick sheet won't show after right clicked on a log view
+
 2007-12-01  Satoshi Nakagawa <artension@gmail.com>
 
 	Refactoring utility scripts.

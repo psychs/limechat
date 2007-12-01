@@ -247,8 +247,8 @@ class MenuController < OSX::NSObject
   end
   
   def on_timer
-    if @paste
-      @paste.on_timer
+    if @paste_sheet
+      @paste_sheet.on_timer
     end
   end
   
@@ -345,20 +345,20 @@ class MenuController < OSX::NSObject
     hash = @pref.load_window('paste_sheet')
     size = NSSize.from_dic(hash) if hash
 
-    @paste = PasteSheet.alloc.init
-    @paste.window = window
-    @paste.delegate = self
-    @paste.uid = uid
-    @paste.cid = cid
-    @paste.nick = mynick
-    @paste.start(s, mode, @pref.gen.paste_syntax, size)
+    @paste_sheet = PasteSheet.alloc.init
+    @paste_sheet.window = window
+    @paste_sheet.delegate = self
+    @paste_sheet.uid = uid
+    @paste_sheet.cid = cid
+    @paste_sheet.nick = mynick
+    @paste_sheet.start(s, mode, @pref.gen.paste_syntax, size)
   end
   
   def pasteSheet_onSend(sender, s, syntax, size)
     @pref.save_window('paste_sheet', size.to_dic)
     @pref.gen.paste_syntax = syntax
     @pref.save
-    @paste = nil
+    @paste_sheet = nil
     
     u, c = @world.find_by_id(sender.uid, sender.cid)
     return unless u && c
@@ -376,7 +376,7 @@ class MenuController < OSX::NSObject
     @pref.save_window('paste_sheet', size.to_dic)
     @pref.gen.paste_syntax = syntax
     @pref.save
-    @paste = nil
+    @paste_sheet = nil
   end
   
   def onPasteDialog(sender)
@@ -448,23 +448,23 @@ class MenuController < OSX::NSObject
   def onNick(sender)
     u = @world.selunit
     return unless u
-    return if @nick
-    @nick = NickSheet.alloc.init
-    @nick.window = window
-    @nick.delegate = self
-    @nick.uid = u.id
-    @nick.start(u.mynick)
+    return if @nick_sheet
+    @nick_sheet = NickSheet.alloc.init
+    @nick_sheet.window = window
+    @nick_sheet.delegate = self
+    @nick_sheet.uid = u.id
+    @nick_sheet.start(u.mynick)
   end
   
   def nickSheet_onOk(sender, nick)
-    @nick = nil
+    @nick_sheet = nil
     u = @world.find_unit_by_id(sender.uid)
     return unless u
     u.change_nick(nick)
   end
   
   def nickSheet_onCancel(sender)
-    @nick = nil
+    @nick_sheet = nil
   end
   
   def onChannelList(sender)
@@ -576,42 +576,42 @@ class MenuController < OSX::NSObject
   def onTopic(sender)
     u, c = @world.sel
     return unless u && c
-    return if @comment
-    @comment = CommentSheet.alloc.init
-    @comment.window = window
-    @comment.delegate = self
-    @comment.uid = u.id
-    @comment.cid = c.id
-    @comment.prefix = 'topicPrompt'
-    @comment.start('Please input topic.', c.topic)
+    return if @comment_sheet
+    @comment_sheet = CommentSheet.alloc.init
+    @comment_sheet.window = window
+    @comment_sheet.delegate = self
+    @comment_sheet.uid = u.id
+    @comment_sheet.cid = c.id
+    @comment_sheet.prefix = 'topicPrompt'
+    @comment_sheet.start('Please input topic.', c.topic)
   end
   
   def topicPrompt_onOk(sender, str)
-    @comment = nil
+    @comment_sheet = nil
     u, c = @world.find_by_id(sender.uid, sender.cid)
     return unless u && c
     u.send(:topic, c.name, ":#{str}")
   end
   
   def topicPrompt_onCancel(sender)
-    @comment = nil
+    @comment_sheet = nil
   end
   
   
   def onMode(sender)
     u, c = @world.sel
     return unless u && c
-    return if @mode
-    @mode = ModeSheet.alloc.init
-    @mode.window = window
-    @mode.delegate = self
-    @mode.uid = u.id
-    @mode.cid = c.id
-    @mode.start(c.name, c.mode)
+    return if @mode_sheet_sheet
+    @mode_sheet = ModeSheet.alloc.init
+    @mode_sheet.window = window
+    @mode_sheet.delegate = self
+    @mode_sheet.uid = u.id
+    @mode_sheet.cid = c.id
+    @mode_sheet.start(c.name, c.mode)
   end
   
   def modeSheet_onOk(sender, newmode)
-    @mode = nil
+    @mode_sheet = nil
     u, c = @world.find_by_id(sender.uid, sender.cid)
     return unless u && c
     ary = c.mode.get_change_str(newmode)
@@ -619,7 +619,7 @@ class MenuController < OSX::NSObject
   end
   
   def modeSheet_onCancel(sender)
-    @mode = nil
+    @mode_sheet = nil
   end
   
   
