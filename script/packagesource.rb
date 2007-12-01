@@ -15,9 +15,12 @@ def rmglob(path)
   FileUtils.rm_rf(Dir.glob(path.to_s))
 end
 
+appver = Pathname.new(__FILE__).dirname + 'appversion.rb'
+ver = `ruby #{appver}`
+
 source = Pathname.new(__FILE__).dirname.parent
 dest = Pathname.new('~/Desktop').expand_path
-tmp = dest + 'limechat_tmp'
+tmp = dest + 'limechat_source_tmp'
 
 tmp.rmtree
 source.cptree(tmp)
@@ -28,10 +31,8 @@ rmglob(tmp + '**/.DS_Store')
 rmglob(tmp + '**/*~.nib')
 rmglob(tmp + '**/._*')
 
-vercmd = Pathname.new(__FILE__).dirname + 'getver.rb'
-ver = `ruby #{vercmd}`
-file = dest + "LimeChat_#{ver}.zip"
 Dir.chdir(tmp)
-system("zip -qr #{file} *")
+file = dest + "LimeChat_#{ver}.zip"
+system "zip -qr #{file} *"
 
 tmp.rmtree

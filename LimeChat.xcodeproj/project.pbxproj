@@ -841,7 +841,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "ver=`ruby script/getver.rb`\nimagename=~/Desktop/\"$PROJECT_NAME\"_\"$ver\".dmg\n\nrm -f ~/Desktop/\"$PROJECT_NAME\"_*.dmg\n\nroot=\"build/Release\"\nresdoc=\"$root\"/LimeChat.app/Contents/Resources/doc\nrootdoc=\"$root\"/doc\n\nif [ -e \"$root\"/LimeChat.app ]; then\n  ln -s /Applications build/Release\n\n  if [ ! -e \"$resdoc\" ]; then\n    mkdir \"$resdoc\"\n  fi\n  cp doc/* \"$resdoc\"/\n\n  if [ ! -e \"$rootdoc\" ]; then\n    mkdir \"$rootdoc\"\n  fi\n  cp doc/* \"$rootdoc\"/\n\n  #hdiutil create -srcfolder $CONFIGURATION_BUILD_DIR -volname \"$PROJECT_NAME\" \"$imagename\"\n  hdiutil create -srcfolder \"$root\" -volname \"$PROJECT_NAME\" \"$imagename\"\n\n  ruby script/packsource.rb\nfi\n";
+			shellScript = "if [ -e build/Release/\"$PROJECT_NAME\".app ]; then\n  ruby script/package.rb\n  ruby script/packagesource.rb\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
