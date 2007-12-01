@@ -1,7 +1,7 @@
 2007-12-01  Satoshi Nakagawa <artension@gmail.com>
 
 	Changed to highlight a current nickname in priority.
-	Fixed a nil access bug, when the parameters of a message is too few.
+	Fixed a nil access bug, when the parameters of a message are too few.
 
 2007-11-30  Satoshi Nakagawa <artension@gmail.com>
 
