@@ -5,9 +5,10 @@ require 'date'
 
 class IRCWorld < OSX::NSObject
   include OSX
-  attr_accessor :tree, :log_base, :console_base, :member_list, :text, :window, :pref, :dcc
-  attr_accessor :tree_default_menu, :server_menu, :channel_menu, :tree_menu, :log_menu, :console_menu, :url_menu, :addr_menu, :member_menu
+  attr_accessor :member_list, :dcc
+  attr_writer :tree, :log_base, :console_base, :text, :window, :pref
   attr_accessor :menu_controller
+  attr_accessor :tree_default_menu, :server_menu, :channel_menu, :tree_menu, :log_menu, :console_menu, :url_menu, :addr_menu, :member_menu
   attr_reader :units, :selected, :console, :config
   
   AUTO_CONNECT_DELAY = 1
@@ -474,27 +475,27 @@ class IRCWorld < OSX::NSObject
   
   def outlineView_willDisplayCell_forTableColumn_item(sender, cell, col, item)
     if item.keyword
-      text = NSColor.magentaColor
+      textcolor = NSColor.magentaColor
     elsif item.newtalk
-      text = NSColor.redColor
+      textcolor = NSColor.redColor
     elsif item.unread
-      text = NSColor.blueColor
+      textcolor = NSColor.blueColor
     elsif item.unit? ? item.login? : item.active?
       #if item == @tree.itemAtRow(@tree.selectedRow) && NSApp.isActive
-      #  text = NSColor.whiteColor
+      #  textcolor = NSColor.whiteColor
       #else
-        text = NSColor.blackColor
+        textcolor = NSColor.blackColor
       #end
     else
       if item == @tree.itemAtRow(@tree.selectedRow)
-        text = NSColor.grayColor
+        textcolor = NSColor.grayColor
       else
-        text = NSColor.lightGrayColor
+        textcolor = NSColor.lightGrayColor
       end
     end
-    cell.setTextColor(text)
+    cell.setTextColor(textcolor)
     
-    #text = NSColor.colorWithCalibratedRed_green_blue_alpha(0.5,0.5,0.5,1.0)
+    #textcolor = NSColor.colorWithCalibratedRed_green_blue_alpha(0.5,0.5,0.5,1.0)
     #cell.setDrawsBackground(true)
     #cell.setBackgroundColor(NSColor.whiteColor)
   end

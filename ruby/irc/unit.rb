@@ -5,7 +5,8 @@ require 'utility'
 
 class IRCUnit < OSX::NSObject
   include OSX
-  attr_accessor :world, :pref, :log, :id
+  attr_accessor :world, :log, :id
+  attr_writer :pref
   attr_reader :config, :channels, :mynick, :mymode, :encoding, :myaddress
   attr_accessor :property_dialog
   attr_accessor :keyword, :unread

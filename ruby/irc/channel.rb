@@ -3,9 +3,9 @@
 
 class IRCChannel < OSX::NSObject
   include OSX
-  attr_accessor :unit, :pref, :id, :topic, :names_init, :who_init, :log
+  attr_accessor :unit, :id, :topic, :names_init, :who_init, :log
   attr_reader :config, :members, :mode
-  attr_writer :op
+  attr_writer :op, :pref
   attr_accessor :keyword, :unread, :newtalk
   attr_accessor :property_dialog
   attr_accessor :stored_topic

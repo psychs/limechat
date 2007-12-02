@@ -25,8 +25,9 @@ end
 
 class LogController < OSX::NSObject
   include OSX
-  attr_accessor :world, :unit, :menu, :url_menu, :addr_menu, :member_menu, :max_lines, :keyword
-  attr_reader :view, :console, :bottom
+  attr_accessor :world
+  attr_writer :unit, :menu, :url_menu, :addr_menu, :member_menu, :keyword
+  attr_reader :view
   
   BOTTOM_EPSILON = 20
   DEFAULT_CSS = <<-EOM
@@ -37,10 +38,13 @@ class LogController < OSX::NSObject
     body {
       font-family: 'Osaka-Mono';
       font-size: 10pt;
+      background: white;
       word-wrap: break-word;
-      margin: 3px 4px 10px 4px;
-      padding: 0;
+      margin: 0;
+      padding: 3px 4px 10px 4px;
     }
+    body.console {}
+    body.normal {}
     img { border: 1px solid #aaa; vertical-align: top; }
     object { vertical-align: top; }
     hr { margin: 0.5em 2em; }
@@ -88,7 +92,7 @@ class LogController < OSX::NSObject
     @max_lines = 3000
   end
   
-  def setup(console=false, style=DEFAULT_CSS)
+  def setup(console=false, style='')
     @loaded = false
     @console = console
     @policy = LogPolicy.alloc.init
@@ -109,7 +113,7 @@ class LogController < OSX::NSObject
     @view.key_delegate = self
     @view.resize_delegate = self
     @view.setAutoresizingMask(NSViewWidthSizable | NSViewHeightSizable)
-    @view.mainFrame.loadHTMLString_baseURL(initial_doc(style), nil)
+    @view.mainFrame.loadHTMLString_baseURL(initial_doc(DEFAULT_CSS + style), nil)
   end
   
   def moveToTop
@@ -373,12 +377,13 @@ class LogController < OSX::NSObject
   end
   
   def initial_doc(styles)
+    body_class = @console ? 'console' : 'normal'
     <<-EOM
       <html>
       <head>
       <style>#{styles}</style>
       </head>
-      <body></body>
+      <body class="#{body_class}"></body>
       </html>
     EOM
   end
