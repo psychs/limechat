@@ -167,25 +167,27 @@ module LogRenderer
       end
     end
     
+    COLOR_MAP = {
+       0 => '#fff',
+       1 => '#000',
+       2 => '#008',
+       3 => '#080',
+       4 => '#f00',
+       5 => '#800',
+       6 => '#808',
+       7 => '#f80',
+       8 => '#ff0',
+       9 => '#0f0',
+      10 => '#088',
+      11 => '#0ff',
+      12 => '#00f',
+      13 => '#f0f',
+      14 => '#888',
+      15 => '#ccc',
+    }
+    
     def num_to_color(n)
-      case n%16
-      when 0; '#fff'
-      when 1; '#000'
-      when 2; '#008'
-      when 3; '#080'
-      when 4; '#f00'
-      when 5; '#800'
-      when 6; '#808'
-      when 7; '#f80'
-      when 8; '#ff0'
-      when 9; '#0f0'
-      when 10; '#088'
-      when 11; '#0ff'
-      when 12; '#00f'
-      when 13; '#f0f'
-      when 14; '#888'
-      when 15; '#ccc'
-      end
+      COLOR_MAP[n%16]
     end
     
     def render_start_tag(e)

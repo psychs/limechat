@@ -1,3 +1,7 @@
+2007-12-03  Satoshi Nakagawa <artension@gmail.com>
+
+	Preparing for log theme.
+
 2007-12-02  Satoshi Nakagawa <artension@gmail.com>
 
 	Added compatibility stuff for old RubyCocoa releases.

@@ -4,6 +4,7 @@
 require 'cgi'
 require 'uri'
 require 'logrenderer'
+require 'pathname'
 
 class LogLine
   attr_accessor :time, :place, :nick, :body
@@ -26,63 +27,10 @@ end
 class LogController < OSX::NSObject
   include OSX
   attr_accessor :world
-  attr_writer :unit, :menu, :url_menu, :addr_menu, :member_menu, :keyword
+  attr_writer :unit, :menu, :url_menu, :addr_menu, :member_menu, :keyword, :style
   attr_reader :view
   
   BOTTOM_EPSILON = 20
-  DEFAULT_CSS = <<-EOM
-    html {
-      margin: 0;
-      padding: 0;
-    }
-    body {
-      font-family: 'Osaka-Mono';
-      font-size: 10pt;
-      background-color: white;
-      word-wrap: break-word;
-      margin: 0;
-      padding: 3px 4px 10px 4px;
-    }
-    body.console {}
-    body.normal {}
-    img { border: 1px solid #aaa; vertical-align: top; }
-    object { vertical-align: top; }
-    hr { margin: 0.5em 2em; }
-    .url { word-break: break-all; }
-    .address { text-decoration: underline; }
-    .highlight { color: #f0f; font-weight: bold; }
-    .line { padding: 1px 0; }
-    /*
-    .even_line { background-color: #fff; }
-    .odd_line { background-color: #eef; }
-    .even_line, .odd_line { margin: 0 -4px 0 -4px; padding-left: 4px; padding-right: 4px }
-    */
-    .time { color: #048; }
-    .place { color: #008; }
-    .nick_normal { color: #008; }
-    .nick_myself { color: #66a; }
-    .system { color: #080; }
-    .error { color: #f00; font-weight: bold; }
-    .reply { color: #088; }
-    .error_reply { color: #f00; }
-    .dcc_send_send { color: #088; }
-    .dcc_send_receive { color: #00c; }
-    .privmsg { color: #000; }
-    .notice { color: #888; }
-    .action { color: #080; }
-    .join { color: #080; }
-    .part { color: #080; }
-    .kick { color: #080; }
-    .quit { color: #080; }
-    .kill { color: #080; }
-    .nick { color: #080; }
-    .mode { color: #080; }
-    .topic { color: #080; }
-    .invite { color: #080; }
-    .wallops { color: #080; }
-    .debug_send { color: #880; }
-    .debug_receive { color: #444; }
-  EOM
   
   def initialize
     @bottom = true
@@ -92,7 +40,7 @@ class LogController < OSX::NSObject
     @max_lines = 3000
   end
   
-  def setup(console=false, style='')
+  def setup(console=false)
     @loaded = false
     @console = console
     @policy = LogPolicy.alloc.init
@@ -113,7 +61,7 @@ class LogController < OSX::NSObject
     @view.key_delegate = self
     @view.resize_delegate = self
     @view.setAutoresizingMask(NSViewWidthSizable | NSViewHeightSizable)
-    @view.mainFrame.loadHTMLString_baseURL(initial_doc(DEFAULT_CSS + style), nil)
+    @view.mainFrame.loadHTMLString_baseURL(initial_document, @style.base)
   end
   
   def moveToTop
@@ -207,13 +155,13 @@ class LogController < OSX::NSObject
     end
   end
   
-  def reset_style(style)
+  def reload_style
     body = @view.mainFrame.DOMDocument.body
     @html = body.innerHTML
     @scroll_bottom = viewing_bottom?
     @scroll_top = body.valueForKey('scrollTop').to_i
     #setup(@console, style)
-    @view.mainFrame.loadHTMLString_baseURL(initial_doc(DEFAULT_CSS + style), nil)
+    @view.mainFrame.loadHTMLString_baseURL(initial_document, @style.base)
   end
   
   
@@ -377,17 +325,72 @@ class LogController < OSX::NSObject
     restore_position
   end
   
-  def initial_doc(styles)
+  def initial_document
     body_class = @console ? 'console' : 'normal'
     <<-EOM
       <html>
       <head>
-      <style>#{styles}</style>
+      <style>#{DEFAULT_CSS}</style>
+      <style><!--#{@style.content}--></style>
       </head>
-      <body class="#{body_class}"></body>
+      <body class="#{body_class}" background="falls.jpg"></body>
       </html>
     EOM
   end
+
+  DEFAULT_CSS = <<-EOM
+    html {
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Osaka-Mono';
+      font-size: 10pt;
+      background-color: white;
+      word-wrap: break-word;
+      margin: 0;
+      padding: 3px 4px 10px 4px;
+    }
+    body.console {}
+    body.normal {}
+    img { border: 1px solid #aaa; vertical-align: top; }
+    object { vertical-align: top; }
+    hr { margin: 0.5em 2em; }
+    .url { word-break: break-all; }
+    .address { text-decoration: underline; }
+    .highlight { color: #f0f; font-weight: bold; }
+    .line { padding: 1px 0; }
+    /*
+    .even_line { background-color: #fff; }
+    .odd_line { background-color: #eef; }
+    .even_line, .odd_line { margin: 0 -4px 0 -4px; padding-left: 4px; padding-right: 4px }
+    */
+    .time { color: #048; }
+    .place { color: #008; }
+    .nick_normal { color: #008; }
+    .nick_myself { color: #66a; }
+    .system { color: #080; }
+    .error { color: #f00; font-weight: bold; }
+    .reply { color: #088; }
+    .error_reply { color: #f00; }
+    .dcc_send_send { color: #088; }
+    .dcc_send_receive { color: #00c; }
+    .privmsg { color: #000; }
+    .notice { color: #888; }
+    .action { color: #080; }
+    .join { color: #080; }
+    .part { color: #080; }
+    .kick { color: #080; }
+    .quit { color: #080; }
+    .kill { color: #080; }
+    .nick { color: #080; }
+    .mode { color: #080; }
+    .topic { color: #080; }
+    .invite { color: #080; }
+    .wallops { color: #080; }
+    .debug_send { color: #880; }
+    .debug_receive { color: #444; }
+  EOM
 end
 
 
@@ -549,5 +552,39 @@ class LogPolicy < OSX::NSObject
     else
       listener.ignore
     end
+  end
+end
+
+
+class LogStyle
+  attr_reader :base
+  
+  def initialize(fname)
+    change_filename(fname)
+  end
+  
+  def change_filename(fname)
+    if fname
+      @filename = Pathname.new(fname).expand_path
+      @base = OSX::NSURL.fileURLWithPath(@filename.dirname.to_s)
+      reload
+    else
+      @filename = nil
+      @base = nil
+    end
+  end
+  
+  def content
+    @content || ''
+  end
+  
+  def reload
+    @content = nil
+    return false unless @filename && @filename.exist?
+    prev = @content
+    @filename.open {|f| @content = f.read }
+    prev != @content
+  rescue
+    ;
   end
 end

@@ -10,8 +10,6 @@ class AppController < OSX::NSObject
   ib_outlet :root_split, :log_split, :info_split, :tree_split
   ib_outlet :menu, :server_menu, :channel_menu, :member_menu, :tree_menu, :log_menu, :console_menu, :url_menu, :addr_menu
   
-  GC_TIME = 600
-  
   def awakeFromNib
     NSApplication.sharedApplication
     
@@ -240,6 +238,8 @@ class AppController < OSX::NSObject
     @timer.stop
     @timer = nil
   end
+  
+  GC_TIME = 600
   
   def timer_onTimer(sender)
     @world.on_timer
