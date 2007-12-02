@@ -38,7 +38,7 @@ class LogController < OSX::NSObject
     body {
       font-family: 'Osaka-Mono';
       font-size: 10pt;
-      background: white;
+      background-color: white;
       word-wrap: break-word;
       margin: 0;
       padding: 3px 4px 10px 4px;
@@ -55,7 +55,7 @@ class LogController < OSX::NSObject
     /*
     .even_line { background-color: #fff; }
     .odd_line { background-color: #eef; }
-    .even_line, .odd_line { margin: 0 -4px 0 -4px; padding: 1px 4px; }
+    .even_line, .odd_line { margin: 0 -4px 0 -4px; padding-left: 4px; padding-right: 4px }
     */
     .time { color: #048; }
     .place { color: #008; }
@@ -428,8 +428,6 @@ class LogScriptEventSink < OSX::NSObject
     nil
   end
   
-  DELTA = 3
-  
   def initialize
     @last = 0.0
     @x = -100
@@ -440,6 +438,8 @@ class LogScriptEventSink < OSX::NSObject
   def onDblClick(e)
     @owner.logView_onDoubleClick(e.to_s)
   end
+  
+  DELTA = 3
   
   objc_method :shouldStopDoubleClick, 'c@:@'
   def shouldStopDoubleClick(e)

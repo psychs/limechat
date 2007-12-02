@@ -698,7 +698,7 @@ class MenuController < OSX::NSObject
     style = <<-EOM
     .even_line { background-color: #fff; }
     .odd_line { background-color: #eef; }
-    .even_line, .odd_line { margin: 0 -4px 0 -4px; padding: 1px 4px; }
+    .even_line, .odd_line { margin: 0 -4px 0 -4px; padding-left: 4px; padding-right: 4px; }
     EOM
     @world.change_log_style(style);
   end
