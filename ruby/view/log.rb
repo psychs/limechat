@@ -53,9 +53,9 @@ class LogController < OSX::NSObject
     .highlight { color: #f0f; font-weight: bold; }
     .line { padding: 1px 0; }
     /*
-    .even_line { background-color: #fff; margin: 0 -3px 0 -3px; }
-    .odd_line { background-color: #eef; margin: 0 -3px 0 -3px; }
-    .even_line, .odd_line { margin: 0 -3px 0 -3px; padding: 1px 3px; }
+    .even_line { background-color: #fff; }
+    .odd_line { background-color: #eef; }
+    .even_line, .odd_line { margin: 0 -4px 0 -4px; padding: 1px 4px; }
     */
     .time { color: #048; }
     .place { color: #008; }
@@ -212,7 +212,8 @@ class LogController < OSX::NSObject
     @html = body.innerHTML
     @scroll_bottom = viewing_bottom?
     @scroll_top = body.valueForKey('scrollTop').to_i
-    setup(@console, style)
+    #setup(@console, style)
+    @view.mainFrame.loadHTMLString_baseURL(initial_doc(DEFAULT_CSS + style), nil)
   end
   
   

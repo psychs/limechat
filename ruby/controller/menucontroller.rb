@@ -695,17 +695,12 @@ class MenuController < OSX::NSObject
   
   
   def changeStyle(sender)
-#=begin
     style = <<-EOM
-    body.console {
-      background: #aaf;
-    }
-    body.normal {
-      background: #ffa;
-    }
+    .even_line { background-color: #fff; }
+    .odd_line { background-color: #eef; }
+    .even_line, .odd_line { margin: 0 -4px 0 -4px; padding: 1px 4px; }
     EOM
     @world.change_log_style(style);
-#=end
   end
   
   
