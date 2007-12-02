@@ -19,8 +19,8 @@ appver = Pathname.new(__FILE__).dirname + 'appversion.rb'
 ver = `ruby #{appver}`
 
 source = Pathname.new(__FILE__).dirname.parent
-dest = Pathname.new('~/Desktop').expand_path
-tmp = dest + 'build_source_tmp'
+desktop = Pathname.new('~/Desktop').expand_path
+tmp = desktop + 'build_source_tmp'
 
 tmp.rmtree
 source.cptree(tmp)
@@ -32,7 +32,7 @@ rmglob(tmp + '**/*~.nib')
 rmglob(tmp + '**/._*')
 
 Dir.chdir(tmp)
-file = dest + "LimeChat_#{ver}.zip"
+file = desktop + "LimeChat_#{ver}.zip"
 file.rmtree
 system "zip -qr #{file} *"
 
