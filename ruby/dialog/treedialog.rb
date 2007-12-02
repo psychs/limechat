@@ -59,7 +59,7 @@ class TreeDialog < OSX::NSObject
   def onUp(sender)
     sel = current_sel
     return unless sel
-    if sel.kind_of?(UnitTreeItem)
+    if sel.ia_a?(UnitTreeItem)
       i = @c.index(sel)
       if i && i > 0
         @c.delete_at(i)
@@ -81,7 +81,7 @@ class TreeDialog < OSX::NSObject
   def onDown(sender)
     sel = current_sel
     return unless sel
-    if sel.kind_of?(UnitTreeItem)
+    if sel.is_a?(UnitTreeItem)
       i = @c.index(sel)
       if i && i < @c.size - 1
         @c.delete_at(i)
@@ -138,7 +138,7 @@ class TreeDialog < OSX::NSObject
   
   def outlineView_writeItems_toPasteboard(sender, items, pboard)
     i = items.to_a[0]
-    if i.kind_of?(UnitTreeItem)
+    if i.is_a?(UnitTreeItem)
       unit_index = @c.index(i)
       s = "#{unit_index}"
     else
@@ -172,7 +172,7 @@ class TreeDialog < OSX::NSObject
     i = find_item_from_pboard(target.to_s)
     return NSDragOperationNone unless i
     
-    if i.kind_of?(UnitTreeItem)
+    if i.is_a?(UnitTreeItem)
       return NSDragOperationNone if item
     else
       return NSDragOperationNone unless item
@@ -201,7 +201,7 @@ class TreeDialog < OSX::NSObject
     i = find_item_from_pboard(target.to_s)
     return false unless i
     
-    if i.kind_of?(UnitTreeItem)
+    if i.is_a?(UnitTreeItem)
       return false if item
       sel = current_sel
       

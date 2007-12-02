@@ -725,7 +725,7 @@ class IRCUnit < OSX::NSObject
   # print
   
   def need_print_console?(channel)
-    channel = nil if channel && channel.kind_of?(String)
+    channel = nil if channel && channel.is_a?(String)
     channel ||= self
     return false if !channel.unit? && !channel.config.console
     channel != @world.selected || !channel.log.viewing_bottom?
@@ -738,7 +738,7 @@ class IRCUnit < OSX::NSObject
     end
     
     time = "#{now} "
-    if channel && channel.kind_of?(String)
+    if channel && channel.is_a?(String)
       chname = channel
       channel = self
     elsif channel.nil? || channel.unit?
@@ -760,7 +760,7 @@ class IRCUnit < OSX::NSObject
     end
     if !channel
       click = nil
-    elsif channel.unit? || channel.kind_of?(String)
+    elsif channel.unit? || channel.is_a?(String)
       click = "unit #{self.id}"
     else
       click = "channel #{self.id} #{channel.id}"
@@ -777,7 +777,7 @@ class IRCUnit < OSX::NSObject
     end
     
     time = "#{now} "
-    if channel && channel.kind_of?(String)
+    if channel && channel.is_a?(String)
       chname = channel
       channel = nil
     else
@@ -870,7 +870,7 @@ class IRCUnit < OSX::NSObject
   
   def notify_text(kind, c, nick, text)
     title = if c
-      if c.kind_of?(String)
+      if c.is_a?(String)
         c
       else
         c.name

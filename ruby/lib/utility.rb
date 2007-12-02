@@ -168,14 +168,14 @@ module OSX
   class NSPoint
     def in(r); OSX::NSPointInRect(self, r); end
     def +(v)
-      if v.kind_of?(OSX::NSSize)
+      if v.is_a?(OSX::NSSize)
         NSPoint.new(x + v.width, y + v.height)
       else
         raise ArgumentException, "parameter should be NSSize"
       end
     end
     def -(v)
-      if v.kind_of?(OSX::NSSize)
+      if v.is_a?(OSX::NSSize)
         NSPoint.new(x - v.width, y - v.height)
       else
         raise ArgumentException, "parameter should be NSSize"
@@ -207,63 +207,40 @@ module OSX
     def width=(v); size.width = v; end
     def height=(v); size.height = v; end
     def contain?(r)
-      if r.kind_of?(NSRect)
-        OSX::NSContainsRect(self, r)
-      elsif r.kind_of?(NSPoint)
-        OSX::NSPointInRect(r, self)
-      else
-        raise ArgumentException, "parameter should be NSRect or NSPoint"
+      case r
+      when NSRect; OSX::NSContainsRect(self, r)
+      when NSPoint; OSX::NSPointInRect(r, self)
+      else raise ArgumentException, "parameter should be NSRect or NSPoint"
       end
     end
     def center; origin + (size / 2.0); end
     def adjustInRect(r)
       n = dup
-      if r.x + r.width < n.x + n.width
-        n.x = r.x + r.width - n.width
-      end
-      if r.y + r.height < n.y + n.height
-        n.y = r.y + r.height - n.height
-      end
-      if n.x < r.x
-        n.x = r.x
-      end
-      if n.y < r.y
-        n.y = r.y
-      end
+      n.x = r.x + r.width - n.width if r.x + r.width < n.x + n.width
+      n.y = r.y + r.height - n.height if r.y + r.height < n.y + n.height
+      n.x = r.x if n.x < r.x
+      n.y = r.y if n.y < r.y
       n
     end
     def self.from_dic(d); NSRect.new(d[:x], d[:y], d[:w], d[:h]); end
-    def to_dic
-      {
-        :x => x,
-        :y => y,
-        :w => width,
-        :h => height
-      }
-    end
+    def to_dic; { :x => x, :y => y, :w => width, :h => height }; end
     def self.from_center(p, width, height)
       NSRect.new(p.x - width/2, p.y - height/2, width, height)
     end
 
     def inspect
-      "#<#{self.class.to_s.gsub(/^OSX::/, '')} (#{x}, #{y}, #{width}, #{height}>"
+      "#<#{self.class.to_s.gsub(/^OSX::/, '')} (#{x}, #{y}, #{width}, #{height})>"
     end
   end
   
   class NSRange
+    def empty?; not_found? || length == 0; end
+    def not_found?; location == OSX::NSNotFound; end
     def size; length; end
     def size=(v); length = v; end
     def max; location + length; end
     def inspect
       "#<#{self.class.to_s.gsub(/^OSX::/, '')} (#{location}, #{length})>"
-    end
-  end
-  
-  class NSSelectionArray
-    def to_a
-      ary = []
-      (0...count).each {|i| ary << objectAtIndex(i) }
-      ary
     end
   end
   
@@ -309,32 +286,56 @@ module OSX
   end
   
   class NSEvent
-    def printType
-      s = case oc_type
-      when NSLeftMouseDown; 'NSLeftMouseDown'
-      when NSLeftMouseUp; 'NSLeftMouseUp'
-      when NSRightMouseDown; 'NSRightMouseDown'
-      when NSRightMouseUp; 'NSRightMouseUp'
-      when NSOtherMouseDown; 'NSOtherMouseDown'
-      when NSOtherMouseUp; 'NSOtherMouseUp'
-      when NSMouseMoved; 'NSMouseMoved'
-      when NSLeftMouseDragged; 'NSLeftMouseDragged'
-      when NSRightMouseDragged; 'NSRightMouseDragged'
-      when NSOtherMouseDragged; 'NSOtherMouseDragged'
-      when NSMouseEntered; 'NSMouseEntered'
-      when NSMouseExited; 'NSMouseExited'
-      when NSKeyDown; 'NSKeyDown'
-      when NSKeyUp; 'NSKeyUp'
-      when NSFlagsChanged; 'NSFlagsChanged'
-      when NSAppKitDefined; 'NSAppKitDefined'
-      when NSSystemDefined; 'NSSystemDefined'
-      when NSApplicationDefined; 'NSApplicationDefined'
-      when NSPeriodic; 'NSPeriodic'
-      when NSCursorUpdate; 'NSCursorUpdate'
-      when NSScrollWheel; 'NSScrollWheel'
-      else 'else'
-      end
-      puts s
+    def inspect
+      "#<#{self.class.to_s.gsub(/^OSX::/, '')}:#{sprintf("0x%x", object_id)} type=#{_type_name}>"
+    end
+    
+    private
+    
+    def _type_name
+      EVENT_TYPE_MAP[oc_type] || 'Unknown'
+    end
+    
+    EVENT_TYPE_MAP = {
+      NSLeftMouseDown => 'NSLeftMouseDown',
+      NSLeftMouseUp => 'NSLeftMouseUp',
+      NSRightMouseDown => 'NSRightMouseDown',
+      NSRightMouseUp => 'NSRightMouseUp',
+      NSMouseMoved => 'NSMouseMoved',
+      NSLeftMouseDragged => 'NSLeftMouseDragged',
+      NSRightMouseDragged => 'NSRightMouseDragged',
+      NSMouseEntered => 'NSMouseEntered',
+      NSMouseExited => 'NSMouseExited',
+      NSKeyDown => 'NSKeyDown',
+      NSKeyUp => 'NSKeyUp',
+      NSFlagsChanged => 'NSFlagsChanged',
+      NSAppKitDefined => 'NSAppKitDefined',
+      NSSystemDefined => 'NSSystemDefined',
+      NSApplicationDefined => 'NSApplicationDefined',
+      NSPeriodic => 'NSPeriodic',
+      NSCursorUpdate => 'NSCursorUpdate',
+      NSScrollWheel => 'NSScrollWheel',
+      NSTabletPoint => 'NSTabletPoint',
+      NSTabletProximity => 'NSTabletProximity',
+      NSOtherMouseDown => 'NSOtherMouseDown',
+      NSOtherMouseUp => 'NSOtherMouseUp',
+      NSOtherMouseDragged => 'NSOtherMouseDragged',
+    }
+  end
+  
+  # for compatilibity
+  if RUBYCOCOA_VERSION < '0.13.0'
+    class NSPoint
+      def dup; NSPoint.new(x, y); end
+    end
+    class NSSize
+      def dup; NSSize.new(width, height); end
+    end
+    class NSRect
+      def dup; NSRect.new(origin, size); end
+    end
+    class NSRange
+      def dup; NSRange.new(location, length); end
     end
   end
 end

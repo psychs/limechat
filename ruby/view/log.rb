@@ -196,7 +196,7 @@ class LogController < OSX::NSObject
   
   def use_small_scroller(v)
     subviews = @view.mainFrame.frameView.subviews
-    scrollView = subviews.find {|i| i.kind_of?(NSScrollView) }
+    scrollView = subviews.find {|i| i.is_a?(NSScrollView) }
     if scrollView
       scrollView.verticalScroller.setControlSize(v ? NSSmallControlSize : NSRegularControlSize)
       scrollView.setAutohidesScrollers(true)

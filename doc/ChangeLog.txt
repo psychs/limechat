@@ -1,5 +1,10 @@
 2007-12-02  Satoshi Nakagawa <artension@gmail.com>
 
+	Added compatibility stuff for old RubyCocoa releases.
+	Refactoring.
+
+2007-12-02  Satoshi Nakagawa <artension@gmail.com>
+
 	Rewrote build scripts.
 
 2007-12-02  Satoshi Nakagawa <artension@gmail.com>
