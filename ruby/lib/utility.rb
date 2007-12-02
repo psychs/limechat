@@ -234,7 +234,7 @@ module OSX
   end
   
   class NSRange
-    def empty?; not_found? || length == 0; end
+    def empty?; length == 0 || not_found?; end
     def not_found?; location == OSX::NSNotFound; end
     def size; length; end
     def size=(v); length = v; end
