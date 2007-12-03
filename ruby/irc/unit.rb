@@ -342,7 +342,6 @@ class IRCUnit < OSX::NSObject
       cmd = :action
       if @world.selunit == self && @world.selchannel
         target = @world.selchannel.name
-        s = target + ' ' + s
       else
         return false
       end
