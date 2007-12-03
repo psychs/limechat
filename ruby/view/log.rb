@@ -4,7 +4,6 @@
 require 'cgi'
 require 'uri'
 require 'logrenderer'
-require 'pathname'
 
 class LogLine
   attr_accessor :time, :place, :nick, :body
@@ -27,7 +26,7 @@ end
 class LogController < OSX::NSObject
   include OSX
   attr_accessor :world
-  attr_writer :unit, :menu, :url_menu, :addr_menu, :member_menu, :keyword, :style
+  attr_writer :unit, :menu, :url_menu, :addr_menu, :member_menu, :keyword, :theme
   attr_reader :view
   
   BOTTOM_EPSILON = 20
@@ -61,7 +60,7 @@ class LogController < OSX::NSObject
     @view.key_delegate = self
     @view.resize_delegate = self
     @view.setAutoresizingMask(NSViewWidthSizable | NSViewHeightSizable)
-    @view.mainFrame.loadHTMLString_baseURL(initial_document, @style.base)
+    @view.mainFrame.loadHTMLString_baseURL(initial_document, @theme.base)
   end
   
   def moveToTop
@@ -155,13 +154,13 @@ class LogController < OSX::NSObject
     end
   end
   
-  def reload_style
+  def reload_theme
     body = @view.mainFrame.DOMDocument.body
     @html = body.innerHTML
     @scroll_bottom = viewing_bottom?
     @scroll_top = body.valueForKey('scrollTop').to_i
     #setup(@console, style)
-    @view.mainFrame.loadHTMLString_baseURL(initial_document, @style.base)
+    @view.mainFrame.loadHTMLString_baseURL(initial_document, @theme.base)
   end
   
   
@@ -331,7 +330,7 @@ class LogController < OSX::NSObject
       <html>
       <head>
       <style>#{DEFAULT_CSS}</style>
-      <style><!--#{@style.content}--></style>
+      <style><!--#{@theme.content}--></style>
       </head>
       <body class="#{body_class}" background="falls.jpg"></body>
       </html>
@@ -552,39 +551,5 @@ class LogPolicy < OSX::NSObject
     else
       listener.ignore
     end
-  end
-end
-
-
-class LogStyle
-  attr_reader :base
-  
-  def initialize(fname)
-    change_filename(fname)
-  end
-  
-  def change_filename(fname)
-    if fname
-      @filename = Pathname.new(fname).expand_path
-      @base = OSX::NSURL.fileURLWithPath(@filename.dirname.to_s)
-      reload
-    else
-      @filename = nil
-      @base = nil
-    end
-  end
-  
-  def content
-    @content || ''
-  end
-  
-  def reload
-    @content = nil
-    return false unless @filename && @filename.exist?
-    prev = @content
-    @filename.open {|f| @content = f.read }
-    prev != @content
-  rescue
-    ;
   end
 end

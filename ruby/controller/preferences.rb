@@ -93,13 +93,23 @@ class Preferences
     end
   end
   
-  model_attr :key, :dcc, :gen, :sound
+  class Theme
+    include PersistenceHelper
+    persistent_attr :log_theme
+    
+    def initialize
+      @log_theme = 'resource:Default'
+    end
+  end
+  
+  model_attr :key, :dcc, :gen, :sound, :theme
   
   def initialize
     @key = Keyword.new
     @dcc = Dcc.new
     @gen = General.new
     @sound = Sound.new
+    @theme = Theme.new
     
     load
   end

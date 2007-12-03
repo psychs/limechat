@@ -695,7 +695,7 @@ class MenuController < OSX::NSObject
   
   
   def changeStyle(sender)
-    @world.reload_log_style
+    @world.reload_log_theme
   end
   
   

@@ -97,6 +97,8 @@
 		78BF64B00C2885E2004451B2 /* user.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78BF64A80C2885E2004451B2 /* user.rb */; };
 		78BF64B10C2885E2004451B2 /* usermode.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78BF64A90C2885E2004451B2 /* usermode.rb */; };
 		78BF64B20C2885E2004451B2 /* world.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78BF64AA0C2885E2004451B2 /* world.rb */; };
+		78D3C6720D04026000FA8B21 /* logtheme.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78D3C6710D04026000FA8B21 /* logtheme.rb */; };
+		78D3C6730D04026000FA8B21 /* logtheme.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78D3C6710D04026000FA8B21 /* logtheme.rb */; };
 		78DA4E930C460DAC008780C8 /* TreeDialog.nib in Resources */ = {isa = PBXBuildFile; fileRef = 78DA4E910C460DAC008780C8 /* TreeDialog.nib */; };
 		78DA4EA50C46180F008780C8 /* treedialog.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78DA4EA40C46180F008780C8 /* treedialog.rb */; };
 		78DA4EC10C461D52008780C8 /* memberlistview.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78DA4EBF0C461D52008780C8 /* memberlistview.rb */; };
@@ -315,6 +317,7 @@
 		78BF64A90C2885E2004451B2 /* usermode.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = usermode.rb; sourceTree = "<group>"; };
 		78BF64AA0C2885E2004451B2 /* world.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = world.rb; sourceTree = "<group>"; };
 		78C5BAD40BE7B95100C4497A /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/CommentSheet.nib; sourceTree = "<group>"; };
+		78D3C6710D04026000FA8B21 /* logtheme.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = logtheme.rb; sourceTree = "<group>"; };
 		78DA4E920C460DAC008780C8 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/TreeDialog.nib; sourceTree = "<group>"; };
 		78DA4EA40C46180F008780C8 /* treedialog.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = treedialog.rb; sourceTree = "<group>"; };
 		78DA4EBF0C461D52008780C8 /* memberlistview.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = memberlistview.rb; sourceTree = "<group>"; };
@@ -541,6 +544,7 @@
 				78229BBF0C288188001DD4C3 /* tableprogressindicator.rb */,
 				78229BC00C288188001DD4C3 /* treeview.rb */,
 				78229BC10C288188001DD4C3 /* unitnamecell.rb */,
+				78D3C6710D04026000FA8B21 /* logtheme.rb */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -734,6 +738,7 @@
 				783D0B200CF45BC6002CC2FB /* ListDialog.nib in Resources */,
 				783D0B2B0CF45C38002CC2FB /* listdialog.rb in Resources */,
 				782647CC0CFE86BB0052E598 /* pastieclient.rb in Resources */,
+				78D3C6730D04026000FA8B21 /* logtheme.rb in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -824,6 +829,7 @@
 				787898260CF38C510045585B /* filelogger.rb in Resources */,
 				783D0B2C0CF45C38002CC2FB /* listdialog.rb in Resources */,
 				782647CD0CFE86BB0052E598 /* pastieclient.rb in Resources */,
+				78D3C6720D04026000FA8B21 /* logtheme.rb in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

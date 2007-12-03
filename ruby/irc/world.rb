@@ -23,7 +23,7 @@ class IRCWorld < OSX::NSObject
   end
   
   def setup(seed)
-    @logstyle = LogStyle.new('~/Library/Application Support/LimeChat/Theme/limechat.css')
+    @logtheme = LogTheme.new(@pref.theme.log_theme)
     @console = create_log(nil, true)
     @console_base.setContentView(@console.view)
     @dummylog = create_log(nil, true)
@@ -365,16 +365,16 @@ class IRCWorld < OSX::NSObject
     @growl.notify(kind, title, desc, context) if @pref.gen.use_growl
   end
   
-  def reload_log_style
-    return unless @logstyle.reload
-    
+  def reload_log_theme
+    @logtheme.theme = @pref.theme.log_theme
+        
     @units.each do |u|
-      u.log.reload_style
+      u.log.reload_theme
       u.channels.each do |c|
-        c.log.reload_style
+        c.log.reload_theme
       end
     end
-    @console.reload_style
+    @console.reload_theme
     
     #sel = selected
     #@log_base.setContentView(sel.log.view) if sel
@@ -383,8 +383,8 @@ class IRCWorld < OSX::NSObject
   
   def preferences_changed
     register_growl
-    
     @units.each {|u| u.preferences_changed}
+    reload_log_theme
   end
   
   def date_changed
@@ -604,7 +604,7 @@ class IRCWorld < OSX::NSObject
     log.world = self
     log.unit = unit
     log.keyword = @pref.key
-    log.style = @logstyle
+    log.theme = @logtheme
     log.setup(console)
     log.view.setHostWindow(@window)
     log

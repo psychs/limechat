@@ -74,6 +74,8 @@
 				<string>id</string>
 				<key>key_words</key>
 				<string>id</string>
+				<key>log_theme</key>
+				<string>id</string>
 				<key>sound_table</key>
 				<string>id</string>
 				<key>transcript_folder</key>

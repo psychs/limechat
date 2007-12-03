@@ -21,6 +21,7 @@ class PreferenceDialog < OSX::NSObject
   ib_mapped_outlet :gen_use_growl
   ib_mapped_outlet :gen_log_transcript
   ib_outlet :transcript_folder
+  ib_outlet :log_theme
   
   def initialize
     @prefix = 'preferenceDialog'
@@ -90,8 +91,7 @@ class PreferenceDialog < OSX::NSObject
   end
   
   def update_transcript_folder
-    path = @m.gen.transcript_folder.expand_path
-    path = Pathname.new(path)
+    path = Pathname.new(@m.gen.transcript_folder).expand_path
     title = path.basename.to_s
     i = @transcript_folder.itemAtIndex(0)
     i.setTitle(title)
@@ -150,6 +150,7 @@ class PreferenceDialog < OSX::NSObject
   def load
     load_mapped_outlets(m, true)
     @sound = m.sound.dup
+    load_log_theme
   end
   
   def save
@@ -162,6 +163,38 @@ class PreferenceDialog < OSX::NSObject
     m.key.dislike_words.uniq!
     m.dcc.last_port = m.dcc.first_port if m.dcc.last_port < m.dcc.first_port
     m.sound.assign(@sound)
+    save_log_theme
+  end
+  
+  def load_log_theme
+    base = '~/Library/Application Support/LimeChat/Theme'.expand_path
+    files = Pathname.glob(base + '/*.css')
+    
+    @log_theme.removeAllItems
+    files.each_with_index do |f,n|
+      @log_theme.addItemWithTitle(f.basename('.*').to_s)
+      @log_theme.itemAtIndex(n).setTag(0)
+    end
+    
+    sel = @m.theme.log_theme
+    sel =~ /\A(\w+):(.*)\z/
+    kind = $1
+    name = $2
+    target_tag = kind == 'resource' ? 0 : 1
+    
+    count = @log_theme.numberOfItems
+    (0...count).each do |n|
+      i = @log_theme.itemAtIndex(n)
+      if i.tag == target_tag && i.title.to_s == name
+        @log_theme.selectItemAtIndex(n)
+        break
+      end
+    end
+  end
+  
+  def save_log_theme
+    sel = @log_theme.selectedItem
+    @m.theme.log_theme = "resource:#{sel.title}"
   end
   
   def update_myaddress
