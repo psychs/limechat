@@ -1,5 +1,9 @@
 2007-12-03  Satoshi Nakagawa <artension@gmail.com>
 
+	Changed to put received files into ~/Downloads if it exists.
+
+2007-12-03  Satoshi Nakagawa <artension@gmail.com>
+
 	Implemented cmd+'+'/'-' for changing text size.
 
 2007-12-03  Satoshi Nakagawa <artension@gmail.com>

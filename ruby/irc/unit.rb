@@ -2,6 +2,7 @@
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
 require 'utility'
+require 'pathname'
 
 class IRCUnit < OSX::NSObject
   include OSX
@@ -1433,7 +1434,14 @@ class IRCUnit < OSX::NSObject
       host = addr
     end
     print_both(self, :dcc_send_receive, "*Received file transfer request from #{m.sender_nick}, #{fname} (#{size.grouped_by_comma} bytes) #{host}:#{port}")
-    @world.dcc.add_receiver(@id, m.sender_nick, host, port, '~/Desktop', fname, size, ver)
+    
+    if Pathname.new('~/Downloads').expand_path.exist?
+      path = '~/Downloads'
+    else
+      path = '~/Desktop'
+    end
+    
+    @world.dcc.add_receiver(@id, m.sender_nick, host, port, path, fname, size, ver)
     SoundPlayer.play(@pref.sound.file_receive_request)
     @world.notify_on_growl(:file_receive_request, m.sender_nick, fname)
     NSApp.requestUserAttention(NSInformationalRequest) unless NSApp.isActive
