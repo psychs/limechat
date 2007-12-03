@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>ruby/irc/world.rb</string>
+	<string>Info.plist</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -21,72 +21,28 @@
 	<integer>266</integer>
 	<key>metaData</key>
 	<dict>
-		<key>ruby/controller/preferences.rb</key>
+		<key>Info.plist</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>36</integer>
+				<integer>10</integer>
 				<key>line</key>
-				<integer>100</integer>
+				<integer>11</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>75</integer>
-		</dict>
-		<key>ruby/dialog/preferencedialog.rb</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>180</integer>
-			</dict>
-			<key>columnSelection</key>
-			<false/>
-			<key>firstVisibleColumn</key>
 			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>155</integer>
-			<key>selectFrom</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>178</integer>
-			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>180</integer>
-			</dict>
 		</dict>
-		<key>ruby/irc/world.rb</key>
+		<key>doc/ChangeLog.txt</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
+				<integer>50</integer>
+				<key>line</key>
 				<integer>25</integer>
-				<key>line</key>
-				<integer>383</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>357</integer>
-		</dict>
-		<key>ruby/view/logtheme.rb</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>13</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
@@ -96,14 +52,12 @@
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>ruby/dialog/preferencedialog.rb</string>
-		<string>ruby/view/logtheme.rb</string>
-		<string>ruby/irc/world.rb</string>
-		<string>ruby/controller/preferences.rb</string>
+		<string>doc/ChangeLog.txt</string>
+		<string>Info.plist</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{493, 72}, {955, 951}}</string>
+	<string>{{687, 86}, {872, 933}}</string>
 </dict>
 </plist>

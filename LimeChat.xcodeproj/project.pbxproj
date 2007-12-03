@@ -21,7 +21,6 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		78084BF60C7604410005D700 /* application.icns in Resources */ = {isa = PBXBuildFile; fileRef = 78084BF50C7604410005D700 /* application.icns */; };
 		780D09F00C2F2C20007C0F4F /* splitter.rb in Resources */ = {isa = PBXBuildFile; fileRef = 780D09EF0C2F2C20007C0F4F /* splitter.rb */; };
 		78208C1A0C9D97CD004472E9 /* cocoasheet.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78208C190C9D97CD004472E9 /* cocoasheet.rb */; };
 		78211B530C5F3560004B47DA /* soundplayer.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78211B520C5F3560004B47DA /* soundplayer.rb */; };
@@ -66,6 +65,8 @@
 		782647CD0CFE86BB0052E598 /* pastieclient.rb in Resources */ = {isa = PBXBuildFile; fileRef = 782647CB0CFE86BB0052E598 /* pastieclient.rb */; };
 		7831B94D0C589A7A00E1F931 /* growl.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7831B94C0C589A7A00E1F931 /* growl.rb */; };
 		7834E1930C69B5AD003C5D65 /* wildcard.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7834E1920C69B5AD003C5D65 /* wildcard.rb */; };
+		7835DF4A0D0415D20064916A /* Theme in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7835DF460D0415D20064916A /* Theme */; };
+		7835DF4B0D0415D20064916A /* Theme in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7835DF460D0415D20064916A /* Theme */; };
 		783D0B200CF45BC6002CC2FB /* ListDialog.nib in Resources */ = {isa = PBXBuildFile; fileRef = 783D0B1E0CF45BC6002CC2FB /* ListDialog.nib */; };
 		783D0B210CF45BDC002CC2FB /* ListDialog.nib in Resources */ = {isa = PBXBuildFile; fileRef = 783D0B1E0CF45BC6002CC2FB /* ListDialog.nib */; };
 		783D0B2B0CF45C38002CC2FB /* listdialog.rb in Resources */ = {isa = PBXBuildFile; fileRef = 783D0B2A0CF45C38002CC2FB /* listdialog.rb */; };
@@ -89,6 +90,8 @@
 		78AF96580C2C219A006D9E4D /* inputhistory.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78AF96570C2C219A006D9E4D /* inputhistory.rb */; };
 		78AFBCF50C33E314008A8FCD /* kanasupport.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78AFBCF40C33E314008A8FCD /* kanasupport.rb */; };
 		78B063530C2BD19D00CDD242 /* singlelineformatter.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78B063520C2BD19D00CDD242 /* singlelineformatter.rb */; };
+		78B2DF200D0417160092EBDA /* application.icns in Resources */ = {isa = PBXBuildFile; fileRef = 78B2DF1F0D0417160092EBDA /* application.icns */; };
+		78B2DF210D0417160092EBDA /* application.icns in Resources */ = {isa = PBXBuildFile; fileRef = 78B2DF1F0D0417160092EBDA /* application.icns */; };
 		78BF64AB0C2885E2004451B2 /* channel.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78BF64A30C2885E2004451B2 /* channel.rb */; };
 		78BF64AC0C2885E2004451B2 /* channelmode.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78BF64A40C2885E2004451B2 /* channelmode.rb */; };
 		78BF64AD0C2885E2004451B2 /* config.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78BF64A50C2885E2004451B2 /* config.rb */; };
@@ -196,7 +199,6 @@
 		78E7F24B0CB2B9D20069E9ED /* textfield.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7877E0610C65B84E002F13C7 /* textfield.rb */; };
 		78E7F24C0CB2B9D20069E9ED /* wildcard.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7834E1920C69B5AD003C5D65 /* wildcard.rb */; };
 		78E7F24D0CB2B9D20069E9ED /* fieldeditortextview.rb in Resources */ = {isa = PBXBuildFile; fileRef = 787A36A10C6A392600DDB70D /* fieldeditortextview.rb */; };
-		78E7F24E0CB2B9D20069E9ED /* application.icns in Resources */ = {isa = PBXBuildFile; fileRef = 78084BF50C7604410005D700 /* application.icns */; };
 		78E7F24F0CB2B9D20069E9ED /* cocoasheet.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78208C190C9D97CD004472E9 /* cocoasheet.rb */; };
 		78E7F2510CB2B9D20069E9ED /* AsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 786926F30BB6EC1B0081019B /* AsyncSocket.m */; };
 		78E7F2520CB2B9D20069E9ED /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 786926F40BB6EC1B0081019B /* main.m */; };
@@ -211,6 +213,26 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		7835DF2C0D0414020064916A /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = ..;
+			dstSubfolderSpec = 7;
+			files = (
+				7835DF4B0D0415D20064916A /* Theme in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7835DF4E0D0416400064916A /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = ..;
+			dstSubfolderSpec = 7;
+			files = (
+				7835DF4A0D0415D20064916A /* Theme in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		78E7F25B0CB2B9D20069E9ED /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -233,7 +255,6 @@
 		780253C20C09525900C170D4 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
 		7804271C0BCA810600C14486 /* GradientFill.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GradientFill.h; path = objc/GradientFill.h; sourceTree = "<group>"; };
 		7804271D0BCA810600C14486 /* GradientFill.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GradientFill.m; path = objc/GradientFill.m; sourceTree = "<group>"; };
-		78084BF50C7604410005D700 /* application.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = application.icns; path = icon/application.icns; sourceTree = "<group>"; };
 		780D09EF0C2F2C20007C0F4F /* splitter.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = splitter.rb; sourceTree = "<group>"; };
 		7817A0390BF6FFCD005C7737 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/DccDialog.nib; sourceTree = "<group>"; };
 		781E254C0BE9E8E20040F56E /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/ModeSheet.nib; sourceTree = "<group>"; };
@@ -279,6 +300,7 @@
 		782647CB0CFE86BB0052E598 /* pastieclient.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = pastieclient.rb; sourceTree = "<group>"; };
 		7831B94C0C589A7A00E1F931 /* growl.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = growl.rb; sourceTree = "<group>"; };
 		7834E1920C69B5AD003C5D65 /* wildcard.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = wildcard.rb; sourceTree = "<group>"; };
+		7835DF460D0415D20064916A /* Theme */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Theme; path = resource/Theme; sourceTree = "<group>"; };
 		783D0B1F0CF45BC6002CC2FB /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/ListDialog.nib; sourceTree = "<group>"; };
 		783D0B2A0CF45C38002CC2FB /* listdialog.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = listdialog.rb; sourceTree = "<group>"; };
 		784660230C3145850064140F /* OldEventManager.h */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = sourcecode.c.h; name = OldEventManager.h; path = objc/OldEventManager.h; sourceTree = "<group>"; };
@@ -307,6 +329,7 @@
 		78AF96570C2C219A006D9E4D /* inputhistory.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = inputhistory.rb; sourceTree = "<group>"; };
 		78AFBCF40C33E314008A8FCD /* kanasupport.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = kanasupport.rb; sourceTree = "<group>"; };
 		78B063520C2BD19D00CDD242 /* singlelineformatter.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = singlelineformatter.rb; sourceTree = "<group>"; };
+		78B2DF1F0D0417160092EBDA /* application.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = application.icns; path = resource/icon/application.icns; sourceTree = "<group>"; };
 		78B869BA0BF2D613007315AA /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/ChannelDialog.nib; sourceTree = "<group>"; };
 		78BF64A30C2885E2004451B2 /* channel.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = channel.rb; sourceTree = "<group>"; };
 		78BF64A40C2885E2004451B2 /* channelmode.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = channelmode.rb; sourceTree = "<group>"; };
@@ -418,8 +441,9 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				78B2DF1F0D0417160092EBDA /* application.icns */,
+				7835DF460D0415D20064916A /* Theme */,
 				7884E5450CDA91F500AF3678 /* SACrashReporter */,
-				78084BF50C7604410005D700 /* application.icns */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 				78AD78E20C61B8F8001E77F4 /* Localizable.strings */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
@@ -603,6 +627,7 @@
 				78E570CC0C1C306500BDF7EC /* Resources */,
 				78E570CD0C1C306500BDF7EC /* Sources */,
 				78E570CE0C1C306500BDF7EC /* Frameworks */,
+				7835DF2C0D0414020064916A /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -621,6 +646,7 @@
 				78E7F2500CB2B9D20069E9ED /* Sources */,
 				78E7F2550CB2B9D20069E9ED /* Frameworks */,
 				78E7F25B0CB2B9D20069E9ED /* CopyFiles */,
+				7835DF4E0D0416400064916A /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -731,7 +757,6 @@
 				7877E0620C65B84E002F13C7 /* textfield.rb in Resources */,
 				7834E1930C69B5AD003C5D65 /* wildcard.rb in Resources */,
 				787A36A20C6A392600DDB70D /* fieldeditortextview.rb in Resources */,
-				78084BF60C7604410005D700 /* application.icns in Resources */,
 				78208C1A0C9D97CD004472E9 /* cocoasheet.rb in Resources */,
 				7884E54E0CDA91F500AF3678 /* SACrashReporter in Resources */,
 				787898250CF38C510045585B /* filelogger.rb in Resources */,
@@ -739,6 +764,7 @@
 				783D0B2B0CF45C38002CC2FB /* listdialog.rb in Resources */,
 				782647CC0CFE86BB0052E598 /* pastieclient.rb in Resources */,
 				78D3C6730D04026000FA8B21 /* logtheme.rb in Resources */,
+				78B2DF210D0417160092EBDA /* application.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -823,13 +849,13 @@
 				78E7F24B0CB2B9D20069E9ED /* textfield.rb in Resources */,
 				78E7F24C0CB2B9D20069E9ED /* wildcard.rb in Resources */,
 				78E7F24D0CB2B9D20069E9ED /* fieldeditortextview.rb in Resources */,
-				78E7F24E0CB2B9D20069E9ED /* application.icns in Resources */,
 				78E7F24F0CB2B9D20069E9ED /* cocoasheet.rb in Resources */,
 				7884E54F0CDA91F500AF3678 /* SACrashReporter in Resources */,
 				787898260CF38C510045585B /* filelogger.rb in Resources */,
 				783D0B2C0CF45C38002CC2FB /* listdialog.rb in Resources */,
 				782647CD0CFE86BB0052E598 /* pastieclient.rb in Resources */,
 				78D3C6720D04026000FA8B21 /* logtheme.rb in Resources */,
+				78B2DF200D0417160092EBDA /* application.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
