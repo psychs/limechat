@@ -166,6 +166,8 @@ module OSX
   end
   
   class NSSelectionArray
+    # NSTextView.selectedRanges returns NSSelectionArray
+    # workaround for Tiger
     def to_a
       ary = []
       (0...count).each {|i| ary << objectAtIndex(i) }
