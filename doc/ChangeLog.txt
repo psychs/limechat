@@ -1,3 +1,7 @@
+2007-12-04  Satoshi Nakagawa <artension@gmail.com>
+
+	Fixed a bug, NSSelectionArray#to_a causes a segmentation fault on Tiger.
+
 2007-12-03  Satoshi Nakagawa <artension@gmail.com>
 
 	Fixed a bug, /me command didn't work well.

@@ -165,6 +165,14 @@ module OSX
     end
   end
   
+  class NSSelectionArray
+    def to_a
+      ary = []
+      (0...count).each {|i| ary << objectAtIndex(i) }
+      ary
+    end
+  end
+  
   class NSPoint
     def in(r); OSX::NSPointInRect(self, r); end
     def +(v)
