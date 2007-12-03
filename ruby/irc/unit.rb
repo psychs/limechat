@@ -321,16 +321,11 @@ class IRCUnit < OSX::NSObject
   def send_command(s)
     return false unless connected?
     command = s.token!
-    return if command.empty? || command.include?("\0")
+    return false if command.empty? || command.include?("\0")
     cmd = command.downcase.to_sym
+    target = nil
     
     case cmd
-    when :me
-      cmd = :action
-      if @world.selunit == self && @world.selchannel
-        target = @world.selchannel.name
-        s = target + ' ' + s
-      end
     when :weights
       sel = @world.selchannel
       if sel
@@ -343,32 +338,87 @@ class IRCUnit < OSX::NSObject
         end
       end
       return true
+    when :me
+      cmd = :action
+      if @world.selunit == self && @world.selchannel
+        target = @world.selchannel.name
+        s = target + ' ' + s
+      else
+        return false
+      end
+    when :privmsg,:msg,:notice,:action,:ctcpquery,:ctcpreply,:ctcpping,:join,:part,:mode,:topic,:kick,:invite
+      target = s.token!
     end
     
-    case cmd
-    when :privmsg,:msg,:notice,:action
-      cmd = :privmsg if cmd == :msg
-      target = s.token!
-      c = find_channel(target)
-      if !c && !target.channelname? && target != 'NickServ'
-        c = @world.create_talk(self, target)
+    s[0] = '' if s[0] == ?:
+    cmd = :privmsg if cmd == :msg
+    
+    if cmd == :privmsg || cmd == :notice
+      if s[0] == 0x1
+        cmd = cmd == :privmsg ? :ctcpquery : :ctcpreply
+        s[0] = ''
+        n = s.index("\x01")
+        s = s[0...n] if n
       end
-      print_both(c || target, cmd, @mynick, to_local_encoding(to_common_encoding(s)))
+    end
+    
+    if cmd == :ctcpquery
+      t = s.dup
+      subcmd = t.token!
+      if subcmd.downcase == 'action'
+        cmd = :action
+        s = t
+      end
+    end
+
+    case cmd
+    when :privmsg,:notice,:action
+      return false unless target
+      return false if s.empty?
+      
+      target.split(/,/).each do |t|
+        next if t.empty?
+        c = find_channel(t)
+        if !c && !t.channelname? && t != 'NickServ'
+          c = @world.create_talk(self, t)
+        end
+        print_both(c || t, cmd, @mynick, to_local_encoding(to_common_encoding(s)))
+      end
+
       if cmd == :action
         cmd = :privmsg
         s = "\x01ACTION #{s}\x01"
       end
       send(cmd, target, ":#{s}")
+    
+    when :ctcpquery
+      send_ctcp_query(target, s)
+    when :ctcpreply
+      send_ctcp_reply(target, s)
+    when :ctcpping
+      send_ctcp_ping(target)
     when :quit
-      quit(s)
+      quit(':' + s)
     when :nick
       change_nick(s)
-    else
-      if cmd
-        send(cmd, s)
+    when :topic
+      if s.empty?
+        send(cmd, target)
       else
-        send(command, s)
+        send(cmd, target, ':' + s)
       end
+    when :part
+      send(cmd, target, ':' + s)
+    when :kick
+      peer = s.token!
+      s = ':' + s if s[0] != ?:
+      send(:kick, target, peer + ' ' + s)
+    when :away
+      send(cmd, ':' + s)
+    when :join,:mode,:invite
+      send(cmd, target, s)
+    else
+      send(cmd, s)
     end
     true
   end
@@ -431,6 +481,12 @@ class IRCUnit < OSX::NSObject
     end
     send_ctcp_query(nick, 'DCC SEND', "#{morph_fname} #{addr} #{port} #{size} 2 :#{fname}")
     print_both(self, :dcc_send_send, "*Trying file transfer to #{nick}, #{fname} (#{size.grouped_by_comma} bytes) #{@myaddress}:#{port}")
+  end
+  
+  def send_ctcp_ping(target)
+    n = Time.now
+    i = n.to_i * 1000000 + n.usec
+    send_ctcp_query(target, :ping, i.to_s)
   end
   
   def send_ctcp_query(target, cmd, body=nil)
