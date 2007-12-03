@@ -1,5 +1,9 @@
 2007-12-03  Satoshi Nakagawa <artension@gmail.com>
 
+	Fixed a bug, /me command didn't work well.
+
+2007-12-03  Satoshi Nakagawa <artension@gmail.com>
+
 	Changed to parse raw commands.
 
 2007-12-03  Satoshi Nakagawa <artension@gmail.com>
