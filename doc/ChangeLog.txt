@@ -1,5 +1,9 @@
 2007-12-03  Satoshi Nakagawa <artension@gmail.com>
 
+ 	Implemented log theme.
+
+2007-12-03  Satoshi Nakagawa <artension@gmail.com>
+
 	Implementing log theme.
 
 2007-12-03  Satoshi Nakagawa <artension@gmail.com>

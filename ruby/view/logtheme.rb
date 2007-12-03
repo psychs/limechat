@@ -6,9 +6,33 @@ require 'utility'
 
 class LogTheme
   attr_reader :name, :base
-
-  RESOURCE_BASE = '~/Library/Application Support/LimeChat/Theme'.expand_path
+  
+  RESOURCE_BASE = (Pathname.new(OSX::NSBundle.mainBundle.resourcePath.fileSystemRepresentation).parent.expand_path + 'Theme').to_s
   USER_BASE = '~/Library/Application Support/LimeChat/Theme'.expand_path
+  
+  def self.RESOURCE_BASE
+    RESOURCE_BASE
+  end
+  
+  def self.USER_BASE
+    USER_BASE
+  end
+  
+  def self.extract_name(name)
+    if name =~ /\A(\w+):(.*)\z/
+      [$1, $2]
+    else
+      nil
+    end
+  end
+  
+  def self.resource_filename(fname)
+    "resource:#{fname}"
+  end
+  
+  def self.user_filename(fname)
+    "user:#{fname}"
+  end
   
   def initialize(name)
     self.theme = name
@@ -17,10 +41,7 @@ class LogTheme
   def theme=(name)
     if name
       @name = name.dup
-      name =~ /\A(\w+):(.*)\z/
-      kind = $1
-      fname = $2
-      
+      kind, fname = LogTheme.extract_name(name)
       if kind == 'resource'
         fullname = "#{RESOURCE_BASE}/#{fname}.css"
       else

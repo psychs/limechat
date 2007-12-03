@@ -3,6 +3,7 @@
 
 require 'dialoghelper'
 require 'pathname'
+require 'logtheme'
 
 class PreferenceDialog < OSX::NSObject
   include OSX
@@ -167,19 +168,24 @@ class PreferenceDialog < OSX::NSObject
   end
   
   def load_log_theme
-    base = '~/Library/Application Support/LimeChat/Theme'.expand_path
-    files = Pathname.glob(base + '/*.css')
-    
     @log_theme.removeAllItems
-    files.each_with_index do |f,n|
-      @log_theme.addItemWithTitle(f.basename('.*').to_s)
-      @log_theme.itemAtIndex(n).setTag(0)
+    @log_theme.addItemWithTitle('Default')
+    @log_theme.itemAtIndex(0).setTag(0)
+    
+    [LogTheme.RESOURCE_BASE, LogTheme.USER_BASE].each_with_index do |base,tag|
+      files = Pathname.glob(base + '/*.css')
+      files.delete_if {|i| i.basename.to_s == 'Default.css'}
+      unless files.empty?
+        @log_theme.menu.addItem(NSMenuItem.separatorItem)
+        count = @log_theme.numberOfItems
+        files.each_with_index do |f,n|
+          @log_theme.addItemWithTitle(f.basename('.*').to_s)
+          @log_theme.itemAtIndex(count + n).setTag(tag)
+        end
+      end
     end
     
-    sel = @m.theme.log_theme
-    sel =~ /\A(\w+):(.*)\z/
-    kind = $1
-    name = $2
+    kind, name = LogTheme.extract_name(@m.theme.log_theme)
     target_tag = kind == 'resource' ? 0 : 1
     
     count = @log_theme.numberOfItems
@@ -194,7 +200,12 @@ class PreferenceDialog < OSX::NSObject
   
   def save_log_theme
     sel = @log_theme.selectedItem
-    @m.theme.log_theme = "resource:#{sel.title}"
+    fname = sel.title.to_s
+    if sel.tag == 0
+      @m.theme.log_theme = LogTheme.resource_filename(fname)
+    else
+      @m.theme.log_theme = LogTheme.user_filename(fname)
+    end
   end
   
   def update_myaddress
