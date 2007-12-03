@@ -91,6 +91,10 @@
 				<string>id</string>
 				<key>onLeave</key>
 				<string>id</string>
+				<key>onMakeTextBigger</key>
+				<string>id</string>
+				<key>onMakeTextSmaller</key>
+				<string>id</string>
 				<key>onMarkScrollback</key>
 				<string>id</string>
 				<key>onMemberAutoOp</key>

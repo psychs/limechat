@@ -391,6 +391,17 @@ class IRCWorld < OSX::NSObject
     @units.each {|u| u.date_changed}
   end
   
+  def change_text_size(op)
+    logs = [@console, @dummylog]
+    @units.each do |u|
+      logs << u.log
+      u.channels.each do |c|
+        logs << c.log
+      end
+    end
+    logs.each {|i| i.change_text_size(op)}
+  end
+  
   # delegate
   
   def outlineView_doubleClicked(sender)
@@ -607,6 +618,7 @@ class IRCWorld < OSX::NSObject
     log.theme = @logtheme
     log.setup(console)
     log.view.setHostWindow(@window)
+    log.view.setTextSizeMultiplier(@console.view.textSizeMultiplier) if @console
     log
   end
   

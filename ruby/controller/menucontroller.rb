@@ -88,6 +88,10 @@ class MenuController < OSX::NSObject
       true
     when 412  # clear scrollback
       true
+    when 421  # make text bigger
+      @world.console.view.canMakeTextLarger?
+    when 422  # make text smaller
+      @world.console.view.canMakeTextSmaller?
       
     when 501  # connect
       not_connected
@@ -423,6 +427,15 @@ class MenuController < OSX::NSObject
     sel = @world.selected
     return unless sel
     sel.log.unmark
+  end
+  
+  
+  def onMakeTextBigger(sender)
+    @world.change_text_size(:bigger)
+  end
+  
+  def onMakeTextSmaller(sender)
+    @world.change_text_size(:smaller)
   end
   
   

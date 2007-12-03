@@ -163,6 +163,16 @@ class LogController < OSX::NSObject
     @view.mainFrame.loadHTMLString_baseURL(initial_document, @theme.base)
   end
   
+  def change_text_size(op)
+    save_position
+    if op == :bigger
+      view.makeTextLarger(nil)
+    else
+      view.makeTextSmaller(nil)
+    end
+    restore_position
+  end
+  
   
   # delegate
 
