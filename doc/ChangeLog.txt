@@ -1,3 +1,7 @@
+2007-12-05  Satoshi Nakagawa <artension@gmail.com>
+
+	Changed a penalty factor for text size.
+
 2007-12-04  Satoshi Nakagawa <artension@gmail.com>
 
 	Changed the url regex to disallow double quotes.

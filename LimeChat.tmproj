@@ -51,29 +51,29 @@
 				<integer>3</integer>
 			</dict>
 		</dict>
-		<key>ruby/view/logrenderer.rb</key>
+		<key>ruby/irc/ircmessage.rb</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>3</integer>
 				<key>line</key>
-				<integer>302</integer>
+				<integer>20</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>273</integer>
+			<integer>3</integer>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>ruby/view/logrenderer.rb</string>
+		<string>ruby/irc/ircmessage.rb</string>
 		<string>doc/ChangeLog.txt</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{568, 84}, {1185, 1087}}</string>
+	<string>{{599, 76}, {936, 1086}}</string>
 </dict>
 </plist>

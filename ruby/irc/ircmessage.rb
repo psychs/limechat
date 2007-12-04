@@ -17,6 +17,7 @@ module Penalty
   TOPIC = 3
   INIT = 0
   MAX = 10
+  TEXT_SIZE_FACTOR = 120
 end
 
 class IRCSendMessage
@@ -49,7 +50,7 @@ class IRCSendMessage
     
     if @penalty == Penalty::NORMAL
       case @command.to_sym
-      when :privmsg,:notice; @penalty += s.size / 100
+      when :privmsg,:notice; @penalty += s.size / Penalty::TEXT_SIZE_FACTOR
       when :mode; @penalty = ChannelMode.calc_penalty(@trail)
       when :part; @penalty = Penalty::PART
       when :topic; @penalty = Penalty::TOPIC
