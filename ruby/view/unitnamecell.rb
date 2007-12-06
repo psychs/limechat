@@ -1,8 +1,7 @@
 # Created by Satoshi Nakagawa.
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
-class UnitNameCell < OSX::NSTextFieldCell
-  include OSX
+class UnitNameCell < NSTextFieldCell
   attr_accessor :view
 
   def drawInteriorWithFrame_inView(frame, view)

@@ -52,7 +52,7 @@ class String
   end
   
   def to_ns
-    OSX::NSMutableString.stringWithString(self)
+    NSMutableString.stringWithString(self)
   end
   
   def expand_path
@@ -76,19 +76,19 @@ class Array
   end
   
   def to_indexset
-    set = OSX::NSMutableIndexSet.alloc.init
+    set = NSMutableIndexSet.alloc.init
     each {|i| set.addIndex(i) }
     set
   end
   
   def to_ns
-    OSX::NSMutableArray.arrayWithArray(self)
+    NSMutableArray.arrayWithArray(self)
   end
 end
 
 class Hash
   def to_ns
-    OSX::NSMutableDictionary.dictionaryWithDictionary(self)
+    NSMutableDictionary.dictionaryWithDictionary(self)
   end
 end
 
@@ -104,23 +104,23 @@ module OSX
   class NSObject
     def to_ruby
       case self 
-      when OSX::NSDate
+      when NSDate
         to_time
-      when OSX::NSCFBoolean
+      when NSCFBoolean
         boolValue
-      when OSX::NSNumber
+      when NSNumber
         float? ? to_f : to_i
-      when OSX::NSString
+      when NSString
         to_s
-      when OSX::NSAttributedString
+      when NSAttributedString
         string.to_s
-      when OSX::NSArray,OSX::NSIndexSet
-        to_a.map {|x| x.is_a?(OSX::NSObject) ? x.to_ruby : x }
-      when OSX::NSDictionary
+      when NSArray,NSIndexSet
+        to_a.map {|x| x.is_a?(NSObject) ? x.to_ruby : x }
+      when NSDictionary
         h = {}
         each do |x, y| 
-          x = x.to_ruby if x.is_a?(OSX::NSObject)
-          y = y.to_ruby if y.is_a?(OSX::NSObject)
+          x = x.to_ruby if x.is_a?(NSObject)
+          y = y.to_ruby if y.is_a?(NSObject)
           x = x.to_sym if x.is_a?(String)
           h[x] = y
         end
@@ -133,7 +133,7 @@ module OSX
   
   class NSNumber
     def float?
-      OSX::CFNumberIsFloatType(self)
+      CFNumberIsFloatType(self)
     end
     
     def inspect
@@ -161,7 +161,7 @@ module OSX
   
   class NSIndexSet
     def inspect
-      "#<#{self.class.to_s.gsub(/^OSX::/, '')} #{to_a.inspect}>"
+      "#<#{self.class.to_s.gsub(/^/, '')} #{to_a.inspect}>"
     end
   end
   
@@ -176,16 +176,16 @@ module OSX
   end
   
   class NSPoint
-    def in(r); OSX::NSPointInRect(self, r); end
+    def in(r); NSPointInRect(self, r); end
     def +(v)
-      if v.is_a?(OSX::NSSize)
+      if v.is_a?(NSSize)
         NSPoint.new(x + v.width, y + v.height)
       else
         raise ArgumentException, "parameter should be NSSize"
       end
     end
     def -(v)
-      if v.is_a?(OSX::NSSize)
+      if v.is_a?(NSSize)
         NSPoint.new(x - v.width, y - v.height)
       else
         raise ArgumentException, "parameter should be NSSize"
@@ -193,7 +193,7 @@ module OSX
     end
 
     def inspect
-      "#<#{self.class.to_s.gsub(/^OSX::/, '')} (#{x}, #{y})>"
+      "#<#{self.class.to_s.gsub(/^/, '')} (#{x}, #{y})>"
     end
   end
   
@@ -207,7 +207,7 @@ module OSX
     def to_dic; { :w => width, :h => height }; end
     
     def inspect
-      "#<#{self.class.to_s.gsub(/^OSX::/, '')} (#{width}, #{height})>"
+      "#<#{self.class.to_s.gsub(/^/, '')} (#{width}, #{height})>"
     end
   end
   
@@ -218,8 +218,8 @@ module OSX
     def height=(v); size.height = v; end
     def contain?(r)
       case r
-      when NSRect; OSX::NSContainsRect(self, r)
-      when NSPoint; OSX::NSPointInRect(r, self)
+      when NSRect; NSContainsRect(self, r)
+      when NSPoint; NSPointInRect(r, self)
       else raise ArgumentException, "parameter should be NSRect or NSPoint"
       end
     end
@@ -239,24 +239,24 @@ module OSX
     end
 
     def inspect
-      "#<#{self.class.to_s.gsub(/^OSX::/, '')} (#{x}, #{y}, #{width}, #{height})>"
+      "#<#{self.class.to_s.gsub(/^/, '')} (#{x}, #{y}, #{width}, #{height})>"
     end
   end
   
   class NSRange
     def empty?; length == 0 || not_found?; end
-    def not_found?; location == OSX::NSNotFound; end
+    def not_found?; location == NSNotFound; end
     def size; length; end
     def size=(v); length = v; end
     def max; location + length; end
     def inspect
-      "#<#{self.class.to_s.gsub(/^OSX::/, '')} (#{location}, #{length})>"
+      "#<#{self.class.to_s.gsub(/^/, '')} (#{location}, #{length})>"
     end
   end
   
   class NSWindow
     def centerOfScreen
-      scr = OSX::NSScreen.screens[0]
+      scr = NSScreen.screens[0]
       if scr
         p = scr.visibleFrame.center
         p -= frame.size / 2
@@ -285,7 +285,7 @@ module OSX
   
   module LanguageSupport
     def primary_language
-      langs = OSX::NSUserDefaults.standardUserDefaults[:AppleLanguages]
+      langs = NSUserDefaults.standardUserDefaults[:AppleLanguages]
       if langs
         langs[0].to_ruby
       else
@@ -297,7 +297,7 @@ module OSX
   
   class NSEvent
     def inspect
-      "#<#{self.class.to_s.gsub(/^OSX::/, '')}:#{sprintf("0x%x", object_id)} type=#{_type_name}>"
+      "#<#{self.class.to_s.gsub(/^/, '')}:#{sprintf("0x%x", object_id)} type=#{_type_name}>"
     end
     
     private

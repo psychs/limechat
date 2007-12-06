@@ -4,7 +4,6 @@
 require 'treeview'
 
 class ServerTreeView < TreeView
-  include OSX
   attr_accessor :responder_delegate
   
   def acceptsFirstResponder

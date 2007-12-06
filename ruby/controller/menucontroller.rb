@@ -4,8 +4,7 @@
 require 'uri'
 require 'cgi'
 
-class MenuController < OSX::NSObject
-  include OSX
+class MenuController < NSObject
   attr_writer :app, :pref, :world, :window, :text, :tree, :member_list
   attr_accessor :url, :addr, :nick
   
@@ -197,7 +196,7 @@ class MenuController < OSX::NSObject
   
   def current_webview
     t = @window.firstResponder
-    if t && OSX::WebHTMLView === t
+    if t && WebHTMLView === t
       t = t.superview while t && !(LogView === t)
       t
     else
@@ -333,7 +332,7 @@ class MenuController < OSX::NSObject
         start_paste_dialog(sel.unit.mynick, sel.unit.id, sel.id, s)
       else
         # single line
-        @world.select_text unless OSX::NSTextView === t
+        @world.select_text unless NSTextView === t
         e = win.fieldEditor_forObject(false, @text)
         e.paste(sender)
       end
@@ -397,7 +396,7 @@ class MenuController < OSX::NSObject
     return unless t
     u = @world.selunit
     return unless u && u.myaddress
-    @world.select_text unless OSX::NSTextView === t
+    @world.select_text unless NSTextView === t
     e = win.fieldEditor_forObject(false, @text)
     e.replaceCharactersInRange_withString(e.selectedRange, u.myaddress)
     e.scrollRangeToVisible(e.selectedRange)

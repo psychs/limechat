@@ -7,7 +7,7 @@ require 'utility'
 class LogTheme
   attr_reader :name, :base
   
-  RESOURCE_BASE = (Pathname.new(OSX::NSBundle.mainBundle.resourcePath.fileSystemRepresentation).parent.expand_path + 'Theme').to_s
+  RESOURCE_BASE = (Pathname.new(NSBundle.mainBundle.resourcePath.fileSystemRepresentation).parent.expand_path + 'Theme').to_s
   USER_BASE = '~/Library/Application Support/LimeChat/Theme'.expand_path
   
   def self.RESOURCE_BASE
@@ -48,7 +48,7 @@ class LogTheme
         fullname = "#{USER_BASE}/#{fname}.css"
       end
       @filename = Pathname.new(fullname).expand_path
-      @base = OSX::NSURL.fileURLWithPath(@filename.dirname.to_s)
+      @base = NSURL.fileURLWithPath(@filename.dirname.to_s)
       reload
     else
       @name = ''

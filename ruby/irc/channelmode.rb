@@ -100,7 +100,7 @@ class ChannelMode
   end
   
   def self.calc_penalty(modestr)
-    penalty = Penalty::MODEBASE
+    penalty = Penalty::MODE_BASE
     str = modestr.dup
     plus = false
     until str.empty?
@@ -113,12 +113,12 @@ class ChannelMode
           when '-'; plus = false
           when '+'; plus = true
           when 'a','i','m','n','p','q','r','s','t','w'
-            penalty += Penalty::MODEOPT
+            penalty += Penalty::MODE_OPT
           when 'O','o','v','b','e','I','R','k'
             str.token!
-            penalty += Penalty::MODEOPT
+            penalty += Penalty::MODE_OPT
           when 'l'
-            penalty += Penalty::MODEOPT if plus
+            penalty += Penalty::MODE_OPT if plus
           end
         end
       end

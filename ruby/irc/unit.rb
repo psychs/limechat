@@ -4,8 +4,7 @@
 require 'utility'
 require 'pathname'
 
-class IRCUnit < OSX::NSObject
-  include OSX
+class IRCUnit < NSObject
   attr_accessor :world, :log, :id
   attr_writer :pref
   attr_reader :config, :channels, :mynick, :mymode, :encoding, :myaddress
@@ -296,16 +295,49 @@ class IRCUnit < OSX::NSObject
     true
   end
   
+  def truncate_text(str, cmd, chname)
+    max = IRC::BODY_LEN
+    max -= to_common_encoding(chname).size
+    max -= @mynick ? @mynick.size : IRC::NICK_LEN
+    max -= @config.username.size
+    max -= @join_address ? @join_address.size : IRC::ADDRESS_LEN
+    case cmd
+    when :notice; max -= 18
+    when :action; max -= 28
+    else          max -= 19
+    end
+    
+    s = str.dup
+    common = to_common_encoding(s)
+    
+    while common.size > max
+      break unless s =~ /.\z/
+      s = $~.pre_match
+      common = to_common_encoding(s)
+    end
+    
+    str[0...s.size] = ''
+    s
+  end
+  
   def send_text(chan, cmd, str)
     return false unless login? && chan
     str.split(/\r\n|\r|\n/).each do |s|
       next if s.empty?
-      print_both(chan, cmd, @mynick, to_local_encoding(to_common_encoding(s)))
-      if cmd == :action
-        cmd = :privmsg
-        s = "\x01ACTION #{s}\x01"
+      s = to_local_encoding(to_common_encoding(s))
+      
+      loop do
+        break if s.empty?
+        t = truncate_text(s, cmd, chan.name)
+        break if t.empty?
+        print_both(chan, cmd, @mynick, t)
+        command = cmd
+        if command == :action
+          command = :privmsg
+          t = "\x01ACTION #{t}\x01"
+        end
+        send(command, chan.name, ":#{t}")
       end
-      send(cmd, chan.name, ":#{s}")
       
       # only watch private messages
       if cmd == :privmsg
@@ -374,21 +406,29 @@ class IRCUnit < OSX::NSObject
     when :privmsg,:notice,:action
       return false unless target
       return false if s.empty?
+      s = to_local_encoding(to_common_encoding(s))
       
-      target.split(/,/).each do |t|
-        next if t.empty?
-        c = find_channel(t)
-        if !c && !t.channelname? && t != 'NickServ'
-          c = @world.create_talk(self, t)
+      loop do
+        break if s.empty?
+        t = truncate_text(s, cmd, target)
+        break if t.empty?
+        
+        target.split(/,/).each do |chname|
+          next if t.empty?
+          c = find_channel(chname)
+          if !c && !chname.channelname? && chname != 'NickServ'
+            c = @world.create_talk(self, chname)
+          end
+          print_both(c || chname, cmd, @mynick, t)
         end
-        print_both(c || t, cmd, @mynick, to_local_encoding(to_common_encoding(s)))
+        
+        command = cmd
+        if command == :action
+          command = :privmsg
+          t = "\x01ACTION #{t}\x01"
+        end
+        send(command, target, ":#{t}")
       end
-
-      if cmd == :action
-        cmd = :privmsg
-        s = "\x01ACTION #{s}\x01"
-      end
-      send(cmd, target, ":#{s}")
     
     when :ctcpquery
       send_ctcp_query(target, s)
@@ -1085,8 +1125,7 @@ class IRCUnit < OSX::NSObject
     @conn = nil
     @connecting = @connected = @login = @quitting = false
     @mynick = @sentnick = ''
-    @myaddress = nil
-    @join_address = nil
+    @myaddress = @join_address = nil
     @mymode.clear
     @in_whois = false
     @channels.each do |c|
@@ -1214,9 +1253,11 @@ class IRCUnit < OSX::NSObject
       c.activate
       reload_tree
       print_system(c, "You have joined the channel")
-      @join_address = m.sender_address unless @join_address
-      if @address_detection_method == Preferences::Dcc::ADDR_DETECT_JOIN
-        Resolver.resolve(self, @join_address) unless @myaddress
+      unless @join_address
+        @join_address = m.sender_address
+        if @address_detection_method == Preferences::Dcc::ADDR_DETECT_JOIN
+          Resolver.resolve(self, @join_address)
+        end
       end
     end
     if c
@@ -1830,7 +1871,7 @@ when 437	# ERR_UNAVAILRESOURCE 2.10
 =end
   
   def receive_nick_collision(m)
-    if @sentnick.size >= IRC::NICKLEN
+    if @sentnick.size >= IRC::NICK_LEN
       if /^(.+)[^_](_*)$/ =~ @sentnick
         head, tail = $1, $2
         @sentnick = head + tail + '_'

@@ -3,8 +3,7 @@
 
 require 'fileutils'
 
-class AppController < OSX::NSObject
-  include OSX
+class AppController < NSObject
   ib_outlet :window, :tree, :log_base, :console_base, :member_list, :text
   ib_outlet :tree_scroller, :left_tree_base, :right_tree_base
   ib_outlet :root_split, :log_split, :info_split, :tree_split

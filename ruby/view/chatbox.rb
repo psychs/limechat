@@ -3,8 +3,7 @@
 
 require 'utility'
 
-class ChatBox < OSX::NSBox
-  include OSX
+class ChatBox < NSBox
   
   SPACE = 3
   

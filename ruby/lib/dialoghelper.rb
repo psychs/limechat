@@ -100,23 +100,23 @@ module DialogHelper
     
     t = instance_variable_get('@' + name)
     case t
-    when OSX::NSMatrix
+    when NSMatrix
       case type
       when :radio
         t.selectCellWithTag(v)
       end
-    when OSX::NSComboBox,OSX::NSTextField
+    when NSComboBox,NSTextField
       t.setStringValue(v)
-    when OSX::NSTextView
-      t.textStorage.setAttributedString(OSX::NSAttributedString.alloc.initWithString(v.join("\n")))
-    when OSX::NSPopUpButton
+    when NSTextView
+      t.textStorage.setAttributedString(NSAttributedString.alloc.initWithString(v.join("\n")))
+    when NSPopUpButton
       case type
       when :int
         t.selectItemWithTag(v)
       else
         t.selectItemWithTitle(v)
       end
-    when OSX::NSButton
+    when NSButton
       t.setState(v ? 1 : 0)
     end
   end
@@ -136,28 +136,28 @@ module DialogHelper
     
     t = instance_variable_get('@' + name)
     case t
-    when OSX::NSMatrix
+    when NSMatrix
       case type
       when :radio
         v = t.selectedCell.tag
       else
         raise 'Outlet type is not supported'
       end
-    when OSX::NSComboBox,OSX::NSTextField
+    when NSComboBox,NSTextField
       v = t.stringValue.to_s
       v = v.gsub(/\r\n|\r|\n/, ' ')
       v = v.to_i if type == :int
-    when OSX::NSTextView
+    when NSTextView
       v = t.textStorage.string.to_s
       v = v.split(/\r\n|\r|\n/)
-    when OSX::NSPopUpButton
+    when NSPopUpButton
       case type
       when :int
         v = t.selectedItem.tag
       else
         v = t.selectedItem.title
       end
-    when OSX::NSButton
+    when NSButton
       v = t.state.to_i != 0
     else
       raise 'Outlet type is not supported'

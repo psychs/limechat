@@ -3,8 +3,7 @@
 
 require 'utility'
 
-class SingleLineFormatter < OSX::NSFormatter
-  include OSX
+class SingleLineFormatter < NSFormatter
   
   def stringForObjectValue(str)
     str.to_s.gsub(/\r\n|\r|\n/, ' ')

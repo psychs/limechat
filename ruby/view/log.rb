@@ -23,8 +23,7 @@ class LogLine
 end
 
 
-class LogController < OSX::NSObject
-  include OSX
+class LogController < NSObject
   attr_accessor :world
   attr_writer :unit, :menu, :url_menu, :addr_menu, :member_menu, :keyword, :theme
   attr_reader :view
@@ -208,7 +207,7 @@ class LogController < OSX::NSObject
     e = body.firstChild
     while e
       n = e.nextSibling
-      body.removeChild_(e) unless OSX::DOMHTMLDivElement === e
+      body.removeChild_(e) unless DOMHTMLDivElement === e
       e = n
     end
     
@@ -403,8 +402,7 @@ class LogController < OSX::NSObject
 end
 
 
-class LogScriptEventSink < OSX::NSObject
-  include OSX
+class LogScriptEventSink < NSObject
   attr_accessor :owner, :policy
   
   EXPORTED_METHODS = %w|onDblClick: shouldStopDoubleClick: setUrl: setAddr: setNick: print:|
@@ -498,8 +496,7 @@ class LogScriptEventSink < OSX::NSObject
 end
 
 
-class LogPolicy < OSX::NSObject
-  include OSX
+class LogPolicy < NSObject
   attr_accessor :owner, :menu, :url_menu, :addr_menu, :member_menu
   attr_accessor :url, :addr, :nick
 

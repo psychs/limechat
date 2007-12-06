@@ -4,8 +4,7 @@
 require 'numberformat'
 require 'utility'
 
-class DccManager < OSX::NSObject
-  include OSX
+class DccManager < NSObject
   attr_accessor :pref, :world
   ib_outlet :window, :splitter, :receiver_table, :sender_table, :clear_button
   
@@ -408,8 +407,7 @@ class DccManager < OSX::NSObject
 end
 
 
-class FileTransferCell < OSX::NSCell
-  include OSX
+class FileTransferCell < NSCell
   attr_accessor :peer_nick, :processed_size, :size, :speed, :time_remaining, :status, :error
   attr_accessor :progress_bar, :icon, :op
   

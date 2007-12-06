@@ -5,7 +5,6 @@ require 'userdefaultsaccess'
 require 'persistencehelper'
 
 class Preferences
-  include OSX
   include UserDefaultsAccess
   
   class << self
@@ -73,7 +72,7 @@ class Preferences
       @use_growl = true
       @log_transcript = false
       @transcript_folder = '~/Documents/LimeChatTranscripts'
-      if OSX::LanguageSupport.primary_language == 'ja'
+      if LanguageSupport.primary_language == 'ja'
         @paste_syntax = 'notice'
       else
         @paste_syntax = 'privmsg'

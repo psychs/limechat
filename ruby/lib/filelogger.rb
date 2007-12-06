@@ -5,7 +5,6 @@ require 'pathname'
 require 'utility'
 
 class FileLogger
-  include OSX
   
   def initialize(pref, unit, channel)
     @pref = pref

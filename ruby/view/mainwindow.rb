@@ -1,8 +1,7 @@
 # Created by Satoshi Nakagawa.
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
-class MainWindow < OSX::NSWindow
-  include OSX
+class MainWindow < NSWindow
   
   def initialize
     @handlermap = {}

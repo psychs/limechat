@@ -67,7 +67,7 @@ class UserMode
   end
   
   def self.calc_penalty(modestr)
-    penalty = Penalty::MODEBASE
+    penalty = Penalty::MODE_BASE
     str = modestr.dup
     plus = false
     until str.empty?
@@ -80,7 +80,7 @@ class UserMode
           when '-'; plus = false
           when '+'; plus = true
           when 'a','i','r','s','w','o','O'
-            penalty += Penalty::MODEOPT
+            penalty += Penalty::MODE_OPT
           end
         end
       end

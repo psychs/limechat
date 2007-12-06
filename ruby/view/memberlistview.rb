@@ -4,7 +4,6 @@
 require 'listview'
 
 class MemberListView < ListView
-  include OSX
   attr_accessor :key_delegate
   
   def keyDown(e)

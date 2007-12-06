@@ -26,7 +26,7 @@ class DccSender
     @filename = @full_filename.basename.to_s
     ext = @full_filename.extname
     ext[0] = '' if ext[0..0] == '.'
-    @icon = OSX::NSWorkspace.sharedWorkspace.iconForFileType(ext)
+    @icon = NSWorkspace.sharedWorkspace.iconForFileType(ext)
   end
   
   def full_filename

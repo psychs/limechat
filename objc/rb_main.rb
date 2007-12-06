@@ -1,11 +1,12 @@
 require 'osx/cocoa'
-OSX::require_framework 'WebKit'
+include OSX
+require_framework 'WebKit'
 $KCODE = 'u'
 
 require File.expand_path('../SACrashReporter/SACrashReporter.rb', __FILE__)
 
 def rb_main_init
-  path = OSX::NSBundle.mainBundle.resourcePath.fileSystemRepresentation
+  path = NSBundle.mainBundle.resourcePath.fileSystemRepresentation
   rbfiles = Dir.entries(path).select {|i| /\.rb\z/ =~ i}
   rbfiles -= [ File.basename(__FILE__) ]
   rbfiles -= [ 'utility.rb' ]

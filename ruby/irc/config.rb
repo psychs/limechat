@@ -74,14 +74,14 @@ class IRCUnitConfig
     @channels = []
     @autoop = []
     
-    @encoding = case OSX::LanguageSupport.primary_language
-    when 'ja'; OSX::NSISO2022JPStringEncoding
+    @encoding = case LanguageSupport.primary_language
+    when 'ja'; NSISO2022JPStringEncoding
     when 'ko'; -2147482590
     when 'zh-Hans'; -2147482063
     when 'zh-Hant'; -2147481085
     #when 'ru'; -2147481086
     else
-      OSX::NSUTF8StringEncoding
+      NSUTF8StringEncoding
     end
     
     seed.each do |k,v|
@@ -221,7 +221,7 @@ module ModelTreeItem
   extend self
 end
 
-class ModelTreeItemBase < OSX::NSObject
+class ModelTreeItemBase < NSObject
   attr_accessor :config, :owner
   
   def autoop

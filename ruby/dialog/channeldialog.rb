@@ -3,8 +3,7 @@
 
 require 'dialoghelper'
 
-class ChannelDialog < OSX::NSObject
-  include OSX
+class ChannelDialog < NSObject
   include DialogHelper
   
   attr_accessor :delegate, :prefix, :parent

@@ -5,8 +5,7 @@ require 'dialoghelper'
 require 'pathname'
 require 'logtheme'
 
-class PreferenceDialog < OSX::NSObject
-  include OSX
+class PreferenceDialog < NSObject
   include DialogHelper
   attr_accessor :delegate
   attr_reader :m

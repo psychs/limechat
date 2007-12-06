@@ -2,18 +2,18 @@
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
 module IRC
-  NICKLEN = 9
-  BODY_LEN = 480
   MSG_LEN = 510
+  BODY_LEN = 500
+  NICK_LEN = 9
 end
 
 module Penalty
   NORMAL = 2
   PART = 4
-  KICKBASE = 1
-  KICKOPT = 3
-  MODEBASE = 1
-  MODEOPT = 3
+  KICK_BASE = 1
+  KICK_OPT = 3
+  MODE_BASE = 1
+  MODE_OPT = 3
   TOPIC = 3
   INIT = 0
   MAX = 10
@@ -54,7 +54,7 @@ class IRCSendMessage
       when :mode; @penalty = ChannelMode.calc_penalty(@trail)
       when :part; @penalty = Penalty::PART
       when :topic; @penalty = Penalty::TOPIC
-      when :kick; @penalty = Penalty::KICKBASE + Penalty::KICKOPT
+      when :kick; @penalty = Penalty::KICK_BASE + Penalty::KICK_OPT
       end
     end
     @penalty = Penalty::MAX if @penalty > Penalty::MAX

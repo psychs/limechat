@@ -6,8 +6,7 @@ require 'socket'
 require 'resolv-replace'
 require 'timeout'
 
-class AsyncTcpClient < OSX::NSObject
-  include OSX
+class AsyncTcpClient < NSObject
   attr_accessor :delegate, :host, :port
   attr_reader :error, :sending
   

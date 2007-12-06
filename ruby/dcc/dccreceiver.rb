@@ -29,7 +29,7 @@ class DccReceiver
     @filename = Pathname.new(v)
     ext = @filename.extname
     ext[0] = '' if ext[0..0] == '.'
-    @icon = OSX::NSWorkspace.sharedWorkspace.iconForFileType(ext)
+    @icon = NSWorkspace.sharedWorkspace.iconForFileType(ext)
   end
   
   def filename

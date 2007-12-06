@@ -2,8 +2,7 @@
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
 module Growl
-  class Notifier < OSX::NSObject
-    include OSX
+  class Notifier < NSObject
     attr_accessor :delegate
   
     GROWL_IS_READY = "Lend Me Some Sugar; I Am Your Neighbor!"

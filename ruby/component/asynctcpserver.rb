@@ -3,8 +3,7 @@
 
 require 'socket'
 
-class AsyncTcpServer < OSX::NSObject
-  include OSX
+class AsyncTcpServer < NSObject
   attr_accessor :delegate, :port
   attr_reader :clients
   

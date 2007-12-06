@@ -3,8 +3,7 @@
 
 require 'dialoghelper'
 
-class TreeDialog < OSX::NSObject
-  include OSX
+class TreeDialog < NSObject
   include DialogHelper  
   attr_accessor :delegate, :prefix
   ib_outlet :window, :tree

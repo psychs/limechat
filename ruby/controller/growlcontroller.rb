@@ -2,7 +2,6 @@
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
 class GrowlController
-  include OSX
   attr_accessor :owner
   
   GROWL_LOGIN_MSG = "Logged in"

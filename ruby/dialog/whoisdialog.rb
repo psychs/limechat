@@ -3,8 +3,7 @@
 
 require 'dialoghelper'
 
-class WhoisDialog < OSX::NSObject
-  include OSX
+class WhoisDialog < NSObject
   include DialogHelper
   attr_accessor :delegate, :prefix
   attr_reader :nick

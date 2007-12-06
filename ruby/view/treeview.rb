@@ -1,8 +1,7 @@
 # Created by Satoshi Nakagawa.
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
-class TreeView < OSX::NSOutlineView
-  include OSX
+class TreeView < NSOutlineView
   attr_accessor :key_delegate
   
   def countSelectedRows
