@@ -8,7 +8,7 @@ class LogTheme
   attr_reader :name, :base
   
   RESOURCE_BASE = (Pathname.new(NSBundle.mainBundle.resourcePath.fileSystemRepresentation).parent.expand_path + 'Theme').to_s
-  USER_BASE = '~/Library/Application Support/LimeChat/Theme'.expand_path
+  USER_BASE = '~/Library/LimeChat/Theme'.expand_path
   
   def self.RESOURCE_BASE
     RESOURCE_BASE

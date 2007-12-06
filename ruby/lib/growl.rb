@@ -3,6 +3,7 @@
 
 module Growl
   class Notifier < NSObject
+    include OSX
     attr_accessor :delegate
   
     GROWL_IS_READY = "Lend Me Some Sugar; I Am Your Neighbor!"

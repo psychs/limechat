@@ -7,7 +7,7 @@ module SoundPlayer
     if name == 'Beep'
       OSX.NSBeep
     else
-      s = NSSound.soundNamed(name)
+      s = OSX::NSSound.soundNamed(name)
       s.play if s
     end
   end

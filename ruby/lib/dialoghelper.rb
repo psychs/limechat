@@ -2,6 +2,8 @@
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
 module DialogHelper
+  include OSX
+  
   module DialogHelperClassMethods
     attr_reader :mapped_outlets
 
