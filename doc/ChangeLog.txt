@@ -1,5 +1,9 @@
 2007-12-07  Satoshi Nakagawa <artension@gmail.com>
 
+	Changed to set ENV['HOME'] at starting up.
+
+2007-12-07  Satoshi Nakagawa <artension@gmail.com>
+
 	Changed to split a text message if the message is too long.
 	Eliminated "include OSX" and "OSX::".
 
