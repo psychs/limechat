@@ -1,6 +1,6 @@
 2007-12-08  Satoshi Nakagawa <artension@gmail.com>
 
-	Fixed a bug, the menu "show paste dialog" caused an exception.
+	Fixed a bug, pasting multi line text to the input text field caused an exception.
 
 2007-12-07  Satoshi Nakagawa <artension@gmail.com>
 
