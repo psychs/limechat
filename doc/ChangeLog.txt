@@ -1,5 +1,9 @@
 2007-12-07  Satoshi Nakagawa <artension@gmail.com>
 
+	Set break-word: break-all for addresses.
+
+2007-12-07  Satoshi Nakagawa <artension@gmail.com>
+
 	Changed the theme path to ~/Library/LimeChat/Theme.
 
 2007-12-07  Satoshi Nakagawa <artension@gmail.com>

@@ -365,7 +365,7 @@ class LogController < NSObject
     object { vertical-align: top; }
     hr { margin: 0.5em 2em; }
     .url { word-break: break-all; }
-    .address { text-decoration: underline; }
+    .address { text-decoration: underline; word-break: break-all; }
     .highlight { color: #f0f; font-weight: bold; }
     .line { padding: 1px 0; }
     /*
