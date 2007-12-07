@@ -1,5 +1,9 @@
 2007-12-07  Satoshi Nakagawa <artension@gmail.com>
 
+	Fixed a bug, a definition of IRC::ADDRESS_LEN was missing.
+
+2007-12-07  Satoshi Nakagawa <artension@gmail.com>
+
 	Fixed a bug, NaN should be treated as 0 in LogController#viewing_bottom?.
 
 2007-12-07  Satoshi Nakagawa <artension@gmail.com>

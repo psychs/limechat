@@ -4,6 +4,7 @@
 module IRC
   MSG_LEN = 510
   BODY_LEN = 500
+  ADDRESS_LEN = 50
   NICK_LEN = 9
 end
 
