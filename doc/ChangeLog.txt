@@ -1,3 +1,7 @@
+2007-12-08  Satoshi Nakagawa <artension@gmail.com>
+
+	Fixed a bug, the menu "show paste dialog" caused an exception.
+
 2007-12-07  Satoshi Nakagawa <artension@gmail.com>
 
 	Fixed a bug, a definition of IRC::ADDRESS_LEN was missing.
