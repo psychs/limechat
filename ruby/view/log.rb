@@ -79,7 +79,7 @@ class LogController < NSObject
     return true unless @loaded
     body = @view.mainFrame.DOMDocument.body
     #viewheight = @view.mainFrame.frameView.documentView.visibleRect.height.to_i
-    viewheight = @view.frame.height.to_i
+    viewheight = @view.frame.height.to_i rescue 0
     scrollheight = body.valueForKey('scrollHeight').to_i
     scrolltop = body.valueForKey('scrollTop').to_i
     (viewheight == 0) || (scrolltop + viewheight >= scrollheight - BOTTOM_EPSILON)
