@@ -9,9 +9,8 @@ class ChatBox < NSBox
   
   def setFrame(rect)
     f = rect
-    content = subviews.objectAtIndex(0)
-    box = content.subviews.objectAtIndex(0)
-    text = content.subviews.objectAtIndex(1)
+    box = log_base
+    text = input_text
     boxframe = box.frame
     textframe = text.frame
     
@@ -27,5 +26,38 @@ class ChatBox < NSBox
     text.setFrame(textframe)
     
     super_setFrame(rect)
+  end
+  
+  def set_input_text_font(font)
+    text = input_text
+    text.setFont(font)
+    
+    # calculate height of the text field
+    f = text.frame
+    f.height = 1e+37
+    f.height = text.cell.cellSizeForBounds(f).height.ceil + 4
+    text.setFrameSize(f.size)
+    
+    # apply the current font to text
+    e = text.currentEditor
+    range = e.selectedRange if e
+    s = text.stringValue
+    text.setAttributedStringValue(NSAttributedString.alloc.init)
+    text.setStringValue(s)
+    e.setSelectedRange(range) if e
+    
+    setFrame(frame)
+  end
+  
+  private
+  
+  def log_base
+    content = subviews.objectAtIndex(0)
+    content.subviews.objectAtIndex(0)
+  end
+  
+  def input_text
+    content = subviews.objectAtIndex(0)
+    content.subviews.objectAtIndex(1)
   end
 end

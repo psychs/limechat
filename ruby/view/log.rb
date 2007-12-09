@@ -59,7 +59,7 @@ class LogController < NSObject
     @view.key_delegate = self
     @view.resize_delegate = self
     @view.setAutoresizingMask(NSViewWidthSizable | NSViewHeightSizable)
-    @view.mainFrame.loadHTMLString_baseURL(initial_document, @theme.base)
+    @view.mainFrame.loadHTMLString_baseURL(initial_document, @theme.baseurl)
   end
   
   def moveToTop
@@ -159,7 +159,7 @@ class LogController < NSObject
     @scroll_bottom = viewing_bottom?
     @scroll_top = body.valueForKey('scrollTop').to_i
     #setup(@console, style)
-    @view.mainFrame.loadHTMLString_baseURL(initial_document, @theme.base)
+    @view.mainFrame.loadHTMLString_baseURL(initial_document, @theme.baseurl)
   end
   
   def change_text_size(op)
@@ -335,11 +335,12 @@ class LogController < NSObject
   
   def initial_document
     body_class = @console ? 'console' : 'normal'
+    style = @theme.content || ''
     <<-EOM
       <html>
       <head>
       <style>#{DEFAULT_CSS}</style>
-      <style><!--#{@theme.content}--></style>
+      <style><!--#{style}--></style>
       </head>
       <body class="#{body_class}" background="falls.jpg"></body>
       </html>
@@ -348,17 +349,15 @@ class LogController < NSObject
 
   DEFAULT_CSS = <<-EOM
     html {
-      margin: 0;
-      padding: 0;
-    }
-    body {
       font-family: 'Osaka-Mono';
       font-size: 10pt;
       background-color: white;
+      color: black;
       word-wrap: break-word;
       margin: 0;
       padding: 3px 4px 10px 4px;
     }
+    body { margin: 0; padding: 0; }
     body.console {}
     body.normal {}
     img { border: 1px solid #aaa; vertical-align: top; }
@@ -367,12 +366,10 @@ class LogController < NSObject
     .url { word-break: break-all; }
     .address { text-decoration: underline; word-break: break-all; }
     .highlight { color: #f0f; font-weight: bold; }
-    .line { padding: 1px 0; }
-    /*
-    .even_line { background-color: #fff; }
-    .odd_line { background-color: #eef; }
-    .even_line, .odd_line { margin: 0 -4px 0 -4px; padding-left: 4px; padding-right: 4px }
-    */
+    .line { margin: 0 -4px; padding: 0 4px 1px 4px; }
+    .even_line {}
+    .odd_line {}
+    /* .even_line, .odd_line { padding-top: 1px; padding-bottom: 1px; } */
     .time { color: #048; }
     .place { color: #008; }
     .nick_normal { color: #008; }

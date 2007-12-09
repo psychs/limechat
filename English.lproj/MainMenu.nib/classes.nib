@@ -207,6 +207,8 @@
 				<string>id</string>
 				<key>channel_menu</key>
 				<string>id</string>
+				<key>chat_box</key>
+				<string>id</string>
 				<key>console_base</key>
 				<string>id</string>
 				<key>console_menu</key>

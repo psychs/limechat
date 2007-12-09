@@ -94,10 +94,10 @@ class Preferences
   
   class Theme
     include PersistenceHelper
-    persistent_attr :log_theme
+    persistent_attr :name
     
     def initialize
-      @log_theme = 'resource:Default'
+      @name = 'resource:Default'
     end
   end
   

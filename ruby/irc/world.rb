@@ -5,7 +5,7 @@ require 'date'
 
 class IRCWorld < NSObject
   attr_accessor :member_list, :dcc
-  attr_writer :tree, :log_base, :console_base, :text, :window, :pref
+  attr_writer :tree, :log_base, :console_base, :chat_box, :text, :window, :pref
   attr_accessor :menu_controller
   attr_accessor :tree_default_menu, :server_menu, :channel_menu, :tree_menu, :log_menu, :console_menu, :url_menu, :addr_menu, :member_menu
   attr_reader :units, :selected, :console, :config
@@ -22,7 +22,7 @@ class IRCWorld < NSObject
   end
   
   def setup(seed)
-    @logtheme = LogTheme.new(@pref.theme.log_theme)
+    @viewtheme = ViewTheme.new(@pref.theme.name)
     @console = create_log(nil, true)
     @console_base.setContentView(@console.view)
     @dummylog = create_log(nil, true)
@@ -32,6 +32,7 @@ class IRCWorld < NSObject
     @config.units.each {|u| create_unit(u) } if @config.units
     @config.units = nil
 
+    change_input_text_theme
     register_growl
   end
   
@@ -364,8 +365,8 @@ class IRCWorld < NSObject
     @growl.notify(kind, title, desc, context) if @pref.gen.use_growl
   end
   
-  def reload_log_theme
-    @logtheme.theme = @pref.theme.log_theme
+  def reload_theme
+    @viewtheme.theme = @pref.theme.name
         
     @units.each do |u|
       u.log.reload_theme
@@ -375,15 +376,27 @@ class IRCWorld < NSObject
     end
     @console.reload_theme
     
+    change_input_text_theme
+    
     #sel = selected
     #@log_base.setContentView(sel.log.view) if sel
     #@console_base.setContentView(@console.view)
   end
   
+  def change_input_text_theme
+    text_color = @viewtheme.other.input_text_color || NSColor.blackColor
+    back_color = @viewtheme.other.input_text_background_color || NSColor.whiteColor
+    @text.setTextColor(text_color)
+    @text.setBackgroundColor(back_color)
+    @text.currentEditor.setInsertionPointColor(text_color)
+    font = @viewtheme.other.input_text_font || NSFont.systemFontOfSize(-1)
+    @chat_box.set_input_text_font(font)
+  end
+  
   def preferences_changed
     register_growl
     @units.each {|u| u.preferences_changed}
-    reload_log_theme
+    reload_theme
   end
   
   def date_changed
@@ -614,7 +627,7 @@ class IRCWorld < NSObject
     log.world = self
     log.unit = unit
     log.keyword = @pref.key
-    log.theme = @logtheme
+    log.theme = @viewtheme.log
     log.setup(console)
     log.view.setHostWindow(@window)
     log.view.setTextSizeMultiplier(@console.view.textSizeMultiplier) if @console

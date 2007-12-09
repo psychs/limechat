@@ -4,7 +4,7 @@
 require 'fileutils'
 
 class AppController < NSObject
-  ib_outlet :window, :tree, :log_base, :console_base, :member_list, :text
+  ib_outlet :window, :tree, :log_base, :console_base, :member_list, :text, :chat_box
   ib_outlet :tree_scroller, :left_tree_base, :right_tree_base
   ib_outlet :root_split, :log_split, :info_split, :tree_split
   ib_outlet :menu, :server_menu, :channel_menu, :member_menu, :tree_menu, :log_menu, :console_menu, :url_menu, :addr_menu
@@ -29,7 +29,7 @@ class AppController < NSObject
     @tree_split.setHidden(true)
     
     load_window_state
-    set_alternative_layout(@pref.gen.main_window_layout == 1)
+    select_3column_layout(@pref.gen.main_window_layout == 1)
     
     @world = IRCWorld.alloc.init
     @world.pref = @pref
@@ -38,6 +38,7 @@ class AppController < NSObject
     @world.text = @text
     @world.log_base = @log_base
     @world.console_base = @console_base
+    @world.chat_box = @chat_box
     @world.member_list = @member_list
     @world.server_menu = @server_menu
     @world.channel_menu = @channel_menu
@@ -152,7 +153,7 @@ class AppController < NSObject
     end
   end
   
-  def set_alternative_layout(value)
+  def select_3column_layout(value)
     return if @info_split.hidden? == !!value
     if value
       @info_split.setHidden(true)
@@ -174,7 +175,7 @@ class AppController < NSObject
   end
   
   def preferences_changed
-    set_alternative_layout(@pref.gen.main_window_layout == 1)
+    select_3column_layout(@pref.gen.main_window_layout == 1)
     @world.preferences_changed
   end
   

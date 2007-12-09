@@ -707,7 +707,7 @@ class MenuController < NSObject
   
   
   def changeStyle(sender)
-    @world.reload_log_theme
+    @world.reload_theme
   end
   
   

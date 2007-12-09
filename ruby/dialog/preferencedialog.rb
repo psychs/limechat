@@ -3,7 +3,7 @@
 
 require 'dialoghelper'
 require 'pathname'
-require 'logtheme'
+require 'viewtheme'
 
 class PreferenceDialog < NSObject
   include DialogHelper
@@ -21,7 +21,7 @@ class PreferenceDialog < NSObject
   ib_mapped_outlet :gen_use_growl
   ib_mapped_outlet :gen_log_transcript
   ib_outlet :transcript_folder
-  ib_outlet :log_theme
+  ib_outlet :theme
   
   def initialize
     @prefix = 'preferenceDialog'
@@ -150,7 +150,7 @@ class PreferenceDialog < NSObject
   def load
     load_mapped_outlets(m, true)
     @sound = m.sound.dup
-    load_log_theme
+    load_theme
   end
   
   def save
@@ -163,47 +163,50 @@ class PreferenceDialog < NSObject
     m.key.dislike_words.uniq!
     m.dcc.last_port = m.dcc.first_port if m.dcc.last_port < m.dcc.first_port
     m.sound.assign(@sound)
-    save_log_theme
+    save_theme
   end
   
-  def load_log_theme
-    @log_theme.removeAllItems
-    @log_theme.addItemWithTitle('Default')
-    @log_theme.itemAtIndex(0).setTag(0)
+  def load_theme
+    @theme.removeAllItems
+    @theme.addItemWithTitle('Default')
+    @theme.itemAtIndex(0).setTag(0)
     
-    [LogTheme.RESOURCE_BASE, LogTheme.USER_BASE].each_with_index do |base,tag|
-      files = Pathname.glob(base + '/*.css')
-      files.delete_if {|i| i.basename.to_s == 'Default.css'}
+    [ViewTheme.RESOURCE_BASE, ViewTheme.USER_BASE].each_with_index do |base,tag|
+      files = Pathname.glob(base + '/*.css') + Pathname.glob(base + '/*.yml')
+      files.map! {|i| i.basename('.*').to_s}
+      files.uniq!
+      files.delete('Default') if tag == 0
+      files.sort!
       unless files.empty?
-        @log_theme.menu.addItem(NSMenuItem.separatorItem)
-        count = @log_theme.numberOfItems
+        @theme.menu.addItem(NSMenuItem.separatorItem)
+        count = @theme.numberOfItems
         files.each_with_index do |f,n|
-          @log_theme.addItemWithTitle(f.basename('.*').to_s)
-          @log_theme.itemAtIndex(count + n).setTag(tag)
+          @theme.addItemWithTitle(f)
+          @theme.itemAtIndex(count + n).setTag(tag)
         end
       end
     end
     
-    kind, name = LogTheme.extract_name(@m.theme.log_theme)
+    kind, name = ViewTheme.extract_name(@m.theme.name)
     target_tag = kind == 'resource' ? 0 : 1
     
-    count = @log_theme.numberOfItems
+    count = @theme.numberOfItems
     (0...count).each do |n|
-      i = @log_theme.itemAtIndex(n)
+      i = @theme.itemAtIndex(n)
       if i.tag == target_tag && i.title.to_s == name
-        @log_theme.selectItemAtIndex(n)
+        @theme.selectItemAtIndex(n)
         break
       end
     end
   end
   
-  def save_log_theme
-    sel = @log_theme.selectedItem
+  def save_theme
+    sel = @theme.selectedItem
     fname = sel.title.to_s
     if sel.tag == 0
-      @m.theme.log_theme = LogTheme.resource_filename(fname)
+      @m.theme.name = ViewTheme.resource_filename(fname)
     else
-      @m.theme.log_theme = LogTheme.user_filename(fname)
+      @m.theme.name = ViewTheme.user_filename(fname)
     end
   end
   
