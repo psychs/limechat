@@ -1,0 +1,40 @@
+html {
+  font-family: 'Monaco';
+  font-size: 9pt;
+  background-color: #000;
+  color: #f0f0f0;
+}
+body {}
+
+.url { color: #99cf50; }
+.address {}
+.highlight {
+  font-size: 160%;
+  font-weight: normal;
+  padding: 0 3px;
+  color: #e28964;
+}
+
+.line {}
+.even_line {}
+.odd_line {}
+
+.time { color: #3387bc; }
+.place { color: #3387bc; }
+.nick_normal { color: #3e87e3; }
+.nick_myself { color: #89bdff; }
+
+.privmsg {}
+.notice { color: #888; }
+.action { color: #8f9d6a;}
+
+.system, .join, .part, .kick, .quit, .kill, .nick, .mode, .topic, .invite, .wallops {
+  color: #65b042;
+}
+.reply { color: #509036; }
+
+.error, .error_reply { color: #f67b37; }
+.dcc_send_send { color: #c5af75; }
+.dcc_send_receive { color: #f9ee98; }
+.debug_send { color: #8996a8; }
+.debug_receive { color: #afc4db; }

@@ -101,8 +101,13 @@ class OtherViewTheme
     size = config['font-size']
     weight = config['font-weight']
     style = config['font-style']
-    return nil unless family && size
-    font = NSFont.fontWithName_size(family, size)
+    size = NSFont.systemFontSize unless size
+    if family
+      font = NSFont.fontWithName_size(family, size)
+    else
+      font = NSFont.systemFontOfSize(size)
+    end
+    font = NSFont.systemFontOfSize(-1) unless font
     fm = NSFontManager.sharedFontManager
     if weight == 'bold'
       to = fm.convertFont_toHaveTrait(font, NSBoldFontMask)

@@ -21,6 +21,10 @@ class AppController < NSObject
     @pref = Preferences.new
     FileUtils.mkpath(@pref.gen.transcript_folder.expand_path) rescue nil
     
+    @field_editor = FieldEditorTextView.alloc.initWithFrame(NSZeroRect)
+    @field_editor.setFieldEditor(true)
+    @field_editor.paste_delegate = self
+    
     @text.setFocusRingType(NSFocusRingTypeNone)
     @window.makeFirstResponder(@text)
     @root_split.setFixedViewIndex(1)
@@ -29,7 +33,7 @@ class AppController < NSObject
     @tree_split.setHidden(true)
     
     load_window_state
-    select_3column_layout(@pref.gen.main_window_layout == 1)
+    #select_3column_layout(@pref.gen.main_window_layout == 1)
     
     @world = IRCWorld.alloc.init
     @world.pref = @pref
@@ -39,6 +43,7 @@ class AppController < NSObject
     @world.log_base = @log_base
     @world.console_base = @console_base
     @world.chat_box = @chat_box
+    @world.field_editor = @field_editor
     @world.member_list = @member_list
     @world.server_menu = @server_menu
     @world.channel_menu = @channel_menu
@@ -132,11 +137,6 @@ class AppController < NSObject
   end
   
   def windowWillReturnFieldEditor_toObject(sender, obj)
-    unless @field_editor
-      @field_editor = FieldEditorTextView.alloc.initWithFrame(NSZeroRect)
-      @field_editor.setFieldEditor(true)
-      @field_editor.paste_delegate = self
-    end
     @field_editor
   end
   

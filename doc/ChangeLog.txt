@@ -1,5 +1,12 @@
 2007-12-10  Satoshi Nakagawa <artension@gmail.com>
 
+	Added the "Spring Night" theme.
+	Changed to use the default font when failed to create a font.
+	Changed to set an insertion point color for the input text field.
+	Twekaed log view styles.
+
+2007-12-10  Satoshi Nakagawa <artension@gmail.com>
+
 	Added a theme support for the input text field.
 	Tweaked the default css for log views.
 

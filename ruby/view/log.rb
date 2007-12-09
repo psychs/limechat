@@ -342,7 +342,7 @@ class LogController < NSObject
       <style>#{DEFAULT_CSS}</style>
       <style><!--#{style}--></style>
       </head>
-      <body class="#{body_class}" background="falls.jpg"></body>
+      <body class="#{body_class}"></body>
       </html>
     EOM
   end
@@ -380,7 +380,7 @@ class LogController < NSObject
     .error_reply { color: #f00; }
     .dcc_send_send { color: #088; }
     .dcc_send_receive { color: #00c; }
-    .privmsg { color: #000; }
+    .privmsg {}
     .notice { color: #888; }
     .action { color: #080; }
     .join { color: #080; }

@@ -5,7 +5,7 @@ require 'date'
 
 class IRCWorld < NSObject
   attr_accessor :member_list, :dcc
-  attr_writer :tree, :log_base, :console_base, :chat_box, :text, :window, :pref
+  attr_writer :tree, :log_base, :console_base, :chat_box, :field_editor, :text, :window, :pref
   attr_accessor :menu_controller
   attr_accessor :tree_default_menu, :server_menu, :channel_menu, :tree_menu, :log_menu, :console_menu, :url_menu, :addr_menu, :member_menu
   attr_reader :units, :selected, :console, :config
@@ -388,7 +388,7 @@ class IRCWorld < NSObject
     back_color = @viewtheme.other.input_text_background_color || NSColor.whiteColor
     @text.setTextColor(text_color)
     @text.setBackgroundColor(back_color)
-    @text.currentEditor.setInsertionPointColor(text_color)
+    @field_editor.setInsertionPointColor(text_color)
     font = @viewtheme.other.input_text_font || NSFont.systemFontOfSize(-1)
     @chat_box.set_input_text_font(font)
   end
