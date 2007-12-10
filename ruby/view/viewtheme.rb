@@ -124,30 +124,7 @@ class OtherViewTheme
     return nil unless @content
     config = @content[category]
     return nil unless config
-    to_color(config[key])
-  end
-  
-  def to_color(str)
-    return nil unless str
-    if str =~ /\A#/
-      str[0] = ''
-      case str.size
-      when 6
-        r = str[0..1].to_i(16)
-        g = str[2..3].to_i(16)
-        b = str[4..5].to_i(16)
-        NSColor.colorWithCalibratedRed_green_blue_alpha(r/255.0, g/255.0, b/255.0, 1.0)
-      when 3
-        r = str[0..0].to_i(16)
-        g = str[1..1].to_i(16)
-        b = str[2..2].to_i(16)
-        NSColor.colorWithCalibratedRed_green_blue_alpha(r/15.0, g/15.0, b/15.0, 1.0)
-      else
-        nil
-      end
-    else
-      nil
-    end
+    NSColor.from_css(config[key])
   end
 end
 

@@ -6,6 +6,17 @@ require 'treeview'
 class ServerTreeView < TreeView
   attr_accessor :responder_delegate
   
+  def initialize
+    #@active_bgcolor = NSColor.from_rgb(0xd6, 0xdd, 0xe5)
+    @active_bgcolor = NSColor.from_rgb(0xe5, 0xed, 0xf7)
+    @inactive_bgcolor = NSColor.from_rgb(0xe8, 0xe8, 0xe8)
+
+    @active_top_line_color = NSColor.from_rgb(0x95, 0x99, 0xb0)
+    from = NSColor.from_rgb(0xab, 0xb8, 0xc5)
+    to = NSColor.from_rgb(0x7e, 0x8e, 0x9f)
+    @active_gradient = GradientFill.gradientWithBeginColor_endColor(from, to)
+  end
+  
   def acceptsFirstResponder
     if @responder_delegate
       @responder_delegate.serverTreeView_acceptFirstResponder
@@ -21,27 +32,25 @@ class ServerTreeView < TreeView
   
   def _highlightRow_clipRect(row, rect)
     return unless NSApp.isActive
-    unless @gradient
-      begin_color = NSColor.colorWithCalibratedRed_green_blue_alpha(173.0/255.0, 187.0/255.0, 208.0/255.0, 1.0)
-      end_color = NSColor.colorWithCalibratedRed_green_blue_alpha(152.0/255.0, 170.0/255.0, 196.0/255.0, 1.0)
-      @gradient = GradientFill.gradientWithBeginColor_endColor(begin_color, end_color)
-    end
-    rect = self.rectOfRow(row)
-    @gradient.fillRect(rect)
     
-    unless @bottom_line_color
-      @bottom_line_color = NSColor.colorWithCalibratedRed_green_blue_alpha(140.0/255.0, 152.0/255.0, 176.0/255.0, 1.0)
-    end
-    @bottom_line_color.set
-    bottom_line_rect = NSMakeRect(NSMinX(rect), NSMaxY(rect) - 1.0, NSWidth(rect), 1.0)
-    NSRectFill(bottom_line_rect)
+    rect = self.rectOfRow(row)
+
+    line_rect = rect.dup
+    line_rect.height = 1
+    @active_top_line_color.set
+    NSRectFill(line_rect)
+    
+    rect.y += 1
+    rect.height -= 1
+    @active_gradient.fillRect(rect)
   end
   
   def drawBackgroundInClipRect(rect)
-    unless @bgcolor
-      @bgcolor = NSColor.colorWithCalibratedRed_green_blue_alpha(229.0/255.0, 237.0/255.0, 247.0/255.0, 1.0)
+    if NSApp.isActive
+      @active_bgcolor.set
+    else
+      @inactive_bgcolor.set
     end
-    @bgcolor.set
     NSRectFill(rect)
   end
 end

@@ -283,6 +283,39 @@ module OSX
     end
   end
   
+  class NSColor
+    def self.from_rgb(red, green, blue, alpha=1.0)
+      NSColor.colorWithCalibratedRed_green_blue_alpha(red/255.0, green/255.0, blue/255.0, alpha)
+    end
+    
+    def self.from_rgba(*args)
+      from_rgb(*args)
+    end
+    
+    def self.from_css(str)
+      return nil unless str
+      if str =~ /\A#/
+        str[0] = ''
+        case str.size
+        when 6
+          r = str[0..1].to_i(16)
+          g = str[2..3].to_i(16)
+          b = str[4..5].to_i(16)
+          from_rgb(r, g, b)
+        when 3
+          r = str[0..0].to_i(16)
+          g = str[1..1].to_i(16)
+          b = str[2..2].to_i(16)
+          from_rgb(r, g, b)
+        else
+          nil
+        end
+      else
+        nil
+      end
+    end
+  end
+  
   module LanguageSupport
     def primary_language
       langs = NSUserDefaults.standardUserDefaults[:AppleLanguages]

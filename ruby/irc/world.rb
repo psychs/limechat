@@ -522,13 +522,10 @@ class IRCWorld < NSObject
     end
     cell.setTextColor(textcolor)
     
-    #textcolor = NSColor.colorWithCalibratedRed_green_blue_alpha(0.5,0.5,0.5,1.0)
+    #textcolor = NSColor.from_rgb(0x80, 0x80, 0x80)
     #cell.setDrawsBackground(true)
     #cell.setBackgroundColor(NSColor.whiteColor)
   end
-  
-  #def outlineView_willDisplayOutlineCell_forTableColumn_item(sender, cell, col, item)
-  #end
   
   # log view
   

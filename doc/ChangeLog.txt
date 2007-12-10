@@ -1,5 +1,11 @@
 2007-12-10  Satoshi Nakagawa <artension@gmail.com>
 
+	Added NSColor utilities.
+	Removed UnitNameCell.
+	Refactoring.
+
+2007-12-10  Satoshi Nakagawa <artension@gmail.com>
+
 	Fixed a string format for CTCP ping time.
 
 2007-12-10  Satoshi Nakagawa <artension@gmail.com>

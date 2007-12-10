@@ -60,7 +60,6 @@
 		78229BEA0C288188001DD4C3 /* mainwindow.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BBE0C288188001DD4C3 /* mainwindow.rb */; };
 		78229BEB0C288188001DD4C3 /* tableprogressindicator.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BBF0C288188001DD4C3 /* tableprogressindicator.rb */; };
 		78229BEC0C288188001DD4C3 /* treeview.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BC00C288188001DD4C3 /* treeview.rb */; };
-		78229BED0C288188001DD4C3 /* unitnamecell.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BC10C288188001DD4C3 /* unitnamecell.rb */; };
 		782647CC0CFE86BB0052E598 /* pastieclient.rb in Resources */ = {isa = PBXBuildFile; fileRef = 782647CB0CFE86BB0052E598 /* pastieclient.rb */; };
 		782647CD0CFE86BB0052E598 /* pastieclient.rb in Resources */ = {isa = PBXBuildFile; fileRef = 782647CB0CFE86BB0052E598 /* pastieclient.rb */; };
 		7831B94D0C589A7A00E1F931 /* growl.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7831B94C0C589A7A00E1F931 /* growl.rb */; };
@@ -167,7 +166,6 @@
 		78E7F22B0CB2B9D20069E9ED /* mainwindow.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BBE0C288188001DD4C3 /* mainwindow.rb */; };
 		78E7F22C0CB2B9D20069E9ED /* tableprogressindicator.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BBF0C288188001DD4C3 /* tableprogressindicator.rb */; };
 		78E7F22D0CB2B9D20069E9ED /* treeview.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BC00C288188001DD4C3 /* treeview.rb */; };
-		78E7F22E0CB2B9D20069E9ED /* unitnamecell.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BC10C288188001DD4C3 /* unitnamecell.rb */; };
 		78E7F22F0CB2B9D20069E9ED /* channel.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78BF64A30C2885E2004451B2 /* channel.rb */; };
 		78E7F2300CB2B9D20069E9ED /* channelmode.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78BF64A40C2885E2004451B2 /* channelmode.rb */; };
 		78E7F2310CB2B9D20069E9ED /* config.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78BF64A50C2885E2004451B2 /* config.rb */; };
@@ -296,7 +294,6 @@
 		78229BBE0C288188001DD4C3 /* mainwindow.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = mainwindow.rb; sourceTree = "<group>"; };
 		78229BBF0C288188001DD4C3 /* tableprogressindicator.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = tableprogressindicator.rb; sourceTree = "<group>"; };
 		78229BC00C288188001DD4C3 /* treeview.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = treeview.rb; sourceTree = "<group>"; };
-		78229BC10C288188001DD4C3 /* unitnamecell.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = unitnamecell.rb; sourceTree = "<group>"; };
 		782647CB0CFE86BB0052E598 /* pastieclient.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = pastieclient.rb; sourceTree = "<group>"; };
 		7831B94C0C589A7A00E1F931 /* growl.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = growl.rb; sourceTree = "<group>"; };
 		7834E1920C69B5AD003C5D65 /* wildcard.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = wildcard.rb; sourceTree = "<group>"; };
@@ -568,7 +565,6 @@
 				78229BBE0C288188001DD4C3 /* mainwindow.rb */,
 				78229BBF0C288188001DD4C3 /* tableprogressindicator.rb */,
 				78229BC00C288188001DD4C3 /* treeview.rb */,
-				78229BC10C288188001DD4C3 /* unitnamecell.rb */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -725,7 +721,6 @@
 				78229BEA0C288188001DD4C3 /* mainwindow.rb in Resources */,
 				78229BEB0C288188001DD4C3 /* tableprogressindicator.rb in Resources */,
 				78229BEC0C288188001DD4C3 /* treeview.rb in Resources */,
-				78229BED0C288188001DD4C3 /* unitnamecell.rb in Resources */,
 				78BF64AB0C2885E2004451B2 /* channel.rb in Resources */,
 				78BF64AC0C2885E2004451B2 /* channelmode.rb in Resources */,
 				78BF64AD0C2885E2004451B2 /* config.rb in Resources */,
@@ -817,7 +812,6 @@
 				78E7F22B0CB2B9D20069E9ED /* mainwindow.rb in Resources */,
 				78E7F22C0CB2B9D20069E9ED /* tableprogressindicator.rb in Resources */,
 				78E7F22D0CB2B9D20069E9ED /* treeview.rb in Resources */,
-				78E7F22E0CB2B9D20069E9ED /* unitnamecell.rb in Resources */,
 				78E7F22F0CB2B9D20069E9ED /* channel.rb in Resources */,
 				78E7F2300CB2B9D20069E9ED /* channelmode.rb in Resources */,
 				78E7F2310CB2B9D20069E9ED /* config.rb in Resources */,
