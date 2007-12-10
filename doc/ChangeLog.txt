@@ -1,5 +1,9 @@
 2007-12-10  Satoshi Nakagawa <artension@gmail.com>
 
+	Fixed a bug, 3 column layout should be applied on starting up.
+
+2007-12-10  Satoshi Nakagawa <artension@gmail.com>
+
 	Added the "Spring Night" theme.
 	Changed to use the default font when failed to create a font.
 	Changed to set an insertion point color for the input text field.

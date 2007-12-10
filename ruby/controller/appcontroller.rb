@@ -33,7 +33,7 @@ class AppController < NSObject
     @tree_split.setHidden(true)
     
     load_window_state
-    #select_3column_layout(@pref.gen.main_window_layout == 1)
+    select_3column_layout(@pref.gen.main_window_layout == 1)
     
     @world = IRCWorld.alloc.init
     @world.pref = @pref
