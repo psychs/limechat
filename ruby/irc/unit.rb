@@ -1556,7 +1556,7 @@ class IRCUnit < NSObject
         d /= 1000
         msec = d % 1000
         sec = d / 1000
-        text = sprintf("%d.%2d", sec, msec/10)
+        text = sprintf("%d.%02d", sec, msec/10)
         print_both(self, :reply, "*CTCP-reply #{command} from #{nick} : #{text} sec")
       else
         print_both(self, :reply, "*CTCP-reply #{command} from #{nick} : #{text}")
