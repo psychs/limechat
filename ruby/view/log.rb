@@ -38,7 +38,7 @@ class LogController < NSObject
     @max_lines = 3000
   end
   
-  def setup(console=false)
+  def setup(console, initial_bgcolor)
     @loaded = false
     @console = console
     @policy = LogPolicy.alloc.init
@@ -52,6 +52,7 @@ class LogController < NSObject
     @sink.policy = @policy
     @view.release if @view
     @view = LogView.alloc.initWithFrame(NSZeroRect)
+    @view.setBackgroundColor(initial_bgcolor)
     @view.setFrameLoadDelegate(self)
     @view.setUIDelegate(@policy)
     @view.setPolicyDelegate(@policy)

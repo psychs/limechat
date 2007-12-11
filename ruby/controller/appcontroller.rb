@@ -12,12 +12,6 @@ class AppController < NSObject
   def awakeFromNib
     NSApplication.sharedApplication
     
-    SACrashReporter.submit
-    
-    ws = NSWorkspace.sharedWorkspace
-    nc = ws.notificationCenter
-    nc.addObserver_selector_name_object(self, :terminateWithoutConfirm, NSWorkspaceWillPowerOffNotification, ws)
-    
     @pref = Preferences.new
     FileUtils.mkpath(@pref.gen.transcript_folder.expand_path) rescue nil
     
@@ -91,6 +85,12 @@ class AppController < NSObject
   end
   
   def applicationDidFinishLaunching(sender)
+    SACrashReporter.submit
+    
+    ws = NSWorkspace.sharedWorkspace
+    nc = ws.notificationCenter
+    nc.addObserver_selector_name_object(self, :terminateWithoutConfirm, NSWorkspaceWillPowerOffNotification, ws)
+    
     start_timer
     @world.auto_connect
   end

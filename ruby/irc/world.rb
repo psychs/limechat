@@ -630,7 +630,7 @@ class IRCWorld < NSObject
     log.unit = unit
     log.keyword = @pref.key
     log.theme = @viewtheme.log
-    log.setup(console)
+    log.setup(console, @viewtheme.other.input_text_bgcolor)
     log.view.setHostWindow(@window)
     log.view.setTextSizeMultiplier(@console.view.textSizeMultiplier) if @console
     log

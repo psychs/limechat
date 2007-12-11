@@ -1,5 +1,9 @@
 2007-12-12  Satoshi Nakagawa <artension@gmail.com>
 
+	Changed to set background color for log views to stop flickering in starting up.
+
+2007-12-12  Satoshi Nakagawa <artension@gmail.com>
+
 	Implemented theme for the server tree.
 
 2007-12-12  Satoshi Nakagawa <artension@gmail.com>

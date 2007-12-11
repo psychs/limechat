@@ -26,9 +26,9 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>32</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>45</integer>
+				<integer>28</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
@@ -42,40 +42,56 @@
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>75</integer>
+				<integer>30</integer>
 			</dict>
+			<key>columnSelection</key>
+			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>57</integer>
+			<integer>412</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>29</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>30</integer>
+			</dict>
 		</dict>
 		<key>ruby/irc/world.rb</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>9</integer>
+				<integer>40</integer>
 				<key>line</key>
-				<integer>399</integer>
+				<integer>632</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>372</integer>
+			<integer>581</integer>
 		</dict>
-		<key>ruby/view/servertreeview.rb</key>
+		<key>ruby/view/log.rb</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>44</integer>
 				<key>line</key>
-				<integer>25</integer>
+				<integer>54</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>31</integer>
 		</dict>
 		<key>ruby/view/treeview.rb</key>
 		<dict>
@@ -91,18 +107,49 @@
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
 		</dict>
+		<key>ruby/view/viewtheme.rb</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>47</integer>
+				<key>line</key>
+				<integer>61</integer>
+			</dict>
+			<key>columnSelection</key>
+			<false/>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>38</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>34</integer>
+				<key>line</key>
+				<integer>61</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>52</integer>
+				<key>line</key>
+				<integer>61</integer>
+			</dict>
+		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>ruby/irc/world.rb</string>
 		<string>ruby/view/treeview.rb</string>
-		<string>ruby/view/servertreeview.rb</string>
 		<string>ruby/controller/appcontroller.rb</string>
+		<string>ruby/irc/world.rb</string>
+		<string>ruby/view/viewtheme.rb</string>
+		<string>ruby/view/log.rb</string>
 		<string>doc/ChangeLog.txt</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{618, 70}, {1087, 1097}}</string>
+	<string>{{585, 82}, {1010, 1096}}</string>
 </dict>
 </plist>
