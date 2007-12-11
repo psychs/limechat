@@ -1,45 +1,103 @@
-{
-    IBClasses = (
-        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
-        {CLASS = ListView; LANGUAGE = ObjC; SUPERCLASS = NSTableView; }, 
-        {CLASS = NSSegmentedControl; LANGUAGE = ObjC; SUPERCLASS = NSControl; }, 
-        {
-            ACTIONS = {
-                onAdd = id; 
-                onCancel = id; 
-                onDelete = id; 
-                onDown = id; 
-                onEdit = id; 
-                onOk = id; 
-                onUp = id; 
-            }; 
-            CLASS = ServerDialog; 
-            LANGUAGE = ObjC; 
-            OUTLETS = {
-                addButton = id; 
-                "auto_connectCheck" = id; 
-                channelsTable = id; 
-                deleteButton = id; 
-                downButton = id; 
-                editButton = id; 
-                encodingCombo = id; 
-                hostCombo = id; 
-                invisibleCheck = id; 
-                "leaving_commentText" = id; 
-                "login_commandsText" = id; 
-                nameText = id; 
-                nickText = id; 
-                okButton = id; 
-                passwordText = id; 
-                portText = id; 
-                realnameText = id; 
-                upButton = id; 
-                userinfoText = id; 
-                usernameText = id; 
-                window = id; 
-            }; 
-            SUPERCLASS = NSObject; 
-        }
-    ); 
-    IBVersion = 1; 
-}
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IBClasses</key>
+	<array>
+		<dict>
+			<key>CLASS</key>
+			<string>FirstResponder</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSObject</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>NSObject</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+		</dict>
+		<dict>
+			<key>ACTIONS</key>
+			<dict>
+				<key>onAdd</key>
+				<string>id</string>
+				<key>onCancel</key>
+				<string>id</string>
+				<key>onDelete</key>
+				<string>id</string>
+				<key>onDown</key>
+				<string>id</string>
+				<key>onEdit</key>
+				<string>id</string>
+				<key>onOk</key>
+				<string>id</string>
+				<key>onUp</key>
+				<string>id</string>
+			</dict>
+			<key>CLASS</key>
+			<string>ServerDialog</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>OUTLETS</key>
+			<dict>
+				<key>addButton</key>
+				<string>id</string>
+				<key>auto_connectCheck</key>
+				<string>id</string>
+				<key>channelsTable</key>
+				<string>id</string>
+				<key>deleteButton</key>
+				<string>id</string>
+				<key>downButton</key>
+				<string>id</string>
+				<key>editButton</key>
+				<string>id</string>
+				<key>encodingCombo</key>
+				<string>id</string>
+				<key>hostCombo</key>
+				<string>id</string>
+				<key>invisibleCheck</key>
+				<string>id</string>
+				<key>leaving_commentText</key>
+				<string>id</string>
+				<key>login_commandsText</key>
+				<string>id</string>
+				<key>nameText</key>
+				<string>id</string>
+				<key>nickText</key>
+				<string>id</string>
+				<key>okButton</key>
+				<string>id</string>
+				<key>passwordText</key>
+				<string>id</string>
+				<key>portText</key>
+				<string>id</string>
+				<key>realnameText</key>
+				<string>id</string>
+				<key>upButton</key>
+				<string>id</string>
+				<key>userinfoText</key>
+				<string>id</string>
+				<key>usernameText</key>
+				<string>id</string>
+				<key>window</key>
+				<string>id</string>
+			</dict>
+			<key>SUPERCLASS</key>
+			<string>NSObject</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>ListView</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSTableView</string>
+		</dict>
+	</array>
+	<key>IBVersion</key>
+	<string>1</string>
+</dict>
+</plist>

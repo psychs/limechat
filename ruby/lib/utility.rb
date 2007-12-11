@@ -306,7 +306,7 @@ module OSX
           r = str[0..0].to_i(16)
           g = str[1..1].to_i(16)
           b = str[2..2].to_i(16)
-          from_rgb(r, g, b)
+          NSColor.colorWithCalibratedRed_green_blue_alpha(r/15.0, g/15.0, b/15.0, 1.0)
         else
           nil
         end
