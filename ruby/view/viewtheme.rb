@@ -61,6 +61,8 @@ end
 class OtherViewTheme
   attr_reader :input_text_color, :input_text_bgcolor, :input_text_font
   attr_reader :tree_highlight_color, :tree_newtalk_color, :tree_unread_color, :tree_font
+  attr_reader :member_list_font, :member_list_color, :member_list_bgcolor
+  attr_reader :member_list_op_color
   
   def filename=(fname)
     if fname
@@ -88,13 +90,18 @@ class OtherViewTheme
   
   def update
     @input_text_font = load_font('input-text') || NSFont.systemFontOfSize(-1)
-    @input_text_color = load_color('input-text', 'color') || NSColor.blackColor
     @input_text_bgcolor = load_color('input-text', 'background-color') || NSColor.whiteColor
+    @input_text_color = load_color('input-text', 'color') || NSColor.blackColor
     
     @tree_font = load_font('server-tree') || NSFont.systemFontOfSize(-1)
     @tree_highlight_color = load_color('server-tree', 'highlight', 'color') || NSColor.magentaColor
     @tree_newtalk_color = load_color('server-tree', 'newtalk', 'color') || NSColor.redColor
     @tree_unread_color = load_color('server-tree', 'unread', 'color') || NSColor.blueColor
+    
+    @member_list_font = load_font('member-list') || NSFont.systemFontOfSize(-1)
+    @member_list_bgcolor = load_color('member-list', 'background-color') || NSColor.whiteColor
+    @member_list_color = load_color('member-list', 'color') || NSColor.blackColor
+    @member_list_op_color = load_color('member-list', 'operator', 'color') || NSColor.blackColor
   end
   
   def load_font(category)

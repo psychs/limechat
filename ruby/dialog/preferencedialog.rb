@@ -181,8 +181,9 @@ class PreferenceDialog < NSObject
         @theme.menu.addItem(NSMenuItem.separatorItem)
         count = @theme.numberOfItems
         files.each_with_index do |f,n|
-          @theme.addItemWithTitle(f)
-          @theme.itemAtIndex(count + n).setTag(tag)
+          item = NSMenuItem.alloc.initWithTitle_action_keyEquivalent(f, nil, '')
+          item.setTag(tag)
+          @theme.menu.addItem(item)
         end
       end
     end

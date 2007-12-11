@@ -20,9 +20,11 @@ class DccManager < NSObject
     @loaded = true
     @splitter.setFixedViewIndex(1)
     @receiver_cell = FileTransferCell.alloc.init
+    @receiver_cell.setup
     @receiver_cell.op = :receive
     @receiver_table.tableColumns[0].setDataCell(@receiver_cell)
     @sender_cell = FileTransferCell.alloc.init
+    @sender_cell.setup
     @sender_cell.op = :send
     @sender_table.tableColumns[0].setDataCell(@sender_cell)
     @receivers.each do |r|
@@ -419,6 +421,15 @@ class FileTransferCell < NSCell
   RIGHT_MARGIN = 10
   ICON_SIZE = NSSize.new(32, 32)
   
+  def setup
+    @filename_style = NSMutableParagraphStyle.alloc.init
+    @filename_style.setAlignment(NSLeftTextAlignment)
+    @filename_style.setLineBreakMode(NSLineBreakByTruncatingMiddle)
+    @status_style = NSMutableParagraphStyle.alloc.init
+    @status_style.setAlignment(NSLeftTextAlignment)
+    @status_style.setLineBreakMode(NSLineBreakByTruncatingTail)
+  end
+  
   def drawInteriorWithFrame_inView(frame, view)
     if @icon
       size = ICON_SIZE
@@ -440,12 +451,9 @@ class FileTransferCell < NSCell
     rect.y += FILENAME_TOP_MARGIN + offset
     rect.width -= rect.height + RIGHT_MARGIN
     rect.height = FILENAME_HEIGHT - FILENAME_TOP_MARGIN
-    style = NSMutableParagraphStyle.alloc.init
-    style.setAlignment(NSLeftTextAlignment)
-    style.setLineBreakMode(NSLineBreakByTruncatingMiddle)
     attrs = {
-      NSParagraphStyleAttributeName => style,
-      NSFontAttributeName => NSFont.fontWithName_size('Helvetica', 12),
+      NSParagraphStyleAttributeName => @filename_style,
+      NSFontAttributeName => NSFont.systemFontOfSize(12),
       NSForegroundColorAttributeName => self.isHighlighted ? NSColor.whiteColor : NSColor.blackColor
     }
     fname.drawInRect_withAttributes(rect, attrs)
@@ -466,12 +474,9 @@ class FileTransferCell < NSCell
     rect.y += FILENAME_HEIGHT + PROGRESSBAR_HEIGHT + STATUS_TOP_MARGIN - offset
     rect.width -= rect.height + RIGHT_MARGIN
     rect.height = STATUS_HEIGHT - STATUS_TOP_MARGIN
-    style = NSMutableParagraphStyle.alloc.init
-    style.setAlignment(NSLeftTextAlignment)
-    style.setLineBreakMode(NSLineBreakByTruncatingTail)
     attrs = {
-      NSParagraphStyleAttributeName => style,
-      NSFontAttributeName => NSFont.fontWithName_size('Helvetica', 11),
+      NSParagraphStyleAttributeName => @status_style,
+      NSFontAttributeName => NSFont.systemFontOfSize(11),
       NSForegroundColorAttributeName =>
         if @status == :error
           NSColor.redColor

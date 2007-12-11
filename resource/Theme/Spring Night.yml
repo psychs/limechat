@@ -1,5 +1,21 @@
 input-text:
-  background-color: "#000000"
-  color: "#f0f0f0"
   font-family: "Monaco"
   font-size: 14.0
+  background-color: "#000"
+  color: "#f0f0f0"
+member-list:
+  font-family: "Lucida Grande"
+  font-size: 13.0
+  color: "#aaa"
+  background-color: "#000"
+  operator:
+    color: "#f0f0f0"
+server-tree:
+  font-family: "Lucida Grande"
+  font-size: 13.0
+  highlight:
+    color: "#f32"
+  newtalk:
+    color: "#e5e"
+  unread:
+    color: "#22f"

@@ -32,7 +32,12 @@ class IRCWorld < NSObject
     @config.units.each {|u| create_unit(u) } if @config.units
     @config.units = nil
 
+    cell = MemberListViewCell.alloc.init
+    cell.setup(@window, @viewtheme.other)
+    @member_list.tableColumns[0].setDataCell(cell)
+
     change_input_text_theme
+    change_member_list_theme
     register_growl
   end
   
@@ -381,6 +386,7 @@ class IRCWorld < NSObject
     
     change_input_text_theme
     change_tree_theme
+    change_member_list_theme
     
     #sel = selected
     #@log_base.setContentView(sel.log.view) if sel
@@ -398,6 +404,13 @@ class IRCWorld < NSObject
   def change_tree_theme
     theme = @viewtheme.other
     @tree.setFont(theme.tree_font)
+  end
+  
+  def change_member_list_theme
+    theme = @viewtheme.other
+    @member_list.setBackgroundColor(theme.member_list_bgcolor)
+    @member_list.setFont(theme.member_list_font)
+    @member_list.tableColumns[0].dataCell.font_changed
   end
   
   def preferences_changed

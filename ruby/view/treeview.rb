@@ -35,6 +35,10 @@ class TreeView < NSOutlineView
     setNeedsDisplay(true)
   end
   
+  def font
+    tableColumns.to_a[0].dataCell.font
+  end
+  
   def keyDown(e)
     if @key_delegate
       case e.keyCode

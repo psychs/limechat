@@ -15,7 +15,21 @@ class User
     @o = args[2] || false
     @v = args[3] || false
   end
-
+  
+  def to_s
+    mark + @nick
+  end
+  
+  def mark
+    if @o
+      '@'
+    elsif @v
+      '+'
+    else
+      ''
+    end
+  end
+  
   # the weighting system keeps track of who you are talking to
   # and who is talking to you... incoming messages are not weighted
   # as highly as the messages you send to someone
