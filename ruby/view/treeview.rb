@@ -25,7 +25,16 @@ class TreeView < NSOutlineView
     end
     menu
   end
-
+  
+  def setFont(font)
+    tableColumns.to_a.each {|i| i.dataCell.setFont(font)}
+    f = frame
+    f.height = 1e+37
+    f.height = tableColumns.to_a[0].dataCell.cellSizeForBounds(f).height.ceil
+    setRowHeight(f.height)
+    setNeedsDisplay(true)
+  end
+  
   def keyDown(e)
     if @key_delegate
       case e.keyCode

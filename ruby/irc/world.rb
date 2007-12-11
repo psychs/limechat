@@ -53,6 +53,9 @@ class IRCWorld < NSObject
         @tree.select(@tree.rowForItem(unit))
       end
     end
+    
+    @tree.theme = @viewtheme.other
+    change_tree_theme
   end
   
   def terminate
@@ -377,6 +380,7 @@ class IRCWorld < NSObject
     @console.reload_theme
     
     change_input_text_theme
+    change_tree_theme
     
     #sel = selected
     #@log_base.setContentView(sel.log.view) if sel
@@ -384,13 +388,16 @@ class IRCWorld < NSObject
   end
   
   def change_input_text_theme
-    text_color = @viewtheme.other.input_text_color || NSColor.blackColor
-    back_color = @viewtheme.other.input_text_background_color || NSColor.whiteColor
-    @text.setTextColor(text_color)
-    @text.setBackgroundColor(back_color)
-    @field_editor.setInsertionPointColor(text_color)
-    font = @viewtheme.other.input_text_font || NSFont.systemFontOfSize(-1)
-    @chat_box.set_input_text_font(font)
+    theme = @viewtheme.other
+    @field_editor.setInsertionPointColor(theme.input_text_color)
+    @text.setTextColor(theme.input_text_color)
+    @text.setBackgroundColor(theme.input_text_bgcolor)
+    @chat_box.set_input_text_font(theme.input_text_font)
+  end
+  
+  def change_tree_theme
+    theme = @viewtheme.other
+    @tree.setFont(theme.tree_font)
   end
   
   def preferences_changed
@@ -501,12 +508,14 @@ class IRCWorld < NSObject
   end
   
   def outlineView_willDisplayCell_forTableColumn_item(sender, cell, col, item)
+    theme = @viewtheme.other
+    
     if item.keyword
-      textcolor = NSColor.magentaColor
+      textcolor = theme.tree_highlight_color
     elsif item.newtalk
-      textcolor = NSColor.redColor
+      textcolor = theme.tree_newtalk_color
     elsif item.unread
-      textcolor = NSColor.blueColor
+      textcolor = theme.tree_unread_color
     elsif item.unit? ? item.login? : item.active?
       #if item == @tree.itemAtRow(@tree.selectedRow) && NSApp.isActive
       #  textcolor = NSColor.whiteColor
@@ -521,10 +530,6 @@ class IRCWorld < NSObject
       end
     end
     cell.setTextColor(textcolor)
-    
-    #textcolor = NSColor.from_rgb(0x80, 0x80, 0x80)
-    #cell.setDrawsBackground(true)
-    #cell.setBackgroundColor(NSColor.whiteColor)
   end
   
   # log view

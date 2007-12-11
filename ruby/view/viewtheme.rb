@@ -59,6 +59,9 @@ end
 
 
 class OtherViewTheme
+  attr_reader :input_text_color, :input_text_bgcolor, :input_text_font
+  attr_reader :tree_highlight_color, :tree_newtalk_color, :tree_unread_color, :tree_font
+  
   def filename=(fname)
     if fname
       @filename = fname
@@ -77,21 +80,22 @@ class OtherViewTheme
     prev != @content
   rescue
     false
-  end
-  
-  def input_text_color
-    load_color('input-text', 'color')
-  end
-  
-  def input_text_background_color
-    load_color('input-text', 'background-color')
-  end
-  
-  def input_text_font
-    load_font('input-text')
+  ensure
+    update
   end
   
   private
+  
+  def update
+    @input_text_font = load_font('input-text') || NSFont.systemFontOfSize(-1)
+    @input_text_color = load_color('input-text', 'color') || NSColor.blackColor
+    @input_text_bgcolor = load_color('input-text', 'background-color') || NSColor.whiteColor
+    
+    @tree_font = load_font('server-tree') || NSFont.systemFontOfSize(-1)
+    @tree_highlight_color = load_color('server-tree', 'highlight', 'color') || NSColor.magentaColor
+    @tree_newtalk_color = load_color('server-tree', 'newtalk', 'color') || NSColor.redColor
+    @tree_unread_color = load_color('server-tree', 'unread', 'color') || NSColor.blueColor
+  end
   
   def load_font(category)
     return nil unless @content
@@ -120,11 +124,15 @@ class OtherViewTheme
     font
   end
   
-  def load_color(category, key)
+  def load_color(category, *keys)
     return nil unless @content
     config = @content[category]
     return nil unless config
-    NSColor.from_css(config[key])
+    keys.each do |i|
+      config = config[i]
+      return nil unless config
+    end
+    NSColor.from_css(config)
   end
 end
 

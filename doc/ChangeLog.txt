@@ -1,3 +1,12 @@
+2007-12-12  Satoshi Nakagawa <artension@gmail.com>
+
+	Implemented theme for the server tree.
+
+2007-12-12  Satoshi Nakagawa <artension@gmail.com>
+
+	Improved encoding choices.
+	Fixed a bug of a NSColor utility method.
+
 2007-12-10  Satoshi Nakagawa <artension@gmail.com>
 
 	Added NSColor utilities.
