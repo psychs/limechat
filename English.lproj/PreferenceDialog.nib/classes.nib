@@ -29,6 +29,8 @@
 				<string>id</string>
 				<key>onOk</key>
 				<string>id</string>
+				<key>onOpenThemePath</key>
+				<string>id</string>
 				<key>onTranscriptFolderChanged</key>
 				<string>id</string>
 			</dict>

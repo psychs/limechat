@@ -104,6 +104,14 @@ class PreferenceDialog < NSObject
     state = @gen_log_transcript.state == 1
     @transcript_folder.setEnabled(state)
   end
+  
+  def onOpenThemePath(sender)
+    path = Pathname.new(ViewTheme.USER_BASE)
+    unless path.exist?
+      path.mkpath rescue nil
+    end
+    NSWorkspace.sharedWorkspace.openFile(path.to_s)
+  end
 
   # sound table
   

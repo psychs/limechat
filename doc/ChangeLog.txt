@@ -1,5 +1,9 @@
 2007-12-12  Satoshi Nakagawa <artension@gmail.com>
 
+	Added a button to open the user theme path in finder on the preference dialog.
+
+2007-12-12  Satoshi Nakagawa <artension@gmail.com>
+
 	Removed the default theme file.
 	Changed to rescue exceptions from dir.mkpath.
 
