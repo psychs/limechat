@@ -175,7 +175,6 @@ class PreferenceDialog < NSObject
       files = Pathname.glob(base + '/*.css') + Pathname.glob(base + '/*.yml')
       files.map! {|i| i.basename('.*').to_s}
       files.uniq!
-      files.delete('Default') if tag == 0
       files.sort!
       unless files.empty?
         @theme.menu.addItem(NSMenuItem.separatorItem)

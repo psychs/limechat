@@ -35,13 +35,17 @@ class FileLogger
   def open
     close if @file
     @fname = build_filename
-    @fname.dirname.mkpath unless @fname.dirname.exist?
-    unless @fname.exist?
-      NSFileManager.defaultManager.createFileAtPath_contents_attributes(@fname.to_s, NSData.data, nil)
-    end
-    @file = NSFileHandle.fileHandleForUpdatingAtPath(@fname.to_s)
-    if @file
-      @file.seekToEndOfFile
+    begin
+      @fname.dirname.mkpath unless @fname.dirname.exist?
+      unless @fname.exist?
+        NSFileManager.defaultManager.createFileAtPath_contents_attributes(@fname.to_s, NSData.data, nil)
+      end
+      @file = NSFileHandle.fileHandleForUpdatingAtPath(@fname.to_s)
+      if @file
+        @file.seekToEndOfFile
+      end
+    rescue
+      ;
     end
   end
   

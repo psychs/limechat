@@ -1,5 +1,10 @@
 2007-12-12  Satoshi Nakagawa <artension@gmail.com>
 
+	Removed the default theme file.
+	Changed to rescue exceptions from dir.mkpath.
+
+2007-12-12  Satoshi Nakagawa <artension@gmail.com>
+
 	Added +h channel mode support.
 	Changed to print operator marks in the center.
 

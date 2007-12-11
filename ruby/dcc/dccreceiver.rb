@@ -137,6 +137,7 @@ class DccReceiver
       i += 1
     end
     begin
+      @download_filename.dirname.mkpath unless @download_filename.dirname.exist?
       @file = @download_filename.open('w+b')
     rescue
       @status = :error

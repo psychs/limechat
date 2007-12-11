@@ -13,7 +13,7 @@ class AppController < NSObject
     NSApplication.sharedApplication
     
     @pref = Preferences.new
-    FileUtils.mkpath(@pref.gen.transcript_folder.expand_path) rescue nil
+    #FileUtils.mkpath(@pref.gen.transcript_folder.expand_path) rescue nil
     
     @field_editor = FieldEditorTextView.alloc.initWithFrame(NSZeroRect)
     @field_editor.setFieldEditor(true)
