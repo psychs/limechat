@@ -1406,6 +1406,9 @@ class IRCUnit < NSObject
                   update_channel_title(c)
                   check_all_autoop(c) if c.op? && !prev && c.who_init
                 end
+              when 'h'
+                t = str.token!
+                c.change_member_op(t, :h, plus)
               when 'v'
                 t = str.token!
                 c.change_member_op(t, :v, plus)
@@ -1726,6 +1729,7 @@ class IRCUnit < NSObject
           end
           m = User.new(nick)
           m.o = op == '@'
+          m.h = op == '%'
           m.v = op == '+'
           c.add_member(m, false)
           c.op = m.o if m.nick == @mynick
@@ -1783,8 +1787,9 @@ class IRCUnit < NSObject
       c = find_channel(chname)
       if c && c.active? && !c.who_init
         o = mode.include?('@')
+        h = mode.include?('%')
         v = mode.include?('+')
-        c.update_member(nick, username, address, o, v)
+        c.update_member(nick, username, address, o, h, v)
       else
         print_unknown_reply(m)
       end

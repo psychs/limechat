@@ -157,12 +157,13 @@ class IRCChannel < NSObject
     add_member(m)
   end
   
-  def update_member(nick, username, address, o=nil, v=nil)
+  def update_member(nick, username, address, o=nil, h=nil, v=nil)
     m = find_member(nick)
     return unless m
     m.username = username
     m.address = address
     m.o = o if o != nil
+    m.h = h if h != nil
     m.v = v if v != nil
   end
   
@@ -171,6 +172,7 @@ class IRCChannel < NSObject
     return unless m
     case type
     when :o; m.o = value
+    when :h; m.h = value
     when :v; m.v = value
     end
     sort_members
@@ -210,6 +212,8 @@ class IRCChannel < NSObject
         1
       elsif a.o != b.o
         a.o ? -1 : 1
+      elsif a.h != b.h
+        a.h ? -1 : 1
       elsif a.v != b.v
         a.v ? -1 : 1
       else

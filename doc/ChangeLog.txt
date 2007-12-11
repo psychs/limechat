@@ -1,5 +1,10 @@
 2007-12-12  Satoshi Nakagawa <artension@gmail.com>
 
+	Added +h channel mode support.
+	Changed to print operator marks in the center.
+
+2007-12-12  Satoshi Nakagawa <artension@gmail.com>
+
 	Implemented theme for the member list.
 	Changed to print operator marks and nick names separately in the member list.
 

@@ -28,7 +28,7 @@
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>2</integer>
+				<integer>4</integer>
 			</dict>
 			<key>columnSelection</key>
 			<false/>
@@ -41,54 +41,24 @@
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>4</integer>
+				<integer>2</integer>
 			</dict>
 			<key>selectTo</key>
 			<dict>
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>2</integer>
+				<integer>4</integer>
 			</dict>
-		</dict>
-		<key>ruby/irc/world.rb</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>54</integer>
-				<key>line</key>
-				<integer>412</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>381</integer>
-		</dict>
-		<key>ruby/view/memberlistview.rb</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>30</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>23</integer>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>ruby/irc/world.rb</string>
-		<string>ruby/view/memberlistview.rb</string>
 		<string>doc/ChangeLog.txt</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{534, 78}, {1006, 1100}}</string>
+	<string>{{555, 76}, {1078, 1095}}</string>
 </dict>
 </plist>

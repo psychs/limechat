@@ -2,6 +2,7 @@
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
 require 'listview'
+require 'user'
 
 class MemberListView < ListView
   attr_accessor :key_delegate
@@ -28,9 +29,11 @@ class MemberListViewCell < NSCell
     @window = window
     @theme = theme
     @mark_width = 0
-    @style = NSMutableParagraphStyle.alloc.init
-    @style.setAlignment(NSLeftTextAlignment)
-    @style.setLineBreakMode(NSLineBreakByTruncatingTail)
+    @mark_style = NSMutableParagraphStyle.alloc.init
+    @mark_style.setAlignment(NSCenterTextAlignment)
+    @nick_style = NSMutableParagraphStyle.alloc.init
+    @nick_style.setAlignment(NSLeftTextAlignment)
+    @nick_style.setLineBreakMode(NSLineBreakByTruncatingTail)
   end
   
   def font_changed
@@ -39,7 +42,7 @@ class MemberListViewCell < NSCell
   
   def calculate_mark_width
     @mark_width = 0
-    ['@', '+'].each do |s|
+    User.marks.each do |s|
       n = s.to_ns.sizeWithAttributes(NSFontAttributeName => font)
       @mark_width = n.width if n.width > @mark_width
     end
@@ -62,22 +65,26 @@ class MemberListViewCell < NSCell
     end
     
     attrs = {
-      NSParagraphStyleAttributeName => @style,
+      NSParagraphStyleAttributeName => @mark_style,
       NSFontAttributeName => font,
       NSForegroundColorAttributeName => color,
     }
     
     rect = frame.dup
     rect.x += LEFT_MARGIN
-    rect.width -= LEFT_MARGIN
+    rect.width = @mark_width
     
     mark = @member.mark
     unless mark.empty?
       mark.to_ns.drawInRect_withAttributes(rect, attrs)
     end
     
-    rect.x += @mark_width + MARK_RIGHT_MARGIN
-    rect.width -= @mark_width + MARK_RIGHT_MARGIN
+    attrs[NSParagraphStyleAttributeName] = @nick_style
+    
+    offset = LEFT_MARGIN + @mark_width + MARK_RIGHT_MARGIN
+    rect = frame.dup
+    rect.x += offset
+    rect.width -= offset
     
     @member.nick.to_ns.drawInRect_withAttributes(rect, attrs)
   end

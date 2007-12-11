@@ -114,7 +114,7 @@ class ChannelMode
           when '+'; plus = true
           when 'a','i','m','n','p','q','r','s','t','w'
             penalty += Penalty::MODE_OPT
-          when 'O','o','v','b','e','I','R','k'
+          when 'O','o','h','v','b','e','I','R','k'
             str.token!
             penalty += Penalty::MODE_OPT
           when 'l'
