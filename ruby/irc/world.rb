@@ -375,14 +375,24 @@ class IRCWorld < NSObject
   
   def reload_theme
     @viewtheme.theme = @pref.theme.name
+    
+    logs = [@console]
         
     @units.each do |u|
-      u.log.reload_theme
+      logs << u.log
       u.channels.each do |c|
-        c.log.reload_theme
+        logs << c.log
       end
     end
-    @console.reload_theme
+    
+    logs.each do |log|
+      if @pref.theme.override_log_font
+        log.override_font = [@pref.theme.log_font_family, @pref.theme.log_font_size]
+      else
+        log.override_font = nil
+      end
+      log.reload_theme
+    end
     
     change_input_text_theme
     change_tree_theme
@@ -424,7 +434,7 @@ class IRCWorld < NSObject
   end
   
   def change_text_size(op)
-    logs = [@console, @dummylog]
+    logs = [@console]
     @units.each do |u|
       logs << u.log
       u.channels.each do |c|
@@ -643,6 +653,11 @@ class IRCWorld < NSObject
     log.unit = unit
     log.keyword = @pref.key
     log.theme = @viewtheme.log
+    if @pref.theme.override_log_font
+      log.override_font = [@pref.theme.log_font_family, @pref.theme.log_font_size]
+    else
+      log.override_font = nil
+    end
     log.setup(console, @viewtheme.other.input_text_bgcolor)
     log.view.setHostWindow(@window)
     log.view.setTextSizeMultiplier(@console.view.textSizeMultiplier) if @console

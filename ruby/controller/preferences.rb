@@ -94,10 +94,13 @@ class Preferences
   
   class Theme
     include PersistenceHelper
-    persistent_attr :name
+    persistent_attr :name, :override_log_font, :log_font_family, :log_font_size
     
     def initialize
       @name = 'resource:Default'
+      @override_log_font = false
+      @log_font_family = 'Lucida Grande'
+      @log_font_size = 12
     end
   end
   

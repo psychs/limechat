@@ -25,7 +25,7 @@ end
 
 class LogController < NSObject
   attr_accessor :world
-  attr_writer :unit, :menu, :url_menu, :addr_menu, :member_menu, :keyword, :theme
+  attr_writer :unit, :menu, :url_menu, :addr_menu, :member_menu, :keyword, :theme, :override_font
   attr_reader :view
   
   BOTTOM_EPSILON = 20
@@ -337,11 +337,22 @@ class LogController < NSObject
   def initial_document
     body_class = @console ? 'console' : 'normal'
     style = @theme.content || ''
+    if @override_font
+      override_style = <<-EOM
+        html {
+          font-family: '#{@override_font[0]}';
+          font-size: #{@override_font[1]}px;
+        }
+      EOM
+    else
+      override_style = ''
+    end
     <<-EOM
       <html>
       <head>
       <style>#{DEFAULT_CSS}</style>
       <style><!--#{style}--></style>
+      <style><!--#{override_style}--></style>
       </head>
       <body class="#{body_class}"></body>
       </html>

@@ -18,7 +18,7 @@
 		</dict>
 	</array>
 	<key>fileHierarchyDrawerWidth</key>
-	<integer>262</integer>
+	<integer>232</integer>
 	<key>metaData</key>
 	<dict>
 		<key>doc/ChangeLog.txt</key>
@@ -26,9 +26,9 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>34</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>44</integer>
+				<integer>3</integer>
 			</dict>
 			<key>columnSelection</key>
 			<false/>
@@ -39,56 +39,26 @@
 			<key>selectFrom</key>
 			<dict>
 				<key>column</key>
-				<integer>33</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>44</integer>
+				<integer>2</integer>
 			</dict>
 			<key>selectTo</key>
 			<dict>
 				<key>column</key>
-				<integer>34</integer>
-				<key>line</key>
-				<integer>44</integer>
-			</dict>
-		</dict>
-		<key>ruby/dialog/preferencedialog.rb</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>113</integer>
+				<integer>3</integer>
 			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>89</integer>
-		</dict>
-		<key>ruby/view/viewtheme.rb</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>15</integer>
-				<key>line</key>
-				<integer>13</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
 		<string>doc/ChangeLog.txt</string>
-		<string>ruby/dialog/preferencedialog.rb</string>
-		<string>ruby/view/viewtheme.rb</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{555, 81}, {1220, 1090}}</string>
+	<string>{{827, 83}, {1063, 1085}}</string>
 </dict>
 </plist>

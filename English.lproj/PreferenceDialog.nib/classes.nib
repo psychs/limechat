@@ -31,6 +31,10 @@
 				<string>id</string>
 				<key>onOpenThemePath</key>
 				<string>id</string>
+				<key>onOverrideLogFontClicked</key>
+				<string>id</string>
+				<key>onSelectFont</key>
+				<string>id</string>
 				<key>onTranscriptFolderChanged</key>
 				<string>id</string>
 			</dict>
@@ -76,9 +80,15 @@
 				<string>id</string>
 				<key>key_words</key>
 				<string>id</string>
+				<key>log_font_text</key>
+				<string>id</string>
+				<key>select_log_font_button</key>
+				<string>id</string>
 				<key>sound_table</key>
 				<string>id</string>
 				<key>theme</key>
+				<string>id</string>
+				<key>theme_override_log_font</key>
 				<string>id</string>
 				<key>transcript_folder</key>
 				<string>id</string>

@@ -22,6 +22,8 @@ class PreferenceDialog < NSObject
   ib_mapped_outlet :gen_log_transcript
   ib_outlet :transcript_folder
   ib_outlet :theme
+  ib_mapped_outlet :theme_override_log_font
+  ib_outlet :log_font_text, :select_log_font_button
   
   def initialize
     @prefix = 'preferenceDialog'
@@ -34,6 +36,8 @@ class PreferenceDialog < NSObject
     update_myaddress
     update_transcript_folder
     onLogTranscriptChanged(nil)
+    onOverrideLogFontClicked(nil)
+    @font_manager.showFontDescription
     show
   end
   
@@ -48,6 +52,7 @@ class PreferenceDialog < NSObject
   end
   
   def windowWillClose(sender)
+    NSFontPanel.sharedFontPanel.close(nil)
     @log_dialog.cancel(nil) if @log_dialog
     fire_event('onClose')
   end
@@ -112,6 +117,17 @@ class PreferenceDialog < NSObject
     end
     NSWorkspace.sharedWorkspace.openFile(path.to_s)
   end
+  
+  def onOverrideLogFontClicked(sender)
+    @select_log_font_button.setEnabled(@theme_override_log_font.state.to_i != 0)
+  end
+  
+  def onSelectFont(sender)
+    @window.makeFirstResponder(@font_manager)
+    panel = NSFontPanel.sharedFontPanel
+    panel.setPanelFont_isMultiple(@font_manager.font, false)
+    panel.makeKeyAndOrderFront(self)
+  end
 
   # sound table
   
@@ -159,6 +175,10 @@ class PreferenceDialog < NSObject
     load_mapped_outlets(m, true)
     @sound = m.sound.dup
     load_theme
+    
+    @font_manager = PreferenceThemeFontManager.alloc.init
+    @font_manager.font = NSFont.fontWithName_size(m.theme.log_font_family, m.theme.log_font_size)
+    @font_manager.text = @log_font_text
   end
   
   def save
@@ -172,6 +192,9 @@ class PreferenceDialog < NSObject
     m.dcc.last_port = m.dcc.first_port if m.dcc.last_port < m.dcc.first_port
     m.sound.assign(@sound)
     save_theme
+    
+    m.theme.log_font_family = @font_manager.font.familyName
+    m.theme.log_font_size = @font_manager.font.pointSize
   end
   
   def load_theme
@@ -195,7 +218,7 @@ class PreferenceDialog < NSObject
       end
     end
     
-    kind, name = ViewTheme.extract_name(@m.theme.name)
+    kind, name = ViewTheme.extract_name(m.theme.name)
     target_tag = kind == 'resource' ? 0 : 1
     
     count = @theme.numberOfItems
@@ -222,5 +245,20 @@ class PreferenceDialog < NSObject
     cond = @dcc_address_detection_method.selectedItem.tag == Preferences::Dcc::ADDR_DETECT_SPECIFY
     @dcc_myaddress_caption.setTextColor(cond ? NSColor.textColor : NSColor.disabledControlTextColor)
     @dcc_myaddress.setEnabled(cond)
+  end
+end
+
+
+class PreferenceThemeFontManager < NSResponder
+  attr_accessor :font, :text
+  
+  def changeFont(sender)
+    @font = sender.convertFont(@font)
+    showFontDescription
+  end
+  
+  def showFontDescription
+    s = "#{@font.displayName} #{@font.pointSize.to_i}pt."
+    @text.setStringValue(s)
   end
 end
