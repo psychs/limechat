@@ -43,7 +43,7 @@ class ViewTheme
         fullname = "#{USER_BASE}/#{fname}"
       end
       @log.filename = Pathname.new(fullname + '.css')
-      @other.filename = Pathname.new(fullname + '.yml')
+      @other.filename = Pathname.new(fullname + '.yaml')
     else
       @name = ''
       @log.filename = nil

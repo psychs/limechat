@@ -203,7 +203,7 @@ class PreferenceDialog < NSObject
     @theme.itemAtIndex(0).setTag(0)
     
     [ViewTheme.RESOURCE_BASE, ViewTheme.USER_BASE].each_with_index do |base,tag|
-      files = Pathname.glob(base + '/*.css') + Pathname.glob(base + '/*.yml')
+      files = Pathname.glob(base + '/*.css') + Pathname.glob(base + '/*.yaml')
       files.map! {|i| i.basename('.*').to_s}
       files.uniq!
       files.sort!
