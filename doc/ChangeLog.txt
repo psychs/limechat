@@ -1,5 +1,9 @@
 2007-12-13  Satoshi Nakagawa <artension@gmail.com>
 
+	Changed max lines of log views to 1000.
+
+2007-12-13  Satoshi Nakagawa <artension@gmail.com>
+
 	Changed to copy a sample theme on making an user theme directory.
 	Tweaked the Spring Night theme.
 
