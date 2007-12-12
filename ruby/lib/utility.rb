@@ -239,7 +239,11 @@ module OSX
     end
 
     def inspect
-      "#<#{self.class.to_s.gsub(/^OSX::/, '')} (#{x}, #{y}, #{width}, #{height})>"
+      "#<#{self.class.to_s.gsub(/^OSX::/, '')} #{to_inspect}>"
+    end
+    
+    def to_inspect
+      "(#{x}, #{y}, #{width}, #{height})"
     end
   end
   
@@ -281,6 +285,10 @@ module OSX
       end
       setFrameOrigin(p)
     end
+    
+    def inspect
+      "#<#{self.class.to_s.gsub(/^OSX::/, '')}:#{sprintf("0x%x", object_id)} frame=#{frame.to_inspect}, title='#{title}'>"
+    end
   end
   
   class NSColor
@@ -308,7 +316,25 @@ module OSX
     end
     
     def inspect
-      sprintf("#<%s (%1.1f, %1.1f, %1.1f, %1.1f)>", self.class.to_s.gsub(/^OSX::/, ''), redComponent*255.0, greenComponent*255.0, blueComponent*255.0, alphaComponent*255.0)
+      "#<#{self.class.to_s.gsub(/^OSX::/, '')} (#{redComponent*255.0}, #{greenComponent*255.0}, #{blueComponent*255.0}, #{alphaComponent})>"
+    end
+  end
+  
+  class NSFont
+    def bold?
+      (NSFontManager.sharedFontManager.traitsOfFont(self) & NSBoldFontMask) != 0
+    end
+    
+    def italic?
+      (NSFontManager.sharedFontManager.traitsOfFont(self) & NSItalicFontMask) != 0
+    end
+    
+    def fixed_pitch?
+      (NSFontManager.sharedFontManager.traitsOfFont(self) & NSFixedPitchFontMask) != 0
+    end
+    
+    def inspect
+      "#<#{self.class.to_s.gsub(/^OSX::/, '')} name='#{fontName}', pointSize=#{pointSize}#{ bold? ? ', bold' : ''}#{ italic? ? ', italic' : ''}>"
     end
   end
   
