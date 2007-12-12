@@ -1,0 +1,49 @@
+html {
+  font-family: 'Courier';
+  font-size: 9pt;
+  background-color: white;
+  color: black;
+  word-wrap: break-word;
+  margin: 0;
+  padding: 3px 4px 10px 4px;
+}
+
+body { margin: 0; padding: 0; }
+body.console {}
+body.normal {}
+
+hr { margin: 0.5em 2em; }
+
+.url { word-break: break-all; }
+.address { text-decoration: underline; word-break: break-all; }
+.highlight { color: #f0f; font-weight: bold; }
+.line { margin: 0 -4px; padding: 0 4px 1px 4px; }
+.even_line {}
+.odd_line {}
+
+.time { color: #048; }
+.place { color: #008; }
+.nick_normal { color: #008; }
+.nick_myself { color: #66a; }
+
+.system { color: #080; }
+.error { color: #f00; font-weight: bold; }
+.reply { color: #088; }
+.error_reply { color: #f00; }
+.dcc_send_send { color: #088; }
+.dcc_send_receive { color: #00c; }
+.privmsg {}
+.notice { color: #888; }
+.action { color: #080; }
+.join { color: #080; }
+.part { color: #080; }
+.kick { color: #080; }
+.quit { color: #080; }
+.kill { color: #080; }
+.nick { color: #080; }
+.mode { color: #080; }
+.topic { color: #080; }
+.invite { color: #080; }
+.wallops { color: #080; }
+.debug_send { color: #880; }
+.debug_receive { color: #444; }

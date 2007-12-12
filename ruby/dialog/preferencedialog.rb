@@ -4,6 +4,7 @@
 require 'dialoghelper'
 require 'pathname'
 require 'viewtheme'
+require 'fileutils'
 
 class PreferenceDialog < NSObject
   include DialogHelper
@@ -52,7 +53,7 @@ class PreferenceDialog < NSObject
   end
   
   def windowWillClose(sender)
-    NSFontPanel.sharedFontPanel.close(nil)
+    NSFontPanel.sharedFontPanel.orderOut(nil)
     @log_dialog.cancel(nil) if @log_dialog
     fire_event('onClose')
   end
@@ -114,6 +115,11 @@ class PreferenceDialog < NSObject
     path = Pathname.new(ViewTheme.USER_BASE)
     unless path.exist?
       path.mkpath rescue nil
+    end
+    files = Dir.glob(path.to_s + '/*') rescue []
+    if files.empty?
+      # copy sample themes
+      FileUtils.cp(Dir.glob(ViewTheme.RESOURCE_BASE + '/Sample.*'), ViewTheme.USER_BASE) rescue nil
     end
     NSWorkspace.sharedWorkspace.openFile(path.to_s)
   end
@@ -205,6 +211,7 @@ class PreferenceDialog < NSObject
     [ViewTheme.RESOURCE_BASE, ViewTheme.USER_BASE].each_with_index do |base,tag|
       files = Pathname.glob(base + '/*.css') + Pathname.glob(base + '/*.yaml')
       files.map! {|i| i.basename('.*').to_s}
+      files.delete('Sample') if tag == 0
       files.uniq!
       files.sort! {|a,b| a.casecmp(b)}
       unless files.empty?

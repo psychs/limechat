@@ -1,5 +1,10 @@
 2007-12-13  Satoshi Nakagawa <artension@gmail.com>
 
+	Changed to copy a sample theme on making an user theme directory.
+	Tweaked the Spring Night theme.
+
+2007-12-13  Satoshi Nakagawa <artension@gmail.com>
+
 	Fixed a bug, themes should be sorted in the dictionary order on the preference dialog.
 
 2007-12-13  Satoshi Nakagawa <artension@gmail.com>

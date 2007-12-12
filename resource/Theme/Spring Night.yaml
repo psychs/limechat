@@ -1,37 +1,37 @@
 input-text:
-  font-family: "Monaco"
-  font-size: 14.0
-  background-color: "#000"
-  color: "#f0f0f0"
+  font-family: 'Lucida Grande'
+  font-size: 13.0
+  background-color: '#000'
+  color: '#f0f0f0'
 member-list:
-  font-family: "Lucida Grande"
+  font-family: 'Lucida Grande'
   font-size: 13.0
-  color: "#aaa"
-  background-color: "#000"
+  color: '#aaa'
+  background-color: '#000'
   operator:
-    color: "#f0f0f0"
+    color: '#f0f0f0'
 server-tree:
-  font-family: "Lucida Grande"
+  font-family: 'Lucida Grande'
   font-size: 13.0
-  background-color: "#000"
+  background-color: '#000'
   highlight:
-    color: "#e28964"
+    color: '#e28964'
   newtalk:
-    color: "#f9ee98"
+    color: '#f9ee98'
   unread:
-    color: "#99cf50"
+    color: '#99cf50'
   normal:
     active:
-      color: "#ccc"
+      color: '#ccc'
     inactive:
-      color: "#666"
+      color: '#666'
   selected:
     active:
-      color: "#fff"
+      color: '#fff'
     inactive:
-      color: "#ccc"
+      color: '#ccc'
     background:
-      top-line-color: "#4b4b4b"
-      bottom-line-color: "#444444"
-      top-color: "#5a5a5a"
-      bottom-color: "#464646"
+      top-line-color: '#4b4b4b'
+      bottom-line-color: '#444444'
+      top-color: '#5a5a5a'
+      bottom-color: '#464646'
