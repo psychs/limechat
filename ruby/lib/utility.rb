@@ -161,7 +161,7 @@ module OSX
   
   class NSIndexSet
     def inspect
-      "#<#{self.class.to_s.gsub(/^/, '')} #{to_a.inspect}>"
+      "#<#{self.class.to_s.gsub(/^OSX::/, '')} #{to_a.inspect}>"
     end
   end
   
@@ -193,7 +193,7 @@ module OSX
     end
 
     def inspect
-      "#<#{self.class.to_s.gsub(/^/, '')} (#{x}, #{y})>"
+      "#<#{self.class.to_s.gsub(/^OSX::/, '')} (#{x}, #{y})>"
     end
   end
   
@@ -207,7 +207,7 @@ module OSX
     def to_dic; { :w => width, :h => height }; end
     
     def inspect
-      "#<#{self.class.to_s.gsub(/^/, '')} (#{width}, #{height})>"
+      "#<#{self.class.to_s.gsub(/^OSX::/, '')} (#{width}, #{height})>"
     end
   end
   
@@ -239,7 +239,7 @@ module OSX
     end
 
     def inspect
-      "#<#{self.class.to_s.gsub(/^/, '')} (#{x}, #{y}, #{width}, #{height})>"
+      "#<#{self.class.to_s.gsub(/^OSX::/, '')} (#{x}, #{y}, #{width}, #{height})>"
     end
   end
   
@@ -250,7 +250,7 @@ module OSX
     def size=(v); length = v; end
     def max; location + length; end
     def inspect
-      "#<#{self.class.to_s.gsub(/^/, '')} (#{location}, #{length})>"
+      "#<#{self.class.to_s.gsub(/^OSX::/, '')} (#{location}, #{length})>"
     end
   end
   
@@ -288,31 +288,27 @@ module OSX
       NSColor.colorWithCalibratedRed_green_blue_alpha(red/255.0, green/255.0, blue/255.0, alpha)
     end
     
-    def self.from_rgba(*args)
-      from_rgb(*args)
-    end
-    
     def self.from_css(str)
       return nil unless str
-      if str =~ /\A#/
-        str[0] = ''
-        case str.size
-        when 6
-          r = str[0..1].to_i(16)
-          g = str[2..3].to_i(16)
-          b = str[4..5].to_i(16)
-          from_rgb(r, g, b)
-        when 3
-          r = str[0..0].to_i(16)
-          g = str[1..1].to_i(16)
-          b = str[2..2].to_i(16)
-          NSColor.colorWithCalibratedRed_green_blue_alpha(r/15.0, g/15.0, b/15.0, 1.0)
-        else
-          nil
-        end
+      str[0] = '' if str =~ /\A#/
+      case str.size
+      when 6
+        r = str[0..1].to_i(16)
+        g = str[2..3].to_i(16)
+        b = str[4..5].to_i(16)
+        from_rgb(r, g, b)
+      when 3
+        r = str[0..0].to_i(16)
+        g = str[1..1].to_i(16)
+        b = str[2..2].to_i(16)
+        NSColor.colorWithCalibratedRed_green_blue_alpha(r/15.0, g/15.0, b/15.0, 1.0)
       else
         nil
       end
+    end
+    
+    def inspect
+      sprintf("#<%s (%1.1f, %1.1f, %1.1f, %1.1f)>", self.class.to_s.gsub(/^OSX::/, ''), redComponent*255.0, greenComponent*255.0, blueComponent*255.0, alphaComponent*255.0)
     end
   end
   
@@ -330,7 +326,7 @@ module OSX
   
   class NSEvent
     def inspect
-      "#<#{self.class.to_s.gsub(/^/, '')}:#{sprintf("0x%x", object_id)} type=#{_type_name}>"
+      "#<#{self.class.to_s.gsub(/^OSX::/, '')}:#{sprintf("0x%x", object_id)} type=#{_type_name}>"
     end
     
     private

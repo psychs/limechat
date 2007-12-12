@@ -1,3 +1,8 @@
+2007-12-13  Satoshi Nakagawa <artension@gmail.com>
+
+	Completed implementation of theme for the server tree.
+	Changed the Spring Night theme.
+
 2007-12-12  Satoshi Nakagawa <artension@gmail.com>
 
 	Changed a theme file name from .yml to .yaml.

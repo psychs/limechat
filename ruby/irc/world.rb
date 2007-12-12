@@ -414,6 +414,7 @@ class IRCWorld < NSObject
   def change_tree_theme
     theme = @viewtheme.other
     @tree.setFont(theme.tree_font)
+    @tree.update_colors
   end
   
   def change_member_list_theme
@@ -540,16 +541,16 @@ class IRCWorld < NSObject
     elsif item.unread
       textcolor = theme.tree_unread_color
     elsif item.unit? ? item.login? : item.active?
-      #if item == @tree.itemAtRow(@tree.selectedRow) && NSApp.isActive
-      #  textcolor = NSColor.whiteColor
-      #else
-        textcolor = NSColor.blackColor
-      #end
+      if item == @tree.itemAtRow(@tree.selectedRow) && NSApp.isActive
+        textcolor = theme.tree_sel_active_color
+      else
+        textcolor = theme.tree_active_color
+      end
     else
       if item == @tree.itemAtRow(@tree.selectedRow)
-        textcolor = NSColor.grayColor
+        textcolor = theme.tree_sel_inactive_color
       else
-        textcolor = NSColor.lightGrayColor
+        textcolor = theme.tree_inactive_color
       end
     end
     cell.setTextColor(textcolor)

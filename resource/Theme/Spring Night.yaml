@@ -13,9 +13,25 @@ member-list:
 server-tree:
   font-family: "Lucida Grande"
   font-size: 13.0
+  background-color: "#000"
   highlight:
-    color: "#f32"
+    color: "#e28964"
   newtalk:
-    color: "#e5e"
+    color: "#f9ee98"
   unread:
-    color: "#22f"
+    color: "#99cf50"
+  normal:
+    active:
+      color: "#ccc"
+    inactive:
+      color: "#666"
+  selected:
+    active:
+      color: "#fff"
+    inactive:
+      color: "#ccc"
+    background:
+      top-line-color: "#4b4b4b"
+      bottom-line-color: "#444444"
+      top-color: "#5a5a5a"
+      bottom-color: "#464646"
