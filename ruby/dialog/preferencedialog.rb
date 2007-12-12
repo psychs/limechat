@@ -206,7 +206,7 @@ class PreferenceDialog < NSObject
       files = Pathname.glob(base + '/*.css') + Pathname.glob(base + '/*.yaml')
       files.map! {|i| i.basename('.*').to_s}
       files.uniq!
-      files.sort!
+      files.sort! {|a,b| a.casecmp(b)}
       unless files.empty?
         @theme.menu.addItem(NSMenuItem.separatorItem)
         count = @theme.numberOfItems

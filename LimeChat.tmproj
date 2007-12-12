@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>ruby/lib/utility.rb</string>
+	<string>Info.plist</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -21,43 +21,28 @@
 	<integer>239</integer>
 	<key>metaData</key>
 	<dict>
-		<key>ruby/controller/appcontroller.rb</key>
+		<key>Info.plist</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>11</integer>
+				<integer>30</integer>
 				<key>line</key>
-				<integer>78</integer>
+				<integer>6</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>50</integer>
-		</dict>
-		<key>ruby/lib/utility.rb</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>292</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
 			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>222</integer>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>ruby/lib/utility.rb</string>
-		<string>ruby/controller/appcontroller.rb</string>
+		<string>Info.plist</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{528, 70}, {1273, 1108}}</string>
+	<string>{{565, 83}, {1001, 1090}}</string>
 </dict>
 </plist>

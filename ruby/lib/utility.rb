@@ -313,6 +313,8 @@ module OSX
       else
         nil
       end
+    rescue
+      nil
     end
     
     def inspect

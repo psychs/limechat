@@ -1,5 +1,9 @@
 2007-12-13  Satoshi Nakagawa <artension@gmail.com>
 
+	Fixed a bug, themes should be sorted in the dictionary order on the preference dialog.
+
+2007-12-13  Satoshi Nakagawa <artension@gmail.com>
+
 	Completed implementation of theme for the server tree.
 	Changed the Spring Night theme.
 
