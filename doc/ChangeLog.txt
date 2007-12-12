@@ -1,6 +1,6 @@
 2007-12-13  Satoshi Nakagawa <artension@gmail.com>
 
-	Changed max lines of log views to 1000.
+	Changed max lines of log views to 300.
 
 2007-12-13  Satoshi Nakagawa <artension@gmail.com>
 

@@ -35,7 +35,7 @@ class LogController < NSObject
     @lines = []
     @line_number = 0
     @loaded = false
-    @max_lines = 1000
+    @max_lines = 300
   end
   
   def setup(console, initial_bgcolor)
