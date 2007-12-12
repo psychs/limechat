@@ -34,6 +34,7 @@ server-tree:
     inactive:
       color: '#888'
     background:
+      # gradient
       top-line-color: '#adbbd0'
       bottom-line-color: '#8c98b0'
       top-color: '#adbbd0'
