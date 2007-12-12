@@ -177,7 +177,7 @@ class PreferenceDialog < NSObject
     load_theme
     
     @font_manager = PreferenceThemeFontManager.alloc.init
-    @font_manager.font = NSFont.fontWithName_size(m.theme.log_font_family, m.theme.log_font_size)
+    @font_manager.font = NSFont.fontWithName_size(m.theme.log_font_name, m.theme.log_font_size)
     @font_manager.text = @log_font_text
   end
   
@@ -193,7 +193,7 @@ class PreferenceDialog < NSObject
     m.sound.assign(@sound)
     save_theme
     
-    m.theme.log_font_family = @font_manager.font.familyName
+    m.theme.log_font_name = @font_manager.font.fontName
     m.theme.log_font_size = @font_manager.font.pointSize
   end
   

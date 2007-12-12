@@ -338,10 +338,12 @@ class LogController < NSObject
     body_class = @console ? 'console' : 'normal'
     style = @theme.content || ''
     if @override_font
+      family = @override_font[0]
+      size = @override_font[1] * 72.0 / 96.0
       override_style = <<-EOM
         html {
-          font-family: '#{@override_font[0]}';
-          font-size: #{@override_font[1]}px;
+          font-family: '#{family}';
+          font-size: #{size}pt;
         }
       EOM
     else
@@ -352,17 +354,25 @@ class LogController < NSObject
       <head>
       <style>#{DEFAULT_CSS}</style>
       <style><!--#{style}--></style>
-      <style><!--#{override_style}--></style>
+      <style>#{override_style}</style>
       </head>
       <body class="#{body_class}"></body>
       </html>
     EOM
   end
-
+  
+  if LanguageSupport.primary_language == 'ja'
+    DEFAULT_FONT = 'Osaka-Mono'
+    DEFAULT_FONT_SIZE = 10
+  else
+    DEFAULT_FONT = 'Courier'
+    DEFAULT_FONT_SIZE = 9
+  end
+  
   DEFAULT_CSS = <<-EOM
     html {
-      font-family: 'Osaka-Mono';
-      font-size: 10pt;
+      font-family: '#{DEFAULT_FONT}';
+      font-size: #{DEFAULT_FONT_SIZE}pt;
       background-color: white;
       color: black;
       word-wrap: break-word;

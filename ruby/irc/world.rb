@@ -387,7 +387,7 @@ class IRCWorld < NSObject
     
     logs.each do |log|
       if @pref.theme.override_log_font
-        log.override_font = [@pref.theme.log_font_family, @pref.theme.log_font_size]
+        log.override_font = [@pref.theme.log_font_name, @pref.theme.log_font_size]
       else
         log.override_font = nil
       end
@@ -654,7 +654,7 @@ class IRCWorld < NSObject
     log.keyword = @pref.key
     log.theme = @viewtheme.log
     if @pref.theme.override_log_font
-      log.override_font = [@pref.theme.log_font_family, @pref.theme.log_font_size]
+      log.override_font = [@pref.theme.log_font_name, @pref.theme.log_font_size]
     else
       log.override_font = nil
     end

@@ -1,5 +1,10 @@
 2007-12-12  Satoshi Nakagawa <artension@gmail.com>
 
+	Added OS to WebKit DPI conversion.
+	Fixed a bug, the log font setting should be stored in its font name not font family name.
+
+2007-12-12  Satoshi Nakagawa <artension@gmail.com>
+
 	Added an option, override log font.
 
 2007-12-12  Satoshi Nakagawa <artension@gmail.com>
