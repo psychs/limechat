@@ -11,6 +11,10 @@ class Pathname
   end
 end
 
+def rmglob(path)
+  FileUtils.rm_rf(Dir.glob(path.to_s))
+end
+
 appshortname = 'LimeChat'
 appname = appshortname + '.app'
 appver = Pathname.new(__FILE__).dirname + 'appversion.rb'
@@ -32,6 +36,8 @@ app.cptree(tmp)
 system "ln -s /Applications #{tmp}"
 doc.cptree(tmp)
 doc.cptree(appdoc)
+rmglob(tmp + '**/.svn')
+rmglob(tmp + '**/.DS_Store')
 
 system "hdiutil create -srcfolder #{tmp} -volname #{appshortname} #{image}"
 
