@@ -53,7 +53,7 @@ class MemberListViewCell < NSCell
   
   def drawInteriorWithFrame_inView(frame, view)
     if self.isHighlighted
-      if NSApp.isActive && @window.firstResponder == view
+      if NSApp.isActive && @window && @window.firstResponder == view
         color = NSColor.whiteColor
       else
         color = NSColor.blackColor

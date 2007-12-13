@@ -1,5 +1,9 @@
 2007-12-13  Satoshi Nakagawa <artension@gmail.com>
 
+	Fixed a nil access bug in starting up.
+
+2007-12-13  Satoshi Nakagawa <artension@gmail.com>
+
 	Tweaked the default theme and the sample theme.
 
 2007-12-13  Satoshi Nakagawa <artension@gmail.com>
