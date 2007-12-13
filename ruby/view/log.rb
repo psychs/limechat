@@ -415,7 +415,7 @@ class LogController < NSObject
     .topic { color: #080; }
     .invite { color: #080; }
     .wallops { color: #080; }
-    .debug_send { color: #880; }
+    .debug_send { color: #aaa; }
     .debug_receive { color: #444; }
   EOM
 end
