@@ -1,5 +1,9 @@
 2007-12-13  Satoshi Nakagawa <artension@gmail.com>
 
+	Added the "Deep Ocean" theme.
+
+2007-12-13  Satoshi Nakagawa <artension@gmail.com>
+
 	Improved the build script to remove unnecessary files.
 
 2007-12-13  Satoshi Nakagawa <artension@gmail.com>
