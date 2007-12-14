@@ -1,5 +1,9 @@
 2007-12-14  Satoshi Nakagawa <artension@gmail.com>
 
+	Tweaked Deep Ocean theme.
+
+2007-12-14  Satoshi Nakagawa <artension@gmail.com>
+
 	Added gradient color settings for member list selected items in a theme.
 	Fixed a nil access bug in starting up.
 

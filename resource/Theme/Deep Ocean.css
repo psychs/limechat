@@ -23,7 +23,7 @@ hr { margin: 0.5em 2em; }
 a { color: inherit; }
 .url { word-break: break-all; }
 .address { text-decoration: underline; word-break: break-all; }
-.highlight { color: #ffc58a; font-size: 160%; font-weight: normal; }
+.highlight { color: #ffc58a; font-size: 130%; font-weight: normal; }
 .line { margin: 0 -4px; padding: 0 4px 1px 4px; }
 .even_line {}
 .odd_line {}
