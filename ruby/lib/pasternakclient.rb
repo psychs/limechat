@@ -3,23 +3,24 @@
 
 require 'cgi'
 
-class PastieClient < NSObject
+class PasternakClient < NSObject
   attr_accessor :delegate
   
   TIMEOUT = 10
-  REQUEST_URL = 'http://pastie.caboo.se/pastes/'
+  REQUEST_URL = 'http://pasternak.superalloy.nl/pastes'
   
-  def start(content, nick, syntax='ruby', is_private=true)
+  def start(content, nick, syntax='ruby')
     cancel
     @buf = ''
     @response = nil
-    body = hash_to_query_string({ :paste => {
-      :body => CGI.escape(content),
-      :display_name => CGI.escape(nick),
-      :parser => syntax,
-      :restricted => is_private ? 1 : 0,
-      :authorization => 'burger',
-    }})
+    params_hash = {
+      'paste[username]' => CGI.escape(nick),
+      'paste[language]' => CGI.escape(syntax),
+      'paste[code]' => CGI.escape(content),
+      'wants_url_response' => 'true',
+      'patch_style' => 'monkeypatch',
+    }
+    body = params_hash.inject('') {|v,i| v << "#{i[0].to_s}=#{CGI.escape(i[1].to_s)}&"}.chop
     
     url = NSURL.URLWithString(REQUEST_URL)
     policy = 1  # NSURLRequestReloadIgnoringLocalCacheData
@@ -45,9 +46,6 @@ class PastieClient < NSObject
     if @response
       code = @response.statusCode
       if code.to_s =~ /^20[01]$/
-        #unless @buf.empty?
-        #  @buf = PRIVATE_URL + @buf
-        #end
         @delegate.pastie_on_success(self, @buf)
       else
         @delegate.pastie_on_error(self, "#{code} #{@response.oc_class.localizedStringForStatusCode(code)}")
@@ -77,19 +75,5 @@ class PastieClient < NSObject
     else
       req
     end
-  end
-  
-  private
-  
-  def hash_to_query_string(hash)
-    hash.map {|k,v|
-      if v.instance_of?(Hash)
-        v.map {|sk, sv|
-          "#{k}[#{sk}]=#{sv}"
-        }.join('&')
-      else
-        "#{k}=#{v}"
-      end
-    }.join('&')
   end
 end

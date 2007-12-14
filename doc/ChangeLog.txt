@@ -1,3 +1,8 @@
+2007-12-14  Satoshi Nakagawa <artension@gmail.com>
+
+	Added a Pasternak client.
+	Added error handling to the Pastie client.
+
 2007-12-13  Satoshi Nakagawa <artension@gmail.com>
 
 	Added the "Deep Ocean" theme.
