@@ -1,5 +1,10 @@
 2007-12-14  Satoshi Nakagawa <artension@gmail.com>
 
+	Added gradient color settings for member list selected items in a theme.
+	Fixed a nil access bug in starting up.
+
+2007-12-14  Satoshi Nakagawa <artension@gmail.com>
+
 	Added a Pasternak client.
 	Added error handling to the Pastie client.
 

@@ -10,6 +10,13 @@ member-list:
   background-color: '#000'
   operator:
     color: '#f0f0f0'
+  selected:
+    color: '#fff'
+    background:
+      top-line-color: '#464646'
+      bottom-line-color: '#464646'
+      top-color: '#464646'
+      bottom-color: '#464646'
 server-tree:
   font-family: 'Lucida Grande'
   font-size: 13.0

@@ -25,6 +25,13 @@ class AppController < NSObject
     @log_split.setFixedViewIndex(1)
     @info_split.setFixedViewIndex(1)
     @tree_split.setHidden(true)
+
+    @view_theme = ViewTheme.new(@pref.theme.name)
+    @tree.theme = @view_theme.other
+    @member_list.theme = @view_theme.other
+    cell = MemberListViewCell.alloc.init
+    cell.setup(@window, @view_theme.other)
+    @member_list.tableColumns[0].setDataCell(cell)
     
     load_window_state
     select_3column_layout(@pref.gen.main_window_layout == 1)
@@ -48,6 +55,7 @@ class AppController < NSObject
     @world.addr_menu = @addr_menu
     @world.member_menu = @member_menu
     @world.menu_controller = @menu
+    @world.view_theme = @view_theme
     @world.setup(IRCWorldConfig.new(@pref.load_world))
     @tree.setDataSource(@world)
     @tree.setDelegate(@world)

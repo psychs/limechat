@@ -13,6 +13,14 @@ member-list:
   background-color: '#000015'
   operator:
     color: '#eee'
+  selected:
+    color: '#eee'
+    background:
+      # gradient
+      top-line-color: '#000040'
+      bottom-line-color: '#000040'
+      top-color: '#000040'
+      bottom-color: '#000040'
 server-tree:
   font-family: 'Lucida Grande'
   font-size: 13.0

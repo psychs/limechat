@@ -5,7 +5,7 @@ require 'date'
 
 class IRCWorld < NSObject
   attr_accessor :member_list, :dcc
-  attr_writer :tree, :log_base, :console_base, :chat_box, :field_editor, :text, :window, :pref
+  attr_writer :tree, :log_base, :console_base, :chat_box, :field_editor, :text, :window, :pref, :view_theme
   attr_accessor :menu_controller
   attr_accessor :tree_default_menu, :server_menu, :channel_menu, :tree_menu, :log_menu, :console_menu, :url_menu, :addr_menu, :member_menu
   attr_reader :units, :selected, :console, :config
@@ -22,7 +22,6 @@ class IRCWorld < NSObject
   end
   
   def setup(seed)
-    @viewtheme = ViewTheme.new(@pref.theme.name)
     @console = create_log(nil, true)
     @console_base.setContentView(@console.view)
     @dummylog = create_log(nil, true)
@@ -32,12 +31,9 @@ class IRCWorld < NSObject
     @config.units.each {|u| create_unit(u) } if @config.units
     @config.units = nil
 
-    cell = MemberListViewCell.alloc.init
-    cell.setup(@window, @viewtheme.other)
-    @member_list.tableColumns[0].setDataCell(cell)
-
     change_input_text_theme
     change_member_list_theme
+    change_tree_theme
     register_growl
   end
   
@@ -57,10 +53,7 @@ class IRCWorld < NSObject
       else
         @tree.select(@tree.rowForItem(unit))
       end
-    end
-    
-    @tree.theme = @viewtheme.other
-    change_tree_theme
+    end    
   end
   
   def terminate
@@ -374,7 +367,7 @@ class IRCWorld < NSObject
   end
   
   def reload_theme
-    @viewtheme.theme = @pref.theme.name
+    @view_theme.theme = @pref.theme.name
     
     logs = [@console]
         
@@ -404,7 +397,7 @@ class IRCWorld < NSObject
   end
   
   def change_input_text_theme
-    theme = @viewtheme.other
+    theme = @view_theme.other
     @field_editor.setInsertionPointColor(theme.input_text_color)
     @text.setTextColor(theme.input_text_color)
     @text.setBackgroundColor(theme.input_text_bgcolor)
@@ -412,16 +405,16 @@ class IRCWorld < NSObject
   end
   
   def change_tree_theme
-    theme = @viewtheme.other
+    theme = @view_theme.other
     @tree.setFont(theme.tree_font)
-    @tree.update_colors
+    @tree.theme_changed
   end
   
   def change_member_list_theme
-    theme = @viewtheme.other
-    @member_list.setBackgroundColor(theme.member_list_bgcolor)
+    theme = @view_theme.other
     @member_list.setFont(theme.member_list_font)
-    @member_list.tableColumns[0].dataCell.font_changed
+    @member_list.tableColumns[0].dataCell.theme_changed
+    @member_list.theme_changed
   end
   
   def preferences_changed
@@ -532,7 +525,7 @@ class IRCWorld < NSObject
   end
   
   def outlineView_willDisplayCell_forTableColumn_item(sender, cell, col, item)
-    theme = @viewtheme.other
+    theme = @view_theme.other
     
     if item.keyword
       textcolor = theme.tree_highlight_color
@@ -653,13 +646,13 @@ class IRCWorld < NSObject
     log.world = self
     log.unit = unit
     log.keyword = @pref.key
-    log.theme = @viewtheme.log
+    log.theme = @view_theme.log
     if @pref.theme.override_log_font
       log.override_font = [@pref.theme.log_font_name, @pref.theme.log_font_size]
     else
       log.override_font = nil
     end
-    log.setup(console, @viewtheme.other.input_text_bgcolor)
+    log.setup(console, @view_theme.other.input_text_bgcolor)
     log.view.setHostWindow(@window)
     log.view.setTextSizeMultiplier(@console.view.textSizeMultiplier) if @console
     log

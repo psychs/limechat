@@ -25,7 +25,7 @@ class ServerTreeView < TreeView
     end
   end
   
-  def update_colors
+  def theme_changed
     @bgcolor = @theme.tree_bgcolor
     @top_line_color = @theme.tree_sel_top_line_color
     @bottom_line_color = @theme.tree_sel_bottom_line_color

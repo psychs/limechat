@@ -6,6 +6,11 @@ require 'user'
 
 class MemberListView < ListView
   attr_accessor :key_delegate
+  attr_writer :theme
+  
+  def initialize
+    @bgcolor = NSColor.controlBackgroundColor
+  end
   
   def keyDown(e)
     if @key_delegate
@@ -19,16 +24,69 @@ class MemberListView < ListView
     end
     super_keyDown(e)
   end
+  
+  def theme_changed
+    @bgcolor = @theme.member_list_bgcolor
+    @top_line_color = @theme.member_list_sel_top_line_color
+    @bottom_line_color = @theme.member_list_sel_bottom_line_color
+    from = @theme.member_list_sel_top_color
+    to = @theme.member_list_sel_bottom_color
+    if from && to
+      @gradient = GradientFill.gradientWithBeginColor_endColor(from, to)
+    else
+      @gradient = nil
+    end
+  end
+  
+  def _highlightColorForCell(cell)
+    nil
+  end
+  
+  def _highlightRow_clipRect(row, rect)
+    frame = self.rectOfRow(row)
+    if @top_line_color && @bottom_line_color && @gradient
+      rect = frame.dup
+      rect.y += 1
+      rect.height -= 2
+      @gradient.fillRect(rect)
+
+      @top_line_color.set
+      rect = frame.dup
+      rect.height = 1
+      NSRectFill(rect)
+
+      @bottom_line_color.set
+      rect = frame.dup
+      rect.y = rect.y + rect.height - 1
+      rect.height = 1
+      NSRectFill(rect)
+    else
+      if NSApp.isActive && window.firstResponder == self
+        NSColor.alternateSelectedControlColor.set
+      else
+        NSColor.selectedControlColor.set
+      end
+      NSRectFill(frame)
+    end
+  end
+  
+  def drawBackgroundInClipRect(rect)
+    @bgcolor.set
+    NSRectFill(rect)
+  end
 end
 
 
 class MemberListViewCell < NSCell
   attr_writer :member
   
+  def initialize
+    @mark_width = 0
+  end
+  
   def setup(window, theme)
     @window = window
     @theme = theme
-    @mark_width = 0
     @mark_style = NSMutableParagraphStyle.alloc.init
     @mark_style.setAlignment(NSCenterTextAlignment)
     @nick_style = NSMutableParagraphStyle.alloc.init
@@ -36,7 +94,7 @@ class MemberListViewCell < NSCell
     @nick_style.setLineBreakMode(NSLineBreakByTruncatingTail)
   end
   
-  def font_changed
+  def theme_changed
     calculate_mark_width
   end
   
@@ -52,11 +110,12 @@ class MemberListViewCell < NSCell
   MARK_RIGHT_MARGIN = 2
   
   def drawInteriorWithFrame_inView(frame, view)
+    return unless @member && @theme
     if self.isHighlighted
       if NSApp.isActive && @window && @window.firstResponder == view
-        color = NSColor.whiteColor
+        color = @theme.member_list_sel_color || NSColor.alternateSelectedControlTextColor
       else
-        color = NSColor.blackColor
+        color = @theme.member_list_sel_color || NSColor.selectedControlTextColor
       end
     elsif @member.o
       color = @theme.member_list_op_color

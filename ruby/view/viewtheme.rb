@@ -65,7 +65,9 @@ class OtherViewTheme
   attr_reader :tree_sel_top_line_color, :tree_sel_bottom_line_color, :tree_sel_top_color, :tree_sel_bottom_color
   attr_reader :member_list_font, :member_list_color, :member_list_bgcolor
   attr_reader :member_list_op_color
-  
+  attr_reader :member_list_sel_color, :member_list_sel_top_line_color, :member_list_sel_bottom_line_color
+  attr_reader :member_list_sel_top_color, :member_list_sel_bottom_color
+
   def filename=(fname)
     if fname
       @filename = fname
@@ -116,6 +118,12 @@ class OtherViewTheme
     @member_list_bgcolor = load_color('member-list', 'background-color') || NSColor.whiteColor
     @member_list_color = load_color('member-list', 'color') || NSColor.blackColor
     @member_list_op_color = load_color('member-list', 'operator', 'color') || NSColor.blackColor
+    
+    @member_list_sel_color = load_color('member-list', 'selected', 'color')
+    @member_list_sel_top_line_color = load_color('member-list', 'selected', 'background', 'top-line-color')
+    @member_list_sel_bottom_line_color = load_color('member-list', 'selected', 'background', 'bottom-line-color')
+    @member_list_sel_top_color = load_color('member-list', 'selected', 'background', 'top-color')
+    @member_list_sel_bottom_color = load_color('member-list', 'selected', 'background', 'bottom-color')
   end
   
   def load_font(category)
