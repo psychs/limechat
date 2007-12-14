@@ -1,5 +1,9 @@
 2007-12-14  Satoshi Nakagawa <artension@gmail.com>
 
+	Switched to Pasternak.
+
+2007-12-14  Satoshi Nakagawa <artension@gmail.com>
+
 	Tweaked Deep Ocean theme.
 
 2007-12-14  Satoshi Nakagawa <artension@gmail.com>

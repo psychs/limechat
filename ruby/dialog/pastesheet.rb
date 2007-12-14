@@ -43,7 +43,7 @@ class PasteSheet < CocoaSheet
       set_requesting
       syntax = tag_to_syntax(@syntaxPopup.selectedItem.tag)
       @result = nil
-      @conn = PastieClient.alloc.init
+      @conn = PasternakClient.alloc.init
       @conn.delegate = self
       @conn.start(@text.textStorage.string.to_s, @nick, syntax)
     end
@@ -99,7 +99,7 @@ class PasteSheet < CocoaSheet
     'privmsg', 'notice', 'c++', 'css', 'diff',
     'html_rails', 'html', 'java', 'javascript', 'php',
     'plain_text', 'python', 'ruby', 'ruby_on_rails', 'sql',
-    'shell-unix-generic', 'perl', 'haskell', 'scheme',
+    'shell-unix-generic', 'perl', 'haskell', 'scheme', 'objective-c',
   ]
   
   def syntax_to_tag(syntax)

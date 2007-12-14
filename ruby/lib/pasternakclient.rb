@@ -14,9 +14,9 @@ class PasternakClient < NSObject
     @buf = ''
     @response = nil
     params_hash = {
-      'paste[username]' => CGI.escape(nick),
-      'paste[language]' => CGI.escape(syntax),
-      'paste[code]' => CGI.escape(content),
+      'paste[username]' => nick,
+      'paste[language]' => syntax,
+      'paste[code]' => content,
       'wants_url_response' => 'true',
       'patch_style' => 'monkeypatch',
     }
