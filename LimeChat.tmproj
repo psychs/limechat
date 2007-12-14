@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>ruby/lib/kanasupport.rb</string>
+	<string>doc/ChangeLog.txt</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -21,6 +21,36 @@
 	<integer>276</integer>
 	<key>metaData</key>
 	<dict>
+		<key>doc/ChangeLog.txt</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>3</integer>
+			</dict>
+			<key>columnSelection</key>
+			<false/>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>2</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>3</integer>
+			</dict>
+		</dict>
 		<key>resource/Theme/Deep Ocean.css</key>
 		<dict>
 			<key>caret</key>
@@ -63,44 +93,14 @@
 			<key>firstVisibleLine</key>
 			<integer>4</integer>
 		</dict>
-		<key>ruby/lib/kanasupport.rb</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>109</integer>
-			</dict>
-			<key>columnSelection</key>
-			<false/>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>51</integer>
-			<key>selectFrom</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>3</integer>
-			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>109</integer>
-			</dict>
-		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>ruby/lib/kanasupport.rb</string>
+		<string>doc/ChangeLog.txt</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{744, 84}, {1030, 1094}}</string>
+	<string>{{555, 84}, {976, 1094}}</string>
 </dict>
 </plist>

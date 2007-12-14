@@ -322,9 +322,9 @@ class IRCUnit < NSObject
   
   def send_text(chan, cmd, str)
     return false unless login? && chan
-    str.split(/\r\n|\r|\n/).each do |s|
-      next if s.empty?
-      s = to_local_encoding(to_common_encoding(s))
+    str.split(/\r\n|\r|\n/).each do |line|
+      next if line.empty?
+      s = to_local_encoding(to_common_encoding(line))
       
       loop do
         break if s.empty?
@@ -341,7 +341,7 @@ class IRCUnit < NSObject
       
       # only watch private messages
       if cmd == :privmsg
-        if s =~ /^([a-zA-Z^_`][a-zA-Z^_`-]*): /
+        if line =~ /\A([^\s:]+): /
           recipient = chan.find_member($1)
           recipient.incoming_conversation! if recipient
         end
@@ -1188,7 +1188,7 @@ class IRCUnit < NSObject
         sound = kind == :highlight ? @pref.sound.highlight : @pref.sound.channeltext
         SoundPlayer.play(sound)
         # if we're being directly spoken too then track the conversation to auto-complete
-        if text =~ /^#{@mynick}: /i
+        if text =~ /\A#{@mynick}: /i
           sender = c.find_member(nick)
           sender.outgoing_conversation! if sender
         end

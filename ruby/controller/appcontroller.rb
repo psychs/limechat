@@ -314,7 +314,7 @@ class AppController < NSObject
     downpre = pre.downcase
     downcur = current.downcase
     
-    nicks = c.members.sort_by {|i| i.weight }.map {|i| i.nick }
+    nicks = c.members.sort_by {|i| -i.weight }.map {|i| i.nick }
     nicks = nicks.select {|i| i[0...pre.size].downcase == downpre }
     nicks -= [u.mynick]
     return if nicks.empty?
