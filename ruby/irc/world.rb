@@ -408,6 +408,7 @@ class IRCWorld < NSObject
     theme = @view_theme.other
     @tree.setFont(theme.tree_font)
     @tree.theme_changed
+    @tree.setNeedsDisplay(true)
   end
   
   def change_member_list_theme
@@ -415,6 +416,7 @@ class IRCWorld < NSObject
     @member_list.setFont(theme.member_list_font)
     @member_list.tableColumns[0].dataCell.theme_changed
     @member_list.theme_changed
+    @member_list.setNeedsDisplay(true)
   end
   
   def preferences_changed

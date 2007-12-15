@@ -38,7 +38,7 @@ server-tree:
       color: '#6a6a6a'
   selected:
     active:
-      color: '#eee'
+      color: '#f5f5f5'
     inactive:
       color: '#aaa'
     background:
