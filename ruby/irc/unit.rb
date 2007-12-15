@@ -849,7 +849,11 @@ class IRCUnit < NSObject
     else
       place = "<#{self.name}> "
     end
-    nickstr = (nick && !nick.empty?) ? "(#{nick}) " : nil
+    if nick && !nick.empty?
+      nickstr = @pref.theme.nick_format.sub(/%n/, nick)
+    else
+      nickstr = nil
+    end
     if nick && eq(nick, @mynick)
       mtype = :myself
     else
@@ -884,7 +888,11 @@ class IRCUnit < NSObject
     if chname
       place = "<#{chname}> "
     end
-    nickstr = (nick && !nick.empty?) ? "(#{nick}) " : nil
+    if nick && !nick.empty?
+      nickstr = @pref.theme.nick_format.sub(/%n/, nick)
+    else
+      nickstr = nil
+    end
     if nick && eq(nick, @mynick)
       mtype = :myself
     else

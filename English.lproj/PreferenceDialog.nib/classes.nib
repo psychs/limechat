@@ -88,6 +88,8 @@
 				<string>id</string>
 				<key>theme</key>
 				<string>id</string>
+				<key>theme_nick_format</key>
+				<string>id</string>
 				<key>theme_override_log_font</key>
 				<string>id</string>
 				<key>transcript_folder</key>

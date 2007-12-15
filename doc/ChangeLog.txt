@@ -1,6 +1,10 @@
 2007-12-15  Satoshi Nakagawa <artension@gmail.com>
 
-	Moved "Reload Theme" menu item to under View.
+	Added the nickname format as an option.
+
+2007-12-15  Satoshi Nakagawa <artension@gmail.com>
+
+	Moved "Reload Theme" menu item under View.
 
 2007-12-15  Satoshi Nakagawa <artension@gmail.com>
 

@@ -25,6 +25,7 @@ class PreferenceDialog < NSObject
   ib_outlet :theme
   ib_mapped_outlet :theme_override_log_font
   ib_outlet :log_font_text, :select_log_font_button
+  ib_mapped_outlet :theme_nick_format
   
   def initialize
     @prefix = 'preferenceDialog'
@@ -39,6 +40,11 @@ class PreferenceDialog < NSObject
     onLogTranscriptChanged(nil)
     onOverrideLogFontClicked(nil)
     @font_manager.showFontDescription
+    
+    ['(%n) ', '<%n> ', '%n: '].each do |i|
+      @theme_nick_format.addItemWithObjectValue(i)
+    end
+    
     show
   end
   
@@ -173,7 +179,6 @@ class PreferenceDialog < NSObject
       SoundPlayer.play(value) unless value.empty?
     end
   end
-  
   
   private
   
