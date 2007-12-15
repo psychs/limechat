@@ -53,8 +53,6 @@
 		<dict>
 			<key>ACTIONS</key>
 			<dict>
-				<key>changeStyle</key>
-				<string>id</string>
 				<key>onAddChannel</key>
 				<string>id</string>
 				<key>onAddServer</key>
@@ -132,6 +130,8 @@
 				<key>onPasteMyAddress</key>
 				<string>id</string>
 				<key>onPreferences</key>
+				<string>id</string>
+				<key>onReloadTheme</key>
 				<string>id</string>
 				<key>onSearchWeb</key>
 				<string>id</string>

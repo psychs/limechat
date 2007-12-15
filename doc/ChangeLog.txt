@@ -1,4 +1,8 @@
-2007-12-14  Satoshi Nakagawa <artension@gmail.com>
+2007-12-15  Satoshi Nakagawa <artension@gmail.com>
+
+	Moved "Reload Theme" menu item to under View.
+
+2007-12-15  Satoshi Nakagawa <artension@gmail.com>
 
 	Tweaked Deep Ocean theme.
 

@@ -91,6 +91,8 @@ class MenuController < NSObject
       @world.console.view.canMakeTextLarger?
     when 422  # make text smaller
       @world.console.view.canMakeTextSmaller?
+    when 431  # reload theme
+      true
       
     when 501  # connect
       not_connected
@@ -438,6 +440,11 @@ class MenuController < NSObject
   end
   
   
+  def onReloadTheme(sender)
+    @world.reload_theme
+  end
+  
+  
   def onConnect(sender)
     u = @world.selunit
     return unless u
@@ -703,11 +710,6 @@ class MenuController < NSObject
     return unless u && c
     onAutoOp(sender)
     @autoop_dialog.select_item(u.id, c.name)
-  end
-  
-  
-  def changeStyle(sender)
-    @world.reload_theme
   end
   
   
