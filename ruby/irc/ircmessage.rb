@@ -38,15 +38,15 @@ class IRCSendMessage
     
     s = @command.to_s.upcase
     unless @target.empty?
-      s += ' '
-      s += @target
+      s << ' '
+      s << @target
     end
     unless @trail.empty?
-      s += ' '
-      s += @trail
+      s << ' '
+      s << @trail
     end
     s = s[0...IRC::MSG_LEN] if s.size > IRC::MSG_LEN
-    s += "\r\n"
+    s << "\r\n"
     @raw = s
     
     if @penalty == Penalty::NORMAL

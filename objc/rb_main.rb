@@ -5,6 +5,10 @@ $KCODE = 'u'
 
 require File.expand_path('../SACrashReporter/SACrashReporter.rb', __FILE__)
 
+def _(s)
+  NSLocalizedString(s)
+end
+
 def rb_main_init
   path = NSBundle.mainBundle.resourcePath.fileSystemRepresentation
   rbfiles = Dir.entries(path).select {|i| /\.rb\z/ =~ i}

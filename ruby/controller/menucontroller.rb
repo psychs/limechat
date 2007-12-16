@@ -521,7 +521,7 @@ class MenuController < NSObject
     return unless u
     config = u.config.dup
     config.channels = []
-    config.name += '_' while @world.find_unit(config.name)
+    config.name << '_' while @world.find_unit(config.name)
     channels = u.channels.select {|c| c.channel? }
     channels.each {|c| config.channels << c.config }
     n = @world.create_unit(config)

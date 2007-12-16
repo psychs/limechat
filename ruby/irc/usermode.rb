@@ -46,9 +46,9 @@ class UserMode
       if instance_variable_get('@' + name.to_s)
         unless plus
           plus = true
-          str += '+'
+          str << '+'
         end
-        str += name.to_s
+        str << name.to_s
       end
     end
     str
@@ -59,8 +59,8 @@ class UserMode
     SIMPLE_MODES.each do |name|
       to = mode.__send__(name)
       if instance_variable_get('@' + name.to_s) != to
-        str += to ? '+' : '-'
-        str += name.to_s
+        str << (to ? '+' : '-')
+        str << name.to_s
       end
     end
     str

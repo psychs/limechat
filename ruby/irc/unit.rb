@@ -203,6 +203,7 @@ class IRCUnit < NSObject
     @reconnect_timer = RECONNECT_TIME
     @retry = true
     @retry_timer = RETRY_TIME
+    @nicklen = IRC::NICK_LEN
     
     @connecting = true
     @conn = IRCSocket.new
@@ -531,16 +532,16 @@ class IRCUnit < NSObject
   def send_ctcp_query(target, cmd, body=nil)
     cmd = cmd.to_s.upcase
     s = ":\x01#{cmd}"
-    s += " #{body}" if body && !body.empty?
-    s += "\x01"
+    s << " #{body}" if body && !body.empty?
+    s << "\x01"
     send(:privmsg, target, s)
   end
   
   def send_ctcp_reply(target, cmd, body=nil)
     cmd = cmd.to_s.upcase
     s = ":\x01#{cmd}"
-    s += " #{body}" if body && !body.empty?
-    s += "\x01"
+    s << " #{body}" if body && !body.empty?
+    s << "\x01"
     send(:notice, target, s)
   end
   
@@ -725,10 +726,8 @@ class IRCUnit < NSObject
   
   def ircsocket_on_connect
     print_system_both(self, 'Connected')
-    @connecting = false
-    @connected = true
-    @login = false
-    @reconnect = true
+    @connecting = @login = false
+    @connected = @reconnect = true
     @encoding = @config.encoding
     @inputnick = @sentnick = @mynick = @config.nick
     mymode = 0
@@ -751,20 +750,20 @@ class IRCUnit < NSObject
       receive_numeric_reply(m)
     else
       case m.command
-        when :privmsg; receive_privmsg(m)
-        when :notice; receive_notice(m)
-        when :join; receive_join(m)
-        when :part; receive_part(m)
-        when :kick; receive_kick(m)
-        when :quit; receive_quit(m)
-        when :kill; receive_kill(m)
-        when :nick; receive_nick(m)
-        when :mode; receive_mode(m)
-        when :topic; receive_topic(m)
-        when :invite; receive_invite(m)
-        when :ping; receive_ping(m)
-        when :error; receive_error(m)
-        when :wallops; receive_wallops(m)
+      when :privmsg; receive_privmsg(m)
+      when :notice; receive_notice(m)
+      when :join; receive_join(m)
+      when :part; receive_part(m)
+      when :kick; receive_kick(m)
+      when :quit; receive_quit(m)
+      when :kill; receive_kill(m)
+      when :nick; receive_nick(m)
+      when :mode; receive_mode(m)
+      when :topic; receive_topic(m)
+      when :invite; receive_invite(m)
+      when :ping; receive_ping(m)
+      when :error; receive_error(m)
+      when :wallops; receive_wallops(m)
       end
     end
   end
@@ -810,13 +809,11 @@ class IRCUnit < NSObject
   end
   
   def detect_myaddress_from_nic
-    begin
-      addr = Socket.getaddrinfo(Socket.gethostname, nil)
-      addr = addr.find {|i| !(/\.local$/ =~ i[2])}
-      Resolver.resolve(self, addr[2]) if addr
-    rescue
-      @myaddress = nil
-    end
+    addr = Socket.getaddrinfo(Socket.gethostname, nil)
+    addr = addr.find {|i| !(/\.local$/ =~ i[2])}
+    Resolver.resolve(self, addr[2]) if addr
+  rescue
+    @myaddress = nil
   end
   
   # print
@@ -826,6 +823,10 @@ class IRCUnit < NSObject
     channel ||= self
     return false if !channel.unit? && !channel.config.console
     channel != @world.selected || !channel.log.viewing_bottom?
+  end
+  
+  def now
+    Time.now.strftime('%H:%M')
   end
   
   def print_console(channel, kind, nick, text=nil)
@@ -843,14 +844,13 @@ class IRCUnit < NSObject
     else
       chname = channel.name
     end
-    place = nil
     if chname && chname.channelname?
       place = "<#{self.name}:#{chname}> "
     else
       place = "<#{self.name}> "
     end
     if nick && !nick.empty?
-      nickstr = @pref.theme.nick_format.sub(/%n/, nick)
+      nickstr = @pref.theme.nick_format.gsub(/%n/, nick)
     else
       nickstr = nil
     end
@@ -884,12 +884,13 @@ class IRCUnit < NSObject
     else
       chname = nil
     end
-    place = nil
     if chname
       place = "<#{chname}> "
+    else
+      place = nil
     end
     if nick && !nick.empty?
-      nickstr = @pref.theme.nick_format.sub(/%n/, nick)
+      nickstr = @pref.theme.nick_format.gsub(/%n/, nick)
     else
       nickstr = nil
     end
@@ -944,13 +945,8 @@ class IRCUnit < NSObject
     print_channel(self, command, text)
   end
   
-  def now
-    Time.now.strftime('%H:%M')
-  end
-  
   def set_keyword_state(t)
     return if NSApp.isActive && @world.selected == t
-    #return if !t.unit? && !t.config.keyword
     return if t.keyword
     t.keyword = true
     reload_tree
@@ -959,7 +955,6 @@ class IRCUnit < NSObject
   
   def set_unread_state(t)
     return if NSApp.isActive && @world.selected == t
-    #return if !t.unit? && !t.config.unread
     return if t.unread
     t.unread = true
     reload_tree
@@ -983,10 +978,10 @@ class IRCUnit < NSObject
     else
       name
     end
-    nickstr = @pref.theme.nick_format.sub(/%n/, nick)
+    nickstr = @pref.theme.nick_format.gsub(/%n/, nick)
     desc = "#{nickstr}#{text}"
     context = "#{@id}"
-    context += ";#{c.id}" if c
+    context << ";#{c.id}" if c
     @world.notify_on_growl(kind, title, desc, context)
   end
   
@@ -1008,7 +1003,7 @@ class IRCUnit < NSObject
       return
     end
     context = "#{@id}"
-    context += ";#{c.id}" if c
+    context << ";#{c.id}" if c
     @world.notify_on_growl(kind, title, desc, context)
   end
   
@@ -1108,10 +1103,10 @@ class IRCUnit < NSObject
       org_target = target
       org_pass = pass
       
-      target += ',' unless target.empty?
-      target += c.name
-      pass += ',' unless pass.empty?
-      pass += c.password
+      target << ',' unless target.empty?
+      target << c.name
+      pass << ',' unless pass.empty?
+      pass << c.password
       
       common = to_common_encoding(target + pass)
       if common.size > IRC::BODY_LEN
@@ -1393,9 +1388,7 @@ class IRCUnit < NSObject
       # channel mode
       c = find_channel(target)
       if c
-        a = c.mode.a
         c.mode.update(modestr)
-        #c.clear_members if !a && c.mode.a
         str = modestr.dup
         plus = false
         until str.empty?
@@ -1482,28 +1475,31 @@ class IRCUnit < NSObject
     nick = m.sender_nick
     text = text.dup
     command = text.token!
+    return if command.empty?
     cmd = command.downcase.to_sym
     case cmd
     when :action
       receive_text(m, :action, text)
     when :dcc
       kind = text.token!
-      case kind.downcase.to_sym
-      when :send
-        fname = text.token!
-        addr = text.token!
-        port = text.token!.to_i
-        size = text.token!.to_i
-        ver = text.token!.to_i
-        lfname = text
-        if ver >= 2
-          lfname[0] = '' if lfname[0] == ?:
-          fname = lfname unless lfname.empty?
+      unless kind.empty?
+        case kind.downcase.to_sym
+        when :send
+          fname = text.token!
+          addr = text.token!
+          port = text.token!.to_i
+          size = text.token!.to_i
+          ver = text.token!.to_i
+          lfname = text
+          if ver >= 2
+            lfname[0] = '' if lfname[0] == ?:
+            fname = lfname unless lfname.empty?
+          end
+          receive_dcc_send(m, fname, addr, port, size, ver)
+          return
         end
-        receive_dcc_send(m, fname, addr, port, size, ver)
-      else
-        print_both(self, :reply, "*CTCP-query unknown(DCC #{kind}) from #{nick} : #{text}")
       end
+      print_both(self, :reply, "*CTCP-query unknown(DCC #{kind}) from #{nick} : #{text}")
     else
       if @last_ctcp && (Time.now - @last_ctcp < 4)
         @last_ctcp = Time.now
@@ -1518,11 +1514,11 @@ class IRCUnit < NSObject
       when :time
         send_ctcp_reply(nick, command, Time.now.to_s)
       when :version
-        send_ctcp_reply(nick, command, NSLocalizedString('AppVersion').to_s)
+        send_ctcp_reply(nick, command, _('AppVersion').to_s)
       when :userinfo
         send_ctcp_reply(nick, command, @config.userinfo)
       when :clientinfo
-        send_ctcp_reply(nick, command, NSLocalizedString('CtcpClientInfo').to_s)
+        send_ctcp_reply(nick, command, _('CtcpClientInfo').to_s)
       else
         print_both(self, :reply, "*CTCP-query unknown(#{command}) from #{nick}")
         return
@@ -1688,12 +1684,8 @@ class IRCUnit < NSObject
       return if modestr == '+'
       c = find_channel(chname)
       if c && c.active?
-        a = c.mode.a
         c.mode.clear
         c.mode.update(modestr)
-        if c.mode.a && !a
-          #c.clear_members
-        end
         update_channel_title(c)
       end
       print_both(c || chname, :reply, "*Mode: #{modestr}")
@@ -1874,7 +1866,8 @@ when 437	#ERR_UNAVAILRESOURCE 2.10
 when 432	#ERR_ERRONEUSNICKNAME 
 when 433	#ERR_NICKNAMEINUSE
 when 436	#ERR_NICKCOLLISION
-if (Status.State == ON) {
+
+if on  
 when 405	# ERR_TOOMANYCHANNELS
 when 471	# ERR_CHANNELISFULL
 when 473	# ERR_INVITEONLYCHAN
@@ -1882,11 +1875,10 @@ when 474	# ERR_BANNEDFROMCHAN
 when 475	# ERR_BADCHANNELKEY
 when 476	# ERR_BADCHANMASK
 when 437	# ERR_UNAVAILRESOURCE 2.10
-}
 =end
   
   def receive_nick_collision(m)
-    if @sentnick.size >= IRC::NICK_LEN
+    if @sentnick.size >= @nicklen
       if /^(.+)[^_](_*)$/ =~ @sentnick
         head, tail = $1, $2
         @sentnick = head + tail + '_'

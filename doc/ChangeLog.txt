@@ -1,7 +1,7 @@
 2007-12-17  Satoshi Nakagawa <artension@gmail.com>
 
 	Improved SACrashReporter to ignore SignalException.
-	Removed an dataSource reference from a combo box on the preferences dialog.
+	Removed a dataSource reference from a combo box on the preferences dialog.
 
 2007-12-17  Satoshi Nakagawa <artension@gmail.com>
 

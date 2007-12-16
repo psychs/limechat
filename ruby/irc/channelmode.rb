@@ -72,25 +72,25 @@ class ChannelMode
     SIMPLE_MODES.each do |name|
       to = mode.__send__(name)
       if instance_variable_get('@' + name.to_s) != to
-        str += to ? '+' : '-'
-        str += name.to_s
+        str << (to ? '+' : '-')
+        str << name.to_s
       end
     end
     if @l != mode.l
       if mode.l > 0
-        str += '+l'
-        trail += " #{mode.l}"
+        str << '+l'
+        trail << " #{mode.l}"
       else
-        str += '-l'
+        str << '-l'
       end
     end
     if @k != mode.k
       if @k.empty?
-        str += '+k'
-        trail += " #{mode.k}"
+        str << '+k'
+        trail << " #{mode.k}"
       else
-        str += '-k'
-        trail += " #{@k}"
+        str << '-k'
+        trail << " #{@k}"
         unless mode.k.empty?
           return [str + trail, "+k #{mode.k}"]
         end
@@ -141,18 +141,18 @@ class ChannelMode
       if instance_variable_get('@' + name.to_s)
         unless plus
           plus = true
-          str += '+'
+          str << '+'
         end
-        str += name.to_s
+        str << name.to_s
       end
     end
     if @l > 0
-      str += "+l"
-      trail += " #{@l}"
+      str << "+l"
+      trail << " #{@l}"
     end
     unless @k.empty?
-      str += '+k'
-      trail += " #{@k}" unless mask
+      str << '+k'
+      trail << " #{@k}" unless mask
     end
     str + trail
   end

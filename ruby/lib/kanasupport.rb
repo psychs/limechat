@@ -27,7 +27,7 @@ module KanaSupport
             when ?I,?i
               enc = :jisroman
               seq = true
-              s += "\x1b(J"
+              s << "\x1b(J"
             end
           end
           if seq
@@ -40,7 +40,7 @@ module KanaSupport
           c |= 0x80 if 0x21 <= c && c <= 0x5f
         end
         
-        s += c.chr
+        s << c.chr
         i += 1
       end      
       s
@@ -70,7 +70,7 @@ module KanaSupport
             when ?J,?j
               enc = :jisroman
               seq = true
-              s += "\x1b(I"
+              s << "\x1b(I"
             when ?I,?i
               enc = :jiskana
             end
@@ -100,7 +100,7 @@ module KanaSupport
           c &= 0x7f if 0xa1 <= c && c <= 0xdf
         end
         
-        s += c.chr
+        s << c.chr
         i += 1
       end
       s

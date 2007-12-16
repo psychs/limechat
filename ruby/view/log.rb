@@ -103,16 +103,17 @@ class LogController < NSObject
     end
     
     s = ''
-    s += %Q[<span class="time">#{h(line.time)}</span>] if line.time
-    s += %Q[<span class="place">#{h(line.place)}</span>] if line.place
+    s << %Q[<span class="time">#{h(line.time)}</span>] if line.time
+    s << %Q[<span class="place">#{h(line.place)}</span>] if line.place
     if line.nick
       if @console
-        s += %Q[<span class="nick_#{line.member_type}">#{h(line.nick)}</span>]
+        s << %Q[<span class="nick_#{line.member_type}">#{h(line.nick)}</span>]
       else
-        s += %Q[<span class="nick_#{line.member_type}" oncontextmenu="on_nick_contextmenu()">#{h(line.nick)}</span>]
+        s << %Q[<span class="nick_#{line.member_type}" oncontextmenu="on_nick_contextmenu()">#{h(line.nick)}</span>]
       end
     end
-    s += %Q[<span class="#{line.line_type}">#{body}</span>]
+    s << %Q[<span class="#{line.line_type}">#{body}</span>]
+    
     attrs = {}
     alternate = @line_number % 2 == 0 ? 'even_line' : 'odd_line'
     attrs['class'] = "line #{alternate}"

@@ -59,82 +59,82 @@ module LogRenderer
               else
                 if e[:off]
                   effect = nil
-                  t += render_end_tag(:effect)
+                  t << render_end_tag(:effect)
                 else
-                  t += render_end_tag(:effect) if effect
+                  t << render_end_tag(:effect) if effect
                   effect = e
-                  t += render_start_tag(e)
+                  t << render_start_tag(e)
                 end
               end
             when :urlend
               if url
                 url = nil
-                t += render_end_tag(:url)
+                t << render_end_tag(:url)
               end
               if !effect && pending_effect
                 effect = pending_effect
                 pending_effect = nil
-                t += render_start_tag(effect)
+                t << render_start_tag(effect)
               end
             when :addrend
               if addr
                 addr = nil
-                t += render_end_tag(:address)
+                t << render_end_tag(:address)
               end
               if !effect && pending_effect
                 effect = pending_effect
                 pending_effect = nil
-                t += render_start_tag(effect)
+                t << render_start_tag(effect)
               end
             when :keyend
               if key
                 key = nil
-                t += render_end_tag(:key)
+                t << render_end_tag(:key)
               end
               if !effect && pending_effect
                 effect = pending_effect
                 pending_effect = nil
-                t += render_start_tag(effect)
+                t << render_start_tag(effect)
               end
             when :urlstart
               if effect
                 pending_effect = effect
                 effect = nil
-                t += render_end_tag(:effect)
+                t << render_end_tag(:effect)
               end
-              t += render_end_tag(:url) if url
+              t << render_end_tag(:url) if url
               url = e
-              t += render_start_tag(e)
+              t << render_start_tag(e)
             when :addrstart
               if effect
                 pending_effect = effect
                 effect = nil
-                t += render_end_tag(:effect)
+                t << render_end_tag(:effect)
               end
-              t += render_end_tag(:address) if addr
+              t << render_end_tag(:address) if addr
               addr = e
-              t += render_start_tag(e)
+              t << render_start_tag(e)
             when :keystart
               if effect
                 pending_effect = effect
                 effect = nil
-                t += render_end_tag(:effect)
+                t << render_end_tag(:effect)
               end
-              t += render_end_tag(:key) if key
+              t << render_end_tag(:key) if key
               key = e
-              t += render_start_tag(e)
+              t << render_start_tag(e)
             end
           end
-          s += t
+          s << t
         end
         
         pos += c.size
-        s += escape_char(c)
+        s << escape_char(c)
       end
     
-      s += render_end_tag(:url) if url
-      s += render_end_tag(:key) if key
-      s += render_end_tag(:effect) if effect
+      s << render_end_tag(:url) if url
+      s << render_end_tag(:key) if key
+      s << render_end_tag(:effect) if effect
       [s, !keywords.empty?]
     end
     
@@ -146,12 +146,12 @@ module LogRenderer
       prev = nil
       s.each_char do |c|
         if c == ' ' && prev == ' '
-          a += '&nbsp;'
+          a << '&nbsp;'
           prev = nil
           next
         end
         prev = c
-        a += escape_char(c)
+        a << escape_char(c)
       end
       a
     end
@@ -209,23 +209,23 @@ module LogRenderer
       when :keystart; '<strong class="highlight">'
       when :effect
         s = '<span class="effect" style="'
-        s += 'font-weight:bold;' if e[:bold]
-        s += 'text-decoration:underline;' if e[:underline]
-        s += 'font-style:italic;' if e[:reverse]
+        s << 'font-weight:bold;' if e[:bold]
+        s << 'text-decoration:underline;' if e[:underline]
+        s << 'font-style:italic;' if e[:reverse]
       
         text = e[:text]
         if text
           text = num_to_color(text)
-          s += "color:#{text};"
+          s << "color:#{text};"
         end
       
         back = e[:back]
         if back
           back = num_to_color(back)
-          s += "background-color:#{back};"
+          s << "background-color:#{back};"
         end
       
-        s += '">'
+        s << '">'
         s
       end
     end
@@ -262,7 +262,7 @@ module LogRenderer
           back = back.to_i if back
           effects << { :type => :color, :pos => pos, :serial => n, :text => text, :back => back }
         end
-        b += s[0...left]
+        b << s[0...left]
         s[0...right] = ''
         offset += left
         n += 1
