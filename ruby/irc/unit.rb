@@ -341,7 +341,7 @@ class IRCUnit < NSObject
       
       # only watch private messages
       if cmd == :privmsg
-        if line =~ /\A([^\s:]+): /
+        if line =~ /\A([^\s:]+): / || line =~ /\A@([^\s:]+) /
           recipient = chan.find_member($1)
           recipient.incoming_conversation! if recipient
         end
@@ -1196,8 +1196,9 @@ class IRCUnit < NSObject
         notify_text(kind, c || target, nick, text)
         sound = kind == :highlight ? @pref.sound.highlight : @pref.sound.channeltext
         SoundPlayer.play(sound)
-        # if we're being directly spoken too then track the conversation to auto-complete
-        if text =~ /\A#{@mynick}: /i
+        
+        # if we're being directly spoken to then track the conversation to auto-complete
+        if text =~ /\A#{@mynick}: /i || text =~ /\A@#{@mynick} /i
           sender = c.find_member(nick)
           sender.outgoing_conversation! if sender
         end
