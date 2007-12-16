@@ -28,14 +28,12 @@ class LogController < NSObject
   attr_writer :unit, :menu, :url_menu, :addr_menu, :member_menu, :keyword, :theme, :override_font
   attr_reader :view
   
-  BOTTOM_EPSILON = 20
-  
   def initialize
     @bottom = true
     @lines = []
     @line_number = 0
     @loaded = false
-    @max_lines = 300
+    @max_lines = 500
   end
   
   def setup(console, initial_bgcolor)
@@ -76,10 +74,11 @@ class LogController < NSObject
     body.setValue_forKey(scrollheight, 'scrollTop')
   end
   
+  BOTTOM_EPSILON = 20
+  
   def viewing_bottom?
     return true unless @loaded
     body = @view.mainFrame.DOMDocument.body
-    #viewheight = @view.mainFrame.frameView.documentView.visibleRect.height.to_i
     viewheight = @view.frame.height.to_i rescue 0
     scrollheight = body.valueForKey('scrollHeight').to_i
     scrolltop = body.valueForKey('scrollTop').to_i
@@ -339,11 +338,11 @@ class LogController < NSObject
     body_class = @console ? 'console' : 'normal'
     style = @theme.content || ''
     if @override_font
-      family = @override_font[0]
-      size = @override_font[1] * 72.0 / 96.0
+      name = @override_font[0]
+      size = @override_font[1] * (72.0 / 96.0)
       override_style = <<-EOM
         html {
-          font-family: '#{family}';
+          font-family: '#{name}';
           font-size: #{size}pt;
         }
       EOM

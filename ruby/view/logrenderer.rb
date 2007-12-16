@@ -38,110 +38,110 @@ module LogRenderer
         body = escape_str(body)
         return [body, false]
       end
-
+      
       effect = nil
       url = nil
       addr = nil
       key = nil
       pending_effect = nil
-    
+      
+      top_event = events[0]
+      
       s = ''
       pos = 0
-      body.each_char do |c|
-        evs = events.select {|i| i[:pos] == pos}
-        unless evs.empty?
-          t = ''
-          evs.each do |e|
-            case e[:kind]
-            when :effect
-              if url || key
-                pending_effect = e[:off] ? nil : e
-              else
-                if e[:off]
-                  effect = nil
-                  t << render_end_tag(:effect)
-                else
-                  t << render_end_tag(:effect) if effect
-                  effect = e
-                  t << render_start_tag(e)
-                end
-              end
-            when :urlend
-              if url
-                url = nil
-                t << render_end_tag(:url)
-              end
-              if !effect && pending_effect
-                effect = pending_effect
-                pending_effect = nil
-                t << render_start_tag(effect)
-              end
-            when :addrend
-              if addr
-                addr = nil
-                t << render_end_tag(:address)
-              end
-              if !effect && pending_effect
-                effect = pending_effect
-                pending_effect = nil
-                t << render_start_tag(effect)
-              end
-            when :keyend
-              if key
-                key = nil
-                t << render_end_tag(:key)
-              end
-              if !effect && pending_effect
-                effect = pending_effect
-                pending_effect = nil
-                t << render_start_tag(effect)
-              end
-            when :urlstart
-              if effect
-                pending_effect = effect
-                effect = nil
-                t << render_end_tag(:effect)
-              end
-              t << render_end_tag(:url) if url
-              url = e
-              t << render_start_tag(e)
-            when :addrstart
-              if effect
-                pending_effect = effect
-                effect = nil
-                t << render_end_tag(:effect)
-              end
-              t << render_end_tag(:address) if addr
-              addr = e
-              t << render_start_tag(e)
-            when :keystart
-              if effect
-                pending_effect = effect
-                effect = nil
-                t << render_end_tag(:effect)
-              end
-              t << render_end_tag(:key) if key
-              key = e
+      
+      events.each do |e|
+        n = e[:pos]
+        s << escape_str(body[pos...n]) unless url && url[:mute_text]
+        pos = n
+        
+        t = ''
+        case e[:kind]
+        when :effect
+          if url || key
+            pending_effect = e[:off] ? nil : e
+          else
+            if e[:off]
+              effect = nil
+              t << render_end_tag(:effect)
+            else
+              t << render_end_tag(:effect) if effect
+              effect = e
               t << render_start_tag(e)
             end
           end
-          s << t
+        when :urlend
+          if url
+            url = nil
+            t << render_end_tag(:url)
+          end
+          if !effect && pending_effect
+            effect = pending_effect
+            pending_effect = nil
+            t << render_start_tag(effect)
+          end
+        when :addrend
+          if addr
+            addr = nil
+            t << render_end_tag(:address)
+          end
+          if !effect && pending_effect
+            effect = pending_effect
+            pending_effect = nil
+            t << render_start_tag(effect)
+          end
+        when :keyend
+          if key
+            key = nil
+            t << render_end_tag(:key)
+          end
+          if !effect && pending_effect
+            effect = pending_effect
+            pending_effect = nil
+            t << render_start_tag(effect)
+          end
+        when :urlstart
+          if effect
+            pending_effect = effect
+            effect = nil
+            t << render_end_tag(:effect)
+          end
+          t << render_end_tag(:url) if url
+          url = e
+          t << render_start_tag(e)
+        when :addrstart
+          if effect
+            pending_effect = effect
+            effect = nil
+            t << render_end_tag(:effect)
+          end
+          t << render_end_tag(:address) if addr
+          addr = e
+          t << render_start_tag(e)
+        when :keystart
+          if effect
+            pending_effect = effect
+            effect = nil
+            t << render_end_tag(:effect)
+          end
+          t << render_end_tag(:key) if key
+          key = e
+          t << render_start_tag(e)
         end
-        
-        pos += c.size
-        s << escape_char(c)
+        s << t
       end
-    
+      
+      s << escape_str(body[pos...body.size])
       s << render_end_tag(:url) if url
       s << render_end_tag(:key) if key
       s << render_end_tag(:effect) if effect
       [s, !keywords.empty?]
     end
     
-    
     private
     
     def escape_str(s)
+      return '' if !s || s.empty?
       a = ''
       prev = nil
       s.each_char do |c|
@@ -151,20 +151,16 @@ module LogRenderer
           next
         end
         prev = c
-        a << escape_char(c)
+        a << case c
+          when '<'; '&lt;'
+          when '>'; '&gt;'
+          when '&'; '&amp;'
+          when '"'; '&quot;'
+          when "\t"; '&nbsp;&nbsp;&nbsp;&nbsp;'
+          else c
+        end
       end
       a
-    end
-    
-    def escape_char(c)
-      case c
-      when '<'; '&lt;'
-      when '>'; '&gt;'
-      when '&'; '&amp;'
-      when '"'; '&quot;'
-      when "\t"; '&nbsp;&nbsp;&nbsp;&nbsp;'
-      else c
-      end
     end
     
     COLOR_MAP = {
@@ -196,11 +192,20 @@ module LogRenderer
         %Q[<a class="url" href="#{e[:url]}" oncontextmenu="on_url_contextmenu()">]
 =begin
         url = e[:url]
-        if /^http:\/\/[a-z]+\.youtube\.com\/watch\?v=([a-zA-Z0-9]+)$/ =~ url
+        if /^http:\/\/[a-z]+\.youtube\.com\/watch\?v=([-_a-z0-9]+)$/i =~ url
           id = $1
-          %Q[<object width="425" height="350"><param name="movie" value="#{url}"></param><param name="wmode" value="transparent"></param><embed src="http://www.youtube.com/v/#{id}" type="application/x-shockwave-flash" wmode="transparent" width="425" height="350"></embed></object>]
-        elsif /\.(jpg|jpeg|gif|png)$/ =~ url
-          %Q[<a class="url" href="#{e[:url]}" oncontextmenu="on_url_contextmenu()"><img src="#{url}"/>]
+          e[:mute_text] = true
+          <<-EOL
+            <div style="margin:1em;">
+              <object width="425" height="350">
+                <param name="movie" value="#{url}"></param>
+                <param name="wmode" value="transparent"></param>
+                <embed src="http://www.youtube.com/v/#{id}" type="application/x-shockwave-flash" wmode="transparent" width="425" height="350"></embed>
+              </object>
+            </div>
+          EOL
+        elsif /\.(jpg|jpeg|gif|png)$/i =~ url
+          %Q[<div style="margin:1em;"><a class="url" href="#{e[:url]}" oncontextmenu="on_url_contextmenu()"><img src="#{url}"/></div>]
         else
           %Q[<a class="url" href="#{e[:url]}" oncontextmenu="on_url_contextmenu()">]
         end
@@ -447,7 +452,9 @@ module LogRenderer
       #
       events.sort! do |a,b|
         cond = a[:pos] <=> b[:pos]
-        if cond == 0
+        if cond != 0
+          cond
+        else
           if a[:kind] == b[:kind]
             if a[:kind] == :effect
               a[:serial] <=> b[:serial]
@@ -471,8 +478,6 @@ module LogRenderer
               1
             end
           end
-        else
-          cond
         end
       end
       
