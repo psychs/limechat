@@ -983,7 +983,8 @@ class IRCUnit < NSObject
     else
       name
     end
-    desc = "(#{nick}) #{text}"
+    nickstr = @pref.theme.nick_format.sub(/%n/, nick)
+    desc = "#{nickstr}#{text}"
     context = "#{@id}"
     context += ";#{c.id}" if c
     @world.notify_on_growl(kind, title, desc, context)

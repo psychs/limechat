@@ -1,3 +1,7 @@
+2007-12-16  Satoshi Nakagawa <artension@gmail.com>
+
+	Changed to apply the nickname format setting to Growl notifications.
+
 2007-12-15  Satoshi Nakagawa <artension@gmail.com>
 
 	Added the nickname format as an option.
