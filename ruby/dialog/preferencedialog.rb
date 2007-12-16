@@ -41,9 +41,7 @@ class PreferenceDialog < NSObject
     onOverrideLogFontClicked(nil)
     @font_manager.showFontDescription
     
-    ['(%n) ', '<%n> ', '%n: '].each do |i|
-      @theme_nick_format.addItemWithObjectValue(i)
-    end
+    ['(%n) ', '<%n> ', '%n: '].each {|i| @theme_nick_format.addItemWithObjectValue(i) }
     
     show
   end
