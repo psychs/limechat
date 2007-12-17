@@ -1,5 +1,9 @@
 2007-12-17  Satoshi Nakagawa <artension@gmail.com>
 
+	Improved message classes for better message handling.
+
+2007-12-17  Satoshi Nakagawa <artension@gmail.com>
+
 	Improved log rendering performance.
 	Changed max lines of log views to 300.
 

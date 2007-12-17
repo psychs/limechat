@@ -21,38 +21,49 @@ module Penalty
   TEXT_SIZE_FACTOR = 120
 end
 
+
 class IRCSendMessage
-  attr_accessor :command, :target, :trail, :penalty, :raw, :built
+  attr_reader :command, :params, :built
+  attr_accessor :penalty, :complete_colon
   
-  def initialize
+  def initialize(command, *args)
     @built = false
-    @command = ''
-    @target = ''
-    @trail = ''
+    @command = command
+    @params = args.select {|i| i}
     @penalty = Penalty::NORMAL
-    @raw = ''
+    @raw = nil
+    @complete_colon = true
   end
   
   def build
     return if @built
     
+    force_complete_colon = false
+    case @command
+    when :privmsg,:notice
+      force_complete_colon = true
+    when :nick,:mode,:join,:names,:who,:list,:invite,:whois,:whowas,:ison
+      @complete_colon = false
+    end
+    
     s = @command.to_s.upcase
-    unless @target.empty?
+    if @params.size > 0
+      if @params.size > 1
+        s << ' '
+        s << @params[0...-1].join(' ')
+      end
       s << ' '
-      s << @target
+      last = @params.last
+      s << ':' if force_complete_colon || @complete_colon && (last.size == 0 || last =~ /^:|\s/)
+      s << last
     end
-    unless @trail.empty?
-      s << ' '
-      s << @trail
-    end
-    s = s[0...IRC::MSG_LEN] if s.size > IRC::MSG_LEN
-    s << "\r\n"
+    s << "\x0d\x0a"
     @raw = s
     
     if @penalty == Penalty::NORMAL
       case @command.to_sym
-      when :privmsg,:notice; @penalty += s.size / Penalty::TEXT_SIZE_FACTOR
-      when :mode; @penalty = ChannelMode.calc_penalty(@trail)
+      when :privmsg,:notice; @penalty += @raw.size / Penalty::TEXT_SIZE_FACTOR
+      when :mode; @penalty = ChannelMode.calc_penalty(@params[1])
       when :part; @penalty = Penalty::PART
       when :topic; @penalty = Penalty::TOPIC
       when :kick; @penalty = Penalty::KICK_BASE + Penalty::KICK_OPT
@@ -63,12 +74,10 @@ class IRCSendMessage
     @built = true
   end
   
-  def map!
+  def apply!
     if block_given?
-      #@command = yield @command
-      @target = yield @target
-      @trail = yield @trail
-      @raw = yield @raw
+      @params.map! {|i| yield i}
+      @raw = yield @raw if @raw
     end
     self
   end
@@ -79,8 +88,9 @@ class IRCSendMessage
   end
 end
 
+
 class IRCReceiveMessage
-  attr_accessor :raw, :sender, :sender_nick, :sender_username, :sender_address, :command, :numeric_reply
+  attr_reader :sender, :sender_nick, :sender_username, :sender_address, :command, :numeric_reply
   
   def initialize(str)
     @raw = str.dup
@@ -94,10 +104,10 @@ class IRCReceiveMessage
     
     str = str.dup
     s = str.token!
-    return self if s.empty?
+    return if s.empty?
     if /^:([^ ]+)/ =~ s
       @sender = $1
-      if /([^ !@]+)!([^ !@]+)@([^ !@]+)/ =~ @sender
+      if /([^!@]+)!([^!@]+)@([^!@]+)/ =~ @sender
         @sender_nick = $1
         @sender_username = $2
         @sender_address = $3
@@ -105,21 +115,20 @@ class IRCReceiveMessage
         @sender_nick = @sender.dup
       end
       s = str.token!
-      return self if s.empty?
+      return if s.empty?
     end
     
     if /^\d+$/ =~ s
-      @command = s
+      @command = s.to_sym
       @numeric_reply = s.to_i
     else
       @command = s.downcase.to_sym
     end
     
-    15.times do
+    loop do
       break if str.empty?
       if /^:/ =~ str
-        @params << str[1..-1]
-        str = ''
+        @params << $~.post_match
         break
       end
       s = str.token!
@@ -127,7 +136,6 @@ class IRCReceiveMessage
       s.rstrip!
       @params << s
     end
-    @params << str unless str.empty?
   end
   
   def [](n)
@@ -143,14 +151,13 @@ class IRCReceiveMessage
     end
   end
   
-  def map!
+  def apply!
     if block_given?
       @raw = yield @raw
       @sender = yield @sender
       @sender_nick = yield @sender_nick
       @sender_username = yield @sender_username
       @sender_address = yield @sender_address
-      #@command = yield @command
       @params.map! {|i| yield i }
     end
     self

@@ -609,7 +609,7 @@ class MenuController < NSObject
     @comment_sheet = nil
     u, c = @world.find_by_id(sender.uid, sender.cid)
     return unless u && c
-    u.send(:topic, c.name, ":#{str}")
+    u.send(:topic, c.name, str)
   end
   
   def topicPrompt_onCancel(sender)

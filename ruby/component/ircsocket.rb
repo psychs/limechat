@@ -6,8 +6,6 @@ require 'timer'
 class IRCSocket
   attr_accessor :delegate, :host, :port
   
-  PENALTY_THREASHOLD = 3
-  
   def initialize
     @sock = TcpClient.alloc.init
     @sock.delegate = self
@@ -95,6 +93,8 @@ class IRCSocket
   
   private
   
+  PENALTY_THREASHOLD = 3
+  
   def try_to_send
     return if @sending
     return if @penalty >= PENALTY_THREASHOLD
@@ -103,7 +103,7 @@ class IRCSocket
     m = @sendq.shift
     m.build
     @penalty += m.penalty
-    @sock.write(m.raw)
+    @sock.write(m.to_s)
     @delegate.ircsocket_on_send(m) if @delegate
   end
 end

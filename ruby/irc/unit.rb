@@ -228,7 +228,7 @@ class IRCUnit < NSObject
     @reconnect = false
     @conn.clear_send_queue
     comment = @config.leaving_comment unless comment
-    send(:quit, ":#{comment}")
+    send(:quit, comment)
   end
   
   def cancel_reconnect
@@ -251,7 +251,7 @@ class IRCUnit < NSObject
   def part_channel(channel, comment=nil)
     return unless login?
     return unless channel.active?
-    comment = ":#{@config.leaving_comment}" if !comment && @config.leaving_comment
+    comment = @config.leaving_comment if !comment && @config.leaving_comment
     send(:part, channel.name, comment)
   end
   
@@ -322,7 +322,7 @@ class IRCUnit < NSObject
   end
   
   def send_text(chan, cmd, str)
-    return false unless login? && chan
+    return false unless login? && chan && cmd && str && !str.include?("\0")
     str.split(/\r\n|\r|\n/).each do |line|
       next if line.empty?
       s = to_local_encoding(to_common_encoding(line))
@@ -337,7 +337,7 @@ class IRCUnit < NSObject
           command = :privmsg
           t = "\x01ACTION #{t}\x01"
         end
-        send(command, chan.name, ":#{t}")
+        send(command, chan.name, t)
       end
       
       # only watch private messages
@@ -352,9 +352,10 @@ class IRCUnit < NSObject
   end
   
   def send_command(s)
-    return false unless connected?
+    return false unless connected? && s && !s.include?("\0")
+    s = s.dup
     command = s.token!
-    return false if command.empty? || command.include?("\0")
+    return false if command.empty?
     cmd = command.downcase.to_sym
     target = nil
     
@@ -382,7 +383,12 @@ class IRCUnit < NSObject
       target = s.token!
     end
     
-    s[0] = '' if s[0] == ?:
+    if s[0] == ?:
+      cut_colon = true
+      s[0] = ''
+    else
+      cut_colon = false
+    end
     cmd = :privmsg if cmd == :msg
     
     if cmd == :privmsg || cmd == :notice
@@ -428,7 +434,7 @@ class IRCUnit < NSObject
           command = :privmsg
           t = "\x01ACTION #{t}\x01"
         end
-        send(command, target, ":#{t}")
+        send(command, target, t)
       end
     
     when :ctcpquery
@@ -438,27 +444,27 @@ class IRCUnit < NSObject
     when :ctcpping
       send_ctcp_ping(target)
     when :quit
-      quit(':' + s)
+      quit(s)
     when :nick
-      change_nick(s)
+      change_nick(s.token!)
     when :topic
-      if s.empty?
+      if s.empty? && !cut_colon
         send(cmd, target)
       else
-        send(cmd, target, ':' + s)
+        send(cmd, target, s)
       end
     when :part
-      send(cmd, target, ':' + s)
+      send(cmd, target, s)
     when :kick
       peer = s.token!
-      s = ':' + s if s[0] != ?:
-      send(:kick, target, peer + ' ' + s)
+      send(:kick, target, peer, s)
     when :away
-      send(cmd, ':' + s)
+      send(cmd, s)
     when :join,:mode,:invite
       send(cmd, target, s)
     else
-      send(cmd, s)
+      s = ':' + s if cut_colon
+      send_raw(cmd, s)
     end
     true
   end
@@ -531,7 +537,7 @@ class IRCUnit < NSObject
   
   def send_ctcp_query(target, cmd, body=nil)
     cmd = cmd.to_s.upcase
-    s = ":\x01#{cmd}"
+    s = "\x01#{cmd}"
     s << " #{body}" if body && !body.empty?
     s << "\x01"
     send(:privmsg, target, s)
@@ -539,7 +545,7 @@ class IRCUnit < NSObject
   
   def send_ctcp_reply(target, cmd, body=nil)
     cmd = cmd.to_s.upcase
-    s = ":\x01#{cmd}"
+    s = "\x01#{cmd}"
     s << " #{body}" if body && !body.empty?
     s << "\x01"
     send(:notice, target, s)
@@ -547,21 +553,17 @@ class IRCUnit < NSObject
   
   def send(command, *args)
     return unless connected?
-    m = IRCSendMessage.new
-    m.command = command if command
-    args = args.select {|i| i }
-    case args.size
-    when 0
-      ;
-    when 1
-      m.trail = args[0]
-    else
-      m.target = args[0]
-      m.trail = args[1..-1].join(' ')
+    m = IRCSendMessage.new(command, *args)
+    if block_given?
+      yield m
     end
-    m.map! {|i| to_common_encoding(i) }
+    m.apply! {|i| to_common_encoding(i) }
     m.penalty = Penalty::INIT unless login?
     @conn.send(m)
+  end
+  
+  def send_raw(*args)
+    send(*args) {|m| m.complete_colon = false }
   end
   
   
@@ -625,7 +627,7 @@ class IRCUnit < NSObject
     @pong_timer -= 1
     if @pong_timer < 0
       @pong_timer = PONG_TIME
-      send(:pong, ":#{@server_hostname}")
+      send(:pong, @server_hostname)
     end
   end
   
@@ -734,7 +736,7 @@ class IRCUnit < NSObject
     mymode += 8 if @config.invisible
     send(:pass, @config.password) if @config.password && !@config.password.empty?
     send(:nick, @sentnick)
-    send(:user, "#{@config.username} #{mymode} * :#{@config.realname}")
+    send(:user, @config.username, mymode.to_s, '*' ,@config.realname)
     update_unit_title
   end
   
@@ -743,8 +745,8 @@ class IRCUnit < NSObject
   end
   
   def ircsocket_on_receive(m)
-    m.map! {|i| to_local_encoding(i) }
-    m.map! {|i| StringValidator::validate_utf8(i, 0x3f) }
+    m.apply! {|i| to_local_encoding(i) }
+    m.apply! {|i| StringValidator::validate_utf8(i, 0x3f) }
     
     if m.numeric_reply > 0
       receive_numeric_reply(m)
@@ -769,7 +771,7 @@ class IRCUnit < NSObject
   end
   
   def ircsocket_on_send(m)
-    m.map! {|i| to_local_encoding(i) }
+    m.apply! {|i| to_local_encoding(i) }
     print_debug(:debug_send, m.to_s)
   end
   
@@ -1456,7 +1458,7 @@ class IRCUnit < NSObject
   
   def receive_ping(m)
     @pong_timer = PONG_TIME
-    send(:pong, ":#{m.sequence}")
+    send(:pong, m.sequence)
   end
   
   def receive_error(m)
@@ -1762,12 +1764,12 @@ class IRCUnit < NSObject
         if c.count_members <= 1 && chname.modechannelname?
           topic = c.stored_topic
           if topic && !topic.empty?
-            send(:topic, chname, ":#{topic}")
+            send(:topic, chname, topic)
             c.stored_topic = nil
           else
             topic = c.config.topic
             if topic && !topic.empty?
-              send(:topic, chname, ":#{topic}")
+              send(:topic, chname, topic)
             end
           end
         end

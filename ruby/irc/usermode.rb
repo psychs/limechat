@@ -68,6 +68,7 @@ class UserMode
   
   def self.calc_penalty(modestr)
     penalty = Penalty::MODE_BASE
+    return penalty unless modestr
     str = modestr.dup
     plus = false
     until str.empty?
