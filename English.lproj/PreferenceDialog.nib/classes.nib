@@ -33,6 +33,8 @@
 				<string>id</string>
 				<key>onOverrideLogFontClicked</key>
 				<string>id</string>
+				<key>onOverrideNickFormatClicked</key>
+				<string>id</string>
 				<key>onSelectFont</key>
 				<string>id</string>
 				<key>onTranscriptFolderChanged</key>
@@ -91,6 +93,8 @@
 				<key>theme_nick_format</key>
 				<string>id</string>
 				<key>theme_override_log_font</key>
+				<string>id</string>
+				<key>theme_override_nick_format</key>
 				<string>id</string>
 				<key>transcript_folder</key>
 				<string>id</string>

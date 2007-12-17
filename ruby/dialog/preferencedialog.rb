@@ -25,7 +25,7 @@ class PreferenceDialog < NSObject
   ib_outlet :theme
   ib_mapped_outlet :theme_override_log_font
   ib_outlet :log_font_text, :select_log_font_button
-  ib_mapped_outlet :theme_nick_format
+  ib_mapped_outlet :theme_override_nick_format, :theme_nick_format
   
   def initialize
     @prefix = 'preferenceDialog'
@@ -39,6 +39,7 @@ class PreferenceDialog < NSObject
     update_transcript_folder
     onLogTranscriptChanged(nil)
     onOverrideLogFontClicked(nil)
+    onOverrideNickFormatClicked(nil)
     @font_manager.showFontDescription
     
     ['(%n) ', '<%n> ', '%n: '].each {|i| @theme_nick_format.addItemWithObjectValue(i) }
@@ -137,6 +138,10 @@ class PreferenceDialog < NSObject
     panel = NSFontPanel.sharedFontPanel
     panel.setPanelFont_isMultiple(@font_manager.font, false)
     panel.makeKeyAndOrderFront(self)
+  end
+  
+  def onOverrideNickFormatClicked(sender)
+    @theme_nick_format.setEnabled(@theme_override_nick_format.state.to_i != 0)
   end
 
   # sound table

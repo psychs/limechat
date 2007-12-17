@@ -59,6 +59,7 @@ end
 
 
 class OtherViewTheme
+  attr_reader :log_nick_format
   attr_reader :input_text_font, :input_text_color, :input_text_bgcolor
   attr_reader :tree_font, :tree_bgcolor, :tree_highlight_color, :tree_newtalk_color, :tree_unread_color
   attr_reader :tree_active_color, :tree_inactive_color, :tree_sel_active_color, :tree_sel_inactive_color
@@ -94,6 +95,8 @@ class OtherViewTheme
   private
   
   def update
+    @log_nick_format = load_string('log-view', 'nickname-format') || '(%n) '
+    
     @input_text_font = load_font('input-text') || NSFont.systemFontOfSize(-1)
     @input_text_bgcolor = load_color('input-text', 'background-color') || NSColor.whiteColor
     @input_text_color = load_color('input-text', 'color') || NSColor.blackColor
@@ -156,6 +159,12 @@ class OtherViewTheme
   end
   
   def load_color(category, *keys)
+    s = load_string(category, *keys)
+    return nil unless s
+    NSColor.from_css(s)
+  end
+  
+  def load_string(category, *keys)
     return nil unless @content
     config = @content[category]
     return nil unless config
@@ -163,7 +172,7 @@ class OtherViewTheme
       config = config[i]
       return nil unless config
     end
-    NSColor.from_css(config)
+    config
   rescue
     nil
   end

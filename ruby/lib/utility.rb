@@ -298,7 +298,7 @@ module OSX
     
     def self.from_css(str)
       return nil unless str
-      str[0] = '' if str =~ /\A#/
+      str = $~.post_match if str =~ /\A#/
       case str.size
       when 6
         r = str[0..1].to_i(16)

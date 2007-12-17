@@ -831,6 +831,14 @@ class IRCUnit < NSObject
     Time.now.strftime('%H:%M')
   end
   
+  def nick_format
+    if @pref.theme.override_nick_format
+      @pref.theme.nick_format
+    else
+      @world.view_theme.other.log_nick_format
+    end
+  end
+  
   def print_console(channel, kind, nick, text=nil)
     if nick && !text
       text = nick
@@ -852,7 +860,7 @@ class IRCUnit < NSObject
       place = "<#{self.name}> "
     end
     if nick && !nick.empty?
-      nickstr = @pref.theme.nick_format.gsub(/%n/, nick)
+      nickstr = nick_format.gsub(/%n/, nick)
     else
       nickstr = nil
     end
@@ -892,7 +900,7 @@ class IRCUnit < NSObject
       place = nil
     end
     if nick && !nick.empty?
-      nickstr = @pref.theme.nick_format.gsub(/%n/, nick)
+      nickstr = nick_format.gsub(/%n/, nick)
     else
       nickstr = nil
     end
@@ -1048,7 +1056,7 @@ class IRCUnit < NSObject
     
     @config.login_commands.each do |s|
       s = s.dup
-      s[0] = '' if /^\// =~ s
+      s = $~.post_match if /^\// =~ s
       send_command(s)
     end
     

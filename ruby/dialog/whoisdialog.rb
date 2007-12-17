@@ -111,7 +111,7 @@ class WhoisDialog < NSObject
     sel = @channelsCombo.selectedItem
     return unless sel
     ch = sel.title.to_s
-    ch[0] = '' if /^[+@]/ =~ ch
+    ch = $~.post_match if /^[+@]/ =~ ch
     fire_event('onJoin', ch)
   end
   

@@ -1,3 +1,8 @@
+# All colors must be in the form of '#rrggbb' or '#rgb'.
+# You cannot use color names.
+
+log-view:
+  nickname-format: '%n: '
 input-text:
   font-family: 'Lucida Grande'
   font-size: 13.0

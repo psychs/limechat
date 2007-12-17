@@ -35,7 +35,7 @@ app.cptree(tmp)
 
 system "ln -s /Applications #{tmp}"
 doc.cptree(tmp)
-doc.cptree(appdoc)
+#doc.cptree(appdoc)
 rmglob(tmp + '**/.svn')
 rmglob(tmp + '**/.DS_Store')
 

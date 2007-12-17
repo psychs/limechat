@@ -28,7 +28,7 @@
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>3</integer>
+				<integer>4</integer>
 			</dict>
 			<key>columnSelection</key>
 			<false/>
@@ -48,74 +48,17 @@
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>3</integer>
+				<integer>4</integer>
 			</dict>
-		</dict>
-		<key>resource/Theme/Deep Ocean.css</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>20</integer>
-				<key>line</key>
-				<integer>22</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>resource/Theme/Sample.css</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>0</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>resource/Theme/Sample.yaml</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>23</integer>
-				<key>line</key>
-				<integer>21</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>4</integer>
-		</dict>
-		<key>ruby/irc/unit.rb</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>32</integer>
-				<key>line</key>
-				<integer>436</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>419</integer>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
 		<string>doc/ChangeLog.txt</string>
-		<string>ruby/irc/unit.rb</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{612, 69}, {995, 1100}}</string>
+	<string>{{553, 83}, {1096, 1085}}</string>
 </dict>
 </plist>
