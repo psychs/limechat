@@ -2,10 +2,6 @@
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
 class String
-  def first_char
-    scan(/./)[0]
-  end
-  
   def each_char
     scan(/./) {|c| yield c }
   end
@@ -99,6 +95,7 @@ class Numeric
     s
   end
 end
+
 
 module OSX
   class NSObject

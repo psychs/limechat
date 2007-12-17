@@ -15,11 +15,11 @@ class ModeSheet < CocoaSheet
     load
     update
     
-    case chname.first_char
-    when '!'
+    case chname
+    when /\A!/
       @aCheck.setEnabled(true)
       @rCheck.setEnabled(true)
-    when '&'
+    when /\A&/
       @aCheck.setEnabled(true)
       @rCheck.setEnabled(false)
     else
