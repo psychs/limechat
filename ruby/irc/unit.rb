@@ -1354,9 +1354,9 @@ class IRCUnit < NSObject
     comment = m[1]
     
     @channels.each do |c|
-      if c.find_member(nick)
+      if c.find_member(target)
         print_channel(c, :kill, "*#{sender} has made #{target} to leave IRC (#{comment})")
-        c.remove_member(nick)
+        c.remove_member(target)
         update_channel_title(c)
         check_rejoin(c)
       end
