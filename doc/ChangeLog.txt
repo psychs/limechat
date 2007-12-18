@@ -1,3 +1,5 @@
+==== LimeChat 0.14 ====
+
 2007-12-18  Satoshi Nakagawa <artension@gmail.com>
 
 	Tweaked around initialization.
@@ -75,6 +77,8 @@
 2007-12-13  Satoshi Nakagawa <artension@gmail.com>
 
 	Improved the build script to remove unnecessary files.
+
+==== LimeChat 0.13.1 ====
 
 2007-12-13  Satoshi Nakagawa <artension@gmail.com>
 
