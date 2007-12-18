@@ -10,7 +10,7 @@ class AppController < NSObject
   ib_outlet :menu, :server_menu, :channel_menu, :member_menu, :tree_menu, :log_menu, :console_menu, :url_menu, :addr_menu
   
   def awakeFromNib
-    NSApplication.sharedApplication
+    SACrashReporter.submit
     
     @pref = Preferences.new
     #FileUtils.mkpath(@pref.gen.transcript_folder.expand_path) rescue nil

@@ -23,4 +23,5 @@ end
 #  OSX.NSApplicationMain(0, nil)
 #end
 
+NSApplication.sharedApplication
 SACrashReporter.run_app

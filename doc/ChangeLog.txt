@@ -1,5 +1,9 @@
 2007-12-18  Satoshi Nakagawa <artension@gmail.com>
 
+	Tweaked around initialization.
+
+2007-12-18  Satoshi Nakagawa <artension@gmail.com>
+
 	Fixed a name error when received a kill command.
 
 2007-12-18  Satoshi Nakagawa <artension@gmail.com>
