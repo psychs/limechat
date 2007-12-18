@@ -1,3 +1,7 @@
+2007-12-19  Satoshi Nakagawa <artension@gmail.com>
+
+	Cut off old workarounds.
+
 ==== LimeChat 0.14 ====
 
 2007-12-18  Satoshi Nakagawa <artension@gmail.com>
