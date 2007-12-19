@@ -50,7 +50,7 @@ class LogController < NSObject
     @sink.policy = @policy
     @view.release if @view
     @view = LogView.alloc.initWithFrame(NSZeroRect)
-    @view.setBackgroundColor(initial_bgcolor)
+    @view.setBackgroundColor(initial_bgcolor) if @view.respondsToSelector('setBackgroundColor:')
     @view.setFrameLoadDelegate(self)
     @view.setUIDelegate(@policy)
     @view.setPolicyDelegate(@policy)

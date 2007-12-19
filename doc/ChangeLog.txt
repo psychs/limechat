@@ -1,5 +1,9 @@
 2007-12-19  Satoshi Nakagawa <artension@gmail.com>
 
+	Added a workaround for old WebKit.
+
+2007-12-19  Satoshi Nakagawa <artension@gmail.com>
+
 	Improved the logic of weights for nick completions.
 
 2007-12-19  Satoshi Nakagawa <artension@gmail.com>
