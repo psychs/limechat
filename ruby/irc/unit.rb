@@ -1901,7 +1901,8 @@ when 437	# ERR_UNAVAILRESOURCE 2.10
   
   def receive_nick_collision(m)
     if @sentnick.size >= @isupport.nicklen
-      if /^(.+)[^_](_*)$/ =~ @sentnick
+      nick = @sentnick[0...@isupport.nicklen]
+      if /^(.+)[^_](_*)$/ =~ nick
         head, tail = $1, $2
         @sentnick = head + tail + '_'
       else
