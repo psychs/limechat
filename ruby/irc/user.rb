@@ -56,10 +56,15 @@ class User
     change = (outgoing_weight == 0) ? 20 : 5
     @outgoing_weight += change
   end
-
+  
   def incoming_conversation!
     change = (incoming_weight == 0) ? 100 : 20
     @incoming_weight += change
+  end
+  
+  def conversation!
+    change = (outgoing_weight == 0) ? 4 : 1
+    @outgoing_weight += change
   end
   
   # make our conversations decay overtime based on a half-life of one minute

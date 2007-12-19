@@ -1,5 +1,9 @@
 2007-12-19  Satoshi Nakagawa <artension@gmail.com>
 
+	Improved the logic of weights for nick completions.
+
+2007-12-19  Satoshi Nakagawa <artension@gmail.com>
+
 	Cut off old workarounds.
 
 ==== LimeChat 0.14 ====

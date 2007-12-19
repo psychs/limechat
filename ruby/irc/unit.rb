@@ -299,7 +299,7 @@ class IRCUnit < NSObject
   def truncate_text(str, cmd, chname)
     max = IRC::BODY_LEN
     max -= to_common_encoding(chname).size
-    max -= @mynick ? @mynick.size : IRC::NICK_LEN
+    max -= @mynick && !@mynick.empty? ? @mynick.size : IRC::NICK_LEN
     max -= @config.username.size
     max -= @join_address ? @join_address.size : IRC::ADDRESS_LEN
     case cmd
@@ -342,7 +342,7 @@ class IRCUnit < NSObject
       
       # only watch private messages
       if cmd == :privmsg
-        if line =~ /\A([^\s:]+): / || line =~ /\A@([^\s:]+) /
+        if line =~ /\A([^\s:]+):\s/ || line =~ /\A@([^\s:]+)\s/ || line =~ /[>＞]\s?([^\s]+)\z/
           recipient = chan.find_member($1)
           recipient.incoming_conversation! if recipient
         end
@@ -1202,10 +1202,17 @@ class IRCUnit < NSObject
         sound = kind == :highlight ? @pref.sound.highlight : @pref.sound.channeltext
         SoundPlayer.play(sound)
         
-        # if we're being directly spoken to then track the conversation to auto-complete
-        if text =~ /\A#{@mynick}: /i || text =~ /\A@#{@mynick} /i
-          sender = c.find_member(nick)
-          sender.outgoing_conversation! if sender
+        # track the conversation to auto-complete
+        sender = c.find_member(nick)
+        if sender
+          pattern = Regexp.escape(@mynick.sub(/\A_+/, '').sub(/_+\z/, ''))
+          if text =~ /#{pattern}/i
+            # if we're being directly spoken to
+            sender.outgoing_conversation!
+          else
+            # the other conversations
+            sender.conversation!
+          end
         end
       end
     elsif eq(target, @mynick)
