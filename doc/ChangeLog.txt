@@ -1,5 +1,11 @@
 2007-12-19  Satoshi Nakagawa <artension@gmail.com>
 
+	Decreased the font size for the member list and the server tree in "Deep Ocean" theme.
+
+==== LimeChat 0.14.1 ====
+
+2007-12-19  Satoshi Nakagawa <artension@gmail.com>
+
 	Added a workaround for old WebKit.
 
 2007-12-19  Satoshi Nakagawa <artension@gmail.com>
