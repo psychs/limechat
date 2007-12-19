@@ -7,7 +7,7 @@ require 'pathname'
 class IRCUnit < NSObject
   attr_accessor :world, :log, :id
   attr_writer :pref
-  attr_reader :config, :channels, :mynick, :mymode, :encoding, :myaddress
+  attr_reader :config, :channels, :mynick, :mymode, :encoding, :myaddress, :isupport
   attr_accessor :property_dialog
   attr_accessor :keyword, :unread
   attr_accessor :last_selected_channel
@@ -23,10 +23,11 @@ class IRCUnit < NSObject
     @whois_dialogs = []
     @connected = @login = @quitting = false
     @mynick = @inputnick = @sentnick = ''
+    @mymode = UserMode.new
     @myaddress = nil
     @join_address = nil
     @encoding = NSISO2022JPStringEncoding
-    @mymode = UserMode.new
+    @isupport = ISupportInfo.new
     @in_whois = false
     @who_queue = []
     @who_wait = 0
@@ -203,7 +204,6 @@ class IRCUnit < NSObject
     @reconnect_timer = RECONNECT_TIME
     @retry = true
     @retry_timer = RETRY_TIME
-    @nicklen = IRC::NICK_LEN
     
     @connecting = true
     @conn = IRCSocket.new
@@ -261,10 +261,11 @@ class IRCUnit < NSObject
     members = members.compact
     members = members.select {|m| m.__send__(mode) != plus }
     members = members.map {|m| m.nick }
+    max = @isupport.modes_count
     until members.empty?
-      t = members[0..2]
+      t = members[0...max]
       send(:mode, channel.name, (plus ? '+' : '-') + mode.to_s * t.size + ' ' + t.join(' '))
-      members[0..2] = nil
+      members[0...max] = nil
     end
   end
   
@@ -299,7 +300,7 @@ class IRCUnit < NSObject
   def truncate_text(str, cmd, chname)
     max = IRC::BODY_LEN
     max -= to_common_encoding(chname).size
-    max -= @mynick && !@mynick.empty? ? @mynick.size : IRC::NICK_LEN
+    max -= @mynick && !@mynick.empty? ? @mynick.size : @isupport.nicklen
     max -= @config.username.size
     max -= @join_address ? @join_address.size : IRC::ADDRESS_LEN
     case cmd
@@ -732,6 +733,7 @@ class IRCUnit < NSObject
     @connected = @reconnect = true
     @encoding = @config.encoding
     @inputnick = @sentnick = @mynick = @config.nick
+    @isupport.reset
     mymode = 0
     mymode += 8 if @config.invisible
     send(:pass, @config.password) if @config.password && !@config.password.empty?
@@ -1603,7 +1605,10 @@ class IRCUnit < NSObject
     when 1,376,422
       receive_init(m)
       print_reply(m)
-    when 2..5,10,20,42,250..255,265,266,372,375
+    when 2..4,10,20,42,250..255,265,266,372,375
+      print_reply(m)
+    when 5  # RPL_ISUPPORT
+      @isupport.update(m.sequence(1))
       print_reply(m)
     when 221  # RPL_UMODEIS
       modestr = m[1].rstrip
@@ -1895,7 +1900,7 @@ when 437	# ERR_UNAVAILRESOURCE 2.10
 =end
   
   def receive_nick_collision(m)
-    if @sentnick.size >= @nicklen
+    if @sentnick.size >= @isupport.nicklen
       if /^(.+)[^_](_*)$/ =~ @sentnick
         head, tail = $1, $2
         @sentnick = head + tail + '_'

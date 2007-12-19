@@ -29,6 +29,7 @@ class IRCChannel < NSObject
   
   def setup(seed)
     @config = seed.dup
+    @mode.isupport = @unit.isupport
   end
   
   def update_config(seed)
@@ -297,11 +298,12 @@ class IRCChannel < NSObject
     if active?
       @op_wait -= 1 if @op_wait > 0
       if @unit.ready_to_send? && @op_wait == 0 && @op_queue.size > 0
-        ary = @op_queue[0..2]
-        @op_queue[0..2] = nil
+        max = @unit.isupport.modes_count
+        ary = @op_queue[0...max]
+        @op_queue[0...max] = nil
         ary = ary.select {|i| m = find_member(i); m && !m.o }
         unless ary.empty?
-          @op_wait = ary.size * 3 + 1
+          @op_wait = ary.size * Penalty::MODE_OPT + Penalty::MODE_BASE
           @unit.change_op(self, ary, :o, true)
         end
       end

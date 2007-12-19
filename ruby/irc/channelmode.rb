@@ -2,6 +2,7 @@
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
 class ChannelMode
+  attr_writer :isupport
   attr_accessor :a, :i, :m, :n, :p, :q, :r, :s, :t
   attr_reader :k, :l
   
