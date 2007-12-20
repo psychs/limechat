@@ -89,7 +89,8 @@ end
 
 
 class IRCReceiveMessage
-  attr_reader :sender, :sender_nick, :sender_username, :sender_address, :command, :numeric_reply
+  attr_reader :sender, :sender_nick, :sender_username, :sender_address
+  attr_reader :command, :numeric_reply
   
   def initialize(str)
     @raw = str.dup
@@ -164,55 +165,5 @@ class IRCReceiveMessage
   
   def to_s
     @raw
-  end
-end
-
-
-class ISupportInfo
-  def initialize
-    reset
-  end
-  
-  def reset
-    @features = {
-      :chanmodes => 'beIR,k,l,imnpstaqr'.split(','),
-      :channeltypes => '#&!+',
-      :modes => 3,
-      :nicklen => 9,
-    }
-  end
-  
-  def [](key)
-    @features[key]
-  end
-  
-  def nicklen
-    @features[:nicklen]
-  end
-  
-  def modes_count
-    @features[:modes]
-  end
-  
-  def update(s)
-    s = s.sub(/ are supported by this server\Z/, '')
-    s.split(' ').each {|i| parse_param(i)}
-  end
-  
-  private
-  
-  def parse_param(s)
-    if s =~ /\A([-_a-zA-Z0-9]+)=(.*)\z/
-      key, value = $1.downcase.to_sym, $2
-      case key
-      when :chanmodes
-        @features[key] = value.split(',', 4)
-      else
-        value = value.to_i if value =~ /\A[0-9]+\z/
-        @features[key] = value
-      end
-    elsif !s.empty? && !s.include?("\0")
-      @features[s.downcase.to_sym] = true
-    end
   end
 end
