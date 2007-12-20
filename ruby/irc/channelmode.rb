@@ -2,7 +2,7 @@
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
 class ChannelMode
-  attr_writer :isupport
+  attr_writer :info
   attr_accessor :a, :i, :m, :n, :p, :q, :r, :s, :t
   attr_reader :k, :l
   
@@ -24,40 +24,30 @@ class ChannelMode
     @l = v ? v : 0
   end
   
+  SIMPLE_MODES = [:p, :s, :m, :n, :t, :i, :a, :q, :r]
+  
   def update(modestr)
-    str = modestr.dup
-    plus = false
-    until str.empty?
-      token = str.token!
-      if /^([-+])(.+)$/ =~ token
-        plus = ($1 == '+')
-        token = $2
-        token.each_char do |char|
-          case char
-          when '-'; plus = false
-          when '+'; plus = true
-          when 'O','o','v','b','e','I','R'; str.token!
-          when 'a'; @a = plus
-          when 'i'; @i = plus
-          when 'm'; @m = plus
-          when 'n'; @n = plus
-          when 'p'; @p = plus
-          when 'q'; @q = plus
-          when 'r'; @r = plus
-          when 's'; @s = plus
-          when 't'; @t = plus
-          when 'k'
-            key = str.token!
-            @k = plus ? key : ''
-          when 'l'
-            @l = plus ? str.token!.to_i : 0
-          end
+    i = @info.parse_modestr(modestr)
+    i.each do |h|
+      mode = h[:mode]
+      plus = h[:plus]
+      case mode
+      when *SIMPLE_MODES
+        instance_variable_set("@#{mode}", plus)
+      when :k
+        param = h[:param] || ''
+        @k = plus ? param : ''
+      when :l
+        if plus
+          param = h[:param] || '0'
+          @l = param.to_i
+        else
+          @l = 0
         end
       end
     end
+    i
   end
-  
-  SIMPLE_MODES = [:p, :s, :m, :n, :t, :i, :a, :q, :r]
   
   def to_s
     _to_s
@@ -72,7 +62,7 @@ class ChannelMode
     trail = ''
     SIMPLE_MODES.each do |name|
       to = mode.__send__(name)
-      if instance_variable_get('@' + name.to_s) != to
+      if instance_variable_get("@#{name}") != to
         str << (to ? '+' : '-')
         str << name.to_s
       end
@@ -101,36 +91,37 @@ class ChannelMode
   end
   
   def self.calc_penalty(modestr)
-    penalty = Penalty::MODE_BASE
-    return penalty unless modestr
+    return Penalty::MODE_BASE unless modestr
     str = modestr.dup
-    plus = false
+    count = 0
     until str.empty?
       token = str.token!
       if /^([-+])(.+)$/ =~ token
-        plus = ($1 == '+')
         token = $2
         token.each_char do |char|
-          case char
-          when '-'; plus = false
-          when '+'; plus = true
-          when 'a','i','m','n','p','q','r','s','t','w'
-            penalty += Penalty::MODE_OPT
-          when 'O','o','h','v','b','e','I','R','k'
-            str.token!
-            penalty += Penalty::MODE_OPT
-          when 'l'
-            penalty += Penalty::MODE_OPT if plus
+          c = char.to_sym
+          case c
+          when :-,:+
+          else
+            count += 1
           end
         end
       end
     end
+    penalty = Penalty::MODE_BASE + Penalty::MODE_OPT * count
     penalty = Penalty::MAX if penalty > Penalty::MAX
     penalty
   end
   
   def dup
-    Marshal::load(Marshal::dump(self))
+    obj = ChannelMode.new
+    instance_variables.each do |i|
+      name = i[1..-1] + '='
+      value = instance_variable_get(i)
+      value = value.dup if value.is_a?(String)
+      obj.__send__(name, value)
+    end
+    obj
   end
   
   private
@@ -140,7 +131,7 @@ class ChannelMode
     trail = ''
     plus = false
     SIMPLE_MODES.each do |name|
-      if instance_variable_get('@' + name.to_s)
+      if instance_variable_get("@#{name}")
         unless plus
           plus = true
           str << '+'

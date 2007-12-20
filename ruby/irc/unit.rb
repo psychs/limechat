@@ -1407,37 +1407,19 @@ class IRCUnit < NSObject
       # channel mode
       c = find_channel(target)
       if c
-        c.mode.update(modestr)
-        str = modestr.dup
-        plus = false
-        until str.empty?
-          token = str.token!
-          if /^([-+])(.+)$/ =~ token
-            plus = ($1 == '+')
-            token = $2
-            token.each_char do |char|
-              case char
-              when '-'; plus = false
-              when '+'; plus = true
-              when 'o'
-                t = str.token!
-                c.change_member_op(t, :o, plus)
-                if t == @mynick
-                  prev = c.op?
-                  c.op = plus
-                  update_channel_title(c)
-                  check_all_autoop(c) if c.op? && !prev && c.who_init
-                end
-              when 'h'
-                t = str.token!
-                c.change_member_op(t, :h, plus)
-              when 'v'
-                t = str.token!
-                c.change_member_op(t, :v, plus)
-              when 'b','e','I','R'; str.token!
-              when 'O','k'; str.token!
-              when 'l'; str.token! if plus
-              end
+        info = c.mode.update(modestr)
+        info.each do |h|
+          mode = h[:mode]
+          case mode
+          when :o,:h,:v
+            plus = h[:plus]
+            t = h[:param]
+            c.change_member_op(t, mode, plus)
+            if mode == :o && eq(t, @mynick)
+              prev = c.op?
+              c.op = plus
+              update_channel_title(c)
+              check_all_autoop(c) if c.op? && !prev && c.who_init
             end
           end
         end
@@ -1756,7 +1738,7 @@ class IRCUnit < NSObject
           m.h = op == '%'
           m.v = op == '+'
           c.add_member(m, false)
-          c.op = m.o if m.nick == @mynick
+          c.op = m.o if eq(m.nick, @mynick)
         end
         c.reload_members
         c.sort_members

@@ -25,7 +25,7 @@ class IRCWorldConfig
     return unless seed
     seed.each do |k,v|
       next if k == :units
-      instance_variable_set("@#{k.to_s}", v) if v != nil
+      instance_variable_set("@#{k}", v) if v != nil
     end
     unitary = seed[:units]
     if unitary
@@ -86,7 +86,7 @@ class IRCUnitConfig
     
     seed.each do |k,v|
       next if k == :channels
-      instance_variable_set("@#{k.to_s}", v) if v != nil
+      instance_variable_set("@#{k}", v) if v != nil
     end
     channelary = seed[:channels]
     if channelary
@@ -142,7 +142,7 @@ class IRCChannelConfig
     @autoop = []
     
     seed.each do |k,v|
-      instance_variable_set("@#{k.to_s}", v) if v != nil
+      instance_variable_set("@#{k}", v) if v != nil
     end
   end
   

@@ -65,7 +65,9 @@ class IRCSendMessage
       when :mode; @penalty = ChannelMode.calc_penalty(@params[1])
       when :part; @penalty = Penalty::PART
       when :topic; @penalty = Penalty::TOPIC
-      when :kick; @penalty = Penalty::KICK_BASE + Penalty::KICK_OPT
+      when :kick
+        targets = @params[1]
+        @penalty = Penalty::KICK_BASE + Penalty::KICK_OPT * targets.split(',').size if targets
       end
     end
     @penalty = Penalty::MAX if @penalty > Penalty::MAX

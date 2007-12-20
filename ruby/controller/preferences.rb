@@ -123,12 +123,12 @@ class Preferences
     d = read_defaults('pref')
     if d
       self.class.models.each do |i|
-        m = instance_variable_get('@' + i.to_s)
+        m = instance_variable_get("@#{i}")
         m.set_persistent_attrs(d[i])
       end
     else
       self.class.models.each do |i|
-        m = instance_variable_get('@' + i.to_s)
+        m = instance_variable_get("@#{i}")
         d = read_defaults(i.to_s)
         m.set_persistent_attrs(d)
       end
@@ -138,7 +138,7 @@ class Preferences
   def save
     h = {}
     self.class.models.each do |i|
-      m = instance_variable_get('@' + i.to_s)
+      m = instance_variable_get("@#{i}")
       h[i] = m.get_persistent_attrs
     end
     write_defaults('pref', h)

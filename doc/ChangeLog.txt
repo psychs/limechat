@@ -1,5 +1,10 @@
 2007-12-21  Satoshi Nakagawa <artension@gmail.com>
 
+	Made the mode parser DRY.
+	Refactoring around instance_variable_{get|set}.
+
+2007-12-21  Satoshi Nakagawa <artension@gmail.com>
+
 	Moved ISupportInfo into a separated file.
 
 2007-12-20  Satoshi Nakagawa <artension@gmail.com>

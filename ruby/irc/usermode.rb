@@ -12,6 +12,8 @@ class UserMode
     @a = @i = @r = @s = @w = @o = @O = false
   end
   
+  SIMPLE_MODES = [:a, :i, :r, :s, :w, :o, :O]
+  
   def update(modestr)
     str = modestr.dup
     plus = false
@@ -21,29 +23,23 @@ class UserMode
         plus = ($1 == '+')
         token = $2
         token.each_char do |char|
+          char = char.to_sym
           case char
-          when '-'; plus = false
-          when '+'; plus = true
-          when 'a'; @a = plus
-          when 'i'; @i = plus
-          when 'r'; @r = plus
-          when 's'; @s = plus
-          when 'w'; @w = plus
-          when 'o'; @o = plus
-          when 'O'; @O = plus
+          when :-; plus = false
+          when :+; plus = true
+          when *SIMPLE_MODES
+            instance_variable_set("@#{char}", plus)
           end
         end
       end
     end
   end
   
-  SIMPLE_MODES = [:a, :i, :r, :s, :w, :o, :O]
-  
   def to_s
     str = ''
     plus = false
     SIMPLE_MODES.each do |name|
-      if instance_variable_get('@' + name.to_s)
+      if instance_variable_get("@#{name}")
         unless plus
           plus = true
           str << '+'
@@ -58,36 +54,12 @@ class UserMode
     str = ''
     SIMPLE_MODES.each do |name|
       to = mode.__send__(name)
-      if instance_variable_get('@' + name.to_s) != to
+      if instance_variable_get("@#{name}") != to
         str << (to ? '+' : '-')
         str << name.to_s
       end
     end
     str
-  end
-  
-  def self.calc_penalty(modestr)
-    penalty = Penalty::MODE_BASE
-    return penalty unless modestr
-    str = modestr.dup
-    plus = false
-    until str.empty?
-      token = str.token!
-      if /^([-+])(.+)$/ =~ token
-        plus = ($1 == '+')
-        token = $2
-        token.each_char do |char|
-          case char
-          when '-'; plus = false
-          when '+'; plus = true
-          when 'a','i','r','s','w','o','O'
-            penalty += Penalty::MODE_OPT
-          end
-        end
-      end
-    end
-    penalty = Penalty::MAX if penalty > Penalty::MAX
-    penalty
   end
   
   def dup

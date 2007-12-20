@@ -100,7 +100,7 @@ module DialogHelper
       v = model.__send__(outlet_to_slot(name))
     end
     
-    t = instance_variable_get('@' + name)
+    t = instance_variable_get("@#{name}")
     case t
     when NSMatrix
       case type
@@ -136,7 +136,7 @@ module DialogHelper
       method = outlet_to_slot(name) + '='
     end
     
-    t = instance_variable_get('@' + name)
+    t = instance_variable_get("@#{name}")
     case t
     when NSMatrix
       case type
