@@ -51,7 +51,7 @@ class Preferences
     persistent_attr :main_window_layout
     persistent_attr :connect_on_doubleclick, :disconnect_on_doubleclick, :join_on_doubleclick, :leave_on_doubleclick
     persistent_attr :use_growl
-    persistent_attr :log_transcript, :transcript_folder
+    persistent_attr :log_transcript, :transcript_folder, :max_log_lines
     persistent_attr :paste_syntax
     
     TAB_COMPLETE_NICK = 0
@@ -72,6 +72,7 @@ class Preferences
       @use_growl = true
       @log_transcript = false
       @transcript_folder = '~/Documents/LimeChatTranscripts'
+      @max_log_lines = 300
       if LanguageSupport.primary_language == 'ja'
         @paste_syntax = 'notice'
       else

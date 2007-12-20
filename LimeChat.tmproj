@@ -18,7 +18,7 @@
 		</dict>
 	</array>
 	<key>fileHierarchyDrawerWidth</key>
-	<integer>227</integer>
+	<integer>268</integer>
 	<key>metaData</key>
 	<dict>
 		<key>doc/ChangeLog.txt</key>
@@ -51,14 +51,29 @@
 				<integer>3</integer>
 			</dict>
 		</dict>
+		<key>ruby/view/log.rb</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>20</integer>
+				<key>line</key>
+				<integer>355</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>325</integer>
+		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
+		<string>ruby/view/log.rb</string>
 		<string>doc/ChangeLog.txt</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{599, 88}, {994, 1089}}</string>
+	<string>{{561, 83}, {912, 1090}}</string>
 </dict>
 </plist>

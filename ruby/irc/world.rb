@@ -421,6 +421,7 @@ class IRCWorld < NSObject
   
   def preferences_changed
     register_growl
+    @console.max_lines = @pref.gen.max_log_lines
     @units.each {|u| u.preferences_changed}
     reload_theme
   end
@@ -648,6 +649,7 @@ class IRCWorld < NSObject
     log.world = self
     log.unit = unit
     log.keyword = @pref.key
+    log.max_lines = @pref.gen.max_log_lines
     log.theme = @view_theme.log
     if @pref.theme.override_log_font
       log.override_font = [@pref.theme.log_font_name, @pref.theme.log_font_size]

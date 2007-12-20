@@ -22,6 +22,7 @@ class PreferenceDialog < NSObject
   ib_mapped_outlet :gen_use_growl
   ib_mapped_outlet :gen_log_transcript
   ib_outlet :transcript_folder
+  ib_mapped_int_outlet :gen_max_log_lines
   ib_outlet :theme
   ib_mapped_outlet :theme_override_log_font
   ib_outlet :log_font_text, :select_log_font_button
@@ -206,6 +207,7 @@ class PreferenceDialog < NSObject
     m.dcc.last_port = m.dcc.first_port if m.dcc.last_port < m.dcc.first_port
     m.sound.assign(@sound)
     save_theme
+    m.gen.max_log_lines = 100 if m.gen.max_log_lines <= 100
     
     m.theme.log_font_name = @font_manager.font.fontName
     m.theme.log_font_size = @font_manager.font.pointSize

@@ -32,8 +32,9 @@ class LogController < NSObject
     @bottom = true
     @lines = []
     @line_number = 0
+    @count = 0
     @loaded = false
-    @max_lines = 500
+    @max_lines = 300
   end
   
   def setup(console, initial_bgcolor)
@@ -59,6 +60,18 @@ class LogController < NSObject
     @view.resize_delegate = self
     @view.setAutoresizingMask(NSViewWidthSizable | NSViewHeightSizable)
     @view.mainFrame.loadHTMLString_baseURL(initial_document, @theme.baseurl)
+  end
+  
+  def max_lines=(n)
+    return if @max_lines == n
+    @max_lines = n
+    return unless @loaded
+    
+    if @max_lines > 0 && @count > @max_lines
+      save_position
+      remove_first_line(@count - @max_lines)
+      restore_position
+    end
   end
   
   def moveToTop
@@ -307,20 +320,13 @@ class LogController < NSObject
     s ? CGI.escapeHTML(s.to_s) : ''
   end
   
-  def write_line(html, attrs)
-    save_position
-    
-    @line_number += 1
+  def remove_first_line(n=1)
+    return unless @loaded
+    return if n <= 0
+    return if @count <= 0
     doc = @view.mainFrame.DOMDocument
     body = doc.body
-    
-    div = doc.createElement('div')
-    div.setInnerHTML(html)
-    attrs.each {|k,v| div.setAttribute__(k, v) } if attrs
-    div.setAttribute__('id', "line#{@line_number}")
-    body.appendChild(div)
-    
-    if @max_lines > 0 && @line_number > @max_lines
+    n.times do
       node = body.firstChild
       if node.tagName.to_s.downcase == 'hr'
         # the first node is the mark
@@ -330,7 +336,23 @@ class LogController < NSObject
       end
       body.removeChild(node)
     end
+    @count -= n
+  end
+  
+  def write_line(html, attrs)
+    save_position
+    @line_number += 1
+    @count += 1
     
+    doc = @view.mainFrame.DOMDocument
+    body = doc.body
+    div = doc.createElement('div')
+    div.setInnerHTML(html)
+    attrs.each {|k,v| div.setAttribute__(k, v) } if attrs
+    div.setAttribute__('id', "line#{@line_number}")
+    body.appendChild(div)
+    
+    remove_first_line if @max_lines > 0 && @count > @max_lines
     restore_position
   end
   

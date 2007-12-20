@@ -655,7 +655,7 @@ class IRCUnit < NSObject
         Resolver.resolve(self, @pref.dcc.myaddress)
       end
     end
-      
+    @log.max_lines = @pref.gen.max_log_lines
     @channels.each {|c| c.preferences_changed}
   end
   

@@ -1,5 +1,9 @@
 2007-12-20  Satoshi Nakagawa <artension@gmail.com>
 
+	Added "Message scrollback" option.
+
+2007-12-20  Satoshi Nakagawa <artension@gmail.com>
+
 	Improved to avoid nick changing loop when a nick collision occured.
 
 2007-12-20  Satoshi Nakagawa <artension@gmail.com>
