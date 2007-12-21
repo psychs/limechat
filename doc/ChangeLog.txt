@@ -1,3 +1,8 @@
+2007-12-22  Satoshi Nakagawa <artension@gmail.com>
+
+	Changed the default transcript directory to ~/Library/LimeChat/Transcripts.
+	Changed transcripts filename from '(channel)/(date)_(server).txt' to '(server)/(channel)/(date).txt'.
+
 2007-12-21  Satoshi Nakagawa <artension@gmail.com>
 
 	Made the mode parser DRY.

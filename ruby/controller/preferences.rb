@@ -71,7 +71,7 @@ class Preferences
       @leave_on_doubleclick = false
       @use_growl = true
       @log_transcript = false
-      @transcript_folder = '~/Documents/LimeChatTranscripts'
+      @transcript_folder = '~/Library/LimeChat/Transcripts'
       @max_log_lines = 300
       if LanguageSupport.primary_language == 'ja'
         @paste_syntax = 'notice'
