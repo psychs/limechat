@@ -1,3 +1,7 @@
+2007-12-23  Satoshi Nakagawa <artension@gmail.com>
+
+	Fixed a nil access bug in old WebKit, when changing theme in log.rb.
+
 2007-12-22  Satoshi Nakagawa <artension@gmail.com>
 
 	Changed the default transcript directory to ~/Library/LimeChat/Transcripts.

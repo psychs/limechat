@@ -76,13 +76,17 @@ class LogController < NSObject
   
   def moveToTop
     return unless @loaded
-    body = @view.mainFrame.DOMDocument.body
+    doc = @view.mainFrame.DOMDocument
+    return unless doc
+    body = doc.body
     body.setValue_forKey(0, 'scrollTop')
   end
   
   def moveToBottom
     return unless @loaded
-    body = @view.mainFrame.DOMDocument.body
+    doc = @view.mainFrame.DOMDocument
+    return unless doc
+    body = doc.body
     scrollheight = body.valueForKey('scrollHeight').to_i
     body.setValue_forKey(scrollheight, 'scrollTop')
   end
@@ -91,7 +95,9 @@ class LogController < NSObject
   
   def viewing_bottom?
     return true unless @loaded
-    body = @view.mainFrame.DOMDocument.body
+    doc = @view.mainFrame.DOMDocument
+    return true unless doc
+    body = doc.body
     viewheight = @view.frame.height.to_i rescue 0
     scrollheight = body.valueForKey('scrollHeight').to_i
     scrolltop = body.valueForKey('scrollTop').to_i
@@ -143,9 +149,11 @@ class LogController < NSObject
   end
   
   def mark
+    return unless @loaded
     save_position
     unmark
     doc = @view.mainFrame.DOMDocument
+    return unless doc
     e = doc.createElement('hr')
     e.setAttribute__('id', 'mark')
     doc.body.appendChild(e)
@@ -153,7 +161,9 @@ class LogController < NSObject
   end
   
   def unmark
+    return unless @loaded
     doc = @view.mainFrame.DOMDocument
+    return unless doc
     e = doc.getElementById('mark')
     doc.body.removeChild(e) if e
   end
@@ -168,7 +178,10 @@ class LogController < NSObject
   end
   
   def reload_theme
-    body = @view.mainFrame.DOMDocument.body
+    return unless @loaded
+    doc = @view.mainFrame.DOMDocument
+    return unless doc
+    body = doc.body
     @html = body.innerHTML
     @scroll_bottom = viewing_bottom?
     @scroll_top = body.valueForKey('scrollTop').to_i
@@ -325,6 +338,7 @@ class LogController < NSObject
     return if n <= 0
     return if @count <= 0
     doc = @view.mainFrame.DOMDocument
+    return unless doc
     body = doc.body
     n.times do
       node = body.firstChild
@@ -345,6 +359,7 @@ class LogController < NSObject
     @count += 1
     
     doc = @view.mainFrame.DOMDocument
+    return unless doc
     body = doc.body
     div = doc.createElement('div')
     div.setInnerHTML(html)
