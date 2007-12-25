@@ -62,6 +62,6 @@ class FileLogger
     else
       c = @channel.name.safe_filename
     end
-    base + "#{u}/#{c}/#{pre}#{date}.txt"
+    base + "#{c}/#{pre}#{date}_#{u}.txt"
   end
 end

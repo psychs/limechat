@@ -1,3 +1,7 @@
+2007-12-25  Satoshi Nakagawa <artension@gmail.com>
+
+	Switched back log file names to '(channel)/(date)_(server).txt' style.
+
 2007-12-23  Satoshi Nakagawa <artension@gmail.com>
 
 	Fixed a nil access bug in old WebKit, when changing theme in log.rb.
