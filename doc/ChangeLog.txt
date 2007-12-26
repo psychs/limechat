@@ -1,3 +1,7 @@
+2007-12-27  Satoshi Nakagawa <artension@gmail.com>
+
+	Changed the url regex to disallow parentheses, brackets, braces and etc in the end.
+
 2007-12-25  Satoshi Nakagawa <artension@gmail.com>
 
 	Switched back log file names to '(channel)/(date)_(server).txt' style.

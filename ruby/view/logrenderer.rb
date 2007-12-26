@@ -303,8 +303,9 @@ module LogRenderer
   
     #URL_REGEX = /(?:h?ttps?|ftp):\/\/[-_a-zA-Z\d.!~*':@%]+(?:\/[-_a-zA-Z\d.!~*'%;\/?:@&=+$,#()]*)?/
     #URL_REGEX = /(?:h?ttps?|ftp):\/\/[-_a-zA-Z\d.!~*':@%]+(?:\/[-_a-zA-Z\d.!~*'%;\/?:@&=+$,#()¡-⿻、-힣-￿]*)?/
+    #URL_REGEX = /(?:h?ttps?|ftp):\/\/[-_a-zA-Z\d.!~*':@%]+(?:\/(?:[-_a-zA-Z\d.!~*'%;\/?:@&=+$,#()]*[-_a-zA-Z\d!~*%\/?:@&=+$#])?)?/
     
-    URL_REGEX = /(?:h?ttps?|ftp):\/\/[^\s　"]+/
+    URL_REGEX = /(?:h?ttps?|ftp):\/\/[^\s\/,'"`　]+(?:\/(?:[^\s'"　…]*[^\s.,'"`(){}\[\]<>　、，。．…])?)?/
   	ADDRESS_REGEX = /(?:[a-zA-Z\d](?:[-a-zA-Z\d]*[a-zA-Z\d])?\.)(?:[a-zA-Z\d](?:[-a-zA-Z\d]*[a-zA-Z\d])?\.)+[a-zA-Z]{2,6}|(?:[a-f\d]{0,4}:){7}[a-f\d]{0,4}|(?:\d{1,3}\.){3}[\d]{1,3}/
     
     def process_urls(body)
