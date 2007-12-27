@@ -1,5 +1,10 @@
 2007-12-27  Satoshi Nakagawa <artension@gmail.com>
 
+	Integrated the font panel handler to the preferences dialog.
+	Because if it is the first responder of the window, the window cannot receive any key events.
+
+2007-12-27  Satoshi Nakagawa <artension@gmail.com>
+
 	Changed the url regex to disallow parentheses, brackets, braces and etc in the end.
 
 2007-12-25  Satoshi Nakagawa <artension@gmail.com>

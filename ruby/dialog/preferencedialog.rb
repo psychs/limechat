@@ -41,7 +41,7 @@ class PreferenceDialog < NSObject
     onLogTranscriptChanged(nil)
     onOverrideLogFontClicked(nil)
     onOverrideNickFormatClicked(nil)
-    @font_manager.showFontDescription
+    showFontDescription
     
     ['(%n) ', '<%n> ', '%n: '].each {|i| @theme_nick_format.addItemWithObjectValue(i) }
     
@@ -135,10 +135,9 @@ class PreferenceDialog < NSObject
   end
   
   def onSelectFont(sender)
-    @window.makeFirstResponder(@font_manager)
-    panel = NSFontPanel.sharedFontPanel
-    panel.setPanelFont_isMultiple(@font_manager.font, false)
-    panel.makeKeyAndOrderFront(self)
+    fm = NSFontManager.sharedFontManager
+    fm.setSelectedFont_isMultiple(@log_font, false)
+    fm.orderFrontFontPanel(self)
   end
   
   def onOverrideNickFormatClicked(sender)
@@ -184,6 +183,16 @@ class PreferenceDialog < NSObject
     end
   end
   
+  def changeFont(sender)
+    @log_font = sender.convertFont(@log_font)
+    showFontDescription
+  end
+  
+  def showFontDescription
+    s = "#{@log_font.displayName} #{@log_font.pointSize.to_i}pt."
+    @log_font_text.setStringValue(s)
+  end
+  
   private
   
   def load
@@ -191,9 +200,7 @@ class PreferenceDialog < NSObject
     @sound = m.sound.dup
     load_theme
     
-    @font_manager = PreferenceThemeFontManager.alloc.init
-    @font_manager.font = NSFont.fontWithName_size(m.theme.log_font_name, m.theme.log_font_size)
-    @font_manager.text = @log_font_text
+    @log_font = NSFont.fontWithName_size(m.theme.log_font_name, m.theme.log_font_size)
   end
   
   def save
@@ -209,8 +216,8 @@ class PreferenceDialog < NSObject
     save_theme
     m.gen.max_log_lines = 100 if m.gen.max_log_lines <= 100
     
-    m.theme.log_font_name = @font_manager.font.fontName
-    m.theme.log_font_size = @font_manager.font.pointSize
+    m.theme.log_font_name = @log_font.fontName
+    m.theme.log_font_size = @log_font.pointSize
   end
   
   def load_theme
@@ -262,20 +269,5 @@ class PreferenceDialog < NSObject
     cond = @dcc_address_detection_method.selectedItem.tag == Preferences::Dcc::ADDR_DETECT_SPECIFY
     @dcc_myaddress_caption.setTextColor(cond ? NSColor.textColor : NSColor.disabledControlTextColor)
     @dcc_myaddress.setEnabled(cond)
-  end
-end
-
-
-class PreferenceThemeFontManager < NSResponder
-  attr_accessor :font, :text
-  
-  def changeFont(sender)
-    @font = sender.convertFont(@font)
-    showFontDescription
-  end
-  
-  def showFontDescription
-    s = "#{@font.displayName} #{@font.pointSize.to_i}pt."
-    @text.setStringValue(s)
   end
 end
