@@ -113,6 +113,7 @@ class ISupportInfo
     
     def parse_modes(s)
       @count = s.to_i
+      @count = 3 if @count <= 0
     end
     
     def parse_prefix(s)

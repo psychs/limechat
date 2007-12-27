@@ -1,3 +1,7 @@
+2007-12-27  Satoshi Nakagawa <artension@gmail.com>
+
+	Added modes count check for safety.
+
 ==== LimeChat 0.14.2 ====
 
 2007-12-27  Satoshi Nakagawa <artension@gmail.com>
