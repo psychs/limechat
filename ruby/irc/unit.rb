@@ -352,13 +352,19 @@ class IRCUnit < NSObject
     true
   end
   
-  def send_command(s)
+  def send_command(s, complete_target=true)
     return false unless connected? && s && !s.include?("\0")
     s = s.dup
     command = s.token!
     return false if command.empty?
     cmd = command.downcase.to_sym
     target = nil
+    
+    if complete_target && @world.selunit == self && @world.selchannel
+      sel = @world.selchannel
+    else
+      sel = nil
+    end
     
     case cmd
     when :weights
@@ -373,15 +379,34 @@ class IRCUnit < NSObject
         end
       end
       return true
-    when :me
-      cmd = :action
-      if @world.selunit == self && @world.selchannel
-        target = @world.selchannel.name
-      else
-        return false
-      end
-    when :privmsg,:msg,:notice,:action,:ctcpquery,:ctcpreply,:ctcpping,:join,:part,:mode,:topic,:kick,:invite
+    when :ctcpquery,:ctcpreply,:ctcpping,:invite
       target = s.token!
+    when :privmsg,:msg,:notice,:action,:me
+      cmd = :privmsg if cmd == :msg
+      cmd = :action if cmd == :me
+      if sel
+        target = sel.name
+      else
+        target = s.token!
+      end
+    when :part,:topic
+      if sel && sel.channel? && !s.channelname?
+        target = sel.name
+      else
+        target = s.token!
+      end
+    when :mode,:kick
+      if sel && sel.channel? && !s.modechannelname?
+        target = sel.name
+      else
+        target = s.token!
+      end
+    when :join
+      if sel && sel.channel? && !sel.active? && !s.channelname?
+        target = sel.name
+      else
+        target = s.token!
+      end
     end
     
     if s[0] == ?:
@@ -390,7 +415,6 @@ class IRCUnit < NSObject
     else
       cut_colon = false
     end
-    cmd = :privmsg if cmd == :msg
     
     if cmd == :privmsg || cmd == :notice
       if s[0] == 0x1
@@ -430,12 +454,11 @@ class IRCUnit < NSObject
           print_both(c || chname, cmd, @mynick, t)
         end
         
-        command = cmd
-        if command == :action
-          command = :privmsg
+        if cmd == :action
+          cmd = :privmsg
           t = "\x01ACTION #{t}\x01"
         end
-        send(command, target, t)
+        send(cmd, target, t)
       end
     
     when :ctcpquery
@@ -1059,7 +1082,7 @@ class IRCUnit < NSObject
     @config.login_commands.each do |s|
       s = s.dup
       s = $~.post_match if /^\// =~ s
-      send_command(s)
+      send_command(s, false)
     end
     
     @channels.each do |c|

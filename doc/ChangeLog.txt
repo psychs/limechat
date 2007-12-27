@@ -1,3 +1,9 @@
+==== LimeChat 0.14.2 ====
+
+2007-12-27  Satoshi Nakagawa <artension@gmail.com>
+
+	Changed to complete a target channel when sending raw commands.
+
 2007-12-27  Satoshi Nakagawa <artension@gmail.com>
 
 	Integrated the font panel handler to the preferences dialog.
