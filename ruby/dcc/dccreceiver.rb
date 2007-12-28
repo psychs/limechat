@@ -38,7 +38,7 @@ class DccReceiver
   
   def speed
     return 0 if @records.empty? || @status != :receiving
-    @records.inject(0) {|v,i| v += i }.to_f / @records.size.to_f
+    @records.inject(0) {|v,i| v + i }.to_f / @records.size.to_f
   end
   
   def open

@@ -1,4 +1,4 @@
-2007-12-27  Satoshi Nakagawa <artension@gmail.com>
+2007-12-28  Satoshi Nakagawa <artension@gmail.com>
 
 	Added modes count check for safety.
 
