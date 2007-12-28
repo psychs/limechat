@@ -6,7 +6,7 @@ require 'utility'
 module AutoOpMatchable
   def match_autoop(mask)
     @autoop.each do |i|
-      return true if Wildcard.new(i) =~ mask
+      return true if Wildcard.new(i, Regexp::IGNORECASE) =~ mask
     end
     false
   end
