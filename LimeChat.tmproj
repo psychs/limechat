@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>currentDocument</key>
+	<string>ruby/irc/unit.rb</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -18,10 +20,91 @@
 	<key>fileHierarchyDrawerWidth</key>
 	<integer>283</integer>
 	<key>metaData</key>
-	<dict/>
+	<dict>
+		<key>objc/rb_main.rb</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>27</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
+		<key>ruby/controller/menucontroller.rb</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>23</integer>
+				<key>line</key>
+				<integer>290</integer>
+			</dict>
+			<key>columnSelection</key>
+			<false/>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>269</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>11</integer>
+				<key>line</key>
+				<integer>290</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>23</integer>
+				<key>line</key>
+				<integer>290</integer>
+			</dict>
+		</dict>
+		<key>ruby/irc/unit.rb</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>42</integer>
+				<key>line</key>
+				<integer>164</integer>
+			</dict>
+			<key>columnSelection</key>
+			<false/>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>143</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>32</integer>
+				<key>line</key>
+				<integer>164</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>42</integer>
+				<key>line</key>
+				<integer>164</integer>
+			</dict>
+		</dict>
+	</dict>
+	<key>openDocuments</key>
+	<array>
+		<string>objc/rb_main.rb</string>
+		<string>ruby/irc/unit.rb</string>
+		<string>ruby/controller/menucontroller.rb</string>
+	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{616, 86}, {798, 1064}}</string>
+	<string>{{329, 62}, {798, 816}}</string>
 </dict>
 </plist>

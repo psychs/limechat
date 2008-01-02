@@ -72,9 +72,9 @@ class IRCUnit < NSObject
       end
     end
     
-    ary += @channels.select {|i| !i.channel? }
-    remains = @channels.select {|i| i.channel? }
-    remains.each {|i| part_channel(i) }
+    chs, nochs = @channels.partition {|i| i.channel? }
+    ary += nochs
+    chs.each {|i| part_channel(i) }
     
     @channels = ary
     @world.reload_tree
@@ -91,9 +91,8 @@ class IRCUnit < NSObject
         @channels.delete(c)
       end
     end
-    ary += @channels.select {|i| i.channel? }
-    ary += @channels.select {|i| !i.channel? }
-    @channels = ary
+    chs, nochs = @channels.partition {|i| i.channel? }
+    @channels = ary + chs + nochs
   end
   
   def update_autoop(conf)
