@@ -2,38 +2,21 @@
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
 module NumberFormat
-  class << self
-    def format_time(sec)
-      min = sec / 60
-      sec %= 60
-      hour = min / 60
-      min %= 60
-      if hour >= 1
-        sprintf("%d:%02d:%02d", hour, min, sec)
-      else
-        sprintf("%d:%02d", min, sec)
-      end
-    end
-    
-    def format_size(bytes)
-      kb = bytes / 1024.0
-      mb = kb / 1024.0
-      gb = mb / 1024.0
-      if gb >= 1
-        if gb >= 10
-          sprintf("%d GB", gb)
-        else
-          sprintf("%1.1f GB", gb)
-        end
-      elsif mb >= 1
-        if mb >= 10
-          sprintf("%d MB", mb)
-        else
-          sprintf("%1.1f MB", mb)
-        end
-      else
-        sprintf("%d KB", kb)
-      end
-    end
+  def format_time(sec=self)
+    min,sec  = sec.divmod(60)
+    hour,min = min.divmod(60)
+    hour >= 1 ? sprintf("%d:%02d:%02d", hour, min, sec) : sprintf("%d:%02d", min, sec)
   end
+  
+  Units = %w[bytes KB MB GB TB]
+  
+  def format_size(bytes=self)
+    unit = (Math.log(bytes)/Math.log(1024)).floor
+    unit = 4 if unit > 4
+    data = bytes/(1024.0**unit)
+    format = (unit == 0 || data >= 10) ? "%d %s" : "%1.1f %s"
+    sprintf(format, data, Units[unit])
+  end
+  
+  extend self
 end

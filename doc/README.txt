@@ -17,6 +17,7 @@ Fujimoto Hisa       # RubyCocoa creator
 Laurent Sansonetti  # RubyCocoa developer, many requests and suggestions
 Josh Goebel			# CocoaSheet, many improvements of code and UIs, Pastie creator
 Jun Morimoto        # bug fixes
+Stefan Rusterholz	# many suggestions and patches
 Takashi Tsugo		# Deep Ocean theme
 
 * License (Ruby's)

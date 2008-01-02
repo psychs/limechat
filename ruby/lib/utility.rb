@@ -1,6 +1,8 @@
 # Created by Satoshi Nakagawa.
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
+require 'numberformat'
+
 class String
   def each_char
     scan(/./) {|c| yield c }
@@ -89,6 +91,8 @@ class Hash
 end
 
 class Numeric
+  include NumberFormat
+  
   def grouped_by_comma
     s = to_s
     nil while s.gsub!(/(.*\d)(\d\d\d)/, '\1,\2')

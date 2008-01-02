@@ -1,7 +1,6 @@
 # Created by Satoshi Nakagawa.
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
-require 'numberformat'
 require 'utility'
 
 class DccManager < NSObject
@@ -519,10 +518,10 @@ class FileTransferCell < NSCell
   end
   
   def fsize(size)
-    NumberFormat.format_size(size)
+    size.format_size
   end
   
   def ftime(sec)
-    NumberFormat.format_time(sec)
+    sec.format_time
   end
 end
