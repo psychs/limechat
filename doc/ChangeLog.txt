@@ -1,5 +1,9 @@
 2008-01-03  Satoshi Nakagawa <artension@gmail.com>
 
+	Removed target channel completion for text commands except /me.
+
+2008-01-03  Satoshi Nakagawa <artension@gmail.com>
+
 	Refactoring NumberFormat.
 	Based on a patch from Stefan Rusterholz.
 

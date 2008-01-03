@@ -378,11 +378,11 @@ class IRCUnit < NSObject
         end
       end
       return true
-    when :ctcpquery,:ctcpreply,:ctcpping,:invite
-      target = s.token!
-    when :privmsg,:msg,:notice,:action,:me
+    when :privmsg,:msg,:notice,:action,:ctcpquery,:ctcpreply,:ctcpping,:invite
       cmd = :privmsg if cmd == :msg
-      cmd = :action if cmd == :me
+      target = s.token!
+    when :me
+      cmd = :action
       if sel
         target = sel.name
       else
