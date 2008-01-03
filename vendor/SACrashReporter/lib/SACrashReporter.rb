@@ -78,9 +78,9 @@ class SACrashReporter < OSX::NSWindowController
         rb_main_init
         OSX.NSApplicationMain(0, nil)
       end
+    rescue SignalException
+      ;
     rescue Exception => exception
-      return if exception.is_a?(SignalException)
-      
       # write backtrace to crash log so it can be reported on next launch
       report.exception = exception
       path = new_crash_log_path
