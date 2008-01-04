@@ -1,5 +1,9 @@
 2008-01-04  Satoshi Nakagawa <artension@gmail.com>
 
+	Fixed a bug, logs were cleared when reloading theme.
+
+2008-01-04  Satoshi Nakagawa <artension@gmail.com>
+
 	Fixed a nil access bug when updating a nick completion weight.
 	Fixed a bug, a node class should be checked when removing an element in log views.
 

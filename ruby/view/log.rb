@@ -226,14 +226,17 @@ class LogController < NSObject
       moveToBottom
       @bottom = true
     end
-    
-    body = @view.mainFrame.DOMDocument.body
-    while e = body.firstChild
-      body.removeChild_(e)
-    end
-    
+
     @lines.each {|i| print(*i) }
     @lines.clear
+
+    body = @view.mainFrame.DOMDocument.body
+    e = body.firstChild
+    while e
+      n = e.nextSibling	 
+      body.removeChild(e) unless DOMHTMLDivElement === e || DOMHTMLHRElement === e
+      e = n
+    end
     
     if @console
       script = <<-EOM
