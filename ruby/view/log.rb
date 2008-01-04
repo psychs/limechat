@@ -227,16 +227,13 @@ class LogController < NSObject
       @bottom = true
     end
     
+    body = @view.mainFrame.DOMDocument.body
+    while e = body.firstChild
+      body.removeChild_(e)
+    end
+    
     @lines.each {|i| print(*i) }
     @lines.clear
-    
-    body = @view.mainFrame.DOMDocument.body
-    e = body.firstChild
-    while e
-      n = e.nextSibling
-      body.removeChild_(e) unless DOMHTMLDivElement === e
-      e = n
-    end
     
     if @console
       script = <<-EOM
@@ -342,11 +339,11 @@ class LogController < NSObject
     body = doc.body
     n.times do
       node = body.firstChild
-      if node.tagName.to_s.downcase == 'hr'
+      if DOMHTMLElement === node && node.tagName.to_s.downcase == 'hr'
         # the first node is the mark
-        hr = node
-        node = node.nextSibling
-        body.removeChild(hr)
+        next_sibling = node.nextSibling
+        body.removeChild(node)
+        node = next_sibling
       end
       body.removeChild(node)
     end

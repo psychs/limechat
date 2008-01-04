@@ -1226,16 +1226,18 @@ class IRCUnit < NSObject
         sound = kind == :highlight ? @pref.sound.highlight : @pref.sound.channeltext
         SoundPlayer.play(sound)
         
-        # track the conversation to auto-complete
-        sender = c.find_member(nick)
-        if sender
-          pattern = Regexp.escape(@mynick.sub(/\A_+/, '').sub(/_+\z/, ''))
-          if text =~ /#{pattern}/i
-            # if we're being directly spoken to
-            sender.outgoing_conversation!
-          else
-            # the other conversations
-            sender.conversation!
+        if c
+          # track the conversation to auto-complete
+          sender = c.find_member(nick)
+          if sender
+            pattern = Regexp.escape(@mynick.sub(/\A_+/, '').sub(/_+\z/, ''))
+            if text =~ /#{pattern}/i
+              # if we're being directly spoken to
+              sender.outgoing_conversation!
+            else
+              # the other conversations
+              sender.conversation!
+            end
           end
         end
       end
