@@ -330,7 +330,8 @@ class LogController < NSObject
   end
   
   def h(s)
-    s ? CGI.escapeHTML(s.to_s) : ''
+    #s ? CGI.escapeHTML(s.to_s) : ''
+    s ? LogRenderer.escape_str(s) : ''
   end
   
   def remove_first_line(n=1)

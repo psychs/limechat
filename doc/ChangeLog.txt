@@ -1,3 +1,7 @@
+2008-01-05  Satoshi Nakagawa <artension@gmail.com>
+
+	Added '%9n' and '%@%n' supported for nick format.
+
 2008-01-04  Satoshi Nakagawa <artension@gmail.com>
 
 	Fixed a bug, logs were cleared when reloading theme.

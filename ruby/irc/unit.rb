@@ -855,11 +855,23 @@ class IRCUnit < NSObject
     Time.now.strftime('%H:%M')
   end
   
-  def nick_format
-    if @pref.theme.override_nick_format
-      @pref.theme.nick_format
-    else
-      @world.view_theme.other.log_nick_format
+  def format_nick(channel, nick)
+    format = @pref.theme.override_nick_format ? @pref.theme.nick_format : @world.view_theme.other.log_nick_format
+    s = format.gsub(/%@/) do |i|
+      mark = ''
+      if channel && channel.channel?
+        m = channel.find_member(nick)
+        mark = m.mark if m
+      end
+      mark.empty? ? ' ' : mark
+    end
+    s.gsub(/%(\d*)n/) do |i|
+      if $1
+        pad = $1.to_i - nick.size
+        pad > 0 ? nick + ' '*pad : nick
+      else
+        nick
+      end
     end
   end
   
@@ -884,7 +896,7 @@ class IRCUnit < NSObject
       place = "<#{self.name}> "
     end
     if nick && !nick.empty?
-      nickstr = nick_format.gsub(/%n/, nick)
+      nickstr = format_nick(channel, nick)
     else
       nickstr = nil
     end
@@ -924,7 +936,7 @@ class IRCUnit < NSObject
       place = nil
     end
     if nick && !nick.empty?
-      nickstr = nick_format.gsub(/%n/, nick)
+      nickstr = format_nick(channel, nick)
     else
       nickstr = nil
     end
@@ -1012,7 +1024,7 @@ class IRCUnit < NSObject
     else
       name
     end
-    nickstr = @pref.theme.nick_format.gsub(/%n/, nick)
+    nickstr = format_nick(c, nick)
     desc = "#{nickstr}#{text}"
     context = "#{@id}"
     context << ";#{c.id}" if c
