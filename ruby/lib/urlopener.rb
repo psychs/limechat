@@ -2,8 +2,11 @@
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
 module UrlOpener
-  def self.openUrl(str)
+  
+  def openUrl(str)
     urls = [OSX::NSURL.URLWithString(str)]
     OSX::NSWorkspace.sharedWorkspace.openURLs_withAppBundleIdentifier_options_additionalEventParamDescriptor_launchIdentifiers(urls, nil, NSWorkspaceLaunchAsync, nil, nil)
   end
+  
+  extend self
 end

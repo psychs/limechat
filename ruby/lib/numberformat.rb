@@ -2,6 +2,7 @@
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
 module NumberFormat
+  
   def format_time(sec=self)
     min,sec  = sec.divmod(60)
     hour,min = min.divmod(60)

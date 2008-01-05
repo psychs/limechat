@@ -2,7 +2,8 @@
 # http://webos-goodies.jp/archives/51072404.html
 
 module StringValidator
-  def self.validate_utf8(str, malformed_chr)
+  
+  def validate_utf8(str, malformed_chr)
     code  = 0
     rest  = 0
     range = nil
@@ -31,4 +32,6 @@ module StringValidator
     end
     ucs.pack('U*')
   end
+  
+  extend self
 end

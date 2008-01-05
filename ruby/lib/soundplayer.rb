@@ -2,7 +2,8 @@
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
 module SoundPlayer
-  def self.play(name)
+  
+  def play(name)
     return if name == nil || name.empty?
     if name == 'Beep'
       OSX.NSBeep
@@ -11,4 +12,6 @@ module SoundPlayer
       s.play if s
     end
   end
+  
+  extend self
 end
