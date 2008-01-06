@@ -1,5 +1,9 @@
 2008-01-07  Satoshi Nakagawa <artension@gmail.com>
 
+	Added an exception handler in completing nick for safety.
+
+2008-01-07  Satoshi Nakagawa <artension@gmail.com>
+
 	Changed to not match a domain name followed by an alphabet or a digit.
 
 2008-01-06  Satoshi Nakagawa <artension@gmail.com>

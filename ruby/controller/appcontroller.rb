@@ -357,6 +357,8 @@ class AppController < NSObject
       r.length = ns.length - ps.length
       status.store(@text.stringValue.to_s, r)
     end
+  rescue
+    p $!
   end
 
   def queryTerminate
