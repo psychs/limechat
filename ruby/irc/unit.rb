@@ -447,7 +447,7 @@ class IRCUnit < NSObject
         target.split(/,/).each do |chname|
           next if t.empty?
           c = find_channel(chname)
-          if !c && !chname.channelname? && chname != 'NickServ'
+          if !c && !chname.channelname? && !eq(chname, 'NickServ') && !eq(chname, 'ChanServ')
             c = @world.create_talk(self, chname)
           end
           print_both(c || chname, cmd, @mynick, t)

@@ -1,6 +1,10 @@
+2008-01-06  Satoshi Nakagawa <artension@gmail.com>
+
+	Changed to not open a talk for 'NickServ' or 'ChanServ' when sending a command.
+
 2008-01-05  Satoshi Nakagawa <artension@gmail.com>
 
-	Added '%9n' and '%@%n' supported for nick format.
+	Added '%9n' and '%@%n' support for nick format.
 
 2008-01-04  Satoshi Nakagawa <artension@gmail.com>
 
