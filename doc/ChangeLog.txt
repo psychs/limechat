@@ -1,3 +1,7 @@
+2008-01-07  Satoshi Nakagawa <artension@gmail.com>
+
+	Changed to not match a domain name followed by an alphabet or a digit.
+
 2008-01-06  Satoshi Nakagawa <artension@gmail.com>
 
 	Changed to not open a talk for 'NickServ' or 'ChanServ' when sending a command.

@@ -306,6 +306,7 @@ module LogRenderer
   
   URL_REGEX = /(?:h?ttps?|ftp):\/\/[^\s\/,'"`　]+(?:\/(?:[^\s'"　…]*[^\s.,'"`(){}\[\]<>　、，。．…])?)?/
 	ADDRESS_REGEX = /(?:[a-zA-Z\d](?:[-a-zA-Z\d]*[a-zA-Z\d])?\.)(?:[a-zA-Z\d](?:[-a-zA-Z\d]*[a-zA-Z\d])?\.)+[a-zA-Z]{2,6}|(?:[a-f\d]{0,4}:){7}[a-f\d]{0,4}|(?:\d{1,3}\.){3}[\d]{1,3}/
+	FORBIDDEN_AFTER_ADDRESS_REGEX = /\A[a-zA-Z\d_]\z/
   
   def process_urls(body)
     urls = []
@@ -331,7 +332,10 @@ module LogRenderer
       left = $~.begin(0)
       right = $~.end(0)
       addr = s[left...right]
-      addrs << { :address => addr, :pos => offset+left, :len => right-left }
+      next_char = s[right,1]
+      if !next_char || FORBIDDEN_AFTER_ADDRESS_REGEX !~ next_char
+        addrs << { :address => addr, :pos => offset+left, :len => right-left }
+      end
       s[0...right] = ''
       offset += right
     end
