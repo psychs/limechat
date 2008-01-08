@@ -110,7 +110,7 @@ module OSX
       when NSCFBoolean
         boolValue
       when NSNumber
-        float? ? to_f : to_i
+        integer? ? to_i : to_f
       when NSString
         to_s
       when NSAttributedString
@@ -133,8 +133,8 @@ module OSX
   end
   
   class NSNumber
-    def float?
-      CFNumberIsFloatType(self)
+    def integer?
+      !CFNumberIsFloatType(self)
     end
     
     def inspect

@@ -1,3 +1,7 @@
+2008-01-08  Satoshi Nakagawa <artension@gmail.com>
+
+	Replaced NSNumber#float? to NSNumber#integer?.
+
 2008-01-07  Satoshi Nakagawa <artension@gmail.com>
 
 	Added an exception handler in completing nick for safety.
