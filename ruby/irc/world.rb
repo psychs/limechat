@@ -35,6 +35,9 @@ class IRCWorld < NSObject
     change_member_list_theme
     change_tree_theme
     register_growl
+    
+    @plugin = PluginManager.new(self, '~/Library/LimeChat/Plugin')
+    @plugin.load_all
   end
   
   def save
@@ -439,6 +442,10 @@ class IRCWorld < NSObject
       end
     end
     logs.each {|i| i.change_text_size(op)}
+  end
+  
+  def reload_plugins
+    @plugin.load_all
   end
   
   # delegate

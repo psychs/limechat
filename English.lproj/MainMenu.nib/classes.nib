@@ -131,6 +131,8 @@
 				<string>id</string>
 				<key>onPreferences</key>
 				<string>id</string>
+				<key>onReloadPlugins</key>
+				<string>id</string>
 				<key>onReloadTheme</key>
 				<string>id</string>
 				<key>onSearchWeb</key>
@@ -140,6 +142,8 @@
 				<key>onServerProperties</key>
 				<string>id</string>
 				<key>onServerTree</key>
+				<string>id</string>
+				<key>onToggleServerMessages</key>
 				<string>id</string>
 				<key>onTopic</key>
 				<string>id</string>

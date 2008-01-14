@@ -67,6 +67,10 @@
 		7834E1930C69B5AD003C5D65 /* wildcard.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7834E1920C69B5AD003C5D65 /* wildcard.rb */; };
 		7835DF4A0D0415D20064916A /* Theme in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7835DF460D0415D20064916A /* Theme */; };
 		7835DF4B0D0415D20064916A /* Theme in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7835DF460D0415D20064916A /* Theme */; };
+		783952320D261EEE00382565 /* pluginmanager.rb in Resources */ = {isa = PBXBuildFile; fileRef = 783952310D261EEE00382565 /* pluginmanager.rb */; };
+		783952330D261EEE00382565 /* pluginmanager.rb in Resources */ = {isa = PBXBuildFile; fileRef = 783952310D261EEE00382565 /* pluginmanager.rb */; };
+		783952350D261F2500382565 /* plugin.rb in Resources */ = {isa = PBXBuildFile; fileRef = 783952340D261F2500382565 /* plugin.rb */; };
+		783952360D261F2500382565 /* plugin.rb in Resources */ = {isa = PBXBuildFile; fileRef = 783952340D261F2500382565 /* plugin.rb */; };
 		783D0B200CF45BC6002CC2FB /* ListDialog.nib in Resources */ = {isa = PBXBuildFile; fileRef = 783D0B1E0CF45BC6002CC2FB /* ListDialog.nib */; };
 		783D0B210CF45BDC002CC2FB /* ListDialog.nib in Resources */ = {isa = PBXBuildFile; fileRef = 783D0B1E0CF45BC6002CC2FB /* ListDialog.nib */; };
 		783D0B2B0CF45C38002CC2FB /* listdialog.rb in Resources */ = {isa = PBXBuildFile; fileRef = 783D0B2A0CF45C38002CC2FB /* listdialog.rb */; };
@@ -295,6 +299,8 @@
 		7831B94C0C589A7A00E1F931 /* growl.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = growl.rb; sourceTree = "<group>"; };
 		7834E1920C69B5AD003C5D65 /* wildcard.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = wildcard.rb; sourceTree = "<group>"; };
 		7835DF460D0415D20064916A /* Theme */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Theme; path = resource/Theme; sourceTree = "<group>"; };
+		783952310D261EEE00382565 /* pluginmanager.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = pluginmanager.rb; sourceTree = "<group>"; };
+		783952340D261F2500382565 /* plugin.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = plugin.rb; sourceTree = "<group>"; };
 		783D0B1F0CF45BC6002CC2FB /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/ListDialog.nib; sourceTree = "<group>"; };
 		783D0B2A0CF45C38002CC2FB /* listdialog.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = listdialog.rb; sourceTree = "<group>"; };
 		784660230C3145850064140F /* OldEventManager.h */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = sourcecode.c.h; name = OldEventManager.h; path = objc/OldEventManager.h; sourceTree = "<group>"; };
@@ -563,6 +569,15 @@
 			path = view;
 			sourceTree = "<group>";
 		};
+		783952300D261EEE00382565 /* plugin */ = {
+			isa = PBXGroup;
+			children = (
+				783952340D261F2500382565 /* plugin.rb */,
+				783952310D261EEE00382565 /* pluginmanager.rb */,
+			);
+			path = plugin;
+			sourceTree = "<group>";
+		};
 		786927470BB6EE130081019B /* objc */ = {
 			isa = PBXGroup;
 			children = (
@@ -581,6 +596,7 @@
 		78A47CF40BF6DE6B001C5B15 /* ruby */ = {
 			isa = PBXGroup;
 			children = (
+				783952300D261EEE00382565 /* plugin */,
 				78BF64A20C2885E2004451B2 /* irc */,
 				78229B8F0C288188001DD4C3 /* component */,
 				78229B980C288188001DD4C3 /* controller */,
@@ -754,6 +770,8 @@
 				7896BFE50D0C5E850069453A /* viewtheme.rb in Resources */,
 				7805EE590D11FDCA000A9B55 /* pasternakclient.rb in Resources */,
 				7801DD2E0D1AF75F00D8691D /* isupportinfo.rb in Resources */,
+				783952320D261EEE00382565 /* pluginmanager.rb in Resources */,
+				783952350D261F2500382565 /* plugin.rb in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -842,6 +860,8 @@
 				78B2DF200D0417160092EBDA /* application.icns in Resources */,
 				7896BFE60D0C5E850069453A /* viewtheme.rb in Resources */,
 				7805EE5A0D11FDCA000A9B55 /* pasternakclient.rb in Resources */,
+				783952330D261EEE00382565 /* pluginmanager.rb in Resources */,
+				783952360D261F2500382565 /* plugin.rb in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

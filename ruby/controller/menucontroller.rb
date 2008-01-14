@@ -370,7 +370,6 @@ class MenuController < NSObject
     s = s.gsub(/\r\n|\r|\n/, "\n")
     case syntax
     when 'privmsg','notice'
-      s = s.gsub(/\r\n|\r|\n/, "\n")
       u.send_text(c, syntax.to_sym, s)
     else
       u.send_text(c, :privmsg, s)
@@ -710,6 +709,11 @@ class MenuController < NSObject
     return unless u && c
     onAutoOp(sender)
     @autoop_dialog.select_item(u.id, c.name)
+  end
+  
+  
+  def onReloadPlugins(sender)
+    @world.reload_plugins
   end
   
   

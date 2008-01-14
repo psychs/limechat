@@ -1,3 +1,7 @@
+2008-01-15  Satoshi Nakagawa <artension@gmail.com>
+
+	Implementing plugin.
+
 2008-01-08  Satoshi Nakagawa <artension@gmail.com>
 
 	Replaced NSNumber#float? to NSNumber#integer?.
