@@ -1,5 +1,9 @@
 2008-01-15  Satoshi Nakagawa <artension@gmail.com>
 
+	Changed to append a pasted url in the input text field.
+
+2008-01-15  Satoshi Nakagawa <artension@gmail.com>
+
 	Implementing plugin.
 
 2008-01-08  Satoshi Nakagawa <artension@gmail.com>

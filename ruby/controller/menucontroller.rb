@@ -365,6 +365,12 @@ class MenuController < NSObject
     @pref.save
     @paste_sheet = nil
     
+    @world.select_text
+    e = @window.fieldEditor_forObject(false, @text)
+    e.replaceCharactersInRange_withString(e.selectedRange, s)
+    e.scrollRangeToVisible(e.selectedRange)
+    
+=begin
     u, c = @world.find_by_id(sender.uid, sender.cid)
     return unless u && c
     s = s.gsub(/\r\n|\r|\n/, "\n")
@@ -374,6 +380,7 @@ class MenuController < NSObject
     else
       u.send_text(c, :privmsg, s)
     end
+=end
   end
   
   def pasteSheet_onCancel(sender, syntax, size)
