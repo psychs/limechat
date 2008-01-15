@@ -1,7 +1,3 @@
-2008-01-16  Satoshi Nakagawa <artension@gmail.com>
-
-	Added ISO-8859-1 in the encoding popup.
-
 2008-01-15  Satoshi Nakagawa <artension@gmail.com>
 
 	Changed to append a pasted url in the input text field.
