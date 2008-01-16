@@ -109,7 +109,7 @@ class IRCReceiveMessage
     return if s.empty?
     if /^:([^ ]+)/ =~ s
       @sender = $1
-      if /([^!@]+)!([^!@]+)@([^!@]+)/ =~ @sender
+      if /([^!]+)!([^@]+)@([^!@]+)/ =~ @sender
         @sender_nick = $1
         @sender_username = $2
         @sender_address = $3

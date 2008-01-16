@@ -1,3 +1,7 @@
+2008-01-17  Satoshi Nakagawa <artension@gmail.com>
+
+	Changed to allow '@' in nickname.
+
 2008-01-15  Satoshi Nakagawa <artension@gmail.com>
 
 	Changed to append a pasted url in the input text field.
