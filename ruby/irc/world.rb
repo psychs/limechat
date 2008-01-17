@@ -56,7 +56,10 @@ class IRCWorld < NSObject
       else
         @tree.select(@tree.rowForItem(unit))
       end
-    end    
+    elsif @units.size > 0
+      select(@units[0])
+    end
+    outlineViewSelectionDidChange(nil)
   end
   
   def terminate
