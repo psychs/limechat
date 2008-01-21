@@ -365,22 +365,18 @@ class MenuController < NSObject
     @pref.save
     @paste_sheet = nil
     
-    @world.select_text
-    e = @window.fieldEditor_forObject(false, @text)
-    e.replaceCharactersInRange_withString(e.selectedRange, s)
-    e.scrollRangeToVisible(e.selectedRange)
-    
-=begin
-    u, c = @world.find_by_id(sender.uid, sender.cid)
-    return unless u && c
-    s = s.gsub(/\r\n|\r|\n/, "\n")
     case syntax
     when 'privmsg','notice'
+      u, c = @world.find_by_id(sender.uid, sender.cid)
+      return unless u && c
+      s = s.gsub(/\r\n|\r|\n/, "\n")
       u.send_text(c, syntax.to_sym, s)
     else
-      u.send_text(c, :privmsg, s)
+      @world.select_text
+      e = @window.fieldEditor_forObject(false, @text)
+      e.replaceCharactersInRange_withString(e.selectedRange, s)
+      e.scrollRangeToVisible(e.selectedRange)
     end
-=end
   end
   
   def pasteSheet_onCancel(sender, syntax, size)
