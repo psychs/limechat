@@ -18,11 +18,11 @@ class DccManager < NSObject
     @window.key_delegate = self
     @loaded = true
     @splitter.setFixedViewIndex(1)
-    @receiver_cell = FileTransferCell.alloc.init
+    @receiver_cell = FileReceiverCell.alloc.init
     @receiver_cell.setup
     @receiver_cell.op = :receive
     @receiver_table.tableColumns[0].setDataCell(@receiver_cell)
-    @sender_cell = FileTransferCell.alloc.init
+    @sender_cell = FileSenderCell.alloc.init
     @sender_cell.setup
     @sender_cell.op = :send
     @sender_table.tableColumns[0].setDataCell(@sender_cell)
@@ -523,5 +523,35 @@ class FileTransferCell < NSCell
   
   def ftime(sec)
     sec.format_time
+  end
+end
+
+class FileSenderCell < FileTransferCell
+  @@singleton = nil
+  def initialize
+    @@singleton ||= self
+  end
+  
+  def drawInteriorWithFrame_inView(frame, view)
+    if self != @@singleton
+      @@singleton.drawInteriorWithFrame_inView(frame, view)
+    else
+      super(frame, view)
+    end
+  end
+end
+
+class FileReceiverCell < FileTransferCell
+  @@singleton = nil
+  def initialize
+    @@singleton ||= self
+  end
+  
+  def drawInteriorWithFrame_inView(frame, view)
+    if self != @@singleton
+      @@singleton.drawInteriorWithFrame_inView(frame, view)
+    else
+      super(frame, view)
+    end
   end
 end

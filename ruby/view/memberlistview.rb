@@ -80,7 +80,10 @@ end
 class MemberListViewCell < NSCell
   attr_writer :member
   
+  @@singleton = nil
+  
   def initialize
+    @@singleton ||= self
     @mark_width = 0
   end
   
@@ -110,6 +113,9 @@ class MemberListViewCell < NSCell
   MARK_RIGHT_MARGIN = 2
   
   def drawInteriorWithFrame_inView(frame, view)
+    if self != @@singleton
+      return @@singleton.drawInteriorWithFrame_inView(frame, view)
+    end
     return unless @member && @theme
     if self.isHighlighted
       if NSApp.isActive && @window && @window.firstResponder == view

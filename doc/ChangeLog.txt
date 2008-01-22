@@ -1,5 +1,9 @@
 2008-01-22  Satoshi Nakagawa <artension@gmail.com>
 
+	Fixed a bug, NSCell in NSTableView should be aware of copy in ObjC level.
+
+2008-01-22  Satoshi Nakagawa <artension@gmail.com>
+
 	Fixed a bug, 'privmsg' and 'notice' type pastes should be sent quickly after pushing the send button.
 
 2008-01-20  Satoshi Nakagawa <artension@gmail.com>
