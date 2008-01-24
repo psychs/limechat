@@ -53,7 +53,7 @@ class IRCSendMessage
       end
       s << ' '
       last = @params.last
-      s << ':' if force_complete_colon || @complete_colon && (last.size == 0 || last =~ /^:|\s/)
+      s << ':' if force_complete_colon || @complete_colon && (last.size == 0 || last =~ /\A:|\s/)
       s << last
     end
     s << "\x0d\x0a"
@@ -107,9 +107,9 @@ class IRCReceiveMessage
     str = str.dup
     s = str.token!
     return if s.empty?
-    if /^:([^ ]+)/ =~ s
+    if /\A:([^ ]+)/ =~ s
       @sender = $1
-      if /([^!]+)!([^@]+)@([^!@]+)/ =~ @sender
+      if /\A([^!]+)!([^@]+)@([^!@]+)\z/ =~ @sender
         @sender_nick = $1
         @sender_username = $2
         @sender_address = $3
@@ -120,7 +120,7 @@ class IRCReceiveMessage
       return if s.empty?
     end
     
-    if /^\d+$/ =~ s
+    if /\A\d+\z/ =~ s
       @command = s.to_sym
       @numeric_reply = s.to_i
     else
@@ -129,7 +129,7 @@ class IRCReceiveMessage
     
     loop do
       break if str.empty?
-      if /^:/ =~ str
+      if /\A:/ =~ str
         @params << $~.post_match
         break
       end

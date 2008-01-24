@@ -1,3 +1,7 @@
+2008-01-24  Satoshi Nakagawa <artension@gmail.com>
+
+	Tweaked the message parser to make sure to parse prefix better.
+
 2008-01-22  Satoshi Nakagawa <artension@gmail.com>
 
 	Fixed a bug, NSCell in NSTableView should be aware of copy in ObjC level.
