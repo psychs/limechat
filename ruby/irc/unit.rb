@@ -865,10 +865,16 @@ class IRCUnit < NSObject
       end
       mark.empty? ? ' ' : mark
     end
-    s.gsub(/%(\d*)n/) do |i|
+    s.gsub(/%(-?\d*)n/) do |i|
       if $1
-        pad = $1.to_i - nick.size
-        pad > 0 ? nick + ' '*pad : nick
+        i = $1.to_i
+        if i >= 0
+          pad = i - nick.size
+          pad > 0 ? (nick + ' ' * pad) : nick
+        else
+          pad = -i - nick.size
+          pad > 0 ? (' ' * pad + nick) : nick
+        end
       else
         nick
       end
