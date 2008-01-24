@@ -1,5 +1,9 @@
 2008-01-24  Satoshi Nakagawa <artension@gmail.com>
 
+	Improved implementation of custom cells in table views to watch copyWithZone.
+
+2008-01-24  Satoshi Nakagawa <artension@gmail.com>
+
 	Added ISO-8859-1 support.
 
 2008-01-24  Satoshi Nakagawa <artension@gmail.com>

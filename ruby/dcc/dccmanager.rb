@@ -18,11 +18,11 @@ class DccManager < NSObject
     @window.key_delegate = self
     @loaded = true
     @splitter.setFixedViewIndex(1)
-    @receiver_cell = FileReceiverCell.alloc.init
+    @receiver_cell = FileTransferCell.alloc.init
     @receiver_cell.setup
     @receiver_cell.op = :receive
     @receiver_table.tableColumns[0].setDataCell(@receiver_cell)
-    @sender_cell = FileSenderCell.alloc.init
+    @sender_cell = FileTransferCell.alloc.init
     @sender_cell.setup
     @sender_cell.op = :send
     @sender_table.tableColumns[0].setDataCell(@sender_cell)
@@ -411,6 +411,7 @@ end
 class FileTransferCell < NSCell
   attr_accessor :peer_nick, :processed_size, :size, :speed, :time_remaining, :status, :error
   attr_accessor :progress_bar, :icon, :op
+  attr_writer :singleton
   
   FILENAME_HEIGHT = 20
   FILENAME_TOP_MARGIN = 1
@@ -419,6 +420,12 @@ class FileTransferCell < NSCell
   STATUS_TOP_MARGIN = 1
   RIGHT_MARGIN = 10
   ICON_SIZE = NSSize.new(32, 32)
+  
+  def copyWithZone(zone)
+    obj = super_copyWithZone(zone)
+    obj.singleton = @singleton || self
+    obj
+  end
   
   def setup
     @filename_style = NSMutableParagraphStyle.alloc.init
@@ -430,6 +437,7 @@ class FileTransferCell < NSCell
   end
   
   def drawInteriorWithFrame_inView(frame, view)
+    return @singleton.drawInteriorWithFrame_inView(frame, view) if @singleton
     if @icon
       size = ICON_SIZE
       margin = (frame.height - size.height) / 2
@@ -523,35 +531,5 @@ class FileTransferCell < NSCell
   
   def ftime(sec)
     sec.format_time
-  end
-end
-
-class FileSenderCell < FileTransferCell
-  @@singleton = nil
-  def initialize
-    @@singleton ||= self
-  end
-  
-  def drawInteriorWithFrame_inView(frame, view)
-    if self != @@singleton
-      @@singleton.drawInteriorWithFrame_inView(frame, view)
-    else
-      super(frame, view)
-    end
-  end
-end
-
-class FileReceiverCell < FileTransferCell
-  @@singleton = nil
-  def initialize
-    @@singleton ||= self
-  end
-  
-  def drawInteriorWithFrame_inView(frame, view)
-    if self != @@singleton
-      @@singleton.drawInteriorWithFrame_inView(frame, view)
-    else
-      super(frame, view)
-    end
   end
 end

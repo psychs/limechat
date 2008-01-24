@@ -78,13 +78,16 @@ end
 
 
 class MemberListViewCell < NSCell
-  attr_writer :member
-  
-  @@singleton = nil
+  attr_writer :member, :singleton
   
   def initialize
-    @@singleton ||= self
     @mark_width = 0
+  end
+  
+  def copyWithZone(zone)
+    obj = super_copyWithZone(zone)
+    obj.singleton = @singleton || self
+    obj
   end
   
   def setup(window, theme)
@@ -113,9 +116,7 @@ class MemberListViewCell < NSCell
   MARK_RIGHT_MARGIN = 2
   
   def drawInteriorWithFrame_inView(frame, view)
-    if self != @@singleton
-      return @@singleton.drawInteriorWithFrame_inView(frame, view)
-    end
+    return @singleton.drawInteriorWithFrame_inView(frame, view) if @singleton
     return unless @member && @theme
     if self.isHighlighted
       if NSApp.isActive && @window && @window.firstResponder == view
