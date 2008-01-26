@@ -26,6 +26,37 @@ class ServerDialog < NSObject
     @c
   end
   
+  JA_SERVERS = %w[
+    irc.nara.wide.ad.jp
+    irc.tokyo.wide.ad.jp
+    irc.fujisawa.wide.ad.jp
+    irc.huie.hokudai.ac.jp
+    irc.media.kyoto-u.ac.jp
+    -
+    irc.friend.td.nu
+    irc.2ch.net
+    irc.reicha.net
+    irc.cre.ne.jp
+    -
+    irc.freenode.net
+    eu.undernet.org
+    irc.quakenet.org
+    irc.mozilla.org
+    chat1.ustream.tv
+  ]
+
+  SERVERS = %w[
+    irc.freenode.net
+    irc.efnet.net
+    irc.us.ircnet.net
+    irc.fr.ircnet.net
+    us.undernet.org
+    eu.undernet.org
+    irc.quakenet.org
+    uk.quakenet.org
+    irc.mozilla.org
+  ]
+  
   def start(conf, uid)
     @c = conf
     @uid = uid
@@ -37,6 +68,7 @@ class ServerDialog < NSObject
     load
     update_connection_page
     update_channels_page
+    (LanguageSupport.primary_language == 'ja' ? JA_SERVERS : SERVERS).each {|i| @hostCombo.addItemWithObjectValue(i) }
     show
   end
   
@@ -78,6 +110,10 @@ class ServerDialog < NSObject
     update_connection_page
   end
   
+  def onHostComboChanged(sender)
+    update_connection_page
+  end
+  
   def update_connection_page
     name = @nameText.stringValue.to_s
     host = @hostCombo.stringValue.to_s
@@ -85,7 +121,7 @@ class ServerDialog < NSObject
     nick = @nickText.stringValue.to_s
     username = @usernameText.stringValue.to_s
     realname = @realnameText.stringValue.to_s
-    @okButton.setEnabled(!name.empty? && !host.empty? && port.to_i > 0 && !nick.empty? && !username.empty? && !realname.empty?)
+    @okButton.setEnabled(!name.empty? && !host.empty? && host != '-' && port.to_i > 0 && !nick.empty? && !username.empty? && !realname.empty?)
   end
   
   def update_channels_page

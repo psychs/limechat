@@ -99,7 +99,7 @@ class MenuController < NSObject
     when 502  # disconnect
       !!u && (u.connected? || u.connecting?)
     when 503  # cancel reconnecting
-      !!u && (u.connecting? || u.reconnecting?)
+      !!u && u.reconnecting?
     when 511  # nick
       login
     when 519  # channel list

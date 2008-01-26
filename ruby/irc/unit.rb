@@ -213,10 +213,9 @@ class IRCUnit < NSObject
   end
   
   def disconnect
-    return unless connected?
     @quitting = false
     @reconnect = false
-    @conn.close
+    @conn.close if @conn
     change_state_to_off
   end
   
