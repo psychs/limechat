@@ -1,5 +1,9 @@
 2008-01-28  Satoshi Nakagawa <artension@gmail.com>
 
+	Turned back the quitting message.
+
+2008-01-28  Satoshi Nakagawa <artension@gmail.com>
+
 	Stopped periodical GC sweeps.
 
 2008-01-28  Satoshi Nakagawa <artension@gmail.com>
