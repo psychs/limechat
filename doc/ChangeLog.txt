@@ -9,7 +9,7 @@
 
 	Added servers to the server list.
 	Fixed a bug, disconnect menu didn't work while connecting.
-	Fixed a bug, cancel reconnect menu should disable while connecting for the first time.
+	Fixed a bug, cancel reconnect menu should be disabled while connecting for the first time.
 
 2008-01-24  Satoshi Nakagawa <artension@gmail.com>
 
