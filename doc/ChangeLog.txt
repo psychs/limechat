@@ -1,3 +1,8 @@
+2008-01-28  Satoshi Nakagawa <artension@gmail.com>
+
+	Commented the end of who message, "Members list has been initialized".
+	Now comboboxes shows all choices at once.
+
 ==== LimeChat 0.14.4 ====
 
 2008-01-26  Satoshi Nakagawa <artension@gmail.com>

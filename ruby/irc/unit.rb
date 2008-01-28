@@ -1847,7 +1847,7 @@ class IRCUnit < NSObject
         c.who_init = true
         c.sort_members
         c.reload_members
-        print_system(c, "Members list has been initialized")
+        #print_system(c, "Members list has been initialized")
         check_all_autoop(c) if c.op?
       else
         print_unknown_reply(m)
