@@ -1,5 +1,9 @@
 2008-01-28  Satoshi Nakagawa <artension@gmail.com>
 
+	Changed the quitting confirmation message to "Are you sure you want to quit?".
+
+2008-01-28  Satoshi Nakagawa <artension@gmail.com>
+
 	Commented the end of who message, "Members list has been initialized".
 	Now comboboxes shows all choices at once.
 
