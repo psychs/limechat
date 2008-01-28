@@ -1,3 +1,5 @@
+==== LimeChat 0.14.4 ====
+
 2008-01-26  Satoshi Nakagawa <artension@gmail.com>
 
 	Added servers to the server list.
