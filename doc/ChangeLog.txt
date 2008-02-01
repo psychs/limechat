@@ -1,3 +1,5 @@
+==== LimeChat 0.15 ====
+
 2008-01-28  Satoshi Nakagawa <artension@gmail.com>
 
 	Turned back the quitting message.
