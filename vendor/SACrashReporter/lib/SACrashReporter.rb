@@ -192,7 +192,7 @@ class SACrashReporter < OSX::NSWindowController
   end
   
   def set_footnote_text_with_dev
-    @footnoteTextfield.stringValue = "Your report will help #{SACrashReporter.developer} improve this software. Your personal information is not sent with this report. You will not be contacted in response to this report unless you would like to in which case please leave your contact info in the comment."
+    @footnoteTextfield.stringValue = "Your report will help #{SACrashReporter.developer} improve this software. Your personal information will not be sent with this report, and you will not be contacted unless you request it."
   end
   
   def set_button_text_with_dev

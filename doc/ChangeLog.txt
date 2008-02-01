@@ -1,3 +1,7 @@
+2008-02-01  Satoshi Nakagawa <artension@gmail.com>
+
+	Changed the report dialog of SACrashReporter.
+
 ==== LimeChat 0.15 ====
 
 2008-01-28  Satoshi Nakagawa <artension@gmail.com>
