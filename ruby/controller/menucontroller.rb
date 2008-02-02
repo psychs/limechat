@@ -728,7 +728,15 @@ class MenuController < NSObject
   end
   
   def memberList_doubleClicked(sender)
-    whois_selected_members(nil, false)
+    pt = @window.mouseLocationOutsideOfEventStream
+    pt = sender.convertPoint_fromView(pt, nil)
+    n = sender.rowAtPoint(pt)
+    if n >= 0
+      if sender.selectedRows.size > 1
+        sender.select(n)
+      end
+      whois_selected_members(nil, false)
+    end
   end
   
   def onMemberWhois(sender)

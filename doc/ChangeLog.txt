@@ -1,3 +1,7 @@
+2008-02-02  Satoshi Nakagawa <artension@gmail.com>
+
+	Changed to send whois for a pointed member when doubleclicked on the member list.
+
 2008-02-01  Satoshi Nakagawa <artension@gmail.com>
 
 	Changed the report dialog of SACrashReporter.
