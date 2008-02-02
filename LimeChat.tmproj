@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>doc/ChangeLog.txt</string>
+	<string>ruby/controller/menucontroller.rb</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -18,39 +18,9 @@
 		</dict>
 	</array>
 	<key>fileHierarchyDrawerWidth</key>
-	<integer>247</integer>
+	<integer>279</integer>
 	<key>metaData</key>
 	<dict>
-		<key>doc/ChangeLog.txt</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>3</integer>
-			</dict>
-			<key>columnSelection</key>
-			<false/>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-			<key>selectFrom</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>2</integer>
-			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>3</integer>
-			</dict>
-		</dict>
 		<key>objc/rb_main.rb</key>
 		<dict>
 			<key>caret</key>
@@ -70,24 +40,54 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>39</integer>
 				<key>line</key>
-				<integer>13</integer>
+				<integer>74</integer>
+			</dict>
+			<key>columnSelection</key>
+			<false/>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>45</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>34</integer>
+				<key>line</key>
+				<integer>74</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>58</integer>
+				<key>line</key>
+				<integer>74</integer>
+			</dict>
+		</dict>
+		<key>ruby/controller/menucontroller.rb</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>6</integer>
+				<key>line</key>
+				<integer>737</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>706</integer>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
 		<string>ruby/controller/appcontroller.rb</string>
-		<string>doc/ChangeLog.txt</string>
+		<string>ruby/controller/menucontroller.rb</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{516, 62}, {928, 966}}</string>
+	<string>{{558, 73}, {852, 1090}}</string>
 </dict>
 </plist>

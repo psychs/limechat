@@ -1,3 +1,5 @@
+==== LimeChat 0.15.1 ====
+
 2008-02-02  Satoshi Nakagawa <artension@gmail.com>
 
 	Changed to send whois for a pointed member when doubleclicked on the member list.
