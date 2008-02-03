@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>currentDocument</key>
-	<string>ruby/controller/menucontroller.rb</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -35,59 +33,10 @@
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
 		</dict>
-		<key>ruby/controller/appcontroller.rb</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>39</integer>
-				<key>line</key>
-				<integer>74</integer>
-			</dict>
-			<key>columnSelection</key>
-			<false/>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>45</integer>
-			<key>selectFrom</key>
-			<dict>
-				<key>column</key>
-				<integer>34</integer>
-				<key>line</key>
-				<integer>74</integer>
-			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
-				<integer>58</integer>
-				<key>line</key>
-				<integer>74</integer>
-			</dict>
-		</dict>
-		<key>ruby/controller/menucontroller.rb</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>6</integer>
-				<key>line</key>
-				<integer>737</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>706</integer>
-		</dict>
 	</dict>
-	<key>openDocuments</key>
-	<array>
-		<string>ruby/controller/appcontroller.rb</string>
-		<string>ruby/controller/menucontroller.rb</string>
-	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{558, 73}, {852, 1090}}</string>
+	<string>{{532, 74}, {852, 1090}}</string>
 </dict>
 </plist>

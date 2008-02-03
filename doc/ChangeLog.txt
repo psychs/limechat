@@ -1,3 +1,9 @@
+==== LimeChat 0.16 ====
+
+2008-02-03  Satoshi Nakagawa <artension@gmail.com>
+
+	Fixed a number format bug, "0.format_size" caused an exception.
+
 ==== LimeChat 0.15.1 ====
 
 2008-02-02  Satoshi Nakagawa <artension@gmail.com>

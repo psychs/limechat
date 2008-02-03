@@ -12,9 +12,14 @@ module NumberFormat
   Units = %w[bytes KB MB GB TB]
   
   def format_size(bytes=self)
-    unit = (Math.log(bytes)/Math.log(1024)).floor
-    unit = 4 if unit > 4
-    data = bytes/(1024.0**unit)
+    if bytes > 0
+      unit = (Math.log(bytes)/Math.log(1024)).floor
+      unit = 4 if unit > 4
+      data = bytes/(1024.0**unit)
+    else
+      unit = 0
+      data = 0
+    end
     format = (unit == 0 || data >= 10) ? "%d %s" : "%1.1f %s"
     sprintf(format, data, Units[unit])
   end
