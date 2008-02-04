@@ -12,8 +12,6 @@ class AppController < NSObject
   def awakeFromNib
     SACrashReporter.submit
     
-    raise 1
-    
     @pref = Preferences.new
     #FileUtils.mkpath(@pref.gen.transcript_folder.expand_path) rescue nil
     
