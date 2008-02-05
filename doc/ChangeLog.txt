@@ -1,5 +1,9 @@
 2008-02-05  Satoshi Nakagawa <artension@gmail.com>
 
+	Prohibit adding a member when received join in a mode +a channel.
+
+2008-02-05  Satoshi Nakagawa <artension@gmail.com>
+
 	Changed to clear member list when received mode +a.
 	Changed to rebuild member list when received mode -a.
 

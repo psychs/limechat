@@ -1325,7 +1325,7 @@ class IRCUnit < NSObject
         end
       end
     end
-    if c
+    if c && !c.mode.a
       c.add_member(User.new(nick, m.sender_username, m.sender_address, njoin))
       update_channel_title(c)
     end
