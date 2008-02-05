@@ -160,7 +160,10 @@ class IRCChannel < NSObject
   
   def update_member(nick, username, address, o=nil, h=nil, v=nil)
     m = find_member(nick)
-    return unless m
+    unless m
+      add_member(User.new(nick, username, address, o, h, v))
+      return
+    end
     m.username = username
     m.address = address
     m.o = o if o != nil

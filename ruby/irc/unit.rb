@@ -1448,7 +1448,18 @@ class IRCUnit < NSObject
       # channel mode
       c = find_channel(target)
       if c
+        prev_a = c.mode.a
         info = c.mode.update(modestr)
+        if c.mode.a != prev_a
+          if c.mode.a
+            me = c.find_member(@mynick)
+            c.clear_members
+            c.add_member(me)
+          else
+            c.who_init = false
+            send(:who, c.name)
+          end
+        end
         info.each do |h|
           mode = h[:mode]
           case mode
@@ -1729,8 +1740,19 @@ class IRCUnit < NSObject
       return if modestr == '+'
       c = find_channel(chname)
       if c && c.active?
+        prev_a = c.mode.a
         c.mode.clear
         c.mode.update(modestr)
+        if c.mode.a != prev_a
+          if c.mode.a
+            me = c.find_member(@mynick)
+            c.clear_members
+            c.add_member(me)
+          else
+            c.who_init = false
+            send(:who, c.name)
+          end
+        end
         update_channel_title(c)
       end
       print_both(c || chname, :reply, "*Mode: #{modestr}")
