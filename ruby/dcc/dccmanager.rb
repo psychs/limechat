@@ -19,11 +19,9 @@ class DccManager < NSObject
     @loaded = true
     @splitter.setFixedViewIndex(1)
     @receiver_cell = FileTransferCell.alloc.init
-    @receiver_cell.setup
     @receiver_cell.op = :receive
     @receiver_table.tableColumns[0].setDataCell(@receiver_cell)
     @sender_cell = FileTransferCell.alloc.init
-    @sender_cell.setup
     @sender_cell.op = :send
     @sender_table.tableColumns[0].setDataCell(@sender_cell)
     @receivers.each do |r|
@@ -427,13 +425,15 @@ class FileTransferCell < NSCell
     obj
   end
   
-  def setup
+  def init
+    super_init
     @filename_style = NSMutableParagraphStyle.alloc.init
     @filename_style.setAlignment(NSLeftTextAlignment)
     @filename_style.setLineBreakMode(NSLineBreakByTruncatingMiddle)
     @status_style = NSMutableParagraphStyle.alloc.init
     @status_style.setAlignment(NSLeftTextAlignment)
     @status_style.setLineBreakMode(NSLineBreakByTruncatingTail)
+    self
   end
   
   def drawInteriorWithFrame_inView(frame, view)
