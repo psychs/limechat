@@ -377,6 +377,14 @@ class IRCUnit < NSObject
         end
       end
       return true
+    when :query
+      target = s.token!
+      c = find_channel(target)
+      unless c
+        c = @world.create_talk(self, target)
+      end
+      @world.select(c)
+      return true
     when :privmsg,:msg,:notice,:action,:ctcpquery,:ctcpreply,:ctcpping,:invite
       cmd = :privmsg if cmd == :msg
       target = s.token!
