@@ -21,7 +21,7 @@ module Penalty
 end
 
 
-class IRCSendMessage
+class IRCSendingMessage
   attr_reader :command, :params, :built
   attr_accessor :penalty, :complete_colon
   
@@ -90,7 +90,7 @@ class IRCSendMessage
 end
 
 
-class IRCReceiveMessage
+class IRCReceivedMessage
   attr_reader :sender, :sender_nick, :sender_username, :sender_address
   attr_reader :command, :numeric_reply
   
@@ -106,10 +106,9 @@ class IRCReceiveMessage
     
     str = str.dup
     s = str.token!
-    return if s.empty?
     if /\A:([^ ]+)/ =~ s
       @sender = $1
-      if /\A([^!]+)!([^@]+)@([^!@]+)\z/ =~ @sender
+      if /\A([^!]+)!([^!@]+)@([^@]+)\z/ =~ @sender
         @sender_nick = $1
         @sender_username = $2
         @sender_address = $3
@@ -117,8 +116,8 @@ class IRCReceiveMessage
         @sender_nick = @sender.dup
       end
       s = str.token!
-      return if s.empty?
     end
+    return if s.empty?
     
     if /\A\d+\z/ =~ s
       @command = s.to_sym
@@ -127,16 +126,14 @@ class IRCReceiveMessage
       @command = s.downcase.to_sym
     end
     
-    loop do
-      break if str.empty?
+    until str.empty?
       if /\A:/ =~ str
         @params << $~.post_match
         break
       end
       s = str.token!
       break if s.empty?
-      s.rstrip!
-      @params << s
+      @params << s.rstrip
     end
   end
   

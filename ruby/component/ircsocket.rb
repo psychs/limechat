@@ -80,7 +80,7 @@ class IRCSocket
       s = @sock.readline
       break unless s
       s = s.gsub("\x00", ' ')   # workaround for plum's bug
-      m = IRCReceiveMessage.new(s)
+      m = IRCReceivedMessage.new(s)
       @delegate.ircsocket_on_receive(m) if @delegate
     end
   end

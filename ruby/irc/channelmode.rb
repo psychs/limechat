@@ -29,9 +29,9 @@ class ChannelMode
   def update(modestr)
     i = @info.parse_modestr(modestr)
     i.each do |h|
-      mode = h[:mode]
-      plus = h[:plus]
-      unless @info.op?(mode)
+      unless h[:op_mode]
+        mode = h[:mode]
+        plus = h[:plus]
         case mode
         when *SIMPLE_MODES
           instance_variable_set("@#{mode}", plus)
@@ -40,7 +40,7 @@ class ChannelMode
           @k = plus ? param : ''
         when :l
           if plus
-            param = h[:param] || '0'
+            param = h[:param] || 0
             @l = param.to_i
           else
             @l = 0
@@ -49,14 +49,6 @@ class ChannelMode
       end
     end
     i
-  end
-  
-  def to_s
-    _to_s
-  end
-  
-  def masked_str
-    _to_s(true)
   end
   
   def get_change_str(mode)
@@ -124,6 +116,14 @@ class ChannelMode
       obj.__send__(name, value)
     end
     obj
+  end
+  
+  def to_s
+    _to_s
+  end
+  
+  def masked_str
+    _to_s(true)
   end
   
   private

@@ -583,7 +583,7 @@ class IRCUnit < NSObject
   
   def send(command, *args)
     return unless connected?
-    m = IRCSendMessage.new(command, *args)
+    m = IRCSendingMessage.new(command, *args)
     if block_given?
       yield m
     end
@@ -1470,8 +1470,8 @@ class IRCUnit < NSObject
           end
         end
         info.each do |h|
-          mode = h[:mode]
-          if @isupport.mode.op?(mode)
+          if h[:op_mode]
+            mode = h[:mode]
             plus = h[:plus]
             t = h[:param]
             c.change_member_op(t, mode, plus)

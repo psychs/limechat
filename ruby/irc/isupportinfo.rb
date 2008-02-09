@@ -81,7 +81,9 @@ class ISupportInfo
             when :-; plus = false
             when :+; plus = true
             else
-              if has_param?(c, plus)
+              if op_mode?(c)
+                ary << {:mode => c, :plus => plus, :param => str.token!, :op_mode => true}
+              elsif has_param?(c, plus)
                 ary << {:mode => c, :plus => plus, :param => str.token!}
               else
                 ary << {:mode => c, :plus => plus}
@@ -91,24 +93,6 @@ class ISupportInfo
         end
       end
       ary
-    end
-    
-    def modes_of_type(n)
-      @modes[n] || ''
-    end
-    
-    def op?(c)
-      !!@opmap[c]
-    end
-    
-    def has_param?(c, plus)
-      return true if @opmap[c]
-      case @modemap[c]
-      when 0; true
-      when 1; true
-      when 2; plus
-      else; false
-      end
     end
     
     def parse_modes(s)
@@ -128,6 +112,22 @@ class ISupportInfo
       @modes = s.split(',', 4)
       @modes.each_with_index do |i,n|
         i.scan(/./).each {|s| @modemap[s.to_sym] = n}
+      end
+    end
+    
+    private
+    
+    def op_mode?(c)
+      !!@opmap[c]
+    end
+    
+    def has_param?(c, plus)
+      return true if @opmap[c]
+      case @modemap[c]
+      when 0; true
+      when 1; true
+      when 2; plus
+      else; false
       end
     end
   end
