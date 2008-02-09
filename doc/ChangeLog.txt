@@ -1,3 +1,5 @@
+==== LimeChat 0.16.1 ====
+
 2008-02-09  Satoshi Nakagawa <artension@gmail.com>
 
 	Changed to take care of +q/+a user modes and '~'/'&' prefixes.
