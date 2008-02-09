@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>English.lproj/InfoPlist.strings</string>
+	<string>ruby/irc/unit.rb</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -21,64 +21,6 @@
 	<integer>279</integer>
 	<key>metaData</key>
 	<dict>
-		<key>English.lproj/InfoPlist.strings</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>6</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>Info.plist</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>0</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>doc/ChangeLog.txt</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>39</integer>
-				<key>line</key>
-				<integer>27</integer>
-			</dict>
-			<key>columnSelection</key>
-			<false/>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-			<key>selectFrom</key>
-			<dict>
-				<key>column</key>
-				<integer>30</integer>
-				<key>line</key>
-				<integer>27</integer>
-			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
-				<integer>39</integer>
-				<key>line</key>
-				<integer>27</integer>
-			</dict>
-		</dict>
 		<key>objc/rb_main.rb</key>
 		<dict>
 			<key>caret</key>
@@ -93,16 +35,28 @@
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
 		</dict>
+		<key>ruby/irc/unit.rb</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>5</integer>
+				<key>line</key>
+				<integer>780</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>751</integer>
+		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>doc/ChangeLog.txt</string>
-		<string>Info.plist</string>
-		<string>English.lproj/InfoPlist.strings</string>
+		<string>ruby/irc/unit.rb</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{537, 79}, {990, 1087}}</string>
+	<string>{{531, 90}, {1142, 1081}}</string>
 </dict>
 </plist>

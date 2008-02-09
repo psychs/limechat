@@ -1,3 +1,7 @@
+2008-02-10  Satoshi Nakagawa <artension@gmail.com>
+
+	Completed +q/+a channel modes support for Unreal IRCd.
+
 ==== LimeChat 0.16.1 ====
 
 2008-02-09  Satoshi Nakagawa <artension@gmail.com>

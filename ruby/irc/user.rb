@@ -12,17 +12,15 @@ class User
     @last_faded_weights = Time.now
     @username = args[0] || ''
     @address = args[1] || ''
-    @o = args[2] || false
-    @h = args[3] || false
-    @v = args[4] || false
+    @q = args[2] || false
+    @a = args[3] || false
+    @o = args[4] || false
+    @h = args[5] || false
+    @v = args[6] || false
   end
   
-  def to_s
-    mark + @nick
-  end
-  
-  def self.marks
-    ['@', '%', '+']
+  def op?
+    @q || @a || @o
   end
   
   def mark
@@ -39,6 +37,14 @@ class User
     else
       ''
     end
+  end
+  
+  def to_s
+    mark + @nick
+  end
+  
+  def self.marks
+    ['~', '&', '@', '%', '+']
   end
   
   # the weighting system keeps track of who you are talking to

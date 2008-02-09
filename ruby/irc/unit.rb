@@ -778,7 +778,7 @@ class IRCUnit < NSObject
   def ircsocket_on_receive(m)
     m.apply! {|i| to_local_encoding(i) }
     m.apply! {|i| StringValidator::validate_utf8(i, 0x3f) }
-    puts m.to_s
+    #puts m.to_s
     
     if m.numeric_reply > 0
       receive_numeric_reply(m)
@@ -1335,7 +1335,7 @@ class IRCUnit < NSObject
       end
     end
     if c && !c.mode.a
-      c.add_member(User.new(nick, m.sender_username, m.sender_address, njoin))
+      c.add_member(User.new(nick, m.sender_username, m.sender_address, false, false, njoin))
       update_channel_title(c)
     end
     print_both(c || chname, :join, "*#{nick} has joined (#{m.sender_username}@#{m.sender_address})")
@@ -1459,6 +1459,8 @@ class IRCUnit < NSObject
       if c
         prev_a = c.mode.a
         info = c.mode.update(modestr)
+        
+        # enter/leave anonymous mode
         if c.mode.a != prev_a
           if c.mode.a
             me = c.find_member(@mynick)
@@ -1469,20 +1471,32 @@ class IRCUnit < NSObject
             send(:who, c.name)
           end
         end
+        
         info.each do |h|
-          if h[:op_mode]
-            mode = h[:mode]
-            plus = h[:plus]
-            t = h[:param]
-            c.change_member_op(t, mode, plus)
-            if mode == :o && eq(t, @mynick)
-              prev = c.op?
-              c.op = plus
-              update_channel_title(c)
-              check_all_autoop(c) if c.op? && !prev && c.who_init
+          next unless h[:op_mode]
+          
+          # process op modes
+          mode = h[:mode]
+          plus = h[:plus]
+          t = h[:param]
+          
+          myself = false
+          if (mode == :q || mode == :a || mode == :o) && eq(t, @mynick)
+            # mode change for myself
+            m = c.find_member(t)
+            if m
+              myself = true
+              prev = m.op?
+              c.change_member_op(t, mode, plus)
+              c.op = m.op?
+              if !prev && c.op? && c.who_init
+                check_all_autoop(c)
+              end
             end
           end
+          c.change_member_op(t, mode, plus) unless myself
         end
+        
         update_channel_title(c)
       end
       print_both(c || target, :mode, "*#{nick} has changed mode: #{modestr}")
@@ -1807,11 +1821,11 @@ class IRCUnit < NSObject
           m = User.new(nick)
           m.q = op == '~'
           m.a = op == '&'
-          m.o = op == '@'
+          m.o = op == '@' || m.q
           m.h = op == '%'
           m.v = op == '+'
           c.add_member(m, false)
-          c.op = m.o if eq(m.nick, @mynick)
+          c.op = (m.q || m.a || m.o) if eq(m.nick, @mynick)
         end
         c.reload_members
         c.sort_members
@@ -1865,10 +1879,12 @@ class IRCUnit < NSObject
       mode = m[6]
       c = find_channel(chname)
       if c && c.active? && !c.who_init
-        o = mode.include?('@')
+        q = mode.include?('~')
+        a = mode.include?('&')
+        o = mode.include?('@') || q
         h = mode.include?('%')
         v = mode.include?('+')
-        c.update_member(nick, username, address, o, h, v)
+        c.update_or_add_member(nick, username, address, q, a, o, h, v)
       else
         print_unknown_reply(m)
       end

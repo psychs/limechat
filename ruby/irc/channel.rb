@@ -123,7 +123,10 @@ class IRCChannel < NSObject
     if m = find_member(member.nick)
       m.username = member.username unless member.username.empty?
       m.address = member.username unless member.address.empty?
+      m.q = member.q
+      m.a = member.a
       m.o = member.o
+      m.h = member.h
       m.v = member.v
     else
       @members << member
@@ -158,20 +161,20 @@ class IRCChannel < NSObject
     add_member(m)
   end
   
-  def update_member(nick, username, address, o=nil, h=nil, v=nil)
+  def update_or_add_member(nick, username, address, q, a, o, h, v)
     m = find_member(nick)
     unless m
-      add_member(User.new(nick, username, address, o, h, v))
+      add_member(User.new(nick, username, address, q, a, o, h, v))
       return
     end
     m.username = username
     m.address = address
     
-    # FIXME it should take care of q/~ and a/&
-    
-    m.o = o if o != nil
-    m.h = h if h != nil
-    m.v = v if v != nil
+    m.q = q
+    m.a = a
+    m.o = o
+    m.h = h
+    m.v = v
   end
   
   def change_member_op(nick, type, value)
@@ -313,7 +316,7 @@ class IRCChannel < NSObject
         max = @unit.isupport.modes_count
         ary = @op_queue[0...max]
         @op_queue[0...max] = nil
-        ary = ary.select {|i| m = find_member(i); m && !m.o }
+        ary = ary.select {|i| m = find_member(i); m && !m.op? }
         unless ary.empty?
           @op_wait = ary.size * Penalty::MODE_OPT + Penalty::MODE_BASE
           @unit.change_op(self, ary, :o, true)

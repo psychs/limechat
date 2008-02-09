@@ -332,7 +332,17 @@ class IRCWorld < NSObject
         end
         title =
           if c.channel?
-            op = c.op? ? '@' : ''
+            op = if c.op?
+              m = c.find_member(u.mynick)
+              if m && m.op?
+                m.mark
+              else
+                ''
+              end
+            else
+              ''
+            end
+            
             if mode.empty?
               if count <= 1
                 "(#{nick}) #{op}#{chname} #{topic}"
