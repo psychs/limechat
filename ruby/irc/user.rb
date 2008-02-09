@@ -2,7 +2,7 @@
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
 class User
-  attr_accessor :nick, :username, :address, :o, :h, :v
+  attr_accessor :nick, :username, :address, :q, :a, :o, :h, :v
   attr_reader :incoming_weight, :outgoing_weight
   
   def initialize(nick, *args)
@@ -26,7 +26,11 @@ class User
   end
   
   def mark
-    if @o
+    if @q
+      '~'
+    elsif @a
+      '&'
+    elsif @o
       '@'
     elsif @h
       '%'

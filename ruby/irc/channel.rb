@@ -166,6 +166,9 @@ class IRCChannel < NSObject
     end
     m.username = username
     m.address = address
+    
+    # FIXME it should take care of q/~ and a/&
+    
     m.o = o if o != nil
     m.h = h if h != nil
     m.v = v if v != nil
@@ -175,6 +178,8 @@ class IRCChannel < NSObject
     m = find_member(nick)
     return unless m
     case type
+    when :q; m.q = value
+    when :a; m.a = value
     when :o; m.o = value
     when :h; m.h = value
     when :v; m.v = value
@@ -214,6 +219,10 @@ class IRCChannel < NSObject
         -1
       elsif unit.mynick == b.nick
         1
+      elsif a.q != b.q
+        a.q ? -1 : 1
+      elsif a.a != b.a
+        a.a ? -1 : 1
       elsif a.o != b.o
         a.o ? -1 : 1
       elsif a.h != b.h

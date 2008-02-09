@@ -31,18 +31,20 @@ class ChannelMode
     i.each do |h|
       mode = h[:mode]
       plus = h[:plus]
-      case mode
-      when *SIMPLE_MODES
-        instance_variable_set("@#{mode}", plus)
-      when :k
-        param = h[:param] || ''
-        @k = plus ? param : ''
-      when :l
-        if plus
-          param = h[:param] || '0'
-          @l = param.to_i
-        else
-          @l = 0
+      unless @info.op?(mode)
+        case mode
+        when *SIMPLE_MODES
+          instance_variable_set("@#{mode}", plus)
+        when :k
+          param = h[:param] || ''
+          @k = plus ? param : ''
+        when :l
+          if plus
+            param = h[:param] || '0'
+            @l = param.to_i
+          else
+            @l = 0
+          end
         end
       end
     end

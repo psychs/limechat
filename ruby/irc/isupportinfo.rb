@@ -93,12 +93,12 @@ class ISupportInfo
       ary
     end
     
-    def ops
-      @ops
-    end
-    
     def modes_of_type(n)
       @modes[n] || ''
+    end
+    
+    def op?(c)
+      !!@opmap[c]
     end
     
     def has_param?(c, plus)

@@ -1,5 +1,9 @@
 2008-02-09  Satoshi Nakagawa <artension@gmail.com>
 
+	Changed to take care of +q/+a user modes and '~'/'&' prefixes.
+
+2008-02-09  Satoshi Nakagawa <artension@gmail.com>
+
 	Added an option, don't show notifications when the application is active.
 
 2008-02-09  Satoshi Nakagawa <artension@gmail.com>

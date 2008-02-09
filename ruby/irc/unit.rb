@@ -778,6 +778,7 @@ class IRCUnit < NSObject
   def ircsocket_on_receive(m)
     m.apply! {|i| to_local_encoding(i) }
     m.apply! {|i| StringValidator::validate_utf8(i, 0x3f) }
+    puts m.to_s
     
     if m.numeric_reply > 0
       receive_numeric_reply(m)
@@ -1470,8 +1471,7 @@ class IRCUnit < NSObject
         end
         info.each do |h|
           mode = h[:mode]
-          case mode
-          when :o,:h,:v
+          if @isupport.mode.op?(mode)
             plus = h[:plus]
             t = h[:param]
             c.change_member_op(t, mode, plus)
@@ -1801,10 +1801,12 @@ class IRCUnit < NSObject
       c = find_channel(chname)
       if c && c.active? && !c.names_init
         trail.split(' ').each do |nick|
-          if /^([@+])(.+)/ =~ nick
+          if /^([~&@%+])(.+)/ =~ nick
             op, nick = $1, $2
           end
           m = User.new(nick)
+          m.q = op == '~'
+          m.a = op == '&'
           m.o = op == '@'
           m.h = op == '%'
           m.v = op == '+'
