@@ -19,7 +19,7 @@ class PreferenceDialog < NSObject
   ib_mapped_int_outlet :gen_tab_action
   ib_mapped_int_outlet :gen_main_window_layout
   ib_mapped_outlet :gen_connect_on_doubleclick, :gen_disconnect_on_doubleclick, :gen_join_on_doubleclick, :gen_leave_on_doubleclick
-  ib_mapped_outlet :gen_use_growl
+  ib_mapped_outlet :gen_use_growl, :gen_stop_growl_on_active
   ib_mapped_outlet :gen_log_transcript
   ib_outlet :transcript_folder
   ib_mapped_int_outlet :gen_max_log_lines
@@ -41,6 +41,7 @@ class PreferenceDialog < NSObject
     onLogTranscriptChanged(nil)
     onOverrideLogFontClicked(nil)
     onOverrideNickFormatClicked(nil)
+    onUseGrowlClicked(nil)
     showFontDescription
     ['(%n) ', '%n: ', '<%n> ', '<%9n> ', '<%-9n> ', '<%@%n> '].each {|i| @theme_nick_format.addItemWithObjectValue(i) }
     show
@@ -140,6 +141,10 @@ class PreferenceDialog < NSObject
   
   def onOverrideNickFormatClicked(sender)
     @theme_nick_format.setEnabled(@theme_override_nick_format.state.to_i != 0)
+  end
+  
+  def onUseGrowlClicked(sender)
+    @gen_stop_growl_on_active.setEnabled(@gen_use_growl.state.to_i != 0)
   end
 
   # sound table

@@ -50,7 +50,7 @@ class Preferences
     persistent_attr :tab_action
     persistent_attr :main_window_layout
     persistent_attr :connect_on_doubleclick, :disconnect_on_doubleclick, :join_on_doubleclick, :leave_on_doubleclick
-    persistent_attr :use_growl
+    persistent_attr :use_growl, :stop_growl_on_active
     persistent_attr :log_transcript, :transcript_folder, :max_log_lines
     persistent_attr :paste_syntax
     
@@ -70,6 +70,7 @@ class Preferences
       @join_on_doubleclick = true
       @leave_on_doubleclick = false
       @use_growl = true
+      @stop_growl_on_active = true
       @log_transcript = false
       @transcript_folder = '~/Library/LimeChat/Transcripts'
       @max_log_lines = 300

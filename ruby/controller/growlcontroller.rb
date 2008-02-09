@@ -29,8 +29,6 @@ class GrowlController
   end
   
   def notify(kind, title, desc, context=nil)
-    return if NSApp.isActive?
-    
     priority = 0
     sticky = false
     

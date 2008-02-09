@@ -369,7 +369,10 @@ class IRCWorld < NSObject
   end
   
   def notify_on_growl(kind, title, desc, context=nil)
-    @growl.notify(kind, title, desc, context) if @pref.gen.use_growl
+    if @pref.gen.use_growl
+      return if @pref.gen.stop_growl_on_active && NSApp.isActive
+      @growl.notify(kind, title, desc, context)
+    end
   end
   
   def reload_theme
