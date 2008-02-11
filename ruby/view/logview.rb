@@ -13,4 +13,13 @@ class LogView < WebView
     super_setFrame(rect)
     @resize_delegate.logView_didResize(rect) if @resize_delegate
   end
+  
+  objc_method :maintainsInactiveSelection, 'c@:'
+  def maintainsInactiveSelection
+    true
+  end
+  
+  def clearSel
+    setSelectedDOMRange_affinity(nil, OSX::NSSelectionAffinityDownstream)
+  end
 end

@@ -1,3 +1,7 @@
+2008-02-11  Satoshi Nakagawa <artension@gmail.com>
+
+	Changed to keep selection when a log view become inactive.
+
 2008-02-10  Satoshi Nakagawa <artension@gmail.com>
 
 	Completed +q/+a channel modes support for Unreal IRCd.

@@ -515,6 +515,7 @@ class IRCWorld < NSObject
     end
     @member_list.deselectAll(self)
     @member_list.scrollRowToVisible(0)
+    @selected.log.view.clearSel
     update_title
     reload_tree
   end
