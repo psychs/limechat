@@ -106,6 +106,7 @@ class AppController < NSObject
       @welcome.delegate = self
       @welcome.start
     else
+      @window.makeKeyAndOrderFront(nil)
       @world.auto_connect
     end
   end
@@ -194,6 +195,7 @@ class AppController < NSObject
   
   def welcomeDialog_onClose(sender)
     @welcome = nil
+    @window.makeKeyAndOrderFront(nil)
   end
   
   def select_3column_layout(value)
