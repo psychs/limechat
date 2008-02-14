@@ -1,5 +1,9 @@
 2008-02-15  Satoshi Nakagawa <artension@gmail.com>
 
+	Changed title of welcome dialog.
+
+2008-02-15  Satoshi Nakagawa <artension@gmail.com>
+
 	Changed to hide the main window for the first start up.
 
 2008-02-15  Satoshi Nakagawa <artension@gmail.com>
