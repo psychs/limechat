@@ -2,7 +2,7 @@
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
 class ListView < NSTableView
-  attr_accessor :key_delegate
+  attr_accessor :key_delegate, :text_delegate
   
   def countSelectedRows
     selectedRowIndexes.count.to_i
@@ -76,5 +76,11 @@ class ListView < NSTableView
       end
     end
     super_keyDown(e)
+  end
+  
+  def textDidEndEditing(note)
+    if @text_delegate
+      @text_delegate.textDidEndEditing(note)
+    end
   end
 end

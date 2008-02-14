@@ -207,7 +207,9 @@ class IRCUnit < NSObject
     @connecting = true
     @conn = IRCSocket.new
     @conn.delegate = self
-    @conn.host = @config.host
+    host = @config.host
+    host = host.split(' ')[0] if host
+    @conn.host = host
     @conn.port = @config.port.to_i
     @conn.open
   end

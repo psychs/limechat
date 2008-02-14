@@ -100,7 +100,14 @@ class AppController < NSObject
     nc.addObserver_selector_name_object(self, :terminateWithoutConfirm, NSWorkspaceWillPowerOffNotification, ws)
     
     start_timer
-    @world.auto_connect
+    
+    if @world.units.size == 0
+      @welcome = WelcomeDialog.alloc.init
+      @welcome.delegate = self
+      @welcome.start
+    else
+      @world.auto_connect
+    end
   end
   
   def applicationShouldTerminate(sender)
@@ -159,6 +166,34 @@ class AppController < NSObject
     else
       false
     end
+  end
+  
+  UTF8_NETS = %w|freenode undernet quakenet mozilla ustream|
+  
+  def welcomeDialog_onOk(sender, c)
+    host = c[:host]
+    if host =~ /^[^\s]+\s+\(([^()]+)\)/
+      c[:name] = $1
+    else
+      c[:name] = host
+    end
+    nick = c[:nick]
+    c[:username] = nick.downcase.gsub(/[^a-zA-Z\d]/, '_')
+    c[:realname] = nick
+    c[:channels].map! {|i| { :name => i } }
+    if LanguageSupport.primary_language == 'ja'
+      net = host.downcase
+      if UTF8_NETS.any? {|i| net.include?(i)}
+        c[:encoding] = NSUTF8StringEncoding
+      end
+    end
+    u = @world.create_unit(IRCUnitConfig.new(c))
+    @world.save
+    u.connect if u.config.auto_connect
+  end
+  
+  def welcomeDialog_onClose(sender)
+    @welcome = nil
   end
   
   def select_3column_layout(value)
@@ -257,8 +292,7 @@ class AppController < NSObject
       #GC.start
       @gc_count = 0
     end
-  end
-  
+  end  
   
   private
   

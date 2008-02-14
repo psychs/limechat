@@ -1,3 +1,7 @@
+2008-02-15  Satoshi Nakagawa <artension@gmail.com>
+
+	Added welcome dialog.
+
 2008-02-11  Satoshi Nakagawa <artension@gmail.com>
 
 	Changed to keep selection when a log view become inactive.

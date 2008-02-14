@@ -490,7 +490,11 @@ class IRCWorld < NSObject
     false
   end
   
-  def outlineViewSelectionDidChange(notification)
+  def outlineViewSelectionIsChanging(note)
+    outlineViewSelectionDidChange(note)
+  end
+  
+  def outlineViewSelectionDidChange(note)
     selitem = @tree.itemAtRow(@tree.selectedRow)
     unless selitem
       @log_base.setContentView(@dummylog.view)

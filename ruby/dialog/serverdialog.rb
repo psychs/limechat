@@ -26,36 +26,40 @@ class ServerDialog < NSObject
     @c
   end
   
-  JA_SERVERS = %w[
-    irc.nara.wide.ad.jp
-    irc.tokyo.wide.ad.jp
-    irc.fujisawa.wide.ad.jp
-    irc.huie.hokudai.ac.jp
-    irc.media.kyoto-u.ac.jp
-    -
-    irc.friend.td.nu
-    irc.2ch.net
-    irc.reicha.net
-    irc.cre.ne.jp
-    -
-    irc.freenode.net
-    eu.undernet.org
-    irc.quakenet.org
-    irc.mozilla.org
-    chat1.ustream.tv
+  JA_SERVERS = [
+    'irc.nara.wide.ad.jp (IRCnet)',
+    'irc.tokyo.wide.ad.jp (IRCnet)',
+    'irc.fujisawa.wide.ad.jp (IRCnet)',
+    'irc.huie.hokudai.ac.jp (IRCnet)',
+    'irc.media.kyoto-u.ac.jp (IRCnet)',
+    '-',
+    'irc.friend.td.nu (Friend)',
+    'irc.2ch.net (2ch)',
+    'irc.reicha.net (Reicha)',
+    'irc.cre.ne.jp (cre)',
+    '-',
+    'irc.freenode.net (Freenode)',
+    'eu.undernet.org (Undernet)',
+    'irc.quakenet.org (QuakeNet)',
+    'irc.mozilla.org (Mozilla)',
+    'chat1.ustream.tv (Ustream)',
   ]
 
-  SERVERS = %w[
-    irc.freenode.net
-    irc.efnet.net
-    irc.us.ircnet.net
-    irc.fr.ircnet.net
-    us.undernet.org
-    eu.undernet.org
-    irc.quakenet.org
-    uk.quakenet.org
-    irc.mozilla.org
+  SERVERS = [
+    'irc.freenode.net (Freenode)',
+    'irc.efnet.net (EFnet)',
+    'irc.us.ircnet.net (IRCnet)',
+    'irc.fr.ircnet.net (IRCnet)',
+    'us.undernet.org (Undernet)',
+    'eu.undernet.org (Undernet)',
+    'irc.quakenet.org (QuakeNet)',
+    'uk.quakenet.org (QuakeNet)',
+    'irc.mozilla.org (Mozilla)',
   ]
+  
+  def self.servers
+    LanguageSupport.primary_language == 'ja' ? JA_SERVERS : SERVERS
+  end
   
   def start(conf, uid)
     @c = conf
@@ -68,7 +72,7 @@ class ServerDialog < NSObject
     load
     update_connection_page
     update_channels_page
-    (LanguageSupport.primary_language == 'ja' ? JA_SERVERS : SERVERS).each {|i| @hostCombo.addItemWithObjectValue(i) }
+    self.class.servers.each {|i| @hostCombo.addItemWithObjectValue(i.split(' ')[0]) }
     show
   end
   
