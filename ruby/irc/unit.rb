@@ -869,7 +869,7 @@ class IRCUnit < NSObject
     format = @pref.theme.override_nick_format ? @pref.theme.nick_format : @world.view_theme.other.log_nick_format
     s = format.gsub(/%@/) do |i|
       mark = ''
-      if channel && channel.channel?
+      if channel && !channel.unit? && channel.channel?
         m = channel.find_member(nick)
         mark = m.mark if m
       end
