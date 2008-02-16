@@ -1,3 +1,5 @@
+==== LimeChat 0.16.2 ====
+
 2008-02-15  Satoshi Nakagawa <artension@gmail.com>
 
 	Fixed a method not found bug while formatting '%@'.
