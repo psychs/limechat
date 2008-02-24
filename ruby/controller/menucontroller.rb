@@ -82,6 +82,8 @@ class MenuController < NSObject
       true
     when 333  # paste dialog
       true
+    when 334  # copy log as html
+      true
     
     when 411  # mark scrollback
       true
@@ -417,6 +419,17 @@ class MenuController < NSObject
       url = "http://www.google.com/search?ie=UTF-8&q=#{sel}"
       UrlOpener::openUrl(url)
     end
+  end
+  
+  def onCopyLogAsHtml(sender)
+    sel = @world.selected
+    return unless sel
+    s = sel.log.content_string
+    pb = NSPasteboard.generalPasteboard
+    pb.declareTypes_owner([NSStringPboardType], self)
+    pb.setString_forType(s, NSStringPboardType)
+  rescue
+    ;
   end
   
   

@@ -1,5 +1,10 @@
 2008-02-24  Satoshi Nakagawa <artension@gmail.com>
 
+	Added a menu item, 'Copy Log as HTML'.
+	Changed a menu item caption from 'Clear Scrollback' to 'Clear Mark'.
+
+2008-02-24  Satoshi Nakagawa <artension@gmail.com>
+
 	We don't want to change units when closing a channel.
 	Based on a patch from Kevin Ballard.
 

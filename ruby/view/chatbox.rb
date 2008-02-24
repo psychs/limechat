@@ -8,23 +8,24 @@ class ChatBox < NSBox
   SPACE = 3
   
   def setFrame(rect)
-    f = rect
-    box = log_base
-    text = input_text
-    boxframe = box.frame
-    textframe = text.frame
+    if subviews.count > 0
+      f = rect
+      box = log_base
+      text = input_text
+      boxframe = box.frame
+      textframe = text.frame
     
-    boxframe.x = 0.0
-    boxframe.y = textframe.height + SPACE
-    boxframe.width = f.width
-    boxframe.height = f.height - textframe.height - SPACE
-    box.setFrame(boxframe)
+      boxframe.x = 0.0
+      boxframe.y = textframe.height + SPACE
+      boxframe.width = f.width
+      boxframe.height = f.height - textframe.height - SPACE
+      box.setFrame(boxframe)
     
-    textframe.x = 0.0
-    textframe.y = 0.0
-    textframe.width = f.width
-    text.setFrame(textframe)
-    
+      textframe.x = 0.0
+      textframe.y = 0.0
+      textframe.width = f.width
+      text.setFrame(textframe)
+    end
     super_setFrame(rect)
   end
   
