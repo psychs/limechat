@@ -112,6 +112,15 @@ class LogController < NSObject
     moveToBottom if @bottom
   end
   
+  def content_string
+    return nil unless @loaded
+    doc = @view.mainFrame.DOMDocument
+    return nil unless doc
+    doc.body.parentNode.outerHTML.to_s
+  rescue
+    nil
+  end
+  
   def print(line, use_keyword=true)
     body, key = build_body(line, use_keyword)
     
