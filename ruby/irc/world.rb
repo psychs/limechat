@@ -644,6 +644,10 @@ class IRCWorld < NSObject
     else
       i = @tree.rowForItem(target)
       sel = @tree.itemAtRow(i+1)
+      if sel && sel.unit?
+        # we don't want to change units when closing a channel
+        sel = @tree.itemAtRow(i-1)
+      end
     end
     if sel
       select(sel)

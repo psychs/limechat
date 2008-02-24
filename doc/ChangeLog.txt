@@ -1,3 +1,8 @@
+2008-02-24  Satoshi Nakagawa <artension@gmail.com>
+
+	We don't want to change units when closing a channel.
+	Based on a patch from Kevin Ballard.
+
 ==== LimeChat 0.16.3 ====
 
 2008-02-24  Satoshi Nakagawa <artension@gmail.com>
