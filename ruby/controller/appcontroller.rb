@@ -13,6 +13,7 @@ class AppController < NSObject
     SACrashReporter.submit
     
     @pref = Preferences.new
+    
     #FileUtils.mkpath(@pref.gen.transcript_folder.expand_path) rescue nil
     
     @field_editor = FieldEditorTextView.alloc.initWithFrame(NSZeroRect)
