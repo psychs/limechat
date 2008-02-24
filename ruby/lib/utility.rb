@@ -297,6 +297,29 @@ module OSX
       NSColor.colorWithCalibratedRed_green_blue_alpha(red/255.0, green/255.0, blue/255.0, alpha)
     end
     
+    HTML4_KEYWORDS = {
+      # taken from the CSS3 Color Module
+      # http://www.w3.org/TR/css3-color/#html4
+      # note that we don't support SVG color keywords
+      'black' => from_rgb(0, 0, 0),
+      'silver' => from_rgb(0xC0, 0xC0, 0xC0),
+      'gray' => from_rgb(0x80, 0x80, 0x80),
+      'white' => from_rgb(0xFF, 0xFF, 0xFF),
+      'maroon' => from_rgb(0x80, 0, 0),
+      'red' => from_rgb(0xFF, 0, 0),
+      'purple' => from_rgb(0x80, 0, 0x80),
+      'fuchsia' => from_rgb(0xFF, 0, 0xFF),
+      'green' => from_rgb(0, 0x80, 0),
+      'lime' => from_rgb(0, 0xFF, 0),
+      'olive' => from_rgb(0x80, 0x80, 0),
+      'yellow' => from_rgb(0xFF, 0xFF, 0),
+      'navy' => from_rgb(0, 0, 0x80),
+      'blue' => from_rgb(0, 0, 0xFF),
+      'teal' => from_rgb(0, 0x80, 0x80),
+      'aqua' => from_rgb(0, 0xFF, 0xFF),
+      'transparent' => from_rgb(0, 0, 0, 0)
+    }
+
     def self.from_css(str)
       case str
       when /^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i:
@@ -321,7 +344,7 @@ module OSX
         a = $4.to_f
         from_rgb(r, g, b, a)
       else
-        nil
+        HTML4_KEYWORDS[str]
       end
     rescue
       nil

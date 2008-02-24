@@ -1,3 +1,7 @@
+2008-02-24  Kevin Ballard <kballard@gmail.com>
+
+	Added HTML4 color names support for YAML themes.
+
 2008-02-24  Satoshi Nakagawa <artension@gmail.com>
 
 	rgba() should allow /.\d/ for alpha values.
