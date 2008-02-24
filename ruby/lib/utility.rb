@@ -314,7 +314,7 @@ module OSX
         g = $2.to_i
         b = $3.to_i
         from_rgb(r, g, b)
-      when /^rgba\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+(?:\.\d))\s*\)$/
+      when /^rgba\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d*(?:\.\d+))\s*\)$/
         r = $1.to_i
         g = $2.to_i
         b = $3.to_i

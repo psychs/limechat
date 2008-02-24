@@ -1,5 +1,9 @@
 2008-02-24  Satoshi Nakagawa <artension@gmail.com>
 
+	rgba() should allow /.\d/ for alpha values.
+
+2008-02-24  Satoshi Nakagawa <artension@gmail.com>
+
 	Enabled continuous spell checking by default.
 
 2008-02-24  Kevin Ballard <kballard@gmail.com>

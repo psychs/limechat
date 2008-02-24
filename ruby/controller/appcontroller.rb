@@ -12,6 +12,14 @@ class AppController < NSObject
   def awakeFromNib
     SACrashReporter.submit
     
+    'rgba(100,0,100,.5)' =~ /^rgba\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d*(?:\.\d+))\s*\)$/
+    r = $1.to_i
+    g = $2.to_i
+    b = $3.to_i
+    a = $4.to_f
+    puts r,g,b,a
+    
+    
     @pref = Preferences.new
     #FileUtils.mkpath(@pref.gen.transcript_folder.expand_path) rescue nil
     

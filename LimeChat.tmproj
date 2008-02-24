@@ -16,7 +16,7 @@
 		</dict>
 	</array>
 	<key>fileHierarchyDrawerWidth</key>
-	<integer>279</integer>
+	<integer>272</integer>
 	<key>metaData</key>
 	<dict>
 		<key>objc/rb_main.rb</key>
@@ -37,6 +37,6 @@
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{332, 84}, {1204, 1076}}</string>
+	<string>{{526, 75}, {1054, 1091}}</string>
 </dict>
 </plist>
