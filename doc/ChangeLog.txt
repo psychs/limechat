@@ -1,3 +1,11 @@
+2008-02-24  Kevin Ballard <kballard@gmail.com>
+
+	Fixed a bug, an effect stopping character should not render as an end tag when there is no effect.
+
+2008-02-24  Satoshi Nakagawa <artension@gmail.com>
+
+	Improved a regex to not capture unnecessary part.
+
 2008-02-24  Satoshi Nakagawa <artension@gmail.com>
 
 	Added a menu item, 'Copy Log as HTML'.

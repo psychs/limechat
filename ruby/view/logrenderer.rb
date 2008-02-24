@@ -61,8 +61,8 @@ module LogRenderer
           pending_effect = e[:off] ? nil : e
         else
           if e[:off]
+            t << render_end_tag(:effect) if effect
             effect = nil
-            t << render_end_tag(:effect)
           else
             t << render_end_tag(:effect) if effect
             effect = e
@@ -249,7 +249,7 @@ module LogRenderer
     b = ''
     offset = 0
     n = 0
-    while /[\x02\x0f\x16\x1f]|\x03((\d{1,2})(,(\d{1,2}))?)?/ =~ s
+    while /[\x02\x0f\x16\x1f]|\x03(?:(\d{1,2})(?:,(\d{1,2}))?)?/ =~ s
       left = $~.begin(0)
       right = $~.end(0)
       t = s[left...right]
@@ -262,7 +262,7 @@ module LogRenderer
       when 0x03
         text = $1
         text = text.to_i if text
-        back = $4
+        back = $2
         back = back.to_i if back
         effects << { :type => :color, :pos => pos, :serial => n, :text => text, :back => back }
       end
