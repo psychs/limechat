@@ -298,19 +298,28 @@ module OSX
     end
     
     def self.from_css(str)
-      return nil unless str
-      str = $~.post_match if str =~ /\A#/
-      case str.size
-      when 6
-        r = str[0..1].to_i(16)
-        g = str[2..3].to_i(16)
-        b = str[4..5].to_i(16)
+      case str
+      when /^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i:
+        r = $1.to_i(16)
+        g = $2.to_i(16)
+        b = $3.to_i(16)
         from_rgb(r, g, b)
-      when 3
-        r = str[0..0].to_i(16)
-        g = str[1..1].to_i(16)
-        b = str[2..2].to_i(16)
-        NSColor.colorWithCalibratedRed_green_blue_alpha(r/15.0, g/15.0, b/15.0, 1.0)
+      when /^#([0-9a-f])([0-9a-f])([0-9a-f])$/i
+        r = ($1*2).to_i(16)
+        g = ($2*2).to_i(16)
+        b = ($3*2).to_i(16)
+        from_rgb(r, g, b)
+      when /^rgb\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)$/
+        r = $1.to_i
+        g = $2.to_i
+        b = $3.to_i
+        from_rgb(r, g, b)
+      when /^rgba\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+(?:\.\d))\s*\)$/
+        r = $1.to_i
+        g = $2.to_i
+        b = $3.to_i
+        a = $4.to_f
+        from_rgb(r, g, b, a)
       else
         nil
       end
