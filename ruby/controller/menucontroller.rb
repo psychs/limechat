@@ -716,13 +716,7 @@ class MenuController < NSObject
   
   
   def onReloadPlugins(sender)
-    puts 'reload'
-    sel = @world.selected
-    view = sel.log.view
-    doc = view.mainFrame.DOMDocument
-    p doc.body.parentNode.outerHTML
-    
-    #@world.reload_plugins
+    @world.reload_plugins
   end
   
   
