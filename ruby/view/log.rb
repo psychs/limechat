@@ -130,25 +130,24 @@ class LogController < NSObject
     end
     
     s = ''
-    s << %Q[<span class="time">#{h(line.time)}</span>] if line.time
-    s << %Q[<span class="place">#{h(line.place)}</span>] if line.place
+    s << %|<span class="time">#{h(line.time)}</span>| if line.time
+    s << %|<span class="place">#{h(line.place)}</span>| if line.place
     if line.nick
-      if @console
-        s << %Q[<span class="nick_#{line.member_type}">#{h(line.nick)}</span>]
-      else
-        s << %Q[<span class="nick_#{line.member_type}" oncontextmenu="on_nick_contextmenu()">#{h(line.nick)}</span>]
-      end
+      s << %|<span class="sender nick_#{line.member_type}" type="#{line.member_type}"|
+      s << %| oncontextmenu="on_nick_contextmenu()"| unless @console
+      s << %|>#{h(line.nick)}</span>|
     end
-    s << %Q[<span class="#{line.line_type}">#{body}</span>]
+    s << %[<span class="message #{line.line_type}" type="#{line.line_type}">#{body}</span>]
     
     attrs = {}
-    alternate = @line_number % 2 == 0 ? 'even_line' : 'odd_line'
-    attrs['class'] = "line #{alternate}"
+    alternate = @line_number % 2 == 0 ? 'even' : 'odd'
+    attrs['alternate'] = alternate
+    attrs['class'] = "line #{alternate}_line"
     attrs['type'] = line.line_type.to_s
     if @console
       if line.click_info
         attrs['clickinfo'] = line.click_info 
-        attrs['ondblclick'] = %Q[on_dblclick()]
+        attrs['ondblclick'] = %|on_dblclick()|
       end
     else
       attrs['nick'] = line.nick_info if line.nick_info
@@ -438,7 +437,6 @@ class LogController < NSObject
     .line { margin: 0 -4px; padding: 0 4px 1px 4px; }
     .even_line {}
     .odd_line {}
-    /* .even_line, .odd_line { padding-top: 1px; padding-bottom: 1px; } */
     .time { color: #048; }
     .place { color: #008; }
     .nick_normal { color: #008; }

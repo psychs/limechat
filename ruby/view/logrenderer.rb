@@ -188,7 +188,7 @@ module LogRenderer
   def render_start_tag(e)
     case e[:kind]
     when :urlstart
-      %Q[<a class="url" href="#{e[:url]}" oncontextmenu="on_url_contextmenu()">]
+      %|<a class="url" href="#{e[:url]}" oncontextmenu="on_url_contextmenu()">|
 =begin
       url = e[:url]
       if /^http:\/\/[a-z]+\.youtube\.com\/watch\?v=([-_a-z0-9]+)$/i =~ url
@@ -204,9 +204,9 @@ module LogRenderer
           </div>
         EOL
       elsif /\.(jpg|jpeg|gif|png)$/i =~ url
-        %Q[<div style="margin:1em;"><a class="url" href="#{e[:url]}" oncontextmenu="on_url_contextmenu()"><img src="#{url}"/></div>]
+        %|<div style="margin:1em;"><a class="url" href="#{e[:url]}" oncontextmenu="on_url_contextmenu()"><img src="#{url}"/></div>|
       else
-        %Q[<a class="url" href="#{e[:url]}" oncontextmenu="on_url_contextmenu()">]
+        %|<a class="url" href="#{e[:url]}" oncontextmenu="on_url_contextmenu()">|
       end
 =end
     when :addrstart; '<span class="address" oncontextmenu="on_address_contextmenu()">'
