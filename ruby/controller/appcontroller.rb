@@ -18,6 +18,7 @@ class AppController < NSObject
     @field_editor = FieldEditorTextView.alloc.initWithFrame(NSZeroRect)
     @field_editor.setFieldEditor(true)
     @field_editor.paste_delegate = self
+    @field_editor.setContinuousSpellCheckingEnabled(true)
     
     @text.setFocusRingType(NSFocusRingTypeNone)
     @window.makeFirstResponder(@text)

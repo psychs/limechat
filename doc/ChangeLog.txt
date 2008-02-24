@@ -1,6 +1,10 @@
+2008-02-24  Satoshi Nakagawa <artension@gmail.com>
+
+	Enabled continuous spell checking by default.
+
 2008-02-24  Kevin Ballard <kballard@gmail.com>
 
-    Changed to allow rgb() and rgba() strings in YAML theme files.
+	Changed to allow rgb() and rgba() strings in YAML theme files.
 
 ==== LimeChat 0.16.2 ====
 
