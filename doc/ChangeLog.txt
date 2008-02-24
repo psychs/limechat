@@ -1,3 +1,7 @@
+2008-02-24  Satoshi Nakagawa <artension@gmail.com>
+
+	Changed /query without parameters to close the current talk.
+
 2008-02-24  Kevin Ballard <kballard@gmail.com>
 
 	Added HTML4 color names support for YAML themes.
