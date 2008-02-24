@@ -17,6 +17,7 @@ Fujimoto Hisa       # RubyCocoa creator
 Laurent Sansonetti  # RubyCocoa developer, many requests and suggestions
 Josh Goebel			# CocoaSheet, many improvements of code and UIs, Pastie creator
 Jun Morimoto        # bug fixes
+Kevin Ballard       # a patch for YAML theme
 Stefan Rusterholz	# many suggestions and patches
 Takashi Tsugo		# Deep Ocean theme
 
