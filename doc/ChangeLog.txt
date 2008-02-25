@@ -1,5 +1,9 @@
 2008-02-25  Satoshi Nakagawa <artension@gmail.com>
 
+	Changed short cut key for "Mark Scrollback" to cmd+L, and "Clear Mark" to cmd+shift+L as well.
+
+2008-02-25  Satoshi Nakagawa <artension@gmail.com>
+
 	Added "Copy Console Log as HTML" menu item.
 	Reformed main menu.
 
