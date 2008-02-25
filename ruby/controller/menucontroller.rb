@@ -84,6 +84,8 @@ class MenuController < NSObject
       true
     when 334  # copy log as html
       true
+    when 335  # copy console log as html
+      true
     
     when 411  # mark scrollback
       true
@@ -428,8 +430,13 @@ class MenuController < NSObject
     pb = NSPasteboard.generalPasteboard
     pb.declareTypes_owner([NSStringPboardType], self)
     pb.setString_forType(s, NSStringPboardType)
-  rescue
-    ;
+  end
+  
+  def onCopyConsoleLogAsHtml(sender)
+    s = @world.console.content_string
+    pb = NSPasteboard.generalPasteboard
+    pb.declareTypes_owner([NSStringPboardType], self)
+    pb.setString_forType(s, NSStringPboardType)
   end
   
   

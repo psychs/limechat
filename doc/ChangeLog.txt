@@ -1,5 +1,10 @@
 2008-02-25  Satoshi Nakagawa <artension@gmail.com>
 
+	Added "Copy Console Log as HTML" menu item.
+	Reformed main menu.
+
+2008-02-25  Satoshi Nakagawa <artension@gmail.com>
+
 	Changed to use the current username only when the username consists of alphabets and numbers in the rough.
 
 2008-02-25  Satoshi Nakagawa <artension@gmail.com>

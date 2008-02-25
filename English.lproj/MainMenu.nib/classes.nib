@@ -73,6 +73,8 @@
 				<string>id</string>
 				<key>onCopyAddress</key>
 				<string>id</string>
+				<key>onCopyConsoleLogAsHtml</key>
+				<string>id</string>
 				<key>onCopyLogAsHtml</key>
 				<string>id</string>
 				<key>onCopyServer</key>
