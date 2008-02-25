@@ -1,3 +1,8 @@
+2008-02-26  Satoshi Nakagawa <artension@gmail.com>
+
+	Added "channelname" and "type" attribute for more control with css.
+	Updated "Alternate Lines" theme to conform to the new css style.
+
 2008-02-25  Satoshi Nakagawa <artension@gmail.com>
 
 	Changed shortcut key for "Mark Scrollback" to cmd+L, and "Clear Mark" to cmd+shift+L as well.

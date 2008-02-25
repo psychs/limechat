@@ -25,7 +25,7 @@ end
 
 class LogController < NSObject
   attr_accessor :world
-  attr_writer :unit, :menu, :url_menu, :addr_menu, :member_menu, :keyword, :theme, :override_font
+  attr_writer :unit, :channel, :menu, :url_menu, :addr_menu, :member_menu, :keyword, :theme, :override_font
   attr_reader :view
   
   def initialize
@@ -395,7 +395,8 @@ class LogController < NSObject
     else
       override_style = ''
     end
-    <<-EOM
+    
+    doc = <<-EOM
       <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
       <html>
       <head>
@@ -407,9 +408,20 @@ class LogController < NSObject
         <style><!--#{style}--></style>
         <style>#{override_style}</style>
       </head>
-      <body class="#{body_class}"></body>
+      <body class="#{body_class}"
+    EOM
+    if @channel
+      doc << %| type="#{@channel.type}"|
+      doc << %| channelname="#{h(@channel.name)}"| if @channel.channel?
+    else
+      doc << %| type="console"|
+    end
+    doc << <<-EOM
+      ></body>
       </html>
     EOM
+    
+    doc
   end
   
   if LanguageSupport.primary_language == 'ja'

@@ -22,9 +22,9 @@ class IRCWorld < NSObject
   end
   
   def setup(seed)
-    @console = create_log(nil, true)
+    @console = create_log(nil, nil, true)
     @console_base.setContentView(@console.view)
-    @dummylog = create_log(nil, true)
+    @dummylog = create_log(nil, nil, true)
     @log_base.setContentView(@dummylog.view)
     
     @config = seed.dup
@@ -186,8 +186,8 @@ class IRCWorld < NSObject
     c.id = @channel_id
     c.unit = unit
     c.pref = @pref
-    c.log = create_log(unit)
     c.setup(seed)
+    c.log = create_log(unit, c)
     
     case seed.type
     when :channel
@@ -672,7 +672,7 @@ class IRCWorld < NSObject
     end
   end
   
-  def create_log(unit, console=false)
+  def create_log(unit, channel=nil, console=false)
     log = LogController.alloc.init
     log.menu = console ? @console_menu : @log_menu
     log.url_menu = @url_menu
@@ -680,6 +680,7 @@ class IRCWorld < NSObject
     log.member_menu = @member_menu
     log.world = self
     log.unit = unit
+    log.channel = channel
     log.keyword = @pref.key
     log.max_lines = @pref.gen.max_log_lines
     log.theme = @view_theme.log
