@@ -19,7 +19,7 @@ class WelcomeDialog < NSObject
     tableViewSelectionIsChanging(nil)
     @channelTable.text_delegate = self
     ServerDialog.servers.each {|i| @serverCombo.addItemWithObjectValue(i) }
-    @nickText.setStringValue(OSX::NSUserName().gsub(/\s/, ''))
+    load
     update_ok_button
     show
   end
@@ -109,6 +109,13 @@ class WelcomeDialog < NSObject
   end
   
   private
+  
+  def load
+    nick = OSX::NSUserName().gsub(/\s/, '')
+    if /\A[a-z][-_a-z\d]*\z/i =~ nick
+      @nickText.setStringValue(nick)
+    end
+  end
   
   def update_ok_button
     nick = @nickText.stringValue.to_s
