@@ -1,5 +1,10 @@
 2008-02-25  Satoshi Nakagawa <artension@gmail.com>
 
+	Use the current username for nick on the welcome dialog.
+	Removed SACrashReporter.submit in AppController#awakeFromNib.
+
+2008-02-25  Satoshi Nakagawa <artension@gmail.com>
+
 	Removed '*' in the head of system messages.
 
 2008-02-25  Satoshi Nakagawa <artension@gmail.com>

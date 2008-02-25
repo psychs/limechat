@@ -10,7 +10,7 @@ class AppController < NSObject
   ib_outlet :menu, :server_menu, :channel_menu, :member_menu, :tree_menu, :log_menu, :console_menu, :url_menu, :addr_menu
   
   def awakeFromNib
-    SACrashReporter.submit
+    #SACrashReporter.submit
     
     @pref = Preferences.new
     #FileUtils.mkpath(@pref.gen.transcript_folder.expand_path) rescue nil
@@ -102,11 +102,13 @@ class AppController < NSObject
     
     start_timer
     
-    if @world.units.size == 0
+    if @world.units.empty?
+      # start initial setting
       @welcome = WelcomeDialog.alloc.init
       @welcome.delegate = self
       @welcome.start
     else
+      # show the main window and start auto connecting
       @window.makeKeyAndOrderFront(nil)
       @world.auto_connect
     end

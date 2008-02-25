@@ -19,6 +19,7 @@ class WelcomeDialog < NSObject
     tableViewSelectionIsChanging(nil)
     @channelTable.text_delegate = self
     ServerDialog.servers.each {|i| @serverCombo.addItemWithObjectValue(i) }
+    @nickText.setStringValue(OSX::NSUserName().gsub(/\s/, ''))
     update_ok_button
     show
   end
