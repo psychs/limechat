@@ -1,5 +1,9 @@
 2008-02-25  Satoshi Nakagawa <artension@gmail.com>
 
+	Added a title tag to the template for log views.
+
+2008-02-25  Satoshi Nakagawa <artension@gmail.com>
+
 	Added DOCTYPE and some meta tags to the template for log views.
 
 2008-02-24  Satoshi Nakagawa <artension@gmail.com>
