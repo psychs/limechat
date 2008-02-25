@@ -567,7 +567,7 @@ class IRCUnit < NSObject
       addr = @myaddress
     end
     send_ctcp_query(nick, 'DCC SEND', "#{morph_fname} #{addr} #{port} #{size} 2 :#{fname}")
-    print_both(self, :dcc_send_send, "*Trying file transfer to #{nick}, #{fname} (#{size.grouped_by_comma} bytes) #{@myaddress}:#{port}")
+    print_both(self, :dcc_send_send, "Trying file transfer to #{nick}, #{fname} (#{size.grouped_by_comma} bytes) #{@myaddress}:#{port}")
   end
   
   def send_ctcp_ping(target)
@@ -1349,7 +1349,7 @@ class IRCUnit < NSObject
       c.add_member(User.new(nick, m.sender_username, m.sender_address, false, false, njoin))
       update_channel_title(c)
     end
-    print_both(c || chname, :join, "*#{nick} has joined (#{m.sender_username}@#{m.sender_address})")
+    print_both(c || chname, :join, "#{nick} has joined (#{m.sender_username}@#{m.sender_address})")
     
     check_autoop(c, m.sender_nick, m.sender) unless myself
   end
@@ -1371,7 +1371,7 @@ class IRCUnit < NSObject
       update_channel_title(c)
       check_rejoin(c) unless myself
     end
-    print_both(c || chname, :part, "*#{nick} has left (#{comment})")
+    print_both(c || chname, :part, "#{nick} has left (#{comment})")
     print_system(c, "You have left the channel") if myself
   end
   
@@ -1399,7 +1399,7 @@ class IRCUnit < NSObject
       update_channel_title(c)
       check_rejoin(c) unless myself
     end
-    print_both(c || chname, :kick, "*#{nick} has kicked #{target} (#{comment})")
+    print_both(c || chname, :kick, "#{nick} has kicked #{target} (#{comment})")
   end
   
   def receive_quit(m)
@@ -1408,13 +1408,13 @@ class IRCUnit < NSObject
     
     @channels.each do |c|
       if c.find_member(nick)
-        print_channel(c, :quit, "*#{nick} has left IRC (#{comment})")
+        print_channel(c, :quit, "#{nick} has left IRC (#{comment})")
         c.remove_member(nick)
         update_channel_title(c)
         check_rejoin(c)
       end
     end
-    print_console(nil, :quit, "*#{nick} has left IRC (#{comment})")
+    print_console(nil, :quit, "#{nick} has left IRC (#{comment})")
   end
   
   def receive_kill(m)
@@ -1425,13 +1425,13 @@ class IRCUnit < NSObject
     
     @channels.each do |c|
       if c.find_member(target)
-        print_channel(c, :kill, "*#{sender} has made #{target} to leave IRC (#{comment})")
+        print_channel(c, :kill, "#{sender} has made #{target} to leave IRC (#{comment})")
         c.remove_member(target)
         update_channel_title(c)
         check_rejoin(c)
       end
     end
-    print_console(nil, :kill, "*#{sender} has made #{target} to leave IRC (#{comment})")
+    print_console(nil, :kill, "#{sender} has made #{target} to leave IRC (#{comment})")
   end
   
   def receive_nick(m)
@@ -1441,11 +1441,11 @@ class IRCUnit < NSObject
     if eq(nick, @mynick)
       @mynick = tonick
       update_unit_title
-      print_channel(self, :nick, "*You are now known as #{tonick}")
+      print_channel(self, :nick, "You are now known as #{tonick}")
     end
     @channels.each do |c|
       if c.find_member(nick)
-        print_channel(c, :nick, "*#{nick} is now known as #{tonick}")
+        print_channel(c, :nick, "#{nick} is now known as #{tonick}")
         c.rename_member(nick, tonick)
       end
       if eq(nick, c.name)
@@ -1456,7 +1456,7 @@ class IRCUnit < NSObject
     end
     @whois_dialogs.select {|i| i.nick == nick}.each {|i| i.nick = tonick}
     @world.dcc.nick_changed(self, nick, tonick)
-    print_console(nil, :nick, "*#{nick} is now known as #{tonick}")
+    print_console(nil, :nick, "#{nick} is now known as #{tonick}")
   end
   
   def receive_mode(m)
@@ -1510,11 +1510,11 @@ class IRCUnit < NSObject
         
         update_channel_title(c)
       end
-      print_both(c || target, :mode, "*#{nick} has changed mode: #{modestr}")
+      print_both(c || target, :mode, "#{nick} has changed mode: #{modestr}")
     else
       # user mode
       @mymode.update(modestr)
-      print_both(self, :mode, "*#{nick} has changed mode: #{modestr}")
+      print_both(self, :mode, "#{nick} has changed mode: #{modestr}")
       update_unit_title
     end
   end
@@ -1529,13 +1529,13 @@ class IRCUnit < NSObject
       c.topic = topic
       update_channel_title(c)
     end
-    print_both(c || chname, :topic, "*#{nick} has set topic: #{topic}")
+    print_both(c || chname, :topic, "#{nick} has set topic: #{topic}")
   end
   
   def receive_invite(m)
     sender = m.sender_nick
     chname = m[1]
-    print_both(self, :invite, "*#{sender} has invited you to #{chname}")
+    print_both(self, :invite, "#{sender} has invited you to #{chname}")
     notify_event(:invited, nil, sender, chname)
     SoundPlayer.play(@pref.sound.invited)
   end
@@ -1547,14 +1547,14 @@ class IRCUnit < NSObject
   
   def receive_error(m)
     comment = m[0]
-    print_error("*Error: #{comment}")
+    print_error("Error: #{comment}")
   end
   
   def receive_wallops(m)
     sender = m.sender_nick
     sender = m.sender if !sender || sender.empty?
     comment = m[0]
-    print_both(self, :wallops, "*Wallops: #{comment}")
+    print_both(self, :wallops, "Wallops: #{comment}")
   end
   
   def receive_ctcp_query(m, text)
@@ -1585,11 +1585,11 @@ class IRCUnit < NSObject
           return
         end
       end
-      print_both(self, :reply, "*CTCP-query unknown(DCC #{kind}) from #{nick} : #{text}")
+      print_both(self, :reply, "CTCP-query unknown(DCC #{kind}) from #{nick} : #{text}")
     else
       if @last_ctcp && (Time.now - @last_ctcp < 4)
         @last_ctcp = Time.now
-        print_both(self, :reply, "*CTCP-query #{command} from #{nick} was ignored")
+        print_both(self, :reply, "CTCP-query #{command} from #{nick} was ignored")
         return
       end
       @last_ctcp = Time.now
@@ -1606,10 +1606,10 @@ class IRCUnit < NSObject
       when :clientinfo
         send_ctcp_reply(nick, command, _('CtcpClientInfo').to_s)
       else
-        print_both(self, :reply, "*CTCP-query unknown(#{command}) from #{nick}")
+        print_both(self, :reply, "CTCP-query unknown(#{command}) from #{nick}")
         return
       end
-      print_both(self, :reply, "*CTCP-query #{command} from #{nick}")
+      print_both(self, :reply, "CTCP-query #{command} from #{nick}")
     end
   end
   
@@ -1624,7 +1624,7 @@ class IRCUnit < NSObject
     else
       host = addr
     end
-    print_both(self, :dcc_send_receive, "*Received file transfer request from #{m.sender_nick}, #{fname} (#{size.grouped_by_comma} bytes) #{host}:#{port}")
+    print_both(self, :dcc_send_receive, "Received file transfer request from #{m.sender_nick}, #{fname} (#{size.grouped_by_comma} bytes) #{host}:#{port}")
     
     if Pathname.new('~/Downloads').expand_path.exist?
       path = '~/Downloads'
@@ -1652,12 +1652,12 @@ class IRCUnit < NSObject
         msec = d % 1000
         sec = d / 1000
         text = sprintf("%d.%02d", sec, msec/10)
-        print_both(self, :reply, "*CTCP-reply #{command} from #{nick} : #{text} sec")
+        print_both(self, :reply, "CTCP-reply #{command} from #{nick} : #{text} sec")
       else
-        print_both(self, :reply, "*CTCP-reply #{command} from #{nick} : #{text}")
+        print_both(self, :reply, "CTCP-reply #{command} from #{nick} : #{text}")
       end
     else
-      print_both(self, :reply, "*CTCP-reply #{command} from #{nick} : #{text}")
+      print_both(self, :reply, "CTCP-reply #{command} from #{nick} : #{text}")
     end
   end
   
@@ -1683,7 +1683,7 @@ class IRCUnit < NSObject
       @mymode.clear
       @mymode.update(modestr)
       update_unit_title
-      print_both(self, :reply, "*Mode: #{modestr}")
+      print_both(self, :reply, "Mode: #{modestr}")
     when 301  # RPL_AWAY
       nick = m[1]
       comment = m[2]
@@ -1788,13 +1788,13 @@ class IRCUnit < NSObject
         end
         update_channel_title(c)
       end
-      print_both(c || chname, :reply, "*Mode: #{modestr}")
+      print_both(c || chname, :reply, "Mode: #{modestr}")
     when 329  # hemp? channel creation time
       chname = m[1]
       timestr = m[2]
       time = Time.at(timestr.to_i)
       c = find_channel(chname)
-      print_both(c || chname, :reply, "*Created at: #{time.strftime('%Y/%m/%d %H:%M:%S')}")
+      print_both(c || chname, :reply, "Created at: #{time.strftime('%Y/%m/%d %H:%M:%S')}")
     when 331  # RPL_NOTOPIC
       chname = m[1]
       c = find_channel(chname)
@@ -1802,7 +1802,7 @@ class IRCUnit < NSObject
         c.topic = ''
         update_channel_title(c)
       end
-      print_both(c || chname, :reply, "*Topic: ")
+      print_both(c || chname, :reply, "Topic: ")
     when 332  # RPL_TOPIC
       chname = m[1]
       topic = m[2]
@@ -1811,7 +1811,7 @@ class IRCUnit < NSObject
         c.topic = topic
         update_channel_title(c)
       end
-      print_both(c || chname, :reply, "*Topic: #{topic}")
+      print_both(c || chname, :reply, "Topic: #{topic}")
     when 333  # RPL_TOPIC_WHO_TIME
       chname = m[1]
       setter = m[2]
@@ -1819,7 +1819,7 @@ class IRCUnit < NSObject
       nick = setter[/^[^!@]+/]
       time = Time.at(timestr.to_i)
       c = find_channel(chname)
-      print_both(c || chname, :reply, "*#{nick} set the topic at: #{time.strftime('%Y/%m/%d %H:%M:%S')}")
+      print_both(c || chname, :reply, "#{nick} set the topic at: #{time.strftime('%Y/%m/%d %H:%M:%S')}")
     when 353  # RPL_NAMREPLY
       chname = m[2]
       trail = m[3].strip
@@ -1842,7 +1842,7 @@ class IRCUnit < NSObject
         c.sort_members
         update_channel_title(c)
       else
-        print_both(c || chname, :reply, "*Names: #{trail}")
+        print_both(c || chname, :reply, "Names: #{trail}")
       end
     when 366  # RPL_ENDOFNAMES
       chname = m[1]
