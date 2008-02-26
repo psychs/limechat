@@ -1,5 +1,9 @@
 2008-02-26  Satoshi Nakagawa <artension@gmail.com>
 
+	Tweaked the preferences dialog and the server properties dialog.
+
+2008-02-26  Satoshi Nakagawa <artension@gmail.com>
+
 	Changed the directory name, from "Theme" to "Themes".
 	Added migration code in prelude.
 
