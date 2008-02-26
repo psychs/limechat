@@ -7,8 +7,8 @@ require 'utility'
 
 class ViewTheme
   
-  RESOURCE_BASE = (Pathname.new(NSBundle.mainBundle.resourcePath.fileSystemRepresentation).parent.expand_path + 'Theme').to_s
-  USER_BASE = '~/Library/LimeChat/Theme'.expand_path
+  RESOURCE_BASE = (Pathname.new(NSBundle.mainBundle.resourcePath.fileSystemRepresentation).parent.expand_path + 'Themes').to_s
+  USER_BASE = '~/Library/LimeChat/Themes'.expand_path
   
   def self.RESOURCE_BASE; RESOURCE_BASE; end
   def self.USER_BASE; USER_BASE; end

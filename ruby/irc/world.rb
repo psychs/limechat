@@ -36,7 +36,7 @@ class IRCWorld < NSObject
     change_tree_theme
     register_growl
     
-    @plugin = PluginManager.new(self, '~/Library/LimeChat/Plugin')
+    @plugin = PluginManager.new(self, '~/Library/LimeChat/Plugins')
     @plugin.load_all
   end
   

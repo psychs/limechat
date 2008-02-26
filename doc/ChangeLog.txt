@@ -1,5 +1,10 @@
 2008-02-26  Satoshi Nakagawa <artension@gmail.com>
 
+	Changed the directory name, from "Theme" to "Themes".
+	Added migration code in prelude.
+
+2008-02-26  Satoshi Nakagawa <artension@gmail.com>
+
 	Added a menu item, "Mark All as Read".
 
 2008-02-26  Satoshi Nakagawa <artension@gmail.com>

@@ -2,6 +2,7 @@
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
 require 'fileutils'
+require 'pathname'
 
 class AppController < NSObject
   ib_outlet :window, :tree, :log_base, :console_base, :member_list, :text, :chat_box
@@ -10,7 +11,7 @@ class AppController < NSObject
   ib_outlet :menu, :server_menu, :channel_menu, :member_menu, :tree_menu, :log_menu, :console_menu, :url_menu, :addr_menu
   
   def awakeFromNib
-    #SACrashReporter.submit
+    prelude
     
     @pref = Preferences.new
     #FileUtils.mkpath(@pref.gen.transcript_folder.expand_path) rescue nil
@@ -300,6 +301,16 @@ class AppController < NSObject
   end  
   
   private
+  
+  def prelude
+    # migrate the old theme directory
+    olddir = Pathname.new('~/Library/LimeChat/Theme').expand_path
+    newdir = Pathname.new(ViewTheme.USER_BASE)
+    if olddir.directory? && !newdir.exist?
+      FileUtils.mv(olddir.to_s, newdir.to_s) rescue nil
+      FileUtils.cp(Dir.glob(ViewTheme.RESOURCE_BASE + '/Sample.*'), newdir.to_s) rescue nil
+    end
+  end
   
   class NickCompletionStatus
     attr_reader :text, :range
