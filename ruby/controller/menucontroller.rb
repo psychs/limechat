@@ -91,6 +91,8 @@ class MenuController < NSObject
       true
     when 412  # clear scrollback
       true
+    when 413  # mark all as read
+      true
     when 421  # make text bigger
       @world.console.view.canMakeTextLarger?
     when 422  # make text smaller
@@ -450,6 +452,10 @@ class MenuController < NSObject
     sel = @world.selected
     return unless sel
     sel.log.unmark
+  end
+  
+  def onMarkAllAsRead(sender)
+    @world.mark_all_as_read
   end
   
   

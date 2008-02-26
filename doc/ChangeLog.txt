@@ -1,5 +1,9 @@
 2008-02-26  Satoshi Nakagawa <artension@gmail.com>
 
+	Added a menu item, "Mark All as Read".
+
+2008-02-26  Satoshi Nakagawa <artension@gmail.com>
+
 	New style action messages.
 	Fixed wrong css selectors in all themes.
 	Changed the default nick format to '%n: '.

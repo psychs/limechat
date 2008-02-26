@@ -464,6 +464,16 @@ class IRCWorld < NSObject
     @plugin.load_all
   end
   
+  def mark_all_as_read
+    @units.each do |u|
+      u.unread = false
+      u.channels.each do |c|
+        c.unread = false
+      end
+    end
+    reload_tree
+  end
+  
   # delegate
   
   def outlineView_doubleClicked(sender)
