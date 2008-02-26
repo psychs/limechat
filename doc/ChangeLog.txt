@@ -1,5 +1,9 @@
 2008-02-26  Satoshi Nakagawa <artension@gmail.com>
 
+	Changed to remember the current text if modified when pushed up key.
+
+2008-02-26  Satoshi Nakagawa <artension@gmail.com>
+
 	Updated the bundled themes to conforms the new css style.
 	Added all attributes in <body> to <html>.
 

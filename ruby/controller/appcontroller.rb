@@ -255,7 +255,7 @@ class AppController < NSObject
   def control_textView_doCommandBySelector(control, textview, selector)
     case selector
     when 'moveUp:'
-      s = @history.up
+      s = @history.up(@text.stringValue.to_s)
       if s
         @text.setStringValue(s)
         @world.select_text

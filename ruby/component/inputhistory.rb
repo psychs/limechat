@@ -19,7 +19,18 @@ class InputHistory
     @pos = @buf.size
   end
   
-  def up
+  def up(s)
+    if s && !s.empty?
+      cur = @buf[@pos]
+      if !cur || cur != s
+        # if the text was modified, append the current text
+        @buf << s
+        if @buf.size > MAX_SIZE
+          @buf.shift
+          @pos -= 1
+        end
+      end
+    end
     @pos -= 1
     if @pos < 0
       @pos = 0
@@ -30,7 +41,10 @@ class InputHistory
   end
   
   def down(s)
-    return nil if !s || s.empty?
+    if !s || s.empty?
+      @pos = @buf.size
+      return nil
+    end
     cur = @buf[@pos]
     if !cur || cur != s
       add(s)
