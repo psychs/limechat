@@ -1,5 +1,10 @@
 2008-02-26  Satoshi Nakagawa <artension@gmail.com>
 
+	Updated the bundled themes to conforms the new css style.
+	Added all attributes in <body> to <html>.
+
+2008-02-26  Satoshi Nakagawa <artension@gmail.com>
+
 	Added "channelname" and "type" attribute for more control with css.
 	Updated "Alternate Lines" theme to conform to the new css style.
 

@@ -382,6 +382,13 @@ class LogController < NSObject
   
   def initial_document
     body_class = @console ? 'console' : 'normal'
+    if @channel
+      body_attrs = %| type="#{@channel.type}"|
+      body_attrs << %| channelname="#{h(@channel.name)}"| if @channel.channel?
+    else
+      body_attrs = %| type="console"|
+    end
+    
     style = @theme.content || ''
     if @override_font
       name = @override_font[0]
@@ -398,26 +405,17 @@ class LogController < NSObject
     
     doc = <<-EOM
       <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-      <html>
+      <html class="#{body_class}" #{body_attrs}>
       <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <meta http-equiv="Content-Script-Type" content="text/javascript">
         <meta http-equiv="Content-Style-Type" content="text/css">
         <title>LimeChat Log</title>
         <style>#{DEFAULT_CSS}</style>
-        <style><!--#{style}--></style>
+        <style><!-- #{style} --></style>
         <style>#{override_style}</style>
       </head>
-      <body class="#{body_class}"
-    EOM
-    if @channel
-      doc << %| type="#{@channel.type}"|
-      doc << %| channelname="#{h(@channel.name)}"| if @channel.channel?
-    else
-      doc << %| type="console"|
-    end
-    doc << <<-EOM
-      ></body>
+      <body class="#{body_class}" #{body_attrs}></body>
       </html>
     EOM
     
@@ -443,8 +441,6 @@ class LogController < NSObject
       padding: 3px 4px 10px 4px;
     }
     body { margin: 0; padding: 0; }
-    body.console {}
-    body.normal {}
     img { border: 1px solid #aaa; vertical-align: top; }
     object { vertical-align: top; }
     hr { margin: 0.5em 2em; }
@@ -452,33 +448,33 @@ class LogController < NSObject
     .address { text-decoration: underline; word-break: break-all; }
     .highlight { color: #f0f; font-weight: bold; }
     .line { margin: 0 -4px; padding: 0 4px 1px 4px; }
-    .even_line {}
-    .odd_line {}
+    .line[alternate=even] {}
+    .line[alternate=odd] {}
     .time { color: #048; }
     .place { color: #008; }
-    .nick_normal { color: #008; }
-    .nick_myself { color: #66a; }
-    .system { color: #080; }
-    .error { color: #f00; font-weight: bold; }
-    .reply { color: #088; }
-    .error_reply { color: #f00; }
-    .dcc_send_send { color: #088; }
-    .dcc_send_receive { color: #00c; }
-    .privmsg {}
-    .notice { color: #888; }
-    .action { color: #080; }
-    .join { color: #080; }
-    .part { color: #080; }
-    .kick { color: #080; }
-    .quit { color: #080; }
-    .kill { color: #080; }
-    .nick { color: #080; }
-    .mode { color: #080; }
-    .topic { color: #080; }
-    .invite { color: #080; }
-    .wallops { color: #080; }
-    .debug_send { color: #aaa; }
-    .debug_receive { color: #444; }
+    .sender[type=normal] { color: #008; }
+    .sender[type=myself] { color: #66a; }
+    .line[type=system] { color: #080; }
+    .line[type=error] { color: #f00; font-weight: bold; }
+    .line[type=reply] { color: #088; }
+    .line[type=error_reply] { color: #f00; }
+    .line[type=dcc_send_send] { color: #088; }
+    .line[type=dcc_send_receive] { color: #00c; }
+    .line[type=privmsg] {}
+    .line[type=notice] { color: #888; }
+    .line[type=action] { color: #080; }
+    .line[type=join] { color: #080; }
+    .line[type=part] { color: #080; }
+    .line[type=kick] { color: #080; }
+    .line[type=quit] { color: #080; }
+    .line[type=kill] { color: #080; }
+    .line[type=nick] { color: #080; }
+    .line[type=mode] { color: #080; }
+    .line[type=topic] { color: #080; }
+    .line[type=invite] { color: #080; }
+    .line[type=wallops] { color: #080; }
+    .line[type=debug_send] { color: #aaa; }
+    .line[type=debug_receive] { color: #444; }
   EOM
 end
 

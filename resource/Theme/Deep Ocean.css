@@ -7,50 +7,49 @@ html {
   margin: 0;
 }
 
-body { margin: 0; }
-body.console {
-  padding: 3px 4px 10px 4px;
-}
-body.normal {
-  padding: 3px 4px 10px 4px;
+html.normal {
   background-image: url(Deep\ Ocean/background.png);
   background-repeat: repeat-x;
   background-attachment: fixed;
 }
 
-hr { margin: 0.5em 2em; }
+body {
+  margin: 0;
+  padding: 3px 4px 10px 4px;
+}
 
+hr { margin: 0.5em 2em; }
 a { color: inherit; }
+
 .url { word-break: break-all; }
 .address { text-decoration: underline; word-break: break-all; }
 .highlight { color: #ffc58a; font-size: 130%; font-weight: normal; }
 .line { margin: 0 -4px; padding: 0 4px 1px 4px; }
-.even_line {}
-.odd_line {}
 
 .time { color: #3175b9; }
 .place { color: #808080; }
-.nick_normal { color: #9abfe4; }
-.nick_myself { color: #3175b9; }
 
-.system { color: #808080; }
-.error { color: #e75858; font-weight: bold; }
-.reply { color: #808080; }
-.error_reply { color: #e75858; }
-.dcc_send_send { color: #3175b9; }
-.dcc_send_receive { color: #3175b9; }
-.privmsg {}
-.notice { color: #808080; }
-.action { color: #d4d4d4; font-style: italic; }
-.join { color: #bcbced; }
-.part { color: #cd87aa; }
-.kick { color: #c16895; }
-.quit { color: #c16895; }
-.kill { color: #c16895; }
-.nick { color: #95bfda; }
-.mode { color: #7878dc; }
-.topic { color: #d5d5ff; }
-.invite { color: #9abfe4; font-style: italic; }
-.wallops { color: #808080; }
-.debug_send { color: #808080; }
-.debug_receive { color: #808080; }
+.sender[type=normal] { color: #9abfe4; }
+.sender[type=myself] { color: #3175b9; }
+
+.line[type=system] { color: #808080; }
+.line[type=error] { color: #e75858; font-weight: bold; }
+.line[type=reply] { color: #808080; }
+.line[type=error_reply] { color: #e75858; }
+.line[type=dcc_send_send] { color: #3175b9; }
+.line[type=dcc_send_receive] { color: #3175b9; }
+.line[type=privmsg] {}
+.line[type=notice] { color: #808080; }
+.line[type=action] { color: #d4d4d4; font-style: italic; }
+.line[type=join] { color: #bcbced; }
+.line[type=part] { color: #cd87aa; }
+.line[type=kick] { color: #c16895; }
+.line[type=quit] { color: #c16895; }
+.line[type=kill] { color: #c16895; }
+.line[type=nick] { color: #95bfda; }
+.line[type=mode] { color: #7878dc; }
+.line[type=topic] { color: #d5d5ff; }
+.line[type=invite] { color: #9abfe4; font-style: italic; }
+.line[type=wallops] { color: #808080; }
+.line[type=debug_send] { color: #808080; }
+.line[type=debug_receive] { color: #808080; }
