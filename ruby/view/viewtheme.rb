@@ -95,7 +95,7 @@ class OtherViewTheme
   private
   
   def update
-    @log_nick_format = load_string('log-view', 'nickname-format') || '(%n) '
+    @log_nick_format = load_string('log-view', 'nickname-format') || '%n: '
     
     @input_text_font = load_font('input-text') || NSFont.systemFontOfSize(-1)
     @input_text_bgcolor = load_color('input-text', 'background-color') || NSColor.whiteColor

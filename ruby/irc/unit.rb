@@ -901,6 +901,7 @@ class IRCUnit < NSObject
   end
   
   def print_console(channel, kind, nick, text=nil)
+    # adjust parameters when nick is omitted
     if nick && !text
       text = nick
       nick = nil
@@ -921,7 +922,11 @@ class IRCUnit < NSObject
       place = "<#{self.name}> "
     end
     if nick && !nick.empty?
-      nickstr = format_nick(channel, nick)
+      if kind == :action
+        nickstr = "#{nick} "
+      else
+        nickstr = format_nick(channel, nick)
+      end
     else
       nickstr = nil
     end
@@ -943,6 +948,7 @@ class IRCUnit < NSObject
   end
   
   def print_channel(channel, kind, nick, text=nil)
+    # adjust parameters when nick is omitted
     if nick && !text
       text = nick
       nick = nil
@@ -961,7 +967,11 @@ class IRCUnit < NSObject
       place = nil
     end
     if nick && !nick.empty?
-      nickstr = format_nick(channel, nick)
+      if kind == :action
+        nickstr = "#{nick} "
+      else
+        nickstr = format_nick(channel, nick)
+      end
     else
       nickstr = nil
     end

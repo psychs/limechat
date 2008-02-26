@@ -454,27 +454,31 @@ class LogController < NSObject
     .place { color: #008; }
     .sender[type=normal] { color: #008; }
     .sender[type=myself] { color: #66a; }
-    .line[type=system] { color: #080; }
-    .line[type=error] { color: #f00; font-weight: bold; }
-    .line[type=reply] { color: #088; }
-    .line[type=error_reply] { color: #f00; }
-    .line[type=dcc_send_send] { color: #088; }
-    .line[type=dcc_send_receive] { color: #00c; }
-    .line[type=privmsg] {}
-    .line[type=notice] { color: #888; }
-    .line[type=action] { color: #080; }
-    .line[type=join] { color: #080; }
-    .line[type=part] { color: #080; }
-    .line[type=kick] { color: #080; }
-    .line[type=quit] { color: #080; }
-    .line[type=kill] { color: #080; }
-    .line[type=nick] { color: #080; }
-    .line[type=mode] { color: #080; }
-    .line[type=topic] { color: #080; }
-    .line[type=invite] { color: #080; }
-    .line[type=wallops] { color: #080; }
-    .line[type=debug_send] { color: #aaa; }
-    .line[type=debug_receive] { color: #444; }
+    .line[type=action] .sender:before {
+      content: "• ";
+      white-space: nowrap;
+    }
+    .message[type=system] { color: #080; }
+    .message[type=error] { color: #f00; font-weight: bold; }
+    .message[type=reply] { color: #088; }
+    .message[type=error_reply] { color: #f00; }
+    .message[type=dcc_send_send] { color: #088; }
+    .message[type=dcc_send_receive] { color: #00c; }
+    .message[type=privmsg] {}
+    .message[type=notice] { color: #888; }
+    .message[type=action] {}
+    .message[type=join] { color: #080; }
+    .message[type=part] { color: #080; }
+    .message[type=kick] { color: #080; }
+    .message[type=quit] { color: #080; }
+    .message[type=kill] { color: #080; }
+    .message[type=nick] { color: #080; }
+    .message[type=mode] { color: #080; }
+    .message[type=topic] { color: #080; }
+    .message[type=invite] { color: #080; }
+    .message[type=wallops] { color: #080; }
+    .message[type=debug_send] { color: #aaa; }
+    .message[type=debug_receive] { color: #444; }
   EOM
 end
 

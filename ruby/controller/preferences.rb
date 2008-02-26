@@ -104,7 +104,7 @@ class Preferences
       @log_font_name = 'Lucida Grande'
       @log_font_size = 12
       @override_nick_format = false
-      @nick_format = '(%n) '
+      @nick_format = '%n: '
     end
   end
   

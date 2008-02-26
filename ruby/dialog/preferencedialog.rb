@@ -43,7 +43,7 @@ class PreferenceDialog < NSObject
     onOverrideNickFormatClicked(nil)
     onUseGrowlClicked(nil)
     showFontDescription
-    ['(%n) ', '%n: ', '<%n> ', '<%9n> ', '<%-9n> ', '<%@%n> '].each {|i| @theme_nick_format.addItemWithObjectValue(i) }
+    ['%n: ', '(%n) ', '<%n> ', '<%9n> ', '<%-9n> ', '<%@%n> '].each {|i| @theme_nick_format.addItemWithObjectValue(i) }
     show
   end
   

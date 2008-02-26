@@ -25,19 +25,19 @@ body {}
 .sender[type=normal] { color: #3e87e3; }
 .sender[type=myself] { color: #89bdff; }
 
-.line[type=privmsg] {}
-.line[type=notice] { color: #888; }
-.line[type=action] { color: #8f9d6a;}
+.message[type=privmsg] {}
+.message[type=notice] { color: #888; }
+.message[type=action] { color: #8f9d6a;}
 
-.line[type=system], .line[type=join], .line[type=part], .line[type=kick],
-.line[type=quit], .line[type=kill], .line[type=nick], .line[type=mode],
-.line[type=topic], .line[type=invite], .line[type=wallops] {
+.message[type=system], .message[type=join], .message[type=part], .message[type=kick],
+.message[type=quit], .message[type=kill], .message[type=nick], .message[type=mode],
+.message[type=topic], .message[type=invite], .message[type=wallops] {
   color: #65b042;
 }
-.line[type=reply] { color: #509036; }
+.message[type=reply] { color: #509036; }
 
-.line[type=error], .line[type=error_reply] { color: #f67b37; }
-.line[type=dcc_send_send] { color: #c5af75; }
-.line[type=dcc_send_receive] { color: #f9ee98; }
-.line[type=debug_send] { color: #8996a8; }
-.line[type=debug_receive] { color: #afc4db; }
+.message[type=error], .message[type=error_reply] { color: #f67b37; }
+.message[type=dcc_send_send] { color: #c5af75; }
+.message[type=dcc_send_receive] { color: #f9ee98; }
+.message[type=debug_send] { color: #8996a8; }
+.message[type=debug_receive] { color: #afc4db; }
