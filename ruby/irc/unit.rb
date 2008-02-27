@@ -901,7 +901,7 @@ class IRCUnit < NSObject
     end
   end
   
-  def print_console(channel, kind, nick, text=nil)
+  def print_console(channel, kind, nick, text=nil, identified=nil)
     # adjust parameters when nick is omitted
     if nick && !text
       text = nick
@@ -944,11 +944,11 @@ class IRCUnit < NSObject
       click = "channel #{self.id} #{channel.id}"
     end
     
-    line = LogLine.new(time, place, nickstr, text, kind, mtype, nick, click)
+    line = LogLine.new(time, place, nickstr, text, kind, mtype, nick, click, identified)
     @world.console.print(line)
   end
   
-  def print_channel(channel, kind, nick, text=nil)
+  def print_channel(channel, kind, nick, text=nil, identified=nil)
     # adjust parameters when nick is omitted
     if nick && !text
       text = nick
@@ -983,7 +983,7 @@ class IRCUnit < NSObject
     end
     click = nil
     
-    line = LogLine.new(time, place, nickstr, text, kind, mtype, nick, click)
+    line = LogLine.new(time, place, nickstr, text, kind, mtype, nick, click, identified)
     if channel && !channel.unit?
       key = channel.print(line)
     else
@@ -992,10 +992,10 @@ class IRCUnit < NSObject
     key
   end
   
-  def print_both(channel, kind, nick, text=nil)
-    r = print_channel(channel, kind, nick, text)
+  def print_both(channel, kind, nick, text=nil, identified=nil)
+    r = print_channel(channel, kind, nick, text, identified)
     if need_print_console?(channel)
-      print_console(channel, kind, nick, text)
+      print_console(channel, kind, nick, text, identified)
     end
     r
   end
@@ -1266,7 +1266,7 @@ class IRCUnit < NSObject
     if target.channelname?
       # channel
       c = find_channel(target)
-      key = print_both(c || target, command, nick, text)
+      key = print_both(c || target, command, nick, text, identified)
       if command != :notice
         t = c || self
         set_unread_state(t)
@@ -1304,7 +1304,7 @@ class IRCUnit < NSObject
           c = @world.create_talk(self, nick)
           newtalk = true
         end
-        key = print_both(c || self, command, nick, text)
+        key = print_both(c || self, command, nick, text, identified)
         if command != :notice
           t = c || self
           set_unread_state(t)

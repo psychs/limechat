@@ -8,9 +8,9 @@ require 'logrenderer'
 class LogLine
   attr_accessor :time, :place, :nick, :body
   attr_accessor :line_type, :member_type
-  attr_accessor :nick_info, :click_info
+  attr_accessor :nick_info, :click_info, :identified
   
-  def initialize(time, place, nick, body, line_type=:system, member_type=:normal, nick_info=nil, click_info=nil)
+  def initialize(time, place, nick, body, line_type=:system, member_type=:normal, nick_info=nil, click_info=nil, identified=nil)
     @time = time
     @place = place
     @nick = nick
@@ -19,6 +19,7 @@ class LogLine
     @member_type = member_type
     @nick_info = nick_info
     @click_info = click_info
+    @identified = identified
   end
 end
 
@@ -135,6 +136,7 @@ class LogController < NSObject
     if line.nick
       s << %|<span class="sender nick_#{line.member_type}" type="#{line.member_type}"|
       s << %| oncontextmenu="on_nick_contextmenu()"| unless @console
+      s << %| identified="#{!!line.identified}"|
       s << %|>#{h(line.nick)}</span>|
     end
     s << %[<span class="message #{line.line_type}" type="#{line.line_type}">#{body}</span>]
@@ -147,7 +149,7 @@ class LogController < NSObject
     if @console
       if line.click_info
         attrs['clickinfo'] = line.click_info 
-        attrs['ondblclick'] = %|on_dblclick()|
+        attrs['ondblclick'] = 'on_dblclick()'
       end
     else
       attrs['nick'] = line.nick_info if line.nick_info
