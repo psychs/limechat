@@ -29,6 +29,8 @@ class IRCUnit < NSObject
     @encoding = NSISO2022JPStringEncoding
     @isupport = ISupportInfo.new
     @in_whois = false
+    @identify_msg = false
+    @identify_ctcp = false
     @who_queue = []
     @who_wait = 0
     reset_state
@@ -795,8 +797,7 @@ class IRCUnit < NSObject
       receive_numeric_reply(m)
     else
       case m.command
-      when :privmsg; receive_privmsg(m)
-      when :notice; receive_notice(m)
+      when :privmsg,:notice; receive_privmsg_and_notice(m)
       when :join; receive_join(m)
       when :part; receive_part(m)
       when :kick; receive_kick(m)
@@ -1213,6 +1214,8 @@ class IRCUnit < NSObject
     @myaddress = @join_address = nil
     @mymode.clear
     @in_whois = false
+    @identify_msg = false
+    @identify_ctcp = false
     @channels.each do |c|
       if c.channel? || c.talk?
         if c.active?
@@ -1231,31 +1234,32 @@ class IRCUnit < NSObject
     end
   end
   
-  def receive_privmsg(m)
+  def receive_privmsg_and_notice(m)
     text = m[1]
-    if text[0] == 0x1
-      text[0] = ''
-      n = text.index("\x01")
-      text = text[0...n] if n
-      receive_ctcp_query(m, text)
+    
+    identified = false
+    if @identify_ctcp && /\A([+-])\x01/ =~ text || @identify_msg && /\A([+-])/ =~ text
+      identified = true if $1 == '+'
+      text = text[1..-1]
+    end
+    
+    if /\A\x01([^\x01]*)/ =~ text
+      text = $1
+      if m.command == :privmsg
+        if /\AACTION /i =~ text
+          receive_text(m, :action, $~.post_match, identified)
+        else
+          receive_ctcp_query(m, text)
+        end
+      else
+        receive_ctcp_reply(m, text)
+      end
     else
-      receive_text(m, :privmsg, text)
+      receive_text(m, m.command, text, identified)
     end
   end
   
-  def receive_notice(m)
-    text = m[1]
-    if text[0] == 0x1
-      text[0] = ''
-      n = text.index("\x01")
-      text = text[0...n] if n
-      receive_ctcp_reply(m, text)
-    else
-      receive_text(m, :notice, text)
-    end
-  end
-  
-  def receive_text(m, command, text)
+  def receive_text(m, command, text, identified)
     nick = m.sender_nick
     target = m[0]
     
@@ -1570,12 +1574,11 @@ class IRCUnit < NSObject
   def receive_ctcp_query(m, text)
     nick = m.sender_nick
     text = text.dup
+    
     command = text.token!
     return if command.empty?
     cmd = command.downcase.to_sym
     case cmd
-    when :action
-      receive_text(m, :action, text)
     when :dcc
       kind = text.token!
       unless kind.empty?
@@ -1694,6 +1697,13 @@ class IRCUnit < NSObject
       @mymode.update(modestr)
       update_unit_title
       print_both(self, :reply, "Mode: #{modestr}")
+    when 290  # RPL_CAPAB ? on freenode
+      kind = m[1]
+      case kind.downcase
+        when 'identify-msg'; @identify_msg = true
+        when 'identify-ctcp'; @identify_ctcp = true
+      end
+      print_reply(m)
     when 301  # RPL_AWAY
       nick = m[1]
       comment = m[2]

@@ -1,3 +1,7 @@
+2008-02-27  Satoshi Nakagawa <artension@gmail.com>
+
+	Added support for CAPAB IDENTIFY-MSG and CAPAB IDENTIFY-CTCP.
+
 ==== LimeChat 0.16.4 ====
 
 2008-02-26  Satoshi Nakagawa <artension@gmail.com>
