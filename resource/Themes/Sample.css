@@ -36,9 +36,28 @@ a {}
   content: "• ";
   white-space: nowrap;
 }
+.line[highlight=true] {
+  background-color: #eee;
+}
 
-.sender[type=normal] { color: #008; }
 .sender[type=myself] { color: #66a; }
+.sender[type=normal] { color: #008; }
+.sender[type=normal][colornumber='0'] {}
+.sender[type=normal][colornumber='1'] {}
+.sender[type=normal][colornumber='2'] {}
+.sender[type=normal][colornumber='3'] {}
+.sender[type=normal][colornumber='4'] {}
+.sender[type=normal][colornumber='5'] {}
+.sender[type=normal][colornumber='6'] {}
+.sender[type=normal][colornumber='7'] {}
+.sender[type=normal][colornumber='8'] {}
+.sender[type=normal][colornumber='9'] {}
+.sender[type=normal][colornumber='10'] {}
+.sender[type=normal][colornumber='11'] {}
+.sender[type=normal][colornumber='12'] {}
+.sender[type=normal][colornumber='13'] {}
+.sender[type=normal][colornumber='14'] {}
+.sender[type=normal][colornumber='15'] {}
 
 .message[type=system] { color: #080; }
 .message[type=error] { color: #f00; font-weight: bold; }

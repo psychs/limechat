@@ -47,6 +47,13 @@ class User
     ['~', '&', '@', '%', '+']
   end
   
+  NUM_COLORS = 16
+  
+  def color_number
+    @color_number = (@nick + @username + @address).hash % NUM_COLORS unless @color_number
+    @color_number
+  end
+  
   # the weighting system keeps track of who you are talking to
   # and who is talking to you... incoming messages are not weighted
   # as highly as the messages you send to someone

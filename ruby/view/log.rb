@@ -8,9 +8,9 @@ require 'logrenderer'
 class LogLine
   attr_accessor :time, :place, :nick, :body
   attr_accessor :line_type, :member_type
-  attr_accessor :nick_info, :click_info, :identified
+  attr_accessor :nick_info, :click_info, :identified, :nick_color_number
   
-  def initialize(time, place, nick, body, line_type=:system, member_type=:normal, nick_info=nil, click_info=nil, identified=nil)
+  def initialize(time, place, nick, body, line_type=:system, member_type=:normal, nick_info=nil, click_info=nil, identified=nil, nick_color_number=nil)
     @time = time
     @place = place
     @nick = nick
@@ -20,6 +20,7 @@ class LogLine
     @nick_info = nick_info
     @click_info = click_info
     @identified = identified
+    @nick_color_number = nick_color_number
   end
 end
 
@@ -137,6 +138,7 @@ class LogController < NSObject
       s << %|<span class="sender nick_#{line.member_type}" type="#{line.member_type}"|
       s << %| oncontextmenu="on_nick_contextmenu()"| unless @console
       s << %| identified="#{!!line.identified}"|
+      s << %| colornumber="#{line.nick_color_number}"| if line.member_type == :normal
       s << %|>#{h(line.nick)}</span>|
     end
     s << %[<span class="message #{line.line_type}" type="#{line.line_type}">#{body}</span>]
@@ -146,6 +148,7 @@ class LogController < NSObject
     attrs['alternate'] = alternate
     attrs['class'] = "line #{alternate}_line"
     attrs['type'] = line.line_type.to_s
+    attrs['highlight'] = "#{!!key}"
     if @console
       if line.click_info
         attrs['clickinfo'] = line.click_info 
@@ -454,12 +457,15 @@ class LogController < NSObject
     .line[alternate=odd] {}
     .time { color: #048; }
     .place { color: #008; }
-    .sender[type=normal] { color: #008; }
-    .sender[type=myself] { color: #66a; }
     .line[type=action] .sender:before {
       content: "• ";
       white-space: nowrap;
     }
+    .line[highlight=true] {
+      background-color: #eee;
+    }
+    .sender[type=myself] { color: #66a; }
+    .sender[type=normal] { color: #008; }
     .message[type=system] { color: #080; }
     .message[type=error] { color: #f00; font-weight: bold; }
     .message[type=reply] { color: #088; }

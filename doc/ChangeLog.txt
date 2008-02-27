@@ -1,5 +1,10 @@
 2008-02-27  Satoshi Nakagawa <artension@gmail.com>
 
+	Added "colornumber" attribute to span.sender for coloring each nick with different colors.
+	Added "highlight" attribute to set style for highlighted lines.
+
+2008-02-27  Satoshi Nakagawa <artension@gmail.com>
+
 	Added "identified" attribute in log view's html for CAPAB IDENTIFY-MSG support.
 
 2008-02-27  Satoshi Nakagawa <artension@gmail.com>

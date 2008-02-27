@@ -944,7 +944,15 @@ class IRCUnit < NSObject
       click = "channel #{self.id} #{channel.id}"
     end
     
-    line = LogLine.new(time, place, nickstr, text, kind, mtype, nick, click, identified)
+    color_num = 0
+    if nick && channel && !channel.unit?
+      m = channel.find_member(nick)
+      if m
+        color_num = m.color_number
+      end
+    end
+    
+    line = LogLine.new(time, place, nickstr, text, kind, mtype, nick, click, identified, color_num)
     @world.console.print(line)
   end
   
@@ -983,7 +991,15 @@ class IRCUnit < NSObject
     end
     click = nil
     
-    line = LogLine.new(time, place, nickstr, text, kind, mtype, nick, click, identified)
+    color_num = 0
+    if nick && channel && !channel.unit?
+      m = channel.find_member(nick)
+      if m
+        color_num = m.color_number
+      end
+    end
+    
+    line = LogLine.new(time, place, nickstr, text, kind, mtype, nick, click, identified, color_num)
     if channel && !channel.unit?
       key = channel.print(line)
     else
