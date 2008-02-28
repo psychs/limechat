@@ -1034,9 +1034,9 @@ class IRCUnit < NSObject
     print_both(self, :reply, text)
   end
   
-  def print_error_reply(m)
+  def print_error_reply(m, target=self)
     text = "Error(#{m.command}): #{m.sequence(1)}"
-    print_both(self, :error_reply, text)
+    print_both(target, :error_reply, text)
   end
   
   def print_debug(command, text)
@@ -1995,6 +1995,12 @@ when 403	# ERR_NOSUCHCHANNEL
   def receive_error_numeric_reply(m)
     number = m.numeric_reply
     case number
+    when 401
+      c = find_channel(m[1])
+      if c
+        print_error_reply(m, c)
+        return
+      end
     when 433
       receive_nick_collision(m)
     end
