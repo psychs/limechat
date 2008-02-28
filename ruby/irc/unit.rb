@@ -1997,7 +1997,7 @@ when 403	# ERR_NOSUCHCHANNEL
     case number
     when 401
       c = find_channel(m[1])
-      if c
+      if c && c.active?
         print_error_reply(m, c)
         return
       end

@@ -1,5 +1,9 @@
 2008-02-28  Satoshi Nakagawa <artension@gmail.com>
 
+	Changed to print 401 errors in a server log when a channel or a talk is inactive.
+
+2008-02-28  Satoshi Nakagawa <artension@gmail.com>
+
 	Now 401 error is printed in a talk log when there is a talk item for the target.
 
 2008-02-28  Satoshi Nakagawa <artension@gmail.com>
