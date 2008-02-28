@@ -81,7 +81,7 @@ class LogController < NSObject
     doc = @view.mainFrame.DOMDocument
     return unless doc
     body = doc.body
-    body.setValue_forKey(0, 'scrollTop')
+    body[:scrollTop] = 0
   end
   
   def moveToBottom
@@ -89,8 +89,8 @@ class LogController < NSObject
     doc = @view.mainFrame.DOMDocument
     return unless doc
     body = doc.body
-    scrollheight = body.valueForKey('scrollHeight').to_i
-    body.setValue_forKey(scrollheight, 'scrollTop')
+    scrollheight = body[:scrollHeight]
+    body[:scrollTop] = scrollheight
   end
   
   BOTTOM_EPSILON = 20
@@ -101,8 +101,8 @@ class LogController < NSObject
     return true unless doc
     body = doc.body
     viewheight = @view.frame.height.to_i rescue 0
-    scrollheight = body.valueForKey('scrollHeight').to_i
-    scrolltop = body.valueForKey('scrollTop').to_i
+    scrollheight = body[:scrollHeight]
+    scrolltop = body[:scrollTop]
     (viewheight == 0) || (scrolltop + viewheight >= scrollheight - BOTTOM_EPSILON)
   end
   
@@ -197,7 +197,7 @@ class LogController < NSObject
     body = doc.body
     @html = body.innerHTML
     @scroll_bottom = viewing_bottom?
-    @scroll_top = body.valueForKey('scrollTop').to_i
+    @scroll_top = body[:scrollTop]
     #setup(@console, style)
     @view.mainFrame.loadHTMLString_baseURL(initial_document, @theme.baseurl)
   end
@@ -218,7 +218,7 @@ class LogController < NSObject
   objc_method :webView_windowScriptObjectAvailable, 'v@:@@'
   def webView_windowScriptObjectAvailable(sender, js)
     @js = js
-    @js.setValue_forKey(@sink, 'app')
+    @js[:app] = @sink
   end
   
   objc_method :webView_didFinishLoadForFrame, 'v@:@@'
@@ -230,7 +230,7 @@ class LogController < NSObject
       if @scroll_bottom
         moveToBottom
       elsif @scroll_top
-        body.setValue_forKey(@scroll_top, 'scrollTop')
+        body[:scrollTop] = @scroll_top
       end
       @html = nil
       @scroll_bottom = nil
@@ -354,16 +354,30 @@ class LogController < NSObject
     doc = @view.mainFrame.DOMDocument
     return unless doc
     body = doc.body
+    
+    # remember scroll top
+    top = body[:scrollTop]
+    delta = 0
+    
     n.times do
       node = body.firstChild
       if DOMHTMLElement === node && node.tagName.to_s.downcase == 'hr'
         # the first node is the mark
         next_sibling = node.nextSibling
+        delta += next_sibling[:offsetTop] - node[:offsetTop] if next_sibling
         body.removeChild(node)
         node = next_sibling
       end
+      next_sibling = node.nextSibling
+      delta += next_sibling[:offsetTop] - node[:offsetTop] if next_sibling
       body.removeChild(node)
     end
+    
+    # scroll back by delta
+    if delta > 0
+      body[:scrollTop] = top - delta
+    end
+    
     @count -= n
   end
   

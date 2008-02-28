@@ -1,3 +1,8 @@
+2008-02-28  Satoshi Nakagawa <artension@gmail.com>
+
+	Now a scroll position is kept when received a new line and removed the first line.
+	Added [] and []= method for DOM classes.
+
 2008-02-27  Satoshi Nakagawa <artension@gmail.com>
 
 	Added "colornumber" attribute to span.sender for coloring each nick with different colors.

@@ -373,6 +373,26 @@ module OSX
     end
   end
   
+  class DOMNode
+    def [](key)
+      valueForKey(key).to_ruby
+    end
+    
+    def []=(key, value)
+      setValue_forKey(value, key)
+    end
+  end
+  
+  class DOMAbstractView
+    def [](key)
+      valueForKey(key).to_ruby
+    end
+    
+    def []=(key, value)
+      setValue_forKey(value, key)
+    end
+  end
+  
   module LanguageSupport
     def primary_language
       langs = NSUserDefaults.standardUserDefaults[:AppleLanguages]
