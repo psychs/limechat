@@ -399,6 +399,7 @@ class AppController < NSObject
     range.location -= ps.length
     range.length += ps.length
     fe.replaceCharactersInRange_withString(range, ns)
+    fe.scrollRangeToVisible(fe.selectedRange)
     range.location += ns.length
     range.length = 0
     fe.setSelectedRange(range)
