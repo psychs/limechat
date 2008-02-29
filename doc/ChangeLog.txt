@@ -1,5 +1,9 @@
 2008-02-29  Satoshi Nakagawa <artension@gmail.com>
 
+	Moved "Copy Console Log as HTML" to context menu of the console.
+
+2008-02-29  Satoshi Nakagawa <artension@gmail.com>
+
 	Fixed a bug, the input text field should be scrolled on nick completion.
 
 2008-02-29  Satoshi Nakagawa <artension@gmail.com>
