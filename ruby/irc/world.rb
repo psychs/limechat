@@ -47,6 +47,7 @@ class IRCWorld < NSObject
   def setup_tree
     @tree.setTarget(self)
     @tree.setDoubleAction('outlineView_doubleClicked:')
+  	@tree.registerForDraggedTypes(TREE_DRAG_ITEM_TYPES);
     
     unit = @units.find {|u| u.config.auto_connect }
     if unit
@@ -598,6 +599,102 @@ class IRCWorld < NSObject
       end
     end
     cell.setTextColor(textcolor)
+  end
+  
+  # tree drag and drop
+    
+  TREE_DRAG_ITEM_TYPE = 'treeitem'
+  TREE_DRAG_ITEM_TYPES = [TREE_DRAG_ITEM_TYPE]
+  
+  def outlineView_writeItems_toPasteboard(sender, items, pboard)
+    puts '--- write'
+    i = items.to_a[0]
+    if i.is_a?(IRCUnit)
+      s = "#{i.id}"
+    else
+      s = "#{i.unit.id}-#{i.id}"
+    end
+    pboard.declareTypes_owner(TREE_DRAG_ITEM_TYPES, self)
+    pboard.setPropertyList_forType(s, TREE_DRAG_ITEM_TYPE)
+    true
+  end
+  
+  def find_item_from_pboard(s)
+    if /^(\d+)-(\d+)$/ =~ s
+      u = $1.to_i
+      c = $2.to_i
+      find_channel_by_id(u, c)
+    elsif /^\d+$/ =~ s
+      find_unit_by_id(s.to_i)
+    else
+      nil
+    end
+  end
+  
+  def outlineView_validateDrop_proposedItem_proposedChildIndex(sender, info, item, index)
+    return NSDragOperationNone if index < 0
+  	pboard = info.draggingPasteboard
+  	return NSDragOperationNone unless pboard.availableTypeFromArray(TREE_DRAG_ITEM_TYPES)
+    target = pboard.propertyListForType(TREE_DRAG_ITEM_TYPE)
+    return NSDragOperationNone unless target
+    i = find_item_from_pboard(target.to_s)
+    return NSDragOperationNone unless i
+    
+    if i.is_a?(IRCUnit)
+      return NSDragOperationNone if item
+    else
+      return NSDragOperationNone unless item
+      return NSDragOperationNone if item != i.unit
+      if i.talk?
+        ary = item.channels
+        low = ary[0...index] || []
+        high = ary[index...ary.size] || []
+        low.delete(i)
+        high.delete(i)
+        next_item = high[0]
+        
+        # don't allow talks dropped above channels
+        return NSDragOperationNone if next_item && next_item.channel?
+      end
+    end
+    NSDragOperationGeneric
+  end
+  
+  def outlineView_acceptDrop_item_childIndex(sender, info, item, index)
+    return false if index < 0
+  	pboard = info.draggingPasteboard
+  	return false unless pboard.availableTypeFromArray(TREE_DRAG_ITEM_TYPES)
+    target = pboard.propertyListForType(TREE_DRAG_ITEM_TYPE)
+    return false unless target
+    i = find_item_from_pboard(target.to_s)
+    return false unless i
+    
+    if i.is_a?(IRCUnit)
+      return false if item
+      
+      ary = @units
+      low = ary[0...index] || []
+      high = ary[index...ary.size] || []
+      low.delete(i)
+      high.delete(i)
+      @units.replace(low + [i] + high)
+      reload_tree
+      save
+    else
+      return false unless item
+      return false if item != i.unit
+      
+      ary = item.channels
+      low = ary[0...index] || []
+      high = ary[index...ary.size] || []
+      low.delete(i)
+      high.delete(i)
+      item.channels.replace(low + [i] + high)
+      reload_tree
+      save if i.channel?
+    end
+    adjust_selection
+    true
   end
   
   # log view

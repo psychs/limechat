@@ -45,8 +45,6 @@ class MenuController < NSObject
     case tag
     when 102  # preferences
       true
-    when 103  # server tree
-      true
     when 104  # auto op
       true
     when 201  # dcc
@@ -281,24 +279,6 @@ class MenuController < NSObject
   
   def preferenceDialog_onClose(sender)
     @pref_dialog = nil
-  end
-  
-  def onServerTree(sender)
-    unless @tree_dialog
-      @tree_dialog = TreeDialog.alloc.init
-      @tree_dialog.delegate = self
-      @tree_dialog.start(@world.store_tree)
-    else
-      @tree_dialog.show
-    end
-  end
-  
-  def treeDialog_onOk(sender, conf)
-    @world.update_order(conf)
-  end
-  
-  def treeDialog_onClose(sender)
-    @tree_dialog = nil
   end
   
   def onAutoOp(sender)

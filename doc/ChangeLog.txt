@@ -1,5 +1,9 @@
 2008-02-29  Satoshi Nakagawa <artension@gmail.com>
 
+	Now we can rearrange servers and channels on the server tree.
+
+2008-02-29  Satoshi Nakagawa <artension@gmail.com>
+
 	Changed to retain input text when changed the current channel, and restore it when come back to the channel.
 
 2008-02-28  Satoshi Nakagawa <artension@gmail.com>
