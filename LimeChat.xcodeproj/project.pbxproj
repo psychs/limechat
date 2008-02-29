@@ -213,6 +213,8 @@
 		78E7F2590CB2B9D20069E9ED /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 787FD46C0BFE960100F2F22D /* Carbon.framework */; };
 		78E7F25A0CB2B9D20069E9ED /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 780253C20C09525900C170D4 /* CoreServices.framework */; };
 		78E7F25C0CB2B9D20069E9ED /* RubyCocoa.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = A5D3C7BF0AEB9FEB00C17985 /* RubyCocoa.framework */; };
+		78F59FE40D78144B0038AC1D /* markedscroller.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78F59FE30D78144B0038AC1D /* markedscroller.rb */; };
+		78F59FE50D78144B0038AC1D /* markedscroller.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78F59FE30D78144B0038AC1D /* markedscroller.rb */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -351,6 +353,7 @@
 		78DA4EC00C461D52008780C8 /* servertreeview.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = servertreeview.rb; sourceTree = "<group>"; };
 		78E570D00C1C306500BDF7EC /* LimeChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LimeChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		78E7F2600CB2B9D20069E9ED /* LimeChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LimeChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		78F59FE30D78144B0038AC1D /* markedscroller.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = markedscroller.rb; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		A5D3C7BF0AEB9FEB00C17985 /* RubyCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RubyCocoa.framework; path = /Library/Frameworks/RubyCocoa.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
@@ -555,6 +558,7 @@
 		78229BB80C288188001DD4C3 /* view */ = {
 			isa = PBXGroup;
 			children = (
+				78F59FE30D78144B0038AC1D /* markedscroller.rb */,
 				7896BFE40D0C5E850069453A /* viewtheme.rb */,
 				787A36A10C6A392600DDB70D /* fieldeditortextview.rb */,
 				7877E0610C65B84E002F13C7 /* textfield.rb */,
@@ -780,6 +784,7 @@
 				7889CAB90D646E2C003D808E /* WelcomeDialog.nib in Resources */,
 				7889CABF0D647494003D808E /* welcomedialog.rb in Resources */,
 				78287EB50D742DAA008D5656 /* Themes in Resources */,
+				78F59FE40D78144B0038AC1D /* markedscroller.rb in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -872,6 +877,7 @@
 				7889CABA0D646E2C003D808E /* WelcomeDialog.nib in Resources */,
 				7889CAC00D647494003D808E /* welcomedialog.rb in Resources */,
 				78287EB60D742DAA008D5656 /* Themes in Resources */,
+				78F59FE50D78144B0038AC1D /* markedscroller.rb in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

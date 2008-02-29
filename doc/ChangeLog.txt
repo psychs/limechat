@@ -1,5 +1,9 @@
 2008-02-29  Satoshi Nakagawa <artension@gmail.com>
 
+	Implemented drawing highlight indicators on a vertical scroller of log views.
+
+2008-02-29  Satoshi Nakagawa <artension@gmail.com>
+
 	Now we can rearrange servers and channels on the server tree.
 
 2008-02-29  Satoshi Nakagawa <artension@gmail.com>

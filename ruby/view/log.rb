@@ -37,6 +37,7 @@ class LogController < NSObject
     @count = 0
     @loaded = false
     @max_lines = 300
+    @highlight_line_numbers = []
   end
   
   def setup(console, initial_bgcolor)
@@ -53,7 +54,7 @@ class LogController < NSObject
     @sink.policy = @policy
     @view.release if @view
     @view = LogView.alloc.initWithFrame(NSZeroRect)
-    @view.setBackgroundColor(initial_bgcolor) if @view.respondsToSelector('setBackgroundColor:')
+    @view.setBackgroundColor(initial_bgcolor) if @view.respondsToSelector('setBackgroundColor:') # new in Leopard
     @view.setFrameLoadDelegate(self)
     @view.setUIDelegate(@policy)
     @view.setPolicyDelegate(@policy)
@@ -181,15 +182,6 @@ class LogController < NSObject
     doc.body.removeChild(e) if e
   end
   
-  def use_small_scroller(v)
-    subviews = @view.mainFrame.frameView.subviews
-    scrollView = subviews.find {|i| i.is_a?(NSScrollView) }
-    if scrollView
-      scrollView.verticalScroller.setControlSize(v ? NSSmallControlSize : NSRegularControlSize)
-      scrollView.setAutohidesScrollers(true)
-    end
-  end
-  
   def reload_theme
     return unless @loaded
     doc = @view.mainFrame.DOMDocument
@@ -224,6 +216,7 @@ class LogController < NSObject
   objc_method :webView_didFinishLoadForFrame, 'v@:@@'
   def webView_didFinishLoadForFrame(sender, frame)
     @loaded = true
+    setup_scroller
     if @html
       body = @view.mainFrame.DOMDocument.body
       body.innerHTML = @html
@@ -316,8 +309,36 @@ class LogController < NSObject
     @world.log_doubleClick(s)
   end
   
+  def scroller_markedPosition(sender)
+    ary = []
+    doc = @view.mainFrame.DOMDocument
+    if doc
+      @highlight_line_numbers.each do |n|
+        e = doc.getElementById("line#{n}")
+        ary << e[:offsetTop] if e
+      end
+    end
+    ary
+  end
   
   private
+  
+  def setup_scroller
+    view = @view.mainFrame.frameView.subviews.find {|i| i.is_a?(NSScrollView) }
+    if view
+      view.setHasHorizontalScroller(false)
+      view.setAllowsHorizontalScrolling(false)
+      old = view.verticalScroller
+      if old && !old.is_a?(MarkedScroller)
+        @scroller = MarkedScroller.alloc.initWithFrame(old.frame)
+        @scroller.dataSource = self
+        @scroller.setFloatValue_knobProportion(old.floatValue, old.knobProportion)
+        view.setVerticalScroller(@scroller)
+      end
+    end
+  rescue
+    p $!
+  end
   
   def build_body(line, use_keyword)
     if use_keyword
@@ -359,6 +380,7 @@ class LogController < NSObject
     top = body[:scrollTop]
     delta = 0
     
+    last_line_id = nil
     n.times do
       node = body.firstChild
       if DOMHTMLElement === node && node.tagName.to_s.downcase == 'hr'
@@ -370,6 +392,7 @@ class LogController < NSObject
       end
       next_sibling = node.nextSibling
       delta += next_sibling[:offsetTop] - node[:offsetTop] if next_sibling
+      last_line_id = node['id']
       body.removeChild(node)
     end
     
@@ -378,7 +401,17 @@ class LogController < NSObject
       body[:scrollTop] = top - delta
     end
     
+    # updating highlight line numbers
+    if last_line_id && last_line_id =~ /\d+$/
+      num = $&.to_i
+      first = @highlight_line_numbers[0]
+      if first && first <= num
+        @highlight_line_numbers.reject! {|i| i <= num}
+      end
+    end
+    
     @count -= n
+    @scroller.setNeedsDisplay(true) if @scroller
   end
   
   def write_line(html, attrs)
@@ -396,6 +429,11 @@ class LogController < NSObject
     body.appendChild(div)
     
     remove_first_line if @max_lines > 0 && @count > @max_lines
+    
+    if attrs['highlight'] == 'true'
+      @highlight_line_numbers << @line_number
+    end
+    @scroller.setNeedsDisplay(true) if @scroller
     restore_position
   end
   
