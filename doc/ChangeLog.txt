@@ -1,5 +1,11 @@
 2008-02-29  Satoshi Nakagawa <artension@gmail.com>
 
+	Removed old class names from html elements on log views.
+	Added "text" or "event" html classes for lines on log views.
+	Added "Copy Log as HTML" menus to the log context menu.
+
+2008-02-29  Satoshi Nakagawa <artension@gmail.com>
+
 	Implemented drawing highlight indicators on a vertical scroller of log views.
 
 2008-02-29  Satoshi Nakagawa <artension@gmail.com>

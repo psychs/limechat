@@ -136,18 +136,25 @@ class LogController < NSObject
     s << %|<span class="time">#{h(line.time)}</span>| if line.time
     s << %|<span class="place">#{h(line.place)}</span>| if line.place
     if line.nick
-      s << %|<span class="sender nick_#{line.member_type}" type="#{line.member_type}"|
+      s << %|<span class="sender" type="#{line.member_type}"|
       s << %| oncontextmenu="on_nick_contextmenu()"| unless @console
       s << %| identified="#{!!line.identified}"|
       s << %| colornumber="#{line.nick_color_number}"| if line.member_type == :normal
       s << %|>#{h(line.nick)}</span>|
     end
-    s << %[<span class="message #{line.line_type}" type="#{line.line_type}">#{body}</span>]
+    s << %[<span class="message" type="#{line.line_type}">#{body}</span>]
     
     attrs = {}
     alternate = @line_number % 2 == 0 ? 'even' : 'odd'
     attrs['alternate'] = alternate
-    attrs['class'] = "line #{alternate}_line"
+    klass = 'line'
+    case line.line_type
+    when :privmsg,:notice,:action
+      klass << ' text'
+    else
+      klass << ' event'
+    end
+    attrs['class'] = klass
     attrs['type'] = line.line_type.to_s
     attrs['highlight'] = "#{!!key}"
     if @console
@@ -248,7 +255,8 @@ class LogController < NSObject
       script = <<-EOM
         function on_dblclick() {
           var t = event.target
-          while (t && !(t.tagName == 'DIV' && (t.className == 'line even_line' || t.className == 'line odd_line'))) {
+          var regex = new RegExp('^line ')
+          while (t && !(t.tagName == 'DIV' && t.className.match(regex))) {
             t = t.parentNode
           }
           if (t) {
@@ -514,7 +522,7 @@ class LogController < NSObject
       white-space: nowrap;
     }
     .line[highlight=true] {
-      background-color: #eee;
+      background-color: #f5f5f5;
     }
     .sender[type=myself] { color: #66a; }
     .sender[type=normal] { color: #008; }
