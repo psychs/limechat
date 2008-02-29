@@ -607,7 +607,6 @@ class IRCWorld < NSObject
   TREE_DRAG_ITEM_TYPES = [TREE_DRAG_ITEM_TYPE]
   
   def outlineView_writeItems_toPasteboard(sender, items, pboard)
-    puts '--- write'
     i = items.to_a[0]
     if i.is_a?(IRCUnit)
       s = "#{i.id}"
