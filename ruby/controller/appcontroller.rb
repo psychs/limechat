@@ -39,6 +39,7 @@ class AppController < NSObject
     select_3column_layout(@pref.gen.main_window_layout == 1)
     
     @world = IRCWorld.alloc.init
+    @world.app = self
     @world.pref = @pref
     @world.window = @window
     @world.tree = @tree
@@ -576,18 +577,15 @@ class AppController < NSObject
           case target
           when :active
             if !i.unit? && i.active?
-              addToHistory
               @world.select(i)
               break
             end
           when :unread
             if i.unread
-              addToHistory
               @world.select(i)
               break
             end
           else
-            addToHistory
             @world.select(i)
             break
           end
@@ -617,14 +615,12 @@ class AppController < NSObject
             if unit.login?
               t = unit.last_selected_channel
               t = unit unless t
-              addToHistory
               @world.select(t)
               break
             end
           else
             t = unit.last_selected_channel
             t = unit unless t
-            addToHistory
             @world.select(t)
             break
           end

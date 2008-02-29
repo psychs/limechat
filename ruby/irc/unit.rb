@@ -10,7 +10,7 @@ class IRCUnit < NSObject
   attr_reader :config, :channels, :mynick, :mymode, :encoding, :myaddress, :isupport
   attr_accessor :property_dialog
   attr_accessor :keyword, :unread
-  attr_accessor :last_selected_channel
+  attr_accessor :last_selected_channel, :last_input_text
   
   RECONNECT_TIME = 20
   RETRY_TIME = 240

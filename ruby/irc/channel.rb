@@ -8,6 +8,7 @@ class IRCChannel < NSObject
   attr_accessor :keyword, :unread, :newtalk
   attr_accessor :property_dialog
   attr_accessor :stored_topic
+  attr_accessor :last_input_text
   
   def initialize
     @topic = ''

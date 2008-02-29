@@ -1,3 +1,7 @@
+2008-02-29  Satoshi Nakagawa <artension@gmail.com>
+
+	Changed to retain input text when changed the current channel, and restore it when come back to the channel.
+
 2008-02-28  Satoshi Nakagawa <artension@gmail.com>
 
 	Changed to print 401 errors in a server log when a channel or a talk is inactive.
