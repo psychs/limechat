@@ -1,3 +1,7 @@
+2008-03-02  Satoshi Nakagawa <artension@gmail.com>
+
+	Tweaked javascript.
+
 2008-02-29  Satoshi Nakagawa <artension@gmail.com>
 
 	Renamed "Copy Console Log as HTML" to "Copy Log as HTML" in the context menu.

@@ -255,8 +255,7 @@ class LogController < NSObject
       script = <<-EOM
         function on_dblclick() {
           var t = event.target
-          var regex = new RegExp('^line ')
-          while (t && !(t.tagName == 'DIV' && t.className.match(regex))) {
+          while (t && !(t.tagName == 'DIV' && t.className.match(/^line /))) {
             t = t.parentNode
           }
           if (t) {
