@@ -41,6 +41,8 @@
 				<string>id</string>
 				<key>onJoin</key>
 				<string>id</string>
+				<key>onSearchTextChanged</key>
+				<string>id</string>
 				<key>onUpdate</key>
 				<string>id</string>
 			</dict>
@@ -51,6 +53,8 @@
 			<key>OUTLETS</key>
 			<dict>
 				<key>closeButton</key>
+				<string>id</string>
+				<key>searchText</key>
 				<string>id</string>
 				<key>table</key>
 				<string>id</string>

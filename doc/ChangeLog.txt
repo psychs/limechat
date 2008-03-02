@@ -1,5 +1,9 @@
 2008-03-02  Satoshi Nakagawa <artension@gmail.com>
 
+	Added a filter text field on the list dialog.
+
+2008-03-02  Satoshi Nakagawa <artension@gmail.com>
+
 	Changed to render selected items with right foreground colors.
 
 2008-03-02  Satoshi Nakagawa <artension@gmail.com>

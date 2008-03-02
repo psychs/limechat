@@ -6,11 +6,13 @@ require 'dialoghelper'
 class ListDialog < NSObject
   include DialogHelper
   attr_accessor :delegate, :prefix, :pref
-  ib_outlet :window, :table, :updateButton, :closeButton
+  ib_outlet :window, :table, :updateButton, :closeButton, :searchText
   
   def initialize
     @prefix = 'listDialog'
     @list = []
+    @flist = nil
+    @filter = ''
     @sort_key = 1
     @sort_order = :descent
   end
@@ -38,16 +40,17 @@ class ListDialog < NSObject
     fire_event('onClose')
   end
   
+  ib_action :onClose
   def onClose(sender)
     @window.close
   end
-  ib_action :onClose
   
+  ib_action :onUpdate
   def onUpdate(sender)
     fire_event('onUpdate')
   end
-  ib_action :onUpdate
   
+  ib_action :onJoin
   def onJoin(sender)
     i = @table.selectedRows[0]
     if i
@@ -56,6 +59,13 @@ class ListDialog < NSObject
         fire_event('onJoin', item[0])
       end
     end
+  end
+  
+  ib_action :onSearchTextChanged
+  def onSearchTextChanged(sender)
+    @filter = sender.stringValue.to_s
+    @flist = nil
+    reload_table
   end
   
   def tableView_didClickTableColumn(table, col)
@@ -70,16 +80,14 @@ class ListDialog < NSObject
       @sort_key = i
       @sort_order = :ascent
     end
+    @flist = nil
     sort
     reload_table
   end
   
-  def update
-    #@joinButton.setEnabled(false)
-  end
-  
   def clear
     @list = []
+    @flist = nil
     reload_table
   end
   
@@ -108,7 +116,8 @@ class ListDialog < NSObject
   
   def add_item(item)
     @list << item
-    if @list.size % 100 == 0
+    @flist = nil
+    if @list.size % 200 == 0
       sort
       reload_table
     end
@@ -118,12 +127,30 @@ class ListDialog < NSObject
     @table.reloadData
   end
   
+  def build_filtered_list
+    return if @flist
+    pattern = /#{Regexp.escape(@filter)}/i
+    @flist = @list.select {|i| i[0] =~ pattern}
+  end
+  
   def numberOfRowsInTableView(sender)
-    @list.size
+    if @filter.empty?
+      @list.size
+    else
+      build_filtered_list
+      @flist.size
+    end
   end
   
   def tableView_objectValueForTableColumn_row(sender, col, row)
-    m = @list[row]
+    if @filter.empty?
+      list = @list
+    else
+      build_filtered_list
+      list = @flist
+    end
+    
+    m = list[row]
     case col.identifier
       when 'chname'; m[0]
       when 'count'; m[1].to_s
