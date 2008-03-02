@@ -21,18 +21,19 @@ class MarkedScroller < NSScroller
   	# make lines
   	knobRect = self.rectForPart(NSScrollerKnob)
   	lines = []
+  	prev = nil
   	ary.each do |i|
-    	line = NSBezierPath.bezierPath
-    	line.setLineWidth(2.0)
     	pt = NSPoint.new(0, i)
     	pt = transform.transformPoint(pt)
-    	unless pt.in(knobRect)
-      	#pt.x = pt.x.ceil
-      	#pt.y = pt.y.ceil
-    		line.moveToPoint(pt)
-    		line.relativeLineToPoint(NSPoint.new(width, 0))
-    		lines << line
-  		end
+    	pt.x = pt.x.ceil
+    	pt.y = pt.y.ceil
+    	next if pt == prev
+    	prev = pt
+    	line = NSBezierPath.bezierPath
+    	line.setLineWidth(1.0)
+		  line.moveToPoint(pt)
+		  line.relativeLineToPoint(NSPoint.new(width, 0))
+		  lines << line
 		end
     
     # draw lines

@@ -1,3 +1,7 @@
+2008-03-03  Satoshi Nakagawa <artension@gmail.com>
+
+	Improved drawing code around highlight indicators.
+
 2008-03-02  Satoshi Nakagawa <artension@gmail.com>
 
 	Removed a server name from place part in the console log.
