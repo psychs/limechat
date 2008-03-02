@@ -1,5 +1,9 @@
 2008-03-02  Satoshi Nakagawa <artension@gmail.com>
 
+	Changed to render selected items with right foreground colors.
+
+2008-03-02  Satoshi Nakagawa <artension@gmail.com>
+
 	Updated short cut keys for "Mark Scrollback" and "Clear Mark" in the log menu.
 
 2008-03-02  Satoshi Nakagawa <artension@gmail.com>

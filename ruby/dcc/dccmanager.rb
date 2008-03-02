@@ -365,6 +365,16 @@ class DccManager < NSObject
   
   # window
   
+  def windowDidBecomeMain(sender)
+    reload_receiver_table
+    reload_sender_table
+  end
+  
+  def windowDidResignMain(sender)
+    reload_receiver_table
+    reload_sender_table
+  end
+  
   def dialogWindow_escape
     @window.orderOut(self)
   end
@@ -438,6 +448,7 @@ class FileTransferCell < NSCell
   
   def drawInteriorWithFrame_inView(frame, view)
     return @singleton.drawInteriorWithFrame_inView(frame, view) if @singleton
+    
     if @icon
       size = ICON_SIZE
       margin = (frame.height - size.height) / 2
@@ -461,7 +472,7 @@ class FileTransferCell < NSCell
     attrs = {
       NSParagraphStyleAttributeName => @filename_style,
       NSFontAttributeName => NSFont.systemFontOfSize(12),
-      NSForegroundColorAttributeName => self.isHighlighted ? NSColor.whiteColor : NSColor.blackColor
+      NSForegroundColorAttributeName => self.isHighlighted && view.window.isMainWindow && view.window.firstResponder == view ? NSColor.whiteColor : NSColor.blackColor
     }
     fname.drawInRect_withAttributes(rect, attrs)
 
@@ -489,7 +500,7 @@ class FileTransferCell < NSCell
           NSColor.redColor
         elsif @status == :complete
           NSColor.blueColor
-        elsif self.isHighlighted
+        elsif self.isHighlighted && view.window.isMainWindow && view.window.firstResponder == view
           NSColor.whiteColor
         else
           NSColor.grayColor

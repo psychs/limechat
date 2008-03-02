@@ -61,7 +61,7 @@ class MemberListView < ListView
       rect.height = 1
       NSRectFill(rect)
     else
-      if NSApp.isActive && window.firstResponder == self
+      if window && window.isMainWindow && window.firstResponder == self
         NSColor.alternateSelectedControlColor.set
       else
         NSColor.selectedControlColor.set
@@ -90,8 +90,7 @@ class MemberListViewCell < NSCell
     obj
   end
   
-  def setup(window, theme)
-    @window = window
+  def setup(theme)
     @theme = theme
     @mark_style = NSMutableParagraphStyle.alloc.init
     @mark_style.setAlignment(NSCenterTextAlignment)
@@ -117,9 +116,11 @@ class MemberListViewCell < NSCell
   
   def drawInteriorWithFrame_inView(frame, view)
     return @singleton.drawInteriorWithFrame_inView(frame, view) if @singleton
+    
     return unless @member && @theme
+    window = view.window
     if self.isHighlighted
-      if NSApp.isActive && @window && @window.firstResponder == view
+      if window && window.isMainWindow && window.firstResponder == view
         color = @theme.member_list_sel_color || NSColor.alternateSelectedControlTextColor
       else
         color = @theme.member_list_sel_color || NSColor.selectedControlTextColor

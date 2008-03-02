@@ -92,7 +92,7 @@ class MenuController < NSObject
     
     when 411  # mark scrollback
       true
-    when 412  # clear scrollback
+    when 412  # clear mark
       true
     when 413  # mark all as read
       true

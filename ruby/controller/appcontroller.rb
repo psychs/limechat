@@ -32,7 +32,7 @@ class AppController < NSObject
     @tree.theme = @view_theme.other
     @member_list.theme = @view_theme.other
     cell = MemberListViewCell.alloc.init
-    cell.setup(@window, @view_theme.other)
+    cell.setup(@view_theme.other)
     @member_list.tableColumns[0].setDataCell(cell)
     
     load_window_state
@@ -163,10 +163,12 @@ class AppController < NSObject
   
   def windowDidBecomeMain(sender)
     @menu.mainWindowChanged(true)
+    @member_list.setNeedsDisplay(true)
   end
   
   def windowDidResignMain(sender)
     @menu.mainWindowChanged(false)
+    @member_list.setNeedsDisplay(true)
   end
   
   def fieldEditorTextView_paste(sender)
