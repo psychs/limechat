@@ -322,7 +322,6 @@ class MenuController < NSObject
   end
   
   def onCloseCurrentPanel(sender)
-    puts 'close current panel'
     sel = @world.selected
     if sel && !sel.unit?
       @world.destroy_channel(sel)
