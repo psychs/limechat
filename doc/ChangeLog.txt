@@ -1,5 +1,10 @@
 2008-03-02  Satoshi Nakagawa <artension@gmail.com>
 
+	Changed to show the paste dialog on opt-return.
+	Changed to select 'privmsg' as the default syntax when the paste dialog is not for paste.
+
+2008-03-02  Satoshi Nakagawa <artension@gmail.com>
+
 	Tweaked javascript.
 
 2008-02-29  Satoshi Nakagawa <artension@gmail.com>

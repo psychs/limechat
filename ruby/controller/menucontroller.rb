@@ -345,9 +345,9 @@ class MenuController < NSObject
     @paste_sheet.start(s, mode, @pref.gen.paste_syntax, size)
   end
   
-  def pasteSheet_onSend(sender, s, syntax, size)
+  def pasteSheet_onSend(sender, s, syntax, size, mode, short_text)
     @pref.save_window('paste_sheet', size.to_dic)
-    @pref.gen.paste_syntax = syntax
+    @pref.gen.paste_syntax = syntax unless @short_text
     @pref.save
     @paste_sheet = nil
     
@@ -365,17 +365,22 @@ class MenuController < NSObject
     end
   end
   
-  def pasteSheet_onCancel(sender, syntax, size)
+  def pasteSheet_onCancel(sender, syntax, size, mode, short_text)
     @pref.save_window('paste_sheet', size.to_dic)
-    @pref.gen.paste_syntax = syntax
+    @pref.gen.paste_syntax = syntax unless @short_text
     @pref.save
+    if mode == :edit
+      @text.setStringValue(@paste_sheet.original_text)
+      @world.select_text
+    end
     @paste_sheet = nil
   end
   
   def onPasteDialog(sender)
     sel = @world.selected
     return unless sel
-    s = NSPasteboard.generalPasteboard.stringForType(NSStringPboardType) || ''
+    s = @text.stringValue
+    @text.setStringValue('')
     start_paste_dialog(sel.unit.mynick, sel.unit.id, sel.id, s, :edit)
   end
   

@@ -5,26 +5,36 @@ require 'cocoasheet'
 
 class PasteSheet < CocoaSheet
   attr_accessor :uid, :cid, :nick
+  attr_reader :original_text
   ib_outlet :text, :sendButton, :syntaxPopup, :progressIndicator, :errorLabel
   first_responder :sendButton
   buttons :Cancel
   
   def startup(str, mode, syntax, size)
-    @sheet.setContentSize(size) if size
-    @syntaxPopup.selectItemWithTag(syntax_to_tag(syntax))
-    if mode == :edit
+    str = str.gsub(/\r\n|\r|\n/, "\n")
+    @original_text = str
+    
+    @short_text = false
+    @mode = mode
+    if @mode == :edit
+      numlines = str.count("\n") + (str[-1,1] == "\n" ? 0 : 1)
+      @short_text = numlines <= 3
+      syntax = 'privmsg' if @short_text
       @sheet.makeFirstResponder(@text)
     end
+    
+    @syntaxPopup.selectItemWithTag(syntax_to_tag(syntax))
     @text.textStorage.setAttributedString(NSAttributedString.alloc.initWithString(str))
+    @sheet.setContentSize(size) if size
   end
   
   def shutdown(button)
     syntax = tag_to_syntax(@syntaxPopup.selectedItem.tag)
     if @result
-      fire_event('onSend', @result, syntax, @sheet.frame.size)
+      fire_event('onSend', @result, syntax, @sheet.frame.size, @mode, @short_text)
     else
       @conn.cancel if @conn
-      fire_event('onCancel', syntax, @sheet.contentView.frame.size)
+      fire_event('onCancel', syntax, @sheet.contentView.frame.size, @mode, @short_text)
     end
   end
   
