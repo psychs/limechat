@@ -21,7 +21,7 @@ body[channelname=#limechat] {}
 hr { margin: 0.5em 2em; }
 a {}
 
-/* log lines */
+/* lines */
 .line { margin: 0 -4px; padding: 0 4px 1px 4px; }
 .line[alternate=even] {}
 .line[alternate=odd] {}
@@ -82,7 +82,7 @@ a {}
 .message[type=debug_send] { color: #aaa; }
 .message[type=debug_receive] { color: #444; }
 
-/* colors for mIRC color effects */
+/* mIRC color effects */
 .effect[color-number='0'] {}
 .effect[color-number='1'] {}
 .effect[color-number='2'] {}
