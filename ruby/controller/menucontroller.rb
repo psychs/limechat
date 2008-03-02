@@ -459,7 +459,7 @@ class MenuController < NSObject
     sel.log.mark
   end
   
-  def onClearScrollback(sender)
+  def onClearMark(sender)
     sel = @world.selected
     return unless sel
     sel.log.unmark
@@ -467,6 +467,11 @@ class MenuController < NSObject
   
   def onMarkAllAsRead(sender)
     @world.mark_all_as_read
+  end
+  
+  def onMarkAllAsReadAndClearAllMarks(sender)
+    @world.mark_all_as_read
+    @world.unmark_all
   end
   
   

@@ -475,6 +475,15 @@ class IRCWorld < NSObject
     reload_tree
   end
   
+  def unmark_all
+    @units.each do |u|
+      u.log.unmark
+      u.channels.each do |c|
+        c.log.unmark
+      end
+    end
+  end
+  
   # delegate
   
   def outlineView_doubleClicked(sender)
