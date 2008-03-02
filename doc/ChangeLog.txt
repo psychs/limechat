@@ -1,5 +1,9 @@
 2008-03-02  Satoshi Nakagawa <artension@gmail.com>
 
+	Updated short cut keys for "Mark Scrollback" and "Clear Mark" in the log menu.
+
+2008-03-02  Satoshi Nakagawa <artension@gmail.com>
+
 	Assigned cmd+opt+shift+R to "Mark All as Read and Clear All Marks".
 
 2008-03-02  Satoshi Nakagawa <artension@gmail.com>
