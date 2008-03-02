@@ -1,5 +1,9 @@
 2008-03-02  Satoshi Nakagawa <artension@gmail.com>
 
+	Now mIRC color effects can be styled in css.
+
+2008-03-02  Satoshi Nakagawa <artension@gmail.com>
+
 	Now the color of highlight indicators refer to theme settings.
 	Updated themes.
 

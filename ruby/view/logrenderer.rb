@@ -162,29 +162,6 @@ module LogRenderer
   
   private
   
-  COLOR_MAP = {
-     0 => '#fff',
-     1 => '#000',
-     2 => '#008',
-     3 => '#080',
-     4 => '#f00',
-     5 => '#800',
-     6 => '#808',
-     7 => '#f80',
-     8 => '#ff0',
-     9 => '#0f0',
-    10 => '#088',
-    11 => '#0ff',
-    12 => '#00f',
-    13 => '#f0f',
-    14 => '#888',
-    15 => '#ccc',
-  }
-  
-  def num_to_color(n)
-    COLOR_MAP[n%16]
-  end
-  
   def render_start_tag(e)
     case e[:kind]
     when :urlstart
@@ -209,27 +186,22 @@ module LogRenderer
         %|<a class="url" href="#{e[:url]}" oncontextmenu="on_url_contextmenu()">|
       end
 =end
-    when :addrstart; '<span class="address" oncontextmenu="on_address_contextmenu()">'
-    when :keystart; '<strong class="highlight">'
+    when :addrstart; %|<span class="address" oncontextmenu="on_address_contextmenu()">|
+    when :keystart; %|<strong class="highlight">|
     when :effect
-      s = '<span class="effect" style="'
-      s << 'font-weight:bold;' if e[:bold]
-      s << 'text-decoration:underline;' if e[:underline]
-      s << 'font-style:italic;' if e[:reverse]
+      s = %|<span class="effect" style="|
+      s << %|font-weight:bold;| if e[:bold]
+      s << %|text-decoration:underline;| if e[:underline]
+      s << %|font-style:italic;| if e[:reverse]
+      s << %|"|
     
       text = e[:text]
-      if text
-        text = num_to_color(text)
-        s << "color:#{text};"
-      end
-    
+      s << %| color-number="#{text%16}"| if text
+      
       back = e[:back]
-      if back
-        back = num_to_color(back)
-        s << "background-color:#{back};"
-      end
+      s << %| bgcolor-number="#{back%16}"| if back
     
-      s << '">'
+      s << '>'
       s
     end
   end
