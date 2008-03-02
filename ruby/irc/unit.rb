@@ -918,7 +918,8 @@ class IRCUnit < NSObject
       chname = channel.name
     end
     if chname && chname.channelname?
-      place = "<#{self.name}:#{chname}> "
+      #place = "<#{self.name}:#{chname}> "
+      place = "<#{chname}> "
     else
       place = "<#{self.name}> "
     end

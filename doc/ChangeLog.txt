@@ -1,5 +1,9 @@
 2008-03-02  Satoshi Nakagawa <artension@gmail.com>
 
+	Removed a server name from place part in the console log.
+
+2008-03-02  Satoshi Nakagawa <artension@gmail.com>
+
 	Added a filter text field on the list dialog.
 
 2008-03-02  Satoshi Nakagawa <artension@gmail.com>
