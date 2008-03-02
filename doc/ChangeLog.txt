@@ -1,5 +1,9 @@
 2008-03-02  Satoshi Nakagawa <artension@gmail.com>
 
+	Removed an unnecessary file.
+
+2008-03-02  Satoshi Nakagawa <artension@gmail.com>
+
 	Assigned cmd+W to "Close Current Panel" when the main window is active.
 
 2008-03-02  Satoshi Nakagawa <artension@gmail.com>
