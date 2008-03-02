@@ -1,5 +1,9 @@
 2008-03-02  Satoshi Nakagawa <artension@gmail.com>
 
+	Assigned cmd+W to "Close Current Panel" when the main window is active.
+
+2008-03-02  Satoshi Nakagawa <artension@gmail.com>
+
 	Changed to show the paste dialog on opt-return.
 	Changed to select 'privmsg' as the default syntax when the paste dialog is not for paste.
 

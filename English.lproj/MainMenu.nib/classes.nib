@@ -69,6 +69,8 @@
 				<string>id</string>
 				<key>onClearScrollback</key>
 				<string>id</string>
+				<key>onCloseCurrentPanel</key>
+				<string>id</string>
 				<key>onConnect</key>
 				<string>id</string>
 				<key>onCopyAddress</key>
@@ -158,6 +160,13 @@
 			<string>MenuController</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
+			<key>OUTLETS</key>
+			<dict>
+				<key>closeCurrentPanelItem</key>
+				<string>id</string>
+				<key>closeWindowItem</key>
+				<string>id</string>
+			</dict>
 			<key>SUPERCLASS</key>
 			<string>NSObject</string>
 		</dict>

@@ -7,11 +7,13 @@ require 'cgi'
 class MenuController < NSObject
   attr_writer :app, :pref, :world, :window, :text, :tree, :member_list
   attr_accessor :url, :addr, :nick
+  ib_outlet :closeWindowItem, :closeCurrentPanelItem
   
   def initialize
     @server_dialogs = []
     @channel_dialogs = []
     @pastie_clients = []
+    @main_window = false
   end
   
   def terminate
@@ -49,6 +51,9 @@ class MenuController < NSObject
       true
     when 201  # dcc
       true
+    when 202  # close current panel
+      sel = @world.selected
+      @main_window && sel && !sel.unit?
     when 313  # paste
       return false unless NSPasteboard.generalPasteboard.availableTypeFromArray([NSStringPboardType])
       win = NSApp.keyWindow
@@ -303,6 +308,28 @@ class MenuController < NSObject
   def onDcc(sender)
     @world.dcc.show
   end
+  
+  
+  def mainWindowChanged(mode)
+    @main_window = mode
+    if @main_window
+      @closeWindowItem.setKeyEquivalent('W')
+      @closeCurrentPanelItem.setKeyEquivalent('w')
+    else
+      @closeWindowItem.setKeyEquivalent('w')
+      @closeCurrentPanelItem.setKeyEquivalent('')
+    end
+  end
+  
+  def onCloseCurrentPanel(sender)
+    puts 'close current panel'
+    sel = @world.selected
+    if sel && !sel.unit?
+      @world.destroy_channel(sel)
+      @world.save
+    end
+  end
+  
   
   def onPaste(sender)
     return unless NSPasteboard.generalPasteboard.availableTypeFromArray([NSStringPboardType])

@@ -161,6 +161,14 @@ class AppController < NSObject
     @field_editor
   end
   
+  def windowDidBecomeMain(sender)
+    @menu.mainWindowChanged(true)
+  end
+  
+  def windowDidResignMain(sender)
+    @menu.mainWindowChanged(false)
+  end
+  
   def fieldEditorTextView_paste(sender)
     s = NSPasteboard.generalPasteboard.stringForType(NSStringPboardType)
     return false unless s
