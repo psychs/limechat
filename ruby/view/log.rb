@@ -62,7 +62,7 @@ class LogController < NSObject
     @view.key_delegate = self
     @view.resize_delegate = self
     @view.setAutoresizingMask(NSViewWidthSizable | NSViewHeightSizable)
-    @view.mainFrame.loadHTMLString_baseURL(initial_document, @theme.baseurl)
+    @view.mainFrame.loadHTMLString_baseURL(initial_document, @theme.log.baseurl)
   end
   
   def max_lines=(n)
@@ -198,7 +198,8 @@ class LogController < NSObject
     @scroll_bottom = viewing_bottom?
     @scroll_top = body[:scrollTop]
     #setup(@console, style)
-    @view.mainFrame.loadHTMLString_baseURL(initial_document, @theme.baseurl)
+    @view.mainFrame.loadHTMLString_baseURL(initial_document, @theme.log.baseurl)
+    @scroller.setNeedsDisplay(true)
   end
   
   def change_text_size(op)
@@ -322,10 +323,16 @@ class LogController < NSObject
     if doc
       @highlight_line_numbers.each do |n|
         e = doc.getElementById("line#{n}")
-        ary << e[:offsetTop] if e
+        if e
+          ary << e[:offsetTop] + e[:offsetHeight] / 2.0
+        end
       end
     end
     ary
+  end
+  
+  def scroller_markColor(sender)
+    @theme.other.log_scroller_highlight_color
   end
   
   private
@@ -453,7 +460,7 @@ class LogController < NSObject
       body_attrs = %| type="console"|
     end
     
-    style = @theme.content || ''
+    style = @theme.log.content || ''
     if @override_font
       name = @override_font[0]
       size = @override_font[1] * (72.0 / 96.0)
@@ -508,21 +515,18 @@ class LogController < NSObject
     img { border: 1px solid #aaa; vertical-align: top; }
     object { vertical-align: top; }
     hr { margin: 0.5em 2em; }
-    .url { word-break: break-all; }
-    .address { text-decoration: underline; word-break: break-all; }
-    .highlight { color: #f0f; font-weight: bold; }
     .line { margin: 0 -4px; padding: 0 4px 1px 4px; }
     .line[alternate=even] {}
     .line[alternate=odd] {}
-    .time { color: #048; }
-    .place { color: #008; }
     .line[type=action] .sender:before {
       content: "• ";
       white-space: nowrap;
     }
-    .line[highlight=true] {
-      background-color: #f5f5f5;
-    }
+    .url { word-break: break-all; }
+    .address { text-decoration: underline; word-break: break-all; }
+    .highlight { color: #f0f; font-weight: bold; }
+    .time { color: #048; }
+    .place { color: #008; }
     .sender[type=myself] { color: #66a; }
     .sender[type=normal] { color: #008; }
     .message[type=system] { color: #080; }

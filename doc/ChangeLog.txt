@@ -1,5 +1,10 @@
 2008-03-02  Satoshi Nakagawa <artension@gmail.com>
 
+	Now the color of highlight indicators refer to theme settings.
+	Updated themes.
+
+2008-03-02  Satoshi Nakagawa <artension@gmail.com>
+
 	Removed an unnecessary file.
 
 2008-03-02  Satoshi Nakagawa <artension@gmail.com>

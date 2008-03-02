@@ -59,7 +59,7 @@ end
 
 
 class OtherViewTheme
-  attr_reader :log_nick_format
+  attr_reader :log_nick_format, :log_scroller_highlight_color
   attr_reader :input_text_font, :input_text_color, :input_text_bgcolor
   attr_reader :tree_font, :tree_bgcolor, :tree_highlight_color, :tree_newtalk_color, :tree_unread_color
   attr_reader :tree_active_color, :tree_inactive_color, :tree_sel_active_color, :tree_sel_inactive_color
@@ -96,6 +96,7 @@ class OtherViewTheme
   
   def update
     @log_nick_format = load_string('log-view', 'nickname-format') || '%n: '
+    @log_scroller_highlight_color = load_color('log-view', 'scroller-highlight-color') || NSColor.magentaColor
     
     @input_text_font = load_font('input-text') || NSFont.systemFontOfSize(-1)
     @input_text_bgcolor = load_color('input-text', 'background-color') || NSColor.whiteColor

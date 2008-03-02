@@ -18,6 +18,7 @@ body {}
 .line {}
 .line[alternate=even] {}
 .line[alternate=odd] {}
+.line[highlight=true] {}
 
 .time { color: #3387bc; }
 .place { color: #3387bc; }

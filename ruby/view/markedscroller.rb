@@ -16,18 +16,19 @@ class MarkedScroller < NSScroller
   	scale = self.scaleToContentView
   	transform.scaleXBy_yBy(1.0, scale)
   	offset = self.rectForPart(NSScrollerKnobSlot).y
-  	transform.translateXBy_yBy(0.0, offset / scale)
+  	transform.translateXBy_yBy(0.0, offset)
   	
   	# make lines
   	knobRect = self.rectForPart(NSScrollerKnob)
   	lines = []
   	ary.each do |i|
     	line = NSBezierPath.bezierPath
+    	line.setLineWidth(2.0)
     	pt = NSPoint.new(0, i)
     	pt = transform.transformPoint(pt)
     	unless pt.in(knobRect)
-      	pt.x = pt.x.ceil
-      	pt.y = pt.y.ceil
+      	#pt.x = pt.x.ceil
+      	#pt.y = pt.y.ceil
     		line.moveToPoint(pt)
     		line.relativeLineToPoint(NSPoint.new(width, 0))
     		lines << line
@@ -36,7 +37,7 @@ class MarkedScroller < NSScroller
     
     # draw lines
   	NSRectClip(self.rectForPart(NSScrollerKnobSlot).inset(3.0, 4.0))
-		NSColor.redColor.set
+		@dataSource.scroller_markColor(self).set
 		lines.each {|i| i.stroke }
 		self.drawKnob
   end

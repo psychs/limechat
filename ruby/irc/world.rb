@@ -799,7 +799,7 @@ class IRCWorld < NSObject
     log.channel = channel
     log.keyword = @pref.key
     log.max_lines = @pref.gen.max_log_lines
-    log.theme = @view_theme.log
+    log.theme = @view_theme
     if @pref.theme.override_log_font
       log.override_font = [@pref.theme.log_font_name, @pref.theme.log_font_size]
     else

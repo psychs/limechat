@@ -24,14 +24,6 @@ a {}
 .line { margin: 0 -4px; padding: 0 4px 1px 4px; }
 .line[alternate=even] {}
 .line[alternate=odd] {}
-
-.url { word-break: break-all; }
-.address { text-decoration: underline; word-break: break-all; }
-.highlight { color: #f0f; font-weight: bold; }
-
-.time { color: #048; }
-.place { color: #008; }
-
 .line[type=action] .sender:before {
   content: "• ";
   white-space: nowrap;
@@ -39,6 +31,12 @@ a {}
 .line[highlight=true] {
   background-color: #eee;
 }
+
+.url { word-break: break-all; }
+.address { text-decoration: underline; word-break: break-all; }
+.highlight { color: #f0f; font-weight: bold; }
+.time { color: #048; }
+.place { color: #008; }
 
 .sender[type=myself] { color: #66a; }
 .sender[type=normal] { color: #008; }

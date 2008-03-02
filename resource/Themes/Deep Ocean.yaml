@@ -3,6 +3,7 @@
 
 log-view:
   nickname-format: '%n: '
+  scroller-highlight-color: '#dcdc78'
 input-text:
   font-family: 'Lucida Grande'
   font-size: 13.0

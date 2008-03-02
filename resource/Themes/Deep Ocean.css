@@ -21,11 +21,14 @@ body {
 hr { margin: 0.5em 2em; }
 a { color: inherit; }
 
+.line { margin: 0 -4px; padding: 0 4px 1px 4px; }
+.line[alternate=even] {}
+.line[alternate=odd] {}
+.line[highlight=true] {}
+
 .url { word-break: break-all; }
 .address { text-decoration: underline; word-break: break-all; }
 .highlight { color: #ffc58a; font-size: 130%; font-weight: normal; }
-.line { margin: 0 -4px; padding: 0 4px 1px 4px; }
-
 .time { color: #3175b9; }
 .place { color: #808080; }
 
