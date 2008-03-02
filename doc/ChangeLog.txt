@@ -1,5 +1,9 @@
 2008-03-03  Satoshi Nakagawa <artension@gmail.com>
 
+	Made the filter text field smaller on the list dialog.
+
+2008-03-03  Satoshi Nakagawa <artension@gmail.com>
+
 	Tweaked themes.
 
 2008-03-03  Satoshi Nakagawa <artension@gmail.com>
