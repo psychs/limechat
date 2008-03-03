@@ -1,5 +1,10 @@
 2008-03-03  Satoshi Nakagawa <artension@gmail.com>
 
+	Added "Reveal in Finder" menu item for receiving items on the dcc dialog.
+	Changed for more robust way to draw the transfer lists on the dcc dialog.
+
+2008-03-03  Satoshi Nakagawa <artension@gmail.com>
+
 	Fixed a bug, an item should be selected prior to starting edit on the startup dialog.
 
 2008-03-03  Satoshi Nakagawa <artension@gmail.com>

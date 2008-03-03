@@ -31,6 +31,8 @@
 				<string>id</string>
 				<key>resumeReceiver</key>
 				<string>id</string>
+				<key>revealReceivedFileInFinder</key>
+				<string>id</string>
 				<key>startReceiver</key>
 				<string>id</string>
 				<key>startSender</key>

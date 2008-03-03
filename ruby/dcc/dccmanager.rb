@@ -21,7 +21,7 @@ class DccManager < NSObject
     @receiver_cell = FileTransferCell.alloc.init
     @receiver_cell.op = :receive
     @receiver_table.tableColumns[0].setDataCell(@receiver_cell)
-    @receiver_table.setDoubleAction(:receiverListDoubleClicked)
+    @receiver_table.setDoubleAction(:revealReceivedFileInFinder)
     @sender_cell = FileTransferCell.alloc.init
     @sender_cell.op = :send
     @sender_table.tableColumns[0].setDataCell(@sender_cell)
@@ -104,6 +104,8 @@ class DccManager < NSObject
         true
       when 3005 # open file
         !!sel.find {|e| e.status == :complete}
+      when 3006 # reveal in finder
+        !!sel.find {|e| e.status == :complete || e.status == :error}
       else
         false
       end
@@ -153,10 +155,10 @@ class DccManager < NSObject
     sel.each{|i| NSWorkspace.sharedWorkspace.openFile(i.download_filename.to_s) }
   end
   
-  def receiverListDoubleClicked(sender)
+  def revealReceivedFileInFinder(sender)
     sel = @receiver_table.selectedRows
     sel = sel.map {|i| @receivers[i]}
-    sel = sel.select {|i| i.status == :complete}
+    sel = sel.select {|i| i.status == :complete || e.status == :error}
     return if sel.empty?
     sel.each{|i| NSWorkspace.sharedWorkspace.selectFile_inFileViewerRootedAtPath(i.download_filename.to_s, nil) }
   end
@@ -354,7 +356,7 @@ class DccManager < NSObject
     elsif sender == @sender_table
       @senders.size
     else
-      raise "sender isn't receiver_table or sender_table."
+      0
     end
   end
   
@@ -364,7 +366,7 @@ class DccManager < NSObject
     elsif sender == @sender_table
       list = @senders
     else
-      raise "sender isn't receiver_table or sender_table."
+      return ''
     end
     i = list[row.to_i]
     cell = col.dataCell
