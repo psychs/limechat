@@ -73,7 +73,7 @@ class Preferences
       @use_growl = true
       @stop_growl_on_active = true
       @log_transcript = false
-      @transcript_folder = '~/Library/LimeChat/Transcripts'
+      @transcript_folder = '~/Documents/LimeChat Transcripts'
       @max_log_lines = 300
       if LanguageSupport.primary_language == 'ja'
         @paste_syntax = 'notice'
