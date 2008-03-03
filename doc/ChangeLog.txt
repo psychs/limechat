@@ -1,3 +1,7 @@
+2008-03-04  Satoshi Nakagawa <artension@gmail.com>
+
+	Changed to not allow '?' at the end of URLs.
+
 ==== LimeChat 0.17 ====
 
 2008-03-03  Satoshi Nakagawa <artension@gmail.com>
