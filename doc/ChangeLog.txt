@@ -1,5 +1,9 @@
 2008-03-03  Satoshi Nakagawa <artension@gmail.com>
 
+	Moved the themes directory from '~/Library/LimeChat' to '~/Library/Application Support/LimeChat'.
+
+2008-03-03  Satoshi Nakagawa <artension@gmail.com>
+
 	Changed the default transcripts directory to '~/Documents/LimeChat Transcripts'.
 
 2008-03-03  Satoshi Nakagawa <artension@gmail.com>

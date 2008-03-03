@@ -314,12 +314,20 @@ class AppController < NSObject
   private
   
   def prelude
-    # migrate the old theme directory
+    # migrate Theme to Themes
     olddir = Pathname.new('~/Library/LimeChat/Theme').expand_path
-    newdir = Pathname.new(ViewTheme.USER_BASE)
+    newdir = Pathname.new('~/Library/LimeChat/Themes').expand_path
     if olddir.directory? && !newdir.exist?
       FileUtils.mv(olddir.to_s, newdir.to_s) rescue nil
       FileUtils.cp(Dir.glob(ViewTheme.RESOURCE_BASE + '/Sample.*'), newdir.to_s) rescue nil
+    end
+    
+    # migrate ~/Library to ~/Library/Application Support
+    olddir = Pathname.new('~/Library/LimeChat/Themes').expand_path
+    newdir = Pathname.new('~/Library/Application Support/LimeChat/Themes').expand_path
+    if olddir.directory? && !newdir.exist?
+      FileUtils.mkpath(Pathname.new('~/Library/Application Support/LimeChat').expand_path.to_s) rescue nil
+      FileUtils.mv(olddir.to_s, newdir.to_s) rescue nil
     end
   end
   
