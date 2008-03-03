@@ -93,14 +93,16 @@ class DccManager < NSObject
       sel = @receiver_table.selectedRows
       sel = sel.map {|e| @receivers[e]}
       case i.tag
-      when 3001 #start
+      when 3001 # start
         !!sel.find {|e| e.status == :waiting || e.status == :error}
-      when 3002 #resume
+      when 3002 # resume
         true
-      when 3003 #stop
+      when 3003 # stop
         !!sel.find {|e| e.status == :connecting || e.status == :receiving}
-      when 3004 #delete
+      when 3004 # delete
         true
+      when 3005 # open file
+        !!sel.find {|e| e.status == :complete}
       else
         false
       end
@@ -109,11 +111,11 @@ class DccManager < NSObject
       sel = @sender_table.selectedRows
       sel = sel.map {|e| @senders[e]}
       case i.tag
-      when 3101 #start
+      when 3101 # start
         !!sel.find {|e| e.status == :waiting || e.status == :error || e.status == :stop}
-      when 3102 #stop
+      when 3102 # stop
         !!sel.find {|e| e.status == :listening || e.status == :sending}
-      when 3103 #delete
+      when 3103 # delete
         true
       else
         false
@@ -140,6 +142,14 @@ class DccManager < NSObject
     sel = sel.map {|i| @receivers[i]}
     sel.each {|i| delete_receiver(i)}
     reload_receiver_table
+  end
+  
+  def openReceiver(sender)
+    sel = @receiver_table.selectedRows
+    sel = sel.map {|i| @receivers[i]}
+    sel = sel.select {|i| i.status == :complete}
+    return if sel.empty?
+    sel.each{|i| NSWorkspace.sharedWorkspace.openFile(i.download_filename.to_s) }
   end
   
   def startSender(sender)
@@ -185,7 +195,7 @@ class DccManager < NSObject
     c.version = ver
     @receivers.unshift(c)
     
-    #c.open
+    c.open if @pref.dcc.auto_receive
     reload_receiver_table
     show(false)
   end
@@ -349,7 +359,7 @@ class DccManager < NSObject
     end
     i = list[row.to_i]
     cell = col.dataCell
-    cell.setStringValue(i.filename)
+    cell.setStringValue((i.is_a?(DccReceiver) && i.status == :complete) ? i.download_filename.basename.to_s : i.filename)
     cell.setHighlighted(sender.isRowSelected(row))
     cell.peer_nick = i.peer_nick
     cell.size = i.size
@@ -360,7 +370,7 @@ class DccManager < NSObject
     cell.error = i.error
     cell.icon = i.icon
     cell.progress_bar = i.progress_bar
-    i.filename
+    cell.stringValue
   end
   
   # window

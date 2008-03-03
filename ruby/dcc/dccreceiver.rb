@@ -5,7 +5,7 @@ require 'pathname'
 
 class DccReceiver
   attr_accessor :delegate, :uid, :peer_nick, :host, :port, :size, :version
-  attr_reader :processed_size, :status, :error, :icon
+  attr_reader :processed_size, :status, :error, :icon, :download_filename
   attr_accessor :progress_bar
   
   # status: waiting, error, stop, connecting, receiving, complete
@@ -160,6 +160,7 @@ class DccReceiver
         i += 1
       end
       @download_filename.rename(fname)
+      @download_filename = fname
     end
   end
 end

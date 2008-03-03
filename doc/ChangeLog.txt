@@ -1,5 +1,10 @@
 2008-03-03  Satoshi Nakagawa <artension@gmail.com>
 
+	Added an option, "Auto accept file transfers".
+	Added "Open File" menu item for receiving items on the dcc dialog.
+
+2008-03-03  Satoshi Nakagawa <artension@gmail.com>
+
 	Made the filter text field smaller on the list dialog.
 
 2008-03-03  Satoshi Nakagawa <artension@gmail.com>

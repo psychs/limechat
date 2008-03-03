@@ -15,6 +15,7 @@ class PreferenceDialog < NSObject
   ib_mapped_int_outlet :dcc_address_detection_method
   ib_mapped_outlet :dcc_myaddress
   ib_mapped_int_outlet :dcc_first_port, :dcc_last_port
+  ib_mapped_outlet :dcc_auto_receive
   ib_mapped_outlet :gen_confirm_quit
   ib_mapped_int_outlet :gen_tab_action
   ib_mapped_int_outlet :gen_main_window_layout

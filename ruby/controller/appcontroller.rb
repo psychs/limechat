@@ -13,6 +13,8 @@ class AppController < NSObject
   def awakeFromNib
     prelude
     
+    #NSWorkspace.sharedWorkspace.openFile('/Users/psychs/Downloads/CampfireTest_0.zip')
+    
     @pref = Preferences.new
     #FileUtils.mkpath(@pref.gen.transcript_folder.expand_path) rescue nil
     

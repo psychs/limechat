@@ -50,6 +50,8 @@
 			<dict>
 				<key>dcc_address_detection_method</key>
 				<string>id</string>
+				<key>dcc_auto_receive</key>
+				<string>id</string>
 				<key>dcc_first_port</key>
 				<string>id</string>
 				<key>dcc_last_port</key>

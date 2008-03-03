@@ -30,7 +30,7 @@ class Preferences
   
   class Dcc
     include PersistenceHelper
-    persistent_attr :first_port, :last_port, :address_detection_method, :myaddress
+    persistent_attr :first_port, :last_port, :address_detection_method, :myaddress, :auto_receive
     
     ADDR_DETECT_JOIN = 0
     ADDR_DETECT_NIC = 1
@@ -41,6 +41,7 @@ class Preferences
       @last_port = 1115
       @address_detection_method = ADDR_DETECT_JOIN
       @myaddress = ''
+      @auto_receive = false
     end
   end
   
