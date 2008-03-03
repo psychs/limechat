@@ -398,7 +398,7 @@ class IRCUnit < NSObject
         @world.select(c)
       end
       return true
-    when :privmsg,:msg,:notice,:action,:ctcpquery,:ctcpreply,:ctcpping,:invite
+    when :privmsg,:msg,:notice,:action,:invite
       cmd = :privmsg if cmd == :msg
       target = s.token!
     when :me
@@ -446,12 +446,13 @@ class IRCUnit < NSObject
       end
     end
     
-    if cmd == :ctcpquery
+    if cmd == :ctcp
       t = s.dup
       subcmd = t.token!
       if subcmd.downcase == 'action'
         cmd = :action
         s = t
+        target = s.token!
       end
     end
 
@@ -482,12 +483,19 @@ class IRCUnit < NSObject
         send(cmd, target, t)
       end
     
-    when :ctcpquery
-      send_ctcp_query(target, s)
+    when :ctcp
+      subcmd = s.token!
+      unless subcmd.empty?
+        target = s.token!
+        if subcmd.downcase == 'ping'
+          send_ctcp_ping(target)
+        else
+          send_ctcp_query(target, "#{subcmd} #{s}")
+        end
+      end
     when :ctcpreply
+      target = s.token!
       send_ctcp_reply(target, s)
-    when :ctcpping
-      send_ctcp_ping(target)
     when :quit
       quit(s)
     when :nick

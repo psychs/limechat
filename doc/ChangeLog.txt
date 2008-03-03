@@ -1,5 +1,10 @@
 2008-03-04  Satoshi Nakagawa <artension@gmail.com>
 
+	Renamed /ctcpquery to /ctcp.
+	Removed /ctcpping.
+
+2008-03-04  Satoshi Nakagawa <artension@gmail.com>
+
 	Added /j command to join a channel.
 	Changed to complete '#' in the head of join commands.
 
