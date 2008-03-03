@@ -1,5 +1,10 @@
 2008-03-04  Satoshi Nakagawa <artension@gmail.com>
 
+	Added /j command to join a channel.
+	Changed to complete '#' in the head of join commands.
+
+2008-03-04  Satoshi Nakagawa <artension@gmail.com>
+
 	Changed to not allow '?' at the end of URLs.
 
 ==== LimeChat 0.17 ====

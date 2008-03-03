@@ -420,11 +420,13 @@ class IRCUnit < NSObject
       else
         target = s.token!
       end
-    when :join
-      if sel && sel.channel? && !sel.active? && !s.channelname?
+    when :join,:j
+      cmd = :join
+      if sel && sel.channel? && !sel.active? && s.empty?
         target = sel.name
       else
         target = s.token!
+        target = '#' + target unless target.channelname?
       end
     end
     
