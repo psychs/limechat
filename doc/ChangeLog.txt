@@ -1,5 +1,9 @@
 2008-03-03  Satoshi Nakagawa <artension@gmail.com>
 
+	Assigned double click to reveal a file in Finder on the dcc receiving transfer list.
+
+2008-03-03  Satoshi Nakagawa <artension@gmail.com>
+
 	Added an option, "Auto accept file transfers".
 	Added "Open File" menu item for receiving items on the dcc dialog.
 

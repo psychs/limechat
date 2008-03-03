@@ -21,6 +21,7 @@ class DccManager < NSObject
     @receiver_cell = FileTransferCell.alloc.init
     @receiver_cell.op = :receive
     @receiver_table.tableColumns[0].setDataCell(@receiver_cell)
+    @receiver_table.setDoubleAction(:receiverListDoubleClicked)
     @sender_cell = FileTransferCell.alloc.init
     @sender_cell.op = :send
     @sender_table.tableColumns[0].setDataCell(@sender_cell)
@@ -150,6 +151,14 @@ class DccManager < NSObject
     sel = sel.select {|i| i.status == :complete}
     return if sel.empty?
     sel.each{|i| NSWorkspace.sharedWorkspace.openFile(i.download_filename.to_s) }
+  end
+  
+  def receiverListDoubleClicked(sender)
+    sel = @receiver_table.selectedRows
+    sel = sel.map {|i| @receivers[i]}
+    sel = sel.select {|i| i.status == :complete}
+    return if sel.empty?
+    sel.each{|i| NSWorkspace.sharedWorkspace.selectFile_inFileViewerRootedAtPath(i.download_filename.to_s, nil) }
   end
   
   def startSender(sender)
