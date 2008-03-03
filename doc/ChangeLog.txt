@@ -1,3 +1,7 @@
+2008-03-03  Satoshi Nakagawa <artension@gmail.com>
+
+	Fixed a wrong index bug when double clicked on the channel list dialog.
+
 ==== LimeChat 0.16.5 ====
 
 2008-03-03  Satoshi Nakagawa <artension@gmail.com>

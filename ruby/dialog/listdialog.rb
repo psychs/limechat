@@ -54,7 +54,13 @@ class ListDialog < NSObject
   def onJoin(sender)
     i = @table.selectedRows[0]
     if i
-      item = @list[i]
+      if @filter.empty?
+        list = @list
+      else
+        build_filtered_list
+        list = @flist
+      end
+      item = list[i]
       if item
         fire_event('onJoin', item[0])
       end
