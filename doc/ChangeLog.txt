@@ -1,5 +1,9 @@
 2008-03-03  Satoshi Nakagawa <artension@gmail.com>
 
+	More smaller font for the member list.
+
+2008-03-03  Satoshi Nakagawa <artension@gmail.com>
+
 	Added "Reveal in Finder" menu item for receiving items on the dcc dialog.
 	Changed for more robust way to draw the transfer lists on the dcc dialog.
 

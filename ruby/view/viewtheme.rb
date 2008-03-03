@@ -118,7 +118,7 @@ class OtherViewTheme
     @tree_sel_top_color = load_color('server-tree', 'selected', 'background', 'top-color') || NSColor.from_rgb(173, 187, 208)
     @tree_sel_bottom_color = load_color('server-tree', 'selected', 'background', 'bottom-color') || NSColor.from_rgb(152, 170, 196)
     
-    @member_list_font = load_font('member-list') || NSFont.systemFontOfSize(-1)
+    @member_list_font = load_font('member-list') || NSFont.systemFontOfSize(NSFont.smallSystemFontSize)
     @member_list_bgcolor = load_color('member-list', 'background-color') || NSColor.whiteColor
     @member_list_color = load_color('member-list', 'color') || NSColor.blackColor
     @member_list_op_color = load_color('member-list', 'operator', 'color') || NSColor.blackColor
