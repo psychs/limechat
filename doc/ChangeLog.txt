@@ -1,5 +1,9 @@
 2008-03-03  Satoshi Nakagawa <artension@gmail.com>
 
+	Fixed a bug, an item should be selected prior to starting edit on the startup dialog.
+
+2008-03-03  Satoshi Nakagawa <artension@gmail.com>
+
 	Assigned double click to reveal a file in Finder on the dcc receiving transfer list.
 
 2008-03-03  Satoshi Nakagawa <artension@gmail.com>

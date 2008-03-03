@@ -66,7 +66,9 @@ class WelcomeDialog < NSObject
   def onAddChannel(sender)
     @channels << ''
     @channelTable.reloadData
-    @channelTable.editColumn_row_withEvent_select(0, @channels.size-1, nil, true)
+    row = @channels.size - 1
+    @channelTable.select(row)
+    @channelTable.editColumn_row_withEvent_select(0, row, nil, true)
   end
 
   ib_action :onDeleteChannel
