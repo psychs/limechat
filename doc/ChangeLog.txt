@@ -1,3 +1,5 @@
+==== LimeChat 0.16.5 ====
+
 2008-03-03  Satoshi Nakagawa <artension@gmail.com>
 
 	Moved the themes directory from '~/Library/LimeChat' to '~/Library/Application Support/LimeChat'.
