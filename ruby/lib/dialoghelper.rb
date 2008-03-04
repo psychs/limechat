@@ -123,6 +123,8 @@ module DialogHelper
     end
   end
   
+  MAX_INT_VALUE = 1_000_000
+  
   def save_outlet_value(outlet, model, nest)
     name = outlet[:name].to_s
     type = outlet[:type]
@@ -148,7 +150,10 @@ module DialogHelper
     when NSComboBox,NSTextField
       v = t.stringValue.to_s
       v = v.gsub(/\r\n|\r|\n/, ' ')
-      v = v.to_i if type == :int
+      if type == :int
+        v = v.to_i
+        v = MAX_INT_VALUE if v > MAX_INT_VALUE
+      end
     when NSTextView
       v = t.textStorage.string.to_s
       v = v.split(/\r\n|\r|\n/)

@@ -1,5 +1,9 @@
 2008-03-04  Satoshi Nakagawa <artension@gmail.com>
 
+	Fixed a bug, numeric values should be capped when converting from ruby to objc.
+
+2008-03-04  Satoshi Nakagawa <artension@gmail.com>
+
 	Renamed /ctcpquery to /ctcp.
 	Removed /ctcpping.
 
