@@ -368,6 +368,7 @@ class IRCUnit < NSObject
       sel = nil
     end
     
+    # parse pseudo commands and alias
     case cmd
     when :weights
       sel = @world.selchannel
@@ -398,8 +399,22 @@ class IRCUnit < NSObject
         @world.select(c)
       end
       return true
-    when :privmsg,:msg,:notice,:action,:invite
-      cmd = :privmsg if cmd == :msg
+    when :msg
+      cmd = :privmsg
+    when :leave
+      cmd = :part
+    when :j
+      cmd = :join
+    when :t
+      cmd = :topic
+    when :raw,:quote
+      send_raw(s.token!, s)
+      return true
+    end
+    
+    # get target if needed
+    case cmd
+    when :privmsg,:notice,:action,:invite
       target = s.token!
     when :me
       cmd = :action
@@ -420,16 +435,35 @@ class IRCUnit < NSObject
       else
         target = s.token!
       end
-    when :join,:j
-      cmd = :join
+    when :join
       if sel && sel.channel? && !sel.active? && s.empty?
         target = sel.name
       else
         target = s.token!
         target = '#' + target unless target.channelname?
       end
+    when :op,:deop,:halfop,:dehalfop,:voice,:devoice,:ban,:unban
+      if sel && sel.channel? && !s.modechannelname?
+        target = sel.name
+      else
+        target = s.token!
+      end
+      command = cmd.to_s
+      if command =~ /^(de|un)/
+        sign = '-'
+        command[0..1] = ''
+      else
+        sign = '+'
+      end
+      params = s.split(/ +/)
+      s = sign + command[0,1] * params.size + ' ' + s
+      cmd = :mode
+    when :umode
+      cmd = :mode
+      s = @mynick
     end
     
+    # cut colon
     if s[0] == ?:
       cut_colon = true
       s[0] = ''
@@ -437,15 +471,15 @@ class IRCUnit < NSObject
       cut_colon = false
     end
     
+    # process text commands
     if cmd == :privmsg || cmd == :notice
       if s[0] == 0x1
-        cmd = cmd == :privmsg ? :ctcpquery : :ctcpreply
+        cmd = cmd == :privmsg ? :ctcp : :ctcpreply
         s[0] = ''
         n = s.index("\x01")
         s = s[0...n] if n
       end
     end
-    
     if cmd == :ctcp
       t = s.dup
       subcmd = t.token!
@@ -456,6 +490,7 @@ class IRCUnit < NSObject
       end
     end
 
+    # finally action
     case cmd
     when :privmsg,:notice,:action
       return false unless target
