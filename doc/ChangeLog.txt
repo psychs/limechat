@@ -1,5 +1,9 @@
 2008-03-04  Satoshi Nakagawa <artension@gmail.com>
 
+	Added channel name completion.
+
+2008-03-04  Satoshi Nakagawa <artension@gmail.com>
+
 	Added /op, /deop, /halfop, /dehalfop, /voice, /devoice, /ban, /unban, /umode, /raw and /quote commands.
 	Added aliases, /t for /topic and /leave for /part.
 

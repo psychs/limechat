@@ -346,7 +346,7 @@ class AppController < NSObject
   
   def complete_nick(forward)
     u, c = @world.sel
-    return unless u && c
+    return unless u
     @world.select_text if @window.firstResponder != @window.fieldEditor_forObject(true, @text)
     fe = @window.fieldEditor_forObject(true, @text)
     return unless fe
@@ -372,7 +372,7 @@ class AppController < NSObject
     return if pre.empty?
 
     headchar = pre[0]
-    if /^[^\w\[\]\\`_^{}|].+$/ =~ pre
+    if /^[^\w\[\]\\`_^{}|]/ =~ pre
       head = headchar == ?@ if head
       pre[0] = ''
       return if pre.empty?
@@ -384,10 +384,21 @@ class AppController < NSObject
     downcur = current.downcase
     
     n = 0
-    nicks = c.members.sort_by {|i| [-i.weight, n += 1] }.map {|i| i.nick }
-    nicks = nicks.select {|i| i[0...pre.size].downcase == downpre }
-    nicks -= [u.mynick]
-    return if nicks.empty?
+    if c
+      nicks = c.members.sort_by {|i| [-i.weight, n += 1] }.map {|i| i.nick }
+      nicks = nicks.select {|i| i[0...pre.size].downcase == downpre }
+      nicks -= [u.mynick]
+    end
+    if !c || nicks.empty?
+      # try channels
+      u = @world.selunit
+      if u
+        channels = u.channels.map {|i| i.name }
+        channels = channels.select {|i| i[0] == headchar }.map{|i| i[1..-1]}
+        nicks = channels
+      end
+      return if nicks.empty?
+    end
     
     index = nicks.index {|i| i.downcase == downcur }
     if index
