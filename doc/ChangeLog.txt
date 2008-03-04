@@ -3,26 +3,6 @@
 	Added /op, /deop, /halfop, /dehalfop, /voice, /devoice, /ban, /unban, /umode, /raw and /quote commands.
 	Added aliases, /t for /topic and /leave for /part.
 
-when :op,:deop,:halfop,:dehalfop,:voice,:devoice,:ban,:unban
-  if sel && sel.channel? && !s.modechannelname?
-    target = sel.name
-  else
-    target = s.token!
-  end
-  command = cmd.to_s
-  if command =~ /^(de|un)/
-    sign = '-'
-    command[0..1] = ''
-  else
-    sign = '+'
-  end
-  params = s.split(/ +/)
-  s = sign + command[0,1] * params.size + ' ' + s
-  cmd = :mode
-when :umode
-
-
-
 2008-03-04  Satoshi Nakagawa <artension@gmail.com>
 
 	Fixed a bug, numeric values should be capped when converting from ruby to objc.
