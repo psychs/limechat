@@ -26,6 +26,7 @@ class PasteSheet < CocoaSheet
     @syntaxPopup.selectItemWithTag(syntax_to_tag(syntax))
     @text.textStorage.setAttributedString(NSAttributedString.alloc.initWithString(str))
     @sheet.setContentSize(size) if size
+    @sheet.key_delegate = self
   end
   
   def shutdown(button)
@@ -89,6 +90,9 @@ class PasteSheet < CocoaSheet
     end
   end
   
+  def dialogWindow_enter
+    onSend(nil)
+  end
   
   private
   

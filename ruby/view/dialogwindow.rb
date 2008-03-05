@@ -22,6 +22,11 @@ class DialogWindow < NSWindow
               @key_delegate.dialogWindow_escape
               return
             end
+          when 76 #enter
+            if @key_delegate.respond_to?(:dialogWindow_enter)
+              @key_delegate.dialogWindow_enter
+              return
+            end
           end
         elsif !shift && ctrl && !alt && !cmd || !shift && !ctrl && !alt && cmd
           # cmd or ctrl

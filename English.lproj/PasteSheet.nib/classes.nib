@@ -61,6 +61,14 @@
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
 		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>DialogWindow</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSWindow</string>
+		</dict>
 	</array>
 	<key>IBVersion</key>
 	<string>1</string>
