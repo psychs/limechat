@@ -5,11 +5,15 @@ require 'listview'
 require 'user'
 
 class MemberListView < ListView
-  attr_accessor :key_delegate
+  attr_accessor :key_delegate, :drop_delegate
   attr_writer :theme
   
   def initialize
     @bgcolor = NSColor.controlBackgroundColor
+  end
+  
+  def awakeFromNib
+    registerForDraggedTypes([NSFilenamesPboardType])
   end
   
   def keyDown(e)
@@ -74,6 +78,80 @@ class MemberListView < ListView
     @bgcolor.set
     NSRectFill(rect)
   end
+  
+  
+  def draggingEntered(info)
+    draggingUpdated(info)
+  end
+  
+  def draggingUpdated(info)
+    if !dragged_files(info).empty? && dragged_row(info) >= 0
+      draw_dragging_position(info, true)
+      NSDragOperationCopy
+    else
+      draw_dragging_position(info, false)
+      NSDragOperationNone
+    end
+  end
+  
+  def draggingEnded(info)
+    draw_dragging_position(info, false)
+  end
+  
+  def draggingExited(info)
+    draw_dragging_position(info, false)
+  end
+  
+  def prepareForDragOperation(info)
+    !dragged_files(info).empty? && dragged_row(info) >= 0
+  end
+  
+  def performDragOperation(info)
+    files = dragged_files(info)
+    if !files.empty?
+      row = dragged_row(info)
+      if row >= 0
+        # received files
+        @drop_delegate.memberListView_dropFiles(files, row)
+        true
+      else
+        false
+      end
+    else
+      false
+    end
+  end
+  
+  def concludeDragOperation(info)
+  end
+  
+  private
+  
+  def dragged_row(info)
+    pt = convertPoint_fromView(info.draggingLocation, nil)
+    rowAtPoint(pt)
+  end
+  
+  def draw_dragging_position(info, on)
+    if on
+      row = dragged_row(info)
+      if row < 0
+        deselectAll(nil)
+      else
+        select(row)
+      end
+    else
+      deselectAll(nil)
+    end
+  end
+  
+  def dragged_files(info)
+    files = info.draggingPasteboard.propertyListForType(NSFilenamesPboardType).to_ruby
+    files.select{|i| File.file?(i) }
+  rescue
+    []
+  end
+  
 end
 
 

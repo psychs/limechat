@@ -211,7 +211,7 @@ class DccManager < NSObject
     show(false)
   end
   
-  def add_sender(uid, nick, file)
+  def add_sender(uid, nick, file, auto_open=true)
     c = DccSender.new
     c.pref = @pref
     c.delegate = self
@@ -225,7 +225,7 @@ class DccManager < NSObject
       c.set_address_error
       return
     end
-    c.open
+    c.open if auto_open
     
     reload_sender_table
     show

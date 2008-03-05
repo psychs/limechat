@@ -1,3 +1,7 @@
+2008-03-05  Satoshi Nakagawa <artension@gmail.com>
+
+	Implemented drag and drop files on the member list to send files on dcc.
+
 2008-03-04  Satoshi Nakagawa <artension@gmail.com>
 
 	Added channel name completion.

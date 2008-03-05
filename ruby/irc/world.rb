@@ -746,6 +746,15 @@ class IRCWorld < NSObject
     end
   end
   
+  def memberListView_dropFiles(files, row)
+    u, c = sel
+    return unless u && c
+    m = c.members[row]
+    if m
+      files.each {|f| @dcc.add_sender(u.id, m.nick, f, false) }
+    end
+  end
+  
   # timer
   
   def on_timer
