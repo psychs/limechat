@@ -1,3 +1,7 @@
+2008-03-06  Satoshi Nakagawa <artension@gmail.com>
+
+	Added alternative nicknames support.
+
 2008-03-05  Satoshi Nakagawa <artension@gmail.com>
 
 	Assigned enter key to send text on the paste dialog.

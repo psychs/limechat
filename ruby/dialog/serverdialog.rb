@@ -12,6 +12,7 @@ class ServerDialog < NSObject
   ib_mapped_int_outlet :portText, :encodingCombo
   ib_mapped_outlet :leaving_commentText, :userinfoText, :invisibleCheck
   ib_mapped_outlet :login_commandsText
+  ib_outlet :alt_nicksText
   ib_outlet :channelsTable, :addButton, :editButton, :deleteButton
   ib_outlet :okButton
   
@@ -103,11 +104,14 @@ class ServerDialog < NSObject
   
   def load
     load_mapped_outlets(@c)
+    @alt_nicksText.setStringValue(@c.alt_nicks.join(' '))
   end
   
   def save
     save_mapped_outlets(@c)
     @c.login_commands.delete_if {|i| i =~ /^\s*$/ }
+    @c.alt_nicks = @alt_nicksText.stringValue.to_s.split(/[\s,]+/)
+    @c.alt_nicks.delete_if {|i| i =~ /^\s+$/ }
   end
   
   def controlTextDidChange(n)

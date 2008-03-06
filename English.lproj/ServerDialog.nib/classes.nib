@@ -46,6 +46,8 @@
 			<dict>
 				<key>addButton</key>
 				<string>id</string>
+				<key>alt_nicksText</key>
+				<string>id</string>
 				<key>auto_connectCheck</key>
 				<string>id</string>
 				<key>channelsTable</key>

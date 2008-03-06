@@ -23,6 +23,7 @@ class IRCUnit < NSObject
     @whois_dialogs = []
     @connected = @login = @quitting = false
     @mynick = @inputnick = @sentnick = ''
+    @trying_nick = -1
     @mymode = UserMode.new
     @myaddress = nil
     @join_address = nil
@@ -1177,6 +1178,7 @@ class IRCUnit < NSObject
     return if login?
     @world.expand_unit(self)
     @login = true
+    @trying_nick = -1
     @pong_timer = PONG_TIME
     @server_hostname = m.sender
     @mynick = m[0]
@@ -1273,6 +1275,7 @@ class IRCUnit < NSObject
     @conn = nil
     @connecting = @connected = @login = @quitting = false
     @mynick = @sentnick = ''
+    @trying_nick = -1
     @myaddress = @join_address = nil
     @mymode.clear
     @in_whois = false
@@ -2070,6 +2073,26 @@ when 437	# ERR_UNAVAILRESOURCE 2.10
 =end
   
   def receive_nick_collision(m)
+    if @config.alt_nicks.empty?
+      # no alt. nicks
+      try_another_nick
+    else
+      # try alt. nicks
+      unless @login
+        # only works when not login
+        @trying_nick += 1
+        nick = @config.alt_nicks[@trying_nick]
+        if nick
+          @sentnick = nick
+          send(:nick, nick)
+        else
+          try_another_nick
+        end
+      end
+    end
+  end
+  
+  def try_another_nick
     if @sentnick.size >= @isupport.nicklen
       nick = @sentnick[0...@isupport.nicklen]
       if /^(.+)[^_](_*)$/ =~ nick
