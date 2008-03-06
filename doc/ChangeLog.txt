@@ -1,3 +1,7 @@
+2008-03-07  Satoshi Nakagawa <artension@gmail.com>
+
+	Changed the note on the server properties dialog.
+
 2008-03-06  Satoshi Nakagawa <artension@gmail.com>
 
 	Added a note for the alternative nicknames field on the server properties dialog.
