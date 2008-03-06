@@ -1,5 +1,9 @@
 2008-03-06  Satoshi Nakagawa <artension@gmail.com>
 
+	Added a note for the alternative nicknames field on the server properties dialog.
+
+2008-03-06  Satoshi Nakagawa <artension@gmail.com>
+
 	Added alternative nicknames support.
 
 2008-03-05  Satoshi Nakagawa <artension@gmail.com>
