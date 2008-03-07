@@ -1,5 +1,9 @@
 2008-03-07  Satoshi Nakagawa <artension@gmail.com>
 
+	Changed to not use nick format for Growl notifications.
+
+2008-03-07  Satoshi Nakagawa <artension@gmail.com>
+
 	Changed logic to calculate nick color numbers.
 	Changed a menu item from 'Mark All as Read and Clear All Marks' to 'Mark All as Read and Mark All Scrollbacks'.
 
