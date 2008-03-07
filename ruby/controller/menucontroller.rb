@@ -469,9 +469,9 @@ class MenuController < NSObject
     @world.mark_all_as_read
   end
   
-  def onMarkAllAsReadAndClearAllMarks(sender)
+  def onMarkAllAsReadAndMarkAllScrollbacks(sender)
     @world.mark_all_as_read
-    @world.unmark_all
+    @world.mark_all_scrollbacks
   end
   
   

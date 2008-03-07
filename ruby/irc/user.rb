@@ -50,7 +50,7 @@ class User
   NUM_COLORS = 16
   
   def color_number
-    @color_number = (@nick + @username + @address).hash % NUM_COLORS unless @color_number
+    @color_number = @nick.hash % NUM_COLORS unless @color_number
     @color_number
   end
   

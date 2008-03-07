@@ -475,11 +475,11 @@ class IRCWorld < NSObject
     reload_tree
   end
   
-  def unmark_all
+  def mark_all_scrollbacks
     @units.each do |u|
-      u.log.unmark
+      u.log.mark
       u.channels.each do |c|
-        c.log.unmark
+        c.log.mark
       end
     end
   end

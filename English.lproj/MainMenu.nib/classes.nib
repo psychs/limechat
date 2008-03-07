@@ -101,7 +101,7 @@
 				<string>id</string>
 				<key>onMarkAllAsRead</key>
 				<string>id</string>
-				<key>onMarkAllAsReadAndClearAllMarks</key>
+				<key>onMarkAllAsReadAndMarkAllScrollbacks</key>
 				<string>id</string>
 				<key>onMarkScrollback</key>
 				<string>id</string>
