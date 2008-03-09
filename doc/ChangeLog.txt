@@ -1,3 +1,7 @@
+2008-03-09  Satoshi Nakagawa <artension@gmail.com>
+
+	Fixed a bug, 'Override Log Font' option should be applied to body[type=...] and body.(normal|console) elements.
+
 2008-03-07  Satoshi Nakagawa <artension@gmail.com>
 
 	Changed to not use nick format for Growl notifications.

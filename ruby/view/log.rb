@@ -465,7 +465,7 @@ class LogController < NSObject
       name = @override_font[0]
       size = @override_font[1] * (72.0 / 96.0)
       override_style = <<-EOM
-        html {
+        html, body, body[type], body.normal, body.console {
           font-family: '#{name}';
           font-size: #{size}pt;
         }
