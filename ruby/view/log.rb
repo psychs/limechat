@@ -456,8 +456,10 @@ class LogController < NSObject
     if @channel
       body_attrs = %| type="#{@channel.type}"|
       body_attrs << %| channelname="#{h(@channel.name)}"| if @channel.channel?
-    else
+    elsif @console
       body_attrs = %| type="console"|
+    else
+      body_attrs = %| type="server"|
     end
     
     style = @theme.log.content || ''
