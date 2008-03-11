@@ -1,5 +1,9 @@
 2008-03-11  Satoshi Nakagawa <artension@gmail.com>
 
+	Added opt-up/down for moving around histories.
+
+2008-03-11  Satoshi Nakagawa <artension@gmail.com>
+
 	Fixed a bug, /query command should be cleared after opening a talk.
 
 2008-03-11  Satoshi Nakagawa <artension@gmail.com>
