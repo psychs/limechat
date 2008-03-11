@@ -364,7 +364,7 @@ class AppController < NSObject
     s = @text.stringValue
     pre = s.substringToIndex(r.location).to_s
     sel = s.substringWithRange(r).to_s
-    if /\s([^\s]*)$/ =~ pre
+    if /[\s~!#\$%&*()<>=+'";:,.\/?]([^\s]*)$/ =~ pre
       pre = $1
       head = false
     else

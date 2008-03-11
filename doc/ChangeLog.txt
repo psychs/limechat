@@ -1,5 +1,9 @@
 2008-03-11  Satoshi Nakagawa <artension@gmail.com>
 
+	Now we can use more delimiters for nick completion.
+
+2008-03-11  Satoshi Nakagawa <artension@gmail.com>
+
 	Added /rejoin, /cycle and /hop commands to rejoin the current channel.
 	Fixed a bug, 'Highlight your current nickname' option should be applied for the console log.
 
