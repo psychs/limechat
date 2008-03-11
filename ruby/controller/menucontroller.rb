@@ -792,8 +792,8 @@ class MenuController < NSObject
       c = u.find_channel(m.nick)
       unless c
         c = @world.create_talk(u, m.nick)
-        @world.select(c)
       end
+      @world.select(c)
     end
     deselect_members(sender)
   end
