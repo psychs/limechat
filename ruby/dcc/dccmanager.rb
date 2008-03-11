@@ -158,7 +158,7 @@ class DccManager < NSObject
   def revealReceivedFileInFinder(sender)
     sel = @receiver_table.selectedRows
     sel = sel.map {|i| @receivers[i]}
-    sel = sel.select {|i| i.status == :complete || e.status == :error}
+    sel = sel.select {|i| i.status == :complete || i.status == :error}
     return if sel.empty?
     sel.each{|i| NSWorkspace.sharedWorkspace.selectFile_inFileViewerRootedAtPath(i.download_filename.to_s, nil) }
   end
