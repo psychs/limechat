@@ -401,6 +401,15 @@ class IRCUnit < NSObject
         @world.select(c)
       end
       return true
+    when :rejoin,:hop,:cycle
+      c = @world.selchannel
+      if c
+        pass = c.mode.k
+        pass = nil if pass.empty?
+        part_channel(c)
+        join_channel(c, pass, true)
+      end
+      return true
     when :msg
       cmd = :privmsg
     when :leave
@@ -1001,7 +1010,7 @@ class IRCUnit < NSObject
     end
     
     line = LogLine.new(time, place, nickstr, text, kind, mtype, nick, click, identified, color_num)
-    @world.console.print(line)
+    @world.console.print(line, self)
   end
   
   def print_channel(channel, kind, nick, text=nil, identified=nil)
@@ -1051,7 +1060,7 @@ class IRCUnit < NSObject
     if channel && !channel.unit?
       key = channel.print(line)
     else
-      key = @log.print(line)
+      key = @log.print(line, self)
     end
     key
   end

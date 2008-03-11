@@ -124,8 +124,8 @@ class LogController < NSObject
     nil
   end
   
-  def print(line, use_keyword=true)
-    body, key = build_body(line, use_keyword)
+  def print(line, unit, use_keyword=true)
+    body, key = build_body(line, unit, use_keyword)
     
     unless @loaded
       @lines << [line, use_keyword]
@@ -354,7 +354,7 @@ class LogController < NSObject
     p $!
   end
   
-  def build_body(line, use_keyword)
+  def build_body(line, unit, use_keyword)
     if use_keyword
       case line.line_type
       when :privmsg,:action
@@ -367,8 +367,8 @@ class LogController < NSObject
     if use_keyword
       dislike = @keyword.dislike_words
       like = @keyword.words
-      if @unit && @keyword.current_nick && !@unit.mynick.empty?
-        like += [@unit.mynick]
+      if unit && @keyword.current_nick && !unit.mynick.empty?
+        like += [unit.mynick]
       end
     else
       like = dislike = nil

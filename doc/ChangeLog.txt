@@ -1,5 +1,10 @@
 2008-03-11  Satoshi Nakagawa <artension@gmail.com>
 
+	Added /rejoin, /cycle and /hop commands to rejoin the current channel.
+	Fixed a bug, 'Highlight your current nickname' option should be applied for the console log.
+
+2008-03-11  Satoshi Nakagawa <artension@gmail.com>
+
 	Added 'New Folder' button on the open dialog for transcripts location.
 	Changed priority of Growl notifications to 1 for highlight events.
 
