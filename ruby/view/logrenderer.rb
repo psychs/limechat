@@ -1,12 +1,15 @@
 # Created by Satoshi Nakagawa.
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
+require 'nkf'
+require 'unicodeutil'
+
 module LogRenderer
     
-  def render_body(body, keywords, dislike_words, whole_line)
+  def render_body(body, keywords, dislike_words, whole_line, exact_word_match)
     effects, body = process_effects(body)
     urls = process_urls(body)
-    keywords = process_keywords(body, urls, keywords, dislike_words)
+    keywords = process_keywords(body, urls, keywords, dislike_words, exact_word_match)
     
     if whole_line && !keywords.empty?
       addrs = []
@@ -321,21 +324,49 @@ module LogRenderer
     br = bl + b[:len]
     al <= bl && bl < ar || al < br && br <= ar || bl <= al && al < br || bl < ar && ar <= br
   end
+  
+  def alphabetical?(s)
+    if s.size == 1
+      if s =~ /\A[a-zA-Z]\z/
+        return true
+      else
+        return false
+      end
+    else
+      s = NKF.nkf('-W -w16', s)
+      code = s[0] * 256 + s[1]
+      UnicodeUtil.alphabetical?(code)
+    end
+  end
 
-  def process_keywords(body, urls, words, dislike_words)
+  def process_keywords(body, urls, words, dislike_words, exact_word_match)
     return [] unless words && !words.empty?
     
     keywords = []
     words.each do |w|
       next if w.empty?
-      s = body.dup
+      s = body
       offset = 0
       rex = Regexp.new(Regexp.escape(w), true)
       while rex =~ s
         left = $~.begin(0)
         right = $~.end(0)
-        keywords << { :pos => offset+left, :len => right-left }
-        s[0...right] = ''
+        pre = $~.pre_match
+        post = $~.post_match
+        ok = true
+        
+        if exact_word_match
+          if !pre.empty? && alphabetical?(w.first_char) && alphabetical?(pre.last_char)
+            ok = false
+          elsif !post.empty? && alphabetical?(w.last_char) && alphabetical?(post.first_char)
+            ok = false
+          end
+        end
+        
+        if ok
+          keywords << { :pos => offset+left, :len => right-left }
+        end
+        s = post
         offset += right
       end
     end
@@ -346,23 +377,25 @@ module LogRenderer
     # eliminate keywords intersect one of urls
     keywords.delete_if {|k| urls.find {|u| intersect?(k,u)}} unless urls.empty?
     
-    if dislike_words && !dislike_words.empty?
-      dislike_matches = []
-      dislike_words.each do |w|
-        next if w.empty?
-        s = body.dup
-        offset = 0
-        rex = Regexp.new(Regexp.escape(w), true)
-        while rex =~ s
-          left = $~.begin(0)
-          right = $~.end(0)
-          dislike_matches << { :pos => offset+left, :len => right-left }
-          s[0...right] = ''
-          offset += right
+    unless exact_word_match
+      if dislike_words && !dislike_words.empty?
+        dislike_matches = []
+        dislike_words.each do |w|
+          next if w.empty?
+          s = body
+          offset = 0
+          rex = Regexp.new(Regexp.escape(w), true)
+          while rex =~ s
+            left = $~.begin(0)
+            right = $~.end(0)
+            dislike_matches << { :pos => offset+left, :len => right-left }
+            s = $~.post_match
+            offset += right
+          end
         end
+        # eliminate keywords intersect one of dislike_words
+        keywords.delete_if {|k| dislike_matches.find {|u| intersect?(k,u)}} unless dislike_matches.empty?
       end
-      # eliminate keywords intersect one of dislike_words
-      keywords.delete_if {|k| dislike_matches.find {|u| intersect?(k,u)}} unless dislike_matches.empty?
     end
     
     # combine keyword ranges
@@ -389,7 +422,7 @@ module LogRenderer
     end
     new_keywords
   end
-
+  
   def combine_events(effects, urls, addrs, keywords)
     events = []
     events += effects.map {|i| i[:kind] = :effect; i }

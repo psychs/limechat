@@ -8,6 +8,22 @@ class String
     scan(/./) {|c| yield c }
   end
   
+  def first_char
+    if /\A./ =~ self
+      $&
+    else
+      nil
+    end
+  end
+  
+  def last_char
+    if /.\z/ =~ self
+      $&
+    else
+      nil
+    end
+  end
+  
   def token!
     if / *([^ ]+) */ =~ self
       self[0...$&.size] = ''

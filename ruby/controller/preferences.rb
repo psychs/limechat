@@ -18,13 +18,17 @@ class Preferences
   
   class Keyword
     include PersistenceHelper
-    persistent_attr :words, :dislike_words, :whole_line, :current_nick
+    persistent_attr :words, :dislike_words, :whole_line, :current_nick, :matching_method
+    
+    MATCH_PARTIAL = 0
+    MATCH_EXACT_WORD = 1
     
     def initialize
       @words = []
       @dislike_words = []
       @whole_line = false
       @current_nick = true
+      @matching_method = MATCH_PARTIAL
     end
   end
   

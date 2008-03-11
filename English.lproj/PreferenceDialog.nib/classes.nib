@@ -25,6 +25,8 @@
 				<string>id</string>
 				<key>onDccAddressDetectionMethodChanged</key>
 				<string>id</string>
+				<key>onKeyMatchingMethodChanged</key>
+				<string>id</string>
 				<key>onLogTranscriptChanged</key>
 				<string>id</string>
 				<key>onOk</key>
@@ -86,11 +88,17 @@
 				<string>id</string>
 				<key>key_dislike_words</key>
 				<string>id</string>
+				<key>key_dislike_words_caption</key>
+				<string>id</string>
+				<key>key_matching_method</key>
+				<string>id</string>
 				<key>key_whole_line</key>
 				<string>id</string>
 				<key>key_words</key>
 				<string>id</string>
 				<key>log_font_text</key>
+				<string>id</string>
+				<key>myOutlet1</key>
 				<string>id</string>
 				<key>select_log_font_button</key>
 				<string>id</string>

@@ -374,11 +374,10 @@ class LogController < NSObject
       like = dislike = nil
     end
     
-    LogRenderer.render_body(line.body, like, dislike, @keyword.whole_line)
+    LogRenderer.render_body(line.body, like, dislike, @keyword.whole_line, @keyword.matching_method == Preferences::Keyword::MATCH_EXACT_WORD)
   end
   
   def h(s)
-    #s ? CGI.escapeHTML(s.to_s) : ''
     s ? LogRenderer.escape_str(s) : ''
   end
   

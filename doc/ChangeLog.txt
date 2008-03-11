@@ -1,3 +1,7 @@
+2008-03-11  Satoshi Nakagawa <artension@gmail.com>
+
+	Implemented exact word matching for highlighting.
+
 2008-03-10  Satoshi Nakagawa <artension@gmail.com>
 
 	Changed to set 'server' type attribute for server logs like <body type="server">.

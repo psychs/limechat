@@ -12,6 +12,8 @@ class PreferenceDialog < NSObject
   attr_reader :m
   ib_outlet :window, :dcc_myaddress_caption, :sound_table
   ib_mapped_outlet :key_words, :key_dislike_words, :key_whole_line, :key_current_nick
+  ib_mapped_int_outlet :key_matching_method
+  ib_outlet :key_dislike_words_caption
   ib_mapped_int_outlet :dcc_address_detection_method
   ib_mapped_outlet :dcc_myaddress
   ib_mapped_int_outlet :dcc_first_port, :dcc_last_port
@@ -39,6 +41,7 @@ class PreferenceDialog < NSObject
     load
     update_myaddress
     update_transcript_folder
+    onKeyMatchingMethodChanged(nil)
     onLogTranscriptChanged(nil)
     onOverrideLogFontClicked(nil)
     onOverrideNickFormatClicked(nil)
@@ -72,6 +75,14 @@ class PreferenceDialog < NSObject
   
   def onCancel(sender)
     @window.close
+  end
+  
+  def onKeyMatchingMethodChanged(sender)
+    cond = @key_matching_method.selectedItem.tag != Preferences::Keyword::MATCH_EXACT_WORD
+    @key_dislike_words_caption.setTextColor(cond ? NSColor.controlTextColor : NSColor.disabledControlTextColor)
+    @key_dislike_words.setTextColor(cond ? NSColor.textColor : NSColor.disabledControlTextColor)
+    @key_dislike_words.setEditable(cond)
+    @key_dislike_words.setSelectable(cond)
   end
   
   def onDccAddressDetectionMethodChanged(sender)
@@ -271,7 +282,7 @@ class PreferenceDialog < NSObject
   
   def update_myaddress
     cond = @dcc_address_detection_method.selectedItem.tag == Preferences::Dcc::ADDR_DETECT_SPECIFY
-    @dcc_myaddress_caption.setTextColor(cond ? NSColor.textColor : NSColor.disabledControlTextColor)
+    @dcc_myaddress_caption.setTextColor(cond ? NSColor.controlTextColor : NSColor.disabledControlTextColor)
     @dcc_myaddress.setEnabled(cond)
   end
 end
