@@ -1,5 +1,10 @@
 2008-03-11  Satoshi Nakagawa <artension@gmail.com>
 
+	Added 'New Folder' button on the open dialog for transcripts location.
+	Changed priority of Growl notifications to 1 for highlight events.
+
+2008-03-11  Satoshi Nakagawa <artension@gmail.com>
+
 	Added opt-up/down for moving around histories.
 
 2008-03-11  Satoshi Nakagawa <artension@gmail.com>

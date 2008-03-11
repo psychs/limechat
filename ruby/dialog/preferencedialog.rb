@@ -97,6 +97,7 @@ class PreferenceDialog < NSObject
       @log_dialog.setCanChooseDirectories(true)
       @log_dialog.setResolvesAliases(true)
       @log_dialog.setAllowsMultipleSelection(false)
+      @log_dialog.setCanCreateDirectories(true)
       path = Pathname.new(@m.gen.transcript_folder.expand_path)
       dir = path.parent.to_s
       @log_dialog.beginForDirectory_file_types_modelessDelegate_didEndSelector_contextInfo(dir, nil, nil, self, 'transcriptFilePanelDidEnd:returnCode:contextInfo:', nil)

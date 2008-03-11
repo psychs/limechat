@@ -35,7 +35,7 @@ class GrowlController
     case kind
     when :highlight
       kind = GROWL_HIGHLIGHT
-      priority = 2
+      priority = 1
       sticky = true
       title = "Highlight: #{title}"
     when :newtalk
