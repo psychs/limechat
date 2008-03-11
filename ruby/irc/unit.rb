@@ -395,6 +395,7 @@ class IRCUnit < NSObject
         # open a new talk
         c = find_channel(target)
         unless c
+          @world.clear_text
           c = @world.create_talk(self, target)
         end
         @world.select(c)

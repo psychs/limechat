@@ -254,6 +254,10 @@ class IRCWorld < NSObject
     end
   end
   
+  def clear_text
+    @text.setStringValue('')
+  end
+  
   def input_text(s, cmd)
     return false unless @selected
     @selected.unit.input_text(s, cmd)
