@@ -57,7 +57,7 @@ end
 class IRCUnitConfig
   include AutoOpMatchable
   attr_accessor :name, :host, :port, :password, :nick, :alt_nicks, :username, :realname
-  attr_accessor :auto_connect, :encoding
+  attr_accessor :ssl, :auto_connect, :encoding
   attr_accessor :channels
   attr_accessor :leaving_comment, :userinfo, :invisible, :login_commands
   attr_accessor :autoop
@@ -67,6 +67,7 @@ class IRCUnitConfig
     @name = @host = @password = @nick = @username = @realname = ''
     @alt_nicks = []
     @port = 6667
+    @ssl = false
     @auto_connect = true
     @leaving_comment = 'Leaving...'
     @userinfo = ''

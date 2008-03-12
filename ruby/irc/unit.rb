@@ -214,6 +214,7 @@ class IRCUnit < NSObject
     host = host.split(' ')[0] if host
     @conn.host = host
     @conn.port = @config.port.to_i
+    @conn.ssl = @config.ssl
     @conn.open
   end
   

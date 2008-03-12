@@ -1,3 +1,7 @@
+2008-03-12  Satoshi Nakagawa <artension@gmail.com>
+
+	Added SSL support.
+
 2008-03-11  Satoshi Nakagawa <artension@gmail.com>
 
 	Fixed a bug, 'Reveal in Finder' menu action on the dcc dialog caused an exception.

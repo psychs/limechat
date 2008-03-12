@@ -46,7 +46,7 @@ typedef enum AsyncSocketError AsyncSocketError;
 -(NSRunLoop*) onSocket:(AsyncSocket*)sock wantsRunLoopForNewSocket:(AsyncSocket*)newSocket;
 
 /* Called when a socket is about to connect. This method should return YES to continue, or NO to abort. If aborted, will result in AsyncSocketCanceledError. */
--(BOOL) onSocketWillConnect:(AsyncSocket*)sock;
+-(void) onSocketWillConnect:(AsyncSocket*)sock;
 
 /* Called when a socket connects and is ready for reading and writing. "host" will be an IP address, not a DNS name. */
 -(void) onSocket:(AsyncSocket*)sock didConnectToHost:(NSString*)host port:(NSNumber*)port;
@@ -129,6 +129,9 @@ typedef enum AsyncSocketError AsyncSocketError;
 
 - (NSString*) localHost;
 - (NSNumber*) localPort;
+
+/* SSL support */
+- (void) useSSL;
 
 /* The following methods won't block. To not time out, use a negative time interval. If they time out, "onSocket:disconnectWithError:" is called. The tag is for your convenience. You can use it as an array index, step number, state id, pointer, etc., just like the socket's user data. */
 

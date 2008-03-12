@@ -80,6 +80,8 @@
 				<string>id</string>
 				<key>realnameText</key>
 				<string>id</string>
+				<key>sslCheck</key>
+				<string>id</string>
 				<key>upButton</key>
 				<string>id</string>
 				<key>userinfoText</key>

@@ -2,13 +2,14 @@
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
 class TcpClient < NSObject
-  attr_accessor :delegate, :host, :port
+  attr_accessor :delegate, :host, :port, :ssl
   attr_reader :send_queue_size
   
   def initialize
     @tag = 0
     @host = ''
     @port = 0
+    @ssl = false
     @send_queue_size = 0
   end
   
@@ -79,6 +80,9 @@ class TcpClient < NSObject
     @sock.isConnected != 0
   end
   
+  def onSocketWillConnect(sock)
+    sock.useSSL if @ssl
+  end
   
   def onSocket_didConnectToHost_port(sock, host, port)
     return unless check_tag(sock)

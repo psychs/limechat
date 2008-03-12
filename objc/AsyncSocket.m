@@ -628,9 +628,10 @@ Failed:;
   
   // Call the delegate method for further configuration.
   if ([theDelegate respondsToSelector:@selector(onSocketWillConnect:)])
-    if ([theDelegate onSocketWillConnect:self] == NO)
-      goto Aborted;
-  
+    [theDelegate onSocketWillConnect:self];
+//    if ([theDelegate onSocketWillConnect:self] == NO)
+//      goto Aborted;
+
   return YES;
   
 Aborted:;
@@ -1564,6 +1565,18 @@ static void MyCFWriteStreamCallback (CFWriteStreamRef stream, CFStreamEventType 
 {
   AsyncSocket *socket = (AsyncSocket*)pInfo;
   [socket doCFWriteStreamCallback:type forStream:stream];
+}
+
+- (void)useSSL
+{
+	CFReadStreamSetProperty(theReadStream, kCFStreamPropertySocketSecurityLevel, kCFStreamSocketSecurityLevelNegotiatedSSL);
+	CFWriteStreamSetProperty(theWriteStream, kCFStreamPropertySocketSecurityLevel, kCFStreamSocketSecurityLevelNegotiatedSSL);
+
+	NSMutableDictionary* settings = [[NSMutableDictionary allocWithZone:nil] init];
+	[settings setObject:[NSNumber numberWithBool:YES] forKey:(NSString *)kCFStreamSSLAllowsAnyRoot];
+
+	CFReadStreamSetProperty(theReadStream, kCFStreamPropertySSLSettings, (CFDictionaryRef)settings);
+	CFWriteStreamSetProperty(theWriteStream, kCFStreamPropertySSLSettings, (CFDictionaryRef)settings);
 }
 
 @end
