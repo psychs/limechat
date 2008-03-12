@@ -1,5 +1,9 @@
 2008-03-12  Satoshi Nakagawa <artension@gmail.com>
 
+	Removed opt-up/down because it interfered with ctrl-a/e.
+
+2008-03-12  Satoshi Nakagawa <artension@gmail.com>
+
 	Added SSL support.
 
 2008-03-11  Satoshi Nakagawa <artension@gmail.com>

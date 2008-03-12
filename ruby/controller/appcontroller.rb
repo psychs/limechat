@@ -267,14 +267,14 @@ class AppController < NSObject
   
   def control_textView_doCommandBySelector(control, textview, selector)
     case selector
-    when 'moveUp:','moveToBeginningOfParagraph:','moveBackward:'
+    when 'moveUp:'
       s = @history.up(@text.stringValue.to_s)
       if s
         @text.setStringValue(s)
         @world.select_text
       end
       true
-    when 'moveDown:','moveToEndOfParagraph:','moveForward:'
+    when 'moveDown:'
       s = @history.down(@text.stringValue.to_s)
       if s
         @text.setStringValue(s)
