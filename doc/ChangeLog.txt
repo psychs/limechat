@@ -1,3 +1,8 @@
+2008-03-14  Satoshi Nakagawa <artension@gmail.com>
+
+	Refactoring key handlers.
+	Added opt-up/down to move around histories.
+
 2008-03-12  Satoshi Nakagawa <artension@gmail.com>
 
 	Removed opt-up/down because it interfered with ctrl-a/e.

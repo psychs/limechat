@@ -185,6 +185,39 @@ class AppController < NSObject
     end
   end
   
+  def fieldEditorTextView_keyDown(e)
+    im = NSInputManager.currentInputManager
+    if !im || im.markedRange.empty?
+      m = e.modifierFlags
+      key = 0
+      key |= 1 if m & NSControlKeyMask > 0
+      key |= 2 if m & NSAlternateKeyMask > 0
+      key |= 4 if m & NSShiftKeyMask > 0
+      key |= 8 if m & NSCommandKeyMask > 0
+      
+      case key
+      when 0,2
+        case e.keyCode
+        when 125
+          s = @history.down(@text.stringValue.to_s)
+          if s
+            @text.setStringValue(s)
+            @world.select_text
+          end
+          return true
+        when 126
+          s = @history.up(@text.stringValue.to_s)
+          if s
+            @text.setStringValue(s)
+            @world.select_text
+          end
+          return true
+        end
+      end
+    end
+    false
+  end
+  
   UTF8_NETS = %w|freenode undernet quakenet mozilla ustream|
   
   def welcomeDialog_onOk(sender, c)
@@ -262,27 +295,6 @@ class AppController < NSObject
     unless s.empty?
       @history.add(s)
       @text.setStringValue('')
-    end
-  end
-  
-  def control_textView_doCommandBySelector(control, textview, selector)
-    case selector
-    when 'moveUp:'
-      s = @history.up(@text.stringValue.to_s)
-      if s
-        @text.setStringValue(s)
-        @world.select_text
-      end
-      true
-    when 'moveDown:'
-      s = @history.down(@text.stringValue.to_s)
-      if s
-        @text.setStringValue(s)
-        @world.select_text
-      end
-      true
-    else
-      false
     end
   end
   
@@ -514,6 +526,10 @@ class AppController < NSObject
     @window.register_key_handler(*args, &block)
   end
   
+  def input_handler(*args, &block)
+    @field_editor.register_key_handler(*args, &block)
+  end
+  
   def register_key_handlers
     handler(:home) { scroll(:home) }
     handler(:end) { scroll(:end) }
@@ -538,6 +554,27 @@ class AppController < NSObject
     handler(:space, :alt) { move(:down, :unread); true }
     handler(:space, :alt, :shift) { move(:up, :unread); true }
     handler('0'..'9', :cmd) {|n| @world.select_channel_at(n.to_s.to_i); true }
+    
+    input_handler(:up) { history_up; true }
+    input_handler(:up, :alt) { history_up; true }
+    input_handler(:down) { history_down; true }
+    input_handler(:down, :alt) { history_down; true }
+  end
+  
+  def history_up
+    s = @history.up(@text.stringValue.to_s)
+    if s
+      @text.setStringValue(s)
+      @world.select_text
+    end
+  end
+  
+  def history_down
+    s = @history.down(@text.stringValue.to_s)
+    if s
+      @text.setStringValue(s)
+      @world.select_text
+    end
   end
   
   def scroll(direction)

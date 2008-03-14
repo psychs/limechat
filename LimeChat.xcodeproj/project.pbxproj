@@ -24,6 +24,8 @@
 		7801DD2E0D1AF75F00D8691D /* isupportinfo.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7801DD2D0D1AF75F00D8691D /* isupportinfo.rb */; };
 		7805EE590D11FDCA000A9B55 /* pasternakclient.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7805EE580D11FDCA000A9B55 /* pasternakclient.rb */; };
 		7805EE5A0D11FDCA000A9B55 /* pasternakclient.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7805EE580D11FDCA000A9B55 /* pasternakclient.rb */; };
+		780CCA0E0D8A294000E4BA77 /* keyeventhandler.rb in Resources */ = {isa = PBXBuildFile; fileRef = 780CCA0D0D8A294000E4BA77 /* keyeventhandler.rb */; };
+		780CCA0F0D8A294000E4BA77 /* keyeventhandler.rb in Resources */ = {isa = PBXBuildFile; fileRef = 780CCA0D0D8A294000E4BA77 /* keyeventhandler.rb */; };
 		780D09F00C2F2C20007C0F4F /* splitter.rb in Resources */ = {isa = PBXBuildFile; fileRef = 780D09EF0C2F2C20007C0F4F /* splitter.rb */; };
 		78208C1A0C9D97CD004472E9 /* cocoasheet.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78208C190C9D97CD004472E9 /* cocoasheet.rb */; };
 		78211B530C5F3560004B47DA /* soundplayer.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78211B520C5F3560004B47DA /* soundplayer.rb */; };
@@ -262,6 +264,7 @@
 		7804271C0BCA810600C14486 /* GradientFill.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GradientFill.h; path = objc/GradientFill.h; sourceTree = "<group>"; };
 		7804271D0BCA810600C14486 /* GradientFill.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GradientFill.m; path = objc/GradientFill.m; sourceTree = "<group>"; };
 		7805EE580D11FDCA000A9B55 /* pasternakclient.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = pasternakclient.rb; sourceTree = "<group>"; };
+		780CCA0D0D8A294000E4BA77 /* keyeventhandler.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = keyeventhandler.rb; sourceTree = "<group>"; };
 		780D09EF0C2F2C20007C0F4F /* splitter.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = splitter.rb; sourceTree = "<group>"; };
 		7817A0390BF6FFCD005C7737 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/DccDialog.nib; sourceTree = "<group>"; };
 		781E254C0BE9E8E20040F56E /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/ModeSheet.nib; sourceTree = "<group>"; };
@@ -535,6 +538,7 @@
 		78229BA70C288188001DD4C3 /* lib */ = {
 			isa = PBXGroup;
 			children = (
+				780CCA0D0D8A294000E4BA77 /* keyeventhandler.rb */,
 				787817C70D860ED30049CF95 /* unicodeutil.rb */,
 				7805EE580D11FDCA000A9B55 /* pasternakclient.rb */,
 				782647CB0CFE86BB0052E598 /* pastieclient.rb */,
@@ -785,6 +789,7 @@
 				78287EB50D742DAA008D5656 /* Themes in Resources */,
 				78F59FE40D78144B0038AC1D /* markedscroller.rb in Resources */,
 				787817C80D860ED30049CF95 /* unicodeutil.rb in Resources */,
+				780CCA0E0D8A294000E4BA77 /* keyeventhandler.rb in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -878,6 +883,7 @@
 				78287EB60D742DAA008D5656 /* Themes in Resources */,
 				78F59FE50D78144B0038AC1D /* markedscroller.rb in Resources */,
 				787817C90D860ED30049CF95 /* unicodeutil.rb in Resources */,
+				780CCA0F0D8A294000E4BA77 /* keyeventhandler.rb in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
