@@ -1,3 +1,7 @@
+2008-03-16  Satoshi Nakagawa <artension@gmail.com>
+
+	Fixed a bug, log views dropped received lines before initializing.
+
 2008-03-14  Satoshi Nakagawa <artension@gmail.com>
 
 	Refactoring key handlers.

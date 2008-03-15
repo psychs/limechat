@@ -128,7 +128,7 @@ class LogController < NSObject
     body, key = build_body(line, unit, use_keyword)
     
     unless @loaded
-      @lines << [line, use_keyword]
+      @lines << [line, unit, use_keyword]
       return key
     end
     
