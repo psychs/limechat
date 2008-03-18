@@ -90,8 +90,7 @@ class LogController < NSObject
     doc = @view.mainFrame.DOMDocument
     return unless doc
     body = doc.body
-    scrollheight = body[:scrollHeight]
-    body[:scrollTop] = scrollheight
+    body[:scrollTop] = body[:scrollHeight]
   end
   
   BOTTOM_EPSILON = 20

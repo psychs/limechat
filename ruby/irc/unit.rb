@@ -562,6 +562,12 @@ class IRCUnit < NSObject
       send(cmd, s)
     when :join,:mode,:invite
       send(cmd, target, s)
+    when :whois
+      if s.include?(' ')
+        send(cmd, s)
+      else
+        send(cmd, "#{s} #{s}")
+      end
     else
       s = ':' + s if cut_colon
       send_raw(cmd, s)
