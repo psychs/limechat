@@ -9,7 +9,7 @@ class ServerDialog < NSObject
   attr_reader :uid
   ib_outlet :window
   ib_mapped_outlet :nameText, :hostCombo, :passwordText, :nickText, :usernameText, :realnameText, :auto_connectCheck, :sslCheck
-  ib_mapped_int_outlet :portText, :encodingCombo
+  ib_mapped_int_outlet :portText, :encodingCombo, :fallback_encodingCombo
   ib_mapped_outlet :leaving_commentText, :userinfoText, :invisibleCheck
   ib_mapped_outlet :login_commandsText
   ib_outlet :alt_nicksText
@@ -73,6 +73,7 @@ class ServerDialog < NSObject
     load
     update_connection_page
     update_channels_page
+    onEncodingComboChanged(nil)
     self.class.servers.each {|i| @hostCombo.addItemWithObjectValue(i.split(' ')[0]) }
     show
   end
@@ -120,6 +121,15 @@ class ServerDialog < NSObject
   
   def onHostComboChanged(sender)
     update_connection_page
+  end
+  
+  def onEncodingComboChanged(sender)
+    sel = @encodingCombo.selectedItem
+    if sel && sel.tag == NSUTF8StringEncoding
+      @fallback_encodingCombo.setEnabled(true)
+    else
+      @fallback_encodingCombo.setEnabled(false)
+    end
   end
   
   def update_connection_page

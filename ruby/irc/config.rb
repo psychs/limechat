@@ -57,7 +57,7 @@ end
 class IRCUnitConfig
   include AutoOpMatchable
   attr_accessor :name, :host, :port, :password, :nick, :alt_nicks, :username, :realname
-  attr_accessor :ssl, :auto_connect, :encoding
+  attr_accessor :ssl, :auto_connect, :encoding, :fallback_encoding
   attr_accessor :channels
   attr_accessor :leaving_comment, :userinfo, :invisible, :login_commands
   attr_accessor :autoop
@@ -76,14 +76,20 @@ class IRCUnitConfig
     @channels = []
     @autoop = []
     
-    @encoding = case LanguageSupport.primary_language
-    when 'ja'; NSISO2022JPStringEncoding
-    when 'ko'; -2147482590
-    when 'zh-Hans'; -2147482063
-    when 'zh-Hant'; -2147481085
-    #when 'ru'; -2147481086
+    @fallback_encoding = NSUTF8StringEncoding
+    
+    case LanguageSupport.primary_language
+    when 'ja'
+      @encoding = NSISO2022JPStringEncoding
+    when 'ko'
+      @encoding = -2147482590
+    when 'zh-Hans'
+      @encoding = -2147482063
+    when 'zh-Hant'
+      @encoding = -2147481085
     else
-      NSUTF8StringEncoding
+      @encoding = NSUTF8StringEncoding
+      @fallback_encoding = NSISOLatin1StringEncoding
     end
     
     seed.each do |k,v|

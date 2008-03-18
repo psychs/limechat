@@ -31,6 +31,8 @@
 				<string>id</string>
 				<key>onEdit</key>
 				<string>id</string>
+				<key>onEncodingComboChanged</key>
+				<string>id</string>
 				<key>onHostComboChanged</key>
 				<string>id</string>
 				<key>onOk</key>
@@ -59,6 +61,8 @@
 				<key>editButton</key>
 				<string>id</string>
 				<key>encodingCombo</key>
+				<string>id</string>
+				<key>fallback_encodingCombo</key>
 				<string>id</string>
 				<key>hostCombo</key>
 				<string>id</string>

@@ -1,3 +1,7 @@
+2008-03-19  Satoshi Nakagawa <artension@gmail.com>
+
+	Added fallback encoding.
+
 2008-03-16  Satoshi Nakagawa <artension@gmail.com>
 
 	Fixed a bug, log views dropped received lines before initializing.

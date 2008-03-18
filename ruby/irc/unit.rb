@@ -846,8 +846,15 @@ class IRCUnit < NSObject
   end
   
   def ircsocket_on_receive(m)
-    m.apply! {|i| to_local_encoding(i) }
-    m.apply! {|i| StringValidator::validate_utf8(i, 0x3f) }
+    if @encoding == NSUTF8StringEncoding &&
+        @config.fallback_encoding != NSUTF8StringEncoding &&
+        !StringValidator::valid_utf8?(m.to_s)
+      use_fallback = true
+    else
+      use_fallback = false
+    end
+    m.apply! {|i| to_local_encoding(i, use_fallback) }
+    m.apply! {|i| StringValidator::validate_utf8(i) }
     #puts m.to_s
     
     if m.numeric_reply > 0
@@ -901,10 +908,17 @@ class IRCUnit < NSObject
     s
   end
   
-  def to_local_encoding(s)
-    return s.dup if @encoding == NSUTF8StringEncoding
-    s = KanaSupport::to_iso2022(s) if @encoding == NSISO2022JPStringEncoding
-    NSString.stringWithCString_encoding(s, @encoding).to_s
+  def to_local_encoding(s, use_fallback=false)
+    enc = @encoding
+    if enc == NSUTF8StringEncoding
+      if use_fallback
+        enc = @config.fallback_encoding
+      else
+        return s.dup
+      end
+    end
+    s = KanaSupport::to_iso2022(s) if enc == NSISO2022JPStringEncoding
+    NSString.stringWithCString_encoding(s, enc).to_s
   end
   
   def reload_tree
