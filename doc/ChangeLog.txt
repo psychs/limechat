@@ -1,3 +1,7 @@
+2008-03-19  Kevin Ballard <kballard@gmail.com>
+
+	Added Rakefile and changed install path to /Applications.
+
 2008-03-19  Satoshi Nakagawa <artension@gmail.com>
 
 	Fixed a bug in utf-8 string validator.
