@@ -28,7 +28,7 @@ module StringValidator
         when 0xf0..0xf7 then rest = 3 ; code = c & 0x07 ; range = 0x10000..0x10ffff
         else                 ucs << malformed_chr; valid = false
         end
-      elsif 0x80..0xbf === c
+      elsif (0x80..0xbf) === c
         code = (code << 6) | (c & 0x3f)
         if (rest -= 1) <= 0
           if !(range === code) || (0xd800..0xdfff) === code

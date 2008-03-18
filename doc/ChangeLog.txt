@@ -1,5 +1,9 @@
 2008-03-19  Satoshi Nakagawa <artension@gmail.com>
 
+	Fixed a bug in utf-8 string validator.
+
+2008-03-19  Satoshi Nakagawa <artension@gmail.com>
+
 	Added fallback encoding.
 
 2008-03-16  Satoshi Nakagawa <artension@gmail.com>
