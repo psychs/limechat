@@ -93,6 +93,7 @@ class GrowlController
   end
 
   def growl_onClicked(sender, context)
+    @owner.window.makeKeyAndOrderFront(nil)
     NSApp.activateIgnoringOtherApps(true)
     
     if context == 'dcc'

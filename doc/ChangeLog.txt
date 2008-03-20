@@ -1,5 +1,9 @@
 2008-03-20  Satoshi Nakagawa <artension@gmail.com>
 
+	Changed to order front the main window when clicked on a growl notification.
+
+2008-03-20  Satoshi Nakagawa <artension@gmail.com>
+
 	Changed to not use nick format for transcripts.
 
 2008-03-19  Satoshi Nakagawa <artension@gmail.com>
