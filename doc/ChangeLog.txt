@@ -1,3 +1,7 @@
+2008-03-26  Satoshi Nakagawa <artension@gmail.com>
+
+	Assigned Cmd-w to close the window, and Cmd-Shift-w to close the current channel.
+
 2008-03-25  Satoshi Nakagawa <artension@gmail.com>
 
 	Changed /part without parameters to close the current talk.

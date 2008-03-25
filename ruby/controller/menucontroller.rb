@@ -313,10 +313,10 @@ class MenuController < NSObject
   def mainWindowChanged(mode)
     @main_window = mode
     if @main_window
-      @closeWindowItem.setKeyEquivalent('W')
-      @closeCurrentPanelItem.setKeyEquivalent('w')
+      #@closeWindowItem.setKeyEquivalent('w')
+      @closeCurrentPanelItem.setKeyEquivalent('W')
     else
-      @closeWindowItem.setKeyEquivalent('w')
+      #@closeWindowItem.setKeyEquivalent('w')
       @closeCurrentPanelItem.setKeyEquivalent('')
     end
   end
