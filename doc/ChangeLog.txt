@@ -1,3 +1,5 @@
+==== LimeChat 0.17.1 ====
+
 2008-03-26  Satoshi Nakagawa <artension@gmail.com>
 
 	Assigned Cmd-w to close the window, and Cmd-Shift-w to close the current channel.
