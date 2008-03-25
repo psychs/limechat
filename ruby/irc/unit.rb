@@ -435,7 +435,15 @@ class IRCUnit < NSObject
       else
         target = s.token!
       end
-    when :part,:topic
+    when :part
+      if sel && sel.channel? && !s.channelname?
+        target = sel.name
+      elsif sel && sel.talk? && !s.channelname?
+        @world.destroy_channel(sel)
+      else
+        target = s.token!
+      end
+    when :topic
       if sel && sel.channel? && !s.channelname?
         target = sel.name
       else

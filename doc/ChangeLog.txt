@@ -1,3 +1,8 @@
+2008-03-25  Satoshi Nakagawa <artension@gmail.com>
+
+	Changed /part without parameters to close the current talk.
+	On the paste dialog, changed "Privmsg command" and "Notice command" to "Send to channel" and "Send Notice to Channel" respectively.
+
 2008-03-20  Satoshi Nakagawa <artension@gmail.com>
 
 	Changed to order front the main window when clicked on a growl notification.
