@@ -1,5 +1,9 @@
 2008-03-27  Satoshi Nakagawa <artension@gmail.com>
 
+	Tweaked the menu title of close current panel.
+
+2008-03-27  Satoshi Nakagawa <artension@gmail.com>
+
 	Changed Cmd-w to close current panel without confirmation when the panel is a talk.
 
 2008-03-27  Satoshi Nakagawa <artension@gmail.com>
