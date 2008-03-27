@@ -331,7 +331,7 @@ class MenuController < NSObject
       # for the main window
       sel = @world.selected
       if sel && !sel.unit?
-        if sel.active?
+        if sel.channel? && sel.active?
           return unless NSRunAlertPanel('LimeChat', %|Do you want to close "#{sel.name}" ?|, 'Close', 'Cancel', nil) == NSAlertDefaultReturn
         end
         @world.destroy_channel(sel)
