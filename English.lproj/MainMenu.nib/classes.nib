@@ -71,6 +71,8 @@
 				<string>id</string>
 				<key>onCloseCurrentPanel</key>
 				<string>id</string>
+				<key>onCloseWindow</key>
+				<string>id</string>
 				<key>onConnect</key>
 				<string>id</string>
 				<key>onCopyAddress</key>

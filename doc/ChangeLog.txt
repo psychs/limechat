@@ -1,3 +1,8 @@
+2008-03-27  Satoshi Nakagawa <artension@gmail.com>
+
+	Changed to Cmd-w to close current panel with confirmation when the main window is foreground.
+	Changed to Cmd-Shift-w to close current panel without confirmation.
+
 ==== LimeChat 0.17.1 ====
 
 2008-03-26  Satoshi Nakagawa <artension@gmail.com>

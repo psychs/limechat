@@ -163,13 +163,19 @@ class AppController < NSObject
   end
   
   def windowDidBecomeMain(sender)
-    @menu.mainWindowChanged(true)
     @member_list.setNeedsDisplay(true)
   end
   
   def windowDidResignMain(sender)
-    @menu.mainWindowChanged(false)
     @member_list.setNeedsDisplay(true)
+  end
+  
+  def windowDidBecomeKey(sender)
+    @menu.keyWindowChanged(true)
+  end
+  
+  def windowDidResignKey(sender)
+    @menu.keyWindowChanged(false)
   end
   
   def fieldEditorTextView_paste(sender)

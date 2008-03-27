@@ -13,7 +13,7 @@ class MenuController < NSObject
     @server_dialogs = []
     @channel_dialogs = []
     @pastie_clients = []
-    @main_window = false
+    @key_window = false
   end
   
   def terminate
@@ -51,9 +51,16 @@ class MenuController < NSObject
       true
     when 201  # dcc
       true
-    when 202  # close current panel
+    when 202  # close current panel without confirmation
       sel = @world.selected
-      @main_window && sel && !sel.unit?
+      @key_window && sel && !sel.unit?
+    when 203  # close window / close current panel
+      if @key_window
+        true
+      else
+        sel = @world.selected
+        sel && !sel.unit?
+      end
     when 313  # paste
       return false unless NSPasteboard.generalPasteboard.availableTypeFromArray([NSStringPboardType])
       win = NSApp.keyWindow
@@ -310,14 +317,30 @@ class MenuController < NSObject
   end
   
   
-  def mainWindowChanged(mode)
-    @main_window = mode
-    if @main_window
-      #@closeWindowItem.setKeyEquivalent('w')
-      @closeCurrentPanelItem.setKeyEquivalent('W')
+  def keyWindowChanged(mode)
+    @key_window = mode
+    if @key_window
+      @closeWindowItem.setTitle(_(:CloseCurrentPanelMenuTitle))
     else
-      #@closeWindowItem.setKeyEquivalent('w')
-      @closeCurrentPanelItem.setKeyEquivalent('')
+      @closeWindowItem.setTitle(_(:CloseWindowMenuTitle))
+    end
+  end
+  
+  def onCloseWindow(sender)
+    if @key_window
+      # for the main window
+      sel = @world.selected
+      if sel && !sel.unit?
+        if sel.active?
+          return unless NSRunAlertPanel('LimeChat', %|Do you want to close "#{sel.name}" ?|, 'Close', 'Cancel', nil) == NSAlertDefaultReturn
+        end
+        @world.destroy_channel(sel)
+        @world.save
+      end
+    else
+      # for other windows
+      win = NSApp.keyWindow
+      win.performClose(sender) if win
     end
   end
   
