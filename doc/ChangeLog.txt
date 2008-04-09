@@ -1,3 +1,7 @@
+2008-04-09  Satoshi Nakagawa <artension@gmail.com>
+
+	Fixed a nil access bug.
+
 2008-03-27  Satoshi Nakagawa <artension@gmail.com>
 
 	Tweaked the menu title of close current panel.

@@ -369,6 +369,7 @@ class DccManager < NSObject
       return ''
     end
     i = list[row.to_i]
+    return '' unless i
     cell = col.dataCell
     cell.setStringValue((i.is_a?(DccReceiver) && i.status == :complete) ? i.download_filename.basename.to_s : i.filename)
     cell.setHighlighted(sender.isRowSelected(row))
