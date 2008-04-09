@@ -1,6 +1,6 @@
 2008-04-09  Satoshi Nakagawa <artension@gmail.com>
 
-	Fixed a nil access bug.
+	Fixed a nil access bug in DccManager#tableView_objectValueForTableColumn_row.
 
 2008-03-27  Satoshi Nakagawa <artension@gmail.com>
 
