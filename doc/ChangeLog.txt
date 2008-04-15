@@ -1,3 +1,5 @@
+==== LimeChat 0.17.2 ====
+
 2008-04-15  Satoshi Nakagawa <artension@gmail.com>
 
 	Fixed a bug, my address was forgotten after reconnecting.
