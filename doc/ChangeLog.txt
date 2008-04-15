@@ -1,3 +1,7 @@
+2008-04-15  Satoshi Nakagawa <artension@gmail.com>
+
+	Fixed a bug, my address was forgotten after reconnecting.
+
 2008-04-09  Satoshi Nakagawa <artension@gmail.com>
 
 	Fixed a nil access bug in DccManager#tableView_objectValueForTableColumn_row.

@@ -1314,7 +1314,7 @@ class IRCUnit < NSObject
     @connecting = @connected = @login = @quitting = false
     @mynick = @sentnick = ''
     @trying_nick = -1
-    @myaddress = @join_address = nil
+    @join_address = nil
     @mymode.clear
     @in_whois = false
     @identify_msg = false
