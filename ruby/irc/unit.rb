@@ -259,6 +259,18 @@ class IRCUnit < NSObject
     send(:part, channel.name, comment)
   end
   
+  def kick(chname, nick, comment=nil)
+    if comment
+      send(:kick, chname, nick)
+    else
+      send(:kick, chname, nick, comment)
+    end
+  end
+  
+  def ban(chname, nick, user, address)
+    send(:mode, chname, "+b #{nick}!#{user}@#{address}")
+  end
+  
   def change_op(channel, members, mode, plus)
     return unless login? && channel && channel.active? && channel.channel? && channel.op?
     members = members.map {|n| String === n ? channel.find_member(n) : n }

@@ -151,20 +151,19 @@ class MenuController < NSObject
     when 802
       true
       
-    when 2001  # member whois
+    # for members
+    when 2001,2002  # whois, talk
       login_unit_chtalk && count_selected_members?(i)
-    when 2002  # member talk
-      login_unit_chtalk && count_selected_members?(i)
-    when 2003  # member giveop
-      op && count_selected_members?(i)
-    when 2004  # member deop
+    when 2003,2004  # giveop, deop
       op && count_selected_members?(i)
     when 2011  # dcc send file
       login_unit_chtalk && count_selected_members?(i) && !!u.myaddress
     when 2101..2105  # ctcp
       login_unit_chtalk && count_selected_members?(i)
-    when 2021  # register to auto op
-      active_channel && count_selected_members?(i)
+    when 2031  # kick
+      op && count_selected_members?(i)
+    when 2032,2033  # ban, kick & ban
+      op && count_selected_members?(i) && c.who_init
     
     when 3001  # copy url
       true
@@ -835,6 +834,36 @@ class MenuController < NSObject
   
   def onMemberDeop(sender)
     change_op(sender, :o, false)
+  end
+  
+  def apply_op(sender)
+  end
+  
+  def onMemberKick(sender)
+    u, c = @world.sel
+    return unless u && u.login? && c && c.active? && c.channel? && c.op?
+    ary = selected_members(sender)
+    ary.each {|i| u.kick(c.name, i.nick) }
+    deselect_members(sender)
+  end
+  
+  def onMemberBan(sender)
+    u, c = @world.sel
+    return unless u && u.login? && c && c.active? && c.channel? && c.op? && c.who_init
+    ary = selected_members(sender)
+    ary.each {|i| u.ban(c.name, '*', '*', i.address) }
+    deselect_members(sender)
+  end
+  
+  def onMemberKickBan(sender)
+    u, c = @world.sel
+    return unless u && u.login? && c && c.active? && c.channel? && c.op? && c.who_init
+    ary = selected_members(sender)
+    ary.each do |i|
+      u.ban(c.name, '*', '*', i.address)
+      u.kick(c.name, i.nick)
+    end
+    deselect_members(sender)
   end
   
   def onMemberSendFile(sender)

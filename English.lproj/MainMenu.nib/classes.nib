@@ -109,11 +109,17 @@
 				<string>id</string>
 				<key>onMemberAutoOp</key>
 				<string>id</string>
+				<key>onMemberBan</key>
+				<string>id</string>
 				<key>onMemberClientInfo</key>
 				<string>id</string>
 				<key>onMemberDeop</key>
 				<string>id</string>
 				<key>onMemberGiveOp</key>
+				<string>id</string>
+				<key>onMemberKick</key>
+				<string>id</string>
+				<key>onMemberKickBan</key>
 				<string>id</string>
 				<key>onMemberPing</key>
 				<string>id</string>

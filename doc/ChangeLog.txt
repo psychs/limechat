@@ -1,3 +1,7 @@
+2008-04-15  Satoshi Nakagawa <artension@gmail.com>
+
+	Added Kick, Ban and Kick & Ban in the context menu on the member list.
+
 ==== LimeChat 0.17.2 ====
 
 2008-04-15  Satoshi Nakagawa <artension@gmail.com>
