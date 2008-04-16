@@ -84,7 +84,7 @@ class ISupportInfo
               if op_mode?(c)
                 ary << {:mode => c, :plus => plus, :param => str.token!, :op_mode => true}
               elsif has_param?(c, plus)
-                ary << {:mode => c, :plus => plus, :param => str.token!}
+                ary << {:mode => c, :plus => plus, :param => str.token!, :user_mask => (@modemap[c] == 0)}
               else
                 ary << {:mode => c, :plus => plus}
               end

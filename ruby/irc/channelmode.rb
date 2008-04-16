@@ -29,7 +29,7 @@ class ChannelMode
   def update(modestr)
     i = @info.parse_modestr(modestr)
     i.each do |h|
-      unless h[:op_mode]
+      if !h[:op_mode] && !h[:user_mask]
         mode = h[:mode]
         plus = h[:plus]
         case mode

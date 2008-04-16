@@ -1,3 +1,7 @@
+2008-04-16  Satoshi Nakagawa <artension@gmail.com>
+
+	Fixed a bug, "MODE +a user" should be considered as setting an user mask.
+
 2008-04-15  Satoshi Nakagawa <artension@gmail.com>
 
 	Added Kick, Ban and Kick & Ban in the context menu on the member list.
