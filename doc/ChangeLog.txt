@@ -1,5 +1,9 @@
 2008-04-16  Satoshi Nakagawa <artension@gmail.com>
 
+	Improved the last fix.
+
+2008-04-16  Satoshi Nakagawa <artension@gmail.com>
+
 	Fixed a bug, "MODE +a user" should be considered as setting an user mask.
 
 2008-04-15  Satoshi Nakagawa <artension@gmail.com>

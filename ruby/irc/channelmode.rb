@@ -29,21 +29,23 @@ class ChannelMode
   def update(modestr)
     i = @info.parse_modestr(modestr)
     i.each do |h|
-      if !h[:op_mode] && !h[:user_mask]
+      unless h[:op_mode]
         mode = h[:mode]
         plus = h[:plus]
-        case mode
-        when *SIMPLE_MODES
+        if h[:simple_mode] && SIMPLE_MODES.include?(mode)
           instance_variable_set("@#{mode}", plus)
-        when :k
-          param = h[:param] || ''
-          @k = plus ? param : ''
-        when :l
-          if plus
-            param = h[:param] || 0
-            @l = param.to_i
-          else
-            @l = 0
+        else
+          case mode
+          when :k
+            param = h[:param] || ''
+            @k = plus ? param : ''
+          when :l
+            if plus
+              param = h[:param] || 0
+              @l = param.to_i
+            else
+              @l = 0
+            end
           end
         end
       end
