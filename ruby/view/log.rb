@@ -343,7 +343,8 @@ class LogController < NSObject
       view.setAllowsHorizontalScrolling(false)
       old = view.verticalScroller
       if old && !old.is_a?(MarkedScroller)
-        @scroller = MarkedScroller.alloc.initWithFrame(old.frame)
+        # new scroller needs to be initialized with enough frame
+        @scroller = MarkedScroller.alloc.initWithFrame(NSRect.new(0,0,16,32))
         @scroller.dataSource = self
         @scroller.setFloatValue_knobProportion(old.floatValue, old.knobProportion)
         view.setVerticalScroller(@scroller)

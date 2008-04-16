@@ -1,5 +1,9 @@
 2008-04-16  Satoshi Nakagawa <artension@gmail.com>
 
+	Fixed a bug, the scrollers of log views won't be rendered correctly when initialized with not enough frame.
+
+2008-04-16  Satoshi Nakagawa <artension@gmail.com>
+
 	Improved the last fix.
 
 2008-04-16  Satoshi Nakagawa <artension@gmail.com>
