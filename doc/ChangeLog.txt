@@ -1,5 +1,9 @@
 2008-04-17  Satoshi Nakagawa <artension@gmail.com>
 
+	Fixed a bug, marked scrollers were visible on the top-left corner of log views when initialized.
+
+2008-04-17  Satoshi Nakagawa <artension@gmail.com>
+
 	Changed the format of text messages for Growl notifications to "<nick> msg".
 
 2008-04-16  Satoshi Nakagawa <artension@gmail.com>
