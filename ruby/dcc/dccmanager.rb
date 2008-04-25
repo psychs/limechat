@@ -212,6 +212,9 @@ class DccManager < NSObject
   end
   
   def add_sender(uid, nick, file, auto_open=true)
+    size = FileTest.size?(file)
+    return if !size || size == 0
+    
     c = DccSender.new
     c.pref = @pref
     c.delegate = self

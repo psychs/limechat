@@ -1,3 +1,7 @@
+2008-04-25  Satoshi Nakagawa <artension@gmail.com>
+
+	Fixed a crash, dropped symlinks on the member list should be ignored for DCC send.
+
 2008-04-17  Satoshi Nakagawa <artension@gmail.com>
 
 	Fixed a bug, marked scrollers were visible on the top-left corner of log views when initialized.
