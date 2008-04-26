@@ -1878,7 +1878,11 @@ class IRCUnit < NSObject
         idle = ''
       end
       signon = signonstr.to_i
-      signon = signon > 0 ? Time.at(signon).strftime('%Y/%m/%d %H:%M:%S') : ''
+      if signon.is_a?(Fixnum) && signon > 0
+        signon = Time.at(signon).strftime('%Y/%m/%d %H:%M:%S')
+      else
+        signon = ''
+      end
       if @in_whois
         d = find_whois_dialog(nick)
         if d
@@ -1927,9 +1931,12 @@ class IRCUnit < NSObject
     when 329  # hemp? channel creation time
       chname = m[1]
       timestr = m[2]
-      time = Time.at(timestr.to_i)
-      c = find_channel(chname)
-      print_both(c || chname, :reply, "Created at: #{time.strftime('%Y/%m/%d %H:%M:%S')}")
+      timenum = timestr.to_i
+      if timenum.is_a?(Fixnum)
+        time = Time.at(timenum)
+        c = find_channel(chname)
+        print_both(c || chname, :reply, "Created at: #{time.strftime('%Y/%m/%d %H:%M:%S')}")
+      end
     when 331  # RPL_NOTOPIC
       chname = m[1]
       c = find_channel(chname)
@@ -1952,9 +1959,12 @@ class IRCUnit < NSObject
       setter = m[2]
       timestr = m[3]
       nick = setter[/^[^!@]+/]
-      time = Time.at(timestr.to_i)
-      c = find_channel(chname)
-      print_both(c || chname, :reply, "#{nick} set the topic at: #{time.strftime('%Y/%m/%d %H:%M:%S')}")
+      timenum = timestr.to_i
+      if timenum.is_a?(Fixnum)
+        time = Time.at(timenum)
+        c = find_channel(chname)
+        print_both(c || chname, :reply, "#{nick} set the topic at: #{time.strftime('%Y/%m/%d %H:%M:%S')}")
+      end
     when 353  # RPL_NAMREPLY
       chname = m[2]
       trail = m[3].strip

@@ -1,3 +1,7 @@
+2008-04-26  Satoshi Nakagawa <artension@gmail.com>
+
+	Fixed a bug, parameters for Time.at should be Fixnum.
+
 2008-04-25  Satoshi Nakagawa <artension@gmail.com>
 
 	Fixed a crash, dropped symlinks on the member list should be ignored for DCC send.
