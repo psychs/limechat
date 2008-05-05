@@ -1,3 +1,7 @@
+2008-05-06  Satoshi Nakagawa <artension@gmail.com>
+
+	Assigned Cmd+E to copy the selection.
+
 2008-05-01  Satoshi Nakagawa <artension@gmail.com>
 
 	Changed to not use channels for nick completion.
