@@ -165,6 +165,8 @@
 				<string>id</string>
 				<key>onTopic</key>
 				<string>id</string>
+				<key>onUseSelectionForFind</key>
+				<string>id</string>
 			</dict>
 			<key>CLASS</key>
 			<string>MenuController</string>

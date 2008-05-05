@@ -75,6 +75,18 @@ class MenuController < NSObject
         end
       end
       false
+    when 324  # use selection for find
+      win = NSApp.keyWindow
+      return false unless win
+      t = win.firstResponder
+      return false unless t
+      case t
+      when OSX::WebHTMLView
+        return true
+      else
+        return true if t.respondsToSelector('writeSelectionToPasteboard:type:')
+      end
+      false
     when 331  # search in google
       t = current_webview
       return false unless t
@@ -430,6 +442,31 @@ class MenuController < NSObject
     s = @text.stringValue
     @text.setStringValue('')
     start_paste_dialog(sel.unit.mynick, sel.unit.id, sel.id, s, :edit)
+  end
+  
+  def onUseSelectionForFind(sender)
+    win = NSApp.keyWindow
+    return unless win
+    t = win.firstResponder
+    return unless t
+    
+    case t
+    when OSX::WebHTMLView
+      while t = t.superview
+        if t.is_a?(LogView)
+          pb = NSPasteboard.pasteboardWithName(NSFindPboard)
+          pb.declareTypes_owner([NSStringPboardType], nil)
+          pb.setString_forType(t.selection, NSStringPboardType)
+          break
+        end
+      end
+    else
+      if t.respondsToSelector('writeSelectionToPasteboard:type:')
+        pb = NSPasteboard.pasteboardWithName(NSFindPboard)
+        pb.declareTypes_owner([NSStringPboardType], nil)
+        t.writeSelectionToPasteboard_type(pb, NSStringPboardType)
+      end
+    end
   end
   
   def onPasteMyAddress(sender)

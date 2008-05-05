@@ -22,4 +22,15 @@ class LogView < WebView
   def clearSel
     setSelectedDOMRange_affinity(nil, OSX::NSSelectionAffinityDownstream)
   end
+  
+  def selection
+    sel = selectedDOMRange.cloneContents
+    return nil unless sel
+    iter = selectedFrame.DOMDocument.createNodeIterator_whatToShow_filter_expandEntityReferences(sel, OSX::DOM_SHOW_TEXT, nil, true)
+    s = ''
+    while node = iter.nextNode
+      s << node.nodeValue
+    end
+    s.empty? ? nil : s
+  end
 end

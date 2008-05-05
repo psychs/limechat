@@ -1,5 +1,9 @@
 2008-05-06  Satoshi Nakagawa <artension@gmail.com>
 
+	Cmd+E should use NSFindPboard.
+
+2008-05-06  Satoshi Nakagawa <artension@gmail.com>
+
 	Assigned Cmd+E to copy the selection.
 
 2008-05-01  Satoshi Nakagawa <artension@gmail.com>
