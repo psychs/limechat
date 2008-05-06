@@ -326,16 +326,28 @@ module LogRenderer
   end
   
   def alphabetical?(s)
-    if s.size == 1
+    case s.size
+    when 1
       if s =~ /\A[a-zA-Z]\z/
         return true
       else
         return false
       end
-    else
+    when 2..3
       s = NKF.nkf('-W -w16', s)
       code = s[0] * 256 + s[1]
       UnicodeUtil.alphabetical?(code)
+    else
+      s = NKF.nkf('-W -w16', s)
+      return false if s.length != 4
+      high = s[0] * 256 + s[1]
+      low = s[2] * 256 + s[3]
+      if (0xd800..0xdbff) === high && (0xdc00..0xdfff) === low
+        code = (high - 0xd800) * 0x400 + (low - 0xdc00) + 0x10000
+        UnicodeUtil.alphabetical?(code)
+      else
+        false
+      end
     end
   end
 

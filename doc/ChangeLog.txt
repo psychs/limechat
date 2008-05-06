@@ -1,5 +1,9 @@
 2008-05-06  Satoshi Nakagawa <artension@gmail.com>
 
+	Supported non-BMP characters for exact word matching.
+
+2008-05-06  Satoshi Nakagawa <artension@gmail.com>
+
 	Cmd+E should use NSFindPboard.
 
 2008-05-06  Satoshi Nakagawa <artension@gmail.com>
