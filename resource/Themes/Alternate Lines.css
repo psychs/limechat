@@ -1,0 +1,3 @@
+.line[alternate=even] { background-color: #fff; }
+.line[alternate=odd] { background-color: #eef; }
+.line[alternate=even], .line[alternate=odd] { padding-top: 1px; padding-bottom: 1px; }

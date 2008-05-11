@@ -1,0 +1,13 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {onCancel = id; onOk = id; }; 
+            CLASS = CommentSheet; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {label = id; sheet = id; text = id; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
+    ); 
+    IBVersion = 1; 
+}

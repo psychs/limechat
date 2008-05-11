@@ -1,0 +1,13 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {onCancel = id; onOk = id; }; 
+            CLASS = NickSheet; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {currentNickText = id; newNickText = id; sheet = id; }; 
+            SUPERCLASS = NSObject; 
+        }
+    ); 
+    IBVersion = 1; 
+}
