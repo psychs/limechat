@@ -325,7 +325,7 @@ module LogRenderer
     al <= bl && bl < ar || al < br && br <= ar || bl <= al && al < br || bl < ar && ar <= br
   end
   
-  def alphabetical?(s)
+  def alphabetic?(s)
     case s.size
     when 1
       if s =~ /\A[a-zA-Z]\z/
@@ -336,7 +336,7 @@ module LogRenderer
     when 2..3
       s = NKF.nkf('-W -w16', s)
       code = s[0] * 256 + s[1]
-      UnicodeUtil.alphabetical?(code)
+      UnicodeUtil.alphabetic?(code)
     else
       s = NKF.nkf('-W -w16', s)
       return false if s.length != 4
@@ -344,7 +344,7 @@ module LogRenderer
       low = s[2] * 256 + s[3]
       if (0xd800..0xdbff) === high && (0xdc00..0xdfff) === low
         code = (high - 0xd800) * 0x400 + (low - 0xdc00) + 0x10000
-        UnicodeUtil.alphabetical?(code)
+        UnicodeUtil.alphabetic?(code)
       else
         false
       end
@@ -368,9 +368,9 @@ module LogRenderer
         ok = true
         
         if exact_word_match
-          if !pre.empty? && alphabetical?(w.first_char) && alphabetical?(pre.last_char)
+          if !pre.empty? && alphabetic?(w.first_char) && alphabetic?(pre.last_char)
             ok = false
-          elsif !post.empty? && alphabetical?(w.last_char) && alphabetical?(post.first_char)
+          elsif !post.empty? && alphabetic?(w.last_char) && alphabetic?(post.first_char)
             ok = false
           end
         end

@@ -90,7 +90,7 @@ ary << [res, 'OTHERS_TABLE']
 
 puts <<-EOM
 
-  def alphabetical?(code)
+  def alphabetic?(code)
     table = case code
 EOM
 ary.each do |i|

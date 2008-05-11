@@ -345,7 +345,7 @@ module UnicodeUtil
     0x1d7c4..0x1d7cb,
   ]
 
-  def alphabetical?(code)
+  def alphabetic?(code)
     table = case code
     when 0x41..0x2ee
       TABLE1
