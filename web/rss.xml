@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>LimeChat</title>
+    <link>http://limechat.sourceforge.net/</link>
+    <description>Change Log of LimeChat</description>
+    <language>en-us</language>
+
+    <item>
+      <title>0.17</title>
+      <link>http://limechat.sourceforge.net/#v0.17</link>
+      <pubDate>Mon, 03 Mar 2008 21:51:00 +0900</pubDate>
+      <content:encoded><![CDATA[
+  			<ul>
+  				<li>Fixed a crashing bug on 10.4, when pushed [+] button on the startup dialog.</li>
+  				<li>Implemented drawing highlight indicators on a vertical scroller of log views.</li>
+  				<li>Enabled continuous spell checking by default.</li>
+  				<li>Now we can rearrange servers and channels on the server tree.</li>
+  				<li>Added a filter text field on the channel list dialog.</li>
+  				<li>Added an option, "Auto accept file transfers".</li>
+  				<li>Added "Open File" menu item for receiving items on the dcc dialog.</li>
+  				<li>Added "Reveal in Finder" menu item for receiving items on the dcc dialog.</li>
+  				<li>Assigned double click to reveal a file in Finder on the dcc receiving transfer list.</li>
+  				<li>Reformed main menu.</li>
+  				<li>Assigned cmd+W to "Close Current Panel" when the main window is active.</li>
+  				<li>Added a menu item, 'Copy Log as HTML'.</li>
+  				<li>Added a menu item, 'Mark All as Read'.</li>
+  				<li>Changed shortcut key for 'Mark Scrollback' to cmd+L, and 'Clear Mark' to cmd+shift+L as well.</li>
+  				<li>Changed to show the paste dialog on opt-return.</li>
+  				<li>Changed to select 'privmsg' as the default syntax when the paste dialog is not for paste.</li>
+  				<li>Reformed the html template for log views.</li>
+  				<li>New style action messages.</li>
+  				<li>Moved the themes directory from '~/Library/LimeChat/Theme' to '~/Library/Application Support/LimeChat/Themes'.</li>
+  				<li>Changed the default nick format to '%n: '.</li>
+  				<li>More smaller font for the member list.</li>
+  				<li>Removed '*' in the head of system messages.</li>
+  				<li>Removed a server name from place part in the console log.</li>
+  				<li>Now mIRC color effects can be styled in css.</li>
+  				<li>Added "colornumber" attribute to span.sender for coloring each nick with different colors.</li>
+  				<li>Added "identified" attribute in log view's html for CAPAB IDENTIFY-MSG support.</li>
+  				<li>Added HTML4 color names support for YAML themes.</li>
+  				<li>Changed to allow rgb() and rgba() strings in YAML theme files.</li>
+  				<li>Changed /query without parameters to close the current talk.</li>
+  				<li>Changed to remember the current text if modified when pushed up key.</li>
+  				<li>Now a scroll position is kept when received a new line and removed the first line.</li>
+  				<li>Changed to retain input text when changed the current channel, and restore it when come back to the channel.</li>
+  				<li>Use the current username for nick on the startup dialog.</li>
+  				<li>Added support for CAPAB IDENTIFY-MSG and CAPAB IDENTIFY-CTCP.</li>
+  				<li>Now 401 error is printed in a talk log when there is a talk item for the target.</li>
+  				<li>Don't change servers when closing a channel.</li>
+  				<li>Fixed a bug, an effect stopping character should not render as an end tag when there is no effect.</li>
+  				<li>Fixed a bug, the input text field should be scrolled on nick completion.</li>
+  			</ul>
+      ]]></content:encoded>
+    </item>
+
+    <item>
+      <title>0.16.2</title>
+      <link>http://limechat.sourceforge.net/#v0.16.2</link>
+      <pubDate>Sat, 16 Feb 2008 11:54:00 +0900</pubDate>
+      <content:encoded><![CDATA[
+  			<ul>
+          <li>Added new connection dialog for the first start up.</li>
+          <li>Added +q/+a channel modes support for Unreal IRCd.</li>
+          <li>Added /query support.</li>
+          <li>Added an option, don't show notifications when the application is active.</li>
+          <li>Prohibit adding a member when received join in a mode +a channel.</li>
+          <li>Changed to clear member list when received mode +a.</li>
+          <li>Changed to rebuild member list when received mode -a.</li>
+          <li>Changed to keep selection when a log view become not focused.</li>
+          <li>Added note for the encoding setting.</li>
+          <li>Fixed a method not found bug while formatting '%@'.</li>
+  			</ul>
+      ]]></content:encoded>
+    </item>
+
+    <item>
+      <title>0.16</title>
+      <link>http://limechat.sourceforge.net/#v0.16</link>
+      <pubDate>Sun, 03 Feb 2008 17:50:00 +0900</pubDate>
+      <content:encoded><![CDATA[
+  			<ul>
+          <li>Fixed a number format bug, "0.format_size" caused an exception.</li>
+          <li>Changed to send whois for a pointed member when doubleclicked on the member list.</li>
+          <li>Improved the report dialog of SACrashReporter.</li>
+  			</ul>
+      ]]></content:encoded>
+    </item>
+
+    <item>
+      <title>0.15</title>
+      <link>http://limechat.sourceforge.net/#v0.15</link>
+      <pubDate>Fri, 01 Feb 2008 12:20:00 +0900</pubDate>
+      <content:encoded><![CDATA[
+  			<ul>
+          <li>Added major servers to the server list on the server properties dialog.</li>
+          <li>Added ISO-8859-1 as a server encoding.</li>
+          <li>Added '%9n', '%-9n' and '%@' for nick format.</li>
+          <li>Removed target channel completion for text commands except /me.</li>
+          <li>Made sorting nicks for auto completion stable.</li>
+          <li>Added an exception handler in completing nick for safety.</li>
+          <li>Changed to allow '@' in nickname.</li>
+          <li>Changed to append a pasted url in the input text field.</li>
+          <li>Stopped periodical GC sweeps.</li>
+          <li>Stopped printing the end of who message, "Members list has been initialized".</li>
+          <li>Changed to not open a talk for 'NickServ' or 'ChanServ' when sending a command.</li>
+          <li>Changed to not match a domain name followed by an alphabet or a digit.</li>
+          <li>Fixed a bug, the selected item in the server tree should be initialized.</li>
+          <li>Improved implementation of custom cells in table views to watch copyWithZone.</li>
+          <li>Fixed a bug, disconnect menu didn't work while connecting.</li>
+          <li>Fixed a bug, autoop masks should ignore case.</li>
+          <li>Fixed a nil access bug when updating a nick completion weight.</li>
+  			</ul>
+      ]]></content:encoded>
+    </item>
+
+    <item>
+      <title>0.14.2</title>
+      <link>http://limechat.sourceforge.net/#v0.14.2</link>
+      <pubDate>Thu, 27 Dec 2007 18:46:00 +0900</pubDate>
+      <content:encoded><![CDATA[
+  			<ul>
+          <li>Added target channel completion when sending raw commands.</li>
+          <li>Added "Message scrollback" option.</li>
+          <li>Fixed a nil access bug with old WebKit, when changing theme in log.rb.</li>
+          <li>Changed the default transcript directory to ~/Library/LimeChat/Transcripts.</li>
+          <li>Changed the url regex to disallow parentheses, brackets, braces and etc in the end.</li>
+          <li>Improved to avoid nick changing loop when nick collisions occurred.</li>
+          <li>Changed to use nickname length and modes count in 005(RPL_ISUPPORT) replies.</li>
+  			</ul>
+      ]]></content:encoded>
+    </item>
+
+    <item>
+      <title>0.14.1</title>
+      <link>http://limechat.sourceforge.net/#v0.14.1</link>
+      <pubDate>Wed, 19 Dec 2007 21:27:00 +0900</pubDate>
+      <content:encoded><![CDATA[
+  			<ul>
+          <li>Improved the logic for nick completion. Now it also takes account of the conversations not for you.</li>
+          <li>Added a workaround for WebKit of Safari 2.</li>
+  			</ul>
+      ]]></content:encoded>
+    </item>
+
+    <item>
+      <title>0.14</title>
+      <link>http://limechat.sourceforge.net/#v0.14</link>
+      <pubDate>Wed, 19 Dec 2007 01:31:00 +0900</pubDate>
+      <content:encoded><![CDATA[
+  			<ul>
+          <li>Added the "Deep Ocean" theme.</li>
+          <li>Switched pasting services from Pastie to Pasternak. (Thanks to Eloy Duran)</li>
+          <li>Added "Override nickname format" option.</li>
+          <li>Added nickname format settings in a theme.</li>
+          <li>Added gradient color settings for member list selected items in a theme.</li>
+          <li>Added "Reload Theme" menu item under View.</li>
+          <li>Added @nick style conversation tracking for the nick completion.</li>
+          <li>Improved SACrashReporter to ignore SignalException.</li>
+          <li>Improved log rendering performance.</li>
+          <li>Changed max lines of log views to 500.</li>
+          <li>Fixed a bug, weights for completion didn't work correctly.</li>
+          <li>Fixed a nil access bug in starting up.</li>
+          <li>Fixed a name error when received a kill command.</li>
+  			</ul>
+      ]]></content:encoded>
+    </item>
+
+    <item>
+      <title>0.13.1</title>
+      <link>http://limechat.sourceforge.net/#v0.13.1</link>
+      <pubDate>Thu, 13 Dec 2007 21:15:00 +0900</pubDate>
+      <content:encoded><![CDATA[
+        <ul>
+          <li>Fixed a nil access bug in drawing the member list on starting up.</li>
+        </ul>
+      ]]></content:encoded>
+    </item>
+
+    <item>
+      <title>0.13</title>
+      <link>http://limechat.sourceforge.net/#v0.13</link>
+      <pubDate>Thu, 13 Dec 2007 20:20:00 +0900</pubDate>
+      <content:encoded><![CDATA[
+        <ul>
+          <li>Added theme.</li>
+          <li>Added the override log font option.</li>
+          <li>Improved encoding choices.</li>
+          <li>Implemented cmd+'+'/'-' to change the font size.</li>
+          <li>Changed to print operator marks and nick names separately in the member list.</li>
+          <li>Changed to split a text message if the message is too long.</li>
+          <li>Changed to highlight a current nickname in priority.</li>
+          <li>Changed to parse raw commands.</li>
+          <li>Changed not to do wordwrap for addresses in log views.</li>
+          <li>Changed the url regex to disallow double quotes.</li>
+          <li>Changed to put received files into ~/Downloads if it exists.</li>
+          <li>Changed max lines of log views to 300. (Due to save memory consumption)</li>
+          <li>Added compatibility stuff for old RubyCocoa releases.</li>
+          <li>Fixed a bug, pasting multi line text to the input text field caused an exception.</li>
+          <li>Fixed a bug, NaN should be treated as 0 for height of log views.</li>
+          <li>Fixed a bug, the nick sheet won't show after right clicked on a log view</li>
+          <li>Fixed a nil access bug, when the parameters of a message are too few.</li>
+          <li>Fixed a bug, an empty string should be rejected for a raw command.</li>
+        </ul>
+      ]]></content:encoded>
+    </item>
+
+    <item>
+      <title>0.12</title>
+      <link>http://limechat.sourceforge.net/#v0.12</link>
+      <pubDate>Fri, 30 Nov 2007 03:33:00 +0900</pubDate>
+      <content:encoded><![CDATA[
+        <ul>
+          <li>Improved the paste dialog to remain showed while requesting to Pastie.</li>
+          <li>Improved the paste dialog to show error messages on it.</li>
+          <li>Changed to send current nickname to Pastie.</li>
+          <li>Fixed a bug, NSURLRequestReloadIgnoringLocalCacheData should not be used for Tiger.</li>
+          <li>Improved SACrashReporter to send a ruby version and a RubyCocoa version.</li>
+          <li>Now privmsg command is the default setting for pasting.</li>
+        </ul>
+      ]]></content:encoded>
+    </item>
+
+    <item>
+      <title>0.11</title>
+      <link>http://limechat.sourceforge.net/#v0.11</link>
+      <pubDate>Thu, 29 Nov 2007 15:18:00 +0900</pubDate>
+      <content:encoded><![CDATA[
+        <ul>
+          <li>Added "log transcripts" option.</li>
+          <li>Integrated Pastie support on a paste sheet.</li>
+          <li>Added an option for 3 columns layout (server tree, logs, member list).</li>
+          <li>Added a channel list dialog.</li>
+          <li>Added "highlight whole line" option.</li>
+          <li>Added "highlight your current nickname" option.</li>
+          <li>Changed to not select a candidate while completing nickname.</li>
+          <li>Integrated SACrashReporter.</li>
+          <li>Made a paste sheet resizable.</li>
+          <li>Assigned ctrl+enter to send Notice commands.</li>
+          <li>Assigned cmd+alt+up/down for moving around channels.</li>
+          <li>Changed a short cut key for moving around servers, from cmd+left/right to cmd+alt+left/right.</li>
+          <li>Supported Internationalized Domain Name in the URL detection.</li>
+          <li>Set "break-word:break-all" for URLs</li>
+          <li>Changed the default setting for tab key to nickname completion.</li>
+          <li>Changed to hide channel passwords in the title bar of the main window.</li>
+          <li>Changed to allow lossy encoding conversions.</li>
+          <li>A message with "//" prefix is now to send a message with "/" prefix.</li>
+          <li>Tweaked the logic for nick completion.</li>
+          <li>Stopped printing Names replies in a channel.</li>
+          <li>Fixed a bug, exceptions from Socket.getaddrinfo should be caught.</li>
+          <li>Enabled ruby thread hooks.</li>
+        </ul>
+      ]]></content:encoded>
+    </item>
+
+    <item>
+      <title>0.10</title>
+      <link>http://limechat.sourceforge.net/#v0.10</link>
+      <pubDate>Mon, 24 Sep 2007 15:30:00 +0900</pubDate>
+      <content:encoded><![CDATA[
+        <ul>
+  				<li>Changed to work with RubyCocoa 0.12.0 only.</li>
+  				<li>Added auto op.</li>
+  				<li>Added Growl notifications.</li>
+  				<li>Added event sounds.</li>
+  				<li>Added flood protection.</li>
+  				<li>Added url menu and address menu.</li>
+  				<li>Added commands performed on login.</li>
+  				<li>Added CTCP.</li>
+  				<li>Added automatic rejoin on kicked.</li>
+  				<li>Added automatic rejoin to acquire op.</li>
+  				<li>Added message length check for quick join.</li>
+  				<li>Changed spacing strategy of log view.</li>
+  				<li>Changed password text field on the server dialog to NSSecureTextField.</li>
+  				<li>Changed to open new talk when sending a text message to unknown nick.</li>
+  				<li>Changed the default action for Tab key to going to next channel.</li>
+  				<li>Fixed a bug, highlight words need regexp escape.</li>
+  				<li>Fixed a bug, kana characters in 0xd0-0xdf were ignored in receiving.</li>
+  				<li>Fixed a bug, multi line paste from context menu of text field should open multi line paste sheet.</li>
+  				<li>Fixed a bug, windowShouldClose needs objc_method in RubyCocoa 0.11.1p1 for PPC.</li>
+        </ul>
+      ]]></content:encoded>
+    </item>
+
+    <item>
+      <title>0.9</title>
+      <link>http://limechat.sourceforge.net/#v0.9</link>
+      <pubDate>Thu, 16 Aug 2007 00:52:00 +0900</pubDate>
+      <content:encoded><![CDATA[
+        <ul>
+  				<li>Changed to work with RubyCocoa 0.12.0 only.</li>
+  				<li>Added auto op.</li>
+  				<li>Added Growl notifications.</li>
+  				<li>Added event sounds.</li>
+  				<li>Added flood protection.</li>
+  				<li>Added url menu and address menu.</li>
+  				<li>Added commands performed on login.</li>
+  				<li>Added CTCP.</li>
+  				<li>Added automatic rejoin on kicked.</li>
+  				<li>Added automatic rejoin to acquire op.</li>
+  				<li>Added message length check for quick join.</li>
+  				<li>Changed spacing strategy of log view.</li>
+  				<li>Changed password text field on the server dialog to NSSecureTextField.</li>
+  				<li>Changed to open new talk when sending a text message to unknown nick.</li>
+  				<li>Changed the default action for Tab key to going to next channel.</li>
+  				<li>Fixed a bug, highlight words need regexp escape.</li>
+  				<li>Fixed a bug, kana characters in 0xd0-0xdf were ignored in receiving.</li>
+  				<li>Fixed a bug, multi line paste from context menu of text field should open multi line paste sheet.</li>
+  				<li>Fixed a bug, windowShouldClose needs objc_method in RubyCocoa 0.11.1p1 for PPC.</li>
+        </ul>
+      ]]></content:encoded>
+    </item>
+    
+    <item>
+      <title>0.8</title>
+      <link>http://limechat.sourceforge.net/#v0.8</link>
+      <pubDate>Sat, 28 Jul 2007 12:00:00 +0900</pubDate>
+      <content:encoded><![CDATA[
+        <ul>
+        	<li>Fixed a bug, checkboxes on dialogs won't be saved when checkboxes were not checked.</li>
+        </ul>
+]]></content:encoded>
+    </item>
+
+    <item>
+      <title>0.7</title>
+      <link>http://limechat.sourceforge.net/#v0.7</link>
+      <pubDate>Fri, 27 Jul 2007 21:00:00 +0900</pubDate>
+      <content:encoded><![CDATA[
+    		<ul>
+    			<li>Fixed a bug, LimeChat.app won't start up at the first time.</li>
+    			<li>Added short cut keys, Opt+Space for going to next unread channel and Opt+Shift+space for going to previous unread channel.</li>
+    			<li>Added an option, no action on Tab key</li>
+    			<li>Added workaround for WebKit on Leopard.</li>
+    		</ul>
+]]></content:encoded>
+    </item>
+        
+    <item>
+      <title>0.6</title>
+      <link>http://limechat.sourceforge.net/#v0.6</link>
+      <pubDate>Wed, 25 Jul 2007 11:12:00 +0900</pubDate>
+      <content:encoded><![CDATA[
+        <ul>
+          <li>Added an option, users can assign Tab key for nickname completion.</li>
+          <li>Fixed a bug, settings are stored inappropriately for pop up buttons on dialogs.</li>
+          <li>Fixed a bug, the setting of IP address detection is not applied sometimes.</li>
+          <li>Fixed a bug, an user is missing in the member list when he changed nickname to identical one.</li>
+          <li>Tweaked conditions to enable or disable Disconnect and Cancel Reconnecting menu items.</li>
+        </ul>
+]]></content:encoded>
+	  </item>
+  </channel>
+</rss>

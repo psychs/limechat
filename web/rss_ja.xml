@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>LimeChat for OSX</title>
+    <link>http://limechat.sourceforge.net/index_ja.html</link>
+    <description>LimeChat for OSX 更新情報</description>
+    <language>ja</language>
+
+    <item>
+      <title>0.17</title>
+      <link>http://limechat.sourceforge.net/index_ja.html#v0.17</link>
+      <pubDate>Mon, 03 Mar 2008 21:51:00 +0900</pubDate>
+      <content:encoded><![CDATA[
+  			<ul>
+  				<li>(Tigerのみ) 初回起動時に表示されるセットアップダイアログで、「+」ボタンを押すとクラッシュしていたバグをfixした。</li>
+  				<li>ログのスクロールバーに、キーワード反応があった場所を表示するようにした。</li>
+  				<li>起動時にスペルチェックをオンにするようにした。</li>
+  				<li>サーバとチャンネルの順序をドラッグアンドドロップで入れ替えられるようにした。</li>
+  				<li>チャンネルリストダイアログで、キーワードでフィルタリングできるようにした。</li>
+  				<li>DCC で送られてきたファイルを自動で受信するオプションを追加した。</li>
+  				<li>DCC で受信したファイルをその場で開くメニューと、Finder で表示するメニューを追加した。</li>
+  				<li>メインメニューに「File」を追加して、「View」を左側に移動した。</li>
+  				<li>Cmd+W でアクティブなチャンネルを閉じるようにした。</li>
+  				<li>ログを HTML としてコピーするメニューを追加した。</li>
+  				<li>「Mark Scrollback」と「Clear Mark」のショートカットキーを Cmd+L と Cmd+Shift+L に変更した。</li>
+  				<li>Opt+Return でペーストダイアログを開くようにした。</li>
+  				<li>メニューやキーからペーストダイアログを開いたとき、送信方法に privmsg を選択するようにした。</li>
+  				<li>ログの HTML テンプレートで CSS のアトリビュートセレクタを使うようにした。</li>
+  				<li>アクションメッセージの表示形式を変えた。</li>
+  				<li>テーマのディレクトリを ~/Library/Application Support/LimeChat/Themes に変更した。</li>
+  				<li>ニックネームのデフォルトの書式を「%n: 」に変更した。</li>
+  				<li>メンバリストのフォントを小さくした。</li>
+  				<li>システムメッセージの頭の「*」を削除した。</li>
+  				<li>コンソールログにサーバ名を表示しないようにした。</li>
+  				<li>mIRC のカラーエフェクトに CSS を適用できるようにした。</li>
+  				<li>ログでニックネームの色分けができるようにした。colornumber 属性に 0〜15 のランダムな番号を振るので、CSS でスタイルを指定できる。</li>
+  				<li>CAPAB IDENTIFY-MSG に対応した。認証済みのユーザの発言は、identified 属性が true になる。</li>
+  				<li>/query でアクティブなトークを閉じるようにした。</li>
+  				<li>上キーを押して入力履歴をたどるとき、入力中のテキストを記憶するようにした。</li>
+  				<li>ログに行がいっぱいの時に新しい行を受信しても、スクロール位置がずれないようにした。</li>
+  				<li>チャンネルごとに入力途中の文字列を保持するようにした。</li>
+  				<li>初回起動時に、OS のアカウント名をデフォルトのニックネームとして使うようにした。</li>
+  				<li>freenode の CAPAB IDENTIFY-MSG、CAPAB IDENTIFY-CTCP に対応した。</li>
+  				<li>401 エラーが来たときに、対象のトークに表示するようにした。</li>
+  				<li>チャンネルを削除したときに、次のサーバに移動しないようにした。</li>
+  				<li>エフェクトを止める特殊文字を受信したときに、タグを閉じなくてもいい場合でも誤って閉じていたバグをfixした。</li>
+  				<li>ニックネーム補完のとき、補完結果が右側に隠れるような場合でもスクロールして見えるようにした。</li>
+  			</ul>
+      ]]></content:encoded>
+    </item>
+
+    <item>
+      <title>0.16.2</title>
+      <link>http://limechat.sourceforge.net/index_ja.html#v0.16.2</link>
+      <pubDate>Sat, 16 Feb 2008 11:54:00 +0900</pubDate>
+      <content:encoded><![CDATA[
+  			<ul>
+          <li>最初の起動時に新規接続ダイアログを出すようにした。</li>
+          <li>Unreal IRCd の +q/+a チャンネルモードをサポートした。</li>
+          <li>/query nick で新規トークを開けるようにした。</li>
+          <li>アプリがアクティブなときに Growl で通知しないオプションを追加した。</li>
+          <li>オリジナルの ircd で +a のチャンネルモードが設定されたとき、メンバリストを見えないようにした。</li>
+          <li>ログビューからフォーカスを外しても、選択が解除されないようにした。</li>
+          <li>サーバプロパティダイアログのエンコーディング設定の下に注意書きを追加した。</li>
+          <li>「%@」を含むようなニックネームのフォーマットを設定していた場合に、コンソールにテキストメッセージを表示すると method not found の例外が出ていたバグをfixした。</li>
+  			</ul>
+      ]]></content:encoded>
+    </item>
+
+    <item>
+      <title>0.16</title>
+      <link>http://limechat.sourceforge.net/index_ja.html#v0.16</link>
+      <pubDate>Sun, 03 Feb 2008 17:50:00 +0900</pubDate>
+      <content:encoded><![CDATA[
+  			<ul>
+          <li>DCC ダイアログで 0 をフォーマットするときに例外が出るバグをfixした。</li>
+          <li>メンバリストで複数を選択してダブルクリックしたときに、ポイントしているメンバーだけに whois を送るようにした。</li>
+          <li>SACrashReporter のダイアログのレイアウトを変更した。</li>
+  			</ul>
+      ]]></content:encoded>
+    </item>
+
+    <item>
+      <title>0.15</title>
+      <link>http://limechat.sourceforge.net/index_ja.html#v0.15</link>
+      <pubDate>Fri, 01 Feb 2008 12:20:00 +0900</pubDate>
+      <content:encoded><![CDATA[
+  			<ul>
+          <li>サーバの選択肢によく使うサーバを追加した。</li>
+          <li>ISO-8859-1 をエンコーディングとして選べるようにした。</li>
+          <li>「%9n」、「%-9n」、「%@」などのようにニックネームをフォーマットできるようにした。</li>
+          <li>/me 以外のテキストコマンドを送信するときに対象チャンネルを補完しないようにした。</li>
+          <li>ニックネーム補完のときに、同じ順位のニックネームはアルファベット順に並べるようにした。</li>
+          <li>ニックネームの補完処理に安全のため例外ハンドラを入れた。</li>
+          <li>Pasternak でペーストするときに、URL をいきなり送信せず入力テキストにペーストするようにした。</li>
+          <li>入力イベントがしばらくないときに GC を走らせていたのをやめた。</li>
+          <li>メンバリストの初期化を知らせるメッセージを表示しないようにした。</li>
+          <li>アルファベットや数字が続くIPアドレスやドメイン名をアドレスとして認識しないようにした。</li>
+          <li>起動時にサーバツリーの一番上のアイテムを選択していることをうまく認識していなかったバグをfixした。</li>
+          <li>テーブルビューのカスタムセルが copyWithZone を見ていないため、Tiger でメンバリストの選択と DCC ダイアログの表示がおかしくなるバグをfixした。</li>
+          <li>Disconnect メニューが接続試行中に効かなかったバグをfixした。</li>
+          <li>自動opのマスクが大文字小文字を同一視していなかったバグをfixした。</li>
+          <li>ニックネーム補完の重み付けを更新するときに、nil アクセスバグが発生することがあったのをfixした。</li>
+  			</ul>
+      ]]></content:encoded>
+    </item>
+
+    <item>
+      <title>0.14.2</title>
+      <link>http://limechat.sourceforge.net/index_ja.html#v0.14.2</link>
+      <pubDate>Thu, 27 Dec 2007 18:46:00 +0900</pubDate>
+      <content:encoded><![CDATA[
+  			<ul>
+          <li>ユーザが入力したコマンドに対象チャンネル名がない場合、補完するようにした。</li>
+          <li>ログの最大行数を設定できるようにした。</li>
+          <li>Safari 2 の WebKit でテーマを変更したときに、nil にアクセスすることがあるバグをfixした。</li>
+          <li>デフォルトのログディレクトリを ~/Library/LimeChat/Transcripts に変更した。</li>
+          <li>末尾に括弧が来ないように URL の正規表現を変更した。</li>
+          <li>ニックネームを変更しようとしたときにすでに使われていた場合、無限ループに陥ってしまうことがあるバグをfixした。</li>
+          <li>005(RPL_ISUPPORT) リプライをパーズして、ニックネームの最大長と一度にセットできるモードの数を認識するようにした。</li>
+  			</ul>
+      ]]></content:encoded>
+    </item>
+
+    <item>
+      <title>0.14.1</title>
+      <link>http://limechat.sourceforge.net/index_ja.html#v0.14.1</link>
+      <pubDate>Wed, 19 Dec 2007 21:27:00 +0900</pubDate>
+      <content:encoded><![CDATA[
+  			<ul>
+          <li>自分が絡まない会話も考慮に入れて、ニックネーム補完の優先順位を計算するようにした。</li>
+          <li>Safari 2 の WebKit でも動作するようにした。</li>
+  			</ul>
+      ]]></content:encoded>
+    </item>
+
+    <item>
+      <title>0.14</title>
+      <link>http://limechat.sourceforge.net/index_ja.html#v0.14</link>
+      <pubDate>Wed, 19 Dec 2007 01:31:00 +0900</pubDate>
+      <content:encoded><![CDATA[
+  			<ul>
+          <li>Deep Ocean テーマを追加した。</li>
+          <li>ペーストサービスを Pasternak に変更した。(Thanks to Eloy Duran)</li>
+          <li>ニックネームフォーマットをオーバーライドするオプションを追加した。</li>
+          <li>メンバリストの選択時の背景をグラデーションで描画するようにした。</li>
+          <li>メニューからテーマをリロードできるようにした。</li>
+          <li>@nick 形式で送信したときにもニックネーム補完の重み付けを増やすようにした。</li>
+          <li>SignalException の場合にクラッシュレポータを起動しないようにした。</li>
+          <li>ログのレンダリングのパフォーマンスを改善した。</li>
+          <li>ログの最大行数を500に増やした。</li>
+          <li>ニックネーム補完の重み付けがうまく動いていなかったバグをfixした。</li>
+          <li>起動時に NSRect の width に nil を代入してしまうことがあるバグをfixした。</li>
+          <li>Kill コマンドを受信したときに例外がでてしまうバグをfixした。</li>
+  			</ul>
+      ]]></content:encoded>
+    </item>
+
+    <item>
+      <title>0.13.1</title>
+      <link>http://limechat.sourceforge.net/index_ja.html#v0.13.1</link>
+      <pubDate>Thu, 13 Dec 2007 21:15:00 +0900</pubDate>
+      <content:encoded><![CDATA[
+  			<ul>
+          <li>起動時にメンバリストを描画しようとすると nil にアクセスすることがあったバグをfixした。</li>
+  			</ul>
+      ]]></content:encoded>
+    </item>
+
+    <item>
+      <title>0.13</title>
+      <link>http://limechat.sourceforge.net/index_ja.html#v0.13</link>
+      <pubDate>Thu, 13 Dec 2007 20:20:00 +0900</pubDate>
+      <content:encoded><![CDATA[
+  			<ul>
+          <li>テーマを実装した。</li>
+          <li>ログのフォントを指定できるようにした。</li>
+          <li>エンコーディングの選択肢を変更した。</li>
+          <li>Cmd+'+'/'-' でフォントサイズを変えられるようにした。</li>
+          <li>メンバリストでオペレータマークを別カラムのように表示するようにした。</li>
+          <li>送信メッセージが長すぎるときに自動的に分割して送るようにした。</li>
+          <li>キーワード反応するときに現在のニックネームの優先度を高くした。</li>
+          <li>ユーザが入力したコマンドを送るときにパーズしなおしてから再構成して送信するようにした。</li>
+          <li>ホスト名や IP アドレスをワードラップしないようにした。</li>
+          <li>ダブルクォートを URL 中の文字として扱わないようにした。</li>
+          <li>ファイルを受信するときに、~/Downloads があればそこにファイルを置くようにした。</li>
+          <li>ログビューの最大行数を300に減らした。(消費メモリを減らすため)</li>
+          <li>RubyCocoa の古いリリースでも動くようにした。</li>
+          <li>テキストフィールドに複数行のテキストをペーストしたら例外がでていたバグをfixした。</li>
+          <li>ログビューの高さが NaN のときに 0 として扱うようにした。</li>
+          <li>ログビュー上でニックネームを右クリックしてメニューを出すと、それ以降ニックネーム変更ダイアログがでなくなるバグをfixした。</li>
+          <li>受信したメッセージのパラメータ数が少なすぎる場合に nil にアクセスすることがあったバグをfixした。</li>
+          <li>空文字列のコマンドを送信しようとすると例外がでていたバグをfixした。</li>
+  			</ul>
+      ]]></content:encoded>
+    </item>
+
+    <item>
+      <title>0.11</title>
+      <link>http://limechat.sourceforge.net/index_ja.html#v0.11</link>
+      <pubDate>Thu, 29 Nov 2007 15:18:00 +0900</pubDate>
+      <content:encoded><![CDATA[
+  			<ul>
+          <li>ログを保存できるようにした。</li>
+          <li>ペーストダイアログから Pastie を使えるようにした。</li>
+          <li>メインウィンドウのレイアウトを3カラムに変更できるようにした。(サーバ、ログ、メンバリスト)</li>
+          <li>チャンネルリストダイアログを追加した。</li>
+          <li>キーワードのある行をまるごとハイライトするオプションを追加した。</li>
+          <li>現在のニックネームをキーワードとして扱うオプションを追加した。</li>
+          <li>ニックネーム補完中に候補を選択しないようにした。</li>
+          <li>SACrashReporter を導入した。</li>
+          <li>ペーストダイアログをリサイズできるようにした。</li>
+          <li>ctrl+enter で Notice コマンドを送信できるようにした。</li>
+          <li>cmd+alt+up/down で見ているチャンネルを移動できるようにした。</li>
+          <li>見ているサーバを移動するショートカットキーを cmd+left/right を cmd+alt+left/right に変更した。</li>
+          <li>国際化ドメインに対応するように URL 検知のアルゴリズムを変更した。</li>
+          <li>ログ中の URL をワードラップしないようにした。</li>
+          <li>タブキーでニックネーム補完をするようにデフォルト設定を変更した。</li>
+          <li>ウィンドウのタイトルバーに mode に含まれるチャンネルパスワードを表示しないようにした。</li>
+          <li>エンコーディング変換のとき、変換できない文字を ? で埋めるようにした。</li>
+          <li>「//」で始まるテキストを送信しようとすると、最初の「/」を削除して「/」で始まるテキストを送信するようにした。</li>
+          <li>ニックネーム補完のアルゴリズムを調整した。(@ で補完すると末尾にスペースを入れるなど)</li>
+          <li>Names リプライをチャンネルログに表示しないようにした。</li>
+          <li>Socket.getaddrinfo の例外を捕捉するようにした。</li>
+          <li>Ruby のスレッドフックを有効にした。(安定性向上のため)</li>
+  			</ul>
+      ]]></content:encoded>
+    </item>
+
+    <item>
+      <title>0.10</title>
+      <link>http://limechat.sourceforge.net/index_ja.html#v0.10</link>
+      <pubDate>Mon, 24 Sep 2007 15:30:00 +0900</pubDate>
+      <content:encoded><![CDATA[
+  			<ul>
+  				<li>
+  					アプリケーションアイコンを追加した。
+  				</li>
+  				<li>
+  					/me コマンドを使えるようにした。
+  				</li>
+  				<li>
+  					テキストメッセージのニックネームに右クリックメニューを追加した。
+  				</li>
+  				<li>
+  					既読マークをつけられるようにした。(Mark Scrollback)
+  				</li>
+  				<li>
+  					サーバを削除するときに確認ダイアログを出すようにした。
+  				</li>
+  				<li>
+  					メンバリストを自分、オペレータ、それ以外の順にソートするようにした。
+  				</li>
+  				<li>
+  					チャンネルを移動するときに入力中のテキストを入力履歴に入れるようにした。
+  				</li>
+  				<li>
+  					ニックネーム補完に優先順位をつけた。(Thanks to Josh Goebel)
+  				</li>
+  				<li>
+  					ウィンドウタイトルに設定するチャンネルトピックの長さを制限するようにした。
+  				</li>
+  				<li>
+  					チャンネルプロパティダイアログ、サーバプロパティダイアログ、ツリーの順序変更ダイアログ、プリファレンスダイアログのUIを改善した。
+  				</li>
+  				<li>
+  					Ruby のスレッドフックを使わないようにした。
+  				</li>
+  				<li>
+  					ログの最大行数を3000に変更した。
+  				</li>
+  				<li>
+  					NSOutlineView に対して、値が変わっていなければいつも同じオブジェクトを返すようにした。
+  				</li>
+  				<li>
+  					接続を試みているときに、再接続をキャンセルできるようにした。
+  				</li>
+  				<li>
+  					サーバに最初のチャンネルが作られたときに、強制的にサーバの項目を開いてチャンネルが見えるようにした。
+  				</li>
+  				<li>
+  					ログの初期化が完了したら、どんな場合にも最後を表示するようにした。
+  				</li>
+  				<li>
+  					Cmd+[-]を押すとアプリケーションが終了してしまうバグをfixした。
+  				</li>
+  				<li>
+  					キックされたときに再joinするため、チャンネルパスワードを覚えたままにするようにした。
+  				</li>
+  			</ul>
+      ]]></content:encoded>
+    </item>
+
+    <item>
+      <title>0.9</title>
+      <link>http://limechat.sourceforge.net/index_ja.html#v0.9</link>
+      <pubDate>Thu, 16 Aug 2007 00:52:00 +0900</pubDate>
+      <content:encoded><![CDATA[
+        <ul>
+  				<li>動作環境を RubyCocoa 0.12.0 に変更した。 (以前のバージョンでは動作しないので注意)</li>
+  				<li>自動オペレータ機能を追加した。</li>
+  				<li>Growl での通知に対応した。</li>
+  				<li>イベント発生時に音を鳴らす機能を追加した。</li>
+  				<li>フラッドプロテクションを実装した。</li>
+  				<li>URLとアドレスの右クリックメニューを追加した。</li>
+  				<li>ログイン時に実行するコマンドを指定できるようにした。</li>
+  				<li>CTCP に対応した。</li>
+  				<li>キックされたときに自動で入り直すようにした。</li>
+  				<li>チャンネルに1人になったとき、オペレータ権限を取り直すためにチャンネルに入り直すようにした。</li>
+  				<li>接続時にまとめてチャンネルに入るとき、送信するコマンドの長さを制限するようにした。</li>
+  				<li>ログビューのワードラップの関係で改行位置がおかしかったので改善した。</li>
+  				<li>サーバダイアログのパスワード欄を NSSecureTextField に変えた。</li>
+  				<li>コマンドで誰かにメッセージを送信した場合、新しくトークを開くようにした。</li>
+  				<li>タブキーのデフォルト動作を、次の未読チャンネルに移動する動作に変えた。</li>
+  				<li>キーワードハイライトをエスケープしていなかったバグを fix した。</li>
+  				<li>半角カナのうち 0xd0-0xdf の範囲の文字が含まれたメッセージを受信すると空白が表示されてしまうバグを fix した。</li>
+  				<li>エディットの右クリックメニューから複数行のテキストをペーストすると、一行でペーストされてしまうバグを fix した。</li>
+  				<li>PPC 環境で、ウィンドウを閉じるときの確認ダイアログのキャンセルボタンを押してもウィンドウが閉じてしまうバグを fix した。</li>
+        </ul>
+      ]]></content:encoded>
+    </item>
+
+    <item>
+      <title>0.8</title>
+      <link>http://limechat.sourceforge.net/index_ja.html#v0.8</link>
+      <pubDate>Sat, 28 Jul 2007 12:00:00 +0900</pubDate>
+      <content:encoded><![CDATA[
+        <ul>
+  				<li>チェックボックスにチェックが入っていないときに、その設定がセーブされないバグを fix した。</li>
+        </ul>
+]]></content:encoded>
+    </item>
+
+    <item>
+      <title>0.7</title>
+      <link>http://limechat.sourceforge.net/index_ja.html#v0.7</link>
+      <pubDate>Fri, 27 Jul 2007 21:00:00 +0900</pubDate>
+      <content:encoded><![CDATA[
+  			<ul>
+  				<li>初回起動時に起動しないバグを fix した。</li>
+  				<li>Opt+Space で次の未読チャンネルに、Opt+Shift+Space で前の未読チャンネルに移動するようにした。</li>
+  				<li>Tab キーで何もしないオプションを追加した。</li>
+  				<li>最新の WebKit でも動作するようにした。</li>
+  			</ul>
+]]></content:encoded>
+    </item>
+    
+    <item>
+      <title>0.6</title>
+      <link>http://limechat.sourceforge.net/index_ja.html#v0.6</link>
+      <pubDate>Wed, 25 Jul 2007 11:12:00 +0900</pubDate>
+      <content:encoded><![CDATA[
+  			<ul>
+  				<li>Tab キーでニックネームを補完できるようにした。</li>
+  				<li>ダイアログ上にあるポップアップボタンの設定項目をうまく保存できていなかったバグを fix した。</li>
+  				<li>自分の IP アドレスを認識するオプションがうまく反映されないことがあるバグを fix した。</li>
+  				<li>ユーザがニックネームをキャピタライズの違いしかないニックネームに変更したときにメンバリストから消えてしまうバグを fix した。</li>
+  				<li>切断と再接続をキャンセルするメニューを有効にする条件を変更した。</li>
+  			</ul>
+]]></content:encoded>
+    </item>
+  </channel>
+</rss>
