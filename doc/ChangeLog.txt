@@ -1,3 +1,7 @@
+2008-05-21  HIROSE Masaaki <hirose31@gmail.com>
+
+	Added nick attribute to the console log.
+
 2008-05-06  Satoshi Nakagawa <artension@gmail.com>
 
 	Supported non-BMP characters for exact word matching.

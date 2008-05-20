@@ -161,9 +161,8 @@ class LogController < NSObject
         attrs['clickinfo'] = line.click_info 
         attrs['ondblclick'] = 'on_dblclick()'
       end
-    else
-      attrs['nick'] = line.nick_info if line.nick_info
     end
+    attrs['nick'] = line.nick_info if line.nick_info
     write_line(s, attrs)
     key
   end
