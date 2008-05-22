@@ -26,6 +26,9 @@ tmp.rmtree
 source.cptree(tmp)
 
 rmglob(tmp + 'build')
+rmglob(tmp + 'etc')
+rmglob(tmp + 'script')
+rmglob(tmp + 'web')
 rmglob(tmp + '**/.svn')
 rmglob(tmp + '**/.DS_Store')
 rmglob(tmp + '**/*~.nib')
