@@ -199,7 +199,7 @@ table#shortcutkeys td
 <div class="section">
 	<ol>
 		<li>Download <a href="http://sourceforge.net/project/showfiles.php?group_id=44114">RubyCocoa 0.13.2</a>, and install it. <strong>Note that you need to install it even if you are using OSX 10.5.2.</strong></li>
-		<li>Download <a href="http://downloads.sourceforge.net/limechat/LimeChat_0.17.dmg">LimeChat 0.17 executable dmg</a>.</li>
+		<li>Download <a href="http://downloads.sourceforge.net/limechat/LimeChat_0.18.dmg">LimeChat 0.18 executable dmg</a>.</li>
 		<li>Open the downloaded dmg, and copy LimeChat.app to your Application folder.</li>
 	</ol>
 </div>
@@ -207,7 +207,7 @@ table#shortcutkeys td
 <h2>Source code</h2>
 <div class="section">
 	<ul>
-		<li><a href="http://downloads.sourceforge.net/limechat/LimeChat_0.17.zip">LimeChat 0.17 source zip</a></li>
+		<li><a href="http://downloads.sourceforge.net/limechat/LimeChat_0.18.zip">LimeChat 0.18 source zip</a></li>
 		<li><code>git clone git://github.com/psychs/limechat.git</code></li>
 	</ul>
 </div>
@@ -274,6 +274,54 @@ table#shortcutkeys td
 		This change log is also available in <a href="rss.xml">RSS</a>.
 	</p>
 	<dl>
+		
+		<dt id="v0.18">0.18 (2008.05.22)</dt>
+		<dd>
+			<ul>
+				<li>Added exact word matching for highlighting.</li>
+				<li>Added SSL support.</li>
+				<li>Added alternative nicknames support.</li>
+				<li>Implemented drag and drop files on the member list to send files on dcc.</li>
+				<li>Added fallback encoding.</li>
+				<li>Changed Cmd-w to close current panel with confirmation when the panel is a channel.</li>
+				<li>Added Kick, Ban and Kick &amp; Ban in the context menu on the member list.</li>
+				<li>Assigned Cmd+E to copy the selection.</li>
+				<li>Changed priority of Growl notifications to 1 for highlight events.</li>
+				<li>Added 'New Folder' button on the open dialog for transcripts location.</li>
+				<li>Changed to not use nick format for transcripts.</li>
+				<li>Changed the format of text messages for Growl notifications to "&lt;nick&gt; msg".</li>
+				<li>Changed to order front the main window when clicked on a growl notification.</li>
+				<li>Assigned enter key to send text on the paste dialog.</li>
+				<li>Added opt-up/down for moving around histories.</li>
+				<li>Changed to not allow '?' at the end of URLs.</li>
+				<li>Changed to select an existing talk when trying to start a talk again.</li>
+				<li>On the paste dialog, changed "Privmsg command" and "Notice command" to "Send to channel" and "Send Notice to Channel" respectively.</li>
+				<li>Changed /part without parameters to close the current talk.</li>
+				<li>Changed to handle /whois to get more information.</li>
+				<li>Added /rejoin, /cycle and /hop commands to rejoin the current channel.</li>
+				<li>Added /op, /deop, /halfop, /dehalfop, /voice, /devoice, /ban, /unban, /umode, /raw and /quote commands.</li>
+				<li>Added aliases, /t for /topic and /leave for /part.</li>
+				<li>Added /j command to join a channel.</li>
+				<li>Renamed /ctcpquery to /ctcp.</li>
+				<li>Removed /ctcpping.</li>
+				<li>Added nick attribute to the console log.</li>
+				<li>Changed to set 'server' type attribute for server logs like &lt;body type="server"&gt;.</li>
+				<li>Fixed a nil access bug in DccManager#tableView_objectValueForTableColumn_row.</li>
+				<li>Fixed a bug, 'Override Log Font' option should be applied to body[type=...] and body.(normal|console) elements.</li>
+				<li>Fixed a bug, numeric values should be capped when converting from ruby to objc.</li>
+				<li>Fixed a bug, parameters for Time.at should be Fixnum.</li>
+				<li>Fixed a bug, marked scrollers were visible on the top-left corner of log views when initialized.</li>
+				<li>Fixed a bug, the scrollers of log views won't be rendered correctly when initialized with not enough frame.</li>
+				<li>Fixed a bug, "MODE +a user" should be considered as setting an user mask.</li>
+				<li>Fixed a bug, my address was forgotten after reconnecting.</li>
+				<li>Fixed a bug in utf-8 string validator.</li>
+				<li>Fixed a bug, log views dropped received lines before initializing.</li>
+				<li>Fixed a bug, 'Reveal in Finder' menu action on the dcc dialog caused an exception.</li>
+				<li>Fixed a bug, 'Highlight your current nickname' option should be applied for the console log.</li>
+				<li>Fixed a bug, /query command should be cleared after opening a talk.</li>
+      </ul>
+		</dd>
+		
 		<dt id="v0.17">0.17 (2008.03.03)</dt>
 		<dd>
 			<ul>

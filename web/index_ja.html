@@ -189,7 +189,7 @@ table#shortcutkeys td
 <div class="section">
 	<ol>
 		<li><a href="http://sourceforge.net/project/showfiles.php?group_id=44114">RubyCocoa 0.13.2</a> をダウンロードしてインストールする。 <strong>(OSX 10.5.2 の RubyCocoa は 0.13.1 と少し古いので、10.5.2 ユーザの方もかならずインストールしてください)</strong></li>
-		<li><a href="http://downloads.sourceforge.net/limechat/LimeChat_0.17.dmg?use_mirror=jaist">LimeChat_0.17.dmg</a> をダウンロードする。</li>
+		<li><a href="http://downloads.sourceforge.net/limechat/LimeChat_0.18.dmg?use_mirror=jaist">LimeChat_0.18.dmg</a> をダウンロードする。</li>
 		<li>ダウンロードした dmg をダブルクリックして開き、LimeChat.app をアプリケーションフォルダにコピーする。</li>
 	</ol>
 </div>
@@ -197,7 +197,7 @@ table#shortcutkeys td
 <h2>ソースの入手方法</h2>
 <div class="section">
 	<ul>
-		<li><a href="http://downloads.sourceforge.net/limechat/LimeChat_0.17.zip?use_mirror=jaist">LimeChat 0.17 source zip</a></li>
+		<li><a href="http://downloads.sourceforge.net/limechat/LimeChat_0.18.zip?use_mirror=jaist">LimeChat 0.18 source zip</a></li>
 		<li><code>git clone git://github.com/psychs/limechat.git</code></li>
 	</ul>
 </div>
@@ -263,6 +263,45 @@ table#shortcutkeys td
 		更新履歴は <a href="rss_ja.xml">RSS</a> でも配信しています。
 	</p>
 	<dl>
+		
+		<dt id="v0.18">0.18 (2008.05.22)</dt>
+		<dd>
+			<ul>
+				<li>ハイライト時にアルファベットの単語単位でマッチするオプションを追加した。</li>
+				<li>SSL 接続をサポートした。</li>
+				<li>ニックネームがぶつかったとき使う、代わりのニックネームをいくつか指定できるようにした。</li>
+				<li>メンバリストにファイルをドロップすると、DCC でファイルを送信するようにした。</li>
+				<li>エンコーディングに UTF-8 を使っているとき、UTF-8 でない文字列を受け取ると、別のエンコーディングの文字列として扱えるようにした。</li>
+				<li>Cmd-W でチャンネルを閉じるときに確認するようにした。</li>
+				<li>メンバリストのメニューに「Kick」と「Kick &amp; Ban」を追加した。</li>
+				<li>Cmd+E で検索用クリップボードにコピーできるようにした。</li>
+				<li>ハイライトイベントの Growl 通知のプライオリティを 1 に変更した。</li>
+				<li>ディレクトリ選択ダイアログに New Folder ボタンを追加した。</li>
+				<li>ニックネームのフォーマットをファイルログへの出力や Growl 通知に使わないようにした。</li>
+				<li>URL の最後に「?」を許さないようにした。</li>
+				<li>すでにトークを開いている相手にトークを開始しようとしたときに、すでに開いてるトークを選択するようにした。</li>
+				<li>パラメータなしの /part でトークを閉じるようにした。</li>
+				<li>/whois を送信前にハンドリングして、より詳細な情報を取得するようにした。</li>
+				<li>/rejoin、/cycle、/hop で現在のチャンネルに入り直すようにした。</li>
+				<li>/op, /deop, /halfop, /dehalfop, /voice, /devoice, /ban, /unban, /umode, /raw, /quote コマンドを追加した。</li>
+				<li>/t で /topic、/leave で /part、/j で /join を実行するようにした。</li>
+				<li>/ctcpquery コマンドを /ctcp に変更した。</li>
+				<li>コンソールログの行にも nick 属性をつけるようにした。</li>
+				<li>サーバログの body タグに type="server" という属性をつけるようにした。</li>
+				<li>Ruby から ObjC への型変換のときに数値の範囲チェックをするようにした。</li>
+				<li>Time.at には Fixnum しか渡さないようにチェックをいれた。</li>
+				<li>スクロールバーがうまく初期化できず、左上角にゴミが表示されるバグをfixした。</li>
+				<li>Mode +a user をユーザモードの変更として実装している IRC サーバに対応した。</li>
+				<li>再接続後に自分のアドレスを初期化してしまうバグをfixした。</li>
+				<li>DCC ダイアログで右クリックすると、nil アクセス例外で落ちることがあったバグをfixした。</li>
+				<li>UTF-8 string validator のバグをfixした。</li>
+				<li>ログビューを初期化する前に受信していた行が捨てられてしまっていたバグをfixした。</li>
+				<li>DCC ダイアログ上の Reveal in Finder メニューが例外を出すバグをfixした。</li>
+				<li>コンソールログに Highlight your current nickname オプションが適用されていなかったバグをfixした。</li>
+				<li>/query してトークを作ったあと、チャンネルに戻ると /query を覚えていたバグをfixした。</li>
+      </ul>
+		</dd>
+
 		<dt id="v0.17">0.17 (2008.03.03)</dt>
 		<dd>
 			<ul>
