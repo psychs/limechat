@@ -1,3 +1,5 @@
+==== LimeChat 0.18 ====
+
 2008-05-21  HIROSE Masaaki <hirose31@gmail.com>
 
 	Added nick attribute to the console log.
