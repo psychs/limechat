@@ -1,3 +1,7 @@
+2008-06-03  Satoshi Nakagawa <psychs@limechat.net>
+
+	Changed to ignore CTCP replies with empty commands.
+
 ==== LimeChat 0.18 ====
 
 2008-05-21  HIROSE Masaaki <hirose31@gmail.com>

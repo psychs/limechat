@@ -1770,6 +1770,7 @@ class IRCUnit < NSObject
     nick = m.sender_nick
     text = text.dup
     command = text.token!
+    return if command.empty?
     case command.downcase.to_sym
     when :ping
       if /^\d+$/ =~ text
