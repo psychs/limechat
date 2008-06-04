@@ -139,9 +139,12 @@ class LogController < NSObject
       s << %| oncontextmenu="on_nick_contextmenu()"| unless @console
       s << %| identified="#{!!line.identified}"|
       s << %| colornumber="#{line.nick_color_number}"| if line.member_type == :normal
+      s << %| first="#{line.nick_info != @prev_nick_info}"| if line.nick_info
       s << %|>#{h(line.nick)}</span>|
     end
     s << %[<span class="message" type="#{line.line_type}">#{body}</span>]
+    
+    @prev_nick_info = line.nick_info
     
     attrs = {}
     alternate = @line_number % 2 == 0 ? 'even' : 'odd'
@@ -156,13 +159,13 @@ class LogController < NSObject
     attrs['class'] = klass
     attrs['type'] = line.line_type.to_s
     attrs['highlight'] = "#{!!key}"
+    attrs['nick'] = line.nick_info if line.nick_info
     if @console
       if line.click_info
         attrs['clickinfo'] = line.click_info 
         attrs['ondblclick'] = 'on_dblclick()'
       end
     end
-    attrs['nick'] = line.nick_info if line.nick_info
     write_line(s, attrs)
     key
   end
