@@ -25,7 +25,7 @@ Takashi Tsugo		# Deep Ocean theme
 
 * License (Ruby's)
 
-LimeChat is copyrighted free software by Satoshi Nakagawa <artension@gmail.com>.
+LimeChat is copyrighted free software by Satoshi Nakagawa <psychs@limechat.net>.
 You can redistribute it and/or modify it under either the terms of the GPL
 version 2 (see the file GPL.txt), or the conditions below:
 
