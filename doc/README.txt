@@ -10,6 +10,8 @@ Satoshi Nakagawa <psychs@limechat.net>
 * Thanks To
 
 Yohei Endo			# application icon
+Atsuhisa Shimazawa	# badges
+Shingo Morita		# badges
 Dustin Voss			# AsyncSocket
 Eloy Duran			# RubyCocoa developer, a patch for bundling RubyCocoa.framework
 					# and SACrashReporter
