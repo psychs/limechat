@@ -17,6 +17,7 @@ class IRCWorld < NSObject
     @unit_id = 0
     @channel_id = 0
     @growl = GrowlController.new
+    @icon = IconController.new
     @growl.owner = self
     @today = Date.today
   end
@@ -390,6 +391,27 @@ class IRCWorld < NSObject
     end
   end
   
+  def update_icon
+    highlight = newTalk = false
+    
+    @units.each do |u|
+      if u.keyword
+        highlight = true
+        break
+      end
+      
+      u.channels.each do |c|
+        if c.keyword
+          highlight = true
+          break
+        end
+        newTalk = true if c.newtalk
+      end
+    end
+    
+    @icon.update(highlight, newTalk)
+  end
+  
   def reload_theme
     @view_theme.theme = @pref.theme.name
     
@@ -556,6 +578,7 @@ class IRCWorld < NSObject
     @selected.log.view.clearSel
     update_title
     reload_tree
+    update_icon
   end
   
   def outlineViewItemDidCollapse(notification)

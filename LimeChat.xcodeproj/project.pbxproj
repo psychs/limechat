@@ -83,6 +83,12 @@
 		78496EFA0C288B070084A836 /* PreferenceDialog.nib in Resources */ = {isa = PBXBuildFile; fileRef = 78496EF80C288B070084A836 /* PreferenceDialog.nib */; };
 		78496EFD0C2890200084A836 /* preferencedialog.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78496EFC0C2890200084A836 /* preferencedialog.rb */; };
 		7867EA4B0C227AD40017B510 /* NickSheet.nib in Resources */ = {isa = PBXBuildFile; fileRef = 7867EA490C227AD40017B510 /* NickSheet.nib */; };
+		7870BA3F0E1116DC004B30B4 /* redstar.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 7870BA3E0E1116DC004B30B4 /* redstar.tiff */; };
+		7870BA400E1116DC004B30B4 /* redstar.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 7870BA3E0E1116DC004B30B4 /* redstar.tiff */; };
+		7870BA440E111952004B30B4 /* bluestar.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 7870BA430E111952004B30B4 /* bluestar.tiff */; };
+		7870BA450E111952004B30B4 /* bluestar.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 7870BA430E111952004B30B4 /* bluestar.tiff */; };
+		7870BA490E111BD0004B30B4 /* iconcontroller.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7870BA480E111BD0004B30B4 /* iconcontroller.rb */; };
+		7870BA4A0E111BD0004B30B4 /* iconcontroller.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7870BA480E111BD0004B30B4 /* iconcontroller.rb */; };
 		78755D730C2AC0B30073FF42 /* logrenderer.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78755D720C2AC0B30073FF42 /* logrenderer.rb */; };
 		7877E0620C65B84E002F13C7 /* textfield.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7877E0610C65B84E002F13C7 /* textfield.rb */; };
 		787817C80D860ED30049CF95 /* unicodeutil.rb in Resources */ = {isa = PBXBuildFile; fileRef = 787817C70D860ED30049CF95 /* unicodeutil.rb */; };
@@ -321,6 +327,9 @@
 		786926F30BB6EC1B0081019B /* AsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = sourcecode.c.objc; name = AsyncSocket.m; path = objc/AsyncSocket.m; sourceTree = "<group>"; };
 		786926F40BB6EC1B0081019B /* main.m */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = sourcecode.c.objc; name = main.m; path = objc/main.m; sourceTree = "<group>"; };
 		7869272D0BB6ED9E0081019B /* rb_main.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; name = rb_main.rb; path = objc/rb_main.rb; sourceTree = "<group>"; };
+		7870BA3E0E1116DC004B30B4 /* redstar.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = redstar.tiff; path = resource/icon/redstar.tiff; sourceTree = "<group>"; };
+		7870BA430E111952004B30B4 /* bluestar.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = bluestar.tiff; path = resource/icon/bluestar.tiff; sourceTree = "<group>"; };
+		7870BA480E111BD0004B30B4 /* iconcontroller.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = iconcontroller.rb; sourceTree = "<group>"; };
 		78755D720C2AC0B30073FF42 /* logrenderer.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = logrenderer.rb; sourceTree = "<group>"; };
 		7877E0610C65B84E002F13C7 /* textfield.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = textfield.rb; sourceTree = "<group>"; };
 		787817C70D860ED30049CF95 /* unicodeutil.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = unicodeutil.rb; sourceTree = "<group>"; };
@@ -453,6 +462,8 @@
 			children = (
 				7889CAB70D646E2C003D808E /* WelcomeDialog.nib */,
 				78B2DF1F0D0417160092EBDA /* application.icns */,
+				7870BA3E0E1116DC004B30B4 /* redstar.tiff */,
+				7870BA430E111952004B30B4 /* bluestar.tiff */,
 				78287EA90D742DAA008D5656 /* Themes */,
 				7884E5450CDA91F500AF3678 /* SACrashReporter */,
 				8D1107310486CEB800E47090 /* Info.plist */,
@@ -499,6 +510,7 @@
 		78229B980C288188001DD4C3 /* controller */ = {
 			isa = PBXGroup;
 			children = (
+				7870BA480E111BD0004B30B4 /* iconcontroller.rb */,
 				788C5E650C5F4F5A0034C46E /* growlcontroller.rb */,
 				78229B990C288188001DD4C3 /* appcontroller.rb */,
 				78229B9A0C288188001DD4C3 /* menucontroller.rb */,
@@ -790,6 +802,9 @@
 				78F59FE40D78144B0038AC1D /* markedscroller.rb in Resources */,
 				787817C80D860ED30049CF95 /* unicodeutil.rb in Resources */,
 				780CCA0E0D8A294000E4BA77 /* keyeventhandler.rb in Resources */,
+				7870BA3F0E1116DC004B30B4 /* redstar.tiff in Resources */,
+				7870BA440E111952004B30B4 /* bluestar.tiff in Resources */,
+				7870BA490E111BD0004B30B4 /* iconcontroller.rb in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -884,6 +899,9 @@
 				78F59FE50D78144B0038AC1D /* markedscroller.rb in Resources */,
 				787817C90D860ED30049CF95 /* unicodeutil.rb in Resources */,
 				780CCA0F0D8A294000E4BA77 /* keyeventhandler.rb in Resources */,
+				7870BA400E1116DC004B30B4 /* redstar.tiff in Resources */,
+				7870BA450E111952004B30B4 /* bluestar.tiff in Resources */,
+				7870BA4A0E111BD0004B30B4 /* iconcontroller.rb in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

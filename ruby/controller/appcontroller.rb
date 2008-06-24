@@ -137,7 +137,10 @@ class AppController < NSObject
   
   def applicationDidBecomeActive(notification)
     sel = @world.selected
-    sel.reset_state if sel
+    if sel
+      sel.reset_state
+      @world.update_icon
+    end
     @tree.setNeedsDisplay(true)
   end
   

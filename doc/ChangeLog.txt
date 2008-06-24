@@ -1,5 +1,10 @@
 2008-06-24  Satoshi Nakagawa <psychs@limechat.net>
 
+	Added badges on the icon for highlight or new talk.
+	Make bouncing just one time for highlight.
+
+2008-06-24  Satoshi Nakagawa <psychs@limechat.net>
+
 	Added /timer command.
 	e.g. /timer 5 join #limechat
 

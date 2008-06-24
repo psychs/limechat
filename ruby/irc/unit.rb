@@ -1169,7 +1169,8 @@ class IRCUnit < NSObject
     return if t.keyword
     t.keyword = true
     reload_tree
-    NSApp.requestUserAttention(NSCriticalRequest) unless NSApp.isActive
+    NSApp.requestUserAttention(NSInformationalRequest) unless NSApp.isActive
+    @world.update_icon
   end
   
   def set_unread_state(t)
@@ -1177,6 +1178,7 @@ class IRCUnit < NSObject
     return if t.unread
     t.unread = true
     reload_tree
+    @world.update_icon
   end
   
   def set_newtalk_state(t)
@@ -1185,6 +1187,7 @@ class IRCUnit < NSObject
     t.newtalk = true
     reload_tree
     NSApp.requestUserAttention(NSInformationalRequest) unless NSApp.isActive
+    @world.update_icon
   end
   
   def notify_text(kind, c, nick, text)
