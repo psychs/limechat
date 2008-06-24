@@ -34,6 +34,7 @@ class IRCUnit < NSObject
     @identify_ctcp = false
     @who_queue = []
     @who_wait = 0
+    @timer_queue = []
     reset_state
   end
   
@@ -368,7 +369,7 @@ class IRCUnit < NSObject
     true
   end
   
-  def send_command(s, complete_target=true)
+  def send_command(s, complete_target=true, target=nil)
     return false unless connected? && s && !s.include?("\0")
     s = s.dup
     command = s.token!
@@ -376,7 +377,9 @@ class IRCUnit < NSObject
     cmd = command.downcase.to_sym
     target = nil
     
-    if complete_target && @world.selunit == self && @world.selchannel
+    if complete_target && target
+      sel = target
+    elsif complete_target && @world.selunit == self && @world.selchannel
       sel = @world.selchannel
     else
       sel = nil
@@ -412,6 +415,14 @@ class IRCUnit < NSObject
           c = @world.create_talk(self, target)
         end
         @world.select(c)
+      end
+      return true
+    when :timer
+      interval = s.token!
+      if interval =~ /^\d+$/
+        @timer_queue << [interval.to_i, sel, s]
+      else
+        print_both(self, :error_reply, "timer command needs interval as a number") 
       end
       return true
     when :rejoin,:hop,:cycle
@@ -716,6 +727,18 @@ class IRCUnit < NSObject
     else
       check_reconnect
       check_delayed_connect
+    end
+    
+    unless @timer_queue.empty?
+      q = @timer_queue
+      q.each {|i| i[0] -= 1}
+      q, @timer_queue = q.partition {|i| i[0] <= 0}
+      q.each do |i|
+        s = i[2]
+        sel = i[1]
+        s = $~.post_match if s =~ /\A\//
+        send_command(s, true, sel)
+      end
     end
     
     @channels.each {|c| c.on_timer}
@@ -1331,6 +1354,8 @@ class IRCUnit < NSObject
     @in_whois = false
     @identify_msg = false
     @identify_ctcp = false
+    @timer_queue = []
+    
     @channels.each do |c|
       if c.channel? || c.talk?
         if c.active?
@@ -1339,6 +1364,7 @@ class IRCUnit < NSObject
         end
       end
     end
+    
     update_unit_title
     reload_tree
     print_system_both(self, 'Disconnected')

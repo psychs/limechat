@@ -1,3 +1,8 @@
+2008-06-24  Satoshi Nakagawa <psychs@limechat.net>
+
+	Added /timer command.
+	e.g. /timer 5 join #limechat
+
 2008-06-04  Satoshi Nakagawa <psychs@limechat.net>
 
 	Added "first" attribute for span.sender to show nicknames in the first line only.
