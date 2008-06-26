@@ -12,7 +12,6 @@ Debug
 *.aps
 *.suo
 *.user
-*.pch
 *.pdb
 *.idb
 BuildLog.htm
