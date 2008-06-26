@@ -1,3 +1,7 @@
+2008-06-26  Satoshi Nakagawa <psychs@limechat.net>
+
+	Added cmd+shift+0..9 as shortcut keys for moving servers.
+
 2008-06-24  Satoshi Nakagawa <psychs@limechat.net>
 
 	Added badges on the icon for highlight or new talk.

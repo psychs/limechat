@@ -567,6 +567,7 @@ class AppController < NSObject
     handler(:space, :alt) { move(:down, :unread); true }
     handler(:space, :alt, :shift) { move(:up, :unread); true }
     handler('0'..'9', :cmd) {|n| @world.select_channel_at(n.to_s.to_i); true }
+    handler('0'..'9', :cmd, :shift) {|n| @world.select_unit_at(n.to_s.to_i); true }
     
     input_handler(:up) { history_up; true }
     input_handler(:up, :alt) { history_up; true }

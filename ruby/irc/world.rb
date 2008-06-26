@@ -294,6 +294,14 @@ class IRCWorld < NSObject
     select(channel) if channel
   end
   
+  def select_unit_at(n)
+    unit = @units[n]
+    return unless unit
+    t = unit.last_selected_channel
+    t = unit unless t
+    select(t)
+  end
+  
   def expand_unit(unit)
     @tree.expandItem(unit)
   end
