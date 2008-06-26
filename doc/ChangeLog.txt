@@ -1,5 +1,9 @@
 2008-06-26  Satoshi Nakagawa <psychs@limechat.net>
 
+	Changed cmd+shift+0..9 to cmd+ctrl+0..9 because cmd+shift+3..4 are for screen capture.
+
+2008-06-26  Satoshi Nakagawa <psychs@limechat.net>
+
 	Added cmd+shift+0..9 as shortcut keys for moving servers.
 
 2008-06-24  Satoshi Nakagawa <psychs@limechat.net>
