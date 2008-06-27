@@ -1,3 +1,8 @@
+2008-06-28  Satoshi Nakagawa <psychs@limechat.net>
+
+	Changed to disconnect from all servers when the computer is going to sleep.
+	Changed to reconnect to the servers after waking up.
+
 2008-06-26  Satoshi Nakagawa <psychs@limechat.net>
 
 	Changed cmd+shift+0..9 to cmd+ctrl+0..9 because cmd+shift+3..4 are for screen capture.

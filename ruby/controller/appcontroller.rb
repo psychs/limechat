@@ -89,6 +89,18 @@ class AppController < NSObject
     @gc_count = 0
     
     register_key_handlers
+    
+    nc = NSWorkspace.sharedWorkspace.notificationCenter
+    nc.addObserver_selector_name_object(self, :computerWillSleep, NSWorkspaceWillSleepNotification, nil)
+    nc.addObserver_selector_name_object(self, :computerDidWake, NSWorkspaceDidWakeNotification, nil)
+  end
+  
+  def computerWillSleep(sender)
+    @world.prepare_for_sleep
+  end
+  
+  def computerDidWake(sender)
+    @world.auto_connect(true)
   end
   
   def terminateWithoutConfirm(sender)

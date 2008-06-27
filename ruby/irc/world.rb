@@ -11,6 +11,7 @@ class IRCWorld < NSObject
   attr_reader :units, :selected, :console, :config
   
   AUTO_CONNECT_DELAY = 1
+  RECONNECT_AFTER_WAKE_UP_DELAY = 5
   
   def initialize
     @units = []
@@ -100,14 +101,19 @@ class IRCWorld < NSObject
     w
   end
   
-  def auto_connect
+  def auto_connect(after_wake_up=false)
     delay = 0
+    delay += RECONNECT_AFTER_WAKE_UP_DELAY if after_wake_up
     @units.each do |u|
-      if u.config.auto_connect
+      if (!after_wake_up) && u.config.auto_connect || after_wake_up && u.reconnect
         u.auto_connect(delay)
         delay += AUTO_CONNECT_DELAY
       end
     end
+  end
+  
+  def prepare_for_sleep
+    @units.each {|u| u.disconnect(true) }
   end
   
   def selunit

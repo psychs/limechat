@@ -7,7 +7,7 @@ require 'pathname'
 class IRCUnit < NSObject
   attr_accessor :world, :log, :id
   attr_writer :pref
-  attr_reader :config, :channels, :mynick, :mymode, :encoding, :myaddress, :isupport
+  attr_reader :config, :channels, :mynick, :mymode, :encoding, :myaddress, :isupport, :reconnect
   attr_accessor :property_dialog
   attr_accessor :keyword, :unread
   attr_accessor :last_selected_channel, :last_input_text
@@ -219,9 +219,9 @@ class IRCUnit < NSObject
     @conn.open
   end
   
-  def disconnect
+  def disconnect(sleeping=false)
     @quitting = false
-    @reconnect = false
+    @reconnect = false unless sleeping
     @conn.close if @conn
     change_state_to_off
   end
@@ -724,9 +724,10 @@ class IRCUnit < NSObject
       end
     elsif connecting? || connected?
       check_retry
+    elsif @connect_delay
+      check_delayed_connect
     else
       check_reconnect
-      check_delayed_connect
     end
     
     unless @timer_queue.empty?
