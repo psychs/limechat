@@ -12,7 +12,7 @@ class ListDialog < NSObject
     @prefix = 'listDialog'
     @list = []
     @flist = nil
-    @filter = ''
+    @filter = nil
     @sort_key = 1
     @sort_order = :descent
   end
@@ -54,7 +54,7 @@ class ListDialog < NSObject
   def onJoin(sender)
     i = @table.selectedRows[0]
     if i
-      if @filter.empty?
+      if @filter.nil?
         list = @list
       else
         build_filtered_list
@@ -69,7 +69,8 @@ class ListDialog < NSObject
   
   ib_action :onSearchTextChanged
   def onSearchTextChanged(sender)
-    @filter = sender.stringValue.to_s
+    filter = sender.stringValue.to_s
+    @filter = filter.empty? ? nil : Regexp.compile(Regexp.escape(filter), Regexp::IGNORECASE)
     @flist = nil
     reload_table
   end
@@ -98,49 +99,79 @@ class ListDialog < NSObject
   end
   
   def sort
-    @list = @list.sort do |a,b|
-      if @sort_key == 1
+    @list.sort! do |a,b|
+      row_compare a, b
+    end
+  end
+
+  def sorted_insert(ary, item)
+    # do a binary search
+    # once the range hits a length of 5 (arbitrary)
+    # switch to linear search
+    head = 0
+    tail = ary.size
+    while tail - head > 5
+      pivot = (head + tail) / 2
+      if row_compare(ary[pivot], item) > 0
+        tail = pivot
+      else
+        head = pivot
+      end
+    end
+    head.upto(tail-1) do |idx|
+      if row_compare(ary[idx], item) > 0
+        ary.insert idx, item
+        return
+      end
+    end
+    ary << item
+  end
+
+  def row_compare(a, b)
+    if @sort_key == 1
+      res = a[1] <=> b[1]
+    else
+      res = a[@sort_key].casecmp b[@sort_key]
+    end
+    if res == 0
+      if @sort_key == 0
         res = a[1] <=> b[1]
       else
-        res = a[@sort_key].downcase <=> b[@sort_key].downcase
+        res = a[0].casecmp b[0]
       end
-      if res == 0
-        if @sort_key == 0
-          res = a[1] <=> b[1]
-        else
-          res = a[0].downcase <=> b[0].downcase
-        end
-      else
-        if @sort_order == :ascent
-          res
-        else
-          - res
-        end
-      end
+    end
+    if @sort_order == :ascent
+      res
+    else
+      - res
     end
   end
   
   def add_item(item)
-    @list << item
-    @flist = nil
-    if @list.size % 200 == 0
-      sort
-      reload_table
-    end
+    sorted_insert @list, item
+    sorted_insert @flist, item if item_matches_filter?(item) unless @flist.nil?
+    note_number_of_rows_changed
   end
   
   def reload_table
     @table.reloadData
   end
+
+  def note_number_of_rows_changed
+    @table.noteNumberOfRowsChanged
+  end
   
   def build_filtered_list
     return if @flist
-    pattern = /#{Regexp.escape(@filter)}/i
-    @flist = @list.select {|i| i[0] =~ pattern || i[2] =~ pattern}
+    @flist = @list.select {|i| item_matches_filter?(i) }
+  end
+
+  def item_matches_filter?(row)
+    row[0] =~ @filter || row[2] =~ @filter
   end
   
   def numberOfRowsInTableView(sender)
-    if @filter.empty?
+    if @filter.nil?
       @list.size
     else
       build_filtered_list
@@ -149,7 +180,7 @@ class ListDialog < NSObject
   end
   
   def tableView_objectValueForTableColumn_row(sender, col, row)
-    if @filter.empty?
+    if @filter.nil?
       list = @list
     else
       build_filtered_list
