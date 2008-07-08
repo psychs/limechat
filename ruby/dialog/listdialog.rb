@@ -136,7 +136,7 @@ class ListDialog < NSObject
   def build_filtered_list
     return if @flist
     pattern = /#{Regexp.escape(@filter)}/i
-    @flist = @list.select {|i| i[0] =~ pattern}
+    @flist = @list.select {|i| i[0] =~ pattern || i[2] =~ pattern}
   end
   
   def numberOfRowsInTableView(sender)
