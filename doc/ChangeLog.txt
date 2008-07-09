@@ -1,3 +1,5 @@
+==== LimeChat 0.19 ====
+
 2008-07-08  Kevin Ballard <kballard@gmail.com>
 
 	When updating the channel list, perform sorted insert instead of re-sorting.
