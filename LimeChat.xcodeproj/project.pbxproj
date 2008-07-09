@@ -6,20 +6,6 @@
 	objectVersion = 42;
 	objects = {
 
-/* Begin PBXAggregateTarget section */
-		78DB8A8E0C1C3216000C27D9 /* dmg&srczip */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = 78DB8A8F0C1C3234000C27D9 /* Build configuration list for PBXAggregateTarget "dmg&srczip" */;
-			buildPhases = (
-				78DB8A8D0C1C3216000C27D9 /* ShellScript */,
-			);
-			dependencies = (
-			);
-			name = "dmg&srczip";
-			productName = dmg;
-		};
-/* End PBXAggregateTarget section */
-
 /* Begin PBXBuildFile section */
 		7801DD2E0D1AF75F00D8691D /* isupportinfo.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7801DD2D0D1AF75F00D8691D /* isupportinfo.rb */; };
 		7805EE590D11FDCA000A9B55 /* pasternakclient.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7805EE580D11FDCA000A9B55 /* pasternakclient.rb */; };
@@ -704,7 +690,6 @@
 			targets = (
 				78E570CF0C1C306500BDF7EC /* LimeChat */,
 				78E7F2000CB2B9D20069E9ED /* LimeChat with RubyCocoa */,
-				78DB8A8E0C1C3216000C27D9 /* dmg&srczip */,
 			);
 		};
 /* End PBXProject section */
@@ -907,22 +892,6 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		78DB8A8D0C1C3216000C27D9 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if [ -e build/Release/\"$PROJECT_NAME\".app ]; then\n  ruby script/package.rb\n  ruby script/packagesource.rb\nfi\n";
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		78E570CD0C1C306500BDF7EC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -1072,28 +1041,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		78DB8A900C1C3234000C27D9 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				PRODUCT_NAME = dmg;
-			};
-			name = Debug;
-		};
-		78DB8A910C1C3234000C27D9 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COPY_PHASE_STRIP = YES;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				PRODUCT_NAME = dmg;
-				ZERO_LINK = NO;
-			};
-			name = Release;
-		};
 		78E570D40C1C306500BDF7EC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1225,15 +1172,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		78DB8A8F0C1C3234000C27D9 /* Build configuration list for PBXAggregateTarget "dmg&srczip" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				78DB8A900C1C3234000C27D9 /* Debug */,
-				78DB8A910C1C3234000C27D9 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		78E570D30C1C306500BDF7EC /* Build configuration list for PBXNativeTarget "LimeChat" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
