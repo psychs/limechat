@@ -198,8 +198,8 @@ table#shortcutkeys td
 <h2>Install</h2>
 <div class="section">
 	<ol>
-		<li>Download <a href="http://sourceforge.net/project/showfiles.php?group_id=44114">RubyCocoa 0.13.2</a>, and install it. <strong>Note that you need to install it even if you are using OSX 10.5.2.</strong></li>
-		<li>Download <a href="http://downloads.sourceforge.net/limechat/LimeChat_0.18.dmg">LimeChat 0.18 executable dmg</a>.</li>
+		<li>Download <a href="http://sourceforge.net/project/showfiles.php?group_id=44114">RubyCocoa 0.13.2</a>, and install it. <strong>Note that you need to install it even if you are using OSX 10.5.4.</strong></li>
+		<li>Download <a href="http://downloads.sourceforge.net/limechat/LimeChat_0.19.dmg">LimeChat 0.19 executable dmg</a>.</li>
 		<li>Open the downloaded dmg, and copy LimeChat.app to your Application folder.</li>
 	</ol>
 </div>
@@ -207,7 +207,7 @@ table#shortcutkeys td
 <h2>Source code</h2>
 <div class="section">
 	<ul>
-		<li><a href="http://downloads.sourceforge.net/limechat/LimeChat_0.18.zip">LimeChat 0.18 source zip</a></li>
+		<li><a href="http://downloads.sourceforge.net/limechat/LimeChat_0.19.zip">LimeChat 0.19 source zip</a></li>
 		<li><code>git clone git://github.com/psychs/limechat.git</code></li>
 	</ul>
 </div>
@@ -248,6 +248,10 @@ table#shortcutkeys td
       <td>Move to the <em>1st .. 10th</em> channel in the current server.</td>
     </tr>
     <tr>
+      <th>Cmd+Ctrl+1..0</th>
+      <td>Move to the <em>1st .. 10th</em> server.</td>
+    </tr>
+    <tr>
       <th>Ctrl+Enter</th>
       <td>Send a notice message.</td>
     </tr>
@@ -274,6 +278,22 @@ table#shortcutkeys td
 		This change log is also available in <a href="rss.xml">RSS</a>.
 	</p>
 	<dl>
+		
+		<dt id="v0.19">0.19 (2008.07.10)</dt>
+		<dd>
+			<ul>
+				<li>Make bouncing just one time for highlight.</li>
+				<li>Added badges on the icon for highlight or new talk.</li>
+				<li>Assigned cmd+ctrl+0..9 to move to the nth server.</li>
+				<li>Changed to disconnect from all servers when the computer is going to sleep.</li>
+				<li>Changed to reconnect to the servers after waking up.</li>
+				<li>Added /timer command. (e.g. /timer 5 join #limechat)</li>
+				<li>When updating the channel list, perform sorted insert instead of re-sorting.</li>
+				<li>Search channel topics in the Channel List.</li>
+				<li>Added "first" attribute for span.sender to show nicknames in the first line only.</li>
+				<li>Changed to ignore CTCP replies with empty commands.</li>
+      </ul>
+		</dd>
 		
 		<dt id="v0.18">0.18 (2008.05.22)</dt>
 		<dd>

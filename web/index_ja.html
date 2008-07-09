@@ -188,8 +188,8 @@ table#shortcutkeys td
 <h2>インストール手順</h2>
 <div class="section">
 	<ol>
-		<li><a href="http://sourceforge.net/project/showfiles.php?group_id=44114">RubyCocoa 0.13.2</a> をダウンロードしてインストールする。 <strong>(OSX 10.5.2 の RubyCocoa は 0.13.1 と少し古いので、10.5.2 ユーザの方もかならずインストールしてください)</strong></li>
-		<li><a href="http://downloads.sourceforge.net/limechat/LimeChat_0.18.dmg?use_mirror=jaist">LimeChat_0.18.dmg</a> をダウンロードする。</li>
+		<li><a href="http://sourceforge.net/project/showfiles.php?group_id=44114">RubyCocoa 0.13.2</a> をダウンロードしてインストールする。 <strong>(OSX 10.5.2 の RubyCocoa は 0.13.1 と少し古いので、10.5.4 ユーザの方もかならずインストールしてください)</strong></li>
+		<li><a href="http://downloads.sourceforge.net/limechat/LimeChat_0.19.dmg?use_mirror=jaist">LimeChat_0.19.dmg</a> をダウンロードする。</li>
 		<li>ダウンロードした dmg をダブルクリックして開き、LimeChat.app をアプリケーションフォルダにコピーする。</li>
 	</ol>
 </div>
@@ -197,7 +197,7 @@ table#shortcutkeys td
 <h2>ソースの入手方法</h2>
 <div class="section">
 	<ul>
-		<li><a href="http://downloads.sourceforge.net/limechat/LimeChat_0.18.zip?use_mirror=jaist">LimeChat 0.18 source zip</a></li>
+		<li><a href="http://downloads.sourceforge.net/limechat/LimeChat_0.19.zip?use_mirror=jaist">LimeChat 0.19 source zip</a></li>
 		<li><code>git clone git://github.com/psychs/limechat.git</code></li>
 	</ul>
 </div>
@@ -238,6 +238,10 @@ table#shortcutkeys td
       <td>1番目から10番目のチャンネルに移動</td>
     </tr>
     <tr>
+      <th>Cmd+Ctrl+1..0</th>
+      <td>1番目から10番目のサーバに移動</td>
+    </tr>
+    <tr>
       <th>Ctrl+Enter</th>
       <td>Notice コマンドで送信</td>
     </tr>
@@ -263,6 +267,22 @@ table#shortcutkeys td
 		更新履歴は <a href="rss_ja.xml">RSS</a> でも配信しています。
 	</p>
 	<dl>
+		
+		<dt id="v0.19">0.19 (2008.07.10)</dt>
+		<dd>
+			<ul>
+				<li>キーワードハイライト時に、1度だけドックアイコンをバウンドするようにした。</li>
+				<li>キーワードハイライト時と新規トークに、ドックアイコン上にバッジをつけるようにした。</li>
+				<li>cmd+ctrl+1..0 で n 番目のサーバにできるようにした。</li>
+				<li>マシンがスリープするときに、サーバから切断するようにした。</li>
+				<li>マシンがスリープから復帰したときに、すぐにサーバに再接続するようにした。</li>
+				<li>/timer コマンドを追加した。(例: /timer 5 join #limechat)</li>
+				<li>チャンネルリストダイアログでリストを更新するときに、ソートが必要ないアルゴリズムで更新するようにした。</li>
+				<li>チャンネルリストダイアログでチャンネルトピックも検索するようにした。</li>
+				<li>ニックネームを1行目しか表示したくないときのために、1行目の span.sender に first 属性を追加した。</li>
+				<li>コマンドが空白のCTCPを無視するようにした。</li>
+      </ul>
+		</dd>
 		
 		<dt id="v0.18">0.18 (2008.05.22)</dt>
 		<dd>
