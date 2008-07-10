@@ -9,9 +9,7 @@
 /* Begin PBXBuildFile section */
 		7801DD2E0D1AF75F00D8691D /* isupportinfo.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7801DD2D0D1AF75F00D8691D /* isupportinfo.rb */; };
 		7805EE590D11FDCA000A9B55 /* pasternakclient.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7805EE580D11FDCA000A9B55 /* pasternakclient.rb */; };
-		7805EE5A0D11FDCA000A9B55 /* pasternakclient.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7805EE580D11FDCA000A9B55 /* pasternakclient.rb */; };
 		780CCA0E0D8A294000E4BA77 /* keyeventhandler.rb in Resources */ = {isa = PBXBuildFile; fileRef = 780CCA0D0D8A294000E4BA77 /* keyeventhandler.rb */; };
-		780CCA0F0D8A294000E4BA77 /* keyeventhandler.rb in Resources */ = {isa = PBXBuildFile; fileRef = 780CCA0D0D8A294000E4BA77 /* keyeventhandler.rb */; };
 		780D09F00C2F2C20007C0F4F /* splitter.rb in Resources */ = {isa = PBXBuildFile; fileRef = 780D09EF0C2F2C20007C0F4F /* splitter.rb */; };
 		78208C1A0C9D97CD004472E9 /* cocoasheet.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78208C190C9D97CD004472E9 /* cocoasheet.rb */; };
 		78211B530C5F3560004B47DA /* soundplayer.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78211B520C5F3560004B47DA /* soundplayer.rb */; };
@@ -50,54 +48,37 @@
 		78229BEB0C288188001DD4C3 /* tableprogressindicator.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BBF0C288188001DD4C3 /* tableprogressindicator.rb */; };
 		78229BEC0C288188001DD4C3 /* treeview.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BC00C288188001DD4C3 /* treeview.rb */; };
 		782647CC0CFE86BB0052E598 /* pastieclient.rb in Resources */ = {isa = PBXBuildFile; fileRef = 782647CB0CFE86BB0052E598 /* pastieclient.rb */; };
-		782647CD0CFE86BB0052E598 /* pastieclient.rb in Resources */ = {isa = PBXBuildFile; fileRef = 782647CB0CFE86BB0052E598 /* pastieclient.rb */; };
 		78287EB50D742DAA008D5656 /* Themes in Resources */ = {isa = PBXBuildFile; fileRef = 78287EA90D742DAA008D5656 /* Themes */; };
-		78287EB60D742DAA008D5656 /* Themes in Resources */ = {isa = PBXBuildFile; fileRef = 78287EA90D742DAA008D5656 /* Themes */; };
 		78287EB70D742DBD008D5656 /* Themes in CopyFiles */ = {isa = PBXBuildFile; fileRef = 78287EA90D742DAA008D5656 /* Themes */; };
-		78287EB80D742DC0008D5656 /* Themes in CopyFiles */ = {isa = PBXBuildFile; fileRef = 78287EA90D742DAA008D5656 /* Themes */; };
 		7831B94D0C589A7A00E1F931 /* growl.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7831B94C0C589A7A00E1F931 /* growl.rb */; };
 		7834E1930C69B5AD003C5D65 /* wildcard.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7834E1920C69B5AD003C5D65 /* wildcard.rb */; };
 		783952320D261EEE00382565 /* pluginmanager.rb in Resources */ = {isa = PBXBuildFile; fileRef = 783952310D261EEE00382565 /* pluginmanager.rb */; };
-		783952330D261EEE00382565 /* pluginmanager.rb in Resources */ = {isa = PBXBuildFile; fileRef = 783952310D261EEE00382565 /* pluginmanager.rb */; };
 		783952350D261F2500382565 /* plugin.rb in Resources */ = {isa = PBXBuildFile; fileRef = 783952340D261F2500382565 /* plugin.rb */; };
-		783952360D261F2500382565 /* plugin.rb in Resources */ = {isa = PBXBuildFile; fileRef = 783952340D261F2500382565 /* plugin.rb */; };
 		783D0B200CF45BC6002CC2FB /* ListDialog.nib in Resources */ = {isa = PBXBuildFile; fileRef = 783D0B1E0CF45BC6002CC2FB /* ListDialog.nib */; };
-		783D0B210CF45BDC002CC2FB /* ListDialog.nib in Resources */ = {isa = PBXBuildFile; fileRef = 783D0B1E0CF45BC6002CC2FB /* ListDialog.nib */; };
 		783D0B2B0CF45C38002CC2FB /* listdialog.rb in Resources */ = {isa = PBXBuildFile; fileRef = 783D0B2A0CF45C38002CC2FB /* listdialog.rb */; };
-		783D0B2C0CF45C38002CC2FB /* listdialog.rb in Resources */ = {isa = PBXBuildFile; fileRef = 783D0B2A0CF45C38002CC2FB /* listdialog.rb */; };
 		784660250C3145850064140F /* OldEventManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 784660240C3145850064140F /* OldEventManager.m */; };
 		78496EFA0C288B070084A836 /* PreferenceDialog.nib in Resources */ = {isa = PBXBuildFile; fileRef = 78496EF80C288B070084A836 /* PreferenceDialog.nib */; };
 		78496EFD0C2890200084A836 /* preferencedialog.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78496EFC0C2890200084A836 /* preferencedialog.rb */; };
 		7867EA4B0C227AD40017B510 /* NickSheet.nib in Resources */ = {isa = PBXBuildFile; fileRef = 7867EA490C227AD40017B510 /* NickSheet.nib */; };
 		7870BA3F0E1116DC004B30B4 /* redstar.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 7870BA3E0E1116DC004B30B4 /* redstar.tiff */; };
-		7870BA400E1116DC004B30B4 /* redstar.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 7870BA3E0E1116DC004B30B4 /* redstar.tiff */; };
 		7870BA440E111952004B30B4 /* bluestar.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 7870BA430E111952004B30B4 /* bluestar.tiff */; };
-		7870BA450E111952004B30B4 /* bluestar.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 7870BA430E111952004B30B4 /* bluestar.tiff */; };
 		7870BA490E111BD0004B30B4 /* iconcontroller.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7870BA480E111BD0004B30B4 /* iconcontroller.rb */; };
-		7870BA4A0E111BD0004B30B4 /* iconcontroller.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7870BA480E111BD0004B30B4 /* iconcontroller.rb */; };
 		78755D730C2AC0B30073FF42 /* logrenderer.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78755D720C2AC0B30073FF42 /* logrenderer.rb */; };
 		7877E0620C65B84E002F13C7 /* textfield.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7877E0610C65B84E002F13C7 /* textfield.rb */; };
 		787817C80D860ED30049CF95 /* unicodeutil.rb in Resources */ = {isa = PBXBuildFile; fileRef = 787817C70D860ED30049CF95 /* unicodeutil.rb */; };
-		787817C90D860ED30049CF95 /* unicodeutil.rb in Resources */ = {isa = PBXBuildFile; fileRef = 787817C70D860ED30049CF95 /* unicodeutil.rb */; };
 		787898250CF38C510045585B /* filelogger.rb in Resources */ = {isa = PBXBuildFile; fileRef = 787898240CF38C510045585B /* filelogger.rb */; };
-		787898260CF38C510045585B /* filelogger.rb in Resources */ = {isa = PBXBuildFile; fileRef = 787898240CF38C510045585B /* filelogger.rb */; };
 		787A36A20C6A392600DDB70D /* fieldeditortextview.rb in Resources */ = {isa = PBXBuildFile; fileRef = 787A36A10C6A392600DDB70D /* fieldeditortextview.rb */; };
 		7884E54E0CDA91F500AF3678 /* SACrashReporter in Resources */ = {isa = PBXBuildFile; fileRef = 7884E5450CDA91F500AF3678 /* SACrashReporter */; };
-		7884E54F0CDA91F500AF3678 /* SACrashReporter in Resources */ = {isa = PBXBuildFile; fileRef = 7884E5450CDA91F500AF3678 /* SACrashReporter */; };
 		7889CAB90D646E2C003D808E /* WelcomeDialog.nib in Resources */ = {isa = PBXBuildFile; fileRef = 7889CAB70D646E2C003D808E /* WelcomeDialog.nib */; };
-		7889CABA0D646E2C003D808E /* WelcomeDialog.nib in Resources */ = {isa = PBXBuildFile; fileRef = 7889CAB70D646E2C003D808E /* WelcomeDialog.nib */; };
 		7889CABF0D647494003D808E /* welcomedialog.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7889CABE0D647494003D808E /* welcomedialog.rb */; };
-		7889CAC00D647494003D808E /* welcomedialog.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7889CABE0D647494003D808E /* welcomedialog.rb */; };
 		788C5E660C5F4F5A0034C46E /* growlcontroller.rb in Resources */ = {isa = PBXBuildFile; fileRef = 788C5E650C5F4F5A0034C46E /* growlcontroller.rb */; };
 		7890B4E90C659E4700DF983F /* autoopdialog.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7890B4E80C659E4700DF983F /* autoopdialog.rb */; };
 		7890B4ED0C659E5D00DF983F /* AutoOpDialog.nib in Resources */ = {isa = PBXBuildFile; fileRef = 7890B4EB0C659E5D00DF983F /* AutoOpDialog.nib */; };
 		7896BFE50D0C5E850069453A /* viewtheme.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7896BFE40D0C5E850069453A /* viewtheme.rb */; };
-		7896BFE60D0C5E850069453A /* viewtheme.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7896BFE40D0C5E850069453A /* viewtheme.rb */; };
 		78AD78E40C61B8F8001E77F4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 78AD78E20C61B8F8001E77F4 /* Localizable.strings */; };
 		78AF96580C2C219A006D9E4D /* inputhistory.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78AF96570C2C219A006D9E4D /* inputhistory.rb */; };
 		78AFBCF50C33E314008A8FCD /* kanasupport.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78AFBCF40C33E314008A8FCD /* kanasupport.rb */; };
 		78B063530C2BD19D00CDD242 /* singlelineformatter.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78B063520C2BD19D00CDD242 /* singlelineformatter.rb */; };
-		78B2DF200D0417160092EBDA /* application.icns in Resources */ = {isa = PBXBuildFile; fileRef = 78B2DF1F0D0417160092EBDA /* application.icns */; };
 		78B2DF210D0417160092EBDA /* application.icns in Resources */ = {isa = PBXBuildFile; fileRef = 78B2DF1F0D0417160092EBDA /* application.icns */; };
 		78BF64AB0C2885E2004451B2 /* channel.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78BF64A30C2885E2004451B2 /* channel.rb */; };
 		78BF64AC0C2885E2004451B2 /* channelmode.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78BF64A40C2885E2004451B2 /* channelmode.rb */; };
@@ -126,89 +107,7 @@
 		78E572490C1C30CE00BDF7EC /* ChannelDialog.nib in Resources */ = {isa = PBXBuildFile; fileRef = 78B869B90BF2D613007315AA /* ChannelDialog.nib */; };
 		78E572660C1C30CE00BDF7EC /* DccDialog.nib in Resources */ = {isa = PBXBuildFile; fileRef = 7817A0380BF6FFCD005C7737 /* DccDialog.nib */; };
 		78E572690C1C30CE00BDF7EC /* WhoisDialog.nib in Resources */ = {isa = PBXBuildFile; fileRef = 78A86AD90BFFD87500E28592 /* WhoisDialog.nib */; };
-		78E7F2020CB2B9D20069E9ED /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 29B97318FDCFA39411CA2CEA /* MainMenu.nib */; };
-		78E7F2030CB2B9D20069E9ED /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
-		78E7F2040CB2B9D20069E9ED /* rb_main.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7869272D0BB6ED9E0081019B /* rb_main.rb */; };
-		78E7F2050CB2B9D20069E9ED /* CommentSheet.nib in Resources */ = {isa = PBXBuildFile; fileRef = 78C5BAD30BE7B95100C4497A /* CommentSheet.nib */; };
-		78E7F2060CB2B9D20069E9ED /* ModeSheet.nib in Resources */ = {isa = PBXBuildFile; fileRef = 781E254B0BE9E8E20040F56E /* ModeSheet.nib */; };
-		78E7F2070CB2B9D20069E9ED /* ServerDialog.nib in Resources */ = {isa = PBXBuildFile; fileRef = 78785B570BEDCF6800456645 /* ServerDialog.nib */; };
-		78E7F2080CB2B9D20069E9ED /* ChannelDialog.nib in Resources */ = {isa = PBXBuildFile; fileRef = 78B869B90BF2D613007315AA /* ChannelDialog.nib */; };
-		78E7F2090CB2B9D20069E9ED /* DccDialog.nib in Resources */ = {isa = PBXBuildFile; fileRef = 7817A0380BF6FFCD005C7737 /* DccDialog.nib */; };
-		78E7F20A0CB2B9D20069E9ED /* WhoisDialog.nib in Resources */ = {isa = PBXBuildFile; fileRef = 78A86AD90BFFD87500E28592 /* WhoisDialog.nib */; };
-		78E7F20B0CB2B9D20069E9ED /* NickSheet.nib in Resources */ = {isa = PBXBuildFile; fileRef = 7867EA490C227AD40017B510 /* NickSheet.nib */; };
-		78E7F20E0CB2B9D20069E9ED /* ircsocket.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229B920C288188001DD4C3 /* ircsocket.rb */; };
-		78E7F20F0CB2B9D20069E9ED /* resolver.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229B940C288188001DD4C3 /* resolver.rb */; };
-		78E7F2100CB2B9D20069E9ED /* tcpclient.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229B950C288188001DD4C3 /* tcpclient.rb */; };
-		78E7F2110CB2B9D20069E9ED /* tcpserver.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229B960C288188001DD4C3 /* tcpserver.rb */; };
-		78E7F2120CB2B9D20069E9ED /* timer.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229B970C288188001DD4C3 /* timer.rb */; };
-		78E7F2130CB2B9D20069E9ED /* appcontroller.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229B990C288188001DD4C3 /* appcontroller.rb */; };
-		78E7F2140CB2B9D20069E9ED /* menucontroller.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229B9A0C288188001DD4C3 /* menucontroller.rb */; };
-		78E7F2150CB2B9D20069E9ED /* preferences.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229B9B0C288188001DD4C3 /* preferences.rb */; };
-		78E7F2160CB2B9D20069E9ED /* dccmanager.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229B9D0C288188001DD4C3 /* dccmanager.rb */; };
-		78E7F2170CB2B9D20069E9ED /* dccreceiver.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229B9E0C288188001DD4C3 /* dccreceiver.rb */; };
-		78E7F2180CB2B9D20069E9ED /* dccsender.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229B9F0C288188001DD4C3 /* dccsender.rb */; };
-		78E7F2190CB2B9D20069E9ED /* channeldialog.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BA10C288188001DD4C3 /* channeldialog.rb */; };
-		78E7F21A0CB2B9D20069E9ED /* commentsheet.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BA20C288188001DD4C3 /* commentsheet.rb */; };
-		78E7F21B0CB2B9D20069E9ED /* modesheet.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BA30C288188001DD4C3 /* modesheet.rb */; };
-		78E7F21C0CB2B9D20069E9ED /* nicksheet.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BA40C288188001DD4C3 /* nicksheet.rb */; };
-		78E7F21D0CB2B9D20069E9ED /* serverdialog.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BA50C288188001DD4C3 /* serverdialog.rb */; };
-		78E7F21E0CB2B9D20069E9ED /* whoisdialog.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BA60C288188001DD4C3 /* whoisdialog.rb */; };
-		78E7F21F0CB2B9D20069E9ED /* dialoghelper.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BA80C288188001DD4C3 /* dialoghelper.rb */; };
-		78E7F2200CB2B9D20069E9ED /* numberformat.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BA90C288188001DD4C3 /* numberformat.rb */; };
-		78E7F2210CB2B9D20069E9ED /* persistencehelper.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BAA0C288188001DD4C3 /* persistencehelper.rb */; };
-		78E7F2220CB2B9D20069E9ED /* stringvalidator.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BAB0C288188001DD4C3 /* stringvalidator.rb */; };
-		78E7F2230CB2B9D20069E9ED /* urlopener.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BAC0C288188001DD4C3 /* urlopener.rb */; };
-		78E7F2240CB2B9D20069E9ED /* userdefaultsaccess.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BAD0C288188001DD4C3 /* userdefaultsaccess.rb */; };
-		78E7F2250CB2B9D20069E9ED /* utility.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BAE0C288188001DD4C3 /* utility.rb */; };
-		78E7F2260CB2B9D20069E9ED /* chatbox.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BB90C288188001DD4C3 /* chatbox.rb */; };
-		78E7F2270CB2B9D20069E9ED /* dialogwindow.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BBA0C288188001DD4C3 /* dialogwindow.rb */; };
-		78E7F2280CB2B9D20069E9ED /* listview.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BBB0C288188001DD4C3 /* listview.rb */; };
-		78E7F2290CB2B9D20069E9ED /* log.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BBC0C288188001DD4C3 /* log.rb */; };
-		78E7F22A0CB2B9D20069E9ED /* logview.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BBD0C288188001DD4C3 /* logview.rb */; };
-		78E7F22B0CB2B9D20069E9ED /* mainwindow.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BBE0C288188001DD4C3 /* mainwindow.rb */; };
-		78E7F22C0CB2B9D20069E9ED /* tableprogressindicator.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BBF0C288188001DD4C3 /* tableprogressindicator.rb */; };
-		78E7F22D0CB2B9D20069E9ED /* treeview.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BC00C288188001DD4C3 /* treeview.rb */; };
-		78E7F22F0CB2B9D20069E9ED /* channel.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78BF64A30C2885E2004451B2 /* channel.rb */; };
-		78E7F2300CB2B9D20069E9ED /* channelmode.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78BF64A40C2885E2004451B2 /* channelmode.rb */; };
-		78E7F2310CB2B9D20069E9ED /* config.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78BF64A50C2885E2004451B2 /* config.rb */; };
-		78E7F2320CB2B9D20069E9ED /* ircmessage.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78BF64A60C2885E2004451B2 /* ircmessage.rb */; };
-		78E7F2330CB2B9D20069E9ED /* unit.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78BF64A70C2885E2004451B2 /* unit.rb */; };
-		78E7F2340CB2B9D20069E9ED /* user.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78BF64A80C2885E2004451B2 /* user.rb */; };
-		78E7F2350CB2B9D20069E9ED /* usermode.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78BF64A90C2885E2004451B2 /* usermode.rb */; };
-		78E7F2360CB2B9D20069E9ED /* world.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78BF64AA0C2885E2004451B2 /* world.rb */; };
-		78E7F2370CB2B9D20069E9ED /* PreferenceDialog.nib in Resources */ = {isa = PBXBuildFile; fileRef = 78496EF80C288B070084A836 /* PreferenceDialog.nib */; };
-		78E7F2380CB2B9D20069E9ED /* preferencedialog.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78496EFC0C2890200084A836 /* preferencedialog.rb */; };
-		78E7F2390CB2B9D20069E9ED /* logrenderer.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78755D720C2AC0B30073FF42 /* logrenderer.rb */; };
-		78E7F23A0CB2B9D20069E9ED /* singlelineformatter.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78B063520C2BD19D00CDD242 /* singlelineformatter.rb */; };
-		78E7F23B0CB2B9D20069E9ED /* inputhistory.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78AF96570C2C219A006D9E4D /* inputhistory.rb */; };
-		78E7F23C0CB2B9D20069E9ED /* PasteSheet.nib in Resources */ = {isa = PBXBuildFile; fileRef = 7821DBDC0C2C84EA00B3EF42 /* PasteSheet.nib */; };
-		78E7F23D0CB2B9D20069E9ED /* pastesheet.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7821DBE30C2C875700B3EF42 /* pastesheet.rb */; };
-		78E7F23E0CB2B9D20069E9ED /* splitter.rb in Resources */ = {isa = PBXBuildFile; fileRef = 780D09EF0C2F2C20007C0F4F /* splitter.rb */; };
-		78E7F23F0CB2B9D20069E9ED /* kanasupport.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78AFBCF40C33E314008A8FCD /* kanasupport.rb */; };
-		78E7F2430CB2B9D20069E9ED /* memberlistview.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78DA4EBF0C461D52008780C8 /* memberlistview.rb */; };
-		78E7F2440CB2B9D20069E9ED /* servertreeview.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78DA4EC00C461D52008780C8 /* servertreeview.rb */; };
-		78E7F2450CB2B9D20069E9ED /* growl.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7831B94C0C589A7A00E1F931 /* growl.rb */; };
-		78E7F2460CB2B9D20069E9ED /* soundplayer.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78211B520C5F3560004B47DA /* soundplayer.rb */; };
-		78E7F2470CB2B9D20069E9ED /* growlcontroller.rb in Resources */ = {isa = PBXBuildFile; fileRef = 788C5E650C5F4F5A0034C46E /* growlcontroller.rb */; };
-		78E7F2480CB2B9D20069E9ED /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 78AD78E20C61B8F8001E77F4 /* Localizable.strings */; };
-		78E7F2490CB2B9D20069E9ED /* autoopdialog.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7890B4E80C659E4700DF983F /* autoopdialog.rb */; };
-		78E7F24A0CB2B9D20069E9ED /* AutoOpDialog.nib in Resources */ = {isa = PBXBuildFile; fileRef = 7890B4EB0C659E5D00DF983F /* AutoOpDialog.nib */; };
-		78E7F24B0CB2B9D20069E9ED /* textfield.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7877E0610C65B84E002F13C7 /* textfield.rb */; };
-		78E7F24C0CB2B9D20069E9ED /* wildcard.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7834E1920C69B5AD003C5D65 /* wildcard.rb */; };
-		78E7F24D0CB2B9D20069E9ED /* fieldeditortextview.rb in Resources */ = {isa = PBXBuildFile; fileRef = 787A36A10C6A392600DDB70D /* fieldeditortextview.rb */; };
-		78E7F24F0CB2B9D20069E9ED /* cocoasheet.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78208C190C9D97CD004472E9 /* cocoasheet.rb */; };
-		78E7F2510CB2B9D20069E9ED /* AsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 786926F30BB6EC1B0081019B /* AsyncSocket.m */; };
-		78E7F2520CB2B9D20069E9ED /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 786926F40BB6EC1B0081019B /* main.m */; };
-		78E7F2530CB2B9D20069E9ED /* GradientFill.m in Sources */ = {isa = PBXBuildFile; fileRef = 7804271D0BCA810600C14486 /* GradientFill.m */; };
-		78E7F2540CB2B9D20069E9ED /* OldEventManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 784660240C3145850064140F /* OldEventManager.m */; };
-		78E7F2560CB2B9D20069E9ED /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
-		78E7F2570CB2B9D20069E9ED /* RubyCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5D3C7BF0AEB9FEB00C17985 /* RubyCocoa.framework */; };
-		78E7F2580CB2B9D20069E9ED /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 788D56F00BB6872B00DDBF69 /* WebKit.framework */; };
-		78E7F2590CB2B9D20069E9ED /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 787FD46C0BFE960100F2F22D /* Carbon.framework */; };
-		78E7F25A0CB2B9D20069E9ED /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 780253C20C09525900C170D4 /* CoreServices.framework */; };
-		78E7F25C0CB2B9D20069E9ED /* RubyCocoa.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = A5D3C7BF0AEB9FEB00C17985 /* RubyCocoa.framework */; };
 		78F59FE40D78144B0038AC1D /* markedscroller.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78F59FE30D78144B0038AC1D /* markedscroller.rb */; };
-		78F59FE50D78144B0038AC1D /* markedscroller.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78F59FE30D78144B0038AC1D /* markedscroller.rb */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -219,26 +118,6 @@
 			dstSubfolderSpec = 7;
 			files = (
 				78287EB70D742DBD008D5656 /* Themes in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		7835DF4E0D0416400064916A /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = ..;
-			dstSubfolderSpec = 7;
-			files = (
-				78287EB80D742DC0008D5656 /* Themes in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		78E7F25B0CB2B9D20069E9ED /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				78E7F25C0CB2B9D20069E9ED /* RubyCocoa.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -350,7 +229,6 @@
 		78DA4EBF0C461D52008780C8 /* memberlistview.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = memberlistview.rb; sourceTree = "<group>"; };
 		78DA4EC00C461D52008780C8 /* servertreeview.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = servertreeview.rb; sourceTree = "<group>"; };
 		78E570D00C1C306500BDF7EC /* LimeChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LimeChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		78E7F2600CB2B9D20069E9ED /* LimeChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LimeChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		78F59FE30D78144B0038AC1D /* markedscroller.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = markedscroller.rb; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		A5D3C7BF0AEB9FEB00C17985 /* RubyCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RubyCocoa.framework; path = /Library/Frameworks/RubyCocoa.framework; sourceTree = "<absolute>"; };
@@ -366,18 +244,6 @@
 				78E5723B0C1C30BA00BDF7EC /* WebKit.framework in Frameworks */,
 				78E5723C0C1C30BA00BDF7EC /* Carbon.framework in Frameworks */,
 				78E5723D0C1C30BA00BDF7EC /* CoreServices.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		78E7F2550CB2B9D20069E9ED /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				78E7F2560CB2B9D20069E9ED /* Cocoa.framework in Frameworks */,
-				78E7F2570CB2B9D20069E9ED /* RubyCocoa.framework in Frameworks */,
-				78E7F2580CB2B9D20069E9ED /* WebKit.framework in Frameworks */,
-				78E7F2590CB2B9D20069E9ED /* Carbon.framework in Frameworks */,
-				78E7F25A0CB2B9D20069E9ED /* CoreServices.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -418,7 +284,6 @@
 			isa = PBXGroup;
 			children = (
 				78E570D00C1C306500BDF7EC /* LimeChat.app */,
-				78E7F2600CB2B9D20069E9ED /* LimeChat.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -657,25 +522,6 @@
 			productReference = 78E570D00C1C306500BDF7EC /* LimeChat.app */;
 			productType = "com.apple.product-type.application";
 		};
-		78E7F2000CB2B9D20069E9ED /* LimeChat with RubyCocoa */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 78E7F25D0CB2B9D20069E9ED /* Build configuration list for PBXNativeTarget "LimeChat with RubyCocoa" */;
-			buildPhases = (
-				78E7F2010CB2B9D20069E9ED /* Resources */,
-				78E7F2500CB2B9D20069E9ED /* Sources */,
-				78E7F2550CB2B9D20069E9ED /* Frameworks */,
-				78E7F25B0CB2B9D20069E9ED /* CopyFiles */,
-				7835DF4E0D0416400064916A /* CopyFiles */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "LimeChat with RubyCocoa";
-			productName = LimeChat;
-			productReference = 78E7F2600CB2B9D20069E9ED /* LimeChat.app */;
-			productType = "com.apple.product-type.application";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -689,7 +535,6 @@
 			projectRoot = "";
 			targets = (
 				78E570CF0C1C306500BDF7EC /* LimeChat */,
-				78E7F2000CB2B9D20069E9ED /* LimeChat with RubyCocoa */,
 			);
 		};
 /* End PBXProject section */
@@ -793,103 +638,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		78E7F2010CB2B9D20069E9ED /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				783D0B210CF45BDC002CC2FB /* ListDialog.nib in Resources */,
-				78E7F2020CB2B9D20069E9ED /* MainMenu.nib in Resources */,
-				78E7F2030CB2B9D20069E9ED /* InfoPlist.strings in Resources */,
-				78E7F2040CB2B9D20069E9ED /* rb_main.rb in Resources */,
-				78E7F2050CB2B9D20069E9ED /* CommentSheet.nib in Resources */,
-				78E7F2060CB2B9D20069E9ED /* ModeSheet.nib in Resources */,
-				78E7F2070CB2B9D20069E9ED /* ServerDialog.nib in Resources */,
-				78E7F2080CB2B9D20069E9ED /* ChannelDialog.nib in Resources */,
-				78E7F2090CB2B9D20069E9ED /* DccDialog.nib in Resources */,
-				78E7F20A0CB2B9D20069E9ED /* WhoisDialog.nib in Resources */,
-				78E7F20B0CB2B9D20069E9ED /* NickSheet.nib in Resources */,
-				78E7F20E0CB2B9D20069E9ED /* ircsocket.rb in Resources */,
-				78E7F20F0CB2B9D20069E9ED /* resolver.rb in Resources */,
-				78E7F2100CB2B9D20069E9ED /* tcpclient.rb in Resources */,
-				78E7F2110CB2B9D20069E9ED /* tcpserver.rb in Resources */,
-				78E7F2120CB2B9D20069E9ED /* timer.rb in Resources */,
-				78E7F2130CB2B9D20069E9ED /* appcontroller.rb in Resources */,
-				78E7F2140CB2B9D20069E9ED /* menucontroller.rb in Resources */,
-				78E7F2150CB2B9D20069E9ED /* preferences.rb in Resources */,
-				78E7F2160CB2B9D20069E9ED /* dccmanager.rb in Resources */,
-				78E7F2170CB2B9D20069E9ED /* dccreceiver.rb in Resources */,
-				78E7F2180CB2B9D20069E9ED /* dccsender.rb in Resources */,
-				78E7F2190CB2B9D20069E9ED /* channeldialog.rb in Resources */,
-				78E7F21A0CB2B9D20069E9ED /* commentsheet.rb in Resources */,
-				78E7F21B0CB2B9D20069E9ED /* modesheet.rb in Resources */,
-				78E7F21C0CB2B9D20069E9ED /* nicksheet.rb in Resources */,
-				78E7F21D0CB2B9D20069E9ED /* serverdialog.rb in Resources */,
-				78E7F21E0CB2B9D20069E9ED /* whoisdialog.rb in Resources */,
-				78E7F21F0CB2B9D20069E9ED /* dialoghelper.rb in Resources */,
-				78E7F2200CB2B9D20069E9ED /* numberformat.rb in Resources */,
-				78E7F2210CB2B9D20069E9ED /* persistencehelper.rb in Resources */,
-				78E7F2220CB2B9D20069E9ED /* stringvalidator.rb in Resources */,
-				78E7F2230CB2B9D20069E9ED /* urlopener.rb in Resources */,
-				78E7F2240CB2B9D20069E9ED /* userdefaultsaccess.rb in Resources */,
-				78E7F2250CB2B9D20069E9ED /* utility.rb in Resources */,
-				78E7F2260CB2B9D20069E9ED /* chatbox.rb in Resources */,
-				78E7F2270CB2B9D20069E9ED /* dialogwindow.rb in Resources */,
-				78E7F2280CB2B9D20069E9ED /* listview.rb in Resources */,
-				78E7F2290CB2B9D20069E9ED /* log.rb in Resources */,
-				78E7F22A0CB2B9D20069E9ED /* logview.rb in Resources */,
-				78E7F22B0CB2B9D20069E9ED /* mainwindow.rb in Resources */,
-				78E7F22C0CB2B9D20069E9ED /* tableprogressindicator.rb in Resources */,
-				78E7F22D0CB2B9D20069E9ED /* treeview.rb in Resources */,
-				78E7F22F0CB2B9D20069E9ED /* channel.rb in Resources */,
-				78E7F2300CB2B9D20069E9ED /* channelmode.rb in Resources */,
-				78E7F2310CB2B9D20069E9ED /* config.rb in Resources */,
-				78E7F2320CB2B9D20069E9ED /* ircmessage.rb in Resources */,
-				78E7F2330CB2B9D20069E9ED /* unit.rb in Resources */,
-				78E7F2340CB2B9D20069E9ED /* user.rb in Resources */,
-				78E7F2350CB2B9D20069E9ED /* usermode.rb in Resources */,
-				78E7F2360CB2B9D20069E9ED /* world.rb in Resources */,
-				78E7F2370CB2B9D20069E9ED /* PreferenceDialog.nib in Resources */,
-				78E7F2380CB2B9D20069E9ED /* preferencedialog.rb in Resources */,
-				78E7F2390CB2B9D20069E9ED /* logrenderer.rb in Resources */,
-				78E7F23A0CB2B9D20069E9ED /* singlelineformatter.rb in Resources */,
-				78E7F23B0CB2B9D20069E9ED /* inputhistory.rb in Resources */,
-				78E7F23C0CB2B9D20069E9ED /* PasteSheet.nib in Resources */,
-				78E7F23D0CB2B9D20069E9ED /* pastesheet.rb in Resources */,
-				78E7F23E0CB2B9D20069E9ED /* splitter.rb in Resources */,
-				78E7F23F0CB2B9D20069E9ED /* kanasupport.rb in Resources */,
-				78E7F2430CB2B9D20069E9ED /* memberlistview.rb in Resources */,
-				78E7F2440CB2B9D20069E9ED /* servertreeview.rb in Resources */,
-				78E7F2450CB2B9D20069E9ED /* growl.rb in Resources */,
-				78E7F2460CB2B9D20069E9ED /* soundplayer.rb in Resources */,
-				78E7F2470CB2B9D20069E9ED /* growlcontroller.rb in Resources */,
-				78E7F2480CB2B9D20069E9ED /* Localizable.strings in Resources */,
-				78E7F2490CB2B9D20069E9ED /* autoopdialog.rb in Resources */,
-				78E7F24A0CB2B9D20069E9ED /* AutoOpDialog.nib in Resources */,
-				78E7F24B0CB2B9D20069E9ED /* textfield.rb in Resources */,
-				78E7F24C0CB2B9D20069E9ED /* wildcard.rb in Resources */,
-				78E7F24D0CB2B9D20069E9ED /* fieldeditortextview.rb in Resources */,
-				78E7F24F0CB2B9D20069E9ED /* cocoasheet.rb in Resources */,
-				7884E54F0CDA91F500AF3678 /* SACrashReporter in Resources */,
-				787898260CF38C510045585B /* filelogger.rb in Resources */,
-				783D0B2C0CF45C38002CC2FB /* listdialog.rb in Resources */,
-				782647CD0CFE86BB0052E598 /* pastieclient.rb in Resources */,
-				78B2DF200D0417160092EBDA /* application.icns in Resources */,
-				7896BFE60D0C5E850069453A /* viewtheme.rb in Resources */,
-				7805EE5A0D11FDCA000A9B55 /* pasternakclient.rb in Resources */,
-				783952330D261EEE00382565 /* pluginmanager.rb in Resources */,
-				783952360D261F2500382565 /* plugin.rb in Resources */,
-				7889CABA0D646E2C003D808E /* WelcomeDialog.nib in Resources */,
-				7889CAC00D647494003D808E /* welcomedialog.rb in Resources */,
-				78287EB60D742DAA008D5656 /* Themes in Resources */,
-				78F59FE50D78144B0038AC1D /* markedscroller.rb in Resources */,
-				787817C90D860ED30049CF95 /* unicodeutil.rb in Resources */,
-				780CCA0F0D8A294000E4BA77 /* keyeventhandler.rb in Resources */,
-				7870BA400E1116DC004B30B4 /* redstar.tiff in Resources */,
-				7870BA450E111952004B30B4 /* bluestar.tiff in Resources */,
-				7870BA4A0E111BD0004B30B4 /* iconcontroller.rb in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -901,17 +649,6 @@
 				78E5723F0C1C30C300BDF7EC /* main.m in Sources */,
 				78E572420C1C30C300BDF7EC /* GradientFill.m in Sources */,
 				784660250C3145850064140F /* OldEventManager.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		78E7F2500CB2B9D20069E9ED /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				78E7F2510CB2B9D20069E9ED /* AsyncSocket.m in Sources */,
-				78E7F2520CB2B9D20069E9ED /* main.m in Sources */,
-				78E7F2530CB2B9D20069E9ED /* GradientFill.m in Sources */,
-				78E7F2540CB2B9D20069E9ED /* OldEventManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1091,56 +828,6 @@
 			};
 			name = Release;
 		};
-		78E7F25E0CB2B9D20069E9ED /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				INFOPLIST_FILE = /Users/psychs/svn/limechat/trunk/Info.plist;
-				INSTALL_PATH = /Applications;
-				OTHER_LDFLAGS = (
-					"-framework",
-					Foundation,
-					"-framework",
-					AppKit,
-				);
-				PREBINDING = NO;
-				PRODUCT_NAME = LimeChat;
-				WRAPPER_EXTENSION = app;
-				ZERO_LINK = YES;
-			};
-			name = Debug;
-		};
-		78E7F25F0CB2B9D20069E9ED /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COPY_PHASE_STRIP = YES;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				INFOPLIST_FILE = /Users/psychs/svn/limechat/trunk/Info.plist;
-				INSTALL_PATH = /Applications;
-				OTHER_LDFLAGS = (
-					"-framework",
-					Foundation,
-					"-framework",
-					AppKit,
-				);
-				PREBINDING = NO;
-				PRODUCT_NAME = LimeChat;
-				WRAPPER_EXTENSION = app;
-				ZERO_LINK = NO;
-			};
-			name = Release;
-		};
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1177,15 +864,6 @@
 			buildConfigurations = (
 				78E570D40C1C306500BDF7EC /* Debug */,
 				78E570D50C1C306500BDF7EC /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		78E7F25D0CB2B9D20069E9ED /* Build configuration list for PBXNativeTarget "LimeChat with RubyCocoa" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				78E7F25E0CB2B9D20069E9ED /* Debug */,
-				78E7F25F0CB2B9D20069E9ED /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
