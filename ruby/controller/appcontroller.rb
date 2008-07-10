@@ -400,7 +400,7 @@ class AppController < NSObject
     s = @text.stringValue
     pre = s.substringToIndex(r.location).to_s
     sel = s.substringWithRange(r).to_s
-    if /[\s~!#\$%&*()<>=+'";:,.\/?]([^\s]*)$/ =~ pre
+    if /[\s~!#\$%&*()<>=+'";:,.?]([^\s]*)$/ =~ pre
       pre = $1
       head = false
     else
@@ -411,8 +411,12 @@ class AppController < NSObject
     # workaround for the @nick form
     # @nick should not be @nick:
 
+		command_mode = false
     headchar = pre[0]
-    if /^[^\w\[\]\\`_^{}|]/ =~ pre
+		if head && /^\// =~ pre
+			pre[0] = ''
+			command_mode = true
+		elsif /^[^\w\[\]\\`_^{}|]/ =~ pre
       head = true if head && headchar == ?@
       pre[0] = ''
       return if pre.empty?
@@ -426,11 +430,19 @@ class AppController < NSObject
     downcur = current.downcase
     
     # sort the choices
-    
-    nicks = c.members.sort_by {|i| [-i.weight, i.nick.downcase] }.map {|i| i.nick }
-    nicks = nicks.select {|i| i[0...pre.size].downcase == downpre }
-    nicks -= [u.mynick]
-    return if nicks.empty?
+
+		if command_mode
+			nicks = %w|action away ban clear ctcp ctcpreply cycle dehalfop deop devoice halfop hop
+									invite j join kick kill leave list mode msg nick notice op part ping
+									privmsg query quit quote raw rejoin t timer topic unban voice weights
+									who whois|
+			nicks = nicks.select {|i| i[0...pre.size] == downpre }
+		else
+    	nicks = c.members.sort_by {|i| [-i.weight, i.nick.downcase] }.map {|i| i.nick }
+    	nicks = nicks.select {|i| i[0...pre.size].downcase == downpre }
+    	nicks -= [u.mynick]
+		end
+		return if nicks.empty?
     
     # find the next choice
     
@@ -449,14 +461,18 @@ class AppController < NSObject
     end
     
     # add suffix
-    
-    if head
-      if headchar == ?@
-        s += ' '
-      else
-        s += ': '
-      end
-    end
+
+		if command_mode
+			s += ' '
+		else
+	    if head
+	      if headchar == ?@
+	        s += ' '
+	      else
+	        s += ': '
+	      end
+	    end
+		end
     
     # set completed nick to the text field
     

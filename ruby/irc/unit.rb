@@ -387,6 +387,14 @@ class IRCUnit < NSObject
     
     # parse pseudo commands and alias
     case cmd
+		when :clear
+			u, c = @world.sel
+			if c
+				c.log.clear
+			elsif u
+				u.log.clear
+			end
+			return true
     when :weights
       sel = @world.selchannel
       if sel

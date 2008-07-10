@@ -202,6 +202,16 @@ class LogController < NSObject
     @view.mainFrame.loadHTMLString_baseURL(initial_document, @theme.log.baseurl)
     @scroller.setNeedsDisplay(true)
   end
+
+	def clear
+    return unless @loaded
+    doc = @view.mainFrame.DOMDocument
+    return unless doc
+    body = doc.body
+    @html = nil
+    @view.mainFrame.loadHTMLString_baseURL(initial_document, @theme.log.baseurl)
+    @scroller.setNeedsDisplay(true)
+	end
   
   def change_text_size(op)
     save_position
