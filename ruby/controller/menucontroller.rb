@@ -166,7 +166,7 @@ class MenuController < NSObject
     # for members
     when 2001,2002  # whois, talk
       login_unit_chtalk && count_selected_members?(i)
-    when 2003,2004  # giveop, deop
+    when 2003,2004  # give op, deop
       op && count_selected_members?(i)
     when 2011  # dcc send file
       login_unit_chtalk && count_selected_members?(i) && !!u.myaddress
@@ -176,6 +176,8 @@ class MenuController < NSObject
       op && count_selected_members?(i)
     when 2032,2033  # ban, kick & ban
       op && count_selected_members?(i) && c.who_init
+    when 2041,2042  # give voice, devoice
+      op && count_selected_members?(i)
     
     when 3001  # copy url
       true
@@ -901,6 +903,14 @@ class MenuController < NSObject
       u.kick(c.name, i.nick)
     end
     deselect_members(sender)
+  end
+  
+  def onMemberGiveVoice(sender)
+    change_op(sender, :v, true)
+  end
+  
+  def onMemberDevoice(sender)
+    change_op(sender, :v, false)
   end
   
   def onMemberSendFile(sender)

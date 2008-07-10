@@ -1,5 +1,9 @@
 2008-07-10  Satoshi Nakagawa <psychs@limechat.net>
 
+	Added voice and devoice menu items.
+
+2008-07-10  Satoshi Nakagawa <psychs@limechat.net>
+
 	Added commands completion.
 	Added /clear command to clear a log.
 

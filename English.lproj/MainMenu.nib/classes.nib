@@ -115,7 +115,11 @@
 				<string>id</string>
 				<key>onMemberDeop</key>
 				<string>id</string>
+				<key>onMemberDevoice</key>
+				<string>id</string>
 				<key>onMemberGiveOp</key>
+				<string>id</string>
+				<key>onMemberGiveVoice</key>
 				<string>id</string>
 				<key>onMemberKick</key>
 				<string>id</string>
