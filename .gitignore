@@ -3,6 +3,7 @@ build
 *.o
 *.ob
 *.pbxuser
+*.tmproj
 *.mode1*
 *.build
 *~.nib
