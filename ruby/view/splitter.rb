@@ -13,7 +13,7 @@ class Splitter < NSSplitView
   end
   
   def awakeFromNib
-    @dividerThickness = isVertical? ? 1 : 5
+    @dividerThickness = vertical? ? 1 : 5
     updatePosition
   end
   

@@ -338,7 +338,7 @@ module OSX
 
     def self.from_css(str)
       case str
-      when /^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i:
+      when /^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i
         r = $1.to_i(16)
         g = $2.to_i(16)
         b = $3.to_i(16)
