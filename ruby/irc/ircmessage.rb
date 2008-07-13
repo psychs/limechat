@@ -60,7 +60,7 @@ class IRCSendingMessage
     @raw = s
     
     if @penalty == Penalty::NORMAL
-      case @command.to_sym
+      case @command
       when :privmsg,:notice; @penalty += @raw.size / Penalty::TEXT_SIZE_FACTOR
       when :mode; @penalty = ChannelMode.calc_penalty(@params[1])
       when :part; @penalty = Penalty::PART
