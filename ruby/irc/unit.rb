@@ -913,7 +913,7 @@ class IRCUnit < NSObject
     end
     m.apply! {|i| to_local_encoding(i, use_fallback) }
     m.apply! {|i| StringValidator::validate_utf8(i) }
-    #puts m.to_s
+    puts m.to_s
     
     if m.numeric_reply > 0
       receive_numeric_reply(m)
@@ -1917,8 +1917,8 @@ class IRCUnit < NSObject
         idle = ''
       end
       signon = signonstr.to_i
-      if signon.is_a?(Fixnum) && signon > 0
-        signon = Time.at(signon).strftime('%Y/%m/%d %H:%M:%S')
+      if signon > 0
+        signon = Time.at(signon).strftime('%Y/%m/%d %H:%M:%S') rescue ''
       else
         signon = ''
       end
@@ -1971,10 +1971,12 @@ class IRCUnit < NSObject
       chname = m[1]
       timestr = m[2]
       timenum = timestr.to_i
-      if timenum.is_a?(Fixnum)
+      begin
         time = Time.at(timenum)
         c = find_channel(chname)
         print_both(c || chname, :reply, "Created at: #{time.strftime('%Y/%m/%d %H:%M:%S')}")
+      rescue
+        ;
       end
     when 331  # RPL_NOTOPIC
       chname = m[1]
@@ -1999,10 +2001,12 @@ class IRCUnit < NSObject
       timestr = m[3]
       nick = setter[/^[^!@]+/]
       timenum = timestr.to_i
-      if timenum.is_a?(Fixnum)
+      begin
         time = Time.at(timenum)
         c = find_channel(chname)
         print_both(c || chname, :reply, "#{nick} set the topic at: #{time.strftime('%Y/%m/%d %H:%M:%S')}")
+      rescue
+        ;
       end
     when 353  # RPL_NAMREPLY
       chname = m[2]

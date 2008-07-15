@@ -1,5 +1,9 @@
 2008-07-14  Satoshi Nakagawa <psychs@limechat.net>
 
+	Fixed a bug, we should allow a Bignum for Time.at.
+
+2008-07-14  Satoshi Nakagawa <psychs@limechat.net>
+
 	/quote with no parameter caused a crash.
 
 2008-07-10  Satoshi Nakagawa <psychs@limechat.net>
