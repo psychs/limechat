@@ -1,3 +1,7 @@
+2008-07-19  Satoshi Nakagawa <psychs@limechat.net>
+
+	Deal with parenthesis pairs in URLs.
+
 2008-07-14  Satoshi Nakagawa <psychs@limechat.net>
 
 	Fixed a bug, we should allow a Bignum for Time.at.

@@ -279,7 +279,7 @@ module LogRenderer
   #URL_REGEX = /(?:h?ttps?|ftp):\/\/[-_a-zA-Z\d.!~*':@%]+(?:\/[-_a-zA-Z\d.!~*'%;\/?:@&=+$,#()¡-⿻、-힣-￿]*)?/
   #URL_REGEX = /(?:h?ttps?|ftp):\/\/[-_a-zA-Z\d.!~*':@%]+(?:\/(?:[-_a-zA-Z\d.!~*'%;\/?:@&=+$,#()]*[-_a-zA-Z\d!~*%\/?:@&=+$#])?)?/
   
-  URL_REGEX = /(?:h?ttps?|ftp):\/\/[^\s\/,'"`?　]+(?:\/(?:[^\s'"　…]*[^\s.,'"`?(){}\[\]<>　、，。．…])?)?/
+  URL_REGEX = /(?:h?ttps?|ftp):\/\/[^\s\/,'"`?　]+(?:\/(?:[^\s'"　…]*[^\s.,'"?　、，。．…])?)?/
 	ADDRESS_REGEX = /(?:[a-zA-Z\d](?:[-a-zA-Z\d]*[a-zA-Z\d])?\.)(?:[a-zA-Z\d](?:[-a-zA-Z\d]*[a-zA-Z\d])?\.)+[a-zA-Z]{2,6}|(?:[a-f\d]{0,4}:){7}[a-f\d]{0,4}|(?:\d{1,3}\.){3}[\d]{1,3}/
 	FORBIDDEN_AFTER_ADDRESS_REGEX = /\A[a-zA-Z\d_]\z/
   
@@ -292,6 +292,16 @@ module LogRenderer
       right = $~.end(0)
       url = s[left...right]
       url = 'h' + url if /^ttp/ =~ url
+      
+      # deal with parenthesis pairs
+      open_count = url.count('(')
+      close_count = url.count(')')
+      while url =~ /\)$/ && (open_count < close_count)
+        url = url[0...-1]
+        right -= 1
+        close_count -= 1
+      end
+      
       urls << { :url => url, :pos => offset+left, :len => right-left }
       s[0...right] = ''
       offset += right
