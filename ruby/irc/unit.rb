@@ -297,7 +297,7 @@ class IRCUnit < NSObject
   end
   
   def input_text(str, cmd)
-    return false unless login?
+    return false unless connected?
     sel = @world.selected
     str.split(/\r\n|\r|\n/).each do |s|
       next if s.empty?
