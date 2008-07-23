@@ -310,6 +310,10 @@ class LogController < NSObject
       EOM
       @js.evaluateWebScript(script)
     end
+    
+    if @theme.js.content
+      @js.evaluateWebScript(@theme.js.content)
+    end
   end
   
   def logView_keyDown(e)

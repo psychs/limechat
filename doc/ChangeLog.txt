@@ -1,5 +1,9 @@
 2008-07-23  Satoshi Nakagawa <psychs@limechat.net>
 
+	Added .js file support for themes.
+
+2008-07-23  Satoshi Nakagawa <psychs@limechat.net>
+
 	Allow to send commands before login.
 
 2008-07-19  Satoshi Nakagawa <psychs@limechat.net>

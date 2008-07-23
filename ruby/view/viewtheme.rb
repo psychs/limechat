@@ -25,11 +25,12 @@ class ViewTheme
   end
   
   
-  attr_reader :name, :log, :other
+  attr_reader :name, :log, :other, :js
   
   def initialize(name)
     @log = LogTheme.new
     @other = OtherViewTheme.new
+    @js = CustomJSFile.new
     self.theme = name
   end
   
@@ -44,6 +45,7 @@ class ViewTheme
       end
       @log.filename = Pathname.new(fullname + '.css')
       @other.filename = Pathname.new(fullname + '.yaml')
+      @js.filename = Pathname.new(fullname + '.js')
     else
       @name = ''
       @log.filename = nil
@@ -54,6 +56,33 @@ class ViewTheme
   def reload
     @log.reload
     @other.reload
+  end
+end
+
+
+class LogTheme
+  attr_reader :content, :baseurl
+  
+  def filename=(fname)
+    if fname
+      @filename = fname
+      @baseurl = NSURL.fileURLWithPath(@filename.dirname.to_s)
+      reload
+    else
+      @filename = nil
+      @baseurl = nil
+      @content = nil
+    end
+  end
+  
+  def reload
+    @content = nil
+    return false unless @filename && @filename.exist?
+    prev = @content
+    @filename.open {|f| @content = f.read }
+    prev != @content
+  rescue
+    false
   end
 end
 
@@ -180,17 +209,15 @@ class OtherViewTheme
 end
 
 
-class LogTheme
-  attr_reader :content, :baseurl
+class CustomJSFile
+  attr_reader :content
   
   def filename=(fname)
     if fname
       @filename = fname
-      @baseurl = NSURL.fileURLWithPath(@filename.dirname.to_s)
       reload
     else
       @filename = nil
-      @baseurl = nil
       @content = nil
     end
   end
