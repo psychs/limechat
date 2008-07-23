@@ -269,8 +269,8 @@ class IRCChannel < NSObject
         unless @logfile
           @logfile = FileLogger.new(@pref, @unit, self)
         end
-        nick = line.nick ? line.nick_info : nil
-        s = "#{line.time}#{nick}: #{line.body}"
+        nickstr = line.nick ? "#{line.nick_info}: " : ""
+        s = "#{line.time}#{nickstr}#{line.body}"
         @logfile.write_line(s)
       end
     end

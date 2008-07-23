@@ -1,5 +1,9 @@
 2008-07-23  Satoshi Nakagawa <psychs@limechat.net>
 
+	Strip unnecessary ":" when printing a line to log file.
+
+2008-07-23  Satoshi Nakagawa <psychs@limechat.net>
+
 	Added .js file support for themes.
 
 2008-07-23  Satoshi Nakagawa <psychs@limechat.net>
