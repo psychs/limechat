@@ -20,6 +20,10 @@ task :install do |t|
   sh "xcodebuild -target LimeChat -configuration Release install DSTROOT=/"
 end
 
+task :clean do |t|
+  sh "rm -rf build"
+end
+
 task :package => [:package_app, :package_source] do |t|
 end
 
