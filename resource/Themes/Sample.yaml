@@ -9,6 +9,8 @@ input-text:
   font-size: 13.0
   background-color: '#fff'
   color: '#000'
+  selected:
+    background-color: '#ccc'
 member-list:
   font-family: 'Lucida Grande'
   font-size: 13.0

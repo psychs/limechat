@@ -78,7 +78,6 @@ class AppController < NSObject
     @member_list.setDoubleAction('memberList_doubleClicked:')
     @member_list.key_delegate = @world
     @member_list.drop_delegate = @world
-    #@member_list.tableColumnWithIdentifier('nick').setDataCell(MemberListCell.alloc.init)
     
     @dcc = DccManager.alloc.init
     @dcc.pref = @pref
@@ -174,6 +173,11 @@ class AppController < NSObject
   end
   
   def windowWillReturnFieldEditor_toObject(sender, obj)
+    if @view_theme && @view_theme.other
+      dic = @field_editor.selectedTextAttributes.mutableCopy
+      dic[NSBackgroundColorAttributeName] = @view_theme.other.input_text_sel_bgcolor
+      @field_editor.setSelectedTextAttributes(dic)
+    end
     @field_editor
   end
   
@@ -353,7 +357,6 @@ class AppController < NSObject
     newdir = Pathname.new('~/Library/LimeChat/Themes').expand_path
     if olddir.directory? && !newdir.exist?
       FileUtils.mv(olddir.to_s, newdir.to_s) rescue nil
-      FileUtils.cp(Dir.glob(ViewTheme.RESOURCE_BASE + '/Sample.*'), newdir.to_s) rescue nil
     end
     
     # migrate ~/Library to ~/Library/Application Support
@@ -363,6 +366,10 @@ class AppController < NSObject
       FileUtils.mkpath(Pathname.new('~/Library/Application Support/LimeChat').expand_path.to_s) rescue nil
       FileUtils.mv(olddir.to_s, newdir.to_s) rescue nil
     end
+
+    # initialize theme directory
+    FileUtils.mkpath(Pathname.new('~/Library/Application Support/LimeChat/Themes').expand_path.to_s) rescue nil
+    FileUtils.cp(Dir.glob(ViewTheme.RESOURCE_BASE + '/Sample.*'), newdir.to_s) rescue nil
   end
   
   class NickCompletionStatus

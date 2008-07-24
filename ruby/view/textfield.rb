@@ -16,7 +16,7 @@ class TextField < NSTextField
     backgroundColor.set
     path = NSBezierPath.bezierPath
     rect = bounds
-    rect.height = 2
+    rect.height = 3
     path.appendBezierPathWithRect(rect)
     rect = bounds
     rect.width = 2
@@ -31,4 +31,5 @@ class TextField < NSTextField
     path.appendBezierPathWithRect(rect)
     path.fill
   end
+  
 end

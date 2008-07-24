@@ -1,5 +1,11 @@
 2008-07-24  Satoshi Nakagawa <psychs@limechat.net>
 
+	Added a theme settings: input-text/selected/background-color
+	The sample theme files should be copied to the theme directory on the first start up.
+	Tweaked margin of the input text field.
+
+2008-07-24  Satoshi Nakagawa <psychs@limechat.net>
+
 	Refactoring table view cells around custom drawing.
 
 2008-07-24  Satoshi Nakagawa <psychs@limechat.net>

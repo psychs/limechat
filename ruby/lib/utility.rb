@@ -365,10 +365,6 @@ module OSX
     rescue
       nil
     end
-    
-    def inspect
-      "#<#{self.class.to_s.gsub(/^OSX::/, '')} (#{redComponent*255.0}, #{greenComponent*255.0}, #{blueComponent*255.0}, #{alphaComponent})>"
-    end
   end
   
   class NSFont

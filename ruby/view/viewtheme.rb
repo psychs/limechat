@@ -89,7 +89,7 @@ end
 
 class OtherViewTheme
   attr_reader :log_nick_format, :log_scroller_highlight_color
-  attr_reader :input_text_font, :input_text_color, :input_text_bgcolor
+  attr_reader :input_text_font, :input_text_color, :input_text_bgcolor, :input_text_sel_bgcolor
   attr_reader :tree_font, :tree_bgcolor, :tree_highlight_color, :tree_newtalk_color, :tree_unread_color
   attr_reader :tree_active_color, :tree_inactive_color, :tree_sel_active_color, :tree_sel_inactive_color
   attr_reader :tree_sel_top_line_color, :tree_sel_bottom_line_color, :tree_sel_top_color, :tree_sel_bottom_color
@@ -130,6 +130,7 @@ class OtherViewTheme
     @input_text_font = load_font('input-text') || NSFont.systemFontOfSize(-1)
     @input_text_bgcolor = load_color('input-text', 'background-color') || NSColor.whiteColor
     @input_text_color = load_color('input-text', 'color') || NSColor.blackColor
+    @input_text_sel_bgcolor = load_color('input-text', 'selected', 'background-color') || NSColor.selectedTextBackgroundColor
     
     @tree_font = load_font('server-tree') || NSFont.systemFontOfSize(-1)
     @tree_bgcolor = load_color('server-tree', 'background-color') || NSColor.from_rgb(229, 237, 247)
