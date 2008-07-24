@@ -12,24 +12,8 @@ class TextField < NSTextField
   
   def drawRect(rect)
     super_drawRect(rect)
-    
     backgroundColor.set
-    path = NSBezierPath.bezierPath
-    rect = bounds
-    rect.height = 3
-    path.appendBezierPathWithRect(rect)
-    rect = bounds
-    rect.width = 2
-    path.appendBezierPathWithRect(rect)
-    rect = bounds
-    rect.x = rect.x + rect.width - 2
-    rect.width = 2
-    path.appendBezierPathWithRect(rect)
-    rect = bounds
-    rect.y = rect.y + rect.height - 2
-    rect.height = 2
-    path.appendBezierPathWithRect(rect)
-    path.fill
+    NSFrameRectWithWidth(bounds, 3)
   end
   
 end
