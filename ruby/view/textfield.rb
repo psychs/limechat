@@ -9,4 +9,26 @@ class TextField < NSTextField
     e.setSelectedRange(NSRange.new(stringValue.length, 0))
     e.scrollRangeToVisible(e.selectedRange)
   end
+  
+  def drawRect(rect)
+    super_drawRect(rect)
+    
+    backgroundColor.set
+    path = NSBezierPath.bezierPath
+    rect = bounds
+    rect.height = 2
+    path.appendBezierPathWithRect(rect)
+    rect = bounds
+    rect.width = 2
+    path.appendBezierPathWithRect(rect)
+    rect = bounds
+    rect.x = rect.x + rect.width - 2
+    rect.width = 2
+    path.appendBezierPathWithRect(rect)
+    rect = bounds
+    rect.y = rect.y + rect.height - 2
+    rect.height = 2
+    path.appendBezierPathWithRect(rect)
+    path.fill
+  end
 end

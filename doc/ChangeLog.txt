@@ -1,3 +1,7 @@
+2008-07-24  Satoshi Nakagawa <psychs@limechat.net>
+
+	More margin for the input text field.
+
 2008-07-23  Satoshi Nakagawa <psychs@limechat.net>
 
 	Strip unnecessary ":" when printing a line to log file.

@@ -36,7 +36,7 @@ class ChatBox < NSBox
     # calculate height of the text field
     f = text.frame
     f.height = 1e+37
-    f.height = text.cell.cellSizeForBounds(f).height.ceil + 4
+    f.height = text.cell.cellSizeForBounds(f).height.ceil + 2
     text.setFrameSize(f.size)
     
     # apply the current font to text
