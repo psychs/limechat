@@ -18,13 +18,11 @@ class DccManager < NSObject
     @window.key_delegate = self
     @loaded = true
     @splitter.setFixedViewIndex(1)
-    @receiver_cell = FileTransferCell.alloc.init
-    @receiver_cell.op = :receive
-    @receiver_table.tableColumns[0].setDataCell(@receiver_cell)
+    @cell = FileTransferCell.alloc.init
+    @cell.setup
+    @receiver_table.tableColumns[0].setDataCell(@cell)
     @receiver_table.setDoubleAction(:revealReceivedFileInFinder)
-    @sender_cell = FileTransferCell.alloc.init
-    @sender_cell.op = :send
-    @sender_table.tableColumns[0].setDataCell(@sender_cell)
+    @sender_table.tableColumns[0].setDataCell(@cell)
     @receivers.each do |r|
       if r.status == :receiving
         dccreceiver_on_open(r)
@@ -364,18 +362,23 @@ class DccManager < NSObject
   end
   
   def tableView_objectValueForTableColumn_row(sender, col, row)
+    ''
+  end
+  
+  def tableView_willDisplayCell_forTableColumn_row(sender, cell, col, row)
     if sender == @receiver_table
       list = @receivers
+      cell.op = :receive
     elsif sender == @sender_table
       list = @senders
-    else
-      return ''
+      cell.op = :send
     end
+    
     i = list[row.to_i]
-    return '' unless i
-    cell = col.dataCell
+    return unless i
+    
     cell.setStringValue((i.is_a?(DccReceiver) && i.status == :complete) ? i.download_filename.basename.to_s : i.filename)
-    cell.setHighlighted(sender.isRowSelected(row))
+    #cell.setHighlighted(sender.isRowSelected(row))
     cell.peer_nick = i.peer_nick
     cell.size = i.size
     cell.processed_size = i.processed_size
@@ -385,7 +388,6 @@ class DccManager < NSObject
     cell.error = i.error
     cell.icon = i.icon
     cell.progress_bar = i.progress_bar
-    cell.stringValue
   end
   
   # window
@@ -444,7 +446,6 @@ end
 class FileTransferCell < NSCell
   attr_accessor :peer_nick, :processed_size, :size, :speed, :time_remaining, :status, :error
   attr_accessor :progress_bar, :icon, :op
-  attr_writer :singleton
   
   FILENAME_HEIGHT = 20
   FILENAME_TOP_MARGIN = 1
@@ -454,26 +455,32 @@ class FileTransferCell < NSCell
   RIGHT_MARGIN = 10
   ICON_SIZE = NSSize.new(32, 32)
   
-  def copyWithZone(zone)
-    obj = super_copyWithZone(zone)
-    obj.singleton = @singleton || self
-    obj
+  class << self
+    attr_reader :filename_style, :status_style
+    
+    def setup
+      @filename_style = NSMutableParagraphStyle.alloc.init
+      @filename_style.setAlignment(NSLeftTextAlignment)
+      @filename_style.setLineBreakMode(NSLineBreakByTruncatingMiddle)
+      @status_style = NSMutableParagraphStyle.alloc.init
+      @status_style.setAlignment(NSLeftTextAlignment)
+      @status_style.setLineBreakMode(NSLineBreakByTruncatingTail)
+    end
   end
   
-  def init
-    super_init
-    @filename_style = NSMutableParagraphStyle.alloc.init
-    @filename_style.setAlignment(NSLeftTextAlignment)
-    @filename_style.setLineBreakMode(NSLineBreakByTruncatingMiddle)
-    @status_style = NSMutableParagraphStyle.alloc.init
-    @status_style.setAlignment(NSLeftTextAlignment)
-    @status_style.setLineBreakMode(NSLineBreakByTruncatingTail)
-    self
+  def setup
+    self.class.setup
+  end
+  
+  def filename_style
+    self.class.filename_style
+  end
+  
+  def status_style
+    self.class.status_style
   end
   
   def drawInteriorWithFrame_inView(frame, view)
-    return @singleton.drawInteriorWithFrame_inView(frame, view) if @singleton
-    
     if @icon
       size = ICON_SIZE
       margin = (frame.height - size.height) / 2
@@ -483,7 +490,6 @@ class FileTransferCell < NSCell
       pt.y += size.height if view.isFlipped
       @icon.setSize(size)
       @icon.compositeToPoint_operation(pt, NSCompositeSourceOver)
-      @icon = nil
     end
     
     offset = @progress_bar ? 0 : PROGRESSBAR_HEIGHT / 3
@@ -495,7 +501,7 @@ class FileTransferCell < NSCell
     rect.width -= rect.height + RIGHT_MARGIN
     rect.height = FILENAME_HEIGHT - FILENAME_TOP_MARGIN
     attrs = {
-      NSParagraphStyleAttributeName => @filename_style,
+      NSParagraphStyleAttributeName => filename_style,
       NSFontAttributeName => NSFont.systemFontOfSize(12),
       NSForegroundColorAttributeName => self.isHighlighted && view.window.isMainWindow && view.window.firstResponder == view ? NSColor.whiteColor : NSColor.blackColor
     }
@@ -509,7 +515,6 @@ class FileTransferCell < NSCell
       rect.width -= rect.height + RIGHT_MARGIN
       rect.height = PROGRESSBAR_HEIGHT
       bar.setFrame(rect)
-      @progress_bar = nil
     end
     
     rect = frame.dup
@@ -518,7 +523,7 @@ class FileTransferCell < NSCell
     rect.width -= rect.height + RIGHT_MARGIN
     rect.height = STATUS_HEIGHT - STATUS_TOP_MARGIN
     attrs = {
-      NSParagraphStyleAttributeName => @status_style,
+      NSParagraphStyleAttributeName => status_style,
       NSFontAttributeName => NSFont.systemFontOfSize(11),
       NSForegroundColorAttributeName =>
         if @status == :error

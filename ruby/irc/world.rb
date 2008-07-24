@@ -570,6 +570,7 @@ class IRCWorld < NSObject
       @log_base.setContentView(@dummylog.view)
       @tree.setMenu(@tree_menu)
       @member_list.setDataSource(nil)
+      @member_list.setDelegate(nil)
       @member_list.reloadData
       return
     end
@@ -579,11 +580,13 @@ class IRCWorld < NSObject
     if selitem.unit?
       @tree.setMenu(@server_menu.submenu)
       @member_list.setDataSource(nil)
+      @member_list.setDelegate(nil)
       @member_list.reloadData
       selitem.last_selected_channel = nil
     else
       @tree.setMenu(@channel_menu.submenu)
       @member_list.setDataSource(selitem)
+      @member_list.setDelegate(selitem)
       @member_list.reloadData
       selitem.unit.last_selected_channel = selitem
     end

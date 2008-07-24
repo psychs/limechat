@@ -302,11 +302,13 @@ class IRCChannel < NSObject
   end
   
   def tableView_objectValueForTableColumn_row(sender, col, row)
+    ''
+  end
+  
+  def tableView_willDisplayCell_forTableColumn_row(sender, cell, col, row)
     m = @members[row]
-    cell = col.dataCell
-    cell.setHighlighted(sender.isRowSelected(row))
+    #cell.setHighlighted(sender.isRowSelected(row))
     cell.member = m
-    m.nick
   end
   
   # timer

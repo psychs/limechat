@@ -1,5 +1,9 @@
 2008-07-24  Satoshi Nakagawa <psychs@limechat.net>
 
+	Refactoring table view cells around custom drawing.
+
+2008-07-24  Satoshi Nakagawa <psychs@limechat.net>
+
 	More margin for the input text field.
 
 2008-07-23  Satoshi Nakagawa <psychs@limechat.net>
