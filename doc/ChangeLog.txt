@@ -1,3 +1,7 @@
+2008-07-28  Satoshi Nakagawa <psychs@limechat.net>
+
+	Updated GrowlNotifier.
+
 2008-07-24  Satoshi Nakagawa <psychs@limechat.net>
 
 	Added a theme settings: input-text/selected/background-color

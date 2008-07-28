@@ -13,8 +13,8 @@ Yohei Endo			# application icon
 Atsuhisa Shimazawa	# badges
 Shingo Morita		# badges
 Dustin Voss			# AsyncSocket
-Eloy Duran			# RubyCocoa developer, a patch for bundling RubyCocoa.framework
-					# and SACrashReporter
+Eloy Duran			# RubyCocoa developer, a patch for bundling RubyCocoa.framework,
+					# SACrashReporter and GrowlNotifier
 Fujimoto Hisa       # RubyCocoa creator
 Laurent Sansonetti  # RubyCocoa developer, many requests and suggestions
 Josh Goebel			# CocoaSheet, many improvements of code and UIs, Pastie creator

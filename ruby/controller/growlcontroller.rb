@@ -20,27 +20,28 @@ class GrowlController
 
   def register
     return if @growl
-    @growl = Growl::Notifier.alloc.initWithDelegate(self)
+    @growl = Growl::Notifier.sharedInstance
+    @growl.delegate = self
     all = [GROWL_LOGIN_MSG, GROWL_DISCONNECT_MSG, GROWL_HIGHLIGHT, GROWL_NEW_TALK, GROWL_CHANNEL_MSG, GROWL_TALK_MSG, GROWL_KICKED_MSG, GROWL_INVITED_MSG,
             GROWL_FILE_RECEIVE_REQUEST_MSG, GROWL_FILE_RECEIVE_SUCCEEDED_MSG, GROWL_FILE_RECEIVE_FAILED_MSG,
             GROWL_FILE_SEND_SUCCEEDED_MSG, GROWL_FILE_SEND_FAILED_MSG]
     default = [GROWL_HIGHLIGHT, GROWL_NEW_TALK]
-    @growl.start(:LimeChat, all, default)
+    @growl.register(:LimeChat, all, default)
   end
   
   def notify(kind, title, desc, context=nil)
-    priority = 0
+    priority = :normal
     sticky = false
     
     case kind
     when :highlight
       kind = GROWL_HIGHLIGHT
-      priority = 1
+      priority = :high
       sticky = true
       title = "Highlight: #{title}"
     when :newtalk
       kind = GROWL_NEW_TALK
-      priority = 1
+      priority = :high
       sticky = true
       title = "New Talk: #{title}"
     when :channeltext
@@ -62,7 +63,7 @@ class GrowlController
       title = "Disconnected: #{title}"
     when :file_receive_request
       kind = GROWL_FILE_RECEIVE_REQUEST_MSG
-      priority = 1
+      priority = :high
       sticky = true
       desc = "From #{title}\n#{desc}"
       title = "File receive request"
@@ -89,10 +90,10 @@ class GrowlController
       context = 'dcc'
     end
     
-    @growl.notify(kind, title, desc, context, sticky, priority)
+    @growl.notify(kind, title, desc, :click_context => context, :sticky => sticky, :priority => priority)
   end
 
-  def growl_onClicked(sender, context)
+  def growlNotifier_notificationClicked(sender, context)
     @owner.window.makeKeyAndOrderFront(nil)
     NSApp.activateIgnoringOtherApps(true)
     
