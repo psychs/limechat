@@ -83,7 +83,7 @@ module Growl
         :NotificationDescription => description,
         :NotificationPriority => PRIORITIES[options[:priority]] || options[:priority] || 0
       }
-      dict[:NotificationIcon] = options[:icon] if options[:icon]
+      dict[:NotificationIcon] = options[:icon].TIFFRepresentation if options[:icon]
       dict[:NotificationSticky] = 1 if options[:sticky]
       
       context = {}
