@@ -8,7 +8,7 @@ class IRCWorld < NSObject
   attr_writer :app, :tree, :log_base, :console_base, :chat_box, :field_editor, :text, :pref
   attr_accessor :menu_controller
   attr_accessor :tree_default_menu, :server_menu, :channel_menu, :tree_menu, :log_menu, :console_menu, :url_menu, :addr_menu, :member_menu
-  attr_reader :units, :selected, :console, :config
+  attr_reader :units, :selected, :prev_selected, :console, :config
   
   AUTO_CONNECT_DELAY = 1
   RECONNECT_AFTER_WAKE_UP_DELAY = 5
@@ -274,7 +274,29 @@ class IRCWorld < NSObject
     @text.focus
   end
   
+  def store_prev_selected
+    if !@selected
+      @prev_selected = nil
+    elsif @selected.unit?
+      @prev_selected = [@selected.id, nil]
+    else
+      @prev_selected = [@selected.unit.id, @selected.id]
+    end
+  end
+  
+  def select_prev
+    return unless @prev_selected
+    uid, cid = @prev_selected
+    if cid
+      i = find_channel_by_id(uid, cid)
+    else
+      i = find_unit_by_id(uid)
+    end
+    select(i) if i
+  end
+  
   def select(item)
+    store_prev_selected
     select_text
     unless item
       @selected = nil
@@ -551,6 +573,7 @@ class IRCWorld < NSObject
   end
   
   def outlineViewSelectionIsChanging(note)
+    store_prev_selected
     outlineViewSelectionDidChange(note)
   end
   
