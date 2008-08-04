@@ -11,6 +11,8 @@ class AppController < NSObject
   ib_outlet :menu, :server_menu, :channel_menu, :member_menu, :tree_menu, :log_menu, :console_menu, :url_menu, :addr_menu
   
   def awakeFromNib
+    prelude
+    
     NSApp.register_hot_key(:l, :cmd, :shift)
     
     @pref = Preferences.new
