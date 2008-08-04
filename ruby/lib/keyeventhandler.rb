@@ -35,8 +35,7 @@ class KeyEventHandler
       when :cmd;      m |= 8
       end
     end
-    
-    keys = keynames_to_keycodes(keys)
+    keys = self.class.keynames_to_keycodes(keys)
     map = @handlermap[m]
     unless map
       map = {}
@@ -45,9 +44,20 @@ class KeyEventHandler
     keys.each {|i| map[i] = handler }
   end
   
-  private
+  def self.mods_to_modifier(mods)
+    m = 0
+    mods.each do |i|
+      case i
+      when :ctrl;     m |= NSControlKeyMask
+      when :alt,:opt; m |= NSAlternateKeyMask
+      when :shift;    m |= NSShiftKeyMask
+      when :cmd;      m |= NSCommandKeyMask
+      end
+    end
+    m
+  end
   
-  def keynames_to_keycodes(keys)
+  def self.keynames_to_keycodes(keys)
     result = []
     keys = [keys] unless Array === keys
     keys.each do |i|
@@ -70,6 +80,8 @@ class KeyEventHandler
     end
     result
   end
+  
+  private
 
   CODEMAP = {
       0 => :a,

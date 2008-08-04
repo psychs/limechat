@@ -11,6 +11,8 @@
 		7805EE590D11FDCA000A9B55 /* pasternakclient.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7805EE580D11FDCA000A9B55 /* pasternakclient.rb */; };
 		780CCA0E0D8A294000E4BA77 /* keyeventhandler.rb in Resources */ = {isa = PBXBuildFile; fileRef = 780CCA0D0D8A294000E4BA77 /* keyeventhandler.rb */; };
 		780D09F00C2F2C20007C0F4F /* splitter.rb in Resources */ = {isa = PBXBuildFile; fileRef = 780D09EF0C2F2C20007C0F4F /* splitter.rb */; };
+		7816C5BD0E474F6000B395DD /* HotKeyManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7816C5BC0E474F6000B395DD /* HotKeyManager.m */; };
+		7816C6100E47588B00B395DD /* application.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7816C60F0E47588B00B395DD /* application.rb */; };
 		78208C1A0C9D97CD004472E9 /* cocoasheet.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78208C190C9D97CD004472E9 /* cocoasheet.rb */; };
 		78211B530C5F3560004B47DA /* soundplayer.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78211B520C5F3560004B47DA /* soundplayer.rb */; };
 		7821DBDE0C2C84EA00B3EF42 /* PasteSheet.nib in Resources */ = {isa = PBXBuildFile; fileRef = 7821DBDC0C2C84EA00B3EF42 /* PasteSheet.nib */; };
@@ -136,6 +138,9 @@
 		7805EE580D11FDCA000A9B55 /* pasternakclient.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = pasternakclient.rb; sourceTree = "<group>"; };
 		780CCA0D0D8A294000E4BA77 /* keyeventhandler.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = keyeventhandler.rb; sourceTree = "<group>"; };
 		780D09EF0C2F2C20007C0F4F /* splitter.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = splitter.rb; sourceTree = "<group>"; };
+		7816C5BB0E474F6000B395DD /* HotKeyManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HotKeyManager.h; path = objc/HotKeyManager.h; sourceTree = "<group>"; };
+		7816C5BC0E474F6000B395DD /* HotKeyManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HotKeyManager.m; path = objc/HotKeyManager.m; sourceTree = "<group>"; };
+		7816C60F0E47588B00B395DD /* application.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = application.rb; sourceTree = "<group>"; };
 		7817A0390BF6FFCD005C7737 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/DccDialog.nib; sourceTree = "<group>"; };
 		781E254C0BE9E8E20040F56E /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/ModeSheet.nib; sourceTree = "<group>"; };
 		78208C190C9D97CD004472E9 /* cocoasheet.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = cocoasheet.rb; sourceTree = "<group>"; };
@@ -343,6 +348,7 @@
 		78229B980C288188001DD4C3 /* controller */ = {
 			isa = PBXGroup;
 			children = (
+				7816C60F0E47588B00B395DD /* application.rb */,
 				7870BA480E111BD0004B30B4 /* iconcontroller.rb */,
 				788C5E650C5F4F5A0034C46E /* growlcontroller.rb */,
 				78229B990C288188001DD4C3 /* appcontroller.rb */,
@@ -448,6 +454,8 @@
 				786926F40BB6EC1B0081019B /* main.m */,
 				7804271C0BCA810600C14486 /* GradientFill.h */,
 				7804271D0BCA810600C14486 /* GradientFill.m */,
+				7816C5BB0E474F6000B395DD /* HotKeyManager.h */,
+				7816C5BC0E474F6000B395DD /* HotKeyManager.m */,
 			);
 			name = objc;
 			sourceTree = "<group>";
@@ -617,6 +625,7 @@
 				7870BA3F0E1116DC004B30B4 /* redstar.tiff in Resources */,
 				7870BA440E111952004B30B4 /* bluestar.tiff in Resources */,
 				7870BA490E111BD0004B30B4 /* iconcontroller.rb in Resources */,
+				7816C6100E47588B00B395DD /* application.rb in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -631,6 +640,7 @@
 				78E5723F0C1C30C300BDF7EC /* main.m in Sources */,
 				78E572420C1C30C300BDF7EC /* GradientFill.m in Sources */,
 				784660250C3145850064140F /* OldEventManager.m in Sources */,
+				7816C5BD0E474F6000B395DD /* HotKeyManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

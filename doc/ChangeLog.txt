@@ -1,6 +1,16 @@
-2008-07-28  Satoshi Nakagawa <psychs@limechat.net>
+2008-08-05  Satoshi Nakagawa <psychs@limechat.net>
+
+	Assigned cmd+shift+L for a hot key to activate LimeChat.
+	Inspired by a patch from Keiji Yoshimi.
+
+2008-08-04  Satoshi Nakagawa <psychs@limechat.net>
 
 	Assigned opt+tab to move to the last selected channel.
+
+2008-08-04  Keiji Yoshimi <walf443@gmail.com>
+
+	It may be better to convert from NSImage to NSData transparently for
+	following document and unifing interface of app_icon.
 
 2008-07-28  Satoshi Nakagawa <psychs@limechat.net>
 

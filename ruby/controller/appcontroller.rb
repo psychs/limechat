@@ -11,7 +11,7 @@ class AppController < NSObject
   ib_outlet :menu, :server_menu, :channel_menu, :member_menu, :tree_menu, :log_menu, :console_menu, :url_menu, :addr_menu
   
   def awakeFromNib
-    prelude
+    NSApp.register_hot_key(:l, :cmd, :shift)
     
     @pref = Preferences.new
     #FileUtils.mkpath(@pref.gen.transcript_folder.expand_path) rescue nil
@@ -138,6 +138,7 @@ class AppController < NSObject
   end
   
   def applicationWillTerminate(notification)
+    NSApp.unregister_hot_key
     stop_timer
     @menu.terminate
     @world.terminate
@@ -157,6 +158,12 @@ class AppController < NSObject
   
   def applicationDidResignActive(notification)
     @tree.setNeedsDisplay(true)
+  end
+  
+  def applicationDidReceivedHotKey(sender)
+    NSApp.activateIgnoringOtherApps(true)
+    @window.makeKeyAndOrderFront(nil)
+    @world.select_text
   end
   
   def windowShouldClose(sender)

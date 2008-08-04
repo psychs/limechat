@@ -16,7 +16,7 @@ Dustin Voss			# AsyncSocket
 Eloy Duran			# RubyCocoa developer, a patch for bundling RubyCocoa.framework,
 					# SACrashReporter and GrowlNotifier
 Fujimoto Hisa       # RubyCocoa creator
-Keiji Yoshimi       # patch for GrowlNotifier
+Keiji Yoshimi       # patch for GrowlNotifier and around hot key
 Laurent Sansonetti  # RubyCocoa developer, many requests and suggestions
 Josh Goebel			# CocoaSheet, many improvements of code and UIs, Pastie creator
 Jun Morimoto        # bug fixes

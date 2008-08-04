@@ -23,7 +23,7 @@
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
-	<string>NSApplication</string>
+	<string>LimeChatApplication</string>
 	<key>SACrashReporterDeveloperName</key>
 	<string>Psychs</string>
 	<key>SACrashReporterPostURL</key>

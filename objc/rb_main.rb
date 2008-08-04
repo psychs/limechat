@@ -23,5 +23,6 @@ end
 #  OSX.NSApplicationMain(0, nil)
 #end
 
-NSApplication.sharedApplication
+rb_main_init
+LimeChatApplication.sharedApplication
 SACrashReporter.run_app
