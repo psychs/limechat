@@ -1,6 +1,6 @@
 2008-07-28  Satoshi Nakagawa <psychs@limechat.net>
 
-    Assigned opt+tab to move to the last selected channel.
+	Assigned opt+tab to move to the last selected channel.
 
 2008-07-28  Satoshi Nakagawa <psychs@limechat.net>
 
