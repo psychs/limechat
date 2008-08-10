@@ -216,10 +216,12 @@ class AutoOpDialog < NSObject
   # table
   
   def numberOfRowsInTableView(sender)
+    return 0 unless @sel
     @sel.autoop.size
   end
   
   def tableView_objectValueForTableColumn_row(sender, column, row)
+    return '' unless @sel
     s = @sel.autoop[row]
     s || ''
   end
@@ -250,6 +252,7 @@ class AutoOpDialog < NSObject
   # edit
   
   def control_textView_doCommandBySelector(control, textview, selector)
+    return false unless @sel
     case selector
     when 'moveDown:'
       if @sel.autoop.size > 0
