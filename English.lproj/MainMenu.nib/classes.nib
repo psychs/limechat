@@ -22,6 +22,14 @@
 		</dict>
 		<dict>
 			<key>CLASS</key>
+			<string>InputTextField</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>TextField</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
 			<string>ServerTreeView</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>

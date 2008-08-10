@@ -1,3 +1,7 @@
+2008-08-10  Satoshi Nakagawa <psychs@limechat.net>
+
+	Separated InputTextField class from TextField class.
+
 2008-08-05  Satoshi Nakagawa <psychs@limechat.net>
 
 	Assigned cmd+shift+L for a hot key to activate LimeChat.

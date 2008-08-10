@@ -10,10 +10,4 @@ class TextField < NSTextField
     e.scrollRangeToVisible(e.selectedRange)
   end
   
-  def drawRect(rect)
-    super_drawRect(rect)
-    backgroundColor.set
-    NSFrameRectWithWidth(bounds, 3)
-  end
-  
 end

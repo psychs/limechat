@@ -1,26 +1,97 @@
-{
-    IBClasses = (
-        {
-            ACTIONS = {onAdd = id; onCancel = id; onDelete = id; onOk = id; onOverwrite = id; }; 
-            CLASS = AutoOpDialog; 
-            LANGUAGE = ObjC; 
-            OUTLETS = {
-                addButton = id; 
-                deleteButton = id; 
-                edit = id; 
-                list = id; 
-                overwriteButton = id; 
-                tree = id; 
-                window = id; 
-            }; 
-            SUPERCLASS = NSObject; 
-        }, 
-        {CLASS = DialogWindow; LANGUAGE = ObjC; SUPERCLASS = NSWindow; }, 
-        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
-        {CLASS = ListView; LANGUAGE = ObjC; SUPERCLASS = NSTableView; }, 
-        {CLASS = SingleLineFormatter; LANGUAGE = ObjC; SUPERCLASS = NSFormatter; }, 
-        {CLASS = TextField; LANGUAGE = ObjC; SUPERCLASS = NSTextField; }, 
-        {CLASS = TreeView; LANGUAGE = ObjC; SUPERCLASS = NSOutlineView; }
-    ); 
-    IBVersion = 1; 
-}
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IBClasses</key>
+	<array>
+		<dict>
+			<key>ACTIONS</key>
+			<dict>
+				<key>onAdd</key>
+				<string>id</string>
+				<key>onCancel</key>
+				<string>id</string>
+				<key>onDelete</key>
+				<string>id</string>
+				<key>onOk</key>
+				<string>id</string>
+				<key>onOverwrite</key>
+				<string>id</string>
+			</dict>
+			<key>CLASS</key>
+			<string>AutoOpDialog</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>OUTLETS</key>
+			<dict>
+				<key>addButton</key>
+				<string>id</string>
+				<key>deleteButton</key>
+				<string>id</string>
+				<key>edit</key>
+				<string>id</string>
+				<key>list</key>
+				<string>id</string>
+				<key>overwriteButton</key>
+				<string>id</string>
+				<key>tree</key>
+				<string>id</string>
+				<key>window</key>
+				<string>id</string>
+			</dict>
+			<key>SUPERCLASS</key>
+			<string>NSObject</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>SingleLineFormatter</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSFormatter</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>FirstResponder</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSObject</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>TreeView</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSOutlineView</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>ListView</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSTableView</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>DialogWindow</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSWindow</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>TextField</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSTextField</string>
+		</dict>
+	</array>
+	<key>IBVersion</key>
+	<string>1</string>
+</dict>
+</plist>
