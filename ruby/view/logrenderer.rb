@@ -5,16 +5,16 @@ require 'nkf'
 require 'unicodeutil'
 
 module LogRenderer
-    
+
   def render_body(body, keywords, dislike_words, whole_line, exact_word_match)
     effects, body = process_effects(body)
     urls = process_urls(body)
     keywords = process_keywords(body, urls, keywords, dislike_words, exact_word_match)
-    
+
     if whole_line && !keywords.empty?
       addrs = []
       keywords = []
-      
+
       if urls.empty?
         keywords << { :pos => 0, :len => body.size }
       else
@@ -34,29 +34,36 @@ module LogRenderer
       addrs.delete_if {|a| urls.find {|u| intersect?(a,u)}} unless urls.empty?
       addrs.delete_if {|a| keywords.find {|k| intersect?(a,k)}} unless keywords.empty?
     end
-    events = combine_events(effects, urls, addrs, keywords)
     
+    channels = process_channels(body)
+    channels.delete_if {|a| urls.find {|u| intersect?(a,u)}} unless urls.empty?
+    channels.delete_if {|a| keywords.find {|k| intersect?(a,k)}} unless keywords.empty?
+    channels.delete_if {|a| addrs.find {|k| intersect?(a,k)}} unless addrs.empty?
+    
+    events = combine_events(effects, urls, addrs, keywords, channels)
+
     if events.empty?
       body = escape_str(body)
       return [body, false]
     end
-    
+
     effect = nil
     url = nil
     addr = nil
     key = nil
+    chan = nil
     pending_effect = nil
-    
+
     top_event = events[0]
-    
+
     s = ''
     pos = 0
-    
+
     events.each do |e|
       n = e[:pos]
       s << escape_str(body[pos...n]) unless url && url[:mute_text]
       pos = n
-      
+
       t = ''
       case e[:kind]
       when :effect
@@ -102,6 +109,16 @@ module LogRenderer
           pending_effect = nil
           t << render_start_tag(effect)
         end
+      when :chanend
+        if chan
+          chan = nil
+          t << render_end_tag(:chan)
+        end
+        if !effect && pending_effect
+          effect = pending_effect
+          pending_effect = nil
+          t << render_start_tag(effect)
+        end
       when :urlstart
         if effect
           pending_effect = effect
@@ -120,6 +137,15 @@ module LogRenderer
         t << render_end_tag(:address) if addr
         addr = e
         t << render_start_tag(e)
+      when :chanstart
+        if effect
+          pending_effect = effect
+          effect = nil
+          t << render_end_tag(:effect)
+        end
+        t << render_end_tag(:chan) if chan
+        chan = e
+        t = render_start_tag(e)
       when :keystart
         if effect
           pending_effect = effect
@@ -132,14 +158,15 @@ module LogRenderer
       end
       s << t
     end
-    
+
     s << escape_str(body[pos...body.size])
     s << render_end_tag(:url) if url
     s << render_end_tag(:key) if key
     s << render_end_tag(:effect) if effect
+    s << render_end_tag(:chan) if chan
     [s, !keywords.empty?]
   end
-  
+
   def escape_str(s)
     return '' if !s || s.empty?
     a = ''
@@ -162,9 +189,9 @@ module LogRenderer
     end
     a
   end
-  
+
   private
-  
+
   def render_start_tag(e)
     case e[:kind]
     when :urlstart
@@ -190,6 +217,8 @@ module LogRenderer
       end
 =end
     when :addrstart; %|<span class="address" oncontextmenu="on_address_contextmenu()">|
+    when :chanstart; %|<span class="channel" oncontextmenu="on_channel_contextmenu()">|
+    # when :nickstart; %|<span class="nick" oncontextmenu="on_nick_contextmenu()">|
     when :keystart; %|<strong class="highlight">|
     when :effect
       s = %|<span class="effect" style="|
@@ -197,13 +226,13 @@ module LogRenderer
       s << %|text-decoration:underline;| if e[:underline]
       s << %|font-style:italic;| if e[:reverse]
       s << %|"|
-    
+
       text = e[:text]
       s << %| color-number="#{text%16}"| if text
-      
+
       back = e[:back]
       s << %| bgcolor-number="#{back%16}"| if back
-    
+
       s << '>'
       s
     end
@@ -213,6 +242,8 @@ module LogRenderer
     case kind
     when :url; '</a>'
     when :address; '</span>'
+    when :chan; '</span>'
+    # when :nick; '</span>'
     when :key; '</strong>'
     when :effect; '</span>'
     end
@@ -248,10 +279,10 @@ module LogRenderer
     end
     body = b + s
     return [[], body] if effects.empty?
-  
+
     bold = underline = reverse = false
     text = back = nil
-  
+
     hash = {}
     effects.each do |i|
       case i[:type]
@@ -261,7 +292,7 @@ module LogRenderer
       when :stop
         next if !bold && !underline && !reverse && !text && !back
         bold = underline = reverse = false
-        text = back = nil 
+        text = back = nil
       when :color
         next if text == i[:text] && back == i[:back]
         text = i[:text]
@@ -271,18 +302,19 @@ module LogRenderer
       hash[i[:pos]] = { :pos => i[:pos], :serial => i[:serial], :bold => bold, :underline => underline, :reverse => reverse, :text => text, :back => back, :off => off }
     end
     effects = hash.keys.sort.map {|k| hash[k]}
-  
+
     [effects, body]
   end
 
   #URL_REGEX = /(?:h?ttps?|ftp):\/\/[-_a-zA-Z\d.!~*':@%]+(?:\/[-_a-zA-Z\d.!~*'%;\/?:@&=+$,#()]*)?/
   #URL_REGEX = /(?:h?ttps?|ftp):\/\/[-_a-zA-Z\d.!~*':@%]+(?:\/[-_a-zA-Z\d.!~*'%;\/?:@&=+$,#()¡-⿻、-힣-￿]*)?/
   #URL_REGEX = /(?:h?ttps?|ftp):\/\/[-_a-zA-Z\d.!~*':@%]+(?:\/(?:[-_a-zA-Z\d.!~*'%;\/?:@&=+$,#()]*[-_a-zA-Z\d!~*%\/?:@&=+$#])?)?/
-  
+
   URL_REGEX = /(?:h?ttps?|ftp):\/\/[^\s\/,'"`?　]+(?:\/(?:[^\s'"　…]*[^\s.,'"?　、，。．…])?)?/
 	ADDRESS_REGEX = /(?:[a-zA-Z\d](?:[-a-zA-Z\d]*[a-zA-Z\d])?\.)(?:[a-zA-Z\d](?:[-a-zA-Z\d]*[a-zA-Z\d])?\.)+[a-zA-Z]{2,6}|(?:[a-f\d]{0,4}:){7}[a-f\d]{0,4}|(?:\d{1,3}\.){3}[\d]{1,3}/
 	FORBIDDEN_AFTER_ADDRESS_REGEX = /\A[a-zA-Z\d_]\z/
-  
+	CHANNEL_REGEX = /[#&][^\s,]+/
+
   def process_urls(body)
     urls = []
     s = body.dup
@@ -292,7 +324,7 @@ module LogRenderer
       right = $~.end(0)
       url = s[left...right]
       url = 'h' + url if /^ttp/ =~ url
-      
+
       # deal with parenthesis pairs
       open_count = url.count('(')
       close_count = url.count(')')
@@ -301,14 +333,14 @@ module LogRenderer
         right -= 1
         close_count -= 1
       end
-      
+
       urls << { :url => url, :pos => offset+left, :len => right-left }
       s[0...right] = ''
       offset += right
     end
     urls
   end
-  
+
   def process_addresses(body)
     addrs = []
     s = body.dup
@@ -327,6 +359,21 @@ module LogRenderer
     addrs
   end
 
+  def process_channels(body)
+    chans = []
+    s = body.dup
+    offset = 0
+    while CHANNEL_REGEX =~ s
+      left = $~.begin(0)
+      right = $~.end(0)
+      res = s[left..right]
+      chans << { :res => res, :pos => offset+left, :len => right-left }
+      s[0...right] = ''
+      offset += right
+    end
+    chans
+  end
+
   def intersect?(a, b)
     al = a[:pos]
     ar = al + a[:len]
@@ -334,7 +381,7 @@ module LogRenderer
     br = bl + b[:len]
     al <= bl && bl < ar || al < br && br <= ar || bl <= al && al < br || bl < ar && ar <= br
   end
-  
+
   def alphabetic?(s)
     case s.size
     when 1
@@ -363,7 +410,7 @@ module LogRenderer
 
   def process_keywords(body, urls, words, dislike_words, exact_word_match)
     return [] unless words && !words.empty?
-    
+
     keywords = []
     words.each do |w|
       next if w.empty?
@@ -376,7 +423,7 @@ module LogRenderer
         pre = $~.pre_match
         post = $~.post_match
         ok = true
-        
+
         if exact_word_match
           if !pre.empty? && alphabetic?(w.first_char) && alphabetic?(pre.last_char)
             ok = false
@@ -384,7 +431,7 @@ module LogRenderer
             ok = false
           end
         end
-        
+
         if ok
           keywords << { :pos => offset+left, :len => right-left }
         end
@@ -392,13 +439,13 @@ module LogRenderer
         offset += right
       end
     end
-    
+
     return [] if keywords.empty?
     keywords.sort! {|a,b| a[:pos] <=> b[:pos] }
-    
+
     # eliminate keywords intersect one of urls
     keywords.delete_if {|k| urls.find {|u| intersect?(k,u)}} unless urls.empty?
-    
+
     unless exact_word_match
       if dislike_words && !dislike_words.empty?
         dislike_matches = []
@@ -419,9 +466,9 @@ module LogRenderer
         keywords.delete_if {|k| dislike_matches.find {|u| intersect?(k,u)}} unless dislike_matches.empty?
       end
     end
-    
+
     # combine keyword ranges
-    
+
     new_keywords = []
     i = 0
     while i < keywords.size
@@ -444,8 +491,8 @@ module LogRenderer
     end
     new_keywords
   end
-  
-  def combine_events(effects, urls, addrs, keywords)
+
+  def combine_events(effects, urls, addrs, keywords, channels)
     events = []
     events += effects.map {|i| i[:kind] = :effect; i }
     urls.each do |i|
@@ -457,7 +504,7 @@ module LogRenderer
       s[:pos] += s[:len]
       events << s
     end
-  
+
     addrs.each do |i|
       s = i.dup
       s[:kind] = :addrstart
@@ -467,7 +514,7 @@ module LogRenderer
       s[:pos] += s[:len]
       events << s
     end
-  
+
     keywords.each do |i|
       s = i.dup
       s[:kind] = :keystart
@@ -477,9 +524,19 @@ module LogRenderer
       s[:pos] += s[:len]
       events << s
     end
-    
+
+    channels.each do |i|
+      s = i.dup
+      s[:kind] = :chanstart
+      events << s
+      s = i.dup
+      s[:kind] = :chanend
+      s[:pos] += s[:len]
+      events << s
+    end
+
     # sort:
-    #   effect off < urlend == keyend == addrend < urlstart == keystart == addrstart < effect on
+    #   effect off < urlend == keyend == addrend == chanend < urlstart == keystart == addrstart == chanstart < effect on
     #
     events.sort! do |a,b|
       cond = a[:pos] <=> b[:pos]
@@ -503,7 +560,7 @@ module LogRenderer
             1
           elsif y == :effect && !b[:off]
             -1
-          elsif x == :urlend || x == :keyend || x == :addrend
+          elsif x == :urlend || x == :keyend || x == :addrend || x == :chanend
             -1
           else
             1
@@ -511,9 +568,9 @@ module LogRenderer
         end
       end
     end
-    
+
     events
   end
-  
+
   extend self
 end

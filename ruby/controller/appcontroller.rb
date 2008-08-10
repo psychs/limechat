@@ -8,21 +8,21 @@ class AppController < NSObject
   ib_outlet :window, :tree, :log_base, :console_base, :member_list, :text, :chat_box
   ib_outlet :tree_scroller, :left_tree_base, :right_tree_base
   ib_outlet :root_split, :log_split, :info_split, :tree_split
-  ib_outlet :menu, :server_menu, :channel_menu, :member_menu, :tree_menu, :log_menu, :console_menu, :url_menu, :addr_menu
-  
+  ib_outlet :menu, :server_menu, :channel_menu, :member_menu, :tree_menu, :log_menu, :console_menu, :url_menu, :addr_menu, :chan_menu
+
   def awakeFromNib
     prelude
-    
+
     NSApp.register_hot_key(:l, :cmd, :shift)
-    
+
     @pref = Preferences.new
     #FileUtils.mkpath(@pref.gen.transcript_folder.expand_path) rescue nil
-    
+
     @field_editor = FieldEditorTextView.alloc.initWithFrame(NSZeroRect)
     @field_editor.setFieldEditor(true)
     @field_editor.paste_delegate = self
     @field_editor.setContinuousSpellCheckingEnabled(true)
-    
+
     @text.setFocusRingType(NSFocusRingTypeNone)
     @window.makeFirstResponder(@text)
     @root_split.setFixedViewIndex(1)
@@ -36,10 +36,10 @@ class AppController < NSObject
     cell = MemberListViewCell.alloc.init
     cell.setup(@view_theme.other)
     @member_list.tableColumns[0].setDataCell(cell)
-    
+
     load_window_state
     select_3column_layout(@pref.gen.main_window_layout == 1)
-    
+
     @world = IRCWorld.alloc.init
     @world.app = self
     @world.pref = @pref
@@ -58,6 +58,7 @@ class AppController < NSObject
     @world.console_menu = @console_menu
     @world.url_menu = @url_menu
     @world.addr_menu = @addr_menu
+    @world.chan_menu = @chan_menu
     @world.member_menu = @member_menu
     @world.menu_controller = @menu
     @world.view_theme = @view_theme
@@ -67,7 +68,7 @@ class AppController < NSObject
     @tree.responder_delegate = @world
     @tree.reloadData
     @world.setup_tree
-    
+
     @menu.app = self
     @menu.pref = @pref
     @menu.world = @world
@@ -75,49 +76,49 @@ class AppController < NSObject
     @menu.tree = @tree
     @menu.member_list = @member_list
     @menu.text = @text
-    
+
     @member_list.setTarget(@menu)
     @member_list.setDoubleAction('memberList_doubleClicked:')
     @member_list.key_delegate = @world
     @member_list.drop_delegate = @world
-    
+
     @dcc = DccManager.alloc.init
     @dcc.pref = @pref
     @dcc.world = @world
     @world.dcc = @dcc
-    
+
     @history = InputHistory.new
     @gc_count = 0
-    
+
     register_key_handlers
-    
+
     nc = NSWorkspace.sharedWorkspace.notificationCenter
     nc.addObserver_selector_name_object(self, :computerWillSleep, NSWorkspaceWillSleepNotification, nil)
     nc.addObserver_selector_name_object(self, :computerDidWake, NSWorkspaceDidWakeNotification, nil)
   end
-  
+
   def computerWillSleep(sender)
     @world.prepare_for_sleep
   end
-  
+
   def computerDidWake(sender)
     @world.auto_connect(true)
   end
-  
+
   def terminateWithoutConfirm(sender)
     @terminating = true
     NSApp.terminate(self)
   end
-  
+
   def applicationDidFinishLaunching(sender)
     SACrashReporter.submit
-    
+
     ws = NSWorkspace.sharedWorkspace
     nc = ws.notificationCenter
     nc.addObserver_selector_name_object(self, :terminateWithoutConfirm, NSWorkspaceWillPowerOffNotification, ws)
-    
+
     start_timer
-    
+
     if @world.units.empty?
       # start initial setting
       @welcome = WelcomeDialog.alloc.init
@@ -129,7 +130,7 @@ class AppController < NSObject
       @world.auto_connect
     end
   end
-  
+
   def applicationShouldTerminate(sender)
     return NSTerminateNow if @terminating
     if queryTerminate
@@ -138,7 +139,7 @@ class AppController < NSObject
       NSTerminateCancel
     end
   end
-  
+
   def applicationWillTerminate(notification)
     NSApp.unregister_hot_key
     stop_timer
@@ -148,7 +149,7 @@ class AppController < NSObject
     save_window_state
     #@world.save
   end
-  
+
   def applicationDidBecomeActive(notification)
     sel = @world.selected
     if sel
@@ -157,17 +158,17 @@ class AppController < NSObject
     end
     @tree.setNeedsDisplay(true)
   end
-  
+
   def applicationDidResignActive(notification)
     @tree.setNeedsDisplay(true)
   end
-  
+
   def applicationDidReceivedHotKey(sender)
     NSApp.activateIgnoringOtherApps(true)
     @window.makeKeyAndOrderFront(nil)
     @world.select_text
   end
-  
+
   def windowShouldClose(sender)
     if queryTerminate
       @terminating = true
@@ -176,11 +177,11 @@ class AppController < NSObject
       false
     end
   end
-  
+
   def windowWillClose(notification)
     terminateWithoutConfirm(self)
   end
-  
+
   def windowWillReturnFieldEditor_toObject(sender, obj)
     if @view_theme && @view_theme.other
       dic = @field_editor.selectedTextAttributes.mutableCopy
@@ -189,23 +190,23 @@ class AppController < NSObject
     end
     @field_editor
   end
-  
+
   def windowDidBecomeMain(sender)
     @member_list.setNeedsDisplay(true)
   end
-  
+
   def windowDidResignMain(sender)
     @member_list.setNeedsDisplay(true)
   end
-  
+
   def windowDidBecomeKey(sender)
     @menu.keyWindowChanged(true)
   end
-  
+
   def windowDidResignKey(sender)
     @menu.keyWindowChanged(false)
   end
-  
+
   def fieldEditorTextView_paste(sender)
     s = NSPasteboard.generalPasteboard.stringForType(NSStringPboardType)
     return false unless s
@@ -218,7 +219,7 @@ class AppController < NSObject
       false
     end
   end
-  
+
   def fieldEditorTextView_keyDown(e)
     im = NSInputManager.currentInputManager
     if !im || im.markedRange.empty?
@@ -228,7 +229,7 @@ class AppController < NSObject
       key |= 2 if m & NSAlternateKeyMask > 0
       key |= 4 if m & NSShiftKeyMask > 0
       key |= 8 if m & NSCommandKeyMask > 0
-      
+
       case key
       when 0,2
         case e.keyCode
@@ -251,9 +252,9 @@ class AppController < NSObject
     end
     false
   end
-  
+
   UTF8_NETS = %w|freenode undernet quakenet mozilla ustream|
-  
+
   def welcomeDialog_onOk(sender, c)
     host = c[:host]
     if host =~ /^[^\s]+\s+\(([^()]+)\)/
@@ -275,12 +276,12 @@ class AppController < NSObject
     @world.save
     u.connect if u.config.auto_connect
   end
-  
+
   def welcomeDialog_onClose(sender)
     @welcome = nil
     @window.makeKeyAndOrderFront(nil)
   end
-  
+
   def select_3column_layout(value)
     return if @info_split.hidden? == !!value
     if value
@@ -301,17 +302,17 @@ class AppController < NSObject
       @tree_scroller.setFrame(NSRect.new(0,0,f.width,f.height))
     end
   end
-  
+
   def preferences_changed
     select_3column_layout(@pref.gen.main_window_layout == 1)
     @world.preferences_changed
   end
-  
+
   def textEntered(sender)
     sendText(:privmsg)
     @gc_count = 0
   end
-  
+
   def sendText(cmd)
     s = @text.stringValue.to_s
     unless s.empty?
@@ -323,7 +324,7 @@ class AppController < NSObject
     @world.select_text
     @comletion_status.clear if @comletion_status
   end
-  
+
   def addToHistory
     s = @text.stringValue.to_s
     unless s.empty?
@@ -331,23 +332,23 @@ class AppController < NSObject
       @text.setStringValue('')
     end
   end
-  
+
   # timer
-  
+
   def start_timer
     stop_timer if @timer
     @timer = Timer.alloc.init
     @timer.start(1.0)
     @timer.delegate = self
   end
-  
+
   def stop_timer
     @timer.stop
     @timer = nil
   end
-  
+
   GC_TIME = 600
-  
+
   def timer_onTimer(sender)
     @world.on_timer
     @menu.on_timer
@@ -356,10 +357,10 @@ class AppController < NSObject
       #GC.start
       @gc_count = 0
     end
-  end  
-  
+  end
+
   private
-  
+
   def prelude
     # migrate Theme to Themes
     olddir = Pathname.new('~/Library/LimeChat/Theme').expand_path
@@ -367,7 +368,7 @@ class AppController < NSObject
     if olddir.directory? && !newdir.exist?
       FileUtils.mv(olddir.to_s, newdir.to_s) rescue nil
     end
-    
+
     # migrate ~/Library to ~/Library/Application Support
     olddir = Pathname.new('~/Library/LimeChat/Themes').expand_path
     newdir = Pathname.new('~/Library/Application Support/LimeChat/Themes').expand_path
@@ -380,20 +381,20 @@ class AppController < NSObject
     FileUtils.mkpath(Pathname.new('~/Library/Application Support/LimeChat/Themes').expand_path.to_s) rescue nil
     FileUtils.cp(Dir.glob(ViewTheme.RESOURCE_BASE + '/Sample.*'), newdir.to_s) rescue nil
   end
-  
+
   class NickCompletionStatus
     attr_reader :text, :range
-    
+
     def clear
       @text = @range = nil
     end
-    
+
     def store(text, range)
       @text = text
       @range = range
     end
   end
-  
+
   def complete_nick(forward)
     u, c = @world.sel
     return unless u && c
@@ -403,16 +404,16 @@ class AppController < NSObject
     r = fe.selectedRanges.to_a[0]
     return unless r
     r = r.rangeValue
-    
+
     @comletion_status ||= NickCompletionStatus.new
     status = @comletion_status
     if status.text == @text.stringValue.to_s && status.range && status.range.max == r.location && r.length == 0
       r = status.range.dup
     end
-    
+
     # pre is the left part of the cursor
     # sel is the right part of the cursor
-    
+
     s = @text.stringValue
     pre = s.substringToIndex(r.location).to_s
     sel = s.substringWithRange(r).to_s
@@ -423,7 +424,7 @@ class AppController < NSObject
       head = true
     end
     return if pre.empty?
-    
+
     # workaround for the @nick form
     # @nick should not be @nick:
 
@@ -437,14 +438,14 @@ class AppController < NSObject
       pre[0] = ''
       return if pre.empty?
     end
-    
+
     # prepare for the matching
-    
+
     current = pre + sel
     current = $1 if /([^:\s]+):?\s?$/ =~ current
     downpre = pre.downcase
     downcur = current.downcase
-    
+
     # sort the choices
 
 		if command_mode
@@ -459,9 +460,9 @@ class AppController < NSObject
     	nicks -= [u.mynick]
 		end
 		return if nicks.empty?
-    
+
     # find the next choice
-    
+
     index = nicks.index {|i| i.downcase == downcur }
     if index
       if forward
@@ -475,7 +476,7 @@ class AppController < NSObject
     else
       s = nicks[0]
     end
-    
+
     # add suffix
 
 		if command_mode
@@ -489,9 +490,9 @@ class AppController < NSObject
 	      end
 	    end
 		end
-    
+
     # set completed nick to the text field
-    
+
     ps = pre.to_ns
     ns = s.to_ns
     range = r.dup
@@ -502,7 +503,7 @@ class AppController < NSObject
     range.location += ns.length
     range.length = 0
     fe.setSelectedRange(range)
-    
+
     if nicks.size == 1
       status.clear
     else
@@ -533,7 +534,7 @@ class AppController < NSObject
       true
     end
   end
-  
+
   def load_window_state
     win = @pref.load_window('main_window')
     if win
@@ -564,7 +565,7 @@ class AppController < NSObject
       @tree_split.setPosition(120)
     end
   end
-  
+
   def save_window_state
     win = @window.frame.to_dic
     split = {
@@ -576,17 +577,17 @@ class AppController < NSObject
     win.merge!(split)
     @pref.save_window('main_window', win)
   end
-  
+
   # key commands
-  
+
   def handler(*args, &block)
     @window.register_key_handler(*args, &block)
   end
-  
+
   def input_handler(*args, &block)
     @field_editor.register_key_handler(*args, &block)
   end
-  
+
   def register_key_handlers
     handler(:home) { scroll(:home) }
     handler(:end) { scroll(:end) }
@@ -613,13 +614,13 @@ class AppController < NSObject
     handler(:space, :alt, :shift) { move(:up, :unread); true }
     handler('0'..'9', :cmd) {|n| @world.select_channel_at(n.to_s.to_i); true }
     handler('0'..'9', :cmd, :ctrl) {|n| n = n.to_s.to_i; @world.select_unit_at(n == 0 ? 9 : n-1); true }
-    
+
     input_handler(:up) { history_up; true }
     input_handler(:up, :alt) { history_up; true }
     input_handler(:down) { history_down; true }
     input_handler(:down, :alt) { history_down; true }
   end
-  
+
   def history_up
     s = @history.up(@text.stringValue.to_s)
     if s
@@ -627,7 +628,7 @@ class AppController < NSObject
       @world.select_text
     end
   end
-  
+
   def history_down
     s = @history.down(@text.stringValue.to_s)
     if s
@@ -635,7 +636,7 @@ class AppController < NSObject
       @world.select_text
     end
   end
-  
+
   def scroll(direction)
     if @window.firstResponder == @text.currentEditor
       sel = @world.selected
@@ -654,7 +655,7 @@ class AppController < NSObject
       false
     end
   end
-  
+
   def tab
     case @pref.gen.tab_action
     when Preferences::General::TAB_UNREAD
@@ -667,7 +668,7 @@ class AppController < NSObject
       false
     end
   end
-  
+
   def shiftTab
     case @pref.gen.tab_action
     when Preferences::General::TAB_UNREAD
@@ -680,7 +681,7 @@ class AppController < NSObject
       false
     end
   end
-  
+
   def move(direction, target=:all)
     case direction
     when :up,:down

@@ -103,6 +103,8 @@
 				<string>id</string>
 				<key>onJoin</key>
 				<string>id</string>
+				<key>onJoinChannel</key>
+				<string>id</string>
 				<key>onLeave</key>
 				<string>id</string>
 				<key>onMakeTextBigger</key>
@@ -247,6 +249,8 @@
 			<key>OUTLETS</key>
 			<dict>
 				<key>addr_menu</key>
+				<string>id</string>
+				<key>chan_menu</key>
 				<string>id</string>
 				<key>channel_menu</key>
 				<string>id</string>

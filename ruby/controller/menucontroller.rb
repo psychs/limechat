@@ -6,16 +6,16 @@ require 'cgi'
 
 class MenuController < NSObject
   attr_writer :app, :pref, :world, :window, :text, :tree, :member_list
-  attr_accessor :url, :addr, :nick
+  attr_accessor :url, :addr, :nick, :chan
   ib_outlet :closeWindowItem, :closeCurrentPanelItem
-  
+
   def initialize
     @server_dialogs = []
     @channel_dialogs = []
     @pastie_clients = []
     @key_window = false
   end
-  
+
   def terminate
     @server_dialogs.each {|d| d.close }
     @channel_dialogs.each {|d| d.close }
@@ -27,10 +27,10 @@ class MenuController < NSObject
     @pref_dialog.close if @pref_dialog
     @autoop_dialog.close if @autoop_dialog
   end
-  
+
   def validateMenuItem(i)
     u, c = @world.sel
-    
+
     connected = !!u && u.connected?
     not_connected = !!u && !u.connected?
     login = !!u && u.login?
@@ -40,10 +40,10 @@ class MenuController < NSObject
     active_chtalk = active && (c.channel? || c.talk?)
     login_unit_chtalk = login && (!c || c.channel? || c.talk?)
     op = active_channel && c.op?
-    
+
     tag = i.tag
     tag -= 500 if nick_menu?(i)
-    
+
     case tag
     when 102  # preferences
       true
@@ -108,7 +108,7 @@ class MenuController < NSObject
       true
     when 335  # copy console log as html
       true
-    
+
     when 411  # mark scrollback
       true
     when 412  # clear mark
@@ -121,7 +121,7 @@ class MenuController < NSObject
       @world.console.view.canMakeTextSmaller?
     when 431  # reload theme
       true
-      
+
     when 501  # connect
       not_connected
     when 502  # disconnect
@@ -162,7 +162,7 @@ class MenuController < NSObject
 
     when 802
       true
-      
+
     # for members
     when 2001,2002  # whois, talk
       login_unit_chtalk && count_selected_members?(i)
@@ -178,17 +178,21 @@ class MenuController < NSObject
       op && count_selected_members?(i) && c.who_init
     when 2041,2042  # give voice, devoice
       op && count_selected_members?(i)
-    
+
     when 3001  # copy url
       true
     when 3101  # copy address
       true
-    
+    when 3201 # open channel
+      true
+    when 3301 # join channel
+      true
+
     else
       false
     end
   end
-  
+
   def count_selected_members?(sender)
     if nick_menu?(sender)
       !!@nick
@@ -196,7 +200,7 @@ class MenuController < NSObject
       @member_list.countSelectedRows > 0
     end
   end
-  
+
   def selected_members(sender)
     c = @world.selchannel
     unless c
@@ -214,17 +218,17 @@ class MenuController < NSObject
       @member_list.selectedRows.map {|i| c.members[i.to_i] }
     end
   end
-  
+
   def deselect_members(sender)
     unless nick_menu?(sender)
       @member_list.deselectAll(nil)
     end
   end
-  
+
   def nick_menu?(sender)
     sender && (2500...3000) === sender.tag.to_i
   end
-  
+
   def current_webview
     t = @window.firstResponder
     if t && WebHTMLView === t
@@ -234,11 +238,11 @@ class MenuController < NSObject
       nil
     end
   end
-  
+
   def menuNeedsUpdate(menu)
     menu.update
   end
-  
+
   def make_mask(nick, username, address)
     if !nick || nick.empty?
       nick = '*'
@@ -247,7 +251,7 @@ class MenuController < NSObject
     else
       nick += '*'
     end
-    
+
     if !username || username.empty?
       username = '*'
     else
@@ -255,7 +259,7 @@ class MenuController < NSObject
         username = $1 + '*'
       end
     end
-    
+
     if !address || address.empty?
       address = '*'
     else
@@ -265,7 +269,7 @@ class MenuController < NSObject
         #if /^[^\.]+\.(.+)$/ =~ address
         #  address = '*.' + $1
         #end
-        
+
         ary = address.split('.')
         if ary.size >= 3
           reserve = ary[-1].size == 2 ? 3 : 2
@@ -276,17 +280,17 @@ class MenuController < NSObject
         end
       end
     end
-    
+
     "#{nick}!#{username}@#{address}"
   end
-  
+
   def on_timer
     if @paste_sheet
       @paste_sheet.on_timer
     end
   end
-  
-  
+
+
   def onPreferences(sender)
     unless @pref_dialog
       @pref_dialog = PreferenceDialog.alloc.init
@@ -296,16 +300,16 @@ class MenuController < NSObject
       @pref_dialog.show
     end
   end
-  
+
   def preferenceDialog_onOk(sender, m)
     @pref.save
     @app.preferences_changed
   end
-  
+
   def preferenceDialog_onClose(sender)
     @pref_dialog = nil
   end
-  
+
   def onAutoOp(sender)
     unless @autoop_dialog
       @autoop_dialog = AutoOpDialog.alloc.init
@@ -315,21 +319,21 @@ class MenuController < NSObject
       @autoop_dialog.show
     end
   end
-  
+
   def autoOpDialog_onOk(sender, conf)
     @world.update_autoop(conf)
   end
-  
+
   def autoOpDialog_onClose(sender)
     @autoop_dialog = nil
   end
-  
-  
+
+
   def onDcc(sender)
     @world.dcc.show
   end
-  
-  
+
+
   def keyWindowChanged(mode)
     @key_window = mode
     if @key_window
@@ -338,7 +342,7 @@ class MenuController < NSObject
       @closeWindowItem.setTitle(_(:CloseWindowMenuTitle))
     end
   end
-  
+
   def onCloseWindow(sender)
     if @key_window
       # for the main window
@@ -356,7 +360,7 @@ class MenuController < NSObject
       win.performClose(sender) if win
     end
   end
-  
+
   def onCloseCurrentPanel(sender)
     sel = @world.selected
     if sel && !sel.unit?
@@ -364,8 +368,8 @@ class MenuController < NSObject
       @world.save
     end
   end
-  
-  
+
+
   def onPaste(sender)
     return unless NSPasteboard.generalPasteboard.availableTypeFromArray([NSStringPboardType])
     win = NSApp.keyWindow
@@ -392,7 +396,7 @@ class MenuController < NSObject
       end
     end
   end
-  
+
   def start_paste_dialog(mynick, uid, cid, s, mode=:paste)
     size = nil
     hash = @pref.load_window('paste_sheet')
@@ -406,13 +410,13 @@ class MenuController < NSObject
     @paste_sheet.nick = mynick
     @paste_sheet.start(s, mode, @pref.gen.paste_syntax, size)
   end
-  
+
   def pasteSheet_onSend(sender, s, syntax, size, mode, short_text)
     @pref.save_window('paste_sheet', size.to_dic)
     @pref.gen.paste_syntax = syntax unless @short_text
     @pref.save
     @paste_sheet = nil
-    
+
     case syntax
     when 'privmsg','notice'
       u, c = @world.find_by_id(sender.uid, sender.cid)
@@ -426,7 +430,7 @@ class MenuController < NSObject
       e.scrollRangeToVisible(e.selectedRange)
     end
   end
-  
+
   def pasteSheet_onCancel(sender, syntax, size, mode, short_text)
     @pref.save_window('paste_sheet', size.to_dic)
     @pref.gen.paste_syntax = syntax unless @short_text
@@ -437,7 +441,7 @@ class MenuController < NSObject
     end
     @paste_sheet = nil
   end
-  
+
   def onPasteDialog(sender)
     sel = @world.selected
     return unless sel
@@ -445,13 +449,13 @@ class MenuController < NSObject
     @text.setStringValue('')
     start_paste_dialog(sel.unit.mynick, sel.unit.id, sel.id, s, :edit)
   end
-  
+
   def onUseSelectionForFind(sender)
     win = NSApp.keyWindow
     return unless win
     t = win.firstResponder
     return unless t
-    
+
     case t
     when OSX::WebHTMLView
       while t = t.superview
@@ -470,7 +474,7 @@ class MenuController < NSObject
       end
     end
   end
-  
+
   def onPasteMyAddress(sender)
     win = NSApp.keyWindow
     return if !win || win != @window
@@ -483,7 +487,7 @@ class MenuController < NSObject
     e.replaceCharactersInRange_withString(e.selectedRange, u.myaddress)
     e.scrollRangeToVisible(e.selectedRange)
   end
-  
+
   def onSearchWeb(sender)
     t = current_webview
     return false unless t
@@ -496,7 +500,7 @@ class MenuController < NSObject
       UrlOpener::openUrl(url)
     end
   end
-  
+
   def onCopyLogAsHtml(sender)
     sel = @world.selected
     return unless sel
@@ -505,70 +509,70 @@ class MenuController < NSObject
     pb.declareTypes_owner([NSStringPboardType], self)
     pb.setString_forType(s, NSStringPboardType)
   end
-  
+
   def onCopyConsoleLogAsHtml(sender)
     s = @world.console.content_string
     pb = NSPasteboard.generalPasteboard
     pb.declareTypes_owner([NSStringPboardType], self)
     pb.setString_forType(s, NSStringPboardType)
   end
-  
-  
+
+
   def onMarkScrollback(sender)
     sel = @world.selected
     return unless sel
     sel.log.mark
   end
-  
+
   def onClearMark(sender)
     sel = @world.selected
     return unless sel
     sel.log.unmark
   end
-  
+
   def onMarkAllAsRead(sender)
     @world.mark_all_as_read
   end
-  
+
   def onMarkAllAsReadAndMarkAllScrollbacks(sender)
     @world.mark_all_as_read
     @world.mark_all_scrollbacks
   end
-  
-  
+
+
   def onMakeTextBigger(sender)
     @world.change_text_size(:bigger)
   end
-  
+
   def onMakeTextSmaller(sender)
     @world.change_text_size(:smaller)
   end
-  
-  
+
+
   def onReloadTheme(sender)
     @world.reload_theme
   end
-  
-  
+
+
   def onConnect(sender)
     u = @world.selunit
     return unless u
     u.connect
   end
-  
+
   def onDisconnect(sender)
     u = @world.selunit
     return unless u
     u.quit
   end
-  
+
   def onCancelReconnecting(sender)
     u = @world.selunit
     return unless u
     u.cancel_reconnect
   end
-  
-  
+
+
   def onNick(sender)
     u = @world.selunit
     return unless u
@@ -579,25 +583,25 @@ class MenuController < NSObject
     @nick_sheet.uid = u.id
     @nick_sheet.start(u.mynick)
   end
-  
+
   def nickSheet_onOk(sender, nick)
     @nick_sheet = nil
     u = @world.find_unit_by_id(sender.uid)
     return unless u
     u.change_nick(nick)
   end
-  
+
   def nickSheet_onCancel(sender)
     @nick_sheet = nil
   end
-  
+
   def onChannelList(sender)
     u = @world.selunit
     return unless u
     u.create_channel_list_dialog
   end
-  
-  
+
+
   def onAddServer(sender)
     u = @world.selunit
     config = u ? u.config.dup : IRCUnitConfig.new
@@ -610,17 +614,17 @@ class MenuController < NSObject
     @server_dialogs << d
     d.start(config, -1)
   end
-  
+
   def newServerDialog_onClose(sender)
     @server_dialogs.delete(sender)
   end
-  
+
   def newServerDialog_onOk(sender, config)
     @world.create_unit(config)
     @world.save
   end
-  
-  
+
+
   def onCopyServer(sender)
     u = @world.selunit
     return unless u
@@ -633,7 +637,7 @@ class MenuController < NSObject
     @tree.expandItem(n)
     @world.save
   end
-  
+
   def onDeleteServer(sender)
     u = @world.selunit
     return unless u && !u.connected?
@@ -641,8 +645,8 @@ class MenuController < NSObject
     @world.destroy_unit(u)
     @world.save
   end
-  
-  
+
+
   def onServerProperties(sender)
     u = @world.selunit
     return unless u
@@ -656,13 +660,13 @@ class MenuController < NSObject
     u.property_dialog = d
     d.start(u.store_config, u.id)
   end
-  
+
   def serverDialog_onClose(sender)
     u = @world.find_unit_by_id(sender.uid)
     return unless u
     u.property_dialog = nil
   end
-  
+
   def serverDialog_onOk(sender, config)
     u = @world.find_unit_by_id(sender.uid)
     return unless u
@@ -670,22 +674,22 @@ class MenuController < NSObject
     @world.reload_tree
     @world.save
   end
-  
-  
+
+
   def onServerAutoOp(sender)
     u = @world.selunit
     return unless u
     onAutoOp(sender)
     @autoop_dialog.select_item(u.id)
   end
-  
-  
+
+
   def onJoin(sender)
     u, c = @world.sel
     return unless u && u.login? && c && !c.active? && c.channel?
     u.join_channel(c)
   end
-  
+
   def onLeave(sender)
     u, c = @world.sel
     return unless u && u.login? && c && c.active?
@@ -695,8 +699,8 @@ class MenuController < NSObject
     when :dccchat;
     end
   end
-  
-  
+
+
   def onTopic(sender)
     u, c = @world.sel
     return unless u && c
@@ -709,19 +713,19 @@ class MenuController < NSObject
     @comment_sheet.prefix = 'topicPrompt'
     @comment_sheet.start('Please input topic.', c.topic)
   end
-  
+
   def topicPrompt_onOk(sender, str)
     @comment_sheet = nil
     u, c = @world.find_by_id(sender.uid, sender.cid)
     return unless u && c
     u.send(:topic, c.name, str)
   end
-  
+
   def topicPrompt_onCancel(sender)
     @comment_sheet = nil
   end
-  
-  
+
+
   def onMode(sender)
     u, c = @world.sel
     return unless u && c
@@ -733,7 +737,7 @@ class MenuController < NSObject
     @mode_sheet.cid = c.id
     @mode_sheet.start(c.name, c.mode)
   end
-  
+
   def modeSheet_onOk(sender, newmode)
     @mode_sheet = nil
     u, c = @world.find_by_id(sender.uid, sender.cid)
@@ -741,12 +745,12 @@ class MenuController < NSObject
     ary = c.mode.get_change_str(newmode)
     ary.each {|i| u.send(:mode, c.name, i) }
   end
-  
+
   def modeSheet_onCancel(sender)
     @mode_sheet = nil
   end
-  
-  
+
+
   def onAddChannel(sender)
     u, c = @world.sel
     return unless u
@@ -759,11 +763,11 @@ class MenuController < NSObject
     @channel_dialogs << d
     d.start(config, u.id, -1)
   end
-  
+
   def newChannelDialog_onClose(sender)
     @channel_dialogs.delete(sender)
   end
-  
+
   def newChannelDialog_onOk(sender, config)
     u = @world.find_unit_by_id(sender.uid)
     return unless u
@@ -771,8 +775,8 @@ class MenuController < NSObject
     @world.save
     @world.expand_unit(u)
   end
-  
-  
+
+
   def onDeleteChannel(sender)
     #return unless NSRunAlertPanel('LimeChat', 'Do you want to delete the channel?', 'Delete', 'Cancel', nil) == NSAlertDefaultReturn
     c = @world.selchannel
@@ -780,8 +784,8 @@ class MenuController < NSObject
     @world.destroy_channel(c)
     @world.save
   end
-  
-  
+
+
   def onChannelProperties(sender)
     u, c = @world.sel
     return unless u && c
@@ -795,41 +799,41 @@ class MenuController < NSObject
     c.property_dialog = d
     d.start(c.config, u.id, c.id)
   end
-  
+
   def channelDialog_onClose(sender)
     c = @world.find_channel_by_id(sender.uid, sender.cid)
     return unless c
     c.property_dialog = nil
   end
-  
+
   def channelDialog_onOk(sender, config)
     c = @world.find_channel_by_id(sender.uid, sender.cid)
     return unless c
     c.update_config(config)
     @world.save
   end
-  
-  
+
+
   def onChannelAutoOp(sender)
     u, c = @world.sel
     return unless u && c
     onAutoOp(sender)
     @autoop_dialog.select_item(u.id, c.name)
   end
-  
-  
+
+
   def onReloadPlugins(sender)
     @world.reload_plugins
   end
-  
-  
+
+
   def whois_selected_members(sender, deselect)
     u = @world.selunit
     return unless u
     selected_members(sender).each {|m| u.send_whois(m.nick) }
     deselect_members(sender) if deselect
   end
-  
+
   def memberList_doubleClicked(sender)
     pt = @window.mouseLocationOutsideOfEventStream
     pt = sender.convertPoint_fromView(pt, nil)
@@ -841,11 +845,11 @@ class MenuController < NSObject
       whois_selected_members(nil, false)
     end
   end
-  
+
   def onMemberWhois(sender)
     whois_selected_members(sender, true)
   end
-  
+
   def onMemberTalk(sender)
     u = @world.selunit
     return unless u
@@ -858,26 +862,26 @@ class MenuController < NSObject
     end
     deselect_members(sender)
   end
-  
-  
+
+
   def change_op(sender, mode, plus)
     u, c = @world.sel
     return unless u && u.login? && c && c.active? && c.channel? && c.op?
     u.change_op(c, selected_members(sender), mode, plus)
     deselect_members(sender)
   end
-  
+
   def onMemberGiveOp(sender)
     change_op(sender, :o, true)
   end
-  
+
   def onMemberDeop(sender)
     change_op(sender, :o, false)
   end
-  
+
   def apply_op(sender)
   end
-  
+
   def onMemberKick(sender)
     u, c = @world.sel
     return unless u && u.login? && c && c.active? && c.channel? && c.op?
@@ -885,7 +889,7 @@ class MenuController < NSObject
     ary.each {|i| u.kick(c.name, i.nick) }
     deselect_members(sender)
   end
-  
+
   def onMemberBan(sender)
     u, c = @world.sel
     return unless u && u.login? && c && c.active? && c.channel? && c.op? && c.who_init
@@ -893,7 +897,7 @@ class MenuController < NSObject
     ary.each {|i| u.ban(c.name, '*', '*', i.address) }
     deselect_members(sender)
   end
-  
+
   def onMemberKickBan(sender)
     u, c = @world.sel
     return unless u && u.login? && c && c.active? && c.channel? && c.op? && c.who_init
@@ -904,15 +908,15 @@ class MenuController < NSObject
     end
     deselect_members(sender)
   end
-  
+
   def onMemberGiveVoice(sender)
     change_op(sender, :v, true)
   end
-  
+
   def onMemberDevoice(sender)
     change_op(sender, :v, false)
   end
-  
+
   def onMemberSendFile(sender)
     @send.cancel(nil) if @send
     u = @world.selunit
@@ -927,7 +931,7 @@ class MenuController < NSObject
     @send.setAllowsMultipleSelection(true)
     @send.beginForDirectory_file_types_modelessDelegate_didEndSelector_contextInfo('~/Desktop', nil, nil, self, 'sendFilePanelDidEnd:returnCode:contextInfo:', nil)
   end
-  
+
   def sendFilePanelDidEnd_returnCode_contextInfo(panel, code, info)
     targets = @send_targets
     uid = @send_uid
@@ -941,7 +945,7 @@ class MenuController < NSObject
       files.each {|f| @world.dcc.add_sender(uid, t.nick, f) }
     end
   end
-  
+
   def send_ctcp_query(sender, cmd, param=nil)
     u = @world.selunit
     return unless u && u.login?
@@ -950,29 +954,29 @@ class MenuController < NSObject
     end
     deselect_members(sender)
   end
-  
+
   def onMemberPing(sender)
     n = Time.now
     i = n.to_i * 1000000 + n.usec
     send_ctcp_query(sender, :ping, i.to_s)
   end
-  
+
   def onMemberTime(sender)
     send_ctcp_query(sender, :time)
   end
-  
+
   def onMemberVersion(sender)
     send_ctcp_query(sender, :version)
   end
-  
+
   def onMemberUserInfo(sender)
     send_ctcp_query(sender, :userinfo)
   end
-  
+
   def onMemberClientInfo(sender)
     send_ctcp_query(sender, :clientinfo)
   end
-  
+
   def onMemberAutoOp(sender)
     u = @world.selunit
     return unless u && u.login?
@@ -988,8 +992,8 @@ class MenuController < NSObject
       @autoop_dialog.add_masks(ary)
     end
   end
-  
-  
+
+
   def onCopyUrl(sender)
     return unless @url
     pb = NSPasteboard.generalPasteboard
@@ -997,7 +1001,14 @@ class MenuController < NSObject
     pb.setString_forType(@url, NSStringPboardType)
     @url = nil
   end
-  
+
+  def onJoinChannel(sender)
+    return unless @chan
+    u, c = @world.sel
+    return unless u && u.login?
+    u.send(:join, @chan)
+  end
+
   def onCopyAddress(sender)
     return unless @addr
     pb = NSPasteboard.generalPasteboard

@@ -9,7 +9,7 @@ class LogLine
   attr_accessor :time, :place, :nick, :body
   attr_accessor :line_type, :member_type
   attr_accessor :nick_info, :click_info, :identified, :nick_color_number
-  
+
   def initialize(time, place, nick, body, line_type=:system, member_type=:normal, nick_info=nil, click_info=nil, identified=nil, nick_color_number=nil)
     @time = time
     @place = place
@@ -27,9 +27,9 @@ end
 
 class LogController < NSObject
   attr_accessor :world
-  attr_writer :unit, :channel, :menu, :url_menu, :addr_menu, :member_menu, :keyword, :theme, :override_font
+  attr_writer :unit, :channel, :menu, :url_menu, :addr_menu, :chan_menu, :member_menu, :keyword, :theme, :override_font
   attr_reader :view
-  
+
   def initialize
     @bottom = true
     @lines = []
@@ -39,7 +39,7 @@ class LogController < NSObject
     @max_lines = 300
     @highlight_line_numbers = []
   end
-  
+
   def setup(console, initial_bgcolor)
     @loaded = false
     @console = console
@@ -48,6 +48,7 @@ class LogController < NSObject
     @policy.menu = @menu
     @policy.url_menu = @url_menu
     @policy.addr_menu = @addr_menu
+    @policy.chan_menu = @chan_menu
     @policy.member_menu = @member_menu
     @sink = LogScriptEventSink.alloc.init
     @sink.owner = self
@@ -64,19 +65,19 @@ class LogController < NSObject
     @view.setAutoresizingMask(NSViewWidthSizable | NSViewHeightSizable)
     @view.mainFrame.loadHTMLString_baseURL(initial_document, @theme.log.baseurl)
   end
-  
+
   def max_lines=(n)
     return if @max_lines == n
     @max_lines = n
     return unless @loaded
-    
+
     if @max_lines > 0 && @count > @max_lines
       save_position
       remove_first_line(@count - @max_lines)
       restore_position
     end
   end
-  
+
   def moveToTop
     return unless @loaded
     doc = @view.mainFrame.DOMDocument
@@ -84,7 +85,7 @@ class LogController < NSObject
     body = doc.body
     body[:scrollTop] = 0
   end
-  
+
   def moveToBottom
     return unless @loaded
     doc = @view.mainFrame.DOMDocument
@@ -92,9 +93,9 @@ class LogController < NSObject
     body = doc.body
     body[:scrollTop] = body[:scrollHeight]
   end
-  
+
   BOTTOM_EPSILON = 20
-  
+
   def viewing_bottom?
     return true unless @loaded
     doc = @view.mainFrame.DOMDocument
@@ -105,15 +106,15 @@ class LogController < NSObject
     scrolltop = body[:scrollTop]
     (viewheight == 0) || (scrolltop + viewheight >= scrollheight - BOTTOM_EPSILON)
   end
-  
+
   def save_position
     @bottom = viewing_bottom?
   end
-  
+
   def restore_position
     moveToBottom if @bottom
   end
-  
+
   def content_string
     return nil unless @loaded
     doc = @view.mainFrame.DOMDocument
@@ -122,15 +123,15 @@ class LogController < NSObject
   rescue
     nil
   end
-  
+
   def print(line, unit, use_keyword=true)
     body, key = build_body(line, unit, use_keyword)
-    
+
     unless @loaded
       @lines << [line, unit, use_keyword]
       return key
     end
-    
+
     s = ''
     s << %|<span class="time">#{h(line.time)}</span>| if line.time
     s << %|<span class="place">#{h(line.place)}</span>| if line.place
@@ -143,9 +144,9 @@ class LogController < NSObject
       s << %|>#{h(line.nick)}</span>|
     end
     s << %[<span class="message" type="#{line.line_type}">#{body}</span>]
-    
+
     @prev_nick_info = line.nick_info
-    
+
     attrs = {}
     alternate = @line_number % 2 == 0 ? 'even' : 'odd'
     attrs['alternate'] = alternate
@@ -162,14 +163,14 @@ class LogController < NSObject
     attrs['nick'] = line.nick_info if line.nick_info
     if @console
       if line.click_info
-        attrs['clickinfo'] = line.click_info 
+        attrs['clickinfo'] = line.click_info
         attrs['ondblclick'] = 'on_dblclick()'
       end
     end
     write_line(s, attrs)
     key
   end
-  
+
   def mark
     return unless @loaded
     save_position
@@ -181,7 +182,7 @@ class LogController < NSObject
     doc.body.appendChild(e)
     restore_position
   end
-  
+
   def unmark
     return unless @loaded
     doc = @view.mainFrame.DOMDocument
@@ -189,7 +190,7 @@ class LogController < NSObject
     e = doc.getElementById('mark')
     doc.body.removeChild(e) if e
   end
-  
+
   def reload_theme
     return unless @loaded
     doc = @view.mainFrame.DOMDocument
@@ -212,7 +213,7 @@ class LogController < NSObject
     @view.mainFrame.loadHTMLString_baseURL(initial_document, @theme.log.baseurl)
     @scroller.setNeedsDisplay(true)
 	end
-  
+
   def change_text_size(op)
     save_position
     if op == :bigger
@@ -222,8 +223,8 @@ class LogController < NSObject
     end
     restore_position
   end
-  
-  
+
+
   # delegate
 
   objc_method :webView_windowScriptObjectAvailable, 'v@:@@'
@@ -231,7 +232,7 @@ class LogController < NSObject
     @js = js
     @js[:app] = @sink
   end
-  
+
   objc_method :webView_didFinishLoadForFrame, 'v@:@@'
   def webView_didFinishLoadForFrame(sender, frame)
     @loaded = true
@@ -258,11 +259,11 @@ class LogController < NSObject
     body = @view.mainFrame.DOMDocument.body
     e = body.firstChild
     while e
-      n = e.nextSibling	 
+      n = e.nextSibling
       body.removeChild(e) unless DOMHTMLDivElement === e || DOMHTMLHRElement === e
       e = n
     end
-    
+
     if @console
       script = <<-EOM
         function on_dblclick() {
@@ -289,7 +290,7 @@ class LogController < NSObject
           var t = event.target
           app.setAddr(t.innerHTML)
         }
-        
+
         document.addEventListener('mousedown', on_mousedown, false)
       EOM
       @js.evaluateWebScript(script)
@@ -307,31 +308,35 @@ class LogController < NSObject
           var t = event.target
           app.setNick(t.parentNode.getAttribute('nick'))
         }
+        function on_channel_contextmenu() {
+          var t = event.target
+          app.setChan(t.innerHTML)
+        }
       EOM
       @js.evaluateWebScript(script)
     end
-    
+
     if @theme.js.content
       @js.evaluateWebScript(@theme.js.content)
     end
   end
-  
+
   def logView_keyDown(e)
     @world.log_keyDown(e)
   end
-  
+
   def logView_willResize(rect)
     save_position
   end
-  
+
   def logView_didResize(rect)
     restore_position
   end
-  
+
   def logView_onDoubleClick(s)
     @world.log_doubleClick(s)
   end
-  
+
   def scroller_markedPosition(sender)
     ary = []
     doc = @view.mainFrame.DOMDocument
@@ -345,13 +350,13 @@ class LogController < NSObject
     end
     ary
   end
-  
+
   def scroller_markColor(sender)
     @theme.other.log_scroller_highlight_color
   end
-  
+
   private
-  
+
   def setup_scroller
     view = @view.mainFrame.frameView.subviews.find {|i| i.is_a?(NSScrollView) }
     if view
@@ -369,7 +374,7 @@ class LogController < NSObject
   rescue
     p $!
   end
-  
+
   def build_body(line, unit, use_keyword)
     if use_keyword
       case line.line_type
@@ -379,7 +384,7 @@ class LogController < NSObject
         use_keyword = false
       end
     end
-    
+
     if use_keyword
       dislike = @keyword.dislike_words
       like = @keyword.words
@@ -389,14 +394,14 @@ class LogController < NSObject
     else
       like = dislike = nil
     end
-    
+
     LogRenderer.render_body(line.body, like, dislike, @keyword.whole_line, @keyword.matching_method == Preferences::Keyword::MATCH_EXACT_WORD)
   end
-  
+
   def h(s)
     s ? LogRenderer.escape_str(s) : ''
   end
-  
+
   def remove_first_line(n=1)
     return unless @loaded
     return if n <= 0
@@ -404,11 +409,11 @@ class LogController < NSObject
     doc = @view.mainFrame.DOMDocument
     return unless doc
     body = doc.body
-    
+
     # remember scroll top
     top = body[:scrollTop]
     delta = 0
-    
+
     last_line_id = nil
     n.times do
       node = body.firstChild
@@ -424,12 +429,12 @@ class LogController < NSObject
       last_line_id = node['id']
       body.removeChild(node)
     end
-    
+
     # scroll back by delta
     if delta > 0
       body[:scrollTop] = top - delta
     end
-    
+
     # updating highlight line numbers
     if last_line_id && last_line_id =~ /\d+$/
       num = $&.to_i
@@ -438,16 +443,16 @@ class LogController < NSObject
         @highlight_line_numbers.reject! {|i| i <= num}
       end
     end
-    
+
     @count -= n
     @scroller.setNeedsDisplay(true) if @scroller
   end
-  
+
   def write_line(html, attrs)
     save_position
     @line_number += 1
     @count += 1
-    
+
     doc = @view.mainFrame.DOMDocument
     return unless doc
     body = doc.body
@@ -456,16 +461,16 @@ class LogController < NSObject
     attrs.each {|k,v| div.setAttribute__(k, v) } if attrs
     div.setAttribute__('id', "line#{@line_number}")
     body.appendChild(div)
-    
+
     remove_first_line if @max_lines > 0 && @count > @max_lines
-    
+
     if attrs['highlight'] == 'true'
       @highlight_line_numbers << @line_number
     end
     @scroller.setNeedsDisplay(true) if @scroller
     restore_position
   end
-  
+
   def initial_document
     body_class = @console ? 'console' : 'normal'
     if @channel
@@ -476,7 +481,7 @@ class LogController < NSObject
     else
       body_attrs = %| type="server"|
     end
-    
+
     style = @theme.log.content || ''
     if @override_font
       name = @override_font[0]
@@ -490,7 +495,7 @@ class LogController < NSObject
     else
       override_style = ''
     end
-    
+
     doc = <<-EOM
       <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
       <html class="#{body_class}" #{body_attrs}>
@@ -506,10 +511,10 @@ class LogController < NSObject
       <body class="#{body_class}" #{body_attrs}></body>
       </html>
     EOM
-    
+
     doc
   end
-  
+
   if LanguageSupport.primary_language == 'ja'
     DEFAULT_FONT = 'Osaka-Mono'
     DEFAULT_FONT_SIZE = 10
@@ -517,7 +522,7 @@ class LogController < NSObject
     DEFAULT_FONT = 'Courier'
     DEFAULT_FONT_SIZE = 9
   end
-  
+
   DEFAULT_CSS = <<-EOM
     html {
       font-family: '#{DEFAULT_FONT}';
@@ -567,7 +572,7 @@ class LogController < NSObject
     .message[type=wallops] { color: #080; }
     .message[type=debug_send] { color: #aaa; }
     .message[type=debug_receive] { color: #444; }
-    
+
     .effect[color-number='0'] { color: #fff; }
     .effect[color-number='1'] { color: #000; }
     .effect[color-number='2'] { color: #008; }
@@ -606,8 +611,8 @@ end
 
 class LogScriptEventSink < NSObject
   attr_accessor :owner, :policy
-  
-  EXPORTED_METHODS = %w|onDblClick: shouldStopDoubleClick: setUrl: setAddr: setNick: print:|
+
+  EXPORTED_METHODS = %w|onDblClick: shouldStopDoubleClick: setUrl: setAddr: setNick: setChan: print:|
 
   objc_class_method 'isSelectorExcludedFromWebScript:', 'c@::'
   def self.isSelectorExcludedFromWebScript(sel)
@@ -634,32 +639,32 @@ class LogScriptEventSink < NSObject
   def self.isKeyExcludedFromWebScript(name)
     true
   end
-  
+
   objc_class_method :webScriptNameForKey, '@@:*'
   def self.webScriptNameForKey(name)
     nil
   end
-  
+
   def initialize
     @last = 0.0
     @x = -100
     @y = -100
   end
-  
+
   objc_method :onDblClick, 'v@:@'
   def onDblClick(e)
     @owner.logView_onDoubleClick(e.to_s)
   end
-  
+
   DELTA = 3
-  
+
   objc_method :shouldStopDoubleClick, 'c@:@'
   def shouldStopDoubleClick(e)
     d = DELTA
     cx = e.valueForKey('clientX').intValue
     cy = e.valueForKey('clientY').intValue
     res = false
-    
+
     now = NSDate.timeIntervalSinceReferenceDate.to_f
     if @x-d <= cx && cx <= @x+d && @y-d <= cy && cy <= @y+d
       res = true if now < @last + (OldEventManager.getDoubleClickTime.to_f / 60.0)
@@ -669,29 +674,34 @@ class LogScriptEventSink < NSObject
     @y = cy
     res
   end
-  
+
   objc_method :setUrl, 'v@:@'
   def setUrl(s)
     @policy.url = uh(s)
   end
-  
+
   objc_method :setAddr, 'v@:@'
   def setAddr(s)
     @policy.addr = uh(s)
   end
-  
+
   objc_method :setNick, 'v@:@'
   def setNick(s)
     @policy.nick = uh(s)
   end
-  
+
+  objc_method :setChan, 'v@:@'
+  def setChan(s)
+    @policy.chan = uh(s)
+  end
+
   objc_method :print, 'v@:@'
   def print(s)
     NSLog("%@", s)
   end
-  
+
   private
-  
+
   def uh(s)
     s ? CGI.unescapeHTML(s.to_s) : ''
   end
@@ -699,14 +709,14 @@ end
 
 
 class LogPolicy < NSObject
-  attr_accessor :owner, :menu, :url_menu, :addr_menu, :member_menu
-  attr_accessor :url, :addr, :nick
+  attr_accessor :owner, :menu, :url_menu, :addr_menu, :member_menu, :chan_menu
+  attr_accessor :url, :addr, :nick, :chan
 
   objc_method :webView_dragDestinationActionMaskForDraggingInfo, 'I@:@@'
   def webView_dragDestinationActionMaskForDraggingInfo(sender, info)
     WebDragDestinationActionNone
   end
-  
+
   objc_method :webView_contextMenuItemsForElement_defaultMenuItems, '@@:@@@'
   def webView_contextMenuItemsForElement_defaultMenuItems(sender, element, defaultMenu)
     if @url
@@ -729,6 +739,11 @@ class LogPolicy < NSObject
         modify_member_menu_item(i)
         i
       end
+    elsif @chan
+      target = @chan
+      @chan = nil
+      @owner.world.menu_controller.chan = target
+      @chan_menu.itemArray.to_a.map {|i| i.copy}
     else
       if @menu
         @menu.itemArray.to_a.map {|i| i.copy }
@@ -737,12 +752,12 @@ class LogPolicy < NSObject
       end
     end
   end
-  
+
   def modify_member_menu_item(i)
     i.setTag(i.tag.to_i + 500)
     modify_member_menu(i.submenu) if i.hasSubmenu
   end
-  
+
   def modify_member_menu(menu)
     menu.itemArray.to_a.each do |i|
       modify_member_menu_item(i)

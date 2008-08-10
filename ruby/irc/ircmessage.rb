@@ -24,7 +24,7 @@ end
 class IRCSendingMessage
   attr_reader :command, :params, :built
   attr_accessor :penalty, :complete_colon
-  
+
   def initialize(command, *args)
     @built = false
     @command = command
@@ -33,10 +33,10 @@ class IRCSendingMessage
     @raw = nil
     @complete_colon = true
   end
-  
+
   def build
     return if @built
-    
+
     force_complete_colon = false
     case @command
     when :privmsg,:notice
@@ -44,7 +44,7 @@ class IRCSendingMessage
     when :nick,:mode,:join,:names,:who,:list,:invite,:whois,:whowas,:ison
       @complete_colon = false
     end
-    
+
     s = @command.to_s.upcase
     if @params.size > 0
       if @params.size > 1
@@ -58,7 +58,7 @@ class IRCSendingMessage
     end
     s << "\x0d\x0a"
     @raw = s
-    
+
     if @penalty == Penalty::NORMAL
       case @command
       when :privmsg,:notice; @penalty += @raw.size / Penalty::TEXT_SIZE_FACTOR
@@ -71,10 +71,10 @@ class IRCSendingMessage
       end
     end
     @penalty = Penalty::MAX if @penalty > Penalty::MAX
-    
+
     @built = true
   end
-  
+
   def apply!
     if block_given?
       @params.map! {|i| yield i}
@@ -82,7 +82,7 @@ class IRCSendingMessage
     end
     self
   end
-  
+
   def to_s
     build
     @raw
@@ -93,7 +93,7 @@ end
 class IRCReceivedMessage
   attr_reader :sender, :sender_nick, :sender_username, :sender_address
   attr_reader :command, :numeric_reply
-  
+
   def initialize(str)
     @raw = str.dup
     @sender = ''
@@ -103,7 +103,7 @@ class IRCReceivedMessage
     @command = ''
     @numeric_reply = 0
     @params = []
-    
+
     str = str.dup
     s = str.token!
     if /\A:([^ ]+)/ =~ s
@@ -118,14 +118,14 @@ class IRCReceivedMessage
       s = str.token!
     end
     return if s.empty?
-    
+
     if /\A\d+\z/ =~ s
       @command = s.to_sym
       @numeric_reply = s.to_i
     else
       @command = s.downcase.to_sym
     end
-    
+
     until str.empty?
       if /\A:/ =~ str
         @params << $~.post_match
@@ -136,11 +136,11 @@ class IRCReceivedMessage
       @params << s.rstrip
     end
   end
-  
+
   def [](n)
     @params[n] || ''
   end
-  
+
   def sequence(n=0)
     ary = @params[n..-1]
     if ary
@@ -149,7 +149,7 @@ class IRCReceivedMessage
       ''
     end
   end
-  
+
   def apply!
     if block_given?
       @raw = yield @raw
@@ -161,7 +161,7 @@ class IRCReceivedMessage
     end
     self
   end
-  
+
   def to_s
     @raw
   end

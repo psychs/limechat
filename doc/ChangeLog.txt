@@ -1,3 +1,8 @@
+2008-08-11  Satoshi Nakagawa <psychs@limechat.net>
+
+	Added context menu on channel name in logs.
+	Based on a patch from Peter Haza.
+
 2008-08-10  Satoshi Nakagawa <psychs@limechat.net>
 
 	AutoOp dialog could cause a nil access exception.

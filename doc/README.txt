@@ -21,6 +21,7 @@ Laurent Sansonetti  # RubyCocoa developer, many requests and suggestions
 Josh Goebel			# CocoaSheet, many improvements of code and UIs, Pastie creator
 Jun Morimoto        # bug fixes
 Kevin Ballard       # patches around theme support
+Peter Haza			# a patch for context menu on channel name in logs
 Stefan Rusterholz	# many suggestions and patches
 Takashi Tsugo		# Deep Ocean theme
 

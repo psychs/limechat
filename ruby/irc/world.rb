@@ -7,12 +7,12 @@ class IRCWorld < NSObject
   attr_accessor :member_list, :dcc, :view_theme, :window
   attr_writer :app, :tree, :log_base, :console_base, :chat_box, :field_editor, :text, :pref
   attr_accessor :menu_controller
-  attr_accessor :tree_default_menu, :server_menu, :channel_menu, :tree_menu, :log_menu, :console_menu, :url_menu, :addr_menu, :member_menu
+  attr_accessor :tree_default_menu, :server_menu, :channel_menu, :tree_menu, :log_menu, :console_menu, :url_menu, :addr_menu, :chan_menu, :member_menu
   attr_reader :units, :selected, :prev_selected, :console, :config
-  
+
   AUTO_CONNECT_DELAY = 1
   RECONNECT_AFTER_WAKE_UP_DELAY = 5
-  
+
   def initialize
     @units = []
     @unit_id = 0
@@ -22,13 +22,13 @@ class IRCWorld < NSObject
     @growl.owner = self
     @today = Date.today
   end
-  
+
   def setup(seed)
     @console = create_log(nil, nil, true)
     @console_base.setContentView(@console.view)
     @dummylog = create_log(nil, nil, true)
     @log_base.setContentView(@dummylog.view)
-    
+
     @config = seed.dup
     @config.units.each {|u| create_unit(u) } if @config.units
     @config.units = nil
@@ -37,20 +37,20 @@ class IRCWorld < NSObject
     change_member_list_theme
     change_tree_theme
     register_growl
-    
+
     #@plugin = PluginManager.new(self, '~/Library/LimeChat/Plugins')
     #@plugin.load_all
   end
-  
+
   def save
     @pref.save_world(to_dic)
   end
-  
+
   def setup_tree
     @tree.setTarget(self)
     @tree.setDoubleAction('outlineView_doubleClicked:')
   	@tree.registerForDraggedTypes(TREE_DRAG_ITEM_TYPES);
-    
+
     unit = @units.find {|u| u.config.auto_connect }
     if unit
       expand_unit(unit)
@@ -64,11 +64,11 @@ class IRCWorld < NSObject
     end
     outlineViewSelectionDidChange(nil)
   end
-  
+
   def terminate
     @units.each {|u| u.terminate }
   end
-  
+
   def update_order(w)
     ary = []
     w.units.each do |i|
@@ -85,7 +85,7 @@ class IRCWorld < NSObject
     adjust_selection
     save
   end
-  
+
   def update_autoop(w)
     @config.autoop = w.autoop
     w.units.each do |i|
@@ -94,13 +94,13 @@ class IRCWorld < NSObject
     end
     save
   end
-  
+
   def store_tree
     w = @config.dup
     w.units = @units.map {|u| u.store_config }
     w
   end
-  
+
   def auto_connect(after_wake_up=false)
     delay = 0
     delay += RECONNECT_AFTER_WAKE_UP_DELAY if after_wake_up
@@ -111,54 +111,54 @@ class IRCWorld < NSObject
       end
     end
   end
-  
+
   def prepare_for_sleep
     @units.each {|u| u.disconnect(true) }
   end
-  
+
   def selunit
     return nil unless @selected
     @selected.unit? ? @selected : @selected.unit
   end
-  
+
   def selchannel
     return nil unless @selected
     @selected.unit? ? nil : @selected
   end
-  
+
   def sel
     [selunit, selchannel]
   end
-  
+
   def to_dic
     h = @config.to_dic
     unless @units.empty?
-      h[:units] = @units.map {|i| i.to_dic } 
+      h[:units] = @units.map {|i| i.to_dic }
     end
     h
   end
-  
+
   def find_unit(name)
     @units.find {|u| u.name == name }
   end
-  
+
   def find_unit_by_id(uid)
     @units.find {|u| u.id == uid }
   end
-  
+
   def find_channel_by_id(uid, cid)
     unit = @units.find {|u| u.id == uid }
     return nil unless unit
     unit.channels.find {|c| c.id == cid }
   end
-  
+
   def find_by_id(uid, cid)
     unit = find_unit_by_id(uid)
     return [] unless unit
     channel = unit.find_channel_by_id(cid)
     [unit, channel]
   end
-  
+
   def create_unit(seed, reload=true)
     @unit_id += 1
     u = IRCUnit.alloc.init
@@ -172,7 +172,7 @@ class IRCWorld < NSObject
     reload_tree if reload
     u
   end
-  
+
   def destroy_unit(unit)
     unit.terminate
     unit.disconnect
@@ -184,11 +184,11 @@ class IRCWorld < NSObject
       adjust_selection
     end
   end
-  
+
   def create_channel(unit, seed, reload=true, adjust=true)
     c = unit.find_channel(seed.name)
     return c if c
-    
+
     @channel_id += 1
     c = IRCChannel.alloc.init
     c.id = @channel_id
@@ -196,7 +196,7 @@ class IRCWorld < NSObject
     c.pref = @pref
     c.setup(seed)
     c.log = create_log(unit, c)
-    
+
     case seed.type
     when :channel
       n = unit.channels.index {|i| i.talk? }
@@ -215,13 +215,13 @@ class IRCWorld < NSObject
     when :dccchat
       unit.channels << c
     end
-    
+
     reload_tree if reload
     adjust_selection if adjust
     expand_unit(unit) if unit.login? && unit.channels.size == 1
     c
   end
-  
+
   def create_talk(unit, nick)
     c = create_channel(unit, IRCChannelConfig.new({:name => nick, :type => :talk}))
     if unit.login?
@@ -231,7 +231,7 @@ class IRCWorld < NSObject
     end
     c
   end
-  
+
   def destroy_channel(channel)
     channel.terminate
     unit = channel.unit
@@ -252,7 +252,7 @@ class IRCWorld < NSObject
       adjust_selection
     end
   end
-  
+
   def adjust_selection
     row = @tree.selectedRow
     if row >= 0 && @selected && @selected != @tree.itemAtRow(row)
@@ -260,20 +260,20 @@ class IRCWorld < NSObject
       reload_tree
     end
   end
-  
+
   def clear_text
     @text.setStringValue('')
   end
-  
+
   def input_text(s, cmd)
     return false unless @selected
     @selected.unit.input_text(s, cmd)
   end
-  
+
   def select_text
     @text.focus
   end
-  
+
   def store_prev_selected
     if !@selected
       @prev_selected = nil
@@ -283,7 +283,7 @@ class IRCWorld < NSObject
       @prev_selected = [@selected.unit.id, @selected.id]
     end
   end
-  
+
   def select_prev
     return unless @prev_selected
     uid, cid = @prev_selected
@@ -294,7 +294,7 @@ class IRCWorld < NSObject
     end
     select(i) if i
   end
-  
+
   def select(item)
     store_prev_selected
     select_text
@@ -312,7 +312,7 @@ class IRCWorld < NSObject
     @tree.select(i)
     item.unit.last_selected_channel = item.unit? ? nil : item
   end
-  
+
   def select_channel_at(n)
     return unless @selected
     unit = @selected.unit
@@ -321,7 +321,7 @@ class IRCWorld < NSObject
     channel = unit.channels[n]
     select(channel) if channel
   end
-  
+
   def select_unit_at(n)
     unit = @units[n]
     return unless unit
@@ -329,21 +329,21 @@ class IRCWorld < NSObject
     t = unit unless t
     select(t)
   end
-  
+
   def expand_unit(unit)
     @tree.expandItem(unit)
   end
-  
+
   def update_unit_title(unit)
     return unless unit && @selected
     update_title if @selected.unit == unit
   end
-  
+
   def update_channel_title(channel)
     return unless channel
     update_title if @selected == channel
   end
-  
+
   def update_title
     if @selected
       sel = @selected
@@ -384,7 +384,7 @@ class IRCWorld < NSObject
             else
               ''
             end
-            
+
             if mode.empty?
               if count <= 1
                 "(#{nick}) #{op}#{chname} #{topic}"
@@ -405,7 +405,7 @@ class IRCWorld < NSObject
       end
     end
   end
-  
+
   def reload_tree
     if @reloading_tree
       @tree.setNeedsDisplay(true)
@@ -415,27 +415,27 @@ class IRCWorld < NSObject
     @tree.reloadData
     @reloading_tree = false
   end
-  
+
   def register_growl
     @growl.register if @pref.gen.use_growl
   end
-  
+
   def notify_on_growl(kind, title, desc, context=nil)
     if @pref.gen.use_growl
       return if @pref.gen.stop_growl_on_active && NSApp.isActive
       @growl.notify(kind, title, desc, context)
     end
   end
-  
+
   def update_icon
     highlight = newtalk = false
-    
+
     @units.each do |u|
       if u.keyword
         highlight = true
         break
       end
-      
+
       u.channels.each do |c|
         if c.keyword
           highlight = true
@@ -444,22 +444,22 @@ class IRCWorld < NSObject
         newtalk = true if c.newtalk
       end
     end
-    
+
     @icon.update(highlight, newtalk)
   end
-  
+
   def reload_theme
     @view_theme.theme = @pref.theme.name
-    
+
     logs = [@console]
-        
+
     @units.each do |u|
       logs << u.log
       u.channels.each do |c|
         logs << c.log
       end
     end
-    
+
     logs.each do |log|
       if @pref.theme.override_log_font
         log.override_font = [@pref.theme.log_font_name, @pref.theme.log_font_size]
@@ -468,16 +468,16 @@ class IRCWorld < NSObject
       end
       log.reload_theme
     end
-    
+
     change_input_text_theme
     change_tree_theme
     change_member_list_theme
-    
+
     #sel = selected
     #@log_base.setContentView(sel.log.view) if sel
     #@console_base.setContentView(@console.view)
   end
-  
+
   def change_input_text_theme
     theme = @view_theme.other
     @field_editor.setInsertionPointColor(theme.input_text_color)
@@ -485,14 +485,14 @@ class IRCWorld < NSObject
     @text.setBackgroundColor(theme.input_text_bgcolor)
     @chat_box.set_input_text_font(theme.input_text_font)
   end
-  
+
   def change_tree_theme
     theme = @view_theme.other
     @tree.setFont(theme.tree_font)
     @tree.theme_changed
     @tree.setNeedsDisplay(true)
   end
-  
+
   def change_member_list_theme
     theme = @view_theme.other
     @member_list.setFont(theme.member_list_font)
@@ -500,18 +500,18 @@ class IRCWorld < NSObject
     @member_list.theme_changed
     @member_list.setNeedsDisplay(true)
   end
-  
+
   def preferences_changed
     register_growl
     @console.max_lines = @pref.gen.max_log_lines
     @units.each {|u| u.preferences_changed}
     reload_theme
   end
-  
+
   def date_changed
     @units.each {|u| u.date_changed}
   end
-  
+
   def change_text_size(op)
     logs = [@console]
     @units.each do |u|
@@ -522,11 +522,11 @@ class IRCWorld < NSObject
     end
     logs.each {|i| i.change_text_size(op)}
   end
-  
+
   def reload_plugins
     #@plugin.load_all
   end
-  
+
   def mark_all_as_read
     @units.each do |u|
       u.unread = false
@@ -536,7 +536,7 @@ class IRCWorld < NSObject
     end
     reload_tree
   end
-  
+
   def mark_all_scrollbacks
     @units.each do |u|
       u.log.mark
@@ -545,9 +545,9 @@ class IRCWorld < NSObject
       end
     end
   end
-  
+
   # delegate
-  
+
   def outlineView_doubleClicked(sender)
     return unless @selected
     u, c = sel
@@ -567,16 +567,16 @@ class IRCWorld < NSObject
       end
     end
   end
-  
+
   def outlineView_shouldEditTableColumn_item(sender, column, item)
     false
   end
-  
+
   def outlineViewSelectionIsChanging(note)
     store_prev_selected
     outlineViewSelectionDidChange(note)
   end
-  
+
   def outlineViewSelectionDidChange(note)
     selitem = @tree.itemAtRow(@tree.selectedRow)
     if @selected != selitem
@@ -620,41 +620,41 @@ class IRCWorld < NSObject
     reload_tree
     update_icon
   end
-  
+
   def outlineViewItemDidCollapse(notification)
     item = notification.userInfo.objectForKey('NSObject')
     select(item) if item
   end
-  
+
   # data source
-  
+
   def outlineView_numberOfChildrenOfItem(sender, item)
     return @units.size unless item
     item.number_of_children
   end
-  
+
   def outlineView_isItemExpandable(sender, item)
     item.number_of_children > 0
   end
-  
+
   def outlineView_child_ofItem(sender, index, item)
     return @units[index] unless item
     item.child_at(index)
   end
-  
+
   def outlineView_objectValueForTableColumn_byItem(sender, column, item)
     item.label
   end
-  
+
   # tree
-  
+
   def serverTreeView_acceptFirstResponder
     select_text
   end
-  
+
   def outlineView_willDisplayCell_forTableColumn_item(sender, cell, col, item)
     theme = @view_theme.other
-    
+
     if item.keyword
       textcolor = theme.tree_highlight_color
     elsif item.newtalk
@@ -676,12 +676,12 @@ class IRCWorld < NSObject
     end
     cell.setTextColor(textcolor)
   end
-  
+
   # tree drag and drop
-    
+
   TREE_DRAG_ITEM_TYPE = 'treeitem'
   TREE_DRAG_ITEM_TYPES = [TREE_DRAG_ITEM_TYPE]
-  
+
   def outlineView_writeItems_toPasteboard(sender, items, pboard)
     i = items.to_a[0]
     if i.is_a?(IRCUnit)
@@ -693,7 +693,7 @@ class IRCWorld < NSObject
     pboard.setPropertyList_forType(s, TREE_DRAG_ITEM_TYPE)
     true
   end
-  
+
   def find_item_from_pboard(s)
     if /^(\d+)-(\d+)$/ =~ s
       u = $1.to_i
@@ -705,7 +705,7 @@ class IRCWorld < NSObject
       nil
     end
   end
-  
+
   def outlineView_validateDrop_proposedItem_proposedChildIndex(sender, info, item, index)
     return NSDragOperationNone if index < 0
   	pboard = info.draggingPasteboard
@@ -714,7 +714,7 @@ class IRCWorld < NSObject
     return NSDragOperationNone unless target
     i = find_item_from_pboard(target.to_s)
     return NSDragOperationNone unless i
-    
+
     if i.is_a?(IRCUnit)
       return NSDragOperationNone if item
     else
@@ -727,14 +727,14 @@ class IRCWorld < NSObject
         low.delete(i)
         high.delete(i)
         next_item = high[0]
-        
+
         # don't allow talks dropped above channels
         return NSDragOperationNone if next_item && next_item.channel?
       end
     end
     NSDragOperationGeneric
   end
-  
+
   def outlineView_acceptDrop_item_childIndex(sender, info, item, index)
     return false if index < 0
   	pboard = info.draggingPasteboard
@@ -743,10 +743,10 @@ class IRCWorld < NSObject
     return false unless target
     i = find_item_from_pboard(target.to_s)
     return false unless i
-    
+
     if i.is_a?(IRCUnit)
       return false if item
-      
+
       ary = @units
       low = ary[0...index] || []
       high = ary[index...ary.size] || []
@@ -758,7 +758,7 @@ class IRCWorld < NSObject
     else
       return false unless item
       return false if item != i.unit
-      
+
       ary = item.channels
       low = ary[0...index] || []
       high = ary[index...ary.size] || []
@@ -771,9 +771,9 @@ class IRCWorld < NSObject
     adjust_selection
     true
   end
-  
+
   # log view
-  
+
   def log_doubleClick(s)
     ary = s.split(' ')
     case ary[0]
@@ -788,7 +788,7 @@ class IRCWorld < NSObject
       select(channel) if channel
     end
   end
-  
+
   def log_keyDown(e)
     @window.makeFirstResponder(@text)
     select_text
@@ -799,9 +799,9 @@ class IRCWorld < NSObject
       @window.sendEvent(e)
     end
   end
-  
+
   # list view
-  
+
   def memberListView_keyDown(e)
     @window.makeFirstResponder(@text)
     select_text
@@ -812,7 +812,7 @@ class IRCWorld < NSObject
       @window.sendEvent(e)
     end
   end
-  
+
   def memberListView_dropFiles(files, row)
     u, c = sel
     return unless u && c
@@ -821,22 +821,22 @@ class IRCWorld < NSObject
       files.each {|f| @dcc.add_sender(u.id, m.nick, f, false) }
     end
   end
-  
+
   # timer
-  
+
   def on_timer
     @units.each {|u| u.on_timer }
     @dcc.on_timer
-    
+
     date = Date.today
     if @today != date
       @today = date
       date_changed
     end
   end
-  
+
   private
-  
+
   def select_other_and_destroy(target)
     if target.unit?
       i = @units.index(target)
@@ -872,12 +872,13 @@ class IRCWorld < NSObject
       @tree.select(i, true)
     end
   end
-  
+
   def create_log(unit, channel=nil, console=false)
     log = LogController.alloc.init
     log.menu = console ? @console_menu : @log_menu
     log.url_menu = @url_menu
     log.addr_menu = @addr_menu
+    log.chan_menu = @chan_menu
     log.member_menu = @member_menu
     log.world = self
     log.unit = unit
@@ -895,5 +896,5 @@ class IRCWorld < NSObject
     log.view.setTextSizeMultiplier(@console.view.textSizeMultiplier) if @console
     log
   end
-  
+
 end
