@@ -1,3 +1,7 @@
+2008-09-12  Satoshi Nakagawa <psychs@limechat.net>
+
+	Supported filenames surrounded by double quotations in DCC file transfers.
+
 2008-08-11  Satoshi Nakagawa <psychs@limechat.net>
 
 	Added context menu on channel name in logs.

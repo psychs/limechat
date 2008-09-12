@@ -1737,7 +1737,12 @@ class IRCUnit < NSObject
       unless kind.empty?
         case kind.downcase.to_sym
         when :send
-          fname = text.token!
+          if text =~ /^\"([^\"]+)\"/
+            fname = $1
+            text = $~.post_match
+          else
+            fname = text.token!
+          end
           addr = text.token!
           port = text.token!.to_i
           size = text.token!.to_i
