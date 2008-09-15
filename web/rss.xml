@@ -2,13 +2,13 @@
 <rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>LimeChat</title>
-    <link>http://limechat.sourceforge.net/</link>
+    <link>http://limechat.net/mac/</link>
     <description>Change Log of LimeChat</description>
     <language>en-us</language>
 
     <item>
       <title>0.19</title>
-      <link>http://limechat.sourceforge.net/index_ja.html#v0.19</link>
+      <link>http://limechat.net/mac/index_ja.html#v0.19</link>
       <pubDate>Thu, 10 Jul 2008 00:13:00 +0900</pubDate>
       <content:encoded><![CDATA[
   			<ul>
@@ -28,7 +28,7 @@
 
     <item>
       <title>0.18</title>
-      <link>http://limechat.sourceforge.net/index_ja.html#v0.18</link>
+      <link>http://limechat.net/mac/index_ja.html#v0.18</link>
       <pubDate>Thu, 22 May 2008 22:50:00 +0900</pubDate>
       <content:encoded><![CDATA[
   			<ul>
@@ -79,7 +79,7 @@
 
     <item>
       <title>0.17</title>
-      <link>http://limechat.sourceforge.net/#v0.17</link>
+      <link>http://limechat.net/mac/#v0.17</link>
       <pubDate>Mon, 03 Mar 2008 21:51:00 +0900</pubDate>
       <content:encoded><![CDATA[
   			<ul>
@@ -127,7 +127,7 @@
 
     <item>
       <title>0.16.2</title>
-      <link>http://limechat.sourceforge.net/#v0.16.2</link>
+      <link>http://limechat.net/mac/#v0.16.2</link>
       <pubDate>Sat, 16 Feb 2008 11:54:00 +0900</pubDate>
       <content:encoded><![CDATA[
   			<ul>
@@ -147,7 +147,7 @@
 
     <item>
       <title>0.16</title>
-      <link>http://limechat.sourceforge.net/#v0.16</link>
+      <link>http://limechat.net/mac/#v0.16</link>
       <pubDate>Sun, 03 Feb 2008 17:50:00 +0900</pubDate>
       <content:encoded><![CDATA[
   			<ul>
