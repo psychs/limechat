@@ -37,12 +37,12 @@ class GrowlController
     when :highlight
       kind = GROWL_HIGHLIGHT
       priority = :high
-      sticky = true
+      #sticky = true
       title = "Highlight: #{title}"
     when :newtalk
       kind = GROWL_NEW_TALK
       priority = :high
-      sticky = true
+      #sticky = true
       title = "New Talk: #{title}"
     when :channeltext
       kind = GROWL_CHANNEL_MSG
@@ -64,7 +64,7 @@ class GrowlController
     when :file_receive_request
       kind = GROWL_FILE_RECEIVE_REQUEST_MSG
       priority = :high
-      sticky = true
+      #sticky = true
       desc = "From #{title}\n#{desc}"
       title = "File receive request"
       context = 'dcc'

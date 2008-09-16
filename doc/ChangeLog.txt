@@ -1,3 +1,7 @@
+2008-09-16  Satoshi Nakagawa <psychs@limechat.net>
+
+	Removed the sticky option for all kind of Growl notifications.
+
 2008-09-12  Satoshi Nakagawa <psychs@limechat.net>
 
 	Supported filenames surrounded by double quotations in DCC file transfers.
