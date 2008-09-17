@@ -6,6 +6,14 @@
 	<array>
 		<dict>
 			<key>CLASS</key>
+			<string>KeyRecorderBox</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSControl</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
 			<string>FirstResponder</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
@@ -84,6 +92,8 @@
 				<string>id</string>
 				<key>gen_use_growl</key>
 				<string>id</string>
+				<key>hotkey</key>
+				<string>id</string>
 				<key>key_current_nick</key>
 				<string>id</string>
 				<key>key_dislike_words</key>
@@ -97,8 +107,6 @@
 				<key>key_words</key>
 				<string>id</string>
 				<key>log_font_text</key>
-				<string>id</string>
-				<key>myOutlet1</key>
 				<string>id</string>
 				<key>select_log_font_button</key>
 				<string>id</string>

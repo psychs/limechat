@@ -11,11 +11,9 @@ class LimeChatApplication < NSApplication
     super_sendEvent(e)
   end
   
-  def register_hot_key(keys, *mods)
+  def register_hot_key(keyCode, modFlags)
     @hotkey ||= HotKeyManager.alloc.init
-    key = KeyEventHandler.keynames_to_keycodes(keys)[0]
-    m = KeyEventHandler.mods_to_modifier(mods)
-    @hotkey.registerHotKeyCode_withModifier(key, m)
+    @hotkey.registerHotKeyCode_withModifier(keyCode, modFlags)
   end
   
   def unregister_hot_key

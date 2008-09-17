@@ -20,6 +20,7 @@ class PreferenceDialog < NSObject
   ib_mapped_outlet :dcc_auto_receive
   ib_mapped_outlet :gen_confirm_quit
   ib_mapped_int_outlet :gen_tab_action
+  ib_outlet :hotkey
   ib_mapped_int_outlet :gen_main_window_layout
   ib_mapped_outlet :gen_connect_on_doubleclick, :gen_disconnect_on_doubleclick, :gen_join_on_doubleclick, :gen_leave_on_doubleclick
   ib_mapped_outlet :gen_use_growl, :gen_stop_growl_on_active
@@ -217,6 +218,12 @@ class PreferenceDialog < NSObject
     load_theme
     
     @log_font = NSFont.fontWithName_size(m.theme.log_font_name, m.theme.log_font_size)
+    
+    if @m.gen.use_hotkey
+      @hotkey.setKeyCode_modifierFlags(@m.gen.hotkey_key_code, @m.gen.hotkey_modifier_flags)
+    else
+      @hotkey.clearKey
+    end
   end
   
   def save
@@ -234,6 +241,14 @@ class PreferenceDialog < NSObject
     
     m.theme.log_font_name = @log_font.fontName
     m.theme.log_font_size = @log_font.pointSize
+    
+    if @hotkey.valid
+      @m.gen.use_hotkey = true
+      @m.gen.hotkey_key_code = @hotkey.keyCode
+      @m.gen.hotkey_modifier_flags = @hotkey.modifierFlags
+    else
+      @m.gen.use_hotkey = false
+    end
   end
   
   def load_theme

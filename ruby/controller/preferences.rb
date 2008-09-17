@@ -53,6 +53,7 @@ class Preferences
     include PersistenceHelper
     persistent_attr :confirm_quit
     persistent_attr :tab_action
+    persistent_attr :use_hotkey, :hotkey_key_code, :hotkey_modifier_flags
     persistent_attr :main_window_layout
     persistent_attr :connect_on_doubleclick, :disconnect_on_doubleclick, :join_on_doubleclick, :leave_on_doubleclick
     persistent_attr :use_growl, :stop_growl_on_active
@@ -69,6 +70,9 @@ class Preferences
     def initialize
       @confirm_quit = true
       @tab_action = TAB_COMPLETE_NICK
+      @use_hotkey = false
+      @hotkey_key_code = 0
+      @hotkey_modifier_flags = 0
       @main_window_layout = LAYOUT_2_COLUMNS
       @connect_on_doubleclick = false
       @disconnect_on_doubleclick = false

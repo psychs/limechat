@@ -1,5 +1,9 @@
 2008-09-17  Satoshi Nakagawa <psychs@limechat.net>
 
+	Added the hot key option in preferences.
+
+2008-09-17  Satoshi Nakagawa <psychs@limechat.net>
+
 	Added "Channel notice received" and "Talk notice received" to the Growl notification types.
 
 2008-09-17  Satoshi Nakagawa <psychs@limechat.net>

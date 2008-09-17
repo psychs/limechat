@@ -13,10 +13,12 @@ class AppController < NSObject
   def awakeFromNib
     prelude
 
-    NSApp.register_hot_key(:l, :cmd, :shift)
-
     @pref = Preferences.new
     #FileUtils.mkpath(@pref.gen.transcript_folder.expand_path) rescue nil
+    
+    if @pref.gen.use_hotkey
+      NSApp.register_hot_key(@pref.gen.hotkey_key_code, @pref.gen.hotkey_modifier_flags)
+    end
 
     @field_editor = FieldEditorTextView.alloc.initWithFrame(NSZeroRect)
     @field_editor.setFieldEditor(true)
@@ -164,9 +166,13 @@ class AppController < NSObject
   end
 
   def applicationDidReceivedHotKey(sender)
-    NSApp.activateIgnoringOtherApps(true)
-    @window.makeKeyAndOrderFront(nil)
-    @world.select_text
+    if !@window.isVisible || !NSApp.isActive
+      NSApp.activateIgnoringOtherApps(true)
+      @window.makeKeyAndOrderFront(nil)
+      @world.select_text
+    else
+      NSApp.hide(nil)
+    end
   end
 
   def windowShouldClose(sender)
@@ -304,6 +310,12 @@ class AppController < NSObject
   end
 
   def preferences_changed
+    if @pref.gen.use_hotkey
+      NSApp.register_hot_key(@pref.gen.hotkey_key_code, @pref.gen.hotkey_modifier_flags)
+    else
+      NSApp.unregister_hot_key
+    end
+    
     select_3column_layout(@pref.gen.main_window_layout == 1)
     @world.preferences_changed
   end
