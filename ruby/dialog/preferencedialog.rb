@@ -242,7 +242,7 @@ class PreferenceDialog < NSObject
     m.theme.log_font_name = @log_font.fontName
     m.theme.log_font_size = @log_font.pointSize
     
-    if @hotkey.valid
+    if @hotkey.valid?
       @m.gen.use_hotkey = true
       @m.gen.hotkey_key_code = @hotkey.keyCode
       @m.gen.hotkey_modifier_flags = @hotkey.modifierFlags

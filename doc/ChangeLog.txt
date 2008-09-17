@@ -1,3 +1,9 @@
+==== LimeChat 0.19.4 ====
+
+2008-09-17  Satoshi Nakagawa <psychs@limechat.net>
+
+	Don't use invalid hot keys.
+
 ==== LimeChat 0.19.3 ====
 
 2008-09-17  Satoshi Nakagawa <psychs@limechat.net>
