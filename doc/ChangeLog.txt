@@ -1,3 +1,12 @@
+==== LimeChat 0.19.3 ====
+
+2008-09-17  Satoshi Nakagawa <psychs@limechat.net>
+
+	Fixed a bug, the Highlight tab should be selected by default on the preferences dialog.
+	Cut off unnecessary code.
+
+==== LimeChat 0.19.2 ====
+
 2008-09-17  Satoshi Nakagawa <psychs@limechat.net>
 
 	Added the hot key option in preferences.

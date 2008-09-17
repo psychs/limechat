@@ -271,8 +271,6 @@ static NSArray* padKeyArray;
 		NSString* keyString = [[NSString stringWithCharacters:chars length:1] uppercaseString];
 		return (isPadKey ? [NSString stringWithFormat:@"#%@", keyString] : keyString);
 	}
-	
-	return nil;    
 }
 
 @end
