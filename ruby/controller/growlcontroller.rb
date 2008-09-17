@@ -9,7 +9,9 @@ class GrowlController
   GROWL_HIGHLIGHT = "Highlight message received"
   GROWL_NEW_TALK = "New talk started"
   GROWL_CHANNEL_MSG = "Channel message received"
+  GROWL_CHANNEL_NOTICE = "Channel notice received"
   GROWL_TALK_MSG = "Talk message received"
+  GROWL_TALK_NOTICE = "Talk notice received"
   GROWL_KICKED_MSG = "Kicked out from channel"
   GROWL_INVITED_MSG = "Invited to channel"
   GROWL_FILE_RECEIVE_REQUEST_MSG = "File receive requested"
@@ -22,7 +24,9 @@ class GrowlController
     return if @growl
     @growl = Growl::Notifier.sharedInstance
     @growl.delegate = self
-    all = [GROWL_LOGIN_MSG, GROWL_DISCONNECT_MSG, GROWL_HIGHLIGHT, GROWL_NEW_TALK, GROWL_CHANNEL_MSG, GROWL_TALK_MSG, GROWL_KICKED_MSG, GROWL_INVITED_MSG,
+    all = [GROWL_LOGIN_MSG, GROWL_DISCONNECT_MSG, GROWL_HIGHLIGHT, GROWL_NEW_TALK,
+            GROWL_CHANNEL_MSG, GROWL_CHANNEL_NOTICE, GROWL_TALK_MSG, GROWL_TALK_NOTICE,
+            GROWL_KICKED_MSG, GROWL_INVITED_MSG,
             GROWL_FILE_RECEIVE_REQUEST_MSG, GROWL_FILE_RECEIVE_SUCCEEDED_MSG, GROWL_FILE_RECEIVE_FAILED_MSG,
             GROWL_FILE_SEND_SUCCEEDED_MSG, GROWL_FILE_SEND_FAILED_MSG]
     default = [GROWL_HIGHLIGHT, GROWL_NEW_TALK]
@@ -46,9 +50,15 @@ class GrowlController
       title = "New Talk: #{title}"
     when :channeltext
       kind = GROWL_CHANNEL_MSG
+    when :channelnotice
+      kind = GROWL_CHANNEL_NOTICE
+      title = "Notice: #{title}"
     when :talktext
       kind = GROWL_TALK_MSG
       title = "Talk: #{title}"
+    when :talknotice
+      kind = GROWL_TALK_NOTICE
+      title = "Talk Notice: #{title}"
     when :kicked
       kind = GROWL_KICKED_MSG
       title = "Kicked: #{title}"

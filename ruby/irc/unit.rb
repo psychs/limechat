@@ -1420,7 +1420,9 @@ class IRCUnit < NSObject
       # channel
       c = find_channel(target)
       key = print_both(c || target, command, nick, text, identified)
-      if command != :notice
+      if command == :notice
+        notify_text(:channelnotice, c || target, nick, text)
+      else
         t = c || self
         set_unread_state(t)
         set_keyword_state(t) if key
@@ -1458,7 +1460,9 @@ class IRCUnit < NSObject
           newtalk = true
         end
         key = print_both(c || self, command, nick, text, identified)
-        if command != :notice
+        if command == :notice
+          notify_text(:talknotice, c || nick, nick, text)
+        else
           t = c || self
           set_unread_state(t)
           set_newtalk_state(t) if newtalk

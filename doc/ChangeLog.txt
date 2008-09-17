@@ -1,5 +1,9 @@
 2008-09-17  Satoshi Nakagawa <psychs@limechat.net>
 
+	Added "Channel notice received" and "Talk notice received" to the Growl notification types.
+
+2008-09-17  Satoshi Nakagawa <psychs@limechat.net>
+
 	Turn on the sticky option of Growl notifications again.
 
 2008-09-16  Satoshi Nakagawa <psychs@limechat.net>
