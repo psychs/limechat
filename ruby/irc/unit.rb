@@ -1610,23 +1610,41 @@ class IRCUnit < NSObject
     tonick = m[0]
     
     if eq(nick, @mynick)
+      # changed mynick
       @mynick = tonick
       update_unit_title
       print_channel(self, :nick, "You are now known as #{tonick}")
     end
+    
     @channels.each do |c|
       if c.find_member(nick)
+        # rename channel member
         print_channel(c, :nick, "#{nick} is now known as #{tonick}")
         c.rename_member(nick, tonick)
       end
-      if eq(nick, c.name)
-        c.name = tonick
-        reload_tree
-        update_channel_title(c)
-      end
     end
+    
+    c = find_channel(nick)
+    if c
+      t = find_channel(tonick)
+      if t
+        # there is already a channel for tonick
+        # remove it
+        @world.destroy_channel(t)
+      end
+      
+      # rename talk
+      c.name = tonick
+      reload_tree
+      update_channel_title(c)
+    end
+    
+    # rename nick on whois dialog
     @whois_dialogs.select {|i| i.nick == nick}.each {|i| i.nick = tonick}
+    
+    # rename nick in dcc
     @world.dcc.nick_changed(self, nick, tonick)
+    
     print_console(nil, :nick, "#{nick} is now known as #{tonick}")
   end
   
