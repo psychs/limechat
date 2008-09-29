@@ -2203,22 +2203,18 @@ when 437	# ERR_UNAVAILRESOURCE 2.10
 =end
   
   def receive_nick_collision(m)
-    if @config.alt_nicks.empty?
-      # no alt. nicks
-      try_another_nick
-    else
-      # try alt. nicks
-      unless @login
-        # only works when not login
-        @trying_nick += 1
-        nick = @config.alt_nicks[@trying_nick]
-        if nick
-          @sentnick = nick
-          send(:nick, nick)
-        else
-          try_another_nick
-        end
+    if !@config.alt_nicks.empty? && !@login
+      # only works when not login
+      @trying_nick += 1
+      nick = @config.alt_nicks[@trying_nick]
+      if nick
+        @sentnick = nick
+        send(:nick, nick)
+      else
+        try_another_nick
       end
+    else
+      try_another_nick
     end
   end
   
