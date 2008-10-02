@@ -1,4 +1,4 @@
-AppVersion = "LimeChat for OSX 0.19.4";
+AppVersion = "LimeChat for OSX 0.20";
 CtcpClientInfo = "DCC VERSION CLIENTINFO USERINFO PING TIME";
 CloseWindowMenuTitle = "Close Window";
 CloseCurrentPanelMenuTitle = "Close Current Panel…";
