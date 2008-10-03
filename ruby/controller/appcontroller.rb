@@ -551,11 +551,17 @@ class AppController < NSObject
     win = @pref.load_window('main_window')
     if win
       f = NSRect.from_dic(win)
+      
       @window.setFrame_display(f, true)
       @root_split.setPosition(win[:root])
       @log_split.setPosition(win[:log])
       @info_split.setPosition(win[:info])
       @tree_split.setPosition(win[:tree] || 120)
+      
+      ignore_spell_checking = win[:ignore_spell_checking]
+      if ignore_spell_checking
+        @field_editor.setContinuousSpellCheckingEnabled(false)
+      end
     else
       scr = NSScreen.screens[0]
       if scr
@@ -585,6 +591,7 @@ class AppController < NSObject
       :log => @log_split.position,
       :info => @info_split.position,
       :tree => @tree_split.position,
+      :ignore_spell_checking => !@field_editor.isContinuousSpellCheckingEnabled,
     }
     win.merge!(split)
     @pref.save_window('main_window', win)

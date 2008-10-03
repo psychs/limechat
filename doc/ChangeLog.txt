@@ -1,5 +1,9 @@
 2008-10-03  Satoshi Nakagawa <psychs@limechat.net>
 
+	Remember spell checking status across session.
+
+2008-10-03  Satoshi Nakagawa <psychs@limechat.net>
+
 	Cut seconds from timestamps.
 
 ==== LimeChat 0.20 ====
