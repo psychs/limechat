@@ -1945,7 +1945,7 @@ class IRCUnit < NSObject
       end
       signon = signonstr.to_i
       if signon > 0
-        signon = Time.at(signon).strftime('%Y/%m/%d %H:%M:%S') rescue ''
+        signon = Time.at(signon).strftime('%Y/%m/%d %H:%M') rescue ''
       else
         signon = ''
       end
@@ -2001,7 +2001,7 @@ class IRCUnit < NSObject
       begin
         time = Time.at(timenum)
         c = find_channel(chname)
-        print_both(c || chname, :reply, "Created at: #{time.strftime('%Y/%m/%d %H:%M:%S')}")
+        print_both(c || chname, :reply, "Created at: #{time.strftime('%Y/%m/%d %H:%M')}")
       rescue
         ;
       end
@@ -2031,7 +2031,7 @@ class IRCUnit < NSObject
       begin
         time = Time.at(timenum)
         c = find_channel(chname)
-        print_both(c || chname, :reply, "#{nick} set the topic at: #{time.strftime('%Y/%m/%d %H:%M:%S')}")
+        print_both(c || chname, :reply, "#{nick} set the topic at: #{time.strftime('%Y/%m/%d %H:%M')}")
       rescue
         ;
       end

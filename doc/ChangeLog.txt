@@ -1,3 +1,7 @@
+2008-10-03  Satoshi Nakagawa <psychs@limechat.net>
+
+	Cut seconds from timestamps.
+
 ==== LimeChat 0.20 ====
 
 ==== LimeChat 0.19.4 ====
