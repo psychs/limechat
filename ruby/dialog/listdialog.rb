@@ -124,7 +124,7 @@ class ListDialog < NSObject
         return
       end
     end
-    ary << item
+    ary.insert tail, item
   end
 
   def row_compare(a, b)

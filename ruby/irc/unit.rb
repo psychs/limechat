@@ -2054,7 +2054,6 @@ class IRCUnit < NSObject
           c.op = (m.q || m.a || m.o) if eq(m.nick, @mynick)
         end
         c.reload_members
-        c.sort_members
         update_channel_title(c)
       else
         print_both(c || chname, :reply, "Names: #{trail}")
@@ -2098,6 +2097,7 @@ class IRCUnit < NSObject
         update_channel_title(c)
       end
     when 352	# RPL_WHOREPLY
+=begin
       chname = m[1]
       username = m[2]
       address = m[3]
@@ -2114,12 +2114,12 @@ class IRCUnit < NSObject
       else
         print_unknown_reply(m)
       end
+=end
     when 315	# RPL_ENDOFWHO
       chname = m[1]
       c = find_channel(chname)
       if c && c.active? && !c.who_init
         c.who_init = true
-        c.sort_members
         c.reload_members
         #print_system(c, "Members list has been initialized")
         check_all_autoop(c) if c.op?

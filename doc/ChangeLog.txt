@@ -1,3 +1,8 @@
+2008-10-05  Satoshi Nakagawa <psychs@limechat.net>
+
+	Perform sorted insert when updating users in a channel.
+	Fixed a bug in the sorted insert algorithm for the channel list.
+
 2008-10-03  Satoshi Nakagawa <psychs@limechat.net>
 
 	Remember spell checking status across session.

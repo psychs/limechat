@@ -1,6 +1,8 @@
 # Created by Satoshi Nakagawa.
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
+require 'pp'
+
 class IRCChannel < NSObject
   attr_accessor :unit, :id, :topic, :names_init, :who_init, :log
   attr_reader :config, :members, :mode
@@ -121,7 +123,8 @@ class IRCChannel < NSObject
   end
   
   def add_member(member, autoreload=true)
-    if m = find_member(member.nick)
+    if i = find_member_index(member.nick)
+      m = @members[i]
       m.username = member.username unless member.username.empty?
       m.address = member.username unless member.address.empty?
       m.q = member.q
@@ -129,58 +132,72 @@ class IRCChannel < NSObject
       m.o = member.o
       m.h = member.h
       m.v = member.v
+      @members.delete_at(i)
+      sorted_insert(m)
     else
-      @members << member
+      sorted_insert(member)
     end
-    if autoreload
-      sort_members
-      reload_members
-    end
+    
+    reload_members if autoreload
   end
   
   def remove_member(nick, autoreload=true)
     t = nick.downcase
     @members.delete_if {|m| m.nick.downcase == t }
-    reload_members if autoreload
     @op_queue.delete_if {|i| i.downcase == t }
+    
+    reload_members if autoreload
   end
   
   def rename_member(nick, tonick)
-    m = find_member(nick)
-    return unless m
+    i = find_member_index(nick)
+    return unless i
+    
     remove_member(tonick, false)
+    
+    m = @members[i]
+    m.nick = tonick
+    @members.delete_at(i)
+    sorted_insert(m)
 
+    # update op queue
+    #
     t = nick.downcase
     index = @op_queue.index {|i| i.downcase == t }
     if index
       @op_queue.delete_at(index)
       @op_queue << tonick
     end
-
-    remove_member(nick, false)
-    m.nick = tonick
-    add_member(m)
+    
+    reload_members
   end
   
   def update_or_add_member(nick, username, address, q, a, o, h, v)
-    m = find_member(nick)
-    unless m
-      add_member(User.new(nick, username, address, q, a, o, h, v))
+    i = find_member_index(nick)
+    unless i
+      sorted_insert(User.new(nick, username, address, q, a, o, h, v))
       return
     end
+    
+    m = @members[i]
     m.username = username
     m.address = address
-    
     m.q = q
     m.a = a
     m.o = o
     m.h = h
     m.v = v
+    
+    @members.delete_at(i)
+    sorted_insert(m)
   end
   
   def change_member_op(nick, type, value)
-    m = find_member(nick)
-    return unless m
+    i = find_member_index(nick)
+    return unless i
+    
+    m = @members[i]
+    
     case type
     when :q; m.q = value
     when :a; m.a = value
@@ -188,18 +205,28 @@ class IRCChannel < NSObject
     when :h; m.h = value
     when :v; m.v = value
     end
-    sort_members
-    reload_members
     
+    @members.delete_at(i)
+    sorted_insert(m)
+    
+    # update op queue
+    #
     if type == :o && value
       t = nick.downcase
       @op_queue.delete_if {|i| i.downcase == t }
     end
+    
+    reload_members
   end
   
   def clear_members
     @members.clear
     reload_members
+  end
+  
+  def find_member_index(nick)
+    t = nick.downcase
+    @members.index {|m| m.nick.downcase == t }
   end
   
   def find_member(nick)
@@ -217,25 +244,54 @@ class IRCChannel < NSObject
     end
   end
   
-  def sort_members
-    @members.sort! do |a,b|
-      if unit.mynick == a.nick
-        -1
-      elsif unit.mynick == b.nick
-        1
-      elsif a.q != b.q
-        a.q ? -1 : 1
-      elsif a.a != b.a
-        a.a ? -1 : 1
-      elsif a.o != b.o
-        a.o ? -1 : 1
-      elsif a.h != b.h
-        a.h ? -1 : 1
-      elsif a.v != b.v
-        a.v ? -1 : 1
+  def sorted_insert(item)
+    # do a binary search
+    # once the range hits a length of 5 (arbitrary)
+    # switch to linear search
+    head = 0
+    tail = @members.size
+    while tail - head > 5
+      pivot = (head + tail) / 2
+      if compare_members(@members[pivot], item) > 0
+        tail = pivot
       else
-        a.nick.casecmp(b.nick)
+        head = pivot
       end
+    end
+    head.upto(tail-1) do |idx|
+      if compare_members(@members[idx], item) > 0
+        @members.insert idx, item
+        return
+      end
+    end
+    @members.insert tail, item
+  end
+  
+  def compare_members(a, b)
+    if unit.mynick == a.nick
+      -1
+    elsif unit.mynick == b.nick
+      1
+    elsif a.q != b.q
+      a.q ? -1 : 1
+    elsif a.q && b.q
+      a.nick.casecmp(b.nick)
+    elsif a.a != b.a
+      a.a ? -1 : 1
+    elsif a.a && b.a
+      a.nick.casecmp(b.nick)
+    elsif a.o != b.o
+      a.o ? -1 : 1
+    elsif a.o && b.o
+      a.nick.casecmp(b.nick)
+    elsif a.h != b.h
+      a.h ? -1 : 1
+    elsif a.h && b.h
+      a.nick.casecmp(b.nick)
+    elsif a.v != b.v
+      a.v ? -1 : 1
+    else
+      a.nick.casecmp(b.nick)
     end
   end
   
