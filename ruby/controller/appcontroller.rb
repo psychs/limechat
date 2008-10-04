@@ -558,9 +558,9 @@ class AppController < NSObject
       @info_split.setPosition(win[:info])
       @tree_split.setPosition(win[:tree] || 120)
       
-      ignore_spell_checking = win[:ignore_spell_checking]
-      if ignore_spell_checking
-        @field_editor.setContinuousSpellCheckingEnabled(false)
+      spell_checking = win[:spell_checking]
+      if spell_checking != nil
+        @field_editor.setContinuousSpellCheckingEnabled(spell_checking)
       end
     else
       scr = NSScreen.screens[0]
@@ -591,7 +591,7 @@ class AppController < NSObject
       :log => @log_split.position,
       :info => @info_split.position,
       :tree => @tree_split.position,
-      :ignore_spell_checking => !@field_editor.isContinuousSpellCheckingEnabled,
+      :spell_checking => @field_editor.isContinuousSpellCheckingEnabled,
     }
     win.merge!(split)
     @pref.save_window('main_window', win)
