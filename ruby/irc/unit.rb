@@ -2097,7 +2097,6 @@ class IRCUnit < NSObject
         update_channel_title(c)
       end
     when 352	# RPL_WHOREPLY
-=begin
       chname = m[1]
       username = m[2]
       address = m[3]
@@ -2114,7 +2113,6 @@ class IRCUnit < NSObject
       else
         print_unknown_reply(m)
       end
-=end
     when 315	# RPL_ENDOFWHO
       chname = m[1]
       c = find_channel(chname)
