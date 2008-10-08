@@ -387,6 +387,21 @@ class IRCUnit < NSObject
     
     # parse pseudo commands and alias
     case cmd
+    when :ruby
+      c = @world.selchannel || self
+      if s.empty?
+        print_both(c, :error_reply, "Input ruby expressions to execute")
+      else
+        begin
+          result = eval(s).inspect
+        rescue SyntaxError => e
+          
+        rescue Exception => e
+          send_text(c, :privmsg, ">> #{s}")
+          send_text(c, :privmsg, "=> #{result}")
+        end
+      end
+      return true
 		when :clear
 			u, c = @world.sel
 			if c

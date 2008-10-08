@@ -1,3 +1,7 @@
+2008-10-08  Satoshi Nakagawa <psychs@limechat.net>
+
+	Changed an option name from "Dislike words" to "Exclude words".
+
 2008-10-05  Satoshi Nakagawa <psychs@limechat.net>
 
 	Perform sorted insert when updating users in a channel.
