@@ -385,6 +385,8 @@ class IRCUnit < NSObject
       sel = nil
     end
     
+    opmsg = false
+    
     # parse pseudo commands and alias
     case cmd
     when :ruby
@@ -457,6 +459,12 @@ class IRCUnit < NSObject
         join_channel(c, pass, true)
       end
       return true
+    when :omsg
+      opmsg = true
+      cmd = :privmsg
+    when :onotice
+      opmsg = true
+      cmd = :notice
     when :msg
       cmd = :privmsg
     when :leave
@@ -568,13 +576,18 @@ class IRCUnit < NSObject
         t = truncate_text(s, cmd, target)
         break if t.empty?
         
-        target.split(/,/).each do |chname|
-          next if t.empty?
+        targets = target.split(/,/)
+        
+        targets.each do |chname|
+          next if chname.empty?
           
           # support for @#channel
           #
           if chname =~ /^@/
-            chname = $~.post_match
+            chname.replace($~.post_match)
+            op_prefix = true
+          else
+            op_prefix = false
           end
           
           c = find_channel(chname)
@@ -582,13 +595,22 @@ class IRCUnit < NSObject
             c = @world.create_talk(self, chname)
           end
           print_both(c || chname, cmd, @mynick, t)
+          
+          # support for @#channel and omsg/onotice
+          #
+          if chname.channelname?
+            if opmsg || op_prefix
+              chname.replace("@#{chname}")
+            end
+          end
         end
         
         if cmd == :action
           cmd = :privmsg
           t = "\x01ACTION #{t}\x01"
         end
-        send(cmd, target, t)
+        
+        send(cmd, targets.join(','), t)
       end
     
     when :ctcp

@@ -1,3 +1,9 @@
+==== LimeChat 0.20.2 ====
+
+2008-10-10  Satoshi Nakagawa <psychs@limechat.net>
+
+	Added support for /omsg and /onotice.
+
 ==== LimeChat 0.20.1 ====
 
 2008-10-10  Satoshi Nakagawa <psychs@limechat.net>
