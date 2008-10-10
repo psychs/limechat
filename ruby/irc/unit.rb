@@ -570,6 +570,13 @@ class IRCUnit < NSObject
         
         target.split(/,/).each do |chname|
           next if t.empty?
+          
+          # support for @#channel
+          #
+          if chname =~ /^@/
+            chname = $~.post_match
+          end
+          
           c = find_channel(chname)
           if !c && !chname.channelname? && !eq(chname, 'NickServ') && !eq(chname, 'ChanServ')
             c = @world.create_talk(self, chname)
@@ -928,7 +935,7 @@ class IRCUnit < NSObject
     end
     m.apply! {|i| to_local_encoding(i, use_fallback) }
     m.apply! {|i| StringValidator::validate_utf8(i) }
-    #puts m.to_s
+    puts m.to_s
     
     if m.numeric_reply > 0
       receive_numeric_reply(m)
@@ -1430,6 +1437,12 @@ class IRCUnit < NSObject
   def receive_text(m, command, text, identified)
     nick = m.sender_nick
     target = m[0]
+    
+    # support for @#channel
+    #
+    if target =~ /^@/
+      target = $~.post_match
+    end
     
     if target.channelname?
       # channel
