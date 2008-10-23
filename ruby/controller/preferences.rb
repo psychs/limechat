@@ -105,7 +105,7 @@ class Preferences
   
   class Theme
     include PersistenceHelper
-    persistent_attr :name, :override_log_font, :log_font_name, :log_font_size, :override_nick_format, :nick_format
+    persistent_attr :name, :override_log_font, :log_font_name, :log_font_size, :override_nick_format, :nick_format, :override_timestamp_format, :timestamp_format
     
     def initialize
       @name = 'resource:Default'
@@ -114,6 +114,8 @@ class Preferences
       @log_font_size = 12
       @override_nick_format = false
       @nick_format = '%n: '
+      @override_timestamp_format = false
+      @timestamp_format = '%H:%M'
     end
   end
   

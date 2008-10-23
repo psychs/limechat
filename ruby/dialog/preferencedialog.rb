@@ -31,6 +31,7 @@ class PreferenceDialog < NSObject
   ib_mapped_outlet :theme_override_log_font
   ib_outlet :log_font_text, :select_log_font_button
   ib_mapped_outlet :theme_override_nick_format, :theme_nick_format
+  ib_mapped_outlet :theme_override_timestamp_format, :theme_timestamp_format
   
   def initialize
     @prefix = 'preferenceDialog'
@@ -49,6 +50,7 @@ class PreferenceDialog < NSObject
     onUseGrowlClicked(nil)
     showFontDescription
     ['%n: ', '(%n) ', '<%n> ', '<%9n> ', '<%-9n> ', '<%@%n> '].each {|i| @theme_nick_format.addItemWithObjectValue(i) }
+    ['%H:%M', '%H:%M:%S'].each {|i| @theme_timestamp_format.addItemWithObjectValue(i) }
     show
   end
   
@@ -155,6 +157,10 @@ class PreferenceDialog < NSObject
   
   def onOverrideNickFormatClicked(sender)
     @theme_nick_format.setEnabled(@theme_override_nick_format.state.to_i != 0)
+  end
+  
+  def onOverrideTimestampFormatClicked(sender)
+    @theme_timestamp_format.setEnabled(@theme_override_timestamp_format.state.to_i != 0)
   end
   
   def onUseGrowlClicked(sender)

@@ -6,6 +6,12 @@
 	<array>
 		<dict>
 			<key>CLASS</key>
+			<string>NSObject</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
 			<string>KeyRecorderBox</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
@@ -21,14 +27,12 @@
 			<string>NSObject</string>
 		</dict>
 		<dict>
-			<key>CLASS</key>
-			<string>NSObject</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-		</dict>
-		<dict>
 			<key>ACTIONS</key>
 			<dict>
+				<key>changeFont</key>
+				<string>id</string>
+				<key>numberOfRowsInTableView</key>
+				<string>id</string>
 				<key>onCancel</key>
 				<string>id</string>
 				<key>onDccAddressDetectionMethodChanged</key>
@@ -45,11 +49,15 @@
 				<string>id</string>
 				<key>onOverrideNickFormatClicked</key>
 				<string>id</string>
+				<key>onOverrideTimestampFormatClicked</key>
+				<string>id</string>
 				<key>onSelectFont</key>
 				<string>id</string>
 				<key>onTranscriptFolderChanged</key>
 				<string>id</string>
 				<key>onUseGrowlClicked</key>
+				<string>id</string>
+				<key>windowWillClose</key>
 				<string>id</string>
 			</dict>
 			<key>CLASS</key>
@@ -69,6 +77,8 @@
 				<key>dcc_myaddress</key>
 				<string>id</string>
 				<key>dcc_myaddress_caption</key>
+				<string>id</string>
+				<key>delegate</key>
 				<string>id</string>
 				<key>gen_confirm_quit</key>
 				<string>id</string>
@@ -119,6 +129,10 @@
 				<key>theme_override_log_font</key>
 				<string>id</string>
 				<key>theme_override_nick_format</key>
+				<string>id</string>
+				<key>theme_override_timestamp_format</key>
+				<string>id</string>
+				<key>theme_timestamp_format</key>
 				<string>id</string>
 				<key>transcript_folder</key>
 				<string>id</string>

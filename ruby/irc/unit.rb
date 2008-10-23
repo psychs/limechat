@@ -1045,7 +1045,9 @@ class IRCUnit < NSObject
   end
   
   def now
-    Time.now.strftime('%H:%M')
+    #Time.now.strftime('%H:%M')
+    format = @pref.theme.override_timestamp_format ? @pref.theme.timestamp_format : '%H:%M'
+    Time.now.strftime(format)
   end
   
   def format_nick(channel, nick)
