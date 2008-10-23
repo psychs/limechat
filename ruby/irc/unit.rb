@@ -1321,6 +1321,9 @@ class IRCUnit < NSObject
     notify_event(:login)
     SoundPlayer.play(@pref.sound.login)
     
+    send(:privmsg, 'NickServ', 'IDENTIFY ' + @config.nickPassword) if @config.nickPassword && !@config.nickPassword.empty?
+    
+    
     @config.login_commands.each do |s|
       s = s.dup
       s = $~.post_match if /^\// =~ s

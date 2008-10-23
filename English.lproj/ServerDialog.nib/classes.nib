@@ -6,14 +6,6 @@
 	<array>
 		<dict>
 			<key>CLASS</key>
-			<string>FirstResponder</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>NSObject</string>
-		</dict>
-		<dict>
-			<key>CLASS</key>
 			<string>NSObject</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
@@ -21,6 +13,10 @@
 		<dict>
 			<key>ACTIONS</key>
 			<dict>
+				<key>channelDialog_onCancel</key>
+				<string>id</string>
+				<key>numberOfRowsInTableView</key>
+				<string>id</string>
 				<key>onAdd</key>
 				<string>id</string>
 				<key>onCancel</key>
@@ -39,6 +35,10 @@
 				<string>id</string>
 				<key>onUp</key>
 				<string>id</string>
+				<key>tableView_doubleClicked</key>
+				<string>id</string>
+				<key>windowWillClose</key>
+				<string>id</string>
 			</dict>
 			<key>CLASS</key>
 			<string>ServerDialog</string>
@@ -53,6 +53,8 @@
 				<key>auto_connectCheck</key>
 				<string>id</string>
 				<key>channelsTable</key>
+				<string>id</string>
+				<key>delegate</key>
 				<string>id</string>
 				<key>deleteButton</key>
 				<string>id</string>
@@ -74,13 +76,19 @@
 				<string>id</string>
 				<key>nameText</key>
 				<string>id</string>
+				<key>nickPasswordText</key>
+				<string>id</string>
 				<key>nickText</key>
 				<string>id</string>
 				<key>okButton</key>
 				<string>id</string>
+				<key>parent</key>
+				<string>id</string>
 				<key>passwordText</key>
 				<string>id</string>
 				<key>portText</key>
+				<string>id</string>
+				<key>prefix</key>
 				<string>id</string>
 				<key>realnameText</key>
 				<string>id</string>
@@ -103,8 +111,23 @@
 			<string>ListView</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
+			<key>OUTLETS</key>
+			<dict>
+				<key>key_delegate</key>
+				<string>id</string>
+				<key>text_delegate</key>
+				<string>id</string>
+			</dict>
 			<key>SUPERCLASS</key>
 			<string>NSTableView</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>FirstResponder</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSObject</string>
 		</dict>
 	</array>
 	<key>IBVersion</key>

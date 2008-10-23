@@ -56,7 +56,7 @@ end
 
 class IRCUnitConfig
   include AutoOpMatchable
-  attr_accessor :name, :host, :port, :password, :nick, :alt_nicks, :username, :realname
+  attr_accessor :name, :host, :port, :password, :nick, :alt_nicks, :username, :realname, :nickPassword
   attr_accessor :ssl, :auto_connect, :encoding, :fallback_encoding
   attr_accessor :channels
   attr_accessor :leaving_comment, :userinfo, :invisible, :login_commands
@@ -64,7 +64,7 @@ class IRCUnitConfig
   attr_accessor :owner, :id
   
   def initialize(seed={})
-    @name = @host = @password = @nick = @username = @realname = ''
+    @name = @host = @password = @nick = @username = @realname = @nickPassword = ''
     @alt_nicks = []
     @port = 6667
     @ssl = false
