@@ -1,3 +1,8 @@
+2008-10-27  August Joki
+
+	Added ability to change the time stamp.
+	Added NickServ identification on join.
+
 ==== LimeChat 0.20.2 ====
 
 2008-10-10  Satoshi Nakagawa <psychs@limechat.net>

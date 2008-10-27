@@ -1045,7 +1045,6 @@ class IRCUnit < NSObject
   end
   
   def now
-    #Time.now.strftime('%H:%M')
     format = @pref.theme.override_timestamp_format ? @pref.theme.timestamp_format : '%H:%M'
     Time.now.strftime(format)
   end
@@ -1322,7 +1321,6 @@ class IRCUnit < NSObject
     SoundPlayer.play(@pref.sound.login)
     
     send(:privmsg, 'NickServ', 'IDENTIFY ' + @config.nickPassword) if @config.nickPassword && !@config.nickPassword.empty?
-    
     
     @config.login_commands.each do |s|
       s = s.dup
