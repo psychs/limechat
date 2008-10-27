@@ -17,7 +17,7 @@ class AppController < NSObject
     #FileUtils.mkpath(@pref.gen.transcript_folder.expand_path) rescue nil
     
     if @pref.gen.use_hotkey
-      NSApp.register_hot_key(@pref.gen.hotkey_key_code, @pref.gen.hotkey_modifier_flags)
+      NSApp.registerHotKey_modifierFlags(@pref.gen.hotkey_key_code, @pref.gen.hotkey_modifier_flags)
     end
 
     @field_editor = FieldEditorTextView.alloc.initWithFrame(NSZeroRect)
@@ -143,7 +143,7 @@ class AppController < NSObject
   end
 
   def applicationWillTerminate(notification)
-    NSApp.unregister_hot_key
+    NSApp.unregisterHotKey
     stop_timer
     @menu.terminate
     @world.terminate
@@ -311,9 +311,9 @@ class AppController < NSObject
 
   def preferences_changed
     if @pref.gen.use_hotkey
-      NSApp.register_hot_key(@pref.gen.hotkey_key_code, @pref.gen.hotkey_modifier_flags)
+      NSApp.registerHotKey_modifierFlags(@pref.gen.hotkey_key_code, @pref.gen.hotkey_modifier_flags)
     else
-      NSApp.unregister_hot_key
+      NSApp.unregisterHotKey
     end
     
     select_3column_layout(@pref.gen.main_window_layout == 1)
