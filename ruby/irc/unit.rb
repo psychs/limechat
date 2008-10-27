@@ -981,8 +981,10 @@ class IRCUnit < NSObject
   end
   
   def ircsocket_on_send(m)
-    m.apply! {|i| to_local_encoding(i) }
-    print_debug(:debug_send, m.to_s)
+    if m.command != :pong
+      m.apply! {|i| to_local_encoding(i) }
+      print_debug(:debug_send, m.to_s)
+    end
   end
   
   def ircsocket_on_error(err)

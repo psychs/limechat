@@ -1,3 +1,7 @@
+2008-10-27  Satoshi Nakagawa <psychs@limechat.net>
+
+	Muted pong commands.
+
 2008-10-27  August Joki
 
 	Added ability to change the time stamp.
