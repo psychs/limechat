@@ -9,12 +9,17 @@ TMP_PATH = Pathname.new("/tmp/#{APP_SHORT_NAME}_build_image")
 BUILD_APP_PATH = ROOT_PATH + 'build/Release' + APP_NAME
 DOC_PATH = ROOT_PATH + 'doc'
 
-desc "Same as :build"
-task :default => :build
+desc "Same as :run"
+task :default => :run
 
 desc "Build a release version"
 task :build do |t|
   sh "xcodebuild -target LimeChat -configuration Release build"
+end
+
+desc "Build & run a release version"
+task :run => :build do
+  sh "./build/Release/LimeChat.app/Contents/MacOS/LimeChat"
 end
 
 desc "Install to /"
