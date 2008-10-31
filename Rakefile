@@ -9,21 +9,30 @@ TMP_PATH = Pathname.new("/tmp/#{APP_SHORT_NAME}_build_image")
 BUILD_APP_PATH = ROOT_PATH + 'build/Release' + APP_NAME
 DOC_PATH = ROOT_PATH + 'doc'
 
-
+desc "Same as :build"
 task :default => :build
 
+desc "Build a release version"
 task :build do |t|
   sh "xcodebuild -target LimeChat -configuration Release build"
 end
 
+desc "Install to /"
 task :install do |t|
   sh "xcodebuild -target LimeChat -configuration Release install DSTROOT=/"
 end
 
+desc "Clean all build files"
 task :clean do |t|
   sh "rm -rf build"
 end
 
+require 'rake/testtask'
+Rake::TestTask.new do |t|
+  t.test_files = FileList['test/**/*_test.rb']
+end
+
+desc "Create a release package"
 task :package => [:package_app, :package_source] do |t|
 end
 
