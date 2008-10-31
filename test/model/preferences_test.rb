@@ -1,5 +1,5 @@
 require File.expand_path('../../test_helper', __FILE__)
-require 'controller/preferences'
+require 'model/preferences'
 
 class TestDefaults < Preferences::General
   defaults_accessor :an_option, true
