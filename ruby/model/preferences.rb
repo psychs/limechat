@@ -86,23 +86,27 @@ class Preferences
   
   include UserDefaultsAccess
   
+  def save
+    sync
+  end
+  
   def load_world
     read_defaults('world')
   end
   
-  # def save_world(c)
-  #   write_defaults('world', c)
-  #   sync
-  # end
+  def save_world(c)
+    write_defaults('world', c)
+    sync
+  end
   
   def load_window(key)
     read_defaults(key)
   end
   
-  # def save_window(key, value)
-  #   write_defaults(key, value)
-  #   sync
-  # end
+  def save_window(key, value)
+    write_defaults(key, value)
+    sync
+  end
   
   private
   
