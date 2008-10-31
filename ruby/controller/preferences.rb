@@ -8,12 +8,58 @@ require 'utility'
 class Preferences
   include UserDefaultsAccess
   
+  class AbstractPreferencesSection
+    class << self
+      def section_defaults_key
+        @section_defaults_key ||= name.sub(/Preferences::/, '').to_sym
+      end
+      
+      def section_default_values
+        Preferences.default_values[section_defaults_key] ||= {}
+      end
+      
+      def defaults_accessor(name, default_value)
+        section_default_values[name] = default_value
+        
+        class_eval do
+          define_method(name) do
+            section_user_defaults[name].to_ruby
+          end
+          
+          define_method("#{name}=") do |value|
+            defaults = section_user_defaults.to_ruby
+            defaults[name] = value
+            self.section_user_defaults = defaults
+            value
+          end
+        end
+      end
+    end
+    
+    def section_user_defaults
+      NSUserDefaults.standardUserDefaults[:pref][self.class.section_defaults_key]
+    end
+    
+    def section_user_defaults=(section_user_defaults)
+      defaults = NSUserDefaults.standardUserDefaults[:pref].to_ruby.merge(self.class.section_defaults_key => section_user_defaults)
+      NSUserDefaults.standardUserDefaults.setObject_forKey(defaults, :pref)
+    end
+  end
+  
   class << self
     attr_reader :models
     def model_attr(*args)
       @models ||= []
       @models += args
       attr_reader(*args)
+    end
+    
+    def default_values
+      @default_values ||= {}
+    end
+    
+    def register_default_values!
+      NSUserDefaults.standardUserDefaults.registerDefaults(:pref => default_values)
     end
   end
   
@@ -50,76 +96,39 @@ class Preferences
     end
   end
   
-  class General
-    class << self
-      def default_values
-        @default_values ||= { :gen => {} }
-      end
-      
-      def defaults_accessor(name, default_value)
-        name = name
-        default_values[:gen][name] = default_value
-        
-        class_eval do
-          define_method(name) do
-            NSUserDefaults.standardUserDefaults[:pref][:gen][name.to_s]
-          end
-          
-          define_method("#{name}=") do |value|
-            preferences = NSUserDefaults.standardUserDefaults[:pref].to_ruby
-            preferences[:gen][name] = value
-            NSUserDefaults.standardUserDefaults.setObject_forKey(preferences, :pref)
-            value
-          end
-        end
-      end
-      
-      def register_default_values!
-        NSUserDefaults.standardUserDefaults.registerDefaults(:pref => default_values)
-      end
-    end
-    
-    defaults_accessor :confirm_quit, true
-    register_default_values!
-    
-    include PersistenceHelper
-    #persistent_attr :confirm_quit
-    persistent_attr :tab_action
-    persistent_attr :use_hotkey, :hotkey_key_code, :hotkey_modifier_flags
-    persistent_attr :main_window_layout
-    persistent_attr :connect_on_doubleclick, :disconnect_on_doubleclick, :join_on_doubleclick, :leave_on_doubleclick
-    persistent_attr :use_growl, :stop_growl_on_active
-    persistent_attr :log_transcript, :transcript_folder, :max_log_lines
-    persistent_attr :paste_syntax
-    
+  class General < AbstractPreferencesSection
     TAB_COMPLETE_NICK = 0
     TAB_UNREAD = 1
     TAB_NONE = 100
     
     LAYOUT_2_COLUMNS = 0
     LAYOUT_3_COLUMNS = 1
-
-    def initialize
-      @confirm_quit = true
-      @tab_action = TAB_COMPLETE_NICK
-      @use_hotkey = false
-      @hotkey_key_code = 0
-      @hotkey_modifier_flags = 0
-      @main_window_layout = LAYOUT_2_COLUMNS
-      @connect_on_doubleclick = false
-      @disconnect_on_doubleclick = false
-      @join_on_doubleclick = true
-      @leave_on_doubleclick = false
-      @use_growl = true
-      @stop_growl_on_active = true
-      @log_transcript = false
-      @transcript_folder = '~/Documents/LimeChat Transcripts'
-      @max_log_lines = 300
-      if LanguageSupport.primary_language == 'ja'
-        @paste_syntax = 'notice'
-      else
-        @paste_syntax = 'privmsg'
-      end
+    
+    defaults_accessor :confirm_quit, true
+    defaults_accessor :tab_action, TAB_COMPLETE_NICK
+    
+    defaults_accessor :use_hotkey, false
+    defaults_accessor :hotkey_key_code, 0
+    defaults_accessor :hotkey_modifier_flags, 0
+    
+    defaults_accessor :main_window_layout, LAYOUT_2_COLUMNS
+    
+    defaults_accessor :connect_on_doubleclick, false
+    defaults_accessor :disconnect_on_doubleclick, false
+    defaults_accessor :join_on_doubleclick, true
+    defaults_accessor :leave_on_doubleclick, false
+    
+    defaults_accessor :use_growl, true
+    defaults_accessor :stop_growl_on_active, true
+    
+    defaults_accessor :log_transcript, false
+    defaults_accessor :transcript_folder, '~/Documents/LimeChat Transcripts'
+    defaults_accessor :max_log_lines, 300
+    
+    defaults_accessor :paste_syntax, (LanguageSupport.primary_language == 'ja' ? 'notice' : 'privmsg')
+    
+    #include PersistenceHelper
+    def set_persistent_attrs(*args)
     end
   end
   
@@ -215,4 +224,7 @@ class Preferences
   def sync
     NSUserDefaults.standardUserDefaults.synchronize
   end
+  
+  # And register the defaults
+  register_default_values!
 end
