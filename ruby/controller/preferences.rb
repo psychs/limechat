@@ -52,27 +52,35 @@ class Preferences
   
   class General
     class << self
-      def defaults_accessor(name)
+      def default_values
+        @default_values ||= { :gen => {} }
+      end
+      
+      def defaults_accessor(name, default_value)
         name = name
+        default_values[:gen][name] = default_value
+        
         class_eval do
           define_method(name) do
-            user_defaults['pref']['gen'][name.to_s]
+            NSUserDefaults.standardUserDefaults[:pref][:gen][name.to_s]
           end
           
           define_method("#{name}=") do |value|
-            preferences = user_defaults['pref'].to_ruby
+            preferences = NSUserDefaults.standardUserDefaults[:pref].to_ruby
             preferences[:gen][name] = value
-            user_defaults.setObject_forKey(preferences, 'pref')
+            NSUserDefaults.standardUserDefaults.setObject_forKey(preferences, :pref)
             value
           end
         end
       end
-    end
-    def user_defaults
-      NSUserDefaults.standardUserDefaults
+      
+      def register_default_values!
+        NSUserDefaults.standardUserDefaults.registerDefaults(:pref => default_values)
+      end
     end
     
-    defaults_accessor :confirm_quit
+    defaults_accessor :confirm_quit, true
+    register_default_values!
     
     include PersistenceHelper
     #persistent_attr :confirm_quit

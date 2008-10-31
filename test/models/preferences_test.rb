@@ -3,14 +3,6 @@ require 'controller/preferences'
 
 describe "Preferences" do
   before do
-    NSUserDefaults.standardUserDefaults.registerDefaults({
-      "pref" => {
-        "gen" => {
-          "confirm_quit" => false
-        }
-      }
-    })
-    
     @preferences = Preferences.new
   end
   
@@ -18,12 +10,12 @@ describe "Preferences" do
     @preferences.general.should.be.instance_of Preferences::General
   end
   
-  it "should return the correct General#confirm_quit value" do
-    @preferences.general.confirm_quit.to_ruby.should == false
+  it "should have registered the default value for General#confirm_quit" do
+    @preferences.general.confirm_quit.to_ruby.should == true
   end
   
   it "should be possible to set a new value for General#confirm_quit" do
-    @preferences.general.confirm_quit = true
-    @preferences.general.confirm_quit.to_ruby.should == true
+    @preferences.general.confirm_quit = false
+    @preferences.general.confirm_quit.to_ruby.should == false
   end
 end
