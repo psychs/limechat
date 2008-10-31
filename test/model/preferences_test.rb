@@ -34,6 +34,7 @@ describe "Preferences::General" do
   end
   
   it "should have set the correct default values" do
+    Preferences::General.section_default_values.should.not.be.empty
     Preferences::General.section_default_values.each do |attr, value|
       @preferences.general.send(attr).should == value
     end
