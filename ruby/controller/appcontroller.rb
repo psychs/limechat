@@ -3,6 +3,7 @@
 
 require 'fileutils'
 require 'pathname'
+require 'preferences'
 
 class AppController < NSObject
   ib_outlet :window, :tree, :log_base, :console_base, :member_list, :text, :chat_box
@@ -13,11 +14,11 @@ class AppController < NSObject
   def awakeFromNib
     prelude
 
-    @pref = Preferences.new
+    #@pref = Preferences.new
     #FileUtils.mkpath(@pref.gen.transcript_folder.expand_path) rescue nil
     
-    if @pref.gen.use_hotkey
-      NSApp.registerHotKey_modifierFlags(@pref.gen.hotkey_key_code, @pref.gen.hotkey_modifier_flags)
+    if preferences.general.use_hotkey
+      NSApp.registerHotKey_modifierFlags(preferences.general.hotkey_key_code, preferences.general.hotkey_modifier_flags)
     end
 
     @field_editor = FieldEditorTextView.alloc.initWithFrame(NSZeroRect)
@@ -32,7 +33,7 @@ class AppController < NSObject
     @info_split.setFixedViewIndex(1)
     @tree_split.setHidden(true)
 
-    @view_theme = ViewTheme.new(@pref.theme.name)
+    @view_theme = ViewTheme.new(preferences.theme.name)
     @tree.theme = @view_theme.other
     @member_list.theme = @view_theme.other
     cell = MemberListViewCell.alloc.init
@@ -40,7 +41,7 @@ class AppController < NSObject
     @member_list.tableColumns[0].setDataCell(cell)
 
     load_window_state
-    select_3column_layout(@pref.gen.main_window_layout == 1)
+    select_3column_layout(preferences.general.main_window_layout == 1)
 
     @world = IRCWorld.alloc.init
     @world.app = self
@@ -64,7 +65,7 @@ class AppController < NSObject
     @world.member_menu = @member_menu
     @world.menu_controller = @menu
     @world.view_theme = @view_theme
-    @world.setup(IRCWorldConfig.new(@pref.load_world))
+    @world.setup(IRCWorldConfig.new(preferences.load_world))
     @tree.setDataSource(@world)
     @tree.setDelegate(@world)
     @tree.responder_delegate = @world
@@ -548,8 +549,7 @@ class AppController < NSObject
   end
 
   def load_window_state
-    win = @pref.load_window('main_window')
-    if win
+    if win = preferences.load_window('main_window')
       f = NSRect.from_dic(win)
       
       @window.setFrame_display(f, true)

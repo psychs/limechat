@@ -12,7 +12,6 @@ module AutoOpMatchable
   end
 end
 
-
 class IRCWorldConfig
   include AutoOpMatchable
   attr_accessor :units

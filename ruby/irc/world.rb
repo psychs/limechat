@@ -417,7 +417,7 @@ class IRCWorld < NSObject
   end
 
   def register_growl
-    @growl.register if @pref.gen.use_growl
+    @growl.register if preferences.general.use_growl
   end
 
   def notify_on_growl(kind, title, desc, context=nil)
@@ -883,11 +883,11 @@ class IRCWorld < NSObject
     log.world = self
     log.unit = unit
     log.channel = channel
-    log.keyword = @pref.key
-    log.max_lines = @pref.gen.max_log_lines
+    log.keyword = preferences.keyword
+    log.max_lines = preferences.general.max_log_lines
     log.theme = @view_theme
-    if @pref.theme.override_log_font
-      log.override_font = [@pref.theme.log_font_name, @pref.theme.log_font_size]
+    if preferences.theme.override_log_font
+      log.override_font = [preferences.theme.log_font_name, preferences.theme.log_font_size]
     else
       log.override_font = nil
     end

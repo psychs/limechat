@@ -3,7 +3,8 @@
 
 require 'utility'
 require 'singleton'
-require 'model/abstract_preferences_section'
+require 'userdefaultsaccess'
+require 'abstract_preferences_section'
 
 class Preferences
   include Singleton
@@ -83,19 +84,21 @@ class Preferences
     class_eval "def #{section}; #{section.capitalize}.instance; end"
   end
   
-  # def load_world
-  #   read_defaults('world')
-  # end
-  # 
+  include UserDefaultsAccess
+  
+  def load_world
+    read_defaults('world')
+  end
+  
   # def save_world(c)
   #   write_defaults('world', c)
   #   sync
   # end
-  # 
-  # def load_window(key)
-  #   read_defaults(key)
-  # end
-  # 
+  
+  def load_window(key)
+    read_defaults(key)
+  end
+  
   # def save_window(key, value)
   #   write_defaults(key, value)
   #   sync
