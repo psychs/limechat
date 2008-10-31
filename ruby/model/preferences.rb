@@ -1,99 +1,34 @@
 # Created by Satoshi Nakagawa.
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
-require 'userdefaultsaccess'
-require 'persistencehelper'
 require 'utility'
+require 'singleton'
+require 'model/abstract_preferences_section'
 
 class Preferences
-  include UserDefaultsAccess
+  include Singleton
   
-  class AbstractPreferencesSection
-    class << self
-      def section_defaults_key
-        @section_defaults_key ||= name.sub(/Preferences::/, '').to_sym
-      end
-      
-      def section_default_values
-        Preferences.default_values[section_defaults_key] ||= {}
-      end
-      
-      def defaults_accessor(name, default_value)
-        section_default_values[name] = default_value
-        
-        class_eval do
-          define_method(name) do
-            section_user_defaults[name].to_ruby
-          end
-          
-          define_method("#{name}=") do |value|
-            defaults = section_user_defaults.to_ruby
-            defaults[name] = value
-            self.section_user_defaults = defaults
-            value
-          end
-        end
-      end
-    end
-    
-    def section_user_defaults
-      NSUserDefaults.standardUserDefaults[:pref][self.class.section_defaults_key]
-    end
-    
-    def section_user_defaults=(section_user_defaults)
-      defaults = NSUserDefaults.standardUserDefaults[:pref].to_ruby.merge(self.class.section_defaults_key => section_user_defaults)
-      NSUserDefaults.standardUserDefaults.setObject_forKey(defaults, :pref)
-    end
-  end
-  
-  class << self
-    attr_reader :models
-    def model_attr(*args)
-      @models ||= []
-      @models += args
-      attr_reader(*args)
-    end
-    
-    def default_values
-      @default_values ||= {}
-    end
-    
-    def register_default_values!
-      NSUserDefaults.standardUserDefaults.registerDefaults(:pref => default_values)
-    end
-  end
-  
-  class Keyword
-    include PersistenceHelper
-    persistent_attr :words, :dislike_words, :whole_line, :current_nick, :matching_method
+  class Keyword < AbstractPreferencesSection
+    defaults_accessor :words, []
+    defaults_accessor :dislike_words, []
+    defaults_accessor :whole_line, false
+    defaults_accessor :current_nick, true
     
     MATCH_PARTIAL = 0
     MATCH_EXACT_WORD = 1
-    
-    def initialize
-      @words = []
-      @dislike_words = []
-      @whole_line = false
-      @current_nick = true
-      @matching_method = MATCH_PARTIAL
-    end
+    defaults_accessor :matching_method, MATCH_PARTIAL
   end
   
-  class Dcc
-    include PersistenceHelper
-    persistent_attr :first_port, :last_port, :address_detection_method, :myaddress, :auto_receive
+  class Dcc < AbstractPreferencesSection
+    defaults_accessor :first_port, 1096
+    defaults_accessor :last_port, 1115
+    defaults_accessor :myaddress, ''
+    defaults_accessor :auto_receive, false
     
     ADDR_DETECT_JOIN = 0
     ADDR_DETECT_NIC = 1
     ADDR_DETECT_SPECIFY = 2
-    
-    def initialize
-      @first_port = 1096
-      @last_port = 1115
-      @address_detection_method = ADDR_DETECT_JOIN
-      @myaddress = ''
-      @auto_receive = false
-    end
+    defaults_accessor :address_detection_method, ADDR_DETECT_JOIN
   end
   
   class General < AbstractPreferencesSection
@@ -125,98 +60,52 @@ class Preferences
     defaults_accessor :max_log_lines, 300
     
     defaults_accessor :paste_syntax, (LanguageSupport.primary_language == 'ja' ? 'notice' : 'privmsg')
-    
-    #include PersistenceHelper
-    def set_persistent_attrs(*args)
-    end
   end
   
-  class Sound
-    include PersistenceHelper
-    persistent_attr :login, :disconnect, :highlight, :newtalk, :kicked, :invited, :channeltext, :talktext
-    persistent_attr :file_receive_request, :file_receive_success, :file_receive_failure, :file_send_success, :file_send_failure
-    
-    def initialize
-      @login = @disconnect = @highlight = @newtalk = @kicked = @invited = @channeltext = @talktext = ''
-      @file_receive_request = @file_receive_success = @file_receive_failure = ''
-      @file_send_success = @file_send_failure = ''
-    end
+  class Sound < AbstractPreferencesSection
+    [ :login, :disconnect, :highlight, :newtalk, :kicked, :invited, :channeltext, :talktext,
+      :file_receive_request, :file_receive_success, :file_receive_failure, :file_send_success, :file_send_failure
+    ].each { |attr| defaults_accessor attr, '' }
   end
   
-  class Theme
-    include PersistenceHelper
-    persistent_attr :name, :override_log_font, :log_font_name, :log_font_size, :override_nick_format, :nick_format, :override_timestamp_format, :timestamp_format
-    
-    def initialize
-      @name = 'resource:Default'
-      @override_log_font = false
-      @log_font_name = 'Lucida Grande'
-      @log_font_size = 12
-      @override_nick_format = false
-      @nick_format = '%n: '
-      @override_timestamp_format = false
-      @timestamp_format = '%H:%M'
-    end
+  class Theme < AbstractPreferencesSection
+    defaults_accessor :name, 'resource:Default'
+    defaults_accessor :override_log_font, false
+    defaults_accessor :log_font_name, 'Lucida Grande'
+    defaults_accessor :log_font_size, 12
+    defaults_accessor :override_nick_format, false
+    defaults_accessor :nick_format, '%n: '
+    defaults_accessor :override_timestamp_format, false
+    defaults_accessor :timestamp_format, '%H:%M'
   end
   
-  model_attr :key, :dcc, :gen, :sound, :theme
-  
-  # TODO: For now alias these, but should replace them completely
-  alias_method :general, :gen
+  attr_reader :dcc, :general, :keyword, :sound, :theme
   
   def initialize
-    @key = Keyword.new
-    @dcc = Dcc.new
-    @gen = General.new
-    @sound = Sound.new
-    @theme = Theme.new
-    
-    load
-  end
-    
-  def load
-    d = read_defaults('pref')
-    if d
-      self.class.models.each do |i|
-        m = instance_variable_get("@#{i}")
-        m.set_persistent_attrs(d[i])
-      end
-    else
-      self.class.models.each do |i|
-        m = instance_variable_get("@#{i}")
-        d = read_defaults(i.to_s)
-        m.set_persistent_attrs(d)
-      end
-    end
+    @keyword = Keyword.new
+    @general = General.new
+    @sound   = Sound.new
+    @theme   = Theme.new
+    @dcc     = Dcc.new
   end
   
-  def save
-    h = {}
-    self.class.models.each do |i|
-      m = instance_variable_get("@#{i}")
-      h[i] = m.get_persistent_attrs
-    end
-    write_defaults('pref', h)
-    sync
-  end
-  
-  def load_world
-    read_defaults('world')
-  end
-  
-  def save_world(c)
-    write_defaults('world', c)
-    sync
-  end
-  
-  def load_window(key)
-    read_defaults(key)
-  end
-  
-  def save_window(key, value)
-    write_defaults(key, value)
-    sync
-  end
+  # def load_world
+  #   read_defaults('world')
+  # end
+  # 
+  # def save_world(c)
+  #   write_defaults('world', c)
+  #   sync
+  # end
+  # 
+  # def load_window(key)
+  #   read_defaults(key)
+  # end
+  # 
+  # def save_window(key, value)
+  #   write_defaults(key, value)
+  #   sync
+  # end
   
   private
   
@@ -226,4 +115,11 @@ class Preferences
   
   # And register the defaults
   register_default_values!
+end
+
+module Kernel
+  # A shortcut method for easy access anywhere to the shared user defaults
+  def preferences
+    Preferences.instance
+  end
 end

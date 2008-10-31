@@ -1,6 +1,23 @@
 require File.expand_path('../../test_helper', __FILE__)
 require 'model/preferences'
 
+describe "Preferences" do
+  it "should be a singleton" do
+    Preferences.should.include Singleton
+    Preferences.instance.should.be.instance_of Preferences
+  end
+  
+  it "should have defined a shortcut method on Kernel" do
+    preferences.should.be Preferences.instance
+  end
+  
+  it "should have instances of all section classes" do
+    %w{ keyword dcc general sound theme }.each do |section|
+      preferences.send(section).class.name.should == "Preferences::#{section.capitalize}"
+    end
+  end
+end
+
 class TestDefaults < Preferences::General
   defaults_accessor :an_option, true
 end
@@ -24,19 +41,18 @@ describe "Preferences::AbstractPreferencesSection" do
   end
 end
 
-describe "Preferences::General" do
-  before do
-    @preferences = Preferences.new
+describe "Preferences sections" do
+  it "should include the `general' preferences" do
+    preferences.general.should.be.instance_of Preferences::General
   end
   
-  it "should return the `general' preferences" do
-    @preferences.general.should.be.instance_of Preferences::General
-  end
-  
-  it "should have set the correct default values" do
-    Preferences::General.section_default_values.should.not.be.empty
-    Preferences::General.section_default_values.each do |attr, value|
-      @preferences.general.send(attr).should == value
+  %w{ General Keyword Dcc Sound }.each do |section|
+    it "should have set the correct default values for the `#{section}' section" do
+      klass = Preferences.const_get(section)
+      klass.section_default_values.should.not.be.empty
+      klass.section_default_values.each do |attr, value|
+        preferences.send(section.downcase).send(attr).should == value
+      end
     end
   end
 end
