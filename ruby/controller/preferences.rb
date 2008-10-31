@@ -51,8 +51,31 @@ class Preferences
   end
   
   class General
+    class << self
+      def defaults_accessor(name)
+        name = name
+        class_eval do
+          define_method(name) do
+            user_defaults['pref']['gen'][name.to_s]
+          end
+          
+          define_method("#{name}=") do |value|
+            preferences = user_defaults['pref'].to_ruby
+            preferences[:gen][name] = value
+            user_defaults.setObject_forKey(preferences, 'pref')
+            value
+          end
+        end
+      end
+    end
+    def user_defaults
+      NSUserDefaults.standardUserDefaults
+    end
+    
+    defaults_accessor :confirm_quit
+    
     include PersistenceHelper
-    persistent_attr :confirm_quit
+    #persistent_attr :confirm_quit
     persistent_attr :tab_action
     persistent_attr :use_hotkey, :hotkey_key_code, :hotkey_modifier_flags
     persistent_attr :main_window_layout
