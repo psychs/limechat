@@ -4,7 +4,7 @@
 require 'pathname'
 
 class DccSender
-  attr_accessor :delegate, :pref, :uid, :peer_nick
+  attr_accessor :delegate, :uid, :peer_nick
   attr_reader :port, :filename, :size, :processed_size, :status, :error, :icon
   attr_accessor :progress_bar
 	
@@ -39,10 +39,10 @@ class DccSender
   end
   
   def open
-    @port = @pref.dcc.first_port
+    @port = preferences.dcc.first_port
     until do_open
       @port += 1
-      if @pref.dcc.last_port < @port
+      if preferences.dcc.last_port < @port
         @status = :error
         @error = 'No available ports'
         @delegate.dccsender_on_error(self)

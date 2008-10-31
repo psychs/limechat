@@ -5,7 +5,7 @@ require 'uri'
 require 'cgi'
 
 class MenuController < NSObject
-  attr_writer :app, :pref, :world, :window, :text, :tree, :member_list
+  attr_writer :app, :world, :window, :text, :tree, :member_list
   attr_accessor :url, :addr, :nick, :chan
   ib_outlet :closeWindowItem, :closeCurrentPanelItem
 
@@ -295,14 +295,14 @@ class MenuController < NSObject
     unless @pref_dialog
       @pref_dialog = PreferenceDialog.alloc.init
       @pref_dialog.delegate = self
-      @pref_dialog.start(@pref)
+      @pref_dialog.start
     else
       @pref_dialog.show
     end
   end
 
   def preferenceDialog_onOk(sender, m)
-    @pref.save
+    preferences.save
     @app.preferences_changed
   end
 
@@ -399,7 +399,7 @@ class MenuController < NSObject
 
   def start_paste_dialog(mynick, uid, cid, s, mode=:paste)
     size = nil
-    hash = @pref.load_window('paste_sheet')
+    hash = preferences.load_window('paste_sheet')
     size = NSSize.from_dic(hash) if hash
 
     @paste_sheet = PasteSheet.alloc.init
@@ -408,13 +408,13 @@ class MenuController < NSObject
     @paste_sheet.uid = uid
     @paste_sheet.cid = cid
     @paste_sheet.nick = mynick
-    @paste_sheet.start(s, mode, @pref.gen.paste_syntax, size)
+    @paste_sheet.start(s, mode, preferences.general.paste_syntax, size)
   end
 
   def pasteSheet_onSend(sender, s, syntax, size, mode, short_text)
-    @pref.save_window('paste_sheet', size.to_dic)
-    @pref.gen.paste_syntax = syntax unless @short_text
-    @pref.save
+    preferences.save_window('paste_sheet', size.to_dic)
+    preferences.general.paste_syntax = syntax unless @short_text
+    preferences.save
     @paste_sheet = nil
 
     case syntax
@@ -432,9 +432,9 @@ class MenuController < NSObject
   end
 
   def pasteSheet_onCancel(sender, syntax, size, mode, short_text)
-    @pref.save_window('paste_sheet', size.to_dic)
-    @pref.gen.paste_syntax = syntax unless @short_text
-    @pref.save
+    preferences.save_window('paste_sheet', size.to_dic)
+    preferences.general.paste_syntax = syntax unless @short_text
+    preferences.save
     if mode == :edit
       @text.setStringValue(@paste_sheet.original_text)
       @world.select_text

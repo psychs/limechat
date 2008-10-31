@@ -5,7 +5,7 @@ require 'dialoghelper'
 
 class ListDialog < NSObject
   include DialogHelper
-  attr_accessor :delegate, :prefix, :pref
+  attr_accessor :delegate, :prefix
   ib_outlet :window, :table, :updateButton, :closeButton, :searchText
   
   def initialize
@@ -198,8 +198,7 @@ class ListDialog < NSObject
   private
 
   def load_window_state
-    c = @pref.load_window('channel_list_window')
-    if c
+    if c = preferences.load_window('channel_list_window')
       frame = NSRect.from_dic(c[:window])
       set_table_header_settings(@table, c[:tablecols])
     else
@@ -214,7 +213,7 @@ class ListDialog < NSObject
         :window => @window.frame.to_dic,
         :tablecols => get_table_header_settings(@table),
       }
-      @pref.save_window('channel_list_window', c)
+      preferences.save_window('channel_list_window', c)
     end
   end
 end

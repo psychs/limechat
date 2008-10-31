@@ -9,7 +9,6 @@ require 'fileutils'
 class PreferenceDialog < NSObject
   include DialogHelper
   attr_accessor :delegate
-  attr_reader :m
   ib_outlet :window, :dcc_myaddress_caption, :sound_table
   ib_mapped_outlet :key_words, :key_dislike_words, :key_whole_line, :key_current_nick
   ib_mapped_int_outlet :key_matching_method
@@ -37,8 +36,7 @@ class PreferenceDialog < NSObject
     @prefix = 'preferenceDialog'
   end
   
-  def start(pref)
-    @m = pref
+  def start
     NSBundle.loadNibNamed_owner('PreferenceDialog', self)
     load
     update_myaddress
@@ -101,7 +99,7 @@ class PreferenceDialog < NSObject
       @log_dialog.setResolvesAliases(true)
       @log_dialog.setAllowsMultipleSelection(false)
       @log_dialog.setCanCreateDirectories(true)
-      path = Pathname.new(@m.gen.transcript_folder.expand_path)
+      path = Pathname.new(preferences.general.transcript_folder.expand_path)
       dir = path.parent.to_s
       @log_dialog.beginForDirectory_file_types_modelessDelegate_didEndSelector_contextInfo(dir, nil, nil, self, 'transcriptFilePanelDidEnd:returnCode:contextInfo:', nil)
     end
@@ -113,12 +111,12 @@ class PreferenceDialog < NSObject
     return if code != NSOKButton
     path = panel.filenames.to_a[0].to_s
     FileUtils.mkpath(path) rescue nil
-    @m.gen.transcript_folder = path.collapse_path
+    preferences.general.transcript_folder = path.collapse_path
     update_transcript_folder
   end
   
   def update_transcript_folder
-    path = Pathname.new(@m.gen.transcript_folder).expand_path
+    path = Pathname.new(preferences.general.transcript_folder).expand_path
     title = path.basename.to_s
     i = @transcript_folder.itemAtIndex(0)
     i.setTitle(title)
@@ -220,13 +218,13 @@ class PreferenceDialog < NSObject
   
   def load
     load_mapped_outlets(m, true)
-    @sound = m.sound.dup
+    @sound = preferences.sound.dup
     load_theme
     
-    @log_font = NSFont.fontWithName_size(m.theme.log_font_name, m.theme.log_font_size)
+    @log_font = NSFont.fontWithName_size(preferences.theme.log_font_name, preferences.theme.log_font_size)
     
-    if @m.gen.use_hotkey
-      @hotkey.setKeyCode_modifierFlags(@m.gen.hotkey_key_code, @m.gen.hotkey_modifier_flags)
+    if preferences.general.use_hotkey
+      @hotkey.setKeyCode_modifierFlags(preferences.general.hotkey_key_code, preferences.general.hotkey_modifier_flags)
     else
       @hotkey.clearKey
     end
@@ -234,26 +232,26 @@ class PreferenceDialog < NSObject
   
   def save
     save_mapped_outlets(m, true)
-    m.key.words.delete_if {|i| i.empty?}
-    m.key.words = m.key.words.sort_by {|i| i.downcase}
-    m.key.words.uniq!
-    m.key.dislike_words.delete_if {|i| i.empty?}
-    m.key.dislike_words = m.key.dislike_words.sort_by {|i| i.downcase}
-    m.key.dislike_words.uniq!
-    m.dcc.last_port = m.dcc.first_port if m.dcc.last_port < m.dcc.first_port
-    m.sound.assign(@sound)
+    preferences.keyword.words.delete_if {|i| i.empty?}
+    preferences.keyword.words = preferences.keyword.words.sort_by {|i| i.downcase}
+    preferences.keyword.words.uniq!
+    preferences.keyword.dislike_words.delete_if {|i| i.empty?}
+    preferences.keyword.dislike_words = preferences.keyword.dislike_words.sort_by {|i| i.downcase}
+    preferences.keyword.dislike_words.uniq!
+    preferences.dcc.last_port = preferences.dcc.first_port if preferences.dcc.last_port < preferences.dcc.first_port
+    preferences.sound.assign(@sound)
     save_theme
-    m.gen.max_log_lines = 100 if m.gen.max_log_lines <= 100
+    preferences.general.max_log_lines = 100 if preferences.general.max_log_lines <= 100
     
-    m.theme.log_font_name = @log_font.fontName
-    m.theme.log_font_size = @log_font.pointSize
+    preferences.theme.log_font_name = @log_font.fontName
+    preferences.theme.log_font_size = @log_font.pointSize
     
     if @hotkey.valid?
-      @m.gen.use_hotkey = true
-      @m.gen.hotkey_key_code = @hotkey.keyCode
-      @m.gen.hotkey_modifier_flags = @hotkey.modifierFlags
+      preferences.general.use_hotkey = true
+      preferences.general.hotkey_key_code = @hotkey.keyCode
+      preferences.general.hotkey_modifier_flags = @hotkey.modifierFlags
     else
-      @m.gen.use_hotkey = false
+      preferences.general.use_hotkey = false
     end
   end
   
@@ -296,9 +294,9 @@ class PreferenceDialog < NSObject
     sel = @theme.selectedItem
     fname = sel.title.to_s
     if sel.tag == 0
-      @m.theme.name = ViewTheme.resource_filename(fname)
+      preferences.theme.name = ViewTheme.resource_filename(fname)
     else
-      @m.theme.name = ViewTheme.user_filename(fname)
+      preferences.theme.name = ViewTheme.user_filename(fname)
     end
   end
   

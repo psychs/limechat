@@ -6,7 +6,6 @@ require 'pathname'
 
 class IRCUnit < NSObject
   attr_accessor :world, :log, :id
-  attr_writer :pref
   attr_reader :config, :channels, :mynick, :mymode, :encoding, :myaddress, :isupport, :reconnect
   attr_accessor :property_dialog
   attr_accessor :keyword, :unread
@@ -49,12 +48,12 @@ class IRCUnit < NSObject
   def setup(seed)
     @config = seed.dup
     @config.channels = nil
-    @address_detection_method = @pref.dcc.address_detection_method
+    @address_detection_method = preferences.dcc.address_detection_method
     case @address_detection_method
     when Preferences::Dcc::ADDR_DETECT_NIC
       detect_myaddress_from_nic
     when Preferences::Dcc::ADDR_DETECT_SPECIFY
-      Resolver.resolve(self, @pref.dcc.myaddress)
+      Resolver.resolve(self, preferences.dcc.myaddress)
     end
   end
   
@@ -844,8 +843,8 @@ class IRCUnit < NSObject
   end
 
   def preferences_changed
-    if @address_detection_method != @pref.dcc.address_detection_method
-      @address_detection_method = @pref.dcc.address_detection_method
+    if @address_detection_method != preferences.dcc.address_detection_method
+      @address_detection_method = preferences.dcc.address_detection_method
       @myaddress = nil
       case @address_detection_method
       when Preferences::Dcc::ADDR_DETECT_JOIN
@@ -853,10 +852,10 @@ class IRCUnit < NSObject
       when Preferences::Dcc::ADDR_DETECT_NIC
         detect_myaddress_from_nic
       when Preferences::Dcc::ADDR_DETECT_SPECIFY
-        Resolver.resolve(self, @pref.dcc.myaddress)
+        Resolver.resolve(self, preferences.dcc.myaddress)
       end
     end
-    @log.max_lines = @pref.gen.max_log_lines
+    @log.max_lines = preferences.general.max_log_lines
     @channels.each {|c| c.preferences_changed}
   end
   
@@ -906,7 +905,6 @@ class IRCUnit < NSObject
     unless @list_dialog
       @list_dialog = ListDialog.alloc.init
       @list_dialog.delegate = self
-      @list_dialog.pref = @pref
       @list_dialog.start
     else
       @list_dialog.show
@@ -1047,12 +1045,12 @@ class IRCUnit < NSObject
   end
   
   def now
-    format = @pref.theme.override_timestamp_format ? @pref.theme.timestamp_format : '%H:%M'
+    format = preferences.theme.override_timestamp_format ? preferences.theme.timestamp_format : '%H:%M'
     Time.now.strftime(format)
   end
   
   def format_nick(channel, nick)
-    format = @pref.theme.override_nick_format ? @pref.theme.nick_format : @world.view_theme.other.log_nick_format
+    format = preferences.theme.override_nick_format ? preferences.theme.nick_format : @world.view_theme.other.log_nick_format
     s = format.gsub(/%@/) do |i|
       mark = ''
       if channel && !channel.unit? && channel.channel?
@@ -1320,7 +1318,7 @@ class IRCUnit < NSObject
     @in_list = false
     print_system(self, 'Logged in')
     notify_event(:login)
-    SoundPlayer.play(@pref.sound.login)
+    SoundPlayer.play(preferences.sound.login)
     
     send(:privmsg, 'NickServ', 'IDENTIFY ' + @config.nickPassword) if @config.nickPassword && !@config.nickPassword.empty?
     
@@ -1432,7 +1430,7 @@ class IRCUnit < NSObject
     
     if prev_connected
       notify_event(:disconnect)
-      SoundPlayer.play(@pref.sound.disconnect)
+      SoundPlayer.play(preferences.sound.disconnect)
     end
   end
   
@@ -1484,7 +1482,7 @@ class IRCUnit < NSObject
         kind = :channeltext
         kind = :highlight if key
         notify_text(kind, c || target, nick, text)
-        sound = kind == :highlight ? @pref.sound.highlight : @pref.sound.channeltext
+        sound = kind == :highlight ? preferences.sound.highlight : preferences.sound.channeltext
         SoundPlayer.play(sound)
         
         if c
@@ -1530,9 +1528,9 @@ class IRCUnit < NSObject
           end
           notify_text(kind, c || nick, nick, text)
           sound = case kind
-          when :highlight; @pref.sound.highlight
-          when :newtalk; @pref.sound.newtalk
-          else; @pref.sound.talktext
+          when :highlight; preferences.sound.highlight
+          when :newtalk; preferences.sound.newtalk
+          else; preferences.sound.talktext
           end
           SoundPlayer.play(sound)
         end
@@ -1616,7 +1614,7 @@ class IRCUnit < NSObject
         reload_tree
         print_system_both(c, "You have been kicked out from the channel")
         notify_event(:kicked, c, nick, comment)
-        SoundPlayer.play(@pref.sound.kicked)
+        SoundPlayer.play(preferences.sound.kicked)
         
         # rejoin
         join_channel(c, c.mode.k) unless eq(nick, @mynick)
@@ -1781,7 +1779,7 @@ class IRCUnit < NSObject
     chname = m[1]
     print_both(self, :invite, "#{sender} has invited you to #{chname}")
     notify_event(:invited, nil, sender, chname)
-    SoundPlayer.play(@pref.sound.invited)
+    SoundPlayer.play(preferences.sound.invited)
   end
   
   def receive_ping(m)
@@ -1881,7 +1879,7 @@ class IRCUnit < NSObject
     end
     
     @world.dcc.add_receiver(@id, m.sender_nick, host, port, path, fname, size, ver)
-    SoundPlayer.play(@pref.sound.file_receive_request)
+    SoundPlayer.play(preferences.sound.file_receive_request)
     @world.notify_on_growl(:file_receive_request, m.sender_nick, fname)
     NSApp.requestUserAttention(NSInformationalRequest) unless NSApp.isActive
   end

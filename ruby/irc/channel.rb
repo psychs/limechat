@@ -4,7 +4,7 @@
 class IRCChannel < NSObject
   attr_accessor :unit, :id, :topic, :names_init, :who_init, :log
   attr_reader :config, :members, :mode
-  attr_writer :op, :pref
+  attr_writer :op
   attr_accessor :keyword, :unread, :newtalk
   attr_accessor :property_dialog
   attr_accessor :stored_topic
@@ -319,9 +319,9 @@ class IRCChannel < NSObject
     
     # open log file
     unless @terminating
-      if @pref.gen.log_transcript
+      if preferences.general.log_transcript
         unless @logfile
-          @logfile = FileLogger.new(@pref, @unit, self)
+          @logfile = FileLogger.new(@unit, self)
         end
         nickstr = line.nick ? "#{line.nick_info}: " : ""
         s = "#{line.time}#{nickstr}#{line.body}"
@@ -385,13 +385,13 @@ class IRCChannel < NSObject
   
   def preferences_changed
     if @logfile
-      if @pref.gen.log_transcript
+      if preferences.general.log_transcript
         @logfile.reopen_if_needed
       else
         close_logfile
       end
     end
-    @log.max_lines = @pref.gen.max_log_lines
+    @log.max_lines = preferences.general.max_log_lines
   end
   
   def date_changed

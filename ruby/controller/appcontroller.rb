@@ -14,9 +14,8 @@ class AppController < NSObject
   def awakeFromNib
     prelude
 
-    #@pref = Preferences.new
-    #FileUtils.mkpath(@pref.gen.transcript_folder.expand_path) rescue nil
-    
+    #FileUtils.mkpath(preferences.general.transcript_folder.expand_path) rescue nil
+
     if preferences.general.use_hotkey
       NSApp.registerHotKey_modifierFlags(preferences.general.hotkey_key_code, preferences.general.hotkey_modifier_flags)
     end
@@ -41,11 +40,10 @@ class AppController < NSObject
     @member_list.tableColumns[0].setDataCell(cell)
 
     load_window_state
-    select_3column_layout(preferences.general.main_window_layout == 1)
+    select_3column_layout(preferences.general.main_window_layout == Preferences::General::LAYOUT_3_COLUMNS)
 
     @world = IRCWorld.alloc.init
     @world.app = self
-    @world.pref = @pref
     @world.window = @window
     @world.tree = @tree
     @world.text = @text
@@ -73,7 +71,6 @@ class AppController < NSObject
     @world.setup_tree
 
     @menu.app = self
-    @menu.pref = @pref
     @menu.world = @world
     @menu.window = @window
     @menu.tree = @tree
@@ -86,7 +83,6 @@ class AppController < NSObject
     @member_list.drop_delegate = @world
 
     @dcc = DccManager.alloc.init
-    @dcc.pref = @pref
     @dcc.world = @world
     @world.dcc = @dcc
 
@@ -311,13 +307,13 @@ class AppController < NSObject
   end
 
   def preferences_changed
-    if @pref.gen.use_hotkey
-      NSApp.registerHotKey_modifierFlags(@pref.gen.hotkey_key_code, @pref.gen.hotkey_modifier_flags)
+    if preferences.general.use_hotkey
+      NSApp.registerHotKey_modifierFlags(preferences.general.hotkey_key_code, preferences.general.hotkey_modifier_flags)
     else
       NSApp.unregisterHotKey
     end
     
-    select_3column_layout(@pref.gen.main_window_layout == 1)
+    select_3column_layout(preferences.general.main_window_layout == Preferences::General::LAYOUT_3_COLUMNS)
     @world.preferences_changed
   end
 
@@ -541,7 +537,7 @@ class AppController < NSObject
       end
       msg << ".\nAre you sure to quit?"
       NSRunCriticalAlertPanel('LimeChat', msg, 'Anyway Quit', 'Cancel', nil) == NSAlertDefaultReturn
-    elsif @pref.gen.confirm_quit
+    elsif preferences.general.confirm_quit
       NSRunCriticalAlertPanel('LimeChat', 'Are you sure to quit?', 'Quit', 'Cancel', nil) == NSAlertDefaultReturn
     else
       true
@@ -594,7 +590,7 @@ class AppController < NSObject
       :spell_checking => @field_editor.isContinuousSpellCheckingEnabled,
     }
     win.merge!(split)
-    @pref.save_window('main_window', win)
+    preferences.save_window('main_window', win)
   end
 
   # key commands
@@ -676,7 +672,7 @@ class AppController < NSObject
   end
 
   def tab
-    case @pref.gen.tab_action
+    case preferences.general.tab_action
     when Preferences::General::TAB_UNREAD
       move(:down, :unread)
       true
@@ -689,7 +685,7 @@ class AppController < NSObject
   end
 
   def shiftTab
-    case @pref.gen.tab_action
+    case preferences.general.tab_action
     when Preferences::General::TAB_UNREAD
       move(:up, :unread)
       true

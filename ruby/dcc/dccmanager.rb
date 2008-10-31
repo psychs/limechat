@@ -4,7 +4,7 @@
 require 'utility'
 
 class DccManager < NSObject
-  attr_accessor :pref, :world
+  attr_accessor :world
   ib_outlet :window, :splitter, :receiver_table, :sender_table, :clear_button
   
   def initialize
@@ -204,7 +204,7 @@ class DccManager < NSObject
     c.version = ver
     @receivers.unshift(c)
     
-    c.open if @pref.dcc.auto_receive
+    c.open if preferences.dcc.auto_receive
     reload_receiver_table
     show(false)
   end
@@ -214,7 +214,6 @@ class DccManager < NSObject
     return if !size || size == 0
     
     c = DccSender.new
-    c.pref = @pref
     c.delegate = self
     c.uid = uid
     c.peer_nick = nick
@@ -268,26 +267,26 @@ class DccManager < NSObject
   
   def dccsender_on_error(sender)
     reload_sender_table
-    SoundPlayer.play(@pref.sound.file_send_failure)
+    SoundPlayer.play(preferences.sound.file_send_failure)
     @world.notify_on_growl(:file_send_failed, sender.peer_nick, sender.filename)
   end
   
   def dccsender_on_complete(sender)
     reload_sender_table
-    SoundPlayer.play(@pref.sound.file_send_success)
+    SoundPlayer.play(preferences.sound.file_send_success)
     @world.notify_on_growl(:file_send_succeeded, sender.peer_nick, sender.filename)
   end
   
   
   def dccreceiver_on_error(sender)
     reload_receiver_table
-    SoundPlayer.play(@pref.sound.file_receive_failure)
+    SoundPlayer.play(preferences.sound.file_receive_failure)
     @world.notify_on_growl(:file_receive_failed, sender.peer_nick, sender.filename)
   end
   
   def dccreceiver_on_complete(sender)
     reload_receiver_table
-    SoundPlayer.play(@pref.sound.file_receive_success)
+    SoundPlayer.play(preferences.sound.file_receive_success)
     @world.notify_on_growl(:file_receive_succeeded, sender.peer_nick, sender.filename)
   end
   
@@ -407,7 +406,7 @@ class DccManager < NSObject
   end
 
   def load_window_state
-    win = @pref.load_window('dcc_window')
+    win = preferences.load_window('dcc_window')
     if win
       f = NSRect.from_dic(win)
       @window.setFrame_display(f, true)
@@ -438,7 +437,7 @@ class DccManager < NSObject
     return unless @loaded
     win = @window.frame.to_dic
     win.merge! :split => @splitter.position
-    @pref.save_window('dcc_window', win)
+    preferences.save_window('dcc_window', win)
   end
 end
 

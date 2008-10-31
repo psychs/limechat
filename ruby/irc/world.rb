@@ -5,7 +5,7 @@ require 'date'
 
 class IRCWorld < NSObject
   attr_accessor :member_list, :dcc, :view_theme, :window
-  attr_writer :app, :tree, :log_base, :console_base, :chat_box, :field_editor, :text, :pref
+  attr_writer :app, :tree, :log_base, :console_base, :chat_box, :field_editor, :text
   attr_accessor :menu_controller
   attr_accessor :tree_default_menu, :server_menu, :channel_menu, :tree_menu, :log_menu, :console_menu, :url_menu, :addr_menu, :chan_menu, :member_menu
   attr_reader :units, :selected, :prev_selected, :console, :config
@@ -43,7 +43,7 @@ class IRCWorld < NSObject
   end
 
   def save
-    @pref.save_world(to_dic)
+    preferences.save_world(to_dic)
   end
 
   def setup_tree
@@ -164,7 +164,6 @@ class IRCWorld < NSObject
     u = IRCUnit.alloc.init
     u.id = @unit_id
     u.world = self
-    u.pref = @pref
     u.log = create_log(u)
     u.setup(seed)
     seed.channels.each {|c| create_channel(u, c) } if seed.channels
@@ -193,7 +192,6 @@ class IRCWorld < NSObject
     c = IRCChannel.alloc.init
     c.id = @channel_id
     c.unit = unit
-    c.pref = @pref
     c.setup(seed)
     c.log = create_log(unit, c)
 
@@ -421,8 +419,8 @@ class IRCWorld < NSObject
   end
 
   def notify_on_growl(kind, title, desc, context=nil)
-    if @pref.gen.use_growl
-      return if @pref.gen.stop_growl_on_active && NSApp.isActive
+    if preferences.general.use_growl
+      return if preferences.general.stop_growl_on_active && NSApp.isActive
       @growl.notify(kind, title, desc, context)
     end
   end
@@ -449,7 +447,7 @@ class IRCWorld < NSObject
   end
 
   def reload_theme
-    @view_theme.theme = @pref.theme.name
+    @view_theme.theme = preferences.theme.name
 
     logs = [@console]
 
@@ -461,8 +459,8 @@ class IRCWorld < NSObject
     end
 
     logs.each do |log|
-      if @pref.theme.override_log_font
-        log.override_font = [@pref.theme.log_font_name, @pref.theme.log_font_size]
+      if preferences.theme.override_log_font
+        log.override_font = [preferences.theme.log_font_name, preferences.theme.log_font_size]
       else
         log.override_font = nil
       end
@@ -503,7 +501,7 @@ class IRCWorld < NSObject
 
   def preferences_changed
     register_growl
-    @console.max_lines = @pref.gen.max_log_lines
+    @console.max_lines = preferences.general.max_log_lines
     @units.each {|u| u.preferences_changed}
     reload_theme
   end
@@ -553,16 +551,16 @@ class IRCWorld < NSObject
     u, c = sel
     unless c
       if u.connecting? || u.connected? || u.login?
-        u.quit if @pref.gen.disconnect_on_doubleclick
+        u.quit if preferences.general.disconnect_on_doubleclick
       else
-        u.connect if @pref.gen.connect_on_doubleclick
+        u.connect if preferences.general.connect_on_doubleclick
       end
     else
       if u.login?
         if c.active?
-          u.part_channel(c) if @pref.gen.leave_on_doubleclick
+          u.part_channel(c) if preferences.general.leave_on_doubleclick
         else
-          u.join_channel(c) if @pref.gen.join_on_doubleclick
+          u.join_channel(c) if preferences.general.join_on_doubleclick
         end
       end
     end
