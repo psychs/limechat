@@ -1,0 +1,3 @@
+* Extract setup code from test/test_helper into a boot.rb file for LimeChat.
+* Move ruby/controllers/preferences to ruby/models/preferences.
+* Make Preferences class a real singleton and change it's use throughout the app.

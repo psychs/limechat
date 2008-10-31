@@ -3,6 +3,7 @@
 
 require 'userdefaultsaccess'
 require 'persistencehelper'
+require 'utility'
 
 class Preferences
   include UserDefaultsAccess
@@ -120,6 +121,9 @@ class Preferences
   end
   
   model_attr :key, :dcc, :gen, :sound, :theme
+  
+  # TODO: For now alias these, but should replace them completely
+  alias_method :general, :gen
   
   def initialize
     @key = Keyword.new
