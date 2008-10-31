@@ -100,18 +100,17 @@ class Preferences
     TAB_COMPLETE_NICK = 0
     TAB_UNREAD = 1
     TAB_NONE = 100
+    defaults_accessor :tab_action, TAB_COMPLETE_NICK
     
     LAYOUT_2_COLUMNS = 0
     LAYOUT_3_COLUMNS = 1
+    defaults_accessor :main_window_layout, LAYOUT_2_COLUMNS
     
     defaults_accessor :confirm_quit, true
-    defaults_accessor :tab_action, TAB_COMPLETE_NICK
     
     defaults_accessor :use_hotkey, false
     defaults_accessor :hotkey_key_code, 0
     defaults_accessor :hotkey_modifier_flags, 0
-    
-    defaults_accessor :main_window_layout, LAYOUT_2_COLUMNS
     
     defaults_accessor :connect_on_doubleclick, false
     defaults_accessor :disconnect_on_doubleclick, false
