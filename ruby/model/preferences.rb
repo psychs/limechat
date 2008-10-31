@@ -79,14 +79,8 @@ class Preferences
     defaults_accessor :timestamp_format, '%H:%M'
   end
   
-  attr_reader :dcc, :general, :keyword, :sound, :theme
-  
-  def initialize
-    @keyword = Keyword.new
-    @general = General.new
-    @sound   = Sound.new
-    @theme   = Theme.new
-    @dcc     = Dcc.new
+  %w{ dcc general keyword sound theme }.each do |section|
+    class_eval "def #{section}; #{section.capitalize}.instance; end"
   end
   
   # def load_world

@@ -13,6 +13,8 @@ class Preferences
   end
   
   class AbstractPreferencesSection
+    include Singleton
+    
     class << self
       # The key in the preferences that represents the section class.
       #

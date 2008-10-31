@@ -33,7 +33,7 @@ describe "Preferences::AbstractPreferencesSection" do
   end
   
   it "should register user defaults with ::defaults_accessor" do
-    prefs = TestDefaults.new
+    prefs = TestDefaults.instance
     Preferences.default_values[:TestDefaults][:an_option].should == true
     prefs.an_option.should == true
     prefs.an_option = false
