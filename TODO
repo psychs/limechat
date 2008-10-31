@@ -1,3 +1,4 @@
 * Extract setup code from test/test_helper into a boot.rb file for LimeChat.
 * Move ruby/controllers/preferences to ruby/models/preferences.
 * Make Preferences class a real singleton and change it's use throughout the app.
+* Create some sort of migration of preferences, because we use keys like “General” instead of “gen”.
