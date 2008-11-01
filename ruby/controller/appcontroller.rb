@@ -387,9 +387,11 @@ class AppController < NSObject
     end
 
     # migrate NSUserDefaults keys
+    # For now add both the nested hashes and all the key-value pairs in the root
+    # with a key which indicates in which section they belong.
     defaults = NSUserDefaults.standardUserDefaults
     if pref = defaults[:pref]
-      defaults[:Preferences] = pref.to_ruby.inject({}) do |hash, (key, value)|
+      new_pref = pref.to_ruby.inject({}) do |hash, (key, value)|
         new_key = case key
         when :gen then :General
         when :key then :Keyword
@@ -399,7 +401,19 @@ class AppController < NSObject
         hash[new_key] = value
         hash
       end
+      defaults[:Preferences] = new_pref
       defaults.removeObjectForKey(:pref)
+      
+      new_flat_pref = new_pref.inject({}) do |hash, (section, values)|
+        values.each do |key, value|
+          hash["Preferences.#{section}.#{key}"] = value
+        end
+        hash
+      end
+      new_flat_pref.each do |key, value|
+        defaults[key] = value
+      end
+      
       defaults.synchronize
     end
 

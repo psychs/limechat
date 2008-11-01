@@ -36,17 +36,20 @@ class Preferences
       #  defaults_accessor :confirm_quit, true
       def defaults_accessor(name, default_value)
         section_default_values[name] = default_value
+        key = "Preferences.#{section_defaults_key}.#{name}"
         
         class_eval do
           define_method(name) do
-            section_user_defaults[name].to_ruby
+            NSUserDefaults.standardUserDefaults[key].to_ruby
+            #section_user_defaults[name].to_ruby
           end
           
           define_method("#{name}=") do |value|
-            defaults = section_user_defaults.to_ruby
-            defaults[name] = value
-            self.section_user_defaults = defaults
-            value
+            # defaults = section_user_defaults.to_ruby
+            # defaults[name] = value
+            # self.section_user_defaults = defaults
+            # value
+            NSUserDefaults.standardUserDefaults[key] = value
           end
         end
       end
