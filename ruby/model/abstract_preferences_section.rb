@@ -1,3 +1,5 @@
+require 'singleton'
+
 class Preferences
   class << self
     # A hash of all default values for the user defaults

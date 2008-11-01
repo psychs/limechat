@@ -44,7 +44,6 @@ module DialogHelper
     mapped_outlets.each {|i| save_outlet_value(i, model, nest) }
   end
   
-  
   private
   
   def set_table_header_settings(table, ary)

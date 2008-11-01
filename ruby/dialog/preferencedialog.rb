@@ -10,22 +10,22 @@ class PreferenceDialog < NSObject
   include DialogHelper
   attr_accessor :delegate
   ib_outlet :window, :dcc_myaddress_caption, :sound_table
-  ib_mapped_outlet :key_words, :key_dislike_words, :key_whole_line, :key_current_nick
-  ib_mapped_int_outlet :key_matching_method
-  ib_outlet :key_dislike_words_caption
+  ib_mapped_outlet :keyword_words, :keyword_dislike_words, :keyword_whole_line, :keyword_current_nick
+  ib_mapped_int_outlet :keyword_matching_method
+  ib_outlet :keyword_dislike_words_caption
   ib_mapped_int_outlet :dcc_address_detection_method
   ib_mapped_outlet :dcc_myaddress
   ib_mapped_int_outlet :dcc_first_port, :dcc_last_port
   ib_mapped_outlet :dcc_auto_receive
-  ib_mapped_outlet :gen_confirm_quit
-  ib_mapped_int_outlet :gen_tab_action
+  ib_mapped_outlet :general_confirm_quit
+  ib_mapped_int_outlet :general_tab_action
   ib_outlet :hotkey
-  ib_mapped_int_outlet :gen_main_window_layout
-  ib_mapped_outlet :gen_connect_on_doubleclick, :gen_disconnect_on_doubleclick, :gen_join_on_doubleclick, :gen_leave_on_doubleclick
-  ib_mapped_outlet :gen_use_growl, :gen_stop_growl_on_active
-  ib_mapped_outlet :gen_log_transcript
+  ib_mapped_int_outlet :general_main_window_layout
+  ib_mapped_outlet :general_connect_on_doubleclick, :general_disconnect_on_doubleclick, :general_join_on_doubleclick, :general_leave_on_doubleclick
+  ib_mapped_outlet :general_use_growl, :general_stop_growl_on_active
+  ib_mapped_outlet :general_log_transcript
   ib_outlet :transcript_folder
-  ib_mapped_int_outlet :gen_max_log_lines
+  ib_mapped_int_outlet :general_max_log_lines
   ib_outlet :theme
   ib_mapped_outlet :theme_override_log_font
   ib_outlet :log_font_text, :select_log_font_button
@@ -70,7 +70,7 @@ class PreferenceDialog < NSObject
   
   def onOk(sender)
     save
-    fire_event('onOk', m)
+    fire_event('onOk', preferences)
     @window.close
   end
   
@@ -79,11 +79,11 @@ class PreferenceDialog < NSObject
   end
   
   def onKeyMatchingMethodChanged(sender)
-    cond = @key_matching_method.selectedItem.tag != Preferences::Keyword::MATCH_EXACT_WORD
-    @key_dislike_words_caption.setTextColor(cond ? NSColor.controlTextColor : NSColor.disabledControlTextColor)
-    @key_dislike_words.setTextColor(cond ? NSColor.textColor : NSColor.disabledControlTextColor)
-    @key_dislike_words.setEditable(cond)
-    @key_dislike_words.setSelectable(cond)
+    cond = @keyword_matching_method.selectedItem.tag != Preferences::Keyword::MATCH_EXACT_WORD
+    @keyword_dislike_words_caption.setTextColor(cond ? NSColor.controlTextColor : NSColor.disabledControlTextColor)
+    @keyword_dislike_words.setTextColor(cond ? NSColor.textColor : NSColor.disabledControlTextColor)
+    @keyword_dislike_words.setEditable(cond)
+    @keyword_dislike_words.setSelectable(cond)
   end
   
   def onDccAddressDetectionMethodChanged(sender)
@@ -126,7 +126,7 @@ class PreferenceDialog < NSObject
   end
   
   def onLogTranscriptChanged(sender)
-    state = @gen_log_transcript.state == 1
+    state = @general_log_transcript.state == 1
     @transcript_folder.setEnabled(state)
   end
   
@@ -162,7 +162,7 @@ class PreferenceDialog < NSObject
   end
   
   def onUseGrowlClicked(sender)
-    @gen_stop_growl_on_active.setEnabled(@gen_use_growl.state.to_i != 0)
+    @general_stop_growl_on_active.setEnabled(@general_use_growl.state.to_i != 0)
   end
 
   # sound table
@@ -217,8 +217,8 @@ class PreferenceDialog < NSObject
   private
   
   def load
-    load_mapped_outlets(m, true)
-    @sound = preferences.sound.dup
+    load_mapped_outlets(preferences, true)
+    @sound = preferences.sound
     load_theme
     
     @log_font = NSFont.fontWithName_size(preferences.theme.log_font_name, preferences.theme.log_font_size)
@@ -231,7 +231,7 @@ class PreferenceDialog < NSObject
   end
   
   def save
-    save_mapped_outlets(m, true)
+    save_mapped_outlets(preferences, true)
     preferences.keyword.words.delete_if {|i| i.empty?}
     preferences.keyword.words = preferences.keyword.words.sort_by {|i| i.downcase}
     preferences.keyword.words.uniq!
@@ -239,7 +239,7 @@ class PreferenceDialog < NSObject
     preferences.keyword.dislike_words = preferences.keyword.dislike_words.sort_by {|i| i.downcase}
     preferences.keyword.dislike_words.uniq!
     preferences.dcc.last_port = preferences.dcc.first_port if preferences.dcc.last_port < preferences.dcc.first_port
-    preferences.sound.assign(@sound)
+    #preferences.assign(@sound) # FIXME: Need to check what this exacty did.
     save_theme
     preferences.general.max_log_lines = 100 if preferences.general.max_log_lines <= 100
     
@@ -277,7 +277,7 @@ class PreferenceDialog < NSObject
       end
     end
     
-    kind, name = ViewTheme.extract_name(m.theme.name)
+    kind, name = ViewTheme.extract_name(preferences.theme.name)
     target_tag = kind == 'resource' ? 0 : 1
     
     count = @theme.numberOfItems

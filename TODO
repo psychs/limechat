@@ -2,3 +2,4 @@
 * Move ruby/controllers/preferences to ruby/models/preferences.
 * Make Preferences class a real singleton and change it's use throughout the app.
 * Create some sort of migration of preferences, because we use keys like “General” instead of “gen”.
+* The old preferencese section classes included persistencehelper, need to check what #assign() did.

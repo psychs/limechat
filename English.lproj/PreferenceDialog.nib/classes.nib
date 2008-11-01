@@ -80,41 +80,41 @@
 				<string>id</string>
 				<key>delegate</key>
 				<string>id</string>
-				<key>gen_confirm_quit</key>
+				<key>general_confirm_quit</key>
 				<string>id</string>
-				<key>gen_connect_on_doubleclick</key>
+				<key>general_connect_on_doubleclick</key>
 				<string>id</string>
-				<key>gen_disconnect_on_doubleclick</key>
+				<key>general_disconnect_on_doubleclick</key>
 				<string>id</string>
-				<key>gen_join_on_doubleclick</key>
+				<key>general_join_on_doubleclick</key>
 				<string>id</string>
-				<key>gen_leave_on_doubleclick</key>
+				<key>general_leave_on_doubleclick</key>
 				<string>id</string>
-				<key>gen_log_transcript</key>
+				<key>general_log_transcript</key>
 				<string>id</string>
-				<key>gen_main_window_layout</key>
+				<key>general_main_window_layout</key>
 				<string>id</string>
-				<key>gen_max_log_lines</key>
+				<key>general_max_log_lines</key>
 				<string>id</string>
-				<key>gen_stop_growl_on_active</key>
+				<key>general_stop_growl_on_active</key>
 				<string>id</string>
-				<key>gen_tab_action</key>
+				<key>general_tab_action</key>
 				<string>id</string>
-				<key>gen_use_growl</key>
+				<key>general_use_growl</key>
 				<string>id</string>
 				<key>hotkey</key>
 				<string>id</string>
-				<key>key_current_nick</key>
+				<key>keyword_current_nick</key>
 				<string>id</string>
-				<key>key_dislike_words</key>
+				<key>keyword_dislike_words</key>
 				<string>id</string>
-				<key>key_dislike_words_caption</key>
+				<key>keyword_dislike_words_caption</key>
 				<string>id</string>
-				<key>key_matching_method</key>
+				<key>keyword_matching_method</key>
 				<string>id</string>
-				<key>key_whole_line</key>
+				<key>keyword_whole_line</key>
 				<string>id</string>
-				<key>key_words</key>
+				<key>keyword_words</key>
 				<string>id</string>
 				<key>log_font_text</key>
 				<string>id</string>
