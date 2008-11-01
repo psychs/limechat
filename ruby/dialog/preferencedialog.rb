@@ -25,8 +25,7 @@ class PreferenceDialog < NSObject
   ib_outlet :transcript_folder
   ib_mapped_int_outlet :general_max_log_lines
   ib_outlet :theme
-  ib_mapped_outlet :theme_override_log_font
-  ib_outlet :log_font_text, :select_log_font_button
+  ib_outlet :log_font_text
   ib_mapped_outlet :theme_override_nick_format, :theme_nick_format
   ib_mapped_outlet :theme_override_timestamp_format, :theme_timestamp_format
   
@@ -41,7 +40,6 @@ class PreferenceDialog < NSObject
     update_transcript_folder
     onKeyMatchingMethodChanged(nil)
     onLogTranscriptChanged(nil)
-    onOverrideLogFontClicked(nil)
     onOverrideNickFormatClicked(nil)
     showFontDescription
     ['%n: ', '(%n) ', '<%n> ', '<%9n> ', '<%-9n> ', '<%@%n> '].each {|i| @theme_nick_format.addItemWithObjectValue(i) }
@@ -138,10 +136,6 @@ class PreferenceDialog < NSObject
       FileUtils.cp(Dir.glob(ViewTheme.RESOURCE_BASE + '/Sample.*'), ViewTheme.USER_BASE) rescue nil
     end
     NSWorkspace.sharedWorkspace.openFile(path.to_s)
-  end
-  
-  def onOverrideLogFontClicked(sender)
-    @select_log_font_button.setEnabled(@theme_override_log_font.state.to_i != 0)
   end
   
   def onSelectFont(sender)
