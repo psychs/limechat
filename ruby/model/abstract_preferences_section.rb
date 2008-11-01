@@ -10,7 +10,7 @@ class Preferences
     # Registers the default values with NSUserDefaults.standardUserDefaults
     # Called at the end of evaluating model/preferences.rb
     def register_default_values!
-      NSUserDefaults.standardUserDefaults.registerDefaults(:pref => default_values)
+      NSUserDefaults.standardUserDefaults.registerDefaults(:Preferences => default_values)
     end
   end
   
@@ -54,13 +54,13 @@ class Preferences
     
     # The reader method for the preferences for this section.
     def section_user_defaults
-      NSUserDefaults.standardUserDefaults[:pref][self.class.section_defaults_key]
+      NSUserDefaults.standardUserDefaults[:Preferences][self.class.section_defaults_key]
     end
     
     # The writer method for the preferences for this section.
     def section_user_defaults=(section_user_defaults)
-      defaults = NSUserDefaults.standardUserDefaults[:pref].to_ruby.merge(self.class.section_defaults_key => section_user_defaults)
-      NSUserDefaults.standardUserDefaults.setObject_forKey(defaults, :pref)
+      defaults = NSUserDefaults.standardUserDefaults[:Preferences].to_ruby.merge(self.class.section_defaults_key => section_user_defaults)
+      NSUserDefaults.standardUserDefaults.setObject_forKey(defaults, :Preferences)
     end
   end
 end
