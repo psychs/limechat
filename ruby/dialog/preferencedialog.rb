@@ -10,7 +10,7 @@ class PreferenceDialog < NSObject
   include DialogHelper
   attr_accessor :delegate
   ib_outlet :window, :dcc_myaddress_caption, :sound_table
-  ib_mapped_outlet :keyword_words, :keyword_dislike_words, :keyword_whole_line, :keyword_current_nick
+  ib_mapped_outlet :keyword_words, :keyword_dislike_words, :keyword_whole_line
   ib_mapped_int_outlet :keyword_matching_method
   ib_outlet :keyword_dislike_words_caption
   ib_mapped_int_outlet :dcc_address_detection_method
