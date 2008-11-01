@@ -17,12 +17,10 @@ class PreferenceDialog < NSObject
   ib_mapped_outlet :dcc_myaddress
   ib_mapped_int_outlet :dcc_first_port, :dcc_last_port
   ib_mapped_outlet :dcc_auto_receive
-  #ib_mapped_outlet :general_confirm_quit
   ib_mapped_int_outlet :general_tab_action
   ib_outlet :hotkey
   ib_mapped_int_outlet :general_main_window_layout
   ib_mapped_outlet :general_connect_on_doubleclick, :general_disconnect_on_doubleclick, :general_join_on_doubleclick, :general_leave_on_doubleclick
-  ib_mapped_outlet :general_use_growl, :general_stop_growl_on_active
   ib_mapped_outlet :general_log_transcript
   ib_outlet :transcript_folder
   ib_mapped_int_outlet :general_max_log_lines
@@ -45,7 +43,6 @@ class PreferenceDialog < NSObject
     onLogTranscriptChanged(nil)
     onOverrideLogFontClicked(nil)
     onOverrideNickFormatClicked(nil)
-    onUseGrowlClicked(nil)
     showFontDescription
     ['%n: ', '(%n) ', '<%n> ', '<%9n> ', '<%-9n> ', '<%@%n> '].each {|i| @theme_nick_format.addItemWithObjectValue(i) }
     ['%H:%M', '%H:%M:%S'].each {|i| @theme_timestamp_format.addItemWithObjectValue(i) }
@@ -159,10 +156,6 @@ class PreferenceDialog < NSObject
   
   def onOverrideTimestampFormatClicked(sender)
     @theme_timestamp_format.setEnabled(@theme_override_timestamp_format.state.to_i != 0)
-  end
-  
-  def onUseGrowlClicked(sender)
-    @general_stop_growl_on_active.setEnabled(@general_use_growl.state.to_i != 0)
   end
 
   # sound table
