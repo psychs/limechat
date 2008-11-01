@@ -386,6 +386,23 @@ class AppController < NSObject
       FileUtils.mv(olddir.to_s, newdir.to_s) rescue nil
     end
 
+    # migrate NSUserDefaults keys
+    defaults = NSUserDefaults.standardUserDefaults
+    if pref = defaults[:pref]
+      defaults[:Preferences] = pref.to_ruby.inject({}) do |hash, (key, value)|
+        new_key = case key
+        when :gen then :General
+        when :key then :Keyword
+        else
+          key.to_s.capitalize.to_sym
+        end
+        hash[new_key] = value
+        hash
+      end
+      defaults.removeObjectForKey(:pref)
+      defaults.synchronize
+    end
+
     # initialize theme directory
     FileUtils.mkpath(Pathname.new('~/Library/Application Support/LimeChat/Themes').expand_path.to_s) rescue nil
     FileUtils.cp(Dir.glob(ViewTheme.RESOURCE_BASE + '/Sample.*'), newdir.to_s) rescue nil
@@ -437,12 +454,12 @@ class AppController < NSObject
     # workaround for the @nick form
     # @nick should not be @nick:
 
-		command_mode = false
+    command_mode = false
     headchar = pre[0]
-		if head && /^\// =~ pre
-			pre[0] = ''
-			command_mode = true
-		elsif /^[^\w\[\]\\`_^{}|]/ =~ pre
+    if head && /^\// =~ pre
+      pre[0] = ''
+      command_mode = true
+    elsif /^[^\w\[\]\\`_^{}|]/ =~ pre
       head = true if head && headchar == ?@
       pre[0] = ''
       return if pre.empty?
@@ -457,18 +474,18 @@ class AppController < NSObject
 
     # sort the choices
 
-		if command_mode
-			nicks = %w|action away ban clear ctcp ctcpreply cycle dehalfop deop devoice halfop hop
-									invite j join kick kill leave list mode msg nick notice op part ping
-									privmsg query quit quote raw rejoin t timer topic unban voice weights
-									who whois|
-			nicks = nicks.select {|i| i[0...pre.size] == downpre }
-		else
-    	nicks = c.members.sort_by {|i| [-i.weight, i.nick.downcase] }.map {|i| i.nick }
-    	nicks = nicks.select {|i| i[0...pre.size].downcase == downpre }
-    	nicks -= [u.mynick]
-		end
-		return if nicks.empty?
+    if command_mode
+      nicks = %w|action away ban clear ctcp ctcpreply cycle dehalfop deop devoice halfop hop
+                  invite j join kick kill leave list mode msg nick notice op part ping
+                  privmsg query quit quote raw rejoin t timer topic unban voice weights
+                  who whois|
+      nicks = nicks.select {|i| i[0...pre.size] == downpre }
+    else
+      nicks = c.members.sort_by {|i| [-i.weight, i.nick.downcase] }.map {|i| i.nick }
+      nicks = nicks.select {|i| i[0...pre.size].downcase == downpre }
+      nicks -= [u.mynick]
+    end
+    return if nicks.empty?
 
     # find the next choice
 
@@ -488,17 +505,17 @@ class AppController < NSObject
 
     # add suffix
 
-		if command_mode
-			s += ' '
-		else
-	    if head
-	      if headchar == ?@
-	        s += ' '
-	      else
-	        s += ': '
-	      end
-	    end
-		end
+    if command_mode
+      s += ' '
+    else
+      if head
+        if headchar == ?@
+          s += ' '
+        else
+          s += ': '
+        end
+      end
+    end
 
     # set completed nick to the text field
 
