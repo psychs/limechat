@@ -1,5 +1,5 @@
 require File.expand_path('../../test_helper', __FILE__)
-require 'model/preferences'
+require 'preferences'
 
 describe "Preferences" do
   it "should be a singleton" do
@@ -18,23 +18,24 @@ describe "Preferences" do
   end
 end
 
-class TestDefaults < Preferences::General
-  defaults_accessor :an_option, true
+class Preferences
+  class TestDefaults < Preferences::General
+    defaults_accessor :an_option, true
+  end
+  register_default_values!
 end
-Preferences.register_default_values!
 
 describe "Preferences::AbstractPreferencesSection" do
   it "should know the key in the prefs based on it's section class name" do
-    TestDefaults.section_defaults_key.should == :TestDefaults
+    Preferences::TestDefaults.section_defaults_key.should == 'Preferences.TestDefaults'
   end
   
   it "should should add default values to the Preferences.default_values" do
-    TestDefaults.section_default_values.should == Preferences.default_values[:TestDefaults]
+    Preferences.default_values['Preferences.TestDefaults.an_option'].should == true
   end
   
   it "should register user defaults with ::defaults_accessor" do
-    prefs = TestDefaults.instance
-    Preferences.default_values[:TestDefaults][:an_option].should == true
+    prefs = Preferences::TestDefaults.instance
     prefs.an_option.should == true
     prefs.an_option = false
     prefs.an_option.should == false
@@ -49,9 +50,10 @@ describe "Preferences sections" do
   %w{ General Keyword Dcc Sound }.each do |section|
     it "should have set the correct default values for the `#{section}' section" do
       klass = Preferences.const_get(section)
-      klass.section_default_values.should.not.be.empty
-      klass.section_default_values.each do |attr, value|
-        preferences.send(section.downcase).send(attr).should == value
+      section_default_values = Preferences.default_values.select { |key, _| key.include? klass.section_defaults_key }
+      section_default_values.should.not.be.empty
+      section_default_values.each do |attr, value|
+        preferences.send(section.downcase).send(attr.split('.').last).should == value
       end
     end
   end
