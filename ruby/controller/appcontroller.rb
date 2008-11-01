@@ -401,17 +401,13 @@ class AppController < NSObject
         hash[new_key] = value
         hash
       end
-      defaults[:Preferences] = new_pref
+      #defaults[:Preferences] = new_pref
       defaults.removeObjectForKey(:pref)
       
-      new_flat_pref = new_pref.inject({}) do |hash, (section, values)|
+      new_pref.each do |section, values|
         values.each do |key, value|
-          hash["Preferences.#{section}.#{key}"] = value
+          defaults["Preferences.#{section}.#{key}"] = value
         end
-        hash
-      end
-      new_flat_pref.each do |key, value|
-        defaults[key] = value
       end
       
       defaults.synchronize
