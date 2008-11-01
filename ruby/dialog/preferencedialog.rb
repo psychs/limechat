@@ -27,7 +27,7 @@ class PreferenceDialog < NSObject
   ib_outlet :theme
   ib_outlet :log_font_text
   ib_mapped_outlet :theme_override_nick_format, :theme_nick_format
-  ib_mapped_outlet :theme_override_timestamp_format, :theme_timestamp_format
+  ib_mapped_outlet :theme_timestamp_format
   
   def initialize
     @prefix = 'preferenceDialog'
@@ -146,10 +146,6 @@ class PreferenceDialog < NSObject
   
   def onOverrideNickFormatClicked(sender)
     @theme_nick_format.setEnabled(@theme_override_nick_format.state.to_i != 0)
-  end
-  
-  def onOverrideTimestampFormatClicked(sender)
-    @theme_timestamp_format.setEnabled(@theme_override_timestamp_format.state.to_i != 0)
   end
 
   # sound table
