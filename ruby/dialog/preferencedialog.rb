@@ -11,7 +11,6 @@ class PreferenceDialog < NSObject
   attr_accessor :delegate
   ib_outlet :window, :dcc_myaddress_caption, :sound_table
   ib_mapped_outlet :keyword_words, :keyword_dislike_words, :keyword_whole_line
-  ib_mapped_int_outlet :keyword_matching_method
   ib_outlet :keyword_dislike_words_caption
   ib_mapped_int_outlet :dcc_address_detection_method
   ib_mapped_outlet :dcc_myaddress
@@ -68,8 +67,14 @@ class PreferenceDialog < NSObject
     @window.close
   end
   
+  # For now leave this in, but use the `preferences' singleton instead of the outlet.
+  # Because enabling/disabling the caption and text color doesn't work that easy through bindings.
+  # A few notes:
+  # * Add a `?' query method for preferences that are booleans, because code should be beautiful.
+  # * Add a callback mechanism for preferences values which would then call this method instead of defining an action in IB.
+  #   preferences.keyword.matching_method_bind(self, :onKeyMatchingMethodChanged)
   def onKeyMatchingMethodChanged(sender)
-    cond = @keyword_matching_method.selectedItem.tag != Preferences::Keyword::MATCH_EXACT_WORD
+    cond = preferences.keyword.matching_method != Preferences::Keyword::MATCH_EXACT_WORD
     @keyword_dislike_words_caption.setTextColor(cond ? NSColor.controlTextColor : NSColor.disabledControlTextColor)
     @keyword_dislike_words.setTextColor(cond ? NSColor.textColor : NSColor.disabledControlTextColor)
     @keyword_dislike_words.setEditable(cond)
