@@ -175,7 +175,6 @@ class PreferenceDialog < NSObject
   private
   
   def load
-    load_mapped_outlets(preferences, true)
     load_theme
     
     if preferences.general.use_hotkey
@@ -186,7 +185,6 @@ class PreferenceDialog < NSObject
   end
   
   def save
-    save_mapped_outlets(preferences, true)
     save_theme
     
     if @hotkey.valid?
