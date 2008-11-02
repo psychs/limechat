@@ -83,24 +83,14 @@ class Preferences
         NSUserDefaults.standardUserDefaults[key_path] = array
       end
       
-      def destroy(wrappers, new_wrappers)
-        klass = wrappers.first.class
-        
-        keep = new_wrappers.map { |w| w.index }
-        wrappers_to_destroy = wrappers.reject { |w| keep.include?(w.index) }
-        
-        # Remove the wrappers to destroy from the `wrappers' array
-        wrappers_to_destroy.sort_by { |w| w.index }.reverse.each do |wrapper_to_destroy|
-          wrappers.delete_at(wrapper_to_destroy.index)
-        end
-        
+      def destroy(klass, new_wrappers)
         # Set the new correct indices on the remaining wrappers
         new_wrappers.each_with_index do |wrapper, new_index|
           wrapper.index = new_index
         end
         
         # Assign the new result array of strings
-        klass.array = wrappers.map { |wrapper| wrapper.string }
+        klass.array = new_wrappers.map { |wrapper| wrapper.string }
       end
     end
     
@@ -156,7 +146,7 @@ class Preferences
         
         def #{name}=(new_wrappers)
           if new_wrappers.length < #{name}.length
-            Preferences::StringArrayWrapper.destroy(#{name}, new_wrappers)
+            Preferences::StringArrayWrapper.destroy(#{name}.first.class, new_wrappers)
           end
           @#{name} = new_wrappers
         end

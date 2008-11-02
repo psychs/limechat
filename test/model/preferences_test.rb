@@ -90,7 +90,7 @@ describe "A Preferences::StringArrayWrapper subclass" do
   it "should remove the strings the wrappers wrap from the array at the configured key path and reset the indices of the wrappers" do
     wrapped = @prefs.an_array_wrapped
     new_wrapped = [wrapped[1]]
-    TestDefaultsStringWrapper.destroy(wrapped, new_wrapped)
+    Preferences::StringArrayWrapper.destroy(TestDefaultsStringWrapper, new_wrapped)
     @prefs.an_array.should == %w{ bar }
     new_wrapped.first.index.should == 0
   end
