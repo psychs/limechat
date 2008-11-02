@@ -43,8 +43,10 @@ class PreferenceDialog < NSObject
   
   def start
     NSBundle.loadNibNamed_owner('PreferenceDialog', self)
-    load
+    
+    load_theme
     update_transcript_folder
+    
     preferences.theme.observe(:override_log_font, self)
     
     if preferences.general.use_hotkey
@@ -73,15 +75,12 @@ class PreferenceDialog < NSObject
     fire_event('onClose')
   end
   
-  def onOk(sender)
-    save
-    fire_event('onOk', preferences)
-    @window.close
-  end
-  
-  def onCancel(sender)
-    @window.close
-  end
+  # FIXME: What does fire_event('onOk', preferences) do?
+  # def onOk(sender)
+  #   save
+  #   fire_event('onOk', preferences)
+  #   @window.close
+  # end
   
   def onLayoutChanged(sender)
     NSApp.delegate.update_layout
@@ -156,21 +155,6 @@ class PreferenceDialog < NSObject
     i.setImage(icon)
   end
   
-  # Theme
-  
-  def onOpenThemePath(sender)
-    path = Pathname.new(ViewTheme.USER_BASE)
-    unless path.exist?
-      path.mkpath rescue nil
-    end
-    files = Dir.glob(path.to_s + '/*') rescue []
-    if files.empty?
-      # copy sample themes
-      FileUtils.cp(Dir.glob(ViewTheme.RESOURCE_BASE + '/Sample.*'), ViewTheme.USER_BASE) rescue nil
-    end
-    NSWorkspace.sharedWorkspace.openFile(path.to_s)
-  end
-  
   # Log Font
   
   def onSelectFont(sender)
@@ -192,15 +176,27 @@ class PreferenceDialog < NSObject
     onLayoutChanged(nil)
   end
   
-  private
+  # Theme
   
-  def load
-    load_theme
-  end
-  
-  def save
+  def onChangedTheme(sender)
     save_theme
+    onLayoutChanged(nil)
   end
+  
+  def onOpenThemePath(sender)
+    path = Pathname.new(ViewTheme.USER_BASE)
+    unless path.exist?
+      path.mkpath rescue nil
+    end
+    files = Dir.glob(path.to_s + '/*') rescue []
+    if files.empty?
+      # copy sample themes
+      FileUtils.cp(Dir.glob(ViewTheme.RESOURCE_BASE + '/Sample.*'), ViewTheme.USER_BASE) rescue nil
+    end
+    NSWorkspace.sharedWorkspace.openFile(path.to_s)
+  end
+  
+  private
   
   def load_theme
     @theme.removeAllItems

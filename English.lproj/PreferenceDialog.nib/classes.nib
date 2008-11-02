@@ -14,6 +14,14 @@
 		</dict>
 		<dict>
 			<key>CLASS</key>
+			<string>NSPopUpButton</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSButton</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
 			<string>FirstResponder</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
@@ -34,6 +42,8 @@
 				<key>numberOfRowsInTableView</key>
 				<string>id</string>
 				<key>onCancel</key>
+				<string>id</string>
+				<key>onChangedTheme</key>
 				<string>id</string>
 				<key>onDccAddressDetectionMethodChanged</key>
 				<string>id</string>
