@@ -290,7 +290,6 @@ class MenuController < NSObject
     end
   end
 
-
   def onPreferences(sender)
     unless @pref_dialog
       @pref_dialog = PreferenceDialog.alloc.init

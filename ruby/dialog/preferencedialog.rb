@@ -72,6 +72,10 @@ class PreferenceDialog < NSObject
     @window.close
   end
   
+  def onLayoutChanged(sender)
+    NSApp.delegate.update_layout
+  end
+  
   def onTranscriptFolderChanged(sender)
     if @transcript_folder.selectedItem.tag == 2
       return if @log_dialog

@@ -312,7 +312,9 @@ class AppController < NSObject
     else
       NSApp.unregisterHotKey
     end
-    
+  end
+
+  def update_layout
     select_3column_layout(preferences.general.main_window_layout == Preferences::General::LAYOUT_3_COLUMNS)
     @world.preferences_changed
   end
