@@ -26,9 +26,9 @@ class Preferences
     defaults_accessor :myaddress, ''
     defaults_accessor :auto_receive, false
     
-    ADDR_DETECT_JOIN = 0
+    ADDR_DETECT_JOIN = 2
     ADDR_DETECT_NIC = 1
-    ADDR_DETECT_SPECIFY = 2
+    ADDR_DETECT_SPECIFY = 0
     defaults_accessor :address_detection_method, ADDR_DETECT_JOIN
   end
   

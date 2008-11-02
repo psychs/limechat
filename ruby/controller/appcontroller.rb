@@ -410,9 +410,17 @@ class AppController < NSObject
         end
       end
       
+      # migrate DCC address detection method tag values.
+      # Because we can use bindings if the tag which returns 0 is the one where the text field should be enabled.
+      if preferences.dcc.address_detection_method == 0
+        preferences.dcc.address_detection_method = 2
+      elsif preferences.dcc.address_detection_method == 2
+        preferences.dcc.address_detection_method = 0
+      end
+      
       defaults.synchronize
     end
-
+    
     # initialize theme directory
     FileUtils.mkpath(Pathname.new('~/Library/Application Support/LimeChat/Themes').expand_path.to_s) rescue nil
     FileUtils.cp(Dir.glob(ViewTheme.RESOURCE_BASE + '/Sample.*'), newdir.to_s) rescue nil

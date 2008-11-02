@@ -9,11 +9,7 @@ require 'fileutils'
 class PreferenceDialog < NSObject
   include DialogHelper
   attr_accessor :delegate
-  ib_outlet :window, :dcc_myaddress_caption, :sound_table
-  ib_mapped_int_outlet :dcc_address_detection_method
-  ib_mapped_outlet :dcc_myaddress
-  ib_mapped_int_outlet :dcc_first_port, :dcc_last_port
-  ib_mapped_outlet :dcc_auto_receive
+  ib_outlet :window, :sound_table
   ib_mapped_int_outlet :general_tab_action
   ib_outlet :hotkey
   ib_mapped_int_outlet :general_main_window_layout
@@ -35,7 +31,6 @@ class PreferenceDialog < NSObject
   def start
     NSBundle.loadNibNamed_owner('PreferenceDialog', self)
     load
-    update_myaddress
     update_transcript_folder
     onLogTranscriptChanged(nil)
     showFontDescription
@@ -66,10 +61,6 @@ class PreferenceDialog < NSObject
   
   def onCancel(sender)
     @window.close
-  end
-  
-  def onDccAddressDetectionMethodChanged(sender)
-    update_myaddress
   end
   
   def onTranscriptFolderChanged(sender)
@@ -258,11 +249,5 @@ class PreferenceDialog < NSObject
     else
       preferences.theme.name = ViewTheme.user_filename(fname)
     end
-  end
-  
-  def update_myaddress
-    cond = @dcc_address_detection_method.selectedItem.tag == Preferences::Dcc::ADDR_DETECT_SPECIFY
-    @dcc_myaddress_caption.setTextColor(cond ? NSColor.controlTextColor : NSColor.disabledControlTextColor)
-    @dcc_myaddress.setEnabled(cond)
   end
 end
