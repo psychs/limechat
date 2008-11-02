@@ -53,6 +53,20 @@ describe "Preferences::AbstractPreferencesSection" do
   it "should return the key path for the defaults_accessor" do
     Preferences::TestDefaults.defaults_accessor(:an_accessor, '').should == 'Preferences.TestDefaults.an_accessor'
   end
+  
+  it "should register an observer for a key path" do
+    observer_mock = mock('Object that observes a preference value')
+    
+    shared_defaults = NSUserDefaultsController.sharedUserDefaultsController
+    shared_defaults.expects(:addObserver_forKeyPath_options_context).with do |observer, key_path, options, context|
+      observer == observer_mock &&
+        key_path == 'values.Preferences.TestDefaults.an_option' &&
+        options == NSKeyValueObservingOptionNew &&
+        context.nil?
+    end
+    
+    @prefs.observe(:an_option, observer_mock)
+  end
 end
 
 describe "A Preferences::StringArrayWrapper subclass" do
@@ -96,7 +110,7 @@ describe "A Preferences::StringArrayWrapper subclass" do
   end
 end
 
-class ClassThatIncludesStringArrayWrapperHelper < OSX::NSObject
+class ClassThatExtendsWithStringArrayWrapperHelper < OSX::NSObject
   extend Preferences::StringArrayWrapperHelper
   
   string_array_wrapper_accessor :a_kvc_array, 'Preferences::TestDefaults.instance.an_array'
@@ -104,7 +118,7 @@ end
 
 describe "A class that extends with Preferences::StringArrayWrapperHelper" do
   before do
-    @instance = ClassThatIncludesStringArrayWrapperHelper.alloc.init
+    @instance = ClassThatExtendsWithStringArrayWrapperHelper.alloc.init
   end
   
   after do
@@ -125,5 +139,25 @@ describe "A class that extends with Preferences::StringArrayWrapperHelper" do
     end
     
     @instance.a_kvc_array.map { |x| x.string }.should == %w{ foo bla boo }
+  end
+end
+
+class ClassThatIncludesKVOCallbackHelper
+  include Preferences::KVOCallbackHelper
+end
+
+describe "A class that includes Preferences::KVOCallbackHelper" do
+  before do
+    @instance = ClassThatIncludesKVOCallbackHelper.new
+  end
+  
+  it "should call the method inflected from the key path with the new value of the preference" do
+    Preferences::TestDefaults.instance.an_option = true
+    @instance.expects(:an_option_changed).with(true)
+    @instance.observeValueForKeyPath_ofObject_change_context('values.Preferences.TestDefaults.an_option', nil, {}, nil)
+    
+    Preferences::TestDefaults.instance.an_option = false
+    @instance.expects(:an_option_changed).with(false)
+    @instance.observeValueForKeyPath_ofObject_change_context('values.Preferences.TestDefaults.an_option', nil, {}, nil)
   end
 end

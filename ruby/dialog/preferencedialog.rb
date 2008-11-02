@@ -14,23 +14,26 @@ class PreferenceDialog < NSObject
   ib_outlet :transcript_folder
   ib_mapped_int_outlet :general_max_log_lines
   ib_outlet :theme
-  ib_outlet :log_font_text
   
-  def initialize
-    @prefix = 'preferenceDialog'
-  end
-  
+  include Preferences::KVOCallbackHelper
   extend Preferences::StringArrayWrapperHelper
+  
   string_array_wrapper_accessor :highlight_words, 'preferences.keyword.words'
   string_array_wrapper_accessor :dislike_words, 'preferences.keyword.dislike_words'
   
   kvc_accessor :sounds
   kvc_accessor :available_sounds
+  kvc_accessor :log_font
+  
+  def initialize
+    @prefix = 'preferenceDialog'
+  end
   
   def init
     if super_init
       @available_sounds = preferences.sound.available_sounds
       @sounds = preferences.sound.events_wrapped
+      @log_font = NSFont.fontWithName_size(preferences.theme.log_font_name, preferences.theme.log_font_size)
       self
     end
   end
@@ -39,7 +42,7 @@ class PreferenceDialog < NSObject
     NSBundle.loadNibNamed_owner('PreferenceDialog', self)
     load
     update_transcript_folder
-    showFontDescription
+    preferences.theme.observe(:override_log_font, self)
     show
   end
   
@@ -134,17 +137,15 @@ class PreferenceDialog < NSObject
   end
   
   def changeFont(sender)
-    @log_font = sender.convertFont(@log_font)
+    # use the kvc_accessor setter method, which send the appropriate KVO messages
+    self.log_font = sender.convertFont(@log_font)
     preferences.theme.log_font_name = @log_font.fontName
     preferences.theme.log_font_size = @log_font.pointSize
-    
-    showFontDescription
     onLayoutChanged(nil)
   end
   
-  def showFontDescription
-    s = "#{@log_font.displayName} #{@log_font.pointSize.to_i}pt."
-    @log_font_text.setStringValue(s)
+  def override_log_font_changed(override)
+    onLayoutChanged(nil)
   end
   
   private
@@ -152,8 +153,6 @@ class PreferenceDialog < NSObject
   def load
     load_mapped_outlets(preferences, true)
     load_theme
-    
-    @log_font = NSFont.fontWithName_size(preferences.theme.log_font_name, preferences.theme.log_font_size)
     
     if preferences.general.use_hotkey
       @hotkey.setKeyCode_modifierFlags(preferences.general.hotkey_key_code, preferences.general.hotkey_modifier_flags)

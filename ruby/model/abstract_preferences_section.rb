@@ -69,6 +69,12 @@ class Preferences
         end
       end
     end
+    
+    def observe(name, observer)
+      key_path = "values.#{self.class.section_defaults_key}.#{name}"
+      NSUserDefaultsController.sharedUserDefaultsController.
+        addObserver_forKeyPath_options_context(observer, key_path, NSKeyValueObservingOptionNew, nil)
+    end
   end
   
   class StringArrayWrapper < OSX::NSObject
@@ -151,6 +157,20 @@ class Preferences
           @#{name} = new_wrappers
         end
       }, __FILE__, __LINE__
+    end
+  end
+  
+  module KVOCallbackHelper
+    # We need to actually define the method on the class because otherwise the method is not
+    # resolved at runtime, probably a bug in RubyCocoa.
+    def self.included(klass)
+      klass.class_eval do
+        def observeValueForKeyPath_ofObject_change_context(key_path, observed, change, context)
+          value_key_path = key_path.sub(/^values\./, '')
+          callback_method = "#{key_path.split('.').last}_changed"
+          send(callback_method, NSUserDefaults.standardUserDefaults[value_key_path].to_ruby)
+        end
+      end
     end
   end
 end
