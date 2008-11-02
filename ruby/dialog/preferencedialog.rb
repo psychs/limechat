@@ -9,7 +9,7 @@ require 'fileutils'
 class PreferenceDialog < NSObject
   include DialogHelper
   attr_accessor :delegate
-  ib_outlet :window, :sound_table
+  ib_outlet :window
   ib_mapped_int_outlet :general_tab_action
   ib_outlet :hotkey
   ib_mapped_int_outlet :general_main_window_layout
@@ -27,6 +27,17 @@ class PreferenceDialog < NSObject
   extend Preferences::StringArrayWrapperHelper
   string_array_wrapper_accessor :highlight_words, 'preferences.keyword.words'
   string_array_wrapper_accessor :dislike_words, 'preferences.keyword.dislike_words'
+  
+  kvc_accessor :sounds
+  kvc_accessor :available_sounds
+  
+  def init
+    if super_init
+      @available_sounds = preferences.sound.available_sounds
+      @sounds = preferences.sound.events_wrapped
+      self
+    end
+  end
   
   def start
     NSBundle.loadNibNamed_owner('PreferenceDialog', self)
@@ -121,45 +132,6 @@ class PreferenceDialog < NSObject
     fm.setSelectedFont_isMultiple(@log_font, false)
     fm.orderFrontFontPanel(self)
   end
-
-  # sound table
-  
-  EMPTY_SOUND = '-'
-  SOUNDS = [EMPTY_SOUND, 'Beep', 'Basso', 'Blow', 'Bottle', 'Frog', 'Funk', 'Glass', 'Hero', 'Morse', 'Ping', 'Pop', 'Purr', 'Sosumi', 'Submarine', 'Tink']
-  SOUND_TITLES = ['Login', 'Disconnected', 'Highlight', 'New talk', 'Channel text', 'Talk text', 'Kicked', 'Invited',
-                  'DCC file receive request', 'DCC file receive success', 'DCC file receive failure', 'DCC file send success', 'DCC file send failure']
-  SOUND_ATTRS = [:login, :disconnect, :highlight, :newtalk, :channeltext, :talktext, :kicked, :invited,
-                  :file_receive_request, :file_receive_success, :file_receive_failure, :file_send_success, :file_send_failure]
-  
-  def numberOfRowsInTableView(sender)
-    SOUND_TITLES.size
-  end
-  
-  def tableView_objectValueForTableColumn_row(sender, col, row)
-    case col.identifier.to_s.to_sym
-    when :title
-      SOUND_TITLES[row]
-    when :sound
-      c = col.dataCell
-      c.removeAllItems
-      SOUNDS.each {|i| c.addItemWithTitle(i) }
-      method = SOUND_ATTRS[row]
-      value = @sound.__send__(method)
-      index = SOUNDS.index(value) || 0
-      index
-    end
-  end
-
-  def tableView_setObjectValue_forTableColumn_row(sender, obj, col, row)
-    case col.identifier.to_s.to_sym
-    when :sound
-      value = SOUNDS[obj.to_i]
-      value = '' if value == EMPTY_SOUND
-      method = SOUND_ATTRS[row].to_s + '='
-      @sound.__send__(method, value)
-      SoundPlayer.play(value) unless value.empty?
-    end
-  end
   
   def changeFont(sender)
     @log_font = sender.convertFont(@log_font)
@@ -175,7 +147,6 @@ class PreferenceDialog < NSObject
   
   def load
     load_mapped_outlets(preferences, true)
-    @sound = preferences.sound
     load_theme
     
     @log_font = NSFont.fontWithName_size(preferences.theme.log_font_name, preferences.theme.log_font_size)
@@ -190,7 +161,6 @@ class PreferenceDialog < NSObject
   def save
     save_mapped_outlets(preferences, true)
     preferences.dcc.last_port = preferences.dcc.first_port if preferences.dcc.last_port < preferences.dcc.first_port
-    #preferences.assign(@sound) # FIXME: Need to check what this exacty did.
     save_theme
     preferences.general.max_log_lines = 100 if preferences.general.max_log_lines <= 100
     

@@ -64,9 +64,52 @@ class Preferences
   end
   
   class Sound < AbstractPreferencesSection
-    [ :login, :disconnect, :highlight, :newtalk, :kicked, :invited, :channeltext, :talktext,
-      :file_receive_request, :file_receive_success, :file_receive_failure, :file_send_success, :file_send_failure
-    ].each { |attr| defaults_accessor attr, '' }
+    EMPTY_SOUND = '-'
+    SOUNDS = [EMPTY_SOUND, 'Beep', 'Basso', 'Blow', 'Bottle', 'Frog', 'Funk', 'Glass', 'Hero', 'Morse', 'Ping', 'Pop', 'Purr', 'Sosumi', 'Submarine', 'Tink']
+    
+    EVENTS = [
+      [:login, 'Login'],
+      [:disconnect, 'Disconnected'],
+      [:highlight, 'Highlight'],
+      [:newtalk, 'New talk'],
+      [:kicked, 'Kicked'],
+      [:invited, 'Invited'],
+      [:channeltext, 'Channel text'],
+      [:talktext, 'Talk text'],
+      [:file_receive_request, 'DCC file receive request'],
+      [:file_receive_success, 'DCC file receive success'],
+      [:file_receive_failure, 'DCC file receive failure'],
+      [:file_send_success, 'DCC file send success'],
+      [:file_send_failure, 'DCC file send failure']
+    ]
+    
+    EVENTS.map { |e| e.first }.each { |attr| defaults_accessor attr, '' }
+    
+    def available_sounds
+      SOUNDS
+    end
+    
+    def events_wrapped
+      EVENTS.map do |name, display_name|
+        SoundWrapper.alloc.initWithName_displayName_sound(name, display_name, send(name))
+      end
+    end
+    
+    class SoundWrapper < OSX::NSObject
+      kvc_accessor :display_name, :sound
+      
+      def initWithName_displayName_sound(name, display_name, sound)
+        if init
+          @name, @display_name, @sound = name, display_name, sound
+          self
+        end
+      end
+      
+      def sound=(sound)
+        @sound = sound
+        preferences.sound.send("#{@name}=", @sound)
+      end
+    end
   end
   
   class Theme < AbstractPreferencesSection
