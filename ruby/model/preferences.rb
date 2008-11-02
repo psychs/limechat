@@ -105,9 +105,13 @@ class Preferences
         end
       end
       
+      def sound
+        @sound.empty? ? Preferences::Sound::EMPTY_SOUND : @sound
+      end
+      
       def sound=(sound)
         @sound = sound
-        preferences.sound.send("#{@name}=", @sound)
+        preferences.sound.send("#{@name}=", (@sound == Preferences::Sound::EMPTY_SOUND ? '' : @sound))
       end
     end
   end

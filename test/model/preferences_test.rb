@@ -43,4 +43,16 @@ describe "Preferences::Sound::SoundWrapper" do
     login_event_wrapper.setValue_forKey('Beep', 'sound')
     preferences.sound.login.should == 'Beep'
   end
+  
+  it "should write an empty string if the value chosen is Preferences::Sound::EMPTY_SOUND" do
+    preferences.sound.login = 'Furr'
+    login_event_wrapper.setValue_forKey(Preferences::Sound::EMPTY_SOUND, 'sound')
+    preferences.sound.login.should.be.empty
+  end
+  
+  it "should return Preferences::Sound::EMPTY_SOUND if the value in the preferences is empty" do
+    preferences.sound.login = ''
+    login_event_wrapper.sound = Preferences::Sound::EMPTY_SOUND
+    login_event_wrapper.sound.should == Preferences::Sound::EMPTY_SOUND
+  end
 end
