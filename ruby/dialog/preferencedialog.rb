@@ -24,6 +24,7 @@ class PreferenceDialog < NSObject
   kvc_accessor :sounds
   kvc_accessor :available_sounds
   kvc_accessor :log_font
+  kvc_accessor :dcc_last_port
   
   def initialize
     @prefix = 'preferenceDialog'
@@ -34,6 +35,7 @@ class PreferenceDialog < NSObject
       @available_sounds = preferences.sound.available_sounds
       @sounds = preferences.sound.events_wrapped
       @log_font = NSFont.fontWithName_size(preferences.theme.log_font_name, preferences.theme.log_font_size)
+      @dcc_last_port = preferences.dcc.last_port
       self
     end
   end
@@ -74,6 +76,19 @@ class PreferenceDialog < NSObject
   
   def onLayoutChanged(sender)
     NSApp.delegate.update_layout
+  end
+  
+  # Dcc last port
+  
+  def dcc_last_port=(port)
+    preferences.dcc.last_port = @dcc_last_port = port
+  end
+  
+  def validateValue_forKeyPath_error(value, key, error)
+    if key == 'dcc_last_port'
+      value.assign(value[0].to_i < preferences.dcc.first_port.to_i ? preferences.dcc.first_port : value[0])
+    end
+    true
   end
   
   # Transcript
@@ -163,7 +178,6 @@ class PreferenceDialog < NSObject
   
   def save
     save_mapped_outlets(preferences, true)
-    preferences.dcc.last_port = preferences.dcc.first_port if preferences.dcc.last_port < preferences.dcc.first_port
     save_theme
     preferences.general.max_log_lines = 100 if preferences.general.max_log_lines <= 100
     

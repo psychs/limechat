@@ -37,6 +37,8 @@
 				<string>id</string>
 				<key>onDccAddressDetectionMethodChanged</key>
 				<string>id</string>
+				<key>onDccLastPortChanged</key>
+				<string>id</string>
 				<key>onKeyMatchingMethodChanged</key>
 				<string>id</string>
 				<key>onLayoutChanged</key>
