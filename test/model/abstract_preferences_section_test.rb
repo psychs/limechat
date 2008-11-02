@@ -113,7 +113,7 @@ end
 class ClassThatExtendsWithStringArrayWrapperHelper < OSX::NSObject
   extend Preferences::StringArrayWrapperHelper
   
-  string_array_wrapper_accessor :a_kvc_array, 'Preferences::TestDefaults.instance.an_array'
+  string_array_kvc_wrapper_accessor :a_kvc_array, 'Preferences::TestDefaults.instance.an_array'
 end
 
 describe "A class that extends with Preferences::StringArrayWrapperHelper" do

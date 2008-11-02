@@ -17,8 +17,8 @@ class PreferenceDialog < NSObject
   include Preferences::KVOCallbackHelper
   extend Preferences::StringArrayWrapperHelper
   
-  string_array_wrapper_accessor :highlight_words, 'preferences.keyword.words'
-  string_array_wrapper_accessor :dislike_words, 'preferences.keyword.dislike_words'
+  string_array_kvc_wrapper_accessor :highlight_words, 'preferences.keyword.words'
+  string_array_kvc_wrapper_accessor :dislike_words, 'preferences.keyword.dislike_words'
   
   kvc_accessor :sounds
   kvc_accessor :available_sounds

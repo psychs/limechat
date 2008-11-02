@@ -142,7 +142,7 @@ class Preferences
   end
   
   module StringArrayWrapperHelper
-    def string_array_wrapper_accessor(name, path_to_eval_to_object)
+    def string_array_kvc_wrapper_accessor(name, path_to_eval_to_object)
       kvc_accessor(name)
       
       class_eval %{
