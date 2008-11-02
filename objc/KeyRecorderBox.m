@@ -112,6 +112,12 @@ static NSArray* padKeyArray;
 	[super dealloc];
 }
 
+- (void)setDelegate:(id)delegate
+{
+  _delegate = delegate;
+}
+- (id)delegate { return _delegate; }
+
 - (BOOL)valid { return valid; }
 - (int)keyCode { return currentKeyCode; }
 - (int)modifierFlags { return currentModifierFlags; }
@@ -128,6 +134,8 @@ static NSArray* padKeyArray;
 - (void)clearKey
 {
 	valid = NO;
+	if ([_delegate respondsToSelector:@selector(hotkeyUpdated:)])
+		[_delegate performSelector:@selector(hotkeyUpdated:) withObject:self];
 	[[self cell] setTitle:@""];
 }
 
@@ -187,6 +195,8 @@ static NSArray* padKeyArray;
 	}
 	
 	valid = YES;
+	if ([_delegate respondsToSelector:@selector(hotkeyUpdated:)])
+		[_delegate performSelector:@selector(hotkeyUpdated:) withObject:self];
 	[self showCurrentKey];
 	return YES;
 }

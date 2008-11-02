@@ -306,14 +306,6 @@ class AppController < NSObject
     end
   end
 
-  def preferences_changed
-    if preferences.general.use_hotkey
-      NSApp.registerHotKey_modifierFlags(preferences.general.hotkey_key_code, preferences.general.hotkey_modifier_flags)
-    else
-      NSApp.unregisterHotKey
-    end
-  end
-
   def update_layout
     select_3column_layout(preferences.general.main_window_layout == Preferences::General::LAYOUT_3_COLUMNS)
     @world.preferences_changed

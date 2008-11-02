@@ -8,8 +8,11 @@
 	BOOL valid;
 	int currentKeyCode;
 	int currentModifierFlags;
+  id _delegate;
 }
 
+- (id)delegate;
+- (void)setDelegate:(id)delegate;
 - (BOOL)valid;
 - (int)keyCode;
 - (int)modifierFlags;

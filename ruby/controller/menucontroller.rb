@@ -302,7 +302,6 @@ class MenuController < NSObject
 
   def preferenceDialog_onOk(sender, m)
     preferences.save
-    @app.preferences_changed
   end
 
   def preferenceDialog_onClose(sender)

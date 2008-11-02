@@ -46,6 +46,14 @@ class PreferenceDialog < NSObject
     load
     update_transcript_folder
     preferences.theme.observe(:override_log_font, self)
+    
+    if preferences.general.use_hotkey
+      @hotkey.setKeyCode_modifierFlags(preferences.general.hotkey_key_code, preferences.general.hotkey_modifier_flags)
+    else
+      @hotkey.clearKey
+    end
+    @hotkey.delegate = self
+    
     show
   end
   
@@ -77,6 +85,18 @@ class PreferenceDialog < NSObject
   
   def onLayoutChanged(sender)
     NSApp.delegate.update_layout
+  end
+  
+  def hotkeyUpdated(hotkey)
+    if @hotkey.valid?
+      preferences.general.use_hotkey = true
+      preferences.general.hotkey_key_code = @hotkey.keyCode
+      preferences.general.hotkey_modifier_flags = @hotkey.modifierFlags
+      NSApp.registerHotKey_modifierFlags(@hotkey.keyCode, @hotkey.modifierFlags)
+    else
+      preferences.general.use_hotkey = false
+      NSApp.unregisterHotKey
+    end
   end
   
   # Validate these values before setting them on the preferences.
@@ -176,24 +196,10 @@ class PreferenceDialog < NSObject
   
   def load
     load_theme
-    
-    if preferences.general.use_hotkey
-      @hotkey.setKeyCode_modifierFlags(preferences.general.hotkey_key_code, preferences.general.hotkey_modifier_flags)
-    else
-      @hotkey.clearKey
-    end
   end
   
   def save
     save_theme
-    
-    if @hotkey.valid?
-      preferences.general.use_hotkey = true
-      preferences.general.hotkey_key_code = @hotkey.keyCode
-      preferences.general.hotkey_modifier_flags = @hotkey.modifierFlags
-    else
-      preferences.general.use_hotkey = false
-    end
   end
   
   def load_theme
