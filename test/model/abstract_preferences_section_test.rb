@@ -45,6 +45,13 @@ describe "Preferences::AbstractPreferencesSection" do
     @prefs.an_option.should == false
   end
   
+  it "should create a query method for boolean preferences" do
+    @prefs.an_option = true
+    assert @prefs.an_option?
+    @prefs.an_option = false
+    assert !@prefs.an_option?
+  end
+  
   it "should return an array of wrapped strings for a string_array_defaults_accessor" do
     assert @prefs.an_array_wrapped.all? { |x| x.is_a? TestDefaultsStringWrapper }
     @prefs.an_array_wrapped.map { |x| x.valueForKey('string') }.should == %w{ foo bar baz }

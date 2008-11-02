@@ -50,7 +50,7 @@ class PreferenceDialog < NSObject
     
     preferences.theme.observe(:override_log_font, self)
     
-    if preferences.general.use_hotkey
+    if preferences.general.use_hotkey?
       @hotkey.setKeyCode_modifierFlags(preferences.general.hotkey_key_code, preferences.general.hotkey_modifier_flags)
     else
       @hotkey.clearKey

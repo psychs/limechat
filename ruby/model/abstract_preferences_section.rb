@@ -41,6 +41,10 @@ class Preferences
           define_method("#{name}=") do |value|
             NSUserDefaults.standardUserDefaults[key_path] = value
           end
+          
+          if default_value == true || default_value == false
+            alias_method "#{name}?", name
+          end
         end
         
         key_path
