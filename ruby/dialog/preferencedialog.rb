@@ -10,7 +10,6 @@ class PreferenceDialog < NSObject
   include DialogHelper
   attr_accessor :delegate
   ib_outlet :window, :dcc_myaddress_caption, :sound_table
-  ib_mapped_outlet :keyword_whole_line
   ib_mapped_int_outlet :dcc_address_detection_method
   ib_mapped_outlet :dcc_myaddress
   ib_mapped_int_outlet :dcc_first_port, :dcc_last_port
