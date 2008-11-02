@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		512517450EBBBD3500FD8060 /* abstract_preferences_section.rb in Resources */ = {isa = PBXBuildFile; fileRef = 512517440EBBBD3500FD8060 /* abstract_preferences_section.rb */; };
+		51F0A51E0EBCF70A00B2C878 /* controls_with_disabled_state.rb in Resources */ = {isa = PBXBuildFile; fileRef = 51F0A51D0EBCF70A00B2C878 /* controls_with_disabled_state.rb */; };
 		7801DD2E0D1AF75F00D8691D /* isupportinfo.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7801DD2D0D1AF75F00D8691D /* isupportinfo.rb */; };
 		7805EE590D11FDCA000A9B55 /* pasternakclient.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7805EE580D11FDCA000A9B55 /* pasternakclient.rb */; };
 		780CCA0E0D8A294000E4BA77 /* keyeventhandler.rb in Resources */ = {isa = PBXBuildFile; fileRef = 780CCA0D0D8A294000E4BA77 /* keyeventhandler.rb */; };
@@ -136,6 +137,7 @@
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		512517440EBBBD3500FD8060 /* abstract_preferences_section.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; name = abstract_preferences_section.rb; path = ruby/model/abstract_preferences_section.rb; sourceTree = "<group>"; };
+		51F0A51D0EBCF70A00B2C878 /* controls_with_disabled_state.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; name = controls_with_disabled_state.rb; path = ruby/view/controls_with_disabled_state.rb; sourceTree = SOURCE_ROOT; };
 		7801DD2D0D1AF75F00D8691D /* isupportinfo.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = isupportinfo.rb; sourceTree = "<group>"; };
 		780253C20C09525900C170D4 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
 		7804271C0BCA810600C14486 /* GradientFill.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GradientFill.h; path = objc/GradientFill.h; sourceTree = "<group>"; };
@@ -362,6 +364,7 @@
 				78229B990C288188001DD4C3 /* appcontroller.rb */,
 				78229B9A0C288188001DD4C3 /* menucontroller.rb */,
 				78229B9B0C288188001DD4C3 /* preferences.rb */,
+				51F0A51D0EBCF70A00B2C878 /* controls_with_disabled_state.rb */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -653,6 +656,7 @@
 				7870BA490E111BD0004B30B4 /* iconcontroller.rb in Resources */,
 				78B418B30E4EF5A60065F111 /* inputtextfield.rb in Resources */,
 				512517450EBBBD3500FD8060 /* abstract_preferences_section.rb in Resources */,
+				51F0A51E0EBCF70A00B2C878 /* controls_with_disabled_state.rb in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

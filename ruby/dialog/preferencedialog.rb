@@ -10,8 +10,7 @@ class PreferenceDialog < NSObject
   include DialogHelper
   attr_accessor :delegate
   ib_outlet :window, :dcc_myaddress_caption, :sound_table
-  ib_mapped_outlet :keyword_words, :keyword_dislike_words, :keyword_whole_line
-  ib_outlet :keyword_dislike_words_caption
+  ib_mapped_outlet :keyword_whole_line
   ib_mapped_int_outlet :dcc_address_detection_method
   ib_mapped_outlet :dcc_myaddress
   ib_mapped_int_outlet :dcc_first_port, :dcc_last_port
@@ -30,12 +29,15 @@ class PreferenceDialog < NSObject
     @prefix = 'preferenceDialog'
   end
   
+  extend Preferences::StringArrayWrapperHelper
+  string_array_wrapper_accessor :highlight_words, 'preferences.keyword.words'
+  string_array_wrapper_accessor :dislike_words, 'preferences.keyword.dislike_words'
+  
   def start
     NSBundle.loadNibNamed_owner('PreferenceDialog', self)
     load
     update_myaddress
     update_transcript_folder
-    onKeyMatchingMethodChanged(nil)
     onLogTranscriptChanged(nil)
     showFontDescription
     show
@@ -65,20 +67,6 @@ class PreferenceDialog < NSObject
   
   def onCancel(sender)
     @window.close
-  end
-  
-  # For now leave this in, but use the `preferences' singleton instead of the outlet.
-  # Because enabling/disabling the caption and text color doesn't work that easy through bindings.
-  # A few notes:
-  # * Add a `?' query method for preferences that are booleans, because code should be beautiful.
-  # * Add a callback mechanism for preferences values which would then call this method instead of defining an action in IB.
-  #   preferences.keyword.matching_method_bind(self, :onKeyMatchingMethodChanged)
-  def onKeyMatchingMethodChanged(sender)
-    cond = preferences.keyword.matching_method != Preferences::Keyword::MATCH_EXACT_WORD
-    @keyword_dislike_words_caption.setTextColor(cond ? NSColor.controlTextColor : NSColor.disabledControlTextColor)
-    @keyword_dislike_words.setTextColor(cond ? NSColor.textColor : NSColor.disabledControlTextColor)
-    @keyword_dislike_words.setEditable(cond)
-    @keyword_dislike_words.setSelectable(cond)
   end
   
   def onDccAddressDetectionMethodChanged(sender)
@@ -211,12 +199,6 @@ class PreferenceDialog < NSObject
   
   def save
     save_mapped_outlets(preferences, true)
-    preferences.keyword.words.delete_if {|i| i.empty?}
-    preferences.keyword.words = preferences.keyword.words.sort_by {|i| i.downcase}
-    preferences.keyword.words.uniq!
-    preferences.keyword.dislike_words.delete_if {|i| i.empty?}
-    preferences.keyword.dislike_words = preferences.keyword.dislike_words.sort_by {|i| i.downcase}
-    preferences.keyword.dislike_words.uniq!
     preferences.dcc.last_port = preferences.dcc.first_port if preferences.dcc.last_port < preferences.dcc.first_port
     #preferences.assign(@sound) # FIXME: Need to check what this exacty did.
     save_theme

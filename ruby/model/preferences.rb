@@ -10,8 +10,8 @@ class Preferences
   include Singleton
   
   class Keyword < AbstractPreferencesSection
-    defaults_accessor :words, []
-    defaults_accessor :dislike_words, []
+    string_array_defaults_accessor :words, [], 'HighlightWordWrapper'
+    string_array_defaults_accessor :dislike_words, [], 'DislikeWordWrapper'
     defaults_accessor :whole_line, false
     defaults_accessor :current_nick, true
     
