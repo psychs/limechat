@@ -18,6 +18,8 @@ class Preferences
     MATCH_PARTIAL = 0
     MATCH_EXACT_WORD = 1
     defaults_accessor :matching_method, MATCH_PARTIAL
+    
+    string_array_defaults_accessor :ignore_words, [], 'IgnoreWordWrapper'
   end
   
   class Dcc < AbstractPreferencesSection

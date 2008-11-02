@@ -1460,6 +1460,9 @@ class IRCUnit < NSObject
   end
   
   def receive_text(m, command, text, identified)
+    # Do we need to log somewhere that we ignored a line?
+    return if preferences.keyword.ignore_words.any? { |w| text.include?(w) }
+    
     nick = m.sender_nick
     target = m[0]
     
