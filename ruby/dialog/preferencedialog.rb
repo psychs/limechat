@@ -73,6 +73,8 @@ class PreferenceDialog < NSObject
     NSApp.delegate.update_layout
   end
   
+  # Transcript
+  
   def onTranscriptFolderChanged(sender)
     if @transcript_folder.selectedItem.tag == 2
       return if @log_dialog
@@ -108,6 +110,8 @@ class PreferenceDialog < NSObject
     i.setImage(icon)
   end
   
+  # Theme
+  
   def onOpenThemePath(sender)
     path = Pathname.new(ViewTheme.USER_BASE)
     unless path.exist?
@@ -121,6 +125,8 @@ class PreferenceDialog < NSObject
     NSWorkspace.sharedWorkspace.openFile(path.to_s)
   end
   
+  # Log Font
+  
   def onSelectFont(sender)
     fm = NSFontManager.sharedFontManager
     fm.setSelectedFont_isMultiple(@log_font, false)
@@ -129,7 +135,11 @@ class PreferenceDialog < NSObject
   
   def changeFont(sender)
     @log_font = sender.convertFont(@log_font)
+    preferences.theme.log_font_name = @log_font.fontName
+    preferences.theme.log_font_size = @log_font.pointSize
+    
     showFontDescription
+    onLayoutChanged(nil)
   end
   
   def showFontDescription
@@ -157,9 +167,6 @@ class PreferenceDialog < NSObject
     preferences.dcc.last_port = preferences.dcc.first_port if preferences.dcc.last_port < preferences.dcc.first_port
     save_theme
     preferences.general.max_log_lines = 100 if preferences.general.max_log_lines <= 100
-    
-    preferences.theme.log_font_name = @log_font.fontName
-    preferences.theme.log_font_size = @log_font.pointSize
     
     if @hotkey.valid?
       preferences.general.use_hotkey = true
