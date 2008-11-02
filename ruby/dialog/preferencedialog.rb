@@ -12,7 +12,6 @@ class PreferenceDialog < NSObject
   ib_outlet :window
   ib_outlet :hotkey
   ib_outlet :transcript_folder
-  ib_mapped_int_outlet :general_max_log_lines
   ib_outlet :theme
   
   include Preferences::KVOCallbackHelper
@@ -25,6 +24,7 @@ class PreferenceDialog < NSObject
   kvc_accessor :available_sounds
   kvc_accessor :log_font
   kvc_accessor :dcc_last_port
+  kvc_accessor :max_log_lines
   
   def initialize
     @prefix = 'preferenceDialog'
@@ -36,6 +36,7 @@ class PreferenceDialog < NSObject
       @sounds = preferences.sound.events_wrapped
       @log_font = NSFont.fontWithName_size(preferences.theme.log_font_name, preferences.theme.log_font_size)
       @dcc_last_port = preferences.dcc.last_port
+      @max_log_lines = preferences.general.max_log_lines
       self
     end
   end
@@ -78,15 +79,22 @@ class PreferenceDialog < NSObject
     NSApp.delegate.update_layout
   end
   
-  # Dcc last port
+  # Validate these values before setting them on the preferences.
   
   def dcc_last_port=(port)
     preferences.dcc.last_port = @dcc_last_port = port
   end
   
+  def max_log_lines=(max)
+    preferences.general.max_log_lines = @max_log_lines = max.to_i
+  end
+  
   def validateValue_forKeyPath_error(value, key, error)
-    if key == 'dcc_last_port'
+    case key
+    when 'dcc_last_port'
       value.assign(value[0].to_i < preferences.dcc.first_port.to_i ? preferences.dcc.first_port : value[0])
+    when 'max_log_lines'
+      value.assign(100) if value[0].to_i <= 100
     end
     true
   end
@@ -159,6 +167,7 @@ class PreferenceDialog < NSObject
     onLayoutChanged(nil)
   end
   
+  # Called when preferences.theme.override_log_font is changed.
   def override_log_font_changed(override)
     onLayoutChanged(nil)
   end
@@ -179,7 +188,6 @@ class PreferenceDialog < NSObject
   def save
     save_mapped_outlets(preferences, true)
     save_theme
-    preferences.general.max_log_lines = 100 if preferences.general.max_log_lines <= 100
     
     if @hotkey.valid?
       preferences.general.use_hotkey = true
