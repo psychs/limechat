@@ -11,7 +11,6 @@ class PreferenceDialog < NSObject
   attr_accessor :delegate
   ib_outlet :window
   ib_outlet :hotkey
-  ib_mapped_int_outlet :general_main_window_layout
   ib_mapped_outlet :general_connect_on_doubleclick, :general_disconnect_on_doubleclick, :general_join_on_doubleclick, :general_leave_on_doubleclick
   ib_mapped_outlet :general_log_transcript
   ib_outlet :transcript_folder
