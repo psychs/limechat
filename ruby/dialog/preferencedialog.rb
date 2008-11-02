@@ -11,7 +11,6 @@ class PreferenceDialog < NSObject
   attr_accessor :delegate
   ib_outlet :window
   ib_outlet :hotkey
-  ib_mapped_outlet :general_log_transcript
   ib_outlet :transcript_folder
   ib_mapped_int_outlet :general_max_log_lines
   ib_outlet :theme
@@ -40,7 +39,6 @@ class PreferenceDialog < NSObject
     NSBundle.loadNibNamed_owner('PreferenceDialog', self)
     load
     update_transcript_folder
-    onLogTranscriptChanged(nil)
     showFontDescription
     show
   end
@@ -108,11 +106,6 @@ class PreferenceDialog < NSObject
     icon = NSWorkspace.sharedWorkspace.iconForFile(path.to_s)
     icon.setSize(NSSize.new(16,16))
     i.setImage(icon)
-  end
-  
-  def onLogTranscriptChanged(sender)
-    state = @general_log_transcript.state == 1
-    @transcript_folder.setEnabled(state)
   end
   
   def onOpenThemePath(sender)
