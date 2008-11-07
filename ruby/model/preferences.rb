@@ -2,12 +2,11 @@
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
 require 'utility'
-require 'singleton'
 require 'userdefaultsaccess'
-require 'abstract_preferences_section'
+require 'abstract_preferences'
 
 class Preferences
-  include Singleton
+  AbstractPreferencesSection = AbstractPreferencesNamespace
   
   class Keyword < AbstractPreferencesSection
     string_array_defaults_accessor :words, [], 'HighlightWordWrapper'

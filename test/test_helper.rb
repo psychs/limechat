@@ -11,6 +11,8 @@ require 'test/spec'
 require 'mocha'
 require 'rucola/test_case'
 
+$: << File.join(APP_ROOT, 'vendor', 'rubycocoa-prefs', 'lib')
+
 Dir.glob("#{APP_ROOT}/ruby/*").each do |dir|
   $: << dir if File.directory?(dir)
 end

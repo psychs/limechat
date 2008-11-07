@@ -1,13 +1,15 @@
 require File.expand_path('../../test_helper', __FILE__)
 require 'preferences'
 
-describe "Preferences sections" do
-  it "should include the `general' preferences" do
-    preferences.general.should.be.instance_of Preferences::General
+describe "Preferences namespaces" do
+  it "should have instances of all section classes" do
+    %w{ keyword dcc general sound theme }.each do |section|
+      preferences.send(section).class.name.should == "Preferences::#{section.capitalize}"
+    end
   end
   
   %w{ General Keyword Dcc Sound }.each do |section|
-    it "should have set the correct default values for the `#{section}' section" do
+    it "should have set the correct default values for the `#{section}' namespace" do
       klass = Preferences.const_get(section)
       section_default_values = Preferences.default_values.select { |key, _| key.include? klass.section_defaults_key }
       section_default_values.should.not.be.empty
