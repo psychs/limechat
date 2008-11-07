@@ -6,9 +6,7 @@ require 'userdefaultsaccess'
 require 'abstract_preferences'
 
 class Preferences
-  AbstractPreferencesSection = AbstractPreferencesNamespace
-  
-  class Keyword < AbstractPreferencesSection
+  class Keyword < Namespace
     string_array_defaults_accessor :words, [], 'HighlightWordWrapper'
     string_array_defaults_accessor :dislike_words, [], 'DislikeWordWrapper'
     defaults_accessor :whole_line, false
@@ -21,7 +19,7 @@ class Preferences
     string_array_defaults_accessor :ignore_words, [], 'IgnoreWordWrapper'
   end
   
-  class Dcc < AbstractPreferencesSection
+  class Dcc < Namespace
     defaults_accessor :first_port, 1096
     defaults_accessor :last_port, 1115
     defaults_accessor :myaddress, ''
@@ -33,7 +31,7 @@ class Preferences
     defaults_accessor :address_detection_method, ADDR_DETECT_JOIN
   end
   
-  class General < AbstractPreferencesSection
+  class General < Namespace
     TAB_COMPLETE_NICK = 0
     TAB_UNREAD = 1
     TAB_NONE = 100
@@ -64,7 +62,7 @@ class Preferences
     defaults_accessor :paste_syntax, (LanguageSupport.primary_language == 'ja' ? 'notice' : 'privmsg')
   end
   
-  class Sound < AbstractPreferencesSection
+  class Sound < Namespace
     EMPTY_SOUND = '-'
     SOUNDS = [EMPTY_SOUND, 'Beep', 'Basso', 'Blow', 'Bottle', 'Frog', 'Funk', 'Glass', 'Hero', 'Morse', 'Ping', 'Pop', 'Purr', 'Sosumi', 'Submarine', 'Tink']
     
@@ -117,7 +115,7 @@ class Preferences
     end
   end
   
-  class Theme < AbstractPreferencesSection
+  class Theme < Namespace
     defaults_accessor :name, 'resource:Default'
     defaults_accessor :override_log_font, false
     defaults_accessor :log_font_name, 'Lucida Grande'
@@ -128,15 +126,7 @@ class Preferences
     defaults_accessor :timestamp_format, '%H:%M'
   end
   
-  %w{ dcc general keyword sound theme }.each do |section|
-    class_eval "def #{section}; #{section.capitalize}.instance; end"
-  end
-  
   include UserDefaultsAccess
-  
-  def save
-    sync
-  end
   
   def load_world
     read_defaults('world')
@@ -164,11 +154,4 @@ class Preferences
   
   # And register the defaults
   register_default_values!
-end
-
-module Kernel
-  # A shortcut method for easy access anywhere to the shared user defaults
-  def preferences
-    Preferences.instance
-  end
 end
