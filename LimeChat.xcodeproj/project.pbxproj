@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		512517450EBBBD3500FD8060 /* abstract_preferences_section.rb in Resources */ = {isa = PBXBuildFile; fileRef = 512517440EBBBD3500FD8060 /* abstract_preferences_section.rb */; };
+		510D9F6D0EC4FE9900D3BEFB /* abstract_preferences.rb in Resources */ = {isa = PBXBuildFile; fileRef = 510D9F6C0EC4FE9900D3BEFB /* abstract_preferences.rb */; };
 		51F0A51E0EBCF70A00B2C878 /* controls_with_disabled_state.rb in Resources */ = {isa = PBXBuildFile; fileRef = 51F0A51D0EBCF70A00B2C878 /* controls_with_disabled_state.rb */; };
 		7801DD2E0D1AF75F00D8691D /* isupportinfo.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7801DD2D0D1AF75F00D8691D /* isupportinfo.rb */; };
 		7805EE590D11FDCA000A9B55 /* pasternakclient.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7805EE580D11FDCA000A9B55 /* pasternakclient.rb */; };
@@ -136,7 +136,7 @@
 		29B97319FDCFA39411CA2CEA /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/MainMenu.nib; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
-		512517440EBBBD3500FD8060 /* abstract_preferences_section.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; name = abstract_preferences_section.rb; path = ruby/model/abstract_preferences_section.rb; sourceTree = "<group>"; };
+		510D9F6C0EC4FE9900D3BEFB /* abstract_preferences.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; name = abstract_preferences.rb; path = "vendor/rubycocoa-prefs/lib/abstract_preferences.rb"; sourceTree = "<group>"; };
 		51F0A51D0EBCF70A00B2C878 /* controls_with_disabled_state.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; name = controls_with_disabled_state.rb; path = ruby/view/controls_with_disabled_state.rb; sourceTree = SOURCE_ROOT; };
 		7801DD2D0D1AF75F00D8691D /* isupportinfo.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = isupportinfo.rb; sourceTree = "<group>"; };
 		780253C20C09525900C170D4 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
@@ -335,6 +335,7 @@
 				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
 				29B97325FDCFA39411CA2CEA /* Foundation.framework */,
 				29B97324FDCFA39411CA2CEA /* AppKit.framework */,
+				510D9F6C0EC4FE9900D3BEFB /* abstract_preferences.rb */,
 				787FD46C0BFE960100F2F22D /* Carbon.framework */,
 				780253C20C09525900C170D4 /* CoreServices.framework */,
 				788D56F00BB6872B00DDBF69 /* WebKit.framework */,
@@ -474,7 +475,6 @@
 				78A55EFC0E810C5E00339EBC /* KeyRecorderBoxCell.m */,
 				786926F40BB6EC1B0081019B /* main.m */,
 				7869272D0BB6ED9E0081019B /* rb_main.rb */,
-				512517440EBBBD3500FD8060 /* abstract_preferences_section.rb */,
 			);
 			name = objc;
 			sourceTree = "<group>";
@@ -655,8 +655,8 @@
 				7870BA440E111952004B30B4 /* bluestar.tiff in Resources */,
 				7870BA490E111BD0004B30B4 /* iconcontroller.rb in Resources */,
 				78B418B30E4EF5A60065F111 /* inputtextfield.rb in Resources */,
-				512517450EBBBD3500FD8060 /* abstract_preferences_section.rb in Resources */,
 				51F0A51E0EBCF70A00B2C878 /* controls_with_disabled_state.rb in Resources */,
+				510D9F6D0EC4FE9900D3BEFB /* abstract_preferences.rb in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
