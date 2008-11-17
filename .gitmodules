@@ -1,3 +1,0 @@
-[submodule "vendor/rubycocoa-prefs"]
-	path = vendor/rubycocoa-prefs
-	url = git://github.com/alloy/rubycocoa-prefs.git
