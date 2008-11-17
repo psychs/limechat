@@ -1,4 +1,0 @@
-Initialize the git submodule(s):
-
-  $ git submodule init
-  $ git submodule update
