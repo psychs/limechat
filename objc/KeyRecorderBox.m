@@ -32,8 +32,8 @@ static NSArray* padKeyArray;
 		@"↩", NUM(36),
 		@"⇥", NUM(48),
 		@"Space", NUM(49),
-		//@"⌫", NUM(51),
-		//@"⎋", NUM(53),
+		@"⌫", NUM(51),
+		@"⎋", NUM(53),
 		@"F17", NUM(64),
 		@"Clear", NUM(71),
 		@"⌅", NUM(76),
@@ -55,7 +55,7 @@ static NSArray* padKeyArray;
 		@"Help", NUM(114),
 		@"↖", NUM(115),
 		@"⇞", NUM(116),
-		//@"⌦", NUM(117),
+		@"⌦", NUM(117),
 		@"F4", NUM(118),
 		@"↘", NUM(119),
 		@"F2", NUM(120),
@@ -156,19 +156,24 @@ static NSArray* padKeyArray;
 	BOOL alt   = (m & NSAlternateKeyMask) != 0;
 	BOOL cmd   = (m & NSCommandKeyMask) != 0;
 	BOOL func  = (m & NSFunctionKeyMask) != 0;
+
+	// all keys
+	switch (k) {
+		case 51:	// backspace
+		case 117:	// delete
+			[self clearKey];
+			return YES;
+	}
 	
 	if (!ctrl && !shift && !alt && !cmd && !func) {
 		// no mods
 		switch (k) {
 			case 36:	// return
 			case 48:	// tab
+			case 49:	// space
 			case 53:	// esc
 			case 76:	// enter
 				return NO;
-			case 51:	// backspace
-			case 117:	// delete
-				[self clearKey];
-				return YES;
 			default:
 			{
 				NSString* s = [specialKeyMap objectForKey:NUM(k)];
