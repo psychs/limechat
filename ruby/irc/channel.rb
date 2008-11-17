@@ -151,9 +151,8 @@ class IRCChannel < NSObject
     i = find_member_index(nick)
     return unless i
     
-    remove_member(tonick, false)
-    
     m = @members[i]
+    remove_member(tonick, false)
     m.nick = tonick
     @members.delete_at(i)
     sorted_insert(m)
