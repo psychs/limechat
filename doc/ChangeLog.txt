@@ -1,6 +1,15 @@
-2008-10-27  Satoshi Nakagawa <psychs@limechat.net>
+2008-11-18  Satoshi Nakagawa <psychs@limechat.net>
 
-	Ported the app class from ruby to Obj-C for the glyph input manager.
+    Fixed a memory leak when enabling SSL.
+
+2008-11-17  Satoshi Nakagawa <psychs@limechat.net>
+
+    Prohibit backspace, delete and space keys for hotkey.
+    Fixed a crash when an user changed his nick to the same one except case.
+
+2008-11-08  Eloy Duran <e.duran@superalloy.nl>
+
+    Refactoring around preferences.
 
 2008-10-27  Satoshi Nakagawa <psychs@limechat.net>
 
