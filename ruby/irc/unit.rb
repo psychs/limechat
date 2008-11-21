@@ -1378,8 +1378,8 @@ class IRCUnit < NSObject
     target = ''
     pass = ''
     chans.each do |c|
-      org_target = target
-      org_pass = pass
+      org_target = target.dup
+      org_pass = pass.dup
       
       target << ',' unless target.empty?
       target << c.name
