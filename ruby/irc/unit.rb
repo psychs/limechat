@@ -1383,8 +1383,10 @@ class IRCUnit < NSObject
       
       target << ',' unless target.empty?
       target << c.name
-      pass << ',' unless pass.empty?
-      pass << c.password
+      unless c.password.empty?
+        pass << ',' unless pass.empty?
+        pass << c.password
+      end
       
       common = to_common_encoding(target + pass)
       if common.size > IRC::BODY_LEN
