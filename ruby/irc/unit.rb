@@ -464,7 +464,7 @@ class IRCUnit < NSObject
     when :onotice
       opmsg = true
       cmd = :notice
-    when :msg
+    when :msg,:m
       cmd = :privmsg
     when :leave
       cmd = :part
