@@ -1,3 +1,8 @@
+2008-11-24  Satoshi Nakagawa <psychs@limechat.net>
+
+    Fixed a bug, it tried to join channels with names of talks.
+    Added /m command.
+    
 2008-11-18  Satoshi Nakagawa <psychs@limechat.net>
 
     Fixed a memory leak when enabling SSL.
