@@ -1,3 +1,7 @@
+2008-12-12  Satoshi Nakagawa <psychs@limechat.net>
+
+    Open URLs without activation.
+
 2008-11-24  Satoshi Nakagawa <psychs@limechat.net>
 
     Fixed a bug, it tried to join channels with names of talks.
