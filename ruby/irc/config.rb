@@ -60,7 +60,7 @@ class IRCUnitConfig
   attr_accessor :channels
   attr_accessor :leaving_comment, :userinfo, :invisible, :login_commands
   attr_accessor :autoop
-  attr_accessor :owner, :id
+  attr_accessor :owner, :uid
   
   def initialize(seed={})
     @name = @host = @password = @nick = @username = @realname = @nickPassword = ''
@@ -259,7 +259,7 @@ class UnitTreeItem < ModelTreeItemBase
   attr_accessor :channels
   
   def id
-    @config.id
+    @config.uid
   end
 end
 

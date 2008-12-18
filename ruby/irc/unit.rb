@@ -5,7 +5,7 @@ require 'utility'
 require 'pathname'
 
 class IRCUnit < NSObject
-  attr_accessor :world, :log, :id
+  attr_accessor :world, :log, :uid
   attr_reader :config, :channels, :mynick, :mymode, :encoding, :myaddress, :isupport, :reconnect
   attr_accessor :property_dialog
   attr_accessor :keyword, :unread
@@ -108,7 +108,7 @@ class IRCUnit < NSObject
   
   def store_config
     u = @config.dup
-    u.id = @id
+    u.uid = @uid
     u.channels = []
     @channels.each do |c|
       u.channels << c.config.dup if c.channel?
@@ -681,7 +681,7 @@ class IRCUnit < NSObject
   end
   
   def find_channel_by_id(cid)
-    @channels.find {|c| c.id == cid }
+    @channels.find {|c| c.uid == cid }
   end
   
   def update_unit_title
@@ -1114,9 +1114,9 @@ class IRCUnit < NSObject
     if !channel
       click = nil
     elsif channel.unit? || channel.is_a?(String)
-      click = "unit #{self.id}"
+      click = "unit #{self.uid}"
     else
-      click = "channel #{self.id} #{channel.id}"
+      click = "channel #{self.uid} #{channel.uid}"
     end
     
     color_num = 0
@@ -1255,8 +1255,8 @@ class IRCUnit < NSObject
       name
     end
     desc = "<#{nick}> #{text}"
-    context = "#{@id}"
-    context << ";#{c.id}" if c
+    context = "#{@uid}"
+    context << ";#{c.uid}" if c
     @world.notify_on_growl(kind, title, desc, context)
   end
   
@@ -1277,8 +1277,8 @@ class IRCUnit < NSObject
     else
       return
     end
-    context = "#{@id}"
-    context << ";#{c.id}" if c
+    context = "#{@uid}"
+    context << ";#{c.uid}" if c
     @world.notify_on_growl(kind, title, desc, context)
   end
   
@@ -1883,7 +1883,7 @@ class IRCUnit < NSObject
       path = '~/Desktop'
     end
     
-    @world.dcc.add_receiver(@id, m.sender_nick, host, port, path, fname, size, ver)
+    @world.dcc.add_receiver(@uid, m.sender_nick, host, port, path, fname, size, ver)
     SoundPlayer.play(preferences.sound.file_receive_request)
     @world.notify_on_growl(:file_receive_request, m.sender_nick, fname)
     NSApp.requestUserAttention(NSInformationalRequest) unless NSApp.isActive

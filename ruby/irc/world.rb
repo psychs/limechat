@@ -72,7 +72,7 @@ class IRCWorld < NSObject
   def update_order(w)
     ary = []
     w.units.each do |i|
-      u = find_unit_by_id(i.id)
+      u = find_unit_by_id(i.uid)
       if u
         u.update_order(i)
         ary << u
@@ -89,7 +89,7 @@ class IRCWorld < NSObject
   def update_autoop(w)
     @config.autoop = w.autoop
     w.units.each do |i|
-      u = find_unit_by_id(i.id)
+      u = find_unit_by_id(i.uid)
       u.update_autoop(i) if u
     end
     save
@@ -143,13 +143,13 @@ class IRCWorld < NSObject
   end
 
   def find_unit_by_id(uid)
-    @units.find {|u| u.id == uid }
+    @units.find {|u| u.uid == uid }
   end
 
   def find_channel_by_id(uid, cid)
-    unit = @units.find {|u| u.id == uid }
+    unit = @units.find {|u| u.uid == uid }
     return nil unless unit
-    unit.channels.find {|c| c.id == cid }
+    unit.channels.find {|c| c.uid == cid }
   end
 
   def find_by_id(uid, cid)
@@ -162,7 +162,7 @@ class IRCWorld < NSObject
   def create_unit(seed, reload=true)
     @unit_id += 1
     u = IRCUnit.alloc.init
-    u.id = @unit_id
+    u.uid = @unit_id
     u.world = self
     u.log = create_log(u)
     u.setup(seed)
@@ -190,7 +190,7 @@ class IRCWorld < NSObject
 
     @channel_id += 1
     c = IRCChannel.alloc.init
-    c.id = @channel_id
+    c.uid = @channel_id
     c.unit = unit
     c.setup(seed)
     c.log = create_log(unit, c)
@@ -276,9 +276,9 @@ class IRCWorld < NSObject
     if !@selected
       @prev_selected = nil
     elsif @selected.unit?
-      @prev_selected = [@selected.id, nil]
+      @prev_selected = [@selected.uid, nil]
     else
-      @prev_selected = [@selected.unit.id, @selected.id]
+      @prev_selected = [@selected.unit.uid, @selected.uid]
     end
   end
 
@@ -683,9 +683,9 @@ class IRCWorld < NSObject
   def outlineView_writeItems_toPasteboard(sender, items, pboard)
     i = items.to_a[0]
     if i.is_a?(IRCUnit)
-      s = "#{i.id}"
+      s = "#{i.uid}"
     else
-      s = "#{i.unit.id}-#{i.id}"
+      s = "#{i.unit.uid}-#{i.uid}"
     end
     pboard.declareTypes_owner(TREE_DRAG_ITEM_TYPES, self)
     pboard.setPropertyList_forType(s, TREE_DRAG_ITEM_TYPE)
@@ -816,7 +816,7 @@ class IRCWorld < NSObject
     return unless u && c
     m = c.members[row]
     if m
-      files.each {|f| @dcc.add_sender(u.id, m.nick, f, false) }
+      files.each {|f| @dcc.add_sender(u.uid, m.nick, f, false) }
     end
   end
 

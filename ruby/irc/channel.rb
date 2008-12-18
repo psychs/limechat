@@ -2,7 +2,7 @@
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
 class IRCChannel < NSObject
-  attr_accessor :unit, :id, :topic, :names_init, :who_init, :log
+  attr_accessor :unit, :uid, :topic, :names_init, :who_init, :log
   attr_reader :config, :members, :mode
   attr_writer :op
   attr_accessor :keyword, :unread, :newtalk

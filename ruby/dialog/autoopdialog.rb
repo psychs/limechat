@@ -42,7 +42,7 @@ class AutoOpDialog < NSObject
   end
   
   def select_item(uid, chname=nil)
-    u = @c.find {|i| i.id == uid }
+    u = @c.find {|i| i.uid == uid }
     if u
       if chname
         c = u.channels.find {|i| i.name == chname }

@@ -381,7 +381,7 @@ class MenuController < NSObject
       sel = @world.selected
       if sel && !sel.unit? && /(\r\n|\r|\n)[^\r\n]/ =~ s
         # multi line
-        start_paste_dialog(sel.unit.mynick, sel.unit.id, sel.id, s)
+        start_paste_dialog(sel.unit.mynick, sel.unit.uid, sel.uid, s)
       else
         # single line
         @world.select_text unless NSTextView === t
@@ -445,7 +445,7 @@ class MenuController < NSObject
     return unless sel
     s = @text.stringValue
     @text.setStringValue('')
-    start_paste_dialog(sel.unit.mynick, sel.unit.id, sel.id, s, :edit)
+    start_paste_dialog(sel.unit.mynick, sel.unit.uid, sel.uid, s, :edit)
   end
 
   def onUseSelectionForFind(sender)
@@ -578,7 +578,7 @@ class MenuController < NSObject
     @nick_sheet = NickSheet.alloc.init
     @nick_sheet.window = @window
     @nick_sheet.delegate = self
-    @nick_sheet.uid = u.id
+    @nick_sheet.uid = u.uid
     @nick_sheet.start(u.mynick)
   end
 
@@ -656,7 +656,7 @@ class MenuController < NSObject
     d.parent = @window
     d.delegate = self
     u.property_dialog = d
-    d.start(u.store_config, u.id)
+    d.start(u.store_config, u.uid)
   end
 
   def serverDialog_onClose(sender)
@@ -678,7 +678,7 @@ class MenuController < NSObject
     u = @world.selunit
     return unless u
     onAutoOp(sender)
-    @autoop_dialog.select_item(u.id)
+    @autoop_dialog.select_item(u.uid)
   end
 
 
@@ -706,8 +706,8 @@ class MenuController < NSObject
     @comment_sheet = CommentSheet.alloc.init
     @comment_sheet.window = @window
     @comment_sheet.delegate = self
-    @comment_sheet.uid = u.id
-    @comment_sheet.cid = c.id
+    @comment_sheet.uid = u.uid
+    @comment_sheet.cid = c.uid
     @comment_sheet.prefix = 'topicPrompt'
     @comment_sheet.start('Please input topic.', c.topic)
   end
@@ -731,8 +731,8 @@ class MenuController < NSObject
     @mode_sheet = ModeSheet.alloc.init
     @mode_sheet.window = @window
     @mode_sheet.delegate = self
-    @mode_sheet.uid = u.id
-    @mode_sheet.cid = c.id
+    @mode_sheet.uid = u.uid
+    @mode_sheet.cid = c.uid
     @mode_sheet.start(c.name, c.mode)
   end
 
@@ -759,7 +759,7 @@ class MenuController < NSObject
     d.delegate = self
     d.prefix = 'newChannelDialog'
     @channel_dialogs << d
-    d.start(config, u.id, -1)
+    d.start(config, u.uid, -1)
   end
 
   def newChannelDialog_onClose(sender)
@@ -795,7 +795,7 @@ class MenuController < NSObject
     d.parent = @window
     d.delegate = self
     c.property_dialog = d
-    d.start(c.config, u.id, c.id)
+    d.start(c.config, u.uid, c.uid)
   end
 
   def channelDialog_onClose(sender)
@@ -816,7 +816,7 @@ class MenuController < NSObject
     u, c = @world.sel
     return unless u && c
     onAutoOp(sender)
-    @autoop_dialog.select_item(u.id, c.name)
+    @autoop_dialog.select_item(u.uid, c.name)
   end
 
 
@@ -921,7 +921,7 @@ class MenuController < NSObject
     return unless u
     @send_targets = selected_members(sender)
     return unless @send_targets && !@send_targets.empty?
-    @send_uid = u.id
+    @send_uid = u.uid
     @send = NSOpenPanel.openPanel
     @send.setCanChooseFiles(true)
     @send.setCanChooseDirectories(false)
