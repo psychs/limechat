@@ -77,6 +77,10 @@ class WelcomeDialog < NSObject
     if n
       @channels.delete_at(n)
       @channelTable.reloadData
+      size = @channels.size
+      n = size - 1 if size <= n
+      @channelTable.select(n) if n >= 0
+      tableViewSelectionIsChanging(nil)
     end
   end
   
