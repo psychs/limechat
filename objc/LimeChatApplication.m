@@ -4,7 +4,7 @@
 #import "LimeChatApplication.h"
 
 @interface NSObject (LimeChatApplicationDelegate)
-- (void)applicationDidReceivedHotKey:(id)sender;
+- (void)applicationDidReceiveHotKey:(id)sender;
 @end
 
 @implementation LimeChatApplication
@@ -18,8 +18,8 @@
 - (void)sendEvent:(NSEvent *)e
 {
 	if ([e type] == 14 && [e subtype] == 6) {
-		if ([[self delegate] respondsToSelector:@selector(applicationDidReceivedHotKey:)]) {
-			[[self delegate] applicationDidReceivedHotKey:self];
+		if ([[self delegate] respondsToSelector:@selector(applicationDidReceiveHotKey:)]) {
+			[[self delegate] applicationDidReceiveHotKey:self];
 		}
 	}
 	

@@ -162,7 +162,7 @@ class AppController < NSObject
     @tree.setNeedsDisplay(true)
   end
 
-  def applicationDidReceivedHotKey(sender)
+  def applicationDidReceiveHotKey(sender)
     if !@window.isVisible || !NSApp.isActive
       NSApp.activateIgnoringOtherApps(true)
       @window.makeKeyAndOrderFront(nil)
