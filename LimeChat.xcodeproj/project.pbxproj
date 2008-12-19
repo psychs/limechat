@@ -831,6 +831,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = LimeChat;
+				SDKROOT = /Developer/SDKs/MacOSX10.5.sdk;
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = YES;
 			};
@@ -855,6 +856,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = LimeChat;
+				SDKROOT = /Developer/SDKs/MacOSX10.5.sdk;
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
 			};
