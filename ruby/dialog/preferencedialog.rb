@@ -76,13 +76,6 @@ class PreferenceDialog < NSObject
     fire_event('onClose')
   end
   
-  # FIXME: What does fire_event('onOk', preferences) do?
-  # def onOk(sender)
-  #   save
-  #   fire_event('onOk', preferences)
-  #   @window.close
-  # end
-  
   def onLayoutChanged(sender)
     NSApp.delegate.update_layout
   end

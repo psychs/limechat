@@ -501,7 +501,6 @@ class IRCWorld < NSObject
   end
 
   def preferences_changed
-    register_growl
     @console.max_lines = preferences.general.max_log_lines
     @units.each {|u| u.preferences_changed}
     reload_theme
