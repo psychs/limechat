@@ -6,6 +6,14 @@
 	<array>
 		<dict>
 			<key>CLASS</key>
+			<string>TextFieldWithDisabledState</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSTextField</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
 			<string>KeyRecorderBox</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
