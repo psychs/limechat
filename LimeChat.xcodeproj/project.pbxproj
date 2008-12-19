@@ -104,7 +104,6 @@
 		78E5723F0C1C30C300BDF7EC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 786926F40BB6EC1B0081019B /* main.m */; };
 		78E572420C1C30C300BDF7EC /* GradientFill.m in Sources */ = {isa = PBXBuildFile; fileRef = 7804271D0BCA810600C14486 /* GradientFill.m */; };
 		78E572430C1C30CE00BDF7EC /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 29B97318FDCFA39411CA2CEA /* MainMenu.nib */; };
-		78E572440C1C30CE00BDF7EC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		78E572450C1C30CE00BDF7EC /* rb_main.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7869272D0BB6ED9E0081019B /* rb_main.rb */; };
 		78E572460C1C30CE00BDF7EC /* CommentSheet.nib in Resources */ = {isa = PBXBuildFile; fileRef = 78C5BAD30BE7B95100C4497A /* CommentSheet.nib */; };
 		78E572470C1C30CE00BDF7EC /* ModeSheet.nib in Resources */ = {isa = PBXBuildFile; fileRef = 781E254B0BE9E8E20040F56E /* ModeSheet.nib */; };
@@ -130,7 +129,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		29B97319FDCFA39411CA2CEA /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/MainMenu.nib; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
@@ -308,7 +306,6 @@
 				78A55F040E810DBC00339EBC /* Images */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 				78AD78E20C61B8F8001E77F4 /* Localizable.strings */,
-				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
 				29B97318FDCFA39411CA2CEA /* MainMenu.nib */,
 				78496EF80C288B070084A836 /* PreferenceDialog.nib */,
 				783D0B1E0CF45BC6002CC2FB /* ListDialog.nib */,
@@ -571,7 +568,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				78E572430C1C30CE00BDF7EC /* MainMenu.nib in Resources */,
-				78E572440C1C30CE00BDF7EC /* InfoPlist.strings in Resources */,
 				78E572450C1C30CE00BDF7EC /* rb_main.rb in Resources */,
 				78E572460C1C30CE00BDF7EC /* CommentSheet.nib in Resources */,
 				78E572470C1C30CE00BDF7EC /* ModeSheet.nib in Resources */,
@@ -687,14 +683,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		089C165CFE840E0CC02AAC07 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				089C165DFE840E0CC02AAC07 /* English */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
 		29B97318FDCFA39411CA2CEA /* MainMenu.nib */ = {
 			isa = PBXVariantGroup;
 			children = (

@@ -1851,7 +1851,10 @@ class IRCUnit < NSObject
       when :time
         send_ctcp_reply(nick, command, Time.now.to_s)
       when :version
-        send_ctcp_reply(nick, command, _('AppVersion').to_s)
+        name = NSBundle.mainBundle.infoDictionary[:LCApplicationName].to_s
+        ver = NSBundle.mainBundle.infoDictionary[:CFBundleVersion].to_s
+        s = "#{name} #{ver}"
+        send_ctcp_reply(nick, command, s)
       when :userinfo
         send_ctcp_reply(nick, command, @config.userinfo)
       when :clientinfo
