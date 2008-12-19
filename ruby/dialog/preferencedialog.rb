@@ -13,6 +13,8 @@ class PreferenceDialog < NSObject
   ib_outlet :hotkey
   ib_outlet :transcript_folder
   ib_outlet :theme
+  ib_outlet :highlightArrayController, :dislikeArrayController, :ignoreArrayController
+  ib_outlet :highlightTable, :dislikeTable, :ignoreTable
   
   include Preferences::KVOCallbackHelper
   extend Preferences::StringArrayWrapperHelper
@@ -90,6 +92,41 @@ class PreferenceDialog < NSObject
       preferences.general.use_hotkey = false
       NSApp.unregisterHotKey
     end
+  end
+  
+  # Highlight
+  
+  def editTable(table)
+    row = table.numberOfRows - 1
+    table.scrollRowToVisible(row)
+    table.editColumn_row_withEvent_select(0, row, nil, true)
+  end
+  
+  def editHighlightWord
+    editTable(@highlightTable)
+  end
+  
+  def editDislikeWord
+    editTable(@dislikeTable)
+  end
+  
+  def editIgnoreWord
+    editTable(@ignoreTable)
+  end
+  
+  def onAddHighlightWord(sender)
+    @highlightArrayController.add(nil)
+    performSelector_withObject_afterDelay('editHighlightWord', nil, 0)
+  end
+  
+  def onAddDislikeWord(sender)
+    @dislikeArrayController.add(nil)
+    performSelector_withObject_afterDelay('editDislikeWord', nil, 0)
+  end
+  
+  def onAddIgnoreWord(sender)
+    @ignoreArrayController.add(nil)
+    performSelector_withObject_afterDelay('editIgnoreWord', nil, 0)
   end
   
   # Validate these values before setting them on the preferences.

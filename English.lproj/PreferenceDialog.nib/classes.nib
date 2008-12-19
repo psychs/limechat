@@ -49,6 +49,12 @@
 				<string>id</string>
 				<key>numberOfRowsInTableView</key>
 				<string>id</string>
+				<key>onAddDislikeWord</key>
+				<string>id</string>
+				<key>onAddHighlightWord</key>
+				<string>id</string>
+				<key>onAddIgnoreWord</key>
+				<string>id</string>
 				<key>onCancel</key>
 				<string>id</string>
 				<key>onChangedTheme</key>
@@ -102,6 +108,10 @@
 				<string>id</string>
 				<key>delegate</key>
 				<string>id</string>
+				<key>dislikeArrayController</key>
+				<string>id</string>
+				<key>dislikeTable</key>
+				<string>id</string>
 				<key>general_confirm_quit</key>
 				<string>id</string>
 				<key>general_connect_on_doubleclick</key>
@@ -124,7 +134,15 @@
 				<string>id</string>
 				<key>general_use_growl</key>
 				<string>id</string>
+				<key>highlightArrayController</key>
+				<string>id</string>
+				<key>highlightTable</key>
+				<string>id</string>
 				<key>hotkey</key>
+				<string>id</string>
+				<key>ignoreArrayController</key>
+				<string>id</string>
+				<key>ignoreTable</key>
 				<string>id</string>
 				<key>keyword_current_nick</key>
 				<string>id</string>
