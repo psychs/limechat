@@ -301,6 +301,7 @@ class MenuController < NSObject
   end
 
   def preferenceDialog_onClose(sender)
+    preferences.save
     @world.preferences_changed
     @pref_dialog = nil
   end

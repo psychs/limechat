@@ -76,7 +76,6 @@ class PreferenceDialog < NSObject
     NSFontPanel.sharedFontPanel.orderOut(nil)
     @log_dialog.cancel(nil) if @log_dialog
     fire_event('onClose')
-    NSUserDefaults.standardUserDefaults.synchronize
   end
   
   def onLayoutChanged(sender)
