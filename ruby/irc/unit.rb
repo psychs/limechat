@@ -529,7 +529,15 @@ class IRCUnit < NSObject
         sign = '+'
       end
       params = s.split(/ +/)
-      s = sign + command[0,1] * params.size + ' ' + s
+      if params.empty?
+        if cmd == :ban
+          s = '+b'
+        else
+          return true
+        end
+      else
+        s = sign + command[0,1] * params.size + ' ' + s
+      end
       cmd = :mode
     when :umode
       cmd = :mode
