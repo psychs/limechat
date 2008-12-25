@@ -170,6 +170,8 @@ class MenuController < NSObject
       op && count_selected_members?(i)
     when 2011  # dcc send file
       login_unit_chtalk && count_selected_members?(i) && !!u.myaddress
+    when 2021  # register to auto op
+      count_selected_members?(i)
     when 2101..2105  # ctcp
       login_unit_chtalk && count_selected_members?(i)
     when 2031  # kick

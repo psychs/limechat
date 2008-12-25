@@ -258,7 +258,7 @@ end
 class UnitTreeItem < ModelTreeItemBase
   attr_accessor :channels
   
-  def id
+  def uid
     @config.uid
   end
 end
