@@ -57,6 +57,7 @@ class Preferences
     
     defaults_accessor :log_transcript, false
     defaults_accessor :transcript_folder, '~/Documents/LimeChat Transcripts'
+    defaults_accessor :show_join_leave, true
     defaults_accessor :max_log_lines, 300
     
     defaults_accessor :paste_syntax, (LanguageSupport.primary_language == 'ja' ? 'notice' : 'privmsg')
