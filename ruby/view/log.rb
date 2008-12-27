@@ -210,6 +210,7 @@ class LogController < NSObject
     return unless doc
     body = doc.body
     @html = nil
+    @loaded = false
     @view.mainFrame.loadHTMLString_baseURL(initial_document, @theme.log.baseurl)
     @scroller.setNeedsDisplay(true)
 	end
