@@ -62,7 +62,7 @@ class ISupportInfo
     
     def reset
       parse_modes('3')
-      parse_prefix('(ov)@+')
+      parse_prefix('(ohv)@%+')
       parse_chanmodes('beIR,k,l,imnpstaqr')
     end
   
