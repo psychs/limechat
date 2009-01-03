@@ -215,7 +215,7 @@ class MemberListViewCell < NSCell
       else
         color = theme.member_list_sel_color || NSColor.selectedControlTextColor
       end
-    elsif @member.o
+    elsif @member.op?
       color = theme.member_list_op_color
     else
       color = theme.member_list_color
