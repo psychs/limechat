@@ -41,7 +41,7 @@ class IRCSendingMessage
     case @command
     when :privmsg,:notice
       force_complete_colon = true
-    when :nick,:mode,:join,:names,:who,:list,:invite,:whois,:whowas,:ison
+    when :nick,:mode,:join,:names,:who,:list,:invite,:whois,:whowas,:ison,:user
       @complete_colon = false
     end
 

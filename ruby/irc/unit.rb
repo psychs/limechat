@@ -945,7 +945,7 @@ class IRCUnit < NSObject
     mymode += 8 if @config.invisible
     send(:pass, @config.password) if @config.password && !@config.password.empty?
     send(:nick, @sentnick)
-    send(:user, @config.username, mymode.to_s, '*' ,@config.realname)
+    send(:user, @config.username, mymode.to_s, '*', ":#{@config.realname}")
     update_unit_title
   end
   
@@ -963,7 +963,7 @@ class IRCUnit < NSObject
     end
     m.apply! {|i| to_local_encoding(i, use_fallback) }
     m.apply! {|i| StringValidator::validate_utf8(i) }
-    #puts m.to_s
+    puts m.to_s
     
     if m.numeric_reply > 0
       receive_numeric_reply(m)
