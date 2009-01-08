@@ -165,7 +165,7 @@ static NSArray* padKeyArray;
 			return YES;
 	}
 	
-	if (!ctrl && !shift && !alt && !cmd && !func) {
+	if (!ctrl && !alt && !cmd && !func) {
 		// no mods
 		switch (k) {
 			case 36:	// return
@@ -185,13 +185,6 @@ static NSArray* padKeyArray;
 			}
 		}
 	}
-	else if (!ctrl && shift && !alt && !cmd && !func) {
-		// shift
-		switch (k) {
-			case 48:	// tab
-				return NO;
-		}
-	}
 	else if (!ctrl && !shift && !alt && cmd && !func) {
 		// cmd
 		if (![padKeyArray containsObject:NUM(k)]) {
@@ -200,8 +193,11 @@ static NSArray* padKeyArray;
 	}
 	
 	valid = YES;
-	if ([_delegate respondsToSelector:@selector(hotkeyUpdated:)])
+	
+	if ([_delegate respondsToSelector:@selector(hotkeyUpdated:)]) {
 		[_delegate performSelector:@selector(hotkeyUpdated:) withObject:self];
+	}
+	
 	[self showCurrentKey];
 	return YES;
 }
