@@ -1,7 +1,7 @@
 require 'pathname'
 require 'fileutils'
 
-APP_SHORT_NAME = 'LimeChat'
+APP_SHORT_NAME = defined?(MACRUBY_VERSION) ? 'MRLimeChat' : 'LimeChat'
 APP_NAME = APP_SHORT_NAME + '.app'
 ROOT_PATH = Pathname.new(__FILE__).dirname
 DESKTOP_PATH = Pathname.new('~/Desktop').expand_path
