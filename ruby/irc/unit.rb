@@ -479,8 +479,16 @@ class IRCUnit < NSObject
     
     # get target if needed
     case cmd
-    when :privmsg,:notice,:action,:invite
-      target = s.token!
+    when :privmsg,:notice,:action
+      if opmsg
+        if sel && sel.channel? && !s.channelname?
+          target = sel.name
+        else
+          target = s.token!
+        end
+      else
+        target = s.token!
+      end
     when :me
       cmd = :action
       if sel
@@ -515,6 +523,8 @@ class IRCUnit < NSObject
         target = s.token!
         target = '#' + target unless target.channelname?
       end
+    when :invite
+      target = s.token!
     when :op,:deop,:halfop,:dehalfop,:voice,:devoice,:ban,:unban
       if sel && sel.channel? && !s.modechannelname?
         target = sel.name
