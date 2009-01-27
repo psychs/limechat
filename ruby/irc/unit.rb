@@ -48,6 +48,8 @@ class IRCUnit < NSObject
   def setup(seed)
     @config = seed.dup
     @config.channels = nil
+    migrate
+    
     @address_detection_method = preferences.dcc.address_detection_method
     case @address_detection_method
     when Preferences::Dcc::ADDR_DETECT_NIC
@@ -55,6 +57,11 @@ class IRCUnit < NSObject
     when Preferences::Dcc::ADDR_DETECT_SPECIFY
       Resolver.resolve(self, preferences.dcc.myaddress)
     end
+  end
+  
+  def migrate
+    # migrate irc.friend.td.nu to irc.friend-chat.jp
+    @config.host = @config.host.gsub(/^irc.friend.td.nu/, 'irc.friend-chat.jp')
   end
   
   def update_config(seed)
