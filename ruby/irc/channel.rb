@@ -300,7 +300,7 @@ class IRCChannel < NSObject
   
   def check_all_autoop
     @members.each do |m|
-      if !m.nick.empty? && !m.username.empty? && !m.address.empty?
+      if !m.op? && !m.nick.empty? && !m.username.empty? && !m.address.empty?
         check_autoop(m.nick, "#{m.nick}!#{m.username}@#{m.address}")
       end
     end
