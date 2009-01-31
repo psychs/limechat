@@ -11,8 +11,14 @@ class AppController < NSObject
   ib_outlet :root_split, :log_split, :info_split, :tree_split
   ib_outlet :menu, :server_menu, :channel_menu, :member_menu, :tree_menu, :log_menu, :console_menu, :url_menu, :addr_menu, :chan_menu
 
+  KInternetEventClass = KAEGetURL = 1196773964
+
   def awakeFromNib
     prelude
+
+    # register URL handler
+    em = NSAppleEventManager.sharedAppleEventManager
+    em.setEventHandler_andSelector_forEventClass_andEventID(self, 'handleURLEvent:withReplyEvent:', KInternetEventClass, KAEGetURL)
 
     #FileUtils.mkpath(preferences.general.transcript_folder.expand_path) rescue nil
 
@@ -140,6 +146,10 @@ class AppController < NSObject
   end
 
   def applicationWillTerminate(notification)
+    # unregister URL handler
+    em = NSAppleEventManager.sharedAppleEventManager
+    em.removeEventHandlerForEventClass_andEventID(KInternetEventClass, KAEGetURL)
+
     NSApp.unregisterHotKey
     stop_timer
     @menu.terminate
@@ -170,6 +180,10 @@ class AppController < NSObject
     else
       NSApp.hide(nil)
     end
+  end
+
+  def handleURLEvent_withReplyEvent(event, replyEvent)
+    url = event.descriptorAtIndex(1).stringValue.to_s
   end
 
   def windowShouldClose(sender)

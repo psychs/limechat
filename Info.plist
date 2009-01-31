@@ -28,6 +28,18 @@
 	<string>Copyright 2007-2008 Satoshi Nakagawa</string>
 	<key>CFBundleGetInfoString</key>
 	<string>LimeChat for OSX, Copyright 2007-2008 Satoshi Nakagawa</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>Internet Relay Chat</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>irc</string>
+				<string>limechat</string>
+			</array>
+		</dict>
+	</array>
 	<key>LCApplicationName</key>
 	<string>LimeChat for OSX</string>
 	<key>SACrashReporterDeveloperName</key>
