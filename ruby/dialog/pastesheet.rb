@@ -94,10 +94,6 @@ class PasteSheet < CocoaSheet
     end
   end
   
-  def dialogWindow_enter
-    onSend(nil)
-  end
-  
   private
   
   def set_requesting
