@@ -429,6 +429,12 @@ class AppController < NSObject
       defaults.synchronize
     end
     
+    # migrate paste syntax
+    case preferences.general.paste_syntax
+    when 'privmsg','notice'
+      preferences.general.paste_syntax = 'plain_text'
+    end
+    
     # initialize theme directory
     FileUtils.mkpath(Pathname.new('~/Library/Application Support/LimeChat/Themes').expand_path.to_s) rescue nil
     FileUtils.cp(Dir.glob(ViewTheme.RESOURCE_BASE + '/Sample.*'), newdir.to_s) rescue nil

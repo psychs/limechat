@@ -7,7 +7,7 @@ class PastieClient < NSObject
   attr_accessor :delegate
   
   TIMEOUT = 10
-  REQUEST_URL = 'http://pastie.caboo.se/pastes/'
+  REQUEST_URL = 'http://pastie.org/pastes/'
   
   def start(content, nick, syntax='ruby', is_private=true)
     cancel

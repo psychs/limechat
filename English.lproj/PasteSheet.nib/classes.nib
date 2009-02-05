@@ -9,7 +9,9 @@
 			<dict>
 				<key>onCancel</key>
 				<string>id</string>
-				<key>onSend</key>
+				<key>onPasteOnline</key>
+				<string>id</string>
+				<key>onSendInChannel</key>
 				<string>id</string>
 			</dict>
 			<key>CLASS</key>
@@ -18,11 +20,15 @@
 			<string>ObjC</string>
 			<key>OUTLETS</key>
 			<dict>
+				<key>commandPopup</key>
+				<string>id</string>
 				<key>errorLabel</key>
+				<string>id</string>
+				<key>pasteButton</key>
 				<string>id</string>
 				<key>progressIndicator</key>
 				<string>id</string>
-				<key>sendButton</key>
+				<key>sendInChannelButton</key>
 				<string>id</string>
 				<key>sheet</key>
 				<string>id</string>

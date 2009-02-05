@@ -406,21 +406,23 @@ class MenuController < NSObject
     @paste_sheet.uid = uid
     @paste_sheet.cid = cid
     @paste_sheet.nick = mynick
-    @paste_sheet.start(s, mode, preferences.general.paste_syntax, size)
+    @paste_sheet.start(s, mode, preferences.general.paste_syntax, preferences.general.paste_command, size)
   end
 
-  def pasteSheet_onSend(sender, s, syntax, size, mode, short_text)
+  def pasteSheet_onSend(sender, s, button, syntax, cmd, size, mode, short_text)
     preferences.save_window('paste_sheet', size.to_dic)
-    preferences.general.paste_syntax = syntax unless @short_text
+    unless @short_text
+      preferences.general.paste_syntax = syntax
+      preferences.general.paste_command = cmd
+    end
     preferences.save
     @paste_sheet = nil
 
-    case syntax
-    when 'privmsg','notice'
+    if button == :send
       u, c = @world.find_by_id(sender.uid, sender.cid)
       return unless u && c
       s = s.gsub(/\r\n|\r|\n/, "\n")
-      u.send_text(c, syntax.to_sym, s)
+      u.send_text(c, cmd.to_sym, s)
     else
       @world.select_text
       e = @window.fieldEditor_forObject(false, @text)
@@ -429,9 +431,12 @@ class MenuController < NSObject
     end
   end
 
-  def pasteSheet_onCancel(sender, syntax, size, mode, short_text)
+  def pasteSheet_onCancel(sender, syntax, cmd, size, mode, short_text)
     preferences.save_window('paste_sheet', size.to_dic)
-    preferences.general.paste_syntax = syntax unless @short_text
+    unless @short_text
+      preferences.general.paste_syntax = syntax
+      preferences.general.paste_command = cmd
+    end
     preferences.save
     if mode == :edit
       @text.setStringValue(@paste_sheet.original_text)

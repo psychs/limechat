@@ -6,14 +6,15 @@ require 'cocoasheet'
 class PasteSheet < CocoaSheet
   attr_accessor :uid, :cid, :nick
   attr_reader :original_text
-  ib_outlet :text, :sendButton, :syntaxPopup, :progressIndicator, :errorLabel
-  first_responder :sendButton
+  ib_outlet :text, :pasteButton, :sendInChannelButton, :syntaxPopup, :commandPopup, :progressIndicator, :errorLabel
+  first_responder :pasteButton
   buttons :Cancel
   
-  def startup(str, mode, syntax, size)
+  def startup(str, mode, syntax, cmd, size)
     str = str.gsub(/\r\n|\r|\n/, "\n")
     @original_text = str
     
+    @button = nil
     @short_text = false
     @mode = mode
     if @mode == :edit
@@ -24,6 +25,7 @@ class PasteSheet < CocoaSheet
     end
     
     @syntaxPopup.selectItemWithTag(syntax_to_tag(syntax))
+    @commandPopup.selectItemWithTag(syntax_to_tag(cmd))
     @text.textStorage.setAttributedString(NSAttributedString.alloc.initWithString(str))
     @sheet.setContentSize(size) if size
     @sheet.key_delegate = self
@@ -31,11 +33,12 @@ class PasteSheet < CocoaSheet
   
   def shutdown(button)
     syntax = tag_to_syntax(@syntaxPopup.selectedItem.tag)
+    cmd = tag_to_syntax(@commandPopup.selectedItem.tag)
     if @result
-      fire_event('onSend', @result, syntax, @sheet.frame.size, @mode, @short_text)
+      fire_event('onSend', @result, @button, syntax, cmd, @sheet.frame.size, @mode, @short_text)
     else
       @conn.cancel if @conn
-      fire_event('onCancel', syntax, @sheet.contentView.frame.size, @mode, @short_text)
+      fire_event('onCancel', syntax, cmd, @sheet.contentView.frame.size, @mode, @short_text)
     end
   end
   
@@ -43,21 +46,22 @@ class PasteSheet < CocoaSheet
     NSApp.endSheet_returnCode(@sheet, 0)
   end
   
-  def onSend(sender)
+  def onSendInChannel(sender)
+    @button = :send
+    @result = @text.textStorage.string.to_s
+    close
+  end
+  
+  def onPasteOnline(sender)
+    @button = :paste
+    @interval = 10
+    set_requesting
     syntax = tag_to_syntax(@syntaxPopup.selectedItem.tag)
-    case syntax
-    when 'privmsg','notice'
-      @result = @text.textStorage.string.to_s
-      close
-    else
-      @interval = 10
-      set_requesting
-      syntax = tag_to_syntax(@syntaxPopup.selectedItem.tag)
-      @result = nil
-      @conn = PasternakClient.alloc.init
-      @conn.delegate = self
-      @conn.start(@text.textStorage.string.to_s, @nick, syntax)
-    end
+    @result = nil
+    @conn = PasternakClient.alloc.init
+    #@conn = PastieClient.alloc.init
+    @conn.delegate = self
+    @conn.start(@text.textStorage.string.to_s, @nick, syntax)
   end
   
   def pastie_on_success(sender, s)
@@ -99,14 +103,18 @@ class PasteSheet < CocoaSheet
   def set_requesting
     @errorLabel.setStringValue("Sending...")
     @progressIndicator.startAnimation(nil)
-    @sendButton.setEnabled(false)
+    @pasteButton.setEnabled(false)
+    @sendInChannelButton.setEnabled(false)
     @syntaxPopup.setEnabled(false)
+    @commandPopup.setEnabled(false)
   end
   
   def set_waiting
     @progressIndicator.stopAnimation(nil)
-    @sendButton.setEnabled(true)
+    @pasteButton.setEnabled(true)
+    @sendInChannelButton.setEnabled(true)
     @syntaxPopup.setEnabled(true)
+    @commandPopup.setEnabled(true)
   end
   
   SYNTAXES = [
