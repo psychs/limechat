@@ -1607,6 +1607,12 @@ class IRCUnit < NSObject
       print_both(c || chname, :join, "#{nick} has joined (#{m.sender_username}@#{m.sender_address})")
     end
     check_autoop(c, m.sender_nick, m.sender) unless myself
+    
+    # add member to talk
+    c = find_channel(nick)
+    if c
+      c.add_member(User.new(nick, m.sender_username, m.sender_address))
+    end
   end
   
   def receive_part(m)
