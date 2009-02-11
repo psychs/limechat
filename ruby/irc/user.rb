@@ -3,13 +3,10 @@
 
 class User
   attr_accessor :nick, :username, :address, :q, :a, :o, :h, :v
-  attr_reader :incoming_weight, :outgoing_weight
+  attr_reader :canonical_nick, :incoming_weight, :outgoing_weight
   
   def initialize(nick, *args)
-    @nick = nick
-    @outgoing_weight = 0
-    @incoming_weight = 0
-    @last_faded_weights = Time.now
+    self.nick = nick
     @username = args[0] || ''
     @address = args[1] || ''
     @q = args[2] || false
@@ -17,6 +14,15 @@ class User
     @o = args[4] || false
     @h = args[5] || false
     @v = args[6] || false
+    
+    @outgoing_weight = 0
+    @incoming_weight = 0
+    @last_faded_weights = Time.now
+  end
+  
+  def nick=(nick)
+    @nick = nick
+    @canonical_nick = nick.downcase
   end
   
   def op?

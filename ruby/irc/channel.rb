@@ -140,9 +140,10 @@ class IRCChannel < NSObject
   end
   
   def remove_member(nick, autoreload=true)
-    t = nick.downcase
-    @members.delete_if {|m| m.nick.downcase == t }
-    @op_queue.delete_if {|i| i.downcase == t }
+    if i = find_member_index(nick)
+      @members.delete_at(i)
+    end
+    remove_from_op_queue(nick)
     
     reload_members if autoreload
   end
@@ -160,10 +161,10 @@ class IRCChannel < NSObject
     # update op queue
     #
     t = nick.downcase
-    index = @op_queue.index {|i| i.downcase == t }
+    index = @op_queue.index {|i| i == t }
     if index
       @op_queue.delete_at(index)
-      @op_queue << tonick
+      @op_queue << tonick.downcase
     end
     
     reload_members
@@ -208,9 +209,8 @@ class IRCChannel < NSObject
     
     # update op queue
     #
-    if type == :o && value
-      t = nick.downcase
-      @op_queue.delete_if {|i| i.downcase == t }
+    if (type == :o || type == :a || type == :q) && value
+      remove_from_op_queue(nick)
     end
     
     reload_members
@@ -223,12 +223,12 @@ class IRCChannel < NSObject
   
   def find_member_index(nick)
     t = nick.downcase
-    @members.index {|m| m.nick.downcase == t }
+    @members.index {|m| m.canonical_nick == t }
   end
   
   def find_member(nick)
     t = nick.downcase
-    @members.find {|m| m.nick.downcase == t }
+    @members.find {|m| m.canonical_nick == t }
   end
   
   def count_members
@@ -257,11 +257,11 @@ class IRCChannel < NSObject
     end
     head.upto(tail-1) do |idx|
       if compare_members(@members[idx], item) > 0
-        @members.insert idx, item
+        @members.insert(idx, item)
         return
       end
     end
-    @members.insert tail, item
+    @members.insert(tail, item)
   end
   
   def compare_members(a, b)
@@ -272,23 +272,23 @@ class IRCChannel < NSObject
     elsif a.q != b.q
       a.q ? -1 : 1
     elsif a.q && b.q
-      a.nick.casecmp(b.nick)
+      a.canonical_nick <=> b.canonical_nick
     elsif a.a != b.a
       a.a ? -1 : 1
     elsif a.a && b.a
-      a.nick.casecmp(b.nick)
+      a.canonical_nick <=> b.canonical_nick
     elsif a.o != b.o
       a.o ? -1 : 1
     elsif a.o && b.o
-      a.nick.casecmp(b.nick)
+      a.canonical_nick <=> b.canonical_nick
     elsif a.h != b.h
       a.h ? -1 : 1
     elsif a.h && b.h
-      a.nick.casecmp(b.nick)
+      a.canonical_nick <=> b.canonical_nick
     elsif a.v != b.v
       a.v ? -1 : 1
     else
-      a.nick.casecmp(b.nick)
+      a.canonical_nick <=> b.canonical_nick
     end
   end
   
@@ -308,8 +308,15 @@ class IRCChannel < NSObject
   
   def add_to_op_queue(nick)
     t = nick.downcase
-    unless @op_queue.find {|i| i.downcase == t }
-      @op_queue << nick.dup
+    unless @op_queue.find {|i| i == t }
+      @op_queue << t
+    end
+  end
+  
+  def remove_from_op_queue(nick)
+    t = nick.downcase
+    if index = @op_queue.index {|i| i == t }
+      @op_queue.delete_at(index)
     end
   end
   
