@@ -2224,18 +2224,21 @@ class IRCUnit < NSObject
         print_unknown_reply(m)
       end
     when 322	# RPL_LIST
-      unless @in_list
-        @in_list = true
-        @list_dialog.clear if @list_dialog
-      end
       chname = m[1]
       count = m[2]
       topic = m.sequence(3)
-      unless @list_dialog
-        create_channel_list_dialog
+      unless @in_list
+        @in_list = true
+        if @list_dialog
+          @list_dialog.clear
+        else
+          create_channel_list_dialog
+        end
       end
       if @list_dialog
         @list_dialog.add_item([chname, count.to_i, topic])
+      else
+        print_both(nil, :reply, "#{chname} (#{count}) #{topic}")
       end
     when 323	# RPL_LISTEND
       @in_list = false
