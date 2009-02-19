@@ -19,15 +19,15 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>0.20.5</string>
+	<string>0.20.6</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>LimeChatApplication</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright 2007-2008 Satoshi Nakagawa</string>
+	<string>Copyright 2007-2009 Satoshi Nakagawa</string>
 	<key>CFBundleGetInfoString</key>
-	<string>LimeChat for OSX, Copyright 2007-2008 Satoshi Nakagawa</string>
+	<string>LimeChat for OSX, Copyright 2007-2009 Satoshi Nakagawa</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
