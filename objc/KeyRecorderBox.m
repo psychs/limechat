@@ -185,6 +185,13 @@ static NSArray* padKeyArray;
 			}
 		}
 	}
+	else if (!ctrl && shift && !alt && !cmd && !func) {
+		// shift
+		switch (k) {
+			case 48:	// tab
+				return NO;
+		}
+	}
 	else if (!ctrl && !shift && !alt && cmd && !func) {
 		// cmd
 		if (![padKeyArray containsObject:NUM(k)]) {
