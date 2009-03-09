@@ -157,4 +157,6 @@ typedef enum AsyncSocketError AsyncSocketError;
 + (NSData*) LFData;   // 0x0A
 + (NSData*) ZeroData; // 0x00
 
++ (NSString*)posixErrorStringFromErrno:(int)code;
+
 @end

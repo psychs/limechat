@@ -93,7 +93,18 @@ class TcpClient < NSObject
   
   def onSocket_willDisconnectWithError(sock, err)
     return unless check_tag(sock)
-    @delegate.tcpclient_on_error(self, err) if @delegate && err
+    return unless err
+    
+    str = nil
+    
+    case err.domain.to_s
+    when NSPOSIXErrorDomain.to_s
+      str = AsyncSocket.posixErrorStringFromErrno(err.code)
+    end
+    
+    str = err.localizedDescription.to_s unless str
+    
+    @delegate.tcpclient_on_error(self, str) if @delegate
   end
   
   def onSocketDidDisconnect(sock)

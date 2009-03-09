@@ -1581,4 +1581,15 @@ static void MyCFWriteStreamCallback (CFWriteStreamRef stream, CFStreamEventType 
 	CFWriteStreamSetProperty(theWriteStream, kCFStreamPropertySSLSettings, settings);
 }
 
++ (NSString*)posixErrorStringFromErrno:(int)code
+{
+  const char* error = strerror(code);
+  if (error) {
+    return [NSString stringWithCString:error];
+  }
+  else {
+    return nil;
+  }
+}
+
 @end

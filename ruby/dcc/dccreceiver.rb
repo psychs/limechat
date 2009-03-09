@@ -83,7 +83,7 @@ class DccReceiver
   def tcpclient_on_error(sender, err)
     return if @status == :complete || @status == :error
     @status = :error
-    @error = err.localizedDescription.to_s
+    @error = err
     close
     @delegate.dccreceiver_on_error(self)
   end

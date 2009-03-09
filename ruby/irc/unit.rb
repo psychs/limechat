@@ -1011,7 +1011,7 @@ class IRCUnit < NSObject
   end
   
   def ircsocket_on_error(err)
-    print_error(err.localizedDescription.to_s)
+    print_error(err)
   end
   
   def ResolverOnResolve(addr)
