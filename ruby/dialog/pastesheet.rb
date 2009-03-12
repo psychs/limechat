@@ -7,7 +7,7 @@ class PasteSheet < CocoaSheet
   attr_accessor :uid, :cid, :nick
   attr_reader :original_text
   ib_outlet :text, :pasteButton, :sendInChannelButton, :syntaxPopup, :commandPopup, :progressIndicator, :errorLabel
-  first_responder :pasteButton
+  first_responder :sendInChannelButton
   buttons :Cancel
   
   def startup(str, mode, syntax, cmd, size)
