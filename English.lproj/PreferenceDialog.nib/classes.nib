@@ -59,6 +59,8 @@
 				<string>id</string>
 				<key>onChangedTheme</key>
 				<string>id</string>
+				<key>onChangedTransparency</key>
+				<string>id</string>
 				<key>onDccAddressDetectionMethodChanged</key>
 				<string>id</string>
 				<key>onDccLastPortChanged</key>

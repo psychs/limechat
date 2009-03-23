@@ -227,6 +227,10 @@ class PreferenceDialog < NSObject
     NSWorkspace.sharedWorkspace.openFile(path.to_s)
   end
   
+  def onChangedTransparency(sender)
+    onLayoutChanged(nil)
+  end
+  
   private
   
   def load_theme

@@ -46,6 +46,7 @@ class AppController < NSObject
     @member_list.tableColumns[0].setDataCell(cell)
 
     load_window_state
+    @window.alphaValue = preferences.theme.transparency
     select_3column_layout(preferences.general.main_window_layout == Preferences::General::LAYOUT_3_COLUMNS)
 
     @world = IRCWorld.alloc.init
@@ -321,6 +322,7 @@ class AppController < NSObject
   end
 
   def update_layout
+    @window.alphaValue = preferences.theme.transparency
     select_3column_layout(preferences.general.main_window_layout == Preferences::General::LAYOUT_3_COLUMNS)
     @world.preferences_changed
   end
