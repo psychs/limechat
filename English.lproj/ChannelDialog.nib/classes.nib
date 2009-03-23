@@ -34,6 +34,8 @@
 			<dict>
 				<key>addButton</key>
 				<string>id</string>
+				<key>alt_nicksText</key>
+				<string>id</string>
 				<key>auto_joinCheck</key>
 				<string>id</string>
 				<key>channelsTable</key>
@@ -43,6 +45,8 @@
 				<key>deleteButton</key>
 				<string>id</string>
 				<key>editButton</key>
+				<string>id</string>
+				<key>growlCheck</key>
 				<string>id</string>
 				<key>keywordCheck</key>
 				<string>id</string>

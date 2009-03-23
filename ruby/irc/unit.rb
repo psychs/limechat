@@ -1270,6 +1270,7 @@ class IRCUnit < NSObject
   end
   
   def notify_text(kind, c, nick, text)
+    return if c && !c.is_a?(String) && !c.config.growl
     title = if c
       if c.is_a?(String)
         c
@@ -1294,6 +1295,7 @@ class IRCUnit < NSObject
       title = "#{name}"
       desc = ''
     when :kicked
+      return unless c.config.growl
       title = "#{c.name}"
       desc = "#{nick} has kicked out you from the channel: #{text}"
     when :invited

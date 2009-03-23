@@ -136,7 +136,7 @@ end
 
 class IRCChannelConfig
   include AutoOpMatchable
-  attr_accessor :name, :password, :mode, :topic, :auto_join, :console, :keyword, :unread
+  attr_accessor :name, :password, :mode, :topic, :auto_join, :console, :keyword, :unread, :growl
   attr_reader :type
   attr_accessor :autoop
   attr_accessor :owner
@@ -144,7 +144,7 @@ class IRCChannelConfig
   def initialize(seed={})
     @name = @password = @topic = ''
     @mode = '+sn'
-    @auto_join = @console = @keyword = @unread = true
+    @auto_join = @console = @keyword = @unread = @growl = true
     @type = :channel
     @autoop = []
     
