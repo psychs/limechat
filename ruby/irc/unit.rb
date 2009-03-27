@@ -13,7 +13,7 @@ class IRCUnit < NSObject
   
   RECONNECT_TIME = 20
   RETRY_TIME = 240
-  PONG_TIME = 300
+  PONG_TIME = 130
   QUIT_TIME = 5
   WHO_TIME = 10
   
