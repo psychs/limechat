@@ -2205,9 +2205,6 @@ class IRCUnit < NSObject
       nick = m[5]
       mode = m[6]
       
-      puts m.to_s
-      puts "  nick = #{nick}"
-      
       c = find_channel(chname)
       if c && c.active? && !c.who_init
         q = mode.include?('~')
