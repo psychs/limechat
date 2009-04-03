@@ -46,6 +46,7 @@ class PreferenceDialog < NSObject
   
   def start
     NSBundle.loadNibNamed_owner('PreferenceDialog', self)
+    @window.key_delegate = self
     
     load_theme
     update_transcript_folder
@@ -69,6 +70,10 @@ class PreferenceDialog < NSObject
   
   def close
     @delegate = nil
+    @window.close
+  end
+  
+  def dialogWindow_escape
     @window.close
   end
   
