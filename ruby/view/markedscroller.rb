@@ -26,7 +26,7 @@ class MarkedScroller < NSScroller
     	pt = NSPoint.new(0, i)
     	pt = transform.transformPoint(pt)
     	pt.x = pt.x.ceil
-    	pt.y = pt.y.ceil
+    	pt.y = pt.y.ceil + 0.5
     	next if pt == prev
     	prev = pt
     	line = NSBezierPath.bezierPath
