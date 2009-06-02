@@ -102,7 +102,7 @@ class AppController < NSObject
     nc.addObserver_selector_name_object(self, :computerWillSleep, NSWorkspaceWillSleepNotification, nil)
     nc.addObserver_selector_name_object(self, :computerDidWake, NSWorkspaceDidWakeNotification, nil)
     
-    @text.setStringValue("#{RUBYCOCOA_VERSION}")
+    #@text.setStringValue("#{RUBYCOCOA_VERSION}")
   end
 
   def computerWillSleep(sender)
