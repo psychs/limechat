@@ -1,6 +1,7 @@
 require 'pathname'
 require 'fileutils'
 
+BUILD_TARGET = 'EmbedFramework'
 APP_SHORT_NAME = defined?(MACRUBY_VERSION) ? 'MRLimeChat' : 'LimeChat'
 APP_NAME = APP_SHORT_NAME + '.app'
 ROOT_PATH = Pathname.new(__FILE__).dirname
@@ -14,7 +15,7 @@ task :default => :build
 
 desc "Build a release version"
 task :build do |t|
-  sh "xcodebuild -project #{APP_SHORT_NAME}.xcodeproj -target #{APP_SHORT_NAME} -configuration Release build"
+  sh "xcodebuild -project #{APP_SHORT_NAME}.xcodeproj -target #{BUILD_TARGET} -configuration Release -sdk macosx10.5 build"
 end
 
 desc "Build & run a release version"
@@ -49,6 +50,7 @@ task :package_app => :build do |t|
 	BUILD_APP_PATH.cptree(TMP_PATH)
 	
 	DOC_PATH.cptree(TMP_PATH)
+	rmglob(TMP_PATH + '**/ChangeLog.txt')
 	rmglob(TMP_PATH + '**/.svn')
 	rmglob(TMP_PATH + '**/.DS_Store')
 	
