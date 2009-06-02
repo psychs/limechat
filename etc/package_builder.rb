@@ -5,8 +5,8 @@ class PackageBuilder
   attr_accessor :name
   
   def self.build(path)
-    raise "Given path `#{path}' does not exist" unless File.exist?(path)
-    raise "Given path `#{path}' does not look like an application bundle" unless File.extname(path) == '.app'
+    raise "Path `#{path}' does not exist" unless File.exist?(path)
+    raise "Path `#{path}' is not an application bundle" unless File.extname(path) == '.app'
     
     build = new
     Dir.chdir(File.dirname(path)) do
