@@ -1,3 +1,10 @@
+#$:.map! {|e| e.sub(/^\\/Library\\/Frameworks\\/, OSX::NSBundle.mainBundle.privateFrameworksPath) }
+#$:.unshift NSBundle.mainBundle.resourcePath.fileSystemRepresentation
+
+require 'pp'
+
+pp $:
+
 require 'osx/cocoa'
 include OSX
 require_framework 'WebKit'

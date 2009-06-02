@@ -6,6 +6,21 @@
 	objectVersion = 42;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		78EB54D60FD5DD7100EC055A /* EmbedFramework */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 78EB54E30FD5DD8800EC055A /* Build configuration list for PBXAggregateTarget "EmbedFramework" */;
+			buildPhases = (
+				78EB54D50FD5DD7100EC055A /* ShellScript */,
+			);
+			dependencies = (
+				78EB54DA0FD5DD7F00EC055A /* PBXTargetDependency */,
+			);
+			name = EmbedFramework;
+			productName = EmbedFramework;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		510D9F6D0EC4FE9900D3BEFB /* abstract_preferences.rb in Resources */ = {isa = PBXBuildFile; fileRef = 510D9F6C0EC4FE9900D3BEFB /* abstract_preferences.rb */; };
 		51F0A51E0EBCF70A00B2C878 /* controls_with_disabled_state.rb in Resources */ = {isa = PBXBuildFile; fileRef = 51F0A51D0EBCF70A00B2C878 /* controls_with_disabled_state.rb */; };
@@ -114,6 +129,16 @@
 		78F59FE40D78144B0038AC1D /* markedscroller.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78F59FE30D78144B0038AC1D /* markedscroller.rb */; };
 		78FFD4F30EB5BD5F00B94D63 /* LimeChatApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 78FFD4F20EB5BD5F00B94D63 /* LimeChatApplication.m */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		78EB54D90FD5DD7F00EC055A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 78E570CF0C1C306500BDF7EC /* LimeChat */;
+			remoteInfo = LimeChat;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		7835DF2C0D0414020064916A /* CopyFiles */ = {
@@ -558,6 +583,7 @@
 			projectRoot = "";
 			targets = (
 				78E570CF0C1C306500BDF7EC /* LimeChat */,
+				78EB54D60FD5DD7100EC055A /* EmbedFramework */,
 			);
 		};
 /* End PBXProject section */
@@ -664,6 +690,22 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		78EB54D50FD5DD7100EC055A /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "PATH=\"$PATH:/usr/local/bin\" /usr/bin/ruby -r etc/package_builder -e \"PackageBuilder.build(ARGV[0])\" $TARGET_BUILD_DIR/$PROJECT_NAME.app";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		78E570CD0C1C306500BDF7EC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -681,6 +723,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		78EB54DA0FD5DD7F00EC055A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 78E570CF0C1C306500BDF7EC /* LimeChat */;
+			targetProxy = 78EB54D90FD5DD7F00EC055A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		29B97318FDCFA39411CA2CEA /* MainMenu.nib */ = {
@@ -850,6 +900,27 @@
 			};
 			name = Release;
 		};
+		78EB54D70FD5DD7100EC055A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = EmbedFramework;
+			};
+			name = Debug;
+		};
+		78EB54D80FD5DD7100EC055A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				PRODUCT_NAME = EmbedFramework;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -889,6 +960,15 @@
 			buildConfigurations = (
 				78E570D40C1C306500BDF7EC /* Debug */,
 				78E570D50C1C306500BDF7EC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		78EB54E30FD5DD8800EC055A /* Build configuration list for PBXAggregateTarget "EmbedFramework" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				78EB54D70FD5DD7100EC055A /* Debug */,
+				78EB54D80FD5DD7100EC055A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
