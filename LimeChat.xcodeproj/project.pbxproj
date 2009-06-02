@@ -135,7 +135,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 78E570CF0C1C306500BDF7EC /* LimeChat */;
+			remoteGlobalIDString = 78E570CF0C1C306500BDF7EC;
 			remoteInfo = LimeChat;
 		};
 /* End PBXContainerItemProxy section */
