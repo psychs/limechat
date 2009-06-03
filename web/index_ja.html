@@ -2,10 +2,11 @@
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-<meta http-equiv="Content-type" content="text/html; charset=utf-8">
-<meta http-equiv="Content-Style-Type" content="text/css">
-<meta http-equiv="Content-Script-Type" content="text/javascript">
-<link rel="alternate" type="application/rss+xml" title="RSS" href="http://limechat.net/mac/rss_ja.xml">
+<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://limechat.net/mac/rss_ja.xml" />
+<link rel="shortcut icon" href="images/favicon.ico" />
 <title>LimeChat: IRC Client for OSX</title>
 <style>
 
@@ -40,11 +41,27 @@ h1
 	margin: 1em 0;
 }
 
+h1 *
+{
+	vertical-align: middle;
+}
+
+h1 img
+{
+	margin-right: 0.5em;
+}
+
 h2
 {
 	font-size: 140%;
 	font-weight: normal;
 	margin: 1em 0 0.5em 0;
+	color: #999;
+}
+
+h3
+{
+	font-weight: normal;
 	color: #999;
 }
 
@@ -96,7 +113,7 @@ strong
 
 .section
 {
-	margin-left: 2em;
+	margin-left: 1em;
 }
 
 #float
@@ -127,6 +144,16 @@ strong
 {
 	margin-top: 2em;
 	text-align: right;
+}
+
+.float-donation
+{
+	text-align: right;
+}
+
+.donation
+{
+	margin-top: 0.5em;
 }
 
 table#shortcutkeys
@@ -160,12 +187,20 @@ table#shortcutkeys td
 </style>
 </head>
 <body>
-<h1>LimeChat for OSX</h1>
+	<h1><img src="images/logo.png" /><span>LimeChat for OSX</span></h1>
 
 <div id="float">
 	<div id="lang"><a href="./">[English]</a></div>
-	<div><a href="images/default3col.png"><img src="images/default3col200.png" alt="screenshot" /></a></div>
-	<div><a href="images/deepocean.png"><img src="images/deepocean200.png" alt="screenshot" /></a></div>
+	<div><a href="images/limelight.png"><img src="images/limelight200.png" alt="screenshot" /></a></div>
+	<div><a href="images/springnight3col.png"><img src="images/springnight3col200.png" alt="screenshot" /></a></div>
+	<div class="float-donation">
+		<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+		<input type="hidden" name="cmd" value="_s-xclick">
+		<input type="hidden" name="hosted_button_id" value="1153442">
+		<input type="image" src="https://www.paypal.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="">
+		<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
+		</form>
+	</div>
 </div>
 
 <div id="main">
@@ -187,18 +222,37 @@ table#shortcutkeys td
 
 <h2>インストール手順</h2>
 <div class="section">
-	<ol>
-		<li><a href="http://sourceforge.net/project/showfiles.php?group_id=44114">RubyCocoa 0.13.2</a> をダウンロードしてインストールする。 <strong>(OSX 10.5.2 の RubyCocoa は 0.13.1 と少し古いので、10.5.5 ユーザの方もかならずインストールしてください)</strong></li>
-		<li><a href="http://downloads.sourceforge.net/limechat/LimeChat_0.19.dmg?use_mirror=jaist">LimeChat_0.19.dmg</a> をダウンロードする。</li>
-		<li>ダウンロードした dmg をダブルクリックして開き、LimeChat.app をアプリケーションフォルダにコピーする。</li>
-	</ol>
+	<h3>OS X 10.5</h3>
+	<div class="section">
+		<ol>
+			<li><a href="http://downloads.sourceforge.net/limechat/LimeChat_1.0.dmg?use_mirror=jaist">LimeChat_1.0.dmg</a> をダウンロードする。</li>
+			<li>ダウンロードした dmg をダブルクリックして開き、LimeChat.app をアプリケーションフォルダにコピーする。</li>
+		</ol>
+	</div>
+	
+	<h3>OS X 10.4</h3>
+	<div class="section">
+		<ol>
+			<li><a href="http://sourceforge.net/project/showfiles.php?group_id=44114">RubyCocoa-0.13.2.1-OSX10.4universal.dmg</a> をダウンロードしてインストールする。</li>
+			<li><a href="http://downloads.sourceforge.net/limechat/LimeChat_0.20.dmg?use_mirror=jaist">LimeChat_0.20.dmg</a> をダウンロードする。</li>
+			<li>ダウンロードした dmg をダブルクリックして開き、LimeChat.app をアプリケーションフォルダにコピーする。</li>
+		</ol>
+	</div>
 </div>
 
 <h2>ソースの入手方法</h2>
 <div class="section">
 	<ul>
-		<li><a href="http://downloads.sourceforge.net/limechat/LimeChat_0.19.zip?use_mirror=jaist">LimeChat 0.19 source zip</a></li>
-		<li><code><a href="http://github.com/psychs/limechat/tree/master">http://github.com/psychs/limechat/tree/master</a></code></li>
+		<li><a href="http://downloads.sourceforge.net/limechat/LimeChat_1.0.zip?use_mirror=jaist">LimeChat 1.0 source zip</a></li>
+		<li><a href="http://github.com/psychs/limechat/tree/master">http://github.com/psychs/limechat/tree/master</a></li>
+	</ul>
+</div>
+
+<h2>その他のプラットフォーム</h2>
+<div class="section">
+	<ul>
+		<li><a href="http://limechat.net/">LimeChat for Windows</a></li>
+		<li><a href="http://limechat.net/iphone/ja.html">LimeChat for iPhone</a></li>
 	</ul>
 </div>
 
@@ -216,6 +270,10 @@ table#shortcutkeys td
     <tr>
       <th>Ctrl+Shift+Tab<br/>Opt+Shift+Space</th>
       <td>前の未読チャンネルに移動</td>
+    </tr>
+    <tr>
+      <th>Opt+Tab</th>
+      <td>直前に選択していたチャンネルに移動</td>
     </tr>
     <tr>
       <th>Cmd+Up/Down<br>Cmd+Opt+Up/Down</th>
@@ -251,14 +309,21 @@ table#shortcutkeys td
 <h2>連絡先</h2>
 <div class="section">
 	<ul>
-		<li><a href="http://d.hatena.ne.jp/Psychs/">http://d.hatena.ne.jp/Psychs/</a></li>
-		<li><a href="http://groups.google.com/group/limechatosx">Google Group: LimeChat</a></li>
 		<li>irc.freenode.net 上の #limechat</li>
-		<li>Satoshi Nakagawa /
-	<script type="text/javascript"><!-- 
-	document.write('<a href="mai' + 'lto:&#112;&#11' + '5;&#121;&#99;&#104;&#115;&#64;&#108;&#105;&#109;&#101;&#99;&#104;&#97;&#116;&#46;&#110;&#101;&#116;">&#112;&#11' + '5;&#121;&#99;&#104;&#115;&#64;&#108;&#105;&#109;&#101;&#99;&#104;&#97;&#116;&#46;&#110;&#101;&#116;</a>'); 
-	--></script></li>
+		<li><a href="http://groups.google.com/group/limechatosx">Google Group: LimeChat</a></li>
+		<li><a href="http://limechat.net/psychs/">Satoshi Nakagawa</a></li>
 	</ul>
+	<div class="donation">
+		<p>
+			もし LimeChat を気に入ってくださったら、寄付をしてくださるとうれしいです。あなたの寄付がこれからの開発を支えます。
+		</p>
+		<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+		<input type="hidden" name="cmd" value="_s-xclick">
+		<input type="hidden" name="hosted_button_id" value="1153442">
+		<input type="image" src="https://www.paypal.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="">
+		<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
+		</form>
+	</div>
 </div>
 
 <h2>更新履歴</h2>
@@ -267,6 +332,54 @@ table#shortcutkeys td
 		更新履歴は <a href="rss_ja.xml">RSS</a> でも配信しています。
 	</p>
 	<dl>
+		
+		<dt id="v1.0">1.0 (2009.06.03)</dt>
+		<dd>
+			<ul>
+				<li>OS X 10.5 のみをサポート。</li>
+				<li>RubyCocoa.framework をアプリ内にバンドルするようにした。</li>
+				<li>プリファレンスダイアログ、ペーストダイアログ、起動時に表示するダイアログをデザインしなおした。</li>
+				<li>チャンネルごとに Growl で通知するオプションを追加した。</li>
+				<li>shift-tab で一つ前にいた場所に移動できるようにした。</li>
+				<li>ニックネームのフォーマットに「%@%n:」を追加。</li>
+				<li>join/leave を表示するかオプションで設定できるようにした。</li>
+				<li>タイムスタンプのフォーマットを設定できるようにした。</li>
+				<li>ignore words オプションを追加。単語を含むメッセージは無視される。</li>
+				<li>/close peer でトークを閉じられるようにした。</li>
+				<li>/omsg と /onotice コマンドをサポート。</li>
+				<li>/notice @#channel をサポート。</li>
+				<li>/m コマンドを追加。</li>
+				<li>/ban でバンリストを表示するようにした。</li>
+				<li>URL を開くときに、ブラウザをアクティブにしないようにした。</li>
+				<li>&lt; と &gt; を URL に含めないようにした。</li>
+				<li>スペルチェックの状態を記憶するようにした。</li>
+				<li>スクロールバーのハイライトマーカの描画を改善した。</li>
+				<li>全種類のオペレータをオペレータの色で表示するようにした。</li>
+				<li>Register to auto op のメニューが無効になっていたのを修正した。</li>
+      </ul>
+		</dd>
+		
+		<dt id="v0.20">0.20 (2008.10.02)</dt>
+		<dd>
+			<ul>
+				<li>ホットキー機能を追加した。</li>
+				<li>Opt+Tab で最後に表示していたチャンネルに戻れるようにした。</li>
+				<li>コマンド補完機能を追加した。</li>
+				<li>ログのチャンネル名の上で右クリックするとメニューを開くようにした。</li>
+				<li>Voice/Devoice のメニューを追加した。</li>
+				<li>Notice 関連の Growl イベントを追加した。</li>
+				<li>テーマで入力欄の選択背景色を指定できるようにした。 (input-text/selected/background-color)</li>
+				<li>URL の括弧を認識してうまくハンドリングするようにした。</li>
+				<li>入力欄のマージンを広くした。</li>
+				<li>テーマと同時に .js ファイルを読み込めるようにした。</li>
+				<li>ログイン前にコマンドを送信できるようにした。</li>
+				<li>/clear コマンドでログを消去できるようにした。</li>
+				<li>DCC ファイル受信時にダブルクォートで囲まれたファイル名を認識するようにした。</li>
+				<li>Auto-op ダイアログで nil アクセスエラーが出るバグをfixした。</li>
+				<li>ファイルにログを書き出すときにフォーマットがおかしかったバグをfixした。</li>
+				<li>引数なしの /quote コマンドを入力すると落ちていたバグをfixした。</li>
+      </ul>
+		</dd>
 		
 		<dt id="v0.19">0.19 (2008.07.10)</dt>
 		<dd>
@@ -699,10 +812,15 @@ table#shortcutkeys td
 	<a href="rss_ja.xml"><img src="images/feed.gif" alt="feed" /></a>
 </div>
 
-<script src="http://www.google-analytics.com/urchin.js" type="text/javascript"></script>
 <script type="text/javascript">
-_uacct = "UA-611359-4";
-urchinTracker();
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-6508864-3");
+pageTracker._trackPageview();
+} catch(err) {}
 </script>
 </body>
 </html>

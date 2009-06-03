@@ -7,6 +7,62 @@
     <language>ja</language>
 
     <item>
+      <title>1.0</title>
+      <link>http://limechat.net/mac/#v1.0</link>
+      <pubDate>Wed, 03 Jun 2009 09:01:00 +0900</pubDate>
+      <content:encoded><![CDATA[
+  			<ul>
+  				<li>OS X 10.5 のみをサポート。</li>
+  				<li>RubyCocoa.framework をアプリ内にバンドルするようにした。</li>
+  				<li>プリファレンスダイアログ、ペーストダイアログ、起動時に表示するダイアログをデザインしなおした。</li>
+  				<li>チャンネルごとに Growl で通知するオプションを追加した。</li>
+  				<li>shift-tab で一つ前にいた場所に移動できるようにした。</li>
+  				<li>ニックネームのフォーマットに「%@%n:」を追加。</li>
+  				<li>join/leave を表示するかオプションで設定できるようにした。</li>
+  				<li>タイムスタンプのフォーマットを設定できるようにした。</li>
+  				<li>ignore words オプションを追加。単語を含むメッセージは無視される。</li>
+  				<li>/close peer でトークを閉じられるようにした。</li>
+  				<li>/omsg と /onotice コマンドをサポート。</li>
+  				<li>/notice @#channel をサポート。</li>
+  				<li>/m コマンドを追加。</li>
+  				<li>/ban でバンリストを表示するようにした。</li>
+  				<li>URL を開くときに、ブラウザをアクティブにしないようにした。</li>
+  				<li>&lt; と &gt; を URL に含めないようにした。</li>
+  				<li>スペルチェックの状態を記憶するようにした。</li>
+  				<li>スクロールバーのハイライトマーカの描画を改善した。</li>
+  				<li>全種類のオペレータをオペレータの色で表示するようにした。</li>
+  				<li>Register to auto op のメニューが無効になっていたのを修正した。</li>
+  			</ul>
+      ]]></content:encoded>
+    </item>
+
+    <item>
+      <title>0.20</title>
+      <link>http://limechat.net/mac/index_ja.html#v0.20</link>
+      <pubDate>Thu, 02 Oct 2008 10:29:00 +0900</pubDate>
+      <content:encoded><![CDATA[
+  			<ul>
+  				<li>ホットキー機能を追加した。</li>
+  				<li>Opt+Tab で最後に表示していたチャンネルに戻れるようにした。</li>
+  				<li>コマンド補完機能を追加した。</li>
+  				<li>ログのチャンネル名の上で右クリックするとメニューを開くようにした。</li>
+  				<li>Voice/Devoice のメニューを追加した。</li>
+  				<li>Notice 関連の Growl イベントを追加した。</li>
+  				<li>テーマで入力欄の選択背景色を指定できるようにした。 (input-text/selected/background-color)</li>
+  				<li>URL の括弧を認識してうまくハンドリングするようにした。</li>
+  				<li>入力欄のマージンを広くした。</li>
+  				<li>テーマと同時に .js ファイルを読み込めるようにした。</li>
+  				<li>ログイン前にコマンドを送信できるようにした。</li>
+  				<li>/clear コマンドでログを消去できるようにした。</li>
+  				<li>DCC ファイル受信時にダブルクォートで囲まれたファイル名を認識するようにした。</li>
+  				<li>Auto-op ダイアログで nil アクセスエラーが出るバグをfixした。</li>
+  				<li>ファイルにログを書き出すときにフォーマットがおかしかったバグをfixした。</li>
+  				<li>引数なしの /quote コマンドを入力すると落ちていたバグをfixした。</li>
+  			</ul>
+      ]]></content:encoded>
+    </item>
+
+    <item>
       <title>0.19</title>
       <link>http://limechat.net/mac/index_ja.html#v0.19</link>
       <pubDate>Thu, 10 Jul 2008 00:13:00 +0900</pubDate>
@@ -22,122 +78,6 @@
   				<li>チャンネルリストダイアログでチャンネルトピックも検索するようにした。</li>
   				<li>ニックネームを1行目しか表示したくないときのために、1行目の span.sender に first 属性を追加した。</li>
   				<li>コマンドが空白のCTCPを無視するようにした。</li>
-  			</ul>
-      ]]></content:encoded>
-    </item>
-
-    <item>
-      <title>0.18</title>
-      <link>http://limechat.net/mac/index_ja.html#v0.18</link>
-      <pubDate>Thu, 22 May 2008 22:50:00 +0900</pubDate>
-      <content:encoded><![CDATA[
-  			<ul>
-      		<li>ハイライト時にアルファベットの単語単位でマッチするオプションを追加した。</li>
-      		<li>SSL 接続をサポートした。</li>
-      		<li>ニックネームがぶつかったとき使う、代わりのニックネームを指定できるようにした。</li>
-      		<li>メンバリストにファイルをドロップすると、DCC でファイルを送信するようにした。</li>
-      		<li>エンコーディングに UTF-8 を使っているとき、UTF-8 でない文字列を受け取ると、別のエンコーディングにフォールバックするオプションを追加した。</li>
-      		<li>Cmd-W でチャンネルを閉じるときに確認するようにした。</li>
-      		<li>メンバリストのメニューに「Kick」と「Kick &amp; Ban」を追加した。</li>
-      		<li>Cmd+E で検索用クリップボードにコピーできるようにした。</li>
-      		<li>ハイライトイベントの Growl 通知のプライオリティを 1 に変更した。</li>
-      		<li>ディレクトリ選択ダイアログに New Folder ボタンを追加した。</li>
-      		<li>ニックネームのフォーマットをファイルログへの出力や Growl 通知に使わないようにした。</li>
-      		<li>URL の最後に「?」を許さないようにした。</li>
-      		<li>すでにトークを開いている相手にトークを開始しようとしたときに、すでに開いてるトークを選択するようにした。</li>
-      		<li>パラメータなしの /part でトークを閉じるようにした。</li>
-      		<li>/whois を送信前にハンドリングして、より詳細な情報を取得するようにした。</li>
-      		<li>/rejoin、/cycle、/hop で現在のチャンネルに入り直すようにした。</li>
-      		<li>/op, /deop, /halfop, /dehalfop, /voice, /devoice, /ban, /unban, /umode, /raw, /quote コマンドを追加した。</li>
-      		<li>/t で /topic、/leave で /part、/j で /join を実行するようにした。</li>
-      		<li>/ctcpquery コマンドを /ctcp に変更した。</li>
-      		<li>コンソールログの行にも nick 属性をつけるようにした。</li>
-      		<li>サーバログの body タグに type="server" という属性をつけるようにした。</li>
-      		<li>Ruby から ObjC への型変換のときに数値の範囲チェックをするようにした。</li>
-      		<li>Time.at には Fixnum しか渡さないようにチェックをいれた。</li>
-      		<li>スクロールバーがうまく初期化できず、左上角にゴミが表示されるバグをfixした。</li>
-      		<li>Mode +a user をユーザモードの変更として実装している IRC サーバに対応した。</li>
-      		<li>再接続後に自分のアドレスを初期化してしまうバグをfixした。</li>
-      		<li>DCC ダイアログで右クリックすると、nil アクセス例外で落ちることがあったバグをfixした。</li>
-      		<li>UTF-8 string validator のバグをfixした。</li>
-      		<li>ログビューを初期化する前に受信していた行が捨てられてしまっていたバグをfixした。</li>
-      		<li>DCC ダイアログ上の Reveal in Finder メニューが例外を出すバグをfixした。</li>
-      		<li>コンソールログに Highlight your current nickname オプションが適用されていなかったバグをfixした。</li>
-      		<li>/query してトークを作ったあと、チャンネルに戻ると /query を覚えていたバグをfixした。</li>
-  			</ul>
-      ]]></content:encoded>
-    </item>
-
-    <item>
-      <title>0.17</title>
-      <link>http://limechat.net/mac/index_ja.html#v0.17</link>
-      <pubDate>Mon, 03 Mar 2008 21:51:00 +0900</pubDate>
-      <content:encoded><![CDATA[
-  			<ul>
-  				<li>(Tigerのみ) 初回起動時に表示されるセットアップダイアログで、「+」ボタンを押すとクラッシュしていたバグをfixした。</li>
-  				<li>ログのスクロールバーに、キーワード反応があった場所を表示するようにした。</li>
-  				<li>起動時にスペルチェックをオンにするようにした。</li>
-  				<li>サーバとチャンネルの順序をドラッグアンドドロップで入れ替えられるようにした。</li>
-  				<li>チャンネルリストダイアログで、キーワードでフィルタリングできるようにした。</li>
-  				<li>DCC で送られてきたファイルを自動で受信するオプションを追加した。</li>
-  				<li>DCC で受信したファイルをその場で開くメニューと、Finder で表示するメニューを追加した。</li>
-  				<li>メインメニューに「File」を追加して、「View」を左側に移動した。</li>
-  				<li>Cmd+W でアクティブなチャンネルを閉じるようにした。</li>
-  				<li>ログを HTML としてコピーするメニューを追加した。</li>
-  				<li>「Mark Scrollback」と「Clear Mark」のショートカットキーを Cmd+L と Cmd+Shift+L に変更した。</li>
-  				<li>Opt+Return でペーストダイアログを開くようにした。</li>
-  				<li>メニューやキーからペーストダイアログを開いたとき、送信方法に privmsg を選択するようにした。</li>
-  				<li>ログの HTML テンプレートで CSS のアトリビュートセレクタを使うようにした。</li>
-  				<li>アクションメッセージの表示形式を変えた。</li>
-  				<li>テーマのディレクトリを ~/Library/Application Support/LimeChat/Themes に変更した。</li>
-  				<li>ニックネームのデフォルトの書式を「%n: 」に変更した。</li>
-  				<li>メンバリストのフォントを小さくした。</li>
-  				<li>システムメッセージの頭の「*」を削除した。</li>
-  				<li>コンソールログにサーバ名を表示しないようにした。</li>
-  				<li>mIRC のカラーエフェクトに CSS を適用できるようにした。</li>
-  				<li>ログでニックネームの色分けができるようにした。colornumber 属性に 0〜15 のランダムな番号を振るので、CSS でスタイルを指定できる。</li>
-  				<li>CAPAB IDENTIFY-MSG に対応した。認証済みのユーザの発言は、identified 属性が true になる。</li>
-  				<li>/query でアクティブなトークを閉じるようにした。</li>
-  				<li>上キーを押して入力履歴をたどるとき、入力中のテキストを記憶するようにした。</li>
-  				<li>ログに行がいっぱいの時に新しい行を受信しても、スクロール位置がずれないようにした。</li>
-  				<li>チャンネルごとに入力途中の文字列を保持するようにした。</li>
-  				<li>初回起動時に、OS のアカウント名をデフォルトのニックネームとして使うようにした。</li>
-  				<li>freenode の CAPAB IDENTIFY-MSG、CAPAB IDENTIFY-CTCP に対応した。</li>
-  				<li>401 エラーが来たときに、対象のトークに表示するようにした。</li>
-  				<li>チャンネルを削除したときに、次のサーバに移動しないようにした。</li>
-  				<li>エフェクトを止める特殊文字を受信したときに、タグを閉じなくてもいい場合でも誤って閉じていたバグをfixした。</li>
-  				<li>ニックネーム補完のとき、補完結果が右側に隠れるような場合でもスクロールして見えるようにした。</li>
-  			</ul>
-      ]]></content:encoded>
-    </item>
-
-    <item>
-      <title>0.16.2</title>
-      <link>http://limechat.net/mac/index_ja.html#v0.16.2</link>
-      <pubDate>Sat, 16 Feb 2008 11:54:00 +0900</pubDate>
-      <content:encoded><![CDATA[
-  			<ul>
-          <li>最初の起動時に新規接続ダイアログを出すようにした。</li>
-          <li>Unreal IRCd の +q/+a チャンネルモードをサポートした。</li>
-          <li>/query nick で新規トークを開けるようにした。</li>
-          <li>アプリがアクティブなときに Growl で通知しないオプションを追加した。</li>
-          <li>オリジナルの ircd で +a のチャンネルモードが設定されたとき、メンバリストを見えないようにした。</li>
-          <li>ログビューからフォーカスを外しても、選択が解除されないようにした。</li>
-          <li>サーバプロパティダイアログのエンコーディング設定の下に注意書きを追加した。</li>
-          <li>「%@」を含むようなニックネームのフォーマットを設定していた場合に、コンソールにテキストメッセージを表示すると method not found の例外が出ていたバグをfixした。</li>
-  			</ul>
-      ]]></content:encoded>
-    </item>
-
-    <item>
-      <title>0.16</title>
-      <link>http://limechat.net/mac/index_ja.html#v0.16</link>
-      <pubDate>Sun, 03 Feb 2008 17:50:00 +0900</pubDate>
-      <content:encoded><![CDATA[
-  			<ul>
-          <li>DCC ダイアログで 0 をフォーマットするときに例外が出るバグをfixした。</li>
-          <li>メンバリストで複数を選択してダブルクリックしたときに、ポイントしているメンバーだけに whois を送るようにした。</li>
-          <li>SACrashReporter のダイアログのレイアウトを変更した。</li>
   			</ul>
       ]]></content:encoded>
     </item>

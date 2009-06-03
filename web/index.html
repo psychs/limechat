@@ -2,10 +2,11 @@
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-<meta http-equiv="Content-type" content="text/html; charset=utf-8">
-<meta http-equiv="Content-Style-Type" content="text/css">
-<meta http-equiv="Content-Script-Type" content="text/javascript">
-<link rel="alternate" type="application/rss+xml" title="RSS" href="http://limechat.net/mac/rss.xml">
+<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://limechat.net/mac/rss.xml" />
+<link rel="shortcut icon" href="images/favicon.ico" />
 <title>LimeChat: IRC Client for OSX</title>
 <style>
 
@@ -40,11 +41,27 @@ h1
 	margin: 1em 0;
 }
 
+h1 *
+{
+	vertical-align: middle;
+}
+
+h1 img
+{
+	margin-right: 0.5em;
+}
+
 h2
 {
 	font-size: 160%;
 	font-weight: normal;
 	margin: 1em 0 0.5em 0;
+	color: #999;
+}
+
+h3
+{
+	font-weight: normal;
 	color: #999;
 }
 
@@ -96,7 +113,7 @@ strong
 
 .section
 {
-	margin-left: 2em;
+	margin-left: 1em;
 }
 
 #float
@@ -122,6 +139,16 @@ strong
 {
 	margin-top: 2em;
 	text-align: right;
+}
+
+.float-donation
+{
+	text-align: right;
+}
+
+.donation
+{
+	margin-top: 0.5em;
 }
 
 table#shortcutkeys
@@ -161,12 +188,20 @@ table#shortcutkeys td
 </style>
 </head>
 <body>
-<h1>LimeChat</h1>
+<h1><img src="images/logo.png" /><span>LimeChat</span></h1>
 
 <div id="float">
 	<div id="lang"><a href="index_ja.html">[Japanese]</a></div>
-	<div><a href="images/default3col.png"><img src="images/default3col200.png" alt="screenshot" /></a></div>
-	<div><a href="images/deepocean.png"><img src="images/deepocean200.png" alt="screenshot" /></a></div>
+	<div><a href="images/limelight.png"><img src="images/limelight200.png" alt="screenshot" /></a></div>
+	<div><a href="images/springnight3col.png"><img src="images/springnight3col200.png" alt="screenshot" /></a></div>
+	<div class="float-donation">
+		<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+			<input type="hidden" name="cmd" value="_s-xclick">
+			<input type="hidden" name="hosted_button_id" value="1153258">
+			<input type="image" src="https://www.paypal.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="">
+			<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
+		</form>
+	</div>
 </div>
 
 <div id="main">
@@ -183,7 +218,7 @@ table#shortcutkeys td
 	<ul>
 		<li>One window for multiple servers.</li>
 		<li>Rich keyboard shortcuts for your comfortable operations.</li>
-		<li>Light speed and stable.</li>
+		<li>Fast and stable.</li>
 	</ul>
 </div>
 
@@ -197,18 +232,36 @@ table#shortcutkeys td
 
 <h2>Install</h2>
 <div class="section">
-	<ol>
-		<li>Download <a href="http://sourceforge.net/project/showfiles.php?group_id=44114">RubyCocoa 0.13.2</a>, and install it. <strong>Note that you need to install it even if you are using OSX 10.5.5.</strong></li>
-		<li>Download <a href="http://downloads.sourceforge.net/limechat/LimeChat_0.19.dmg">LimeChat 0.19 executable dmg</a>.</li>
-		<li>Open the downloaded dmg, and copy LimeChat.app to your Application folder.</li>
-	</ol>
+	<h3>OS X 10.5</h3>
+	<div class="section">
+		<ol>
+			<li>Download <a href="http://downloads.sourceforge.net/limechat/LimeChat_1.0.dmg">LimeChat 1.0 executable dmg</a>.</li>
+			<li>Open the downloaded dmg, and copy LimeChat.app to your Application folder.</li>
+		</ol>
+	</div>
+
+	<h3>OS X 10.4</h3>
+	<div class="section">
+		<ol>
+			<li>Download <a href="http://sourceforge.net/project/showfiles.php?group_id=44114">RubyCocoa-0.13.2.1-OSX10.4universal.dmg</a>, and install it.</li>
+			<li>Download <a href="http://downloads.sourceforge.net/limechat/LimeChat_0.20.dmg">LimeChat 0.20 executable dmg</a>.</li>
+			<li>Open the downloaded dmg, and copy LimeChat.app to your Application folder.</li>
+		</ol>
+	</div>
 </div>
 
 <h2>Source code</h2>
 <div class="section">
 	<ul>
-		<li><a href="http://downloads.sourceforge.net/limechat/LimeChat_0.19.zip">LimeChat 0.19 source zip</a></li>
-		<li><code><a href="http://github.com/psychs/limechat/tree/master">http://github.com/psychs/limechat/tree/master</a></code></li>
+		<li><a href="http://downloads.sourceforge.net/limechat/LimeChat_1.0.zip">LimeChat 1.0 source zip</a></li>
+		<li><a href="http://github.com/psychs/limechat/tree/master">http://github.com/psychs/limechat/tree/master</a></li>
+	</ul>
+</div>
+
+<h2>For other platforms</h2>
+<div class="section">
+	<ul>
+		<li><a href="http://limechat.net/iphone/">LimeChat for iPhone</a></li>
 	</ul>
 </div>
 
@@ -226,6 +279,10 @@ table#shortcutkeys td
     <tr>
       <th>Ctrl+Shift+Tab<br/>Opt+Shift+Space</th>
       <td>Move to the previous <em>unread</em> channel.</td>
+    </tr>
+    <tr>
+      <th>Opt+Tab</th>
+      <td>Move back to the previously selected channel.</td>
     </tr>
     <tr>
       <th>Cmd+Up/Down<br>Cmd+Opt+Up/Down</th>
@@ -263,13 +320,19 @@ table#shortcutkeys td
 	<ul>
 		<li>#limechat on irc.freenode.net</li>
 		<li><a href="http://groups.google.com/group/limechatosx">Google Group: LimeChat</a></li>
-		<li>Satoshi Nakagawa /
-			<script type="text/javascript"><!-- 
-  document.write('<a href="mai' + 'lto:&#112;&#11' + '5;&#121;&#99;&#104;&#115;&#64;&#108;&#105;&#109;&#101;&#99;&#104;&#97;&#116;&#46;&#110;&#101;&#116;">&#112;&#11' + '5;&#121;&#99;&#104;&#115;&#64;&#108;&#105;&#109;&#101;&#99;&#104;&#97;&#116;&#46;&#110;&#101;&#116;</a>'); 
-	--></script>
-		</li>
-		<li><a href="http://d.hatena.ne.jp/Psychs/">http://d.hatena.ne.jp/Psychs/</a> (in Japanese)</li>
+		<li><a href="http://limechat.net/psychs/">Satoshi Nakagawa</a></li>
 	</ul>
+	<p>
+		I'll be glad if you would like to donate. Your donation would help further development.
+	</p>
+	<div class="donation">
+		<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+		<input type="hidden" name="cmd" value="_s-xclick">
+		<input type="hidden" name="hosted_button_id" value="1153258">
+		<input type="image" src="https://www.paypal.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="">
+		<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
+		</form>
+	</div>
 </div>
 
 <h2>Change log</h2>
@@ -278,6 +341,70 @@ table#shortcutkeys td
 		This change log is also available in <a href="rss.xml">RSS</a>.
 	</p>
 	<dl>
+		
+		<dt id="v1.0">1.0 (2009.06.03)</dt>
+		<dd>
+			<ul>
+				<li>Only OS X 10.5 is supported now.</li>
+				<li>Embed RubyCocoa.framework into the app.</li>
+				<li>Renewed preferences dialog.</li>
+				<li>Renewed paste dialog.</li>
+				<li>Renewed welcome dialog.</li>
+				<li>Added "Notify events in Growl" option in channel properies.</li>
+				<li>Assigned shift-tab to move to the previous control.</li>
+				<li>Added %@%n: nick format.</li>
+				<li>Added show join/leave option.</li>
+				<li>Added time stamp format.</li>
+				<li>Added "ignore words" option. If text contains any of these words it will be ignored.</li>
+				<li>Added "/close peer" command to close a talk.</li>
+				<li>Added /omsg and /onotice commands.</li>
+				<li>Added support for /notice @#channel.</li>
+				<li>Added /m command.</li>
+				<li>Query ban list by /ban.</li>
+				<li>Open URLs without activation.</li>
+				<li>Remember spell checking status across session.</li>
+				<li>Fixed a bug in CP949 and other encodings.</li>
+				<li>Shorten sending PONG interval.</li>
+				<li>Don't allow &lt; and &gt; in URLs.</li>
+				<li>Ignore case in URL schemes.</li>
+				<li>Don't show the channel list dialog again while /list responses.</li>
+				<li>Markers in scrollers should be drawn as 1 point width lines.</li>
+				<li>All kind of ops should be colored as ops.</li>
+				<li>Work around for buggy bouncers, they don't send 005 replies appropriately.</li>
+				<li>Don't show PONG responses.</li>
+				<li>Changed an option name from "Dislike words" to "Exclude words".</li>
+				<li>Prohibit backspace, delete and space keys for hotkey.</li>
+				<li>Fixed a crash when an user changed his nick to the same one except case.</li>
+				<li>Fixed a memory leak when enabling SSL.</li>
+				<li>Fixed a bug around quick join.</li>
+				<li>Fixed a bug, it tried to join channels with names of talks.</li>
+				<li>Fixed a bug, the log was kept blank after /clear sometimes.</li>
+				<li>Fixed a bug, register to auto op menu was disabled.</li>
+      </ul>
+		</dd>
+		
+		<dt id="v0.20">0.20 (2008.10.02)</dt>
+		<dd>
+			<ul>
+				<li>Added hot key option.</li>
+				<li>Assigned opt+tab to move to the last selected channel.</li>
+				<li>Added commands completion.</li>
+				<li>Added context menu on channel name in logs.</li>
+				<li>Added voice and devoice menu items.</li>
+				<li>Added "Channel notice received" and "Talk notice received" to the Growl notification types.</li>
+				<li>Added a theme settings: input-text/selected/background-color</li>
+				<li>Deal with parenthesis pairs in URLs.</li>
+				<li>Tweaked margin of the input text field.</li>
+				<li>Added .js file support for themes.</li>
+				<li>Allow to send commands before login.</li>
+				<li>Added /clear command to clear a log.</li>
+				<li>Supported filenames surrounded by double quotations in DCC file transfers.</li>
+				<li>Fixed a bug, the auto-op dialog could cause a nil access exception.</li>
+				<li>Strip unnecessary ":" when printing a line to log file.</li>
+				<li>Fixed a bug, we should allow a Bignum for Time.at.</li>
+				<li>Fixed a bug, /quote with no parameter caused a crash.</li>
+      </ul>
+		</dd>
 		
 		<dt id="v0.19">0.19 (2008.07.10)</dt>
 		<dd>
@@ -698,10 +825,15 @@ table#shortcutkeys td
 	<a href="rss.xml"><img src="images/feed.gif" alt="feed" /></a>
 </div>
 
-<script src="http://www.google-analytics.com/urchin.js" type="text/javascript"></script>
 <script type="text/javascript">
-_uacct = "UA-611359-4";
-urchinTracker();
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-6508864-3");
+pageTracker._trackPageview();
+} catch(err) {}
 </script>
 </body>
 </html>
