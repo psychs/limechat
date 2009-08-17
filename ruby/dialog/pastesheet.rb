@@ -2,6 +2,7 @@
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
 require 'cocoasheet'
+require 'cocoa_gist'
 
 class PasteSheet < CocoaSheet
   attr_accessor :uid, :cid, :nick
@@ -58,10 +59,12 @@ class PasteSheet < CocoaSheet
     set_requesting
     syntax = tag_to_syntax(@syntaxPopup.selectedItem.tag)
     @result = nil
-    @conn = PasternakClient.alloc.init
+    @conn = CocoaGist.alloc.init
+    #@conn = PasternakClient.alloc.init
     #@conn = PastieClient.alloc.init
     @conn.delegate = self
-    @conn.start(@text.textStorage.string.to_s, @nick, syntax)
+    # @conn.start(@text.textStorage.string.to_s, @nick, syntax)
+    @conn.start(@text.textStorage.string.to_s, syntax)
   end
   
   def pastie_on_success(sender, s)
