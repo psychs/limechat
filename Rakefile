@@ -15,6 +15,11 @@ task :default => :build
 
 desc "Build a release version"
 task :build do |t|
+  sh "xcodebuild -project #{APP_SHORT_NAME}.xcodeproj -target #{APP_SHORT_NAME} -configuration Release -sdk macosx10.5 build"
+end
+
+desc "Build a release version"
+task :build_with_rc do |t|
   sh "xcodebuild -project #{APP_SHORT_NAME}.xcodeproj -target #{BUILD_TARGET} -configuration Release -sdk macosx10.5 build"
 end
 
@@ -42,9 +47,21 @@ desc "Create a release package"
 task :package => [:package_app, :package_source] do |t|
 end
 
-task :package_app => :build do |t|
-	DMG_PATH = DESKTOP_PATH + "#{APP_SHORT_NAME}_#{app_version}.dmg"
-	DMG_PATH.rmtree
+task :package_app => [:package_app_without_rc, :package_app_with_rc] do |t|
+end
+
+task :package_app_without_rc => [:clean, :build] do |t|
+  package(false)
+end
+
+task :package_app_with_rc => [:clean, :build_with_rc] do |t|
+  package(true)
+end
+
+def package(with_rubycocoa)
+  kind = with_rubycocoa ? "_standalone" : ""
+	dmg_path = DESKTOP_PATH + "#{APP_SHORT_NAME}_#{app_version}#{kind}.dmg"
+	dmg_path.rmtree
 	TMP_PATH.rmtree
 	TMP_PATH.mkpath
 	BUILD_APP_PATH.cptree(TMP_PATH)
@@ -55,7 +72,7 @@ task :package_app => :build do |t|
 	rmglob(TMP_PATH + '**/.DS_Store')
 	
 	sh "ln -s /Applications #{TMP_PATH}"
-	sh "hdiutil create -srcfolder #{TMP_PATH} -volname #{APP_SHORT_NAME} #{DMG_PATH}"
+	sh "hdiutil create -srcfolder #{TMP_PATH} -volname #{APP_SHORT_NAME} #{dmg_path}"
 	
 	TMP_PATH.rmtree
 end
