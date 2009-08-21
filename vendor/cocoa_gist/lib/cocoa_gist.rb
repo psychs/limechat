@@ -20,8 +20,8 @@ class CocoaGist < OSX::NSObject
     }.reject { |_, v| v.empty? }
   end
   
-  def start(content, syntax = 'ruby')
-    request = post_request(params(content, syntax))
+  def start(content, syntax = 'ruby', private_gist = false)
+    request = post_request(params(content, syntax, private_gist))
     @connection = OSX::NSURLConnection.alloc.initWithRequest_delegate(request, self)
   end
   
@@ -54,11 +54,14 @@ class CocoaGist < OSX::NSObject
     request
   end
   
-  def params(content, syntax)
-    self.class.credentials.merge({
+  def params(content, syntax, private_gist)
+    params = self.class.credentials.merge({
       'file_contents[gistfile1]' => content,
       'file_ext[gistfile1]'      => syntax_ext(syntax)
     }).inject('') { |body, (key, value)| body << "#{key}=#{CGI.escape(value)}&" }.chop
+    
+    params << '&private=on' if private_gist
+    params
   end
   
   def syntax_ext(syntax)

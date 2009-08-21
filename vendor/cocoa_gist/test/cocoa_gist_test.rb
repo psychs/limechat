@@ -39,18 +39,12 @@ describe "A CocoaGist" do
   end
   
   it "should serialize the parameters" do
-    @gist.send(:params, 'the content', 'ruby').split('&').sort.should ==
-      %w{ file_contents[gistfile1]=the+content  file_ext[gistfile1]=.rb  login=alloy  token=secret }.sort
-  end
-  
-  it "should omit empty values from the serialized parameters" do
-    CocoaGist.stubs(:credentials).returns({})
-    @gist.send(:params, 'the content', 'html').split('&').sort.should ==
-      %w{ file_contents[gistfile1]=the+content  file_ext[gistfile1]=.htm }.sort
+    @gist.send(:params, 'the content', 'ruby', true).split('&').sort.should ==
+      %w{ file_contents[gistfile1]=the+content  file_ext[gistfile1]=.rb  login=alloy  token=secret private=on }.sort
   end
   
   it "should post the paste contents" do
-    @gist.expects(:params).with('the content', 'ruby').returns('the parameters')
+    @gist.expects(:params).with('the content', 'ruby', true).returns('the parameters')
     
     request = mock('NSMutableURLRequest')
     OSX::NSMutableURLRequest.expects(:requestWithURL_cachePolicy_timeoutInterval).with do |url, policy, timeout|
@@ -65,7 +59,7 @@ describe "A CocoaGist" do
     connection = mock('NSURLConnection')
     OSX::NSURLConnection.any_instance.expects(:initWithRequest_delegate).with(request, @gist).returns(connection)
     
-    @gist.start('the content', 'ruby')
+    @gist.start('the content', 'ruby', true)
     @gist.connection.should.be connection
   end
   
