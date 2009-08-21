@@ -7,7 +7,7 @@ require 'cocoa_gist'
 class PasteSheet < CocoaSheet
   attr_accessor :uid, :cid, :nick
   attr_reader :original_text
-  ib_outlet :text, :pasteButton, :sendInChannelButton, :syntaxPopup, :commandPopup, :progressIndicator, :errorLabel
+  ib_outlet :text, :pasteButton, :pastePrivate, :sendInChannelButton, :syntaxPopup, :commandPopup, :progressIndicator, :errorLabel
   first_responder :sendInChannelButton
   buttons :Cancel
   
@@ -62,13 +62,13 @@ class PasteSheet < CocoaSheet
     # CocoaGist.set_credentials(login, token)
     @conn = CocoaGist.alloc.init
     @conn.delegate = self
-    @conn.start(@text.textStorage.string.to_s, syntax)
+    @conn.start(@text.textStorage.string.to_s, syntax, @pastePrivate.state == NSOnState)
   end
   
   def pastie_on_success(sender, s)
     @conn = nil
     if s.empty?
-      @errorLabel.setStringValue("Could not get an URL from Pastie")
+      @errorLabel.setStringValue("Could not get an URL from Gist")
       set_waiting
     else
       @errorLabel.setStringValue('')
@@ -79,7 +79,7 @@ class PasteSheet < CocoaSheet
   
   def pastie_on_error(sender, e)
     @conn = nil
-    @errorLabel.setStringValue("Pastie failed: #{e}")
+    @errorLabel.setStringValue("Gist failed: #{e}")
     set_waiting
   end
   
@@ -89,7 +89,7 @@ class PasteSheet < CocoaSheet
       if @interval <= 0
         @conn.cancel
         @conn = nil
-        @errorLabel.setStringValue("Unable to reach Pastie at this moment")
+        @errorLabel.setStringValue("Unable to reach Gist at this moment")
         set_waiting
       end
     end
@@ -101,6 +101,7 @@ class PasteSheet < CocoaSheet
     @errorLabel.setStringValue("Sending...")
     @progressIndicator.startAnimation(nil)
     @pasteButton.setEnabled(false)
+    @pastePrivate.setEnabled(false)
     @sendInChannelButton.setEnabled(false)
     @syntaxPopup.setEnabled(false)
     @commandPopup.setEnabled(false)
@@ -109,6 +110,7 @@ class PasteSheet < CocoaSheet
   def set_waiting
     @progressIndicator.stopAnimation(nil)
     @pasteButton.setEnabled(true)
+    @pastePrivate.setEnabled(true)
     @sendInChannelButton.setEnabled(true)
     @syntaxPopup.setEnabled(true)
     @commandPopup.setEnabled(true)

@@ -26,6 +26,8 @@
 				<string>id</string>
 				<key>pasteButton</key>
 				<string>id</string>
+				<key>pastePrivate</key>
+				<string>id</string>
 				<key>progressIndicator</key>
 				<string>id</string>
 				<key>sendInChannelButton</key>
