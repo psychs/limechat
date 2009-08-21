@@ -9,6 +9,10 @@ class CocoaGist < OSX::NSObject
   attr_accessor :delegate
   attr_reader :connection, :response
   
+  def self.set_credentials(login, token)
+    @credentials = { 'login' => login, 'token' => token }
+  end
+  
   def self.credentials
     @credentials ||= {
       'login' => `git config --global github.user`.strip,

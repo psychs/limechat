@@ -23,11 +23,16 @@ describe 'CocoaGist' do
     CocoaGist.stubs(:`).returns('')
     CocoaGist.credentials.should == {}
   end
+  
+  it "should accept credentials" do
+    CocoaGist.set_credentials('psychs', 'top_secret')
+    CocoaGist.credentials.should == { 'login' => 'psychs', 'token' => 'top_secret' }
+  end
 end
 
 describe "A CocoaGist" do
   before do
-    CocoaGist.instance_variable_set(:@credentials, GITHUB_ACCOUNT)
+    CocoaGist.set_credentials(GITHUB_ACCOUNT['login'], GITHUB_ACCOUNT['token'])
     
     @gist = CocoaGist.alloc.init
     @gist.delegate = mock('Delegate')
