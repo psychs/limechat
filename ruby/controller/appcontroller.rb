@@ -20,8 +20,6 @@ class AppController < NSObject
     em = NSAppleEventManager.sharedAppleEventManager
     em.setEventHandler_andSelector_forEventClass_andEventID(self, 'handleURLEvent:withReplyEvent:', KInternetEventClass, KAEGetURL)
 
-    #FileUtils.mkpath(preferences.general.transcript_folder.expand_path) rescue nil
-
     if preferences.general.use_hotkey
       NSApp.registerHotKey_modifierFlags(preferences.general.hotkey_key_code, preferences.general.hotkey_modifier_flags)
     end
@@ -442,6 +440,11 @@ class AppController < NSObject
     # initialize theme directory
     FileUtils.mkpath(Pathname.new('~/Library/Application Support/LimeChat/Themes').expand_path.to_s) rescue nil
     FileUtils.cp(Dir.glob(ViewTheme.RESOURCE_BASE + '/Sample.*'), newdir.to_s) rescue nil
+    
+    # migrate ADDR_DETECT_NIC to ADDR_DETECT_JOIN
+    if preferences.dcc.address_detection_method == Preferences::Dcc::ADDR_DETECT_NIC
+      preferences.dcc.address_detection_method = Preferences::Dcc::ADDR_DETECT_JOIN
+    end
   end
 
   class NickCompletionStatus

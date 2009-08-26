@@ -35,7 +35,6 @@
 		7821DBDE0C2C84EA00B3EF42 /* PasteSheet.nib in Resources */ = {isa = PBXBuildFile; fileRef = 7821DBDC0C2C84EA00B3EF42 /* PasteSheet.nib */; };
 		7821DBE40C2C875700B3EF42 /* pastesheet.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7821DBE30C2C875700B3EF42 /* pastesheet.rb */; };
 		78229BC40C288188001DD4C3 /* ircsocket.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229B920C288188001DD4C3 /* ircsocket.rb */; };
-		78229BC60C288188001DD4C3 /* resolver.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229B940C288188001DD4C3 /* resolver.rb */; };
 		78229BC70C288188001DD4C3 /* tcpclient.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229B950C288188001DD4C3 /* tcpclient.rb */; };
 		78229BC80C288188001DD4C3 /* tcpserver.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229B960C288188001DD4C3 /* tcpserver.rb */; };
 		78229BC90C288188001DD4C3 /* timer.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229B970C288188001DD4C3 /* timer.rb */; };
@@ -81,6 +80,7 @@
 		7870BA3F0E1116DC004B30B4 /* redstar.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 7870BA3E0E1116DC004B30B4 /* redstar.tiff */; };
 		7870BA440E111952004B30B4 /* bluestar.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 7870BA430E111952004B30B4 /* bluestar.tiff */; };
 		7870BA490E111BD0004B30B4 /* iconcontroller.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7870BA480E111BD0004B30B4 /* iconcontroller.rb */; };
+		7870F6A01044FD1300F93E35 /* HostResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = 7870F69F1044FD1300F93E35 /* HostResolver.m */; };
 		78755D730C2AC0B30073FF42 /* logrenderer.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78755D720C2AC0B30073FF42 /* logrenderer.rb */; };
 		7877E0620C65B84E002F13C7 /* textfield.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7877E0610C65B84E002F13C7 /* textfield.rb */; };
 		787817C80D860ED30049CF95 /* unicodeutil.rb in Resources */ = {isa = PBXBuildFile; fileRef = 787817C70D860ED30049CF95 /* unicodeutil.rb */; };
@@ -178,7 +178,6 @@
 		7821DBDD0C2C84EA00B3EF42 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/PasteSheet.nib; sourceTree = "<group>"; };
 		7821DBE30C2C875700B3EF42 /* pastesheet.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = pastesheet.rb; sourceTree = "<group>"; };
 		78229B920C288188001DD4C3 /* ircsocket.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = ircsocket.rb; sourceTree = "<group>"; };
-		78229B940C288188001DD4C3 /* resolver.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = resolver.rb; sourceTree = "<group>"; };
 		78229B950C288188001DD4C3 /* tcpclient.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = tcpclient.rb; sourceTree = "<group>"; };
 		78229B960C288188001DD4C3 /* tcpserver.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = tcpserver.rb; sourceTree = "<group>"; };
 		78229B970C288188001DD4C3 /* timer.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = timer.rb; sourceTree = "<group>"; };
@@ -229,6 +228,8 @@
 		7870BA3E0E1116DC004B30B4 /* redstar.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = redstar.tiff; path = resource/icon/redstar.tiff; sourceTree = "<group>"; };
 		7870BA430E111952004B30B4 /* bluestar.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = bluestar.tiff; path = resource/icon/bluestar.tiff; sourceTree = "<group>"; };
 		7870BA480E111BD0004B30B4 /* iconcontroller.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = iconcontroller.rb; sourceTree = "<group>"; };
+		7870F69E1044FD1300F93E35 /* HostResolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HostResolver.h; path = objc/HostResolver.h; sourceTree = "<group>"; };
+		7870F69F1044FD1300F93E35 /* HostResolver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HostResolver.m; path = objc/HostResolver.m; sourceTree = "<group>"; };
 		78755D720C2AC0B30073FF42 /* logrenderer.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = logrenderer.rb; sourceTree = "<group>"; };
 		7877E0610C65B84E002F13C7 /* textfield.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = textfield.rb; sourceTree = "<group>"; };
 		787817C70D860ED30049CF95 /* unicodeutil.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = unicodeutil.rb; sourceTree = "<group>"; };
@@ -371,7 +372,6 @@
 			children = (
 				78AF96570C2C219A006D9E4D /* inputhistory.rb */,
 				78229B920C288188001DD4C3 /* ircsocket.rb */,
-				78229B940C288188001DD4C3 /* resolver.rb */,
 				78229B950C288188001DD4C3 /* tcpclient.rb */,
 				78229B960C288188001DD4C3 /* tcpserver.rb */,
 				78229B970C288188001DD4C3 /* timer.rb */,
@@ -484,6 +484,8 @@
 			children = (
 				78FFD4F10EB5BD5F00B94D63 /* LimeChatApplication.h */,
 				78FFD4F20EB5BD5F00B94D63 /* LimeChatApplication.m */,
+				7870F69E1044FD1300F93E35 /* HostResolver.h */,
+				7870F69F1044FD1300F93E35 /* HostResolver.m */,
 				784660230C3145850064140F /* OldEventManager.h */,
 				784660240C3145850064140F /* OldEventManager.m */,
 				786926F20BB6EC1B0081019B /* AsyncSocket.h */,
@@ -606,7 +608,6 @@
 				78E572690C1C30CE00BDF7EC /* WhoisDialog.nib in Resources */,
 				7867EA4B0C227AD40017B510 /* NickSheet.nib in Resources */,
 				78229BC40C288188001DD4C3 /* ircsocket.rb in Resources */,
-				78229BC60C288188001DD4C3 /* resolver.rb in Resources */,
 				78229BC70C288188001DD4C3 /* tcpclient.rb in Resources */,
 				78229BC80C288188001DD4C3 /* tcpserver.rb in Resources */,
 				78229BC90C288188001DD4C3 /* timer.rb in Resources */,
@@ -723,6 +724,7 @@
 				78A55EFD0E810C5E00339EBC /* KeyRecorderBox.m in Sources */,
 				78A55EFE0E810C5E00339EBC /* KeyRecorderBoxCell.m in Sources */,
 				78FFD4F30EB5BD5F00B94D63 /* LimeChatApplication.m in Sources */,
+				7870F6A01044FD1300F93E35 /* HostResolver.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
