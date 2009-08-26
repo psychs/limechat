@@ -5,6 +5,7 @@ class CocoaGist < OSX::NSObject
   REQUEST_URL = OSX::NSURL.URLWithString('http://gist.github.com/gists')
   TIMEOUT = 10
   POLICY = 1 # NSURLRequestReloadIgnoringLocalCacheData
+  PATH_COMMAND = 'PATH=$PATH:/usr/local/bin:/opt/local/bin'
   
   attr_accessor :delegate
   attr_reader :connection, :response
@@ -15,8 +16,8 @@ class CocoaGist < OSX::NSObject
   
   def self.credentials
     @credentials ||= {
-      'login' => `git config --global github.user`.strip,
-      'token' => `git config --global github.token`.strip
+      'login' => `#{PATH_COMMAND}; git config --global github.user`.strip,
+      'token' => `#{PATH_COMMAND}; git config --global github.token`.strip
     }.reject { |_, v| v.empty? }
   end
   
