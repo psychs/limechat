@@ -7,8 +7,20 @@
     <language>ja</language>
 
     <item>
+      <title>1.1</title>
+      <link>http://limechat.net/mac/index_ja.html#v1.1</link>
+      <pubDate>Wed, 26 Aug 2009 15:28:00 +0900</pubDate>
+      <content:encoded><![CDATA[
+  			<ul>
+  				<li>ペーストサービスを gist に変更した。</li>
+  				<li>Snow Leopard 対応のため、DNS を別スレッドで引くようにした。</li>
+  			</ul>
+      ]]></content:encoded>
+    </item>
+
+    <item>
       <title>1.0</title>
-      <link>http://limechat.net/mac/#v1.0</link>
+      <link>http://limechat.net/mac/index_ja.html#v1.0</link>
       <pubDate>Wed, 03 Jun 2009 09:01:00 +0900</pubDate>
       <content:encoded><![CDATA[
   			<ul>
