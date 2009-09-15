@@ -7,6 +7,7 @@ build
 *.mode1*
 *.build
 *~.nib
+designable.nib
 *.tm_build_errors
 Debug
 *.obj
