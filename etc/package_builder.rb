@@ -48,7 +48,7 @@ class PackageBuilder
   end
   
   def framework_package(sdk)
-    "../../../../../resource/rubycocoa/RubyCocoa_1.0.0p2_#{sdk}.tar.gz"
+    "../../../../../resource/rubycocoa/RubyCocoa_1.0.0p3_#{sdk}.tar.gz"
   end
 
 end
