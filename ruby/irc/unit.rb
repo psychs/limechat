@@ -34,6 +34,7 @@ class IRCUnit < NSObject
     @who_queue = []
     @who_wait = 0
     @timer_queue = []
+    @resolver = HostResolver.alloc.initWithDelegate(self)
     reset_state
   end
   
@@ -51,11 +52,8 @@ class IRCUnit < NSObject
     migrate
     
     @address_detection_method = preferences.dcc.address_detection_method
-    case @address_detection_method
-    when Preferences::Dcc::ADDR_DETECT_NIC
-      detect_myaddress_from_nic
-    when Preferences::Dcc::ADDR_DETECT_SPECIFY
-      Resolver.resolve(self, preferences.dcc.myaddress)
+    if @address_detection_method == Preferences::Dcc::ADDR_DETECT_SPECIFY
+      @resolver.resolve(preferences.dcc.myaddress)
     end
   end
   
@@ -884,12 +882,12 @@ class IRCUnit < NSObject
       @myaddress = nil
       case @address_detection_method
       when Preferences::Dcc::ADDR_DETECT_JOIN
-        Resolver.resolve(self, @join_address) if @join_address
-      when Preferences::Dcc::ADDR_DETECT_NIC
-        detect_myaddress_from_nic
+        @resolver.resolve(@join_address) if @join_address
       when Preferences::Dcc::ADDR_DETECT_SPECIFY
-        Resolver.resolve(self, preferences.dcc.myaddress)
+        @resolver.resolve(preferences.dcc.myaddress)
       end
+    elsif @address_detection_method == Preferences::Dcc::ADDR_DETECT_SPECIFY
+      @resolver.resolve(preferences.dcc.myaddress)
     end
     @log.max_lines = preferences.general.max_log_lines
     @channels.each {|c| c.preferences_changed}
@@ -1026,10 +1024,17 @@ class IRCUnit < NSObject
     print_error(err)
   end
   
-  def ResolverOnResolve(addr)
-    return unless addr
-    addr = addr.to_a.map {|i| i.to_s}
-    @myaddress = addr[0]
+  def hostResolver_didResolve(sender, host)
+    addrs = host.addresses
+    if addrs && addrs.count > 0
+      @myaddress = host.addresses.to_a[0].to_s
+    else
+      @myaddress = nil
+    end
+  end
+  
+  def hostResolver_didNotResolve(sender, hostname)
+    @myaddress = nil
   end
   
   def print_error(text)
@@ -1062,14 +1067,6 @@ class IRCUnit < NSObject
   
   def reload_tree
     @world.reload_tree
-  end
-  
-  def detect_myaddress_from_nic
-    addr = Socket.getaddrinfo(Socket.gethostname, nil)
-    addr = addr.find {|i| !(/\.local$/ =~ i[2])}
-    Resolver.resolve(self, addr[2]) if addr
-  rescue
-    @myaddress = nil
   end
   
   # print
@@ -1609,7 +1606,7 @@ class IRCUnit < NSObject
       unless @join_address
         @join_address = m.sender_address
         if @address_detection_method == Preferences::Dcc::ADDR_DETECT_JOIN
-          Resolver.resolve(self, @join_address)
+          @resolver.resolve(@join_address)
         end
       end
     end

@@ -7,8 +7,93 @@
     <language>en-us</language>
 
     <item>
+      <title>1.1</title>
+      <link>http://limechat.net/mac/#v1.1</link>
+      <pubDate>Wed, 26 Aug 2009 15:28:00 +0900</pubDate>
+      <content:encoded><![CDATA[
+  			<ul>
+  				<li>Switched paste service to gist.</li>
+  				<li>Use threaded hostname resolver for Snow Leopard.</li>
+  			</ul>
+      ]]></content:encoded>
+    </item>
+
+    <item>
+      <title>1.0</title>
+      <link>http://limechat.net/mac/#v1.0</link>
+      <pubDate>Wed, 03 Jun 2009 09:01:00 +0900</pubDate>
+      <content:encoded><![CDATA[
+  			<ul>
+  				<li>Only OS X 10.5 is supported now.</li>
+  				<li>Embed RubyCocoa.framework into the app.</li>
+  				<li>Improved crashing bug in 10.5.7.</li>
+  				<li>Renewed preferences dialog.</li>
+  				<li>Renewed paste dialog.</li>
+  				<li>Renewed welcome dialog.</li>
+  				<li>Added "Notify events in Growl" option in channel properies.</li>
+  				<li>Assigned shift-tab to move to the previous control.</li>
+  				<li>Added %@%n: nick format.</li>
+  				<li>Added show join/leave option.</li>
+  				<li>Added time stamp format.</li>
+  				<li>Added "ignore words" option. If text contains any of these words it will be ignored.</li>
+  				<li>Added "/close peer" command to close a talk.</li>
+  				<li>Added /omsg and /onotice commands.</li>
+  				<li>Added support for /notice @#channel.</li>
+  				<li>Added /m command.</li>
+  				<li>Query ban list by /ban.</li>
+  				<li>Open URLs without activation.</li>
+  				<li>Remember spell checking status across session.</li>
+  				<li>Fixed a bug in CP949 and other encodings.</li>
+  				<li>Shorten sending PONG interval.</li>
+  				<li>Don't allow &lt; and &gt; in URLs.</li>
+  				<li>Ignore case in URL schemes.</li>
+  				<li>Don't show the channel list dialog again while /list responses.</li>
+  				<li>Markers in scrollers should be drawn as 1 point width lines.</li>
+  				<li>All kind of ops should be colored as ops.</li>
+  				<li>Work around for buggy bouncers, they don't send 005 replies appropriately.</li>
+  				<li>Don't show PONG responses.</li>
+  				<li>Changed an option name from "Dislike words" to "Exclude words".</li>
+  				<li>Prohibit backspace, delete and space keys for hotkey.</li>
+  				<li>Fixed a crash when an user changed his nick to the same one except case.</li>
+  				<li>Fixed a memory leak when enabling SSL.</li>
+  				<li>Fixed a bug around quick join.</li>
+  				<li>Fixed a bug, it tried to join channels with names of talks.</li>
+  				<li>Fixed a bug, the log was kept blank after /clear sometimes.</li>
+  				<li>Fixed a bug, register to auto op menu was disabled.</li>
+  			</ul>
+      ]]></content:encoded>
+    </item>
+
+    <item>
+      <title>0.20</title>
+      <link>http://limechat.net/mac/#v0.20</link>
+      <pubDate>Thu, 02 Oct 2008 10:29:00 +0900</pubDate>
+      <content:encoded><![CDATA[
+  			<ul>
+  				<li>Added hot key option.</li>
+  				<li>Assigned opt+tab to move to the last selected channel.</li>
+  				<li>Added commands completion.</li>
+  				<li>Added context menu on channel name in logs.</li>
+  				<li>Added voice and devoice menu items.</li>
+  				<li>Added "Channel notice received" and "Talk notice received" to the Growl notification types.</li>
+  				<li>Added a theme settings: input-text/selected/background-color</li>
+  				<li>Deal with parenthesis pairs in URLs.</li>
+  				<li>Tweaked margin of the input text field.</li>
+  				<li>Added .js file support for themes.</li>
+  				<li>Allow to send commands before login.</li>
+  				<li>Added /clear command to clear a log.</li>
+  				<li>Supported filenames surrounded by double quotations in DCC file transfers.</li>
+  				<li>Fixed a bug, the auto-op dialog could cause a nil access exception.</li>
+  				<li>Strip unnecessary ":" when printing a line to log file.</li>
+  				<li>Fixed a bug, we should allow a Bignum for Time.at.</li>
+  				<li>Fixed a bug, /quote with no parameter caused a crash.</li>
+  			</ul>
+      ]]></content:encoded>
+    </item>
+
+    <item>
       <title>0.19</title>
-      <link>http://limechat.net/mac/index_ja.html#v0.19</link>
+      <link>http://limechat.net/mac/#v0.19</link>
       <pubDate>Thu, 10 Jul 2008 00:13:00 +0900</pubDate>
       <content:encoded><![CDATA[
   			<ul>
@@ -22,138 +107,6 @@
   				<li>Search channel topics in the Channel List.</li>
   				<li>Added "first" attribute for span.sender to show nicknames in the first line only.</li>
   				<li>Changed to ignore CTCP replies with empty commands.</li>
-  			</ul>
-      ]]></content:encoded>
-    </item>
-
-    <item>
-      <title>0.18</title>
-      <link>http://limechat.net/mac/index_ja.html#v0.18</link>
-      <pubDate>Thu, 22 May 2008 22:50:00 +0900</pubDate>
-      <content:encoded><![CDATA[
-  			<ul>
-  				<li>Added exact word matching for highlighting.</li>
-  				<li>Added SSL support.</li>
-  				<li>Added alternative nicknames support.</li>
-  				<li>Implemented drag and drop files on the member list to send files on dcc.</li>
-  				<li>Added fallback encoding.</li>
-  				<li>Changed Cmd-w to close current panel with confirmation when the panel is a channel.</li>
-  				<li>Added Kick, Ban and Kick &amp; Ban in the context menu on the member list.</li>
-  				<li>Assigned Cmd+E to copy the selection.</li>
-  				<li>Changed priority of Growl notifications to 1 for highlight events.</li>
-  				<li>Added 'New Folder' button on the open dialog for transcripts location.</li>
-  				<li>Changed to not use nick format for transcripts.</li>
-  				<li>Changed the format of text messages for Growl notifications to "&lt;nick&gt; msg".</li>
-  				<li>Changed to order front the main window when clicked on a growl notification.</li>
-  				<li>Assigned enter key to send text on the paste dialog.</li>
-  				<li>Added opt-up/down for moving around histories.</li>
-  				<li>Changed to not allow '?' at the end of URLs.</li>
-  				<li>Changed to select an existing talk when trying to start a talk again.</li>
-  				<li>On the paste dialog, changed "Privmsg command" and "Notice command" to "Send to channel" and "Send Notice to Channel" respectively.</li>
-  				<li>Changed /part without parameters to close the current talk.</li>
-  				<li>Changed to handle /whois to get more information.</li>
-  				<li>Added /rejoin, /cycle and /hop commands to rejoin the current channel.</li>
-  				<li>Added /op, /deop, /halfop, /dehalfop, /voice, /devoice, /ban, /unban, /umode, /raw and /quote commands.</li>
-  				<li>Added aliases, /t for /topic and /leave for /part.</li>
-  				<li>Added /j command to join a channel.</li>
-  				<li>Renamed /ctcpquery to /ctcp.</li>
-  				<li>Removed /ctcpping.</li>
-  				<li>Added nick attribute to the console log.</li>
-  				<li>Changed to set 'server' type attribute for server logs like &lt;body type="server"&gt;.</li>
-  				<li>Fixed a nil access bug in DccManager#tableView_objectValueForTableColumn_row.</li>
-  				<li>Fixed a bug, 'Override Log Font' option should be applied to body[type=...] and body.(normal|console) elements.</li>
-  				<li>Fixed a bug, numeric values should be capped when converting from ruby to objc.</li>
-  				<li>Fixed a bug, parameters for Time.at should be Fixnum.</li>
-  				<li>Fixed a bug, marked scrollers were visible on the top-left corner of log views when initialized.</li>
-  				<li>Fixed a bug, the scrollers of log views won't be rendered correctly when initialized with not enough frame.</li>
-  				<li>Fixed a bug, "MODE +a user" should be considered as setting an user mask.</li>
-  				<li>Fixed a bug, my address was forgotten after reconnecting.</li>
-  				<li>Fixed a bug in utf-8 string validator.</li>
-  				<li>Fixed a bug, log views dropped received lines before initializing.</li>
-  				<li>Fixed a bug, 'Reveal in Finder' menu action on the dcc dialog caused an exception.</li>
-  				<li>Fixed a bug, 'Highlight your current nickname' option should be applied for the console log.</li>
-  				<li>Fixed a bug, /query command should be cleared after opening a talk.</li>
-  			</ul>
-      ]]></content:encoded>
-    </item>
-
-    <item>
-      <title>0.17</title>
-      <link>http://limechat.net/mac/#v0.17</link>
-      <pubDate>Mon, 03 Mar 2008 21:51:00 +0900</pubDate>
-      <content:encoded><![CDATA[
-  			<ul>
-  				<li>Fixed a crashing bug on 10.4, when pushed [+] button on the startup dialog.</li>
-  				<li>Implemented drawing highlight indicators on a vertical scroller of log views.</li>
-  				<li>Enabled continuous spell checking by default.</li>
-  				<li>Now we can rearrange servers and channels on the server tree.</li>
-  				<li>Added a filter text field on the channel list dialog.</li>
-  				<li>Added an option, "Auto accept file transfers".</li>
-  				<li>Added "Open File" menu item for receiving items on the dcc dialog.</li>
-  				<li>Added "Reveal in Finder" menu item for receiving items on the dcc dialog.</li>
-  				<li>Assigned double click to reveal a file in Finder on the dcc receiving transfer list.</li>
-  				<li>Reformed main menu.</li>
-  				<li>Assigned cmd+W to "Close Current Panel" when the main window is active.</li>
-  				<li>Added a menu item, 'Copy Log as HTML'.</li>
-  				<li>Added a menu item, 'Mark All as Read'.</li>
-  				<li>Changed shortcut key for 'Mark Scrollback' to cmd+L, and 'Clear Mark' to cmd+shift+L as well.</li>
-  				<li>Changed to show the paste dialog on opt-return.</li>
-  				<li>Changed to select 'privmsg' as the default syntax when the paste dialog is not for paste.</li>
-  				<li>Reformed the html template for log views.</li>
-  				<li>New style action messages.</li>
-  				<li>Moved the themes directory from '~/Library/LimeChat/Theme' to '~/Library/Application Support/LimeChat/Themes'.</li>
-  				<li>Changed the default nick format to '%n: '.</li>
-  				<li>More smaller font for the member list.</li>
-  				<li>Removed '*' in the head of system messages.</li>
-  				<li>Removed a server name from place part in the console log.</li>
-  				<li>Now mIRC color effects can be styled in css.</li>
-  				<li>Added "colornumber" attribute to span.sender for coloring each nick with different colors.</li>
-  				<li>Added "identified" attribute in log view's html for CAPAB IDENTIFY-MSG support.</li>
-  				<li>Added HTML4 color names support for YAML themes.</li>
-  				<li>Changed to allow rgb() and rgba() strings in YAML theme files.</li>
-  				<li>Changed /query without parameters to close the current talk.</li>
-  				<li>Changed to remember the current text if modified when pushed up key.</li>
-  				<li>Now a scroll position is kept when received a new line and removed the first line.</li>
-  				<li>Changed to retain input text when changed the current channel, and restore it when come back to the channel.</li>
-  				<li>Use the current username for nick on the startup dialog.</li>
-  				<li>Added support for CAPAB IDENTIFY-MSG and CAPAB IDENTIFY-CTCP.</li>
-  				<li>Now 401 error is printed in a talk log when there is a talk item for the target.</li>
-  				<li>Don't change servers when closing a channel.</li>
-  				<li>Fixed a bug, an effect stopping character should not render as an end tag when there is no effect.</li>
-  				<li>Fixed a bug, the input text field should be scrolled on nick completion.</li>
-  			</ul>
-      ]]></content:encoded>
-    </item>
-
-    <item>
-      <title>0.16.2</title>
-      <link>http://limechat.net/mac/#v0.16.2</link>
-      <pubDate>Sat, 16 Feb 2008 11:54:00 +0900</pubDate>
-      <content:encoded><![CDATA[
-  			<ul>
-          <li>Added new connection dialog for the first start up.</li>
-          <li>Added +q/+a channel modes support for Unreal IRCd.</li>
-          <li>Added /query support.</li>
-          <li>Added an option, don't show notifications when the application is active.</li>
-          <li>Prohibit adding a member when received join in a mode +a channel.</li>
-          <li>Changed to clear member list when received mode +a.</li>
-          <li>Changed to rebuild member list when received mode -a.</li>
-          <li>Changed to keep selection when a log view become not focused.</li>
-          <li>Added note for the encoding setting.</li>
-          <li>Fixed a method not found bug while formatting '%@'.</li>
-  			</ul>
-      ]]></content:encoded>
-    </item>
-
-    <item>
-      <title>0.16</title>
-      <link>http://limechat.net/mac/#v0.16</link>
-      <pubDate>Sun, 03 Feb 2008 17:50:00 +0900</pubDate>
-      <content:encoded><![CDATA[
-  			<ul>
-          <li>Fixed a number format bug, "0.format_size" caused an exception.</li>
-          <li>Changed to send whois for a pointed member when doubleclicked on the member list.</li>
-          <li>Improved the report dialog of SACrashReporter.</li>
   			</ul>
       ]]></content:encoded>
     </item>

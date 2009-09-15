@@ -6,8 +6,24 @@
 	objectVersion = 42;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		78EB54D60FD5DD7100EC055A /* EmbedFramework */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 78EB54E30FD5DD8800EC055A /* Build configuration list for PBXAggregateTarget "EmbedFramework" */;
+			buildPhases = (
+				78EB54D50FD5DD7100EC055A /* ShellScript */,
+			);
+			dependencies = (
+				78EB54DA0FD5DD7F00EC055A /* PBXTargetDependency */,
+			);
+			name = EmbedFramework;
+			productName = EmbedFramework;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		510D9F6D0EC4FE9900D3BEFB /* abstract_preferences.rb in Resources */ = {isa = PBXBuildFile; fileRef = 510D9F6C0EC4FE9900D3BEFB /* abstract_preferences.rb */; };
+		51C39169103A18A9009DEFBF /* cocoa_gist.rb in Resources */ = {isa = PBXBuildFile; fileRef = 51C39168103A18A9009DEFBF /* cocoa_gist.rb */; };
 		51F0A51E0EBCF70A00B2C878 /* controls_with_disabled_state.rb in Resources */ = {isa = PBXBuildFile; fileRef = 51F0A51D0EBCF70A00B2C878 /* controls_with_disabled_state.rb */; };
 		7801DD2E0D1AF75F00D8691D /* isupportinfo.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7801DD2D0D1AF75F00D8691D /* isupportinfo.rb */; };
 		7805EE590D11FDCA000A9B55 /* pasternakclient.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7805EE580D11FDCA000A9B55 /* pasternakclient.rb */; };
@@ -19,7 +35,6 @@
 		7821DBDE0C2C84EA00B3EF42 /* PasteSheet.nib in Resources */ = {isa = PBXBuildFile; fileRef = 7821DBDC0C2C84EA00B3EF42 /* PasteSheet.nib */; };
 		7821DBE40C2C875700B3EF42 /* pastesheet.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7821DBE30C2C875700B3EF42 /* pastesheet.rb */; };
 		78229BC40C288188001DD4C3 /* ircsocket.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229B920C288188001DD4C3 /* ircsocket.rb */; };
-		78229BC60C288188001DD4C3 /* resolver.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229B940C288188001DD4C3 /* resolver.rb */; };
 		78229BC70C288188001DD4C3 /* tcpclient.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229B950C288188001DD4C3 /* tcpclient.rb */; };
 		78229BC80C288188001DD4C3 /* tcpserver.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229B960C288188001DD4C3 /* tcpserver.rb */; };
 		78229BC90C288188001DD4C3 /* timer.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229B970C288188001DD4C3 /* timer.rb */; };
@@ -65,6 +80,7 @@
 		7870BA3F0E1116DC004B30B4 /* redstar.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 7870BA3E0E1116DC004B30B4 /* redstar.tiff */; };
 		7870BA440E111952004B30B4 /* bluestar.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 7870BA430E111952004B30B4 /* bluestar.tiff */; };
 		7870BA490E111BD0004B30B4 /* iconcontroller.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7870BA480E111BD0004B30B4 /* iconcontroller.rb */; };
+		7870F6A01044FD1300F93E35 /* HostResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = 7870F69F1044FD1300F93E35 /* HostResolver.m */; };
 		78755D730C2AC0B30073FF42 /* logrenderer.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78755D720C2AC0B30073FF42 /* logrenderer.rb */; };
 		7877E0620C65B84E002F13C7 /* textfield.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7877E0610C65B84E002F13C7 /* textfield.rb */; };
 		787817C80D860ED30049CF95 /* unicodeutil.rb in Resources */ = {isa = PBXBuildFile; fileRef = 787817C70D860ED30049CF95 /* unicodeutil.rb */; };
@@ -115,6 +131,16 @@
 		78FFD4F30EB5BD5F00B94D63 /* LimeChatApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 78FFD4F20EB5BD5F00B94D63 /* LimeChatApplication.m */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		78EB54D90FD5DD7F00EC055A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 78E570CF0C1C306500BDF7EC;
+			remoteInfo = LimeChat;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
 		7835DF2C0D0414020064916A /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -134,6 +160,7 @@
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		510D9F6C0EC4FE9900D3BEFB /* abstract_preferences.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; name = abstract_preferences.rb; path = "../vendor/rubycocoa-prefs/lib/abstract_preferences.rb"; sourceTree = "<group>"; };
+		51C39168103A18A9009DEFBF /* cocoa_gist.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; name = cocoa_gist.rb; path = vendor/cocoa_gist/lib/cocoa_gist.rb; sourceTree = SOURCE_ROOT; };
 		51F0A51D0EBCF70A00B2C878 /* controls_with_disabled_state.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; name = controls_with_disabled_state.rb; path = ruby/view/controls_with_disabled_state.rb; sourceTree = SOURCE_ROOT; };
 		7801DD2D0D1AF75F00D8691D /* isupportinfo.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = isupportinfo.rb; sourceTree = "<group>"; };
 		780253C20C09525900C170D4 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
@@ -151,7 +178,6 @@
 		7821DBDD0C2C84EA00B3EF42 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/PasteSheet.nib; sourceTree = "<group>"; };
 		7821DBE30C2C875700B3EF42 /* pastesheet.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = pastesheet.rb; sourceTree = "<group>"; };
 		78229B920C288188001DD4C3 /* ircsocket.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = ircsocket.rb; sourceTree = "<group>"; };
-		78229B940C288188001DD4C3 /* resolver.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = resolver.rb; sourceTree = "<group>"; };
 		78229B950C288188001DD4C3 /* tcpclient.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = tcpclient.rb; sourceTree = "<group>"; };
 		78229B960C288188001DD4C3 /* tcpserver.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = tcpserver.rb; sourceTree = "<group>"; };
 		78229B970C288188001DD4C3 /* timer.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = timer.rb; sourceTree = "<group>"; };
@@ -202,6 +228,8 @@
 		7870BA3E0E1116DC004B30B4 /* redstar.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = redstar.tiff; path = resource/icon/redstar.tiff; sourceTree = "<group>"; };
 		7870BA430E111952004B30B4 /* bluestar.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = bluestar.tiff; path = resource/icon/bluestar.tiff; sourceTree = "<group>"; };
 		7870BA480E111BD0004B30B4 /* iconcontroller.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = iconcontroller.rb; sourceTree = "<group>"; };
+		7870F69E1044FD1300F93E35 /* HostResolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HostResolver.h; path = objc/HostResolver.h; sourceTree = "<group>"; };
+		7870F69F1044FD1300F93E35 /* HostResolver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HostResolver.m; path = objc/HostResolver.m; sourceTree = "<group>"; };
 		78755D720C2AC0B30073FF42 /* logrenderer.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = logrenderer.rb; sourceTree = "<group>"; };
 		7877E0610C65B84E002F13C7 /* textfield.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = textfield.rb; sourceTree = "<group>"; };
 		787817C70D860ED30049CF95 /* unicodeutil.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = unicodeutil.rb; sourceTree = "<group>"; };
@@ -344,7 +372,6 @@
 			children = (
 				78AF96570C2C219A006D9E4D /* inputhistory.rb */,
 				78229B920C288188001DD4C3 /* ircsocket.rb */,
-				78229B940C288188001DD4C3 /* resolver.rb */,
 				78229B950C288188001DD4C3 /* tcpclient.rb */,
 				78229B960C288188001DD4C3 /* tcpserver.rb */,
 				78229B970C288188001DD4C3 /* timer.rb */,
@@ -380,6 +407,7 @@
 			children = (
 				7889CABE0D647494003D808E /* welcomedialog.rb */,
 				7890B4E80C659E4700DF983F /* autoopdialog.rb */,
+				51C39168103A18A9009DEFBF /* cocoa_gist.rb */,
 				7821DBE30C2C875700B3EF42 /* pastesheet.rb */,
 				78496EFC0C2890200084A836 /* preferencedialog.rb */,
 				78229BA10C288188001DD4C3 /* channeldialog.rb */,
@@ -456,6 +484,8 @@
 			children = (
 				78FFD4F10EB5BD5F00B94D63 /* LimeChatApplication.h */,
 				78FFD4F20EB5BD5F00B94D63 /* LimeChatApplication.m */,
+				7870F69E1044FD1300F93E35 /* HostResolver.h */,
+				7870F69F1044FD1300F93E35 /* HostResolver.m */,
 				784660230C3145850064140F /* OldEventManager.h */,
 				784660240C3145850064140F /* OldEventManager.m */,
 				786926F20BB6EC1B0081019B /* AsyncSocket.h */,
@@ -558,6 +588,7 @@
 			projectRoot = "";
 			targets = (
 				78E570CF0C1C306500BDF7EC /* LimeChat */,
+				78EB54D60FD5DD7100EC055A /* EmbedFramework */,
 			);
 		};
 /* End PBXProject section */
@@ -577,7 +608,6 @@
 				78E572690C1C30CE00BDF7EC /* WhoisDialog.nib in Resources */,
 				7867EA4B0C227AD40017B510 /* NickSheet.nib in Resources */,
 				78229BC40C288188001DD4C3 /* ircsocket.rb in Resources */,
-				78229BC60C288188001DD4C3 /* resolver.rb in Resources */,
 				78229BC70C288188001DD4C3 /* tcpclient.rb in Resources */,
 				78229BC80C288188001DD4C3 /* tcpserver.rb in Resources */,
 				78229BC90C288188001DD4C3 /* timer.rb in Resources */,
@@ -659,10 +689,27 @@
 				78B418B30E4EF5A60065F111 /* inputtextfield.rb in Resources */,
 				51F0A51E0EBCF70A00B2C878 /* controls_with_disabled_state.rb in Resources */,
 				510D9F6D0EC4FE9900D3BEFB /* abstract_preferences.rb in Resources */,
+				51C39169103A18A9009DEFBF /* cocoa_gist.rb in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		78EB54D50FD5DD7100EC055A /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "PATH=\"$PATH:/usr/local/bin\" /usr/bin/ruby -r etc/package_builder -e \"PackageBuilder.build(ARGV[0])\" $TARGET_BUILD_DIR/$PROJECT_NAME.app";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		78E570CD0C1C306500BDF7EC /* Sources */ = {
@@ -677,10 +724,19 @@
 				78A55EFD0E810C5E00339EBC /* KeyRecorderBox.m in Sources */,
 				78A55EFE0E810C5E00339EBC /* KeyRecorderBoxCell.m in Sources */,
 				78FFD4F30EB5BD5F00B94D63 /* LimeChatApplication.m in Sources */,
+				7870F6A01044FD1300F93E35 /* HostResolver.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		78EB54DA0FD5DD7F00EC055A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 78E570CF0C1C306500BDF7EC /* LimeChat */;
+			targetProxy = 78EB54D90FD5DD7F00EC055A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		29B97318FDCFA39411CA2CEA /* MainMenu.nib */ = {
@@ -850,34 +906,53 @@
 			};
 			name = Release;
 		};
+		78EB54D70FD5DD7100EC055A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = EmbedFramework;
+			};
+			name = Debug;
+		};
+		78EB54D80FD5DD7100EC055A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				PRODUCT_NAME = EmbedFramework;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(NATIVE_ARCH)";
+				ARCHS = "$(ONLY_ACTIVE_ARCH_PRE_XCODE_3_1)";
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH_PRE_XCODE_3_1 = "$(NATIVE_ARCH)";
 				PREBINDING = NO;
-				SDKROOT = "";
+				SDKROOT = /Developer/SDKs/MacOSX10.5.sdk;
 			};
 			name = Debug;
 		};
 		C01FCF5008A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					ppc,
-					i386,
-				);
+				ARCHS = "$(ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1)";
+				ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1 = "ppc i386";
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INSTALL_PATH = /Applications;
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				PREBINDING = NO;
-				SDKROOT = "";
+				SDKROOT = /Developer/SDKs/MacOSX10.5.sdk;
 			};
 			name = Release;
 		};
@@ -889,6 +964,15 @@
 			buildConfigurations = (
 				78E570D40C1C306500BDF7EC /* Debug */,
 				78E570D50C1C306500BDF7EC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		78EB54E30FD5DD8800EC055A /* Build configuration list for PBXAggregateTarget "EmbedFramework" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				78EB54D70FD5DD7100EC055A /* Debug */,
+				78EB54D80FD5DD7100EC055A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
