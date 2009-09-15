@@ -75,7 +75,7 @@ def package(sdk)
 end
 
 def package_source
-	source_zip_path = DESKTOP_PATH + "#{APP_SHORT_NAME}_#{app_version}.zip"
+	source_zip_path = DESKTOP_PATH + "#{APP_SHORT_NAME}_#{app_version}_src.zip"
 	source_zip_path.rmtree
 	TMP_PATH.rmtree
 	
