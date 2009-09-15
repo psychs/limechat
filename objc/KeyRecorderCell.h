@@ -3,5 +3,8 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface KeyRecorderBoxCell : NSButtonCell
+
+@interface KeyRecorderCell : NSCell
+{
+}
 @end

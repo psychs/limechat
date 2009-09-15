@@ -78,8 +78,6 @@
 		7890B4E90C659E4700DF983F /* autoopdialog.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7890B4E80C659E4700DF983F /* autoopdialog.rb */; };
 		7890B4ED0C659E5D00DF983F /* AutoOpDialog.nib in Resources */ = {isa = PBXBuildFile; fileRef = 7890B4EB0C659E5D00DF983F /* AutoOpDialog.nib */; };
 		7896BFE50D0C5E850069453A /* viewtheme.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7896BFE40D0C5E850069453A /* viewtheme.rb */; };
-		78A55EFD0E810C5E00339EBC /* KeyRecorderBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A55EFA0E810C5E00339EBC /* KeyRecorderBox.m */; };
-		78A55EFE0E810C5E00339EBC /* KeyRecorderBoxCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A55EFC0E810C5E00339EBC /* KeyRecorderBoxCell.m */; };
 		78AD78E40C61B8F8001E77F4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 78AD78E20C61B8F8001E77F4 /* Localizable.strings */; };
 		78AF96580C2C219A006D9E4D /* inputhistory.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78AF96570C2C219A006D9E4D /* inputhistory.rb */; };
 		78AFBCF50C33E314008A8FCD /* kanasupport.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78AFBCF40C33E314008A8FCD /* kanasupport.rb */; };
@@ -94,6 +92,9 @@
 		78BF64B00C2885E2004451B2 /* user.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78BF64A80C2885E2004451B2 /* user.rb */; };
 		78BF64B10C2885E2004451B2 /* usermode.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78BF64A90C2885E2004451B2 /* usermode.rb */; };
 		78BF64B20C2885E2004451B2 /* world.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78BF64AA0C2885E2004451B2 /* world.rb */; };
+		78C215EC105FD70300F4C716 /* KeyCodeTranslator.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C215E7105FD70300F4C716 /* KeyCodeTranslator.m */; };
+		78C215ED105FD70300F4C716 /* KeyRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C215E9105FD70300F4C716 /* KeyRecorder.m */; };
+		78C215EE105FD70300F4C716 /* KeyRecorderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C215EB105FD70300F4C716 /* KeyRecorderCell.m */; };
 		78DA4EC10C461D52008780C8 /* memberlistview.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78DA4EBF0C461D52008780C8 /* memberlistview.rb */; };
 		78DA4EC20C461D52008780C8 /* servertreeview.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78DA4EC00C461D52008780C8 /* servertreeview.rb */; };
 		78E572390C1C30BA00BDF7EC /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
@@ -220,10 +221,6 @@
 		7890B4E80C659E4700DF983F /* autoopdialog.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = autoopdialog.rb; sourceTree = "<group>"; };
 		7890B4EC0C659E5D00DF983F /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/AutoOpDialog.nib; sourceTree = "<group>"; };
 		7896BFE40D0C5E850069453A /* viewtheme.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = viewtheme.rb; sourceTree = "<group>"; };
-		78A55EF90E810C5E00339EBC /* KeyRecorderBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KeyRecorderBox.h; path = objc/KeyRecorderBox.h; sourceTree = "<group>"; };
-		78A55EFA0E810C5E00339EBC /* KeyRecorderBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KeyRecorderBox.m; path = objc/KeyRecorderBox.m; sourceTree = "<group>"; };
-		78A55EFB0E810C5E00339EBC /* KeyRecorderBoxCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KeyRecorderBoxCell.h; path = objc/KeyRecorderBoxCell.h; sourceTree = "<group>"; };
-		78A55EFC0E810C5E00339EBC /* KeyRecorderBoxCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KeyRecorderBoxCell.m; path = objc/KeyRecorderBoxCell.m; sourceTree = "<group>"; };
 		78A86ADA0BFFD87500E28592 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/WhoisDialog.nib; sourceTree = "<group>"; };
 		78AD78E30C61B8F8001E77F4 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
 		78AF96570C2C219A006D9E4D /* inputhistory.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = inputhistory.rb; sourceTree = "<group>"; };
@@ -240,6 +237,12 @@
 		78BF64A80C2885E2004451B2 /* user.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = user.rb; sourceTree = "<group>"; };
 		78BF64A90C2885E2004451B2 /* usermode.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = usermode.rb; sourceTree = "<group>"; };
 		78BF64AA0C2885E2004451B2 /* world.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = world.rb; sourceTree = "<group>"; };
+		78C215E6105FD70300F4C716 /* KeyCodeTranslator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KeyCodeTranslator.h; path = objc/KeyCodeTranslator.h; sourceTree = "<group>"; };
+		78C215E7105FD70300F4C716 /* KeyCodeTranslator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KeyCodeTranslator.m; path = objc/KeyCodeTranslator.m; sourceTree = "<group>"; };
+		78C215E8105FD70300F4C716 /* KeyRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KeyRecorder.h; path = objc/KeyRecorder.h; sourceTree = "<group>"; };
+		78C215E9105FD70300F4C716 /* KeyRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KeyRecorder.m; path = objc/KeyRecorder.m; sourceTree = "<group>"; };
+		78C215EA105FD70300F4C716 /* KeyRecorderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KeyRecorderCell.h; path = objc/KeyRecorderCell.h; sourceTree = "<group>"; };
+		78C215EB105FD70300F4C716 /* KeyRecorderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KeyRecorderCell.m; path = objc/KeyRecorderCell.m; sourceTree = "<group>"; };
 		78C5BAD40BE7B95100C4497A /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/CommentSheet.nib; sourceTree = "<group>"; };
 		78DA4EBF0C461D52008780C8 /* memberlistview.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = memberlistview.rb; sourceTree = "<group>"; };
 		78DA4EC00C461D52008780C8 /* servertreeview.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = servertreeview.rb; sourceTree = "<group>"; };
@@ -469,10 +472,12 @@
 				7804271D0BCA810600C14486 /* GradientFill.m */,
 				7816C5BB0E474F6000B395DD /* HotKeyManager.h */,
 				7816C5BC0E474F6000B395DD /* HotKeyManager.m */,
-				78A55EF90E810C5E00339EBC /* KeyRecorderBox.h */,
-				78A55EFA0E810C5E00339EBC /* KeyRecorderBox.m */,
-				78A55EFB0E810C5E00339EBC /* KeyRecorderBoxCell.h */,
-				78A55EFC0E810C5E00339EBC /* KeyRecorderBoxCell.m */,
+				78C215E6105FD70300F4C716 /* KeyCodeTranslator.h */,
+				78C215E7105FD70300F4C716 /* KeyCodeTranslator.m */,
+				78C215E8105FD70300F4C716 /* KeyRecorder.h */,
+				78C215E9105FD70300F4C716 /* KeyRecorder.m */,
+				78C215EA105FD70300F4C716 /* KeyRecorderCell.h */,
+				78C215EB105FD70300F4C716 /* KeyRecorderCell.m */,
 				786926F40BB6EC1B0081019B /* main.m */,
 				7869272D0BB6ED9E0081019B /* rb_main.rb */,
 			);
@@ -679,10 +684,11 @@
 				78E572420C1C30C300BDF7EC /* GradientFill.m in Sources */,
 				784660250C3145850064140F /* OldEventManager.m in Sources */,
 				7816C5BD0E474F6000B395DD /* HotKeyManager.m in Sources */,
-				78A55EFD0E810C5E00339EBC /* KeyRecorderBox.m in Sources */,
-				78A55EFE0E810C5E00339EBC /* KeyRecorderBoxCell.m in Sources */,
 				78FFD4F30EB5BD5F00B94D63 /* LimeChatApplication.m in Sources */,
 				7870F6A01044FD1300F93E35 /* HostResolver.m in Sources */,
+				78C215EC105FD70300F4C716 /* KeyCodeTranslator.m in Sources */,
+				78C215ED105FD70300F4C716 /* KeyRecorder.m in Sources */,
+				78C215EE105FD70300F4C716 /* KeyRecorderCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -863,7 +869,6 @@
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				ONLY_ACTIVE_ARCH_PRE_XCODE_3_1 = "$(NATIVE_ARCH)";
 				PREBINDING = NO;
 				SDKROOT = /Developer/SDKs/MacOSX10.5.sdk;

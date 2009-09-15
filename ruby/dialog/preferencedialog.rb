@@ -54,9 +54,11 @@ class PreferenceDialog < NSObject
     preferences.theme.observe(:override_log_font, self)
     
     if preferences.general.use_hotkey?
-      @hotkey.setKeyCode_modifierFlags(preferences.general.hotkey_key_code, preferences.general.hotkey_modifier_flags)
+      @hotkey.setKeyCode(preferences.general.hotkey_key_code)
+      @hotkey.setModifierFlags(preferences.general.hotkey_modifier_flags)
     else
-      @hotkey.clearKey
+      @hotkey.setKeyCode(0)
+      @hotkey.setModifierFlags(0)
     end
     @hotkey.delegate = self
     
@@ -87,7 +89,7 @@ class PreferenceDialog < NSObject
     NSApp.delegate.update_layout
   end
   
-  def hotkeyUpdated(hotkey)
+  def keyRecorderDidChangeKey(sender)
     if @hotkey.valid?
       preferences.general.use_hotkey = true
       preferences.general.hotkey_key_code = @hotkey.keyCode
