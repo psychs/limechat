@@ -2,15 +2,16 @@ require 'fileutils'
 
 class PackageBuilder
   
-  attr_accessor :name
+  attr_accessor :name, :sdk
   
-  def self.build(path)
+  def self.build(path, sdk)
     raise "Path `#{path}' does not exist" unless File.exist?(path)
     raise "Path `#{path}' is not an application bundle" unless File.extname(path) == '.app'
     
     build = new
     Dir.chdir(File.dirname(path)) do
       build.name = File.basename(path, '.app') 
+      build.sdk = sdk
       build.build
     end
   end
@@ -19,7 +20,7 @@ class PackageBuilder
     unless File.exist?(File.join(frameworks_root, 'RubyCocoa.framework'))
       FileUtils.mkdir_p frameworks_root
       Dir.chdir(frameworks_root) do
-        `tar xzvf #{framework_package}`
+        `tar xzvf #{framework_package(@sdk)}`
       end
     end
     `install_name_tool -change /System/Library/Frameworks/RubyCocoa.framework/Versions/A/RubyCocoa @executable_path/../Frameworks/RubyCocoa.framework/Versions/A/RubyCocoa '#{macos_root}/#{objective_c_executable_file}'`
@@ -46,8 +47,8 @@ class PackageBuilder
     File.join(contents_root, "MacOS")
   end
   
-  def framework_package
-    "../../../../../resource/rubycocoa/RubyCocoa_1.0.0_10.5.tar.gz"
+  def framework_package(sdk)
+    "../../../../../resource/rubycocoa/RubyCocoa_1.0.0p2_#{sdk}.tar.gz"
   end
 
 end

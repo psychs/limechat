@@ -1,7 +1,7 @@
 require 'pathname'
 require 'fileutils'
+require 'rake/testtask'
 
-BUILD_TARGET = 'EmbedFramework'
 APP_SHORT_NAME = defined?(MACRUBY_VERSION) ? 'MRLimeChat' : 'LimeChat'
 APP_NAME = APP_SHORT_NAME + '.app'
 ROOT_PATH = Pathname.new(__FILE__).dirname
@@ -10,58 +10,54 @@ TMP_PATH = Pathname.new("/tmp/#{APP_SHORT_NAME}_build_image")
 BUILD_APP_PATH = ROOT_PATH + 'build/Release' + APP_NAME
 DOC_PATH = ROOT_PATH + 'doc'
 
-desc "Same as :build"
+
 task :default => :build
 
-desc "Build a release version"
-task :build do |t|
-  sh "xcodebuild -project #{APP_SHORT_NAME}.xcodeproj -target #{APP_SHORT_NAME} -configuration Release -sdk macosx10.5 build"
-end
-
-desc "Build a release version"
-task :build_with_rc do |t|
-  sh "xcodebuild -project #{APP_SHORT_NAME}.xcodeproj -target #{BUILD_TARGET} -configuration Release -sdk macosx10.5 build"
-end
-
-desc "Build & run a release version"
-task :run => :build do
-  sh "./build/Release/#{APP_NAME}/Contents/MacOS/#{APP_SHORT_NAME}"
-end
-
-desc "Install to /"
-task :install do |t|
-  sh "xcodebuild -project #{APP_SHORT_NAME}.xcodeproj -target #{APP_SHORT_NAME} -configuration Release install DSTROOT=/"
-end
-
-desc "Clean all build files"
 task :clean do |t|
   sh "rm -rf build"
 end
 
-require 'rake/testtask'
+task :build do |t|
+  build('10.5')
+end
+
 Rake::TestTask.new do |t|
   t.test_files = FileList['test/**/*_test.rb']
 end
 
-desc "Create a release package"
-task :package => [:package_app, :package_source] do |t|
+task :package => [:package_app_10_5, :package_app_10_6, :package_source] do |t|
 end
 
-task :package_app => [:package_app_without_rc, :package_app_with_rc] do |t|
+task :package_app_10_5 => :clean do |t|
+  sdk = '10.5'
+  build(sdk)
+  embed_framework(sdk)
+  package(sdk)
 end
 
-task :package_app_without_rc => [:clean, :build] do |t|
-  package(false)
+task :package_app_10_6 => :clean do |t|
+  sdk = '10.6'
+  build(sdk)
+  embed_framework(sdk)
+  package(sdk)
 end
 
-task :package_app_with_rc => [:clean, :build_with_rc] do |t|
-  package(true)
+task :package_source do |t|
+  package_source
 end
 
-def package(with_rubycocoa)
-  kind = with_rubycocoa ? "_standalone" : ""
-	dmg_path = DESKTOP_PATH + "#{APP_SHORT_NAME}_#{app_version}#{kind}.dmg"
-	dmg_path.rmtree
+
+def build(sdk)
+  sh "xcodebuild -project #{APP_SHORT_NAME}.xcodeproj -target #{APP_SHORT_NAME} -configuration Release -sdk macosx#{sdk} build"
+end
+
+def embed_framework(sdk)
+  sh %Q|/usr/bin/ruby -r etc/package_builder -e "PackageBuilder.build('#{BUILD_APP_PATH}', '#{sdk}')"|
+end
+
+def package(sdk)
+	zip_path = DESKTOP_PATH + "#{APP_SHORT_NAME}_#{app_version}_#{sdk}.zip"
+	zip_path.rmtree
 	TMP_PATH.rmtree
 	TMP_PATH.mkpath
 	BUILD_APP_PATH.cptree(TMP_PATH)
@@ -71,15 +67,16 @@ def package(with_rubycocoa)
 	rmglob(TMP_PATH + '**/.svn')
 	rmglob(TMP_PATH + '**/.DS_Store')
 	
-	sh "ln -s /Applications #{TMP_PATH}"
-	sh "hdiutil create -srcfolder #{TMP_PATH} -volname #{APP_SHORT_NAME} #{dmg_path}"
+	Dir.chdir(TMP_PATH) do
+		sh "zip -qr #{zip_path} *"
+	end
 	
 	TMP_PATH.rmtree
 end
 
-task :package_source do |t|
-	SOURCE_ZIP_PATH = DESKTOP_PATH + "#{APP_SHORT_NAME}_#{app_version}.zip"
-	SOURCE_ZIP_PATH.rmtree
+def package_source
+	source_zip_path = DESKTOP_PATH + "#{APP_SHORT_NAME}_#{app_version}.zip"
+	source_zip_path.rmtree
 	TMP_PATH.rmtree
 	
 	ROOT_PATH.cptree(TMP_PATH)
@@ -100,7 +97,7 @@ task :package_source do |t|
 	rmglob(TMP_PATH + '**/._*')
 	
 	Dir.chdir(TMP_PATH) do
-		sh "zip -qr #{SOURCE_ZIP_PATH} *"
+		sh "zip -qr #{source_zip_path} *"
 	end
 	
 	TMP_PATH.rmtree
