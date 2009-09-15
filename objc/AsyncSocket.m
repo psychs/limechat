@@ -1585,7 +1585,7 @@ static void MyCFWriteStreamCallback (CFWriteStreamRef stream, CFStreamEventType 
 {
   const char* error = strerror(code);
   if (error) {
-    return [NSString stringWithCString:error];
+    return [NSString stringWithCString:error encoding:NSASCIIStringEncoding];
   }
   else {
     return nil;
