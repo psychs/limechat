@@ -987,6 +987,7 @@ class IRCUnit < NSObject
     else
       use_fallback = false
     end
+    
     s = to_local_encoding(s, use_fallback)
     s = StringValidator::validate_utf8(s)
     m = IRCReceivedMessage.new(s)

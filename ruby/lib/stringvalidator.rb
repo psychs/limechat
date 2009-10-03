@@ -44,7 +44,7 @@ module StringValidator
       end
     end
     str = ucs.pack('U*')
-    [str, valid]
+    [str, valid && rest == 0]
   end
   
   extend self
