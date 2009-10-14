@@ -78,6 +78,8 @@
 		7890B4E90C659E4700DF983F /* autoopdialog.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7890B4E80C659E4700DF983F /* autoopdialog.rb */; };
 		7890B4ED0C659E5D00DF983F /* AutoOpDialog.nib in Resources */ = {isa = PBXBuildFile; fileRef = 7890B4EB0C659E5D00DF983F /* AutoOpDialog.nib */; };
 		7896BFE50D0C5E850069453A /* viewtheme.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7896BFE40D0C5E850069453A /* viewtheme.rb */; };
+		789AF78A10859FEE006848B3 /* RubyCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 789AF78910859FEE006848B3 /* RubyCocoa.framework */; };
+		789AF7A51085A043006848B3 /* RubyCocoa.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 789AF78910859FEE006848B3 /* RubyCocoa.framework */; };
 		78AD78E40C61B8F8001E77F4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 78AD78E20C61B8F8001E77F4 /* Localizable.strings */; };
 		78AF96580C2C219A006D9E4D /* inputhistory.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78AF96570C2C219A006D9E4D /* inputhistory.rb */; };
 		78AFBCF50C33E314008A8FCD /* kanasupport.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78AFBCF40C33E314008A8FCD /* kanasupport.rb */; };
@@ -98,7 +100,6 @@
 		78DA4EC10C461D52008780C8 /* memberlistview.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78DA4EBF0C461D52008780C8 /* memberlistview.rb */; };
 		78DA4EC20C461D52008780C8 /* servertreeview.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78DA4EC00C461D52008780C8 /* servertreeview.rb */; };
 		78E572390C1C30BA00BDF7EC /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
-		78E5723A0C1C30BA00BDF7EC /* RubyCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5D3C7BF0AEB9FEB00C17985 /* RubyCocoa.framework */; };
 		78E5723B0C1C30BA00BDF7EC /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 788D56F00BB6872B00DDBF69 /* WebKit.framework */; };
 		78E5723C0C1C30BA00BDF7EC /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 787FD46C0BFE960100F2F22D /* Carbon.framework */; };
 		78E5723D0C1C30BA00BDF7EC /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 780253C20C09525900C170D4 /* CoreServices.framework */; };
@@ -125,6 +126,16 @@
 			dstSubfolderSpec = 7;
 			files = (
 				78287EB70D742DBD008D5656 /* Themes in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		789AF7B41085A047006848B3 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				789AF7A51085A043006848B3 /* RubyCocoa.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -221,6 +232,7 @@
 		7890B4E80C659E4700DF983F /* autoopdialog.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = autoopdialog.rb; sourceTree = "<group>"; };
 		7890B4EC0C659E5D00DF983F /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/AutoOpDialog.nib; sourceTree = "<group>"; };
 		7896BFE40D0C5E850069453A /* viewtheme.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = viewtheme.rb; sourceTree = "<group>"; };
+		789AF78910859FEE006848B3 /* RubyCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RubyCocoa.framework; path = Frameworks/RubyCocoa.framework; sourceTree = "<group>"; };
 		78A86ADA0BFFD87500E28592 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/WhoisDialog.nib; sourceTree = "<group>"; };
 		78AD78E30C61B8F8001E77F4 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
 		78AF96570C2C219A006D9E4D /* inputhistory.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = inputhistory.rb; sourceTree = "<group>"; };
@@ -251,7 +263,6 @@
 		78FFD4F10EB5BD5F00B94D63 /* LimeChatApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LimeChatApplication.h; path = objc/LimeChatApplication.h; sourceTree = "<group>"; };
 		78FFD4F20EB5BD5F00B94D63 /* LimeChatApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LimeChatApplication.m; path = objc/LimeChatApplication.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		A5D3C7BF0AEB9FEB00C17985 /* RubyCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RubyCocoa.framework; path = /Library/Frameworks/RubyCocoa.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -260,10 +271,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				78E572390C1C30BA00BDF7EC /* Cocoa.framework in Frameworks */,
-				78E5723A0C1C30BA00BDF7EC /* RubyCocoa.framework in Frameworks */,
 				78E5723B0C1C30BA00BDF7EC /* WebKit.framework in Frameworks */,
 				78E5723C0C1C30BA00BDF7EC /* Carbon.framework in Frameworks */,
 				78E5723D0C1C30BA00BDF7EC /* CoreServices.framework in Frameworks */,
+				789AF78A10859FEE006848B3 /* RubyCocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -340,7 +351,7 @@
 				787FD46C0BFE960100F2F22D /* Carbon.framework */,
 				780253C20C09525900C170D4 /* CoreServices.framework */,
 				788D56F00BB6872B00DDBF69 /* WebKit.framework */,
-				A5D3C7BF0AEB9FEB00C17985 /* RubyCocoa.framework */,
+				789AF78910859FEE006848B3 /* RubyCocoa.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -545,6 +556,7 @@
 				78E570CD0C1C306500BDF7EC /* Sources */,
 				78E570CE0C1C306500BDF7EC /* Frameworks */,
 				7835DF2C0D0414020064916A /* CopyFiles */,
+				789AF7B41085A047006848B3 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -814,6 +826,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/Frameworks\"";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
@@ -841,6 +858,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/Frameworks\"";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
