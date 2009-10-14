@@ -29,7 +29,7 @@
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright 2007-2009 Satoshi Nakagawa</string>
 	<key>CFBundleGetInfoString</key>
-	<string>LimeChat for OSX, Copyright 2007-2009 Satoshi Nakagawa</string>
+	<string>LimeChat for Mac, Copyright 2007-2009 Satoshi Nakagawa</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -43,7 +43,7 @@
 		</dict>
 	</array>
 	<key>LCApplicationName</key>
-	<string>LimeChat for OSX</string>
+	<string>LimeChat for Mac</string>
 	<key>SUFeedURL</key>
 	<string>http://limechat.net/mac/limechat_appcast.xml</string>
 	<key>SUScheduledCheckInterval</key>

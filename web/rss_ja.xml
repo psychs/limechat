@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>LimeChat for OSX</title>
+    <title>LimeChat for Mac</title>
     <link>http://limechat.net/mac/ja.html</link>
-    <description>LimeChat for OSX 更新情報</description>
+    <description>LimeChat for Mac 更新情報</description>
     <language>ja</language>
 
     <item>
@@ -12,11 +12,11 @@
       <pubDate>Wed, 14 Oct 2009 17:16:02 +0900</pubDate>
       <content:encoded><![CDATA[
   			<ul>
-          <li>Added Sparkle auto updater</li>
-          <li>Added an option to ignore incoming file transfers</li>
-          <li>Renewed hot key recorder</li>
-          <li>Fixed encoding fallback bug</li>
-          <li>Fixed minor bugs</li>
+          <li>Sparkle オートアップデータを利用するようにした。</li>
+          <li>DCC ファイル送信を無視するオプションを追加した。</li>
+          <li>ホットキーレコードをデザインしなおした。</li>
+          <li>Fallback encoding のバグを直した。</li>
+          <li>細かいバグを修正した。</li>
   			</ul>
       ]]></content:encoded>
     </item>
