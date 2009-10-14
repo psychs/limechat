@@ -242,39 +242,6 @@ class AppController < NSObject
     end
   end
 
-  def fieldEditorTextView_keyDown(e)
-    im = NSInputManager.currentInputManager
-    if !im || im.markedRange.empty?
-      m = e.modifierFlags
-      key = 0
-      key |= 1 if m & NSControlKeyMask > 0
-      key |= 2 if m & NSAlternateKeyMask > 0
-      key |= 4 if m & NSShiftKeyMask > 0
-      key |= 8 if m & NSCommandKeyMask > 0
-
-      case key
-      when 0,2
-        case e.keyCode
-        when 125
-          s = @history.down(@text.stringValue.to_s)
-          if s
-            @text.setStringValue(s)
-            @world.select_text
-          end
-          return true
-        when 126
-          s = @history.up(@text.stringValue.to_s)
-          if s
-            @text.setStringValue(s)
-            @world.select_text
-          end
-          return true
-        end
-      end
-    end
-    false
-  end
-
   UTF8_NETS = %w|freenode undernet quakenet mozilla ustream|
 
   def welcomeDialog_onOk(sender, c)
