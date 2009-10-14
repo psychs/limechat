@@ -1,4 +1,5 @@
 build
+Packages
 .DS_Store
 *.o
 *.ob
@@ -9,16 +10,4 @@ build
 *~.nib
 designable.nib
 *.tm_build_errors
-Debug
-*.obj
-*.ncb
-*.aps
-*.suo
-*.user
-*.pdb
-*.idb
-BuildLog.htm
-mt.dep
-debuglog.*
-*.intermediate.manifest
 

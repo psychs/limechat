@@ -32,7 +32,7 @@
         </html>
       ]]></description>
       <pubDate><%= ftime %></pubDate>
-      <enclosure url="http://limechat.com/mac/<%= package_fname %>" length="<%= fsize %>" type="application/octet-stream"/>
+      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/<%= package_fname %>" length="<%= fsize %>" type="application/octet-stream"/>
     </item>
     
   </channel>

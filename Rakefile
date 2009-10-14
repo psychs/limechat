@@ -1,14 +1,20 @@
 require 'pathname'
 require 'fileutils'
+require 'time'
+require 'erb'
 require 'rake/testtask'
+require 'pp'
 
 APP_SHORT_NAME = defined?(MACRUBY_VERSION) ? 'MRLimeChat' : 'LimeChat'
 APP_NAME = APP_SHORT_NAME + '.app'
 ROOT_PATH = Pathname.new(__FILE__).dirname
-DESKTOP_PATH = Pathname.new('~/Desktop').expand_path
-TMP_PATH = Pathname.new("/tmp/#{APP_SHORT_NAME}_build_image")
-BUILD_APP_PATH = ROOT_PATH + 'build/Release' + APP_NAME
+APP_BUILD_PATH = ROOT_PATH + 'build/Release' + APP_NAME
 DOC_PATH = ROOT_PATH + 'doc'
+PACKAGES_PATH = ROOT_PATH + 'Packages'
+APPCAST_TEMPLATE_PATH = ROOT_PATH + 'etc/appcast_template.rxml'
+APPCAST_PATH = PACKAGES_PATH + 'limechat_appcast.xml'
+
+TMP_PATH = Pathname.new("/tmp/#{APP_SHORT_NAME}_build_image")
 
 
 task :default => :build
@@ -21,29 +27,40 @@ task :build do |t|
   build('10.5')
 end
 
-Rake::TestTask.new do |t|
-  t.test_files = FileList['test/**/*_test.rb']
+task :package => [:package_app] do |t|
 end
 
-task :package => [:package_app_10_5, :package_app_10_6, :package_source] do |t|
-end
-
-task :package_app_10_5 => :clean do |t|
+task :package_app => :clean do |t|
   sdk = '10.5'
   build(sdk)
-  embed_framework(sdk)
-  package(sdk)
-end
-
-task :package_app_10_6 => :clean do |t|
-  sdk = '10.6'
-  build(sdk)
-  embed_framework(sdk)
-  package(sdk)
+  package
 end
 
 task :package_source do |t|
   package_source
+end
+
+task :appcast do |t|
+  package_fname = "#{APP_SHORT_NAME}_#{app_version}.tar.bz2"
+	package_path = PACKAGES_PATH + package_fname
+	stat = File.stat(package_path)
+	
+  version = app_version
+	fsize = stat.size
+	ftime = stat.mtime.rfc2822
+  updates = parse_commit_log
+  
+  e = ERB.new(File.open(APPCAST_TEMPLATE_PATH).read, nil, '-')
+  s = e.result(binding)
+  File.open(APPCAST_PATH, 'w') do |f|
+    f.write(s)
+  end
+  
+  sh "mate #{APPCAST_PATH}"
+end
+
+Rake::TestTask.new do |t|
+  t.test_files = FileList['test/**/*_test.rb']
 end
 
 
@@ -52,37 +69,37 @@ def build(sdk)
 end
 
 def embed_framework(sdk)
-  sh %Q|/usr/bin/ruby -r etc/package_builder -e "PackageBuilder.build('#{BUILD_APP_PATH}', '#{sdk}')"|
+  sh %Q|/usr/bin/ruby -r etc/package_builder -e "PackageBuilder.build('#{APP_BUILD_PATH}', '#{sdk}')"|
 end
 
-def package(sdk)
-	zip_path = DESKTOP_PATH + "#{APP_SHORT_NAME}_#{app_version}_#{sdk}.zip"
-	zip_path.rmtree
+def package
+	package_path = PACKAGES_PATH + "#{APP_SHORT_NAME}_#{app_version}.tar.bz2"
+	package_path.rmtree
 	TMP_PATH.rmtree
 	TMP_PATH.mkpath
-	BUILD_APP_PATH.cptree(TMP_PATH)
+	APP_BUILD_PATH.cptree(TMP_PATH)
 	
 	DOC_PATH.cptree(TMP_PATH)
 	rmglob(TMP_PATH + '**/ChangeLog.txt')
-	rmglob(TMP_PATH + '**/.svn')
 	rmglob(TMP_PATH + '**/.DS_Store')
 	
 	Dir.chdir(TMP_PATH) do
-		sh "zip -qr #{zip_path} *"
+		sh "tar jcf #{package_path} *"
 	end
 	
 	TMP_PATH.rmtree
 end
 
 def package_source
-	source_zip_path = DESKTOP_PATH + "#{APP_SHORT_NAME}_#{app_version}_src.zip"
-	source_zip_path.rmtree
+	source_package_path = PACKAGES_PATH + "#{APP_SHORT_NAME}_#{app_version}_src.tar.bz2"
+	source_package_path.rmtree
 	TMP_PATH.rmtree
 	
 	ROOT_PATH.cptree(TMP_PATH)
 	
 	rmglob(TMP_PATH + 'build')
 	rmglob(TMP_PATH + 'etc')
+	rmglob(TMP_PATH + 'Packages')
 	rmglob(TMP_PATH + 'script')
 	rmglob(TMP_PATH + 'web')
 	rmglob(TMP_PATH + '*.tmproj')
@@ -91,16 +108,100 @@ def package_source
 	rmglob(TMP_PATH + 'LimeChat.xcodeproj/*.pbxuser')
 	rmglob(TMP_PATH + '**/*.tm_build_errors')
 	rmglob(TMP_PATH + '**/.gitignore')
-	rmglob(TMP_PATH + '**/.svn')
 	rmglob(TMP_PATH + '**/.DS_Store')
 	rmglob(TMP_PATH + '**/*~.nib')
 	rmglob(TMP_PATH + '**/._*')
 	
 	Dir.chdir(TMP_PATH) do
-		sh "zip -qr #{source_zip_path} *"
+		sh "tar jcf #{source_package_path} *"
 	end
 	
 	TMP_PATH.rmtree
+end
+
+
+class CommitLog
+  attr_accessor :hash, :merge, :author, :date
+  attr_reader :lines
+  
+  def initialize
+    @lines = []
+  end
+  
+  def add_line(line)
+    @lines << line
+  end
+  
+  def release_version
+    ary = @lines.select {|e| e =~ /^released (\d+\.\d+)$/i }
+    if ary
+      $1
+    else
+      nil
+    end
+  end
+  
+  def one_line
+    s = ''
+    @lines.each do |e|
+      s << e
+      s << ' '
+    end
+    s.chop
+  end
+  
+  def inspect
+    "<CommitLog #{hash[0...6]} #{author} #{date}>"
+  end
+end
+
+
+def parse_commit_log
+  updates = []
+  commit = nil
+  
+  log = `git log`
+  
+  log.each_line do |s|
+    s.chomp!
+    if s =~ /^commit\s+/
+      if commit
+        updates << commit
+      end
+      commit = CommitLog.new
+      commit.hash = $~.post_match
+    elsif s =~ /^Author:\s*/
+      commit.author = $~.post_match
+    elsif s =~ /^Date:\s*/
+      commit.date = $~.post_match
+    elsif s =~ /^Merge:\s*/
+      commit.merge = $~.post_match
+    elsif s =~ /^\s*$/
+      ;
+    elsif s =~ /^\s+/
+      commit.add_line($~.post_match)
+    end
+  end
+  
+  updates << commit
+  
+  ver = app_version
+  first = 0
+  last = 0
+  updates.each_with_index do |e,i|
+    rel = e.release_version
+    if rel
+      if rel == ver
+        first = i + 1
+      else
+        last = i
+        break
+      end
+    end
+  end
+  
+  updates = updates[first...last]
+  updates.map {|e| e.one_line }
 end
 
 
