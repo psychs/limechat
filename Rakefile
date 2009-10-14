@@ -12,8 +12,7 @@ APP_BUILD_PATH = ROOT_PATH + 'build/Release' + APP_NAME
 DOC_PATH = ROOT_PATH + 'doc'
 PACKAGES_PATH = ROOT_PATH + 'Packages'
 APPCAST_TEMPLATE_PATH = ROOT_PATH + 'etc/appcast_template.rxml'
-APPCAST_PATH = PACKAGES_PATH + 'limechat_appcast.xml'
-
+APPCAST_PATH = ROOT_PATH + 'web/limechat_appcast.xml'
 TMP_PATH = Pathname.new("/tmp/#{APP_SHORT_NAME}_build_image")
 
 
@@ -41,7 +40,7 @@ task :package_source do |t|
 end
 
 task :appcast do |t|
-  package_fname = "#{APP_SHORT_NAME}_#{app_version}.tar.bz2"
+  package_fname = "#{APP_SHORT_NAME}_#{app_version}.tbz"
 	package_path = PACKAGES_PATH + package_fname
 	stat = File.stat(package_path)
 	
@@ -50,6 +49,7 @@ task :appcast do |t|
 	ftime = stat.mtime.rfc2822
   updates = parse_commit_log
   
+  APPCAST_PATH.rmtree
   e = ERB.new(File.open(APPCAST_TEMPLATE_PATH).read, nil, '-')
   s = e.result(binding)
   File.open(APPCAST_PATH, 'w') do |f|
@@ -73,7 +73,7 @@ def embed_framework(sdk)
 end
 
 def package
-	package_path = PACKAGES_PATH + "#{APP_SHORT_NAME}_#{app_version}.tar.bz2"
+	package_path = PACKAGES_PATH + "#{APP_SHORT_NAME}_#{app_version}.tbz"
 	package_path.rmtree
 	TMP_PATH.rmtree
 	TMP_PATH.mkpath
@@ -91,7 +91,7 @@ def package
 end
 
 def package_source
-	source_package_path = PACKAGES_PATH + "#{APP_SHORT_NAME}_#{app_version}_src.tar.bz2"
+	source_package_path = PACKAGES_PATH + "#{APP_SHORT_NAME}_#{app_version}_src.tbz"
 	source_package_path.rmtree
 	TMP_PATH.rmtree
 	
