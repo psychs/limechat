@@ -7,6 +7,21 @@
     <language>en-us</language>
 
     <item>
+      <title>1.2</title>
+      <link>http://limechat.net/mac/#v1.2</link>
+      <pubDate>Wed, 14 Oct 2009 17:16:02 +0900</pubDate>
+      <content:encoded><![CDATA[
+  			<ul>
+          <li>Added Sparkle auto updater</li>
+          <li>Added an option to ignore incoming file transfers</li>
+          <li>Renewed hot key recorder</li>
+          <li>Fixed encoding fallback bug</li>
+          <li>Fixed minor bugs</li>
+  			</ul>
+      ]]></content:encoded>
+    </item>
+
+    <item>
       <title>1.1</title>
       <link>http://limechat.net/mac/#v1.1</link>
       <pubDate>Wed, 26 Aug 2009 15:28:00 +0900</pubDate>
@@ -14,99 +29,6 @@
   			<ul>
   				<li>Switched paste service to gist.</li>
   				<li>Use threaded hostname resolver for Snow Leopard.</li>
-  			</ul>
-      ]]></content:encoded>
-    </item>
-
-    <item>
-      <title>1.0</title>
-      <link>http://limechat.net/mac/#v1.0</link>
-      <pubDate>Wed, 03 Jun 2009 09:01:00 +0900</pubDate>
-      <content:encoded><![CDATA[
-  			<ul>
-  				<li>Only OS X 10.5 is supported now.</li>
-  				<li>Embed RubyCocoa.framework into the app.</li>
-  				<li>Improved crashing bug in 10.5.7.</li>
-  				<li>Renewed preferences dialog.</li>
-  				<li>Renewed paste dialog.</li>
-  				<li>Renewed welcome dialog.</li>
-  				<li>Added "Notify events in Growl" option in channel properies.</li>
-  				<li>Assigned shift-tab to move to the previous control.</li>
-  				<li>Added %@%n: nick format.</li>
-  				<li>Added show join/leave option.</li>
-  				<li>Added time stamp format.</li>
-  				<li>Added "ignore words" option. If text contains any of these words it will be ignored.</li>
-  				<li>Added "/close peer" command to close a talk.</li>
-  				<li>Added /omsg and /onotice commands.</li>
-  				<li>Added support for /notice @#channel.</li>
-  				<li>Added /m command.</li>
-  				<li>Query ban list by /ban.</li>
-  				<li>Open URLs without activation.</li>
-  				<li>Remember spell checking status across session.</li>
-  				<li>Fixed a bug in CP949 and other encodings.</li>
-  				<li>Shorten sending PONG interval.</li>
-  				<li>Don't allow &lt; and &gt; in URLs.</li>
-  				<li>Ignore case in URL schemes.</li>
-  				<li>Don't show the channel list dialog again while /list responses.</li>
-  				<li>Markers in scrollers should be drawn as 1 point width lines.</li>
-  				<li>All kind of ops should be colored as ops.</li>
-  				<li>Work around for buggy bouncers, they don't send 005 replies appropriately.</li>
-  				<li>Don't show PONG responses.</li>
-  				<li>Changed an option name from "Dislike words" to "Exclude words".</li>
-  				<li>Prohibit backspace, delete and space keys for hotkey.</li>
-  				<li>Fixed a crash when an user changed his nick to the same one except case.</li>
-  				<li>Fixed a memory leak when enabling SSL.</li>
-  				<li>Fixed a bug around quick join.</li>
-  				<li>Fixed a bug, it tried to join channels with names of talks.</li>
-  				<li>Fixed a bug, the log was kept blank after /clear sometimes.</li>
-  				<li>Fixed a bug, register to auto op menu was disabled.</li>
-  			</ul>
-      ]]></content:encoded>
-    </item>
-
-    <item>
-      <title>0.20</title>
-      <link>http://limechat.net/mac/#v0.20</link>
-      <pubDate>Thu, 02 Oct 2008 10:29:00 +0900</pubDate>
-      <content:encoded><![CDATA[
-  			<ul>
-  				<li>Added hot key option.</li>
-  				<li>Assigned opt+tab to move to the last selected channel.</li>
-  				<li>Added commands completion.</li>
-  				<li>Added context menu on channel name in logs.</li>
-  				<li>Added voice and devoice menu items.</li>
-  				<li>Added "Channel notice received" and "Talk notice received" to the Growl notification types.</li>
-  				<li>Added a theme settings: input-text/selected/background-color</li>
-  				<li>Deal with parenthesis pairs in URLs.</li>
-  				<li>Tweaked margin of the input text field.</li>
-  				<li>Added .js file support for themes.</li>
-  				<li>Allow to send commands before login.</li>
-  				<li>Added /clear command to clear a log.</li>
-  				<li>Supported filenames surrounded by double quotations in DCC file transfers.</li>
-  				<li>Fixed a bug, the auto-op dialog could cause a nil access exception.</li>
-  				<li>Strip unnecessary ":" when printing a line to log file.</li>
-  				<li>Fixed a bug, we should allow a Bignum for Time.at.</li>
-  				<li>Fixed a bug, /quote with no parameter caused a crash.</li>
-  			</ul>
-      ]]></content:encoded>
-    </item>
-
-    <item>
-      <title>0.19</title>
-      <link>http://limechat.net/mac/#v0.19</link>
-      <pubDate>Thu, 10 Jul 2008 00:13:00 +0900</pubDate>
-      <content:encoded><![CDATA[
-  			<ul>
-  				<li>Make bouncing just one time for highlight.</li>
-  				<li>Added badges on the icon for highlight or new talk.</li>
-  				<li>Assigned cmd+ctrl+0..9 to move to the nth server.</li>
-  				<li>Changed to disconnect from all servers when the computer is going to sleep.</li>
-  				<li>Changed to reconnect to the servers after waking up.</li>
-  				<li>Added /timer command. (e.g. /timer 5 join #limechat)</li>
-  				<li>When updating the channel list, perform sorted insert instead of re-sorting.</li>
-  				<li>Search channel topics in the Channel List.</li>
-  				<li>Added "first" attribute for span.sender to show nicknames in the first line only.</li>
-  				<li>Changed to ignore CTCP replies with empty commands.</li>
   			</ul>
       ]]></content:encoded>
     </item>

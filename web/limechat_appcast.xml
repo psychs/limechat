@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+  <rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle">
+  <channel>
+    <title>LimeChat Appcast</title>
+    <link>http://limechat.net/mac/limechat_appcast.xml</link>
+    <description>LimeChat Releases</description>
+    <language>en</language>
+    
+    <item>
+      <title>LimeChat 1.2</title>
+      <description><![CDATA[
+        <html>
+        <body>
+        <style>
+          body {
+            font-size: medium;
+          }
+          h1 {
+            font-size: large;
+          }
+          li {
+            margin: 0.2em 0;
+          }
+        </style>
+        <h1>LimeChat 1.2</h1>
+        <ul>
+          <li>Added Sparkle auto updater</li>
+          <li>Added an option to ignore incoming file transfers</li>
+          <li>Renewed hot key recorder</li>
+          <li>Fixed encoding fallback bug</li>
+          <li>Fixed minor bugs</li>
+        </ul>
+        </body>
+        </html>
+      ]]></description>
+      <pubDate>Wed, 14 Oct 2009 17:16:02 +0900</pubDate>
+      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/LimeChat_1.2.tbz" length="675220" type="application/octet-stream"/>
+    </item>
+    
+  </channel>
+</rss>

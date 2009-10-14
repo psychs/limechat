@@ -12,7 +12,8 @@ APP_BUILD_PATH = ROOT_PATH + 'build/Release' + APP_NAME
 DOC_PATH = ROOT_PATH + 'doc'
 PACKAGES_PATH = ROOT_PATH + 'Packages'
 APPCAST_TEMPLATE_PATH = ROOT_PATH + 'etc/appcast_template.rxml'
-APPCAST_PATH = ROOT_PATH + 'web/limechat_appcast.xml'
+WEB_PATH = ROOT_PATH + 'web'
+APPCAST_PATH = WEB_PATH + 'limechat_appcast.xml'
 TMP_PATH = Pathname.new("/tmp/#{APP_SHORT_NAME}_build_image")
 
 
@@ -56,7 +57,7 @@ task :appcast do |t|
     f.write(s)
   end
   
-  sh "mate #{APPCAST_PATH}"
+  sh "mate #{WEB_PATH}"
 end
 
 Rake::TestTask.new do |t|

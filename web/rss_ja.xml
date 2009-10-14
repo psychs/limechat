@@ -2,95 +2,33 @@
 <rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>LimeChat for OSX</title>
-    <link>http://limechat.net/mac/index_ja.html</link>
+    <link>http://limechat.net/mac/ja.html</link>
     <description>LimeChat for OSX 更新情報</description>
     <language>ja</language>
 
     <item>
+      <title>1.2</title>
+      <link>http://limechat.net/mac/#v1.2</link>
+      <pubDate>Wed, 14 Oct 2009 17:16:02 +0900</pubDate>
+      <content:encoded><![CDATA[
+  			<ul>
+          <li>Added Sparkle auto updater</li>
+          <li>Added an option to ignore incoming file transfers</li>
+          <li>Renewed hot key recorder</li>
+          <li>Fixed encoding fallback bug</li>
+          <li>Fixed minor bugs</li>
+  			</ul>
+      ]]></content:encoded>
+    </item>
+
+    <item>
       <title>1.1</title>
-      <link>http://limechat.net/mac/index_ja.html#v1.1</link>
+      <link>http://limechat.net/mac/ja.html#v1.1</link>
       <pubDate>Wed, 26 Aug 2009 15:28:00 +0900</pubDate>
       <content:encoded><![CDATA[
   			<ul>
   				<li>ペーストサービスを gist に変更した。</li>
   				<li>Snow Leopard 対応のため、DNS を別スレッドで引くようにした。</li>
-  			</ul>
-      ]]></content:encoded>
-    </item>
-
-    <item>
-      <title>1.0</title>
-      <link>http://limechat.net/mac/index_ja.html#v1.0</link>
-      <pubDate>Wed, 03 Jun 2009 09:01:00 +0900</pubDate>
-      <content:encoded><![CDATA[
-  			<ul>
-  				<li>OS X 10.5 のみをサポート。</li>
-  				<li>RubyCocoa.framework をアプリ内にバンドルするようにした。</li>
-  				<li>10.5.7 で落ちやすくなっていた問題を改善した.</li>
-  				<li>プリファレンスダイアログ、ペーストダイアログ、起動時に表示するダイアログをデザインしなおした。</li>
-  				<li>チャンネルごとに Growl で通知するオプションを追加した。</li>
-  				<li>shift-tab で一つ前にいた場所に移動できるようにした。</li>
-  				<li>ニックネームのフォーマットに「%@%n:」を追加。</li>
-  				<li>join/leave を表示するかオプションで設定できるようにした。</li>
-  				<li>タイムスタンプのフォーマットを設定できるようにした。</li>
-  				<li>ignore words オプションを追加。単語を含むメッセージは無視される。</li>
-  				<li>/close peer でトークを閉じられるようにした。</li>
-  				<li>/omsg と /onotice コマンドをサポート。</li>
-  				<li>/notice @#channel をサポート。</li>
-  				<li>/m コマンドを追加。</li>
-  				<li>/ban でバンリストを表示するようにした。</li>
-  				<li>URL を開くときに、ブラウザをアクティブにしないようにした。</li>
-  				<li>&lt; と &gt; を URL に含めないようにした。</li>
-  				<li>スペルチェックの状態を記憶するようにした。</li>
-  				<li>スクロールバーのハイライトマーカの描画を改善した。</li>
-  				<li>全種類のオペレータをオペレータの色で表示するようにした。</li>
-  				<li>Register to auto op のメニューが無効になっていたのを修正した。</li>
-  			</ul>
-      ]]></content:encoded>
-    </item>
-
-    <item>
-      <title>0.20</title>
-      <link>http://limechat.net/mac/index_ja.html#v0.20</link>
-      <pubDate>Thu, 02 Oct 2008 10:29:00 +0900</pubDate>
-      <content:encoded><![CDATA[
-  			<ul>
-  				<li>ホットキー機能を追加した。</li>
-  				<li>Opt+Tab で最後に表示していたチャンネルに戻れるようにした。</li>
-  				<li>コマンド補完機能を追加した。</li>
-  				<li>ログのチャンネル名の上で右クリックするとメニューを開くようにした。</li>
-  				<li>Voice/Devoice のメニューを追加した。</li>
-  				<li>Notice 関連の Growl イベントを追加した。</li>
-  				<li>テーマで入力欄の選択背景色を指定できるようにした。 (input-text/selected/background-color)</li>
-  				<li>URL の括弧を認識してうまくハンドリングするようにした。</li>
-  				<li>入力欄のマージンを広くした。</li>
-  				<li>テーマと同時に .js ファイルを読み込めるようにした。</li>
-  				<li>ログイン前にコマンドを送信できるようにした。</li>
-  				<li>/clear コマンドでログを消去できるようにした。</li>
-  				<li>DCC ファイル受信時にダブルクォートで囲まれたファイル名を認識するようにした。</li>
-  				<li>Auto-op ダイアログで nil アクセスエラーが出るバグをfixした。</li>
-  				<li>ファイルにログを書き出すときにフォーマットがおかしかったバグをfixした。</li>
-  				<li>引数なしの /quote コマンドを入力すると落ちていたバグをfixした。</li>
-  			</ul>
-      ]]></content:encoded>
-    </item>
-
-    <item>
-      <title>0.19</title>
-      <link>http://limechat.net/mac/index_ja.html#v0.19</link>
-      <pubDate>Thu, 10 Jul 2008 00:13:00 +0900</pubDate>
-      <content:encoded><![CDATA[
-  			<ul>
-  				<li>キーワードハイライト時に、1度だけドックアイコンをバウンドするようにした。</li>
-  				<li>キーワードハイライトと新規トークがあったとき、ドックアイコンにバッジをつけるようにした。</li>
-  				<li>cmd+ctrl+1..0 で n 番目のサーバにできるようにした。</li>
-  				<li>マシンがスリープするときに、サーバから切断するようにした。</li>
-  				<li>マシンがスリープから復帰したときに、すぐにサーバに再接続するようにした。</li>
-  				<li>/timer コマンドを追加した。(例: /timer 5 join #limechat)</li>
-  				<li>チャンネルリストダイアログでリストを更新するときに、ソートが必要ないアルゴリズムで更新するようにした。</li>
-  				<li>チャンネルリストダイアログでチャンネルトピックも検索するようにした。</li>
-  				<li>ニックネームを1行目しか表示したくないときのために、1行目の span.sender に first 属性を追加した。</li>
-  				<li>コマンドが空白のCTCPを無視するようにした。</li>
   			</ul>
       ]]></content:encoded>
     </item>
