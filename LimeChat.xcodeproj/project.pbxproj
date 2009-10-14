@@ -107,7 +107,6 @@
 		78E5723D0C1C30BA00BDF7EC /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 780253C20C09525900C170D4 /* CoreServices.framework */; };
 		78E5723E0C1C30C300BDF7EC /* AsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 786926F30BB6EC1B0081019B /* AsyncSocket.m */; };
 		78E5723F0C1C30C300BDF7EC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 786926F40BB6EC1B0081019B /* main.m */; };
-		78E572420C1C30C300BDF7EC /* GradientFill.m in Sources */ = {isa = PBXBuildFile; fileRef = 7804271D0BCA810600C14486 /* GradientFill.m */; };
 		78E572430C1C30CE00BDF7EC /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 29B97318FDCFA39411CA2CEA /* MainMenu.nib */; };
 		78E572450C1C30CE00BDF7EC /* rb_main.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7869272D0BB6ED9E0081019B /* rb_main.rb */; };
 		78E572460C1C30CE00BDF7EC /* CommentSheet.nib in Resources */ = {isa = PBXBuildFile; fileRef = 78C5BAD30BE7B95100C4497A /* CommentSheet.nib */; };
@@ -156,8 +155,6 @@
 		51F0A51D0EBCF70A00B2C878 /* controls_with_disabled_state.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; name = controls_with_disabled_state.rb; path = ruby/view/controls_with_disabled_state.rb; sourceTree = SOURCE_ROOT; };
 		7801DD2D0D1AF75F00D8691D /* isupportinfo.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = isupportinfo.rb; sourceTree = "<group>"; };
 		780253C20C09525900C170D4 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
-		7804271C0BCA810600C14486 /* GradientFill.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GradientFill.h; path = objc/GradientFill.h; sourceTree = "<group>"; };
-		7804271D0BCA810600C14486 /* GradientFill.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GradientFill.m; path = objc/GradientFill.m; sourceTree = "<group>"; };
 		7805EE580D11FDCA000A9B55 /* pasternakclient.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = pasternakclient.rb; sourceTree = "<group>"; };
 		780CCA0D0D8A294000E4BA77 /* keyeventhandler.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = keyeventhandler.rb; sourceTree = "<group>"; };
 		780D09EF0C2F2C20007C0F4F /* splitter.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = splitter.rb; sourceTree = "<group>"; };
@@ -502,8 +499,6 @@
 				784660240C3145850064140F /* OldEventManager.m */,
 				786926F20BB6EC1B0081019B /* AsyncSocket.h */,
 				786926F30BB6EC1B0081019B /* AsyncSocket.m */,
-				7804271C0BCA810600C14486 /* GradientFill.h */,
-				7804271D0BCA810600C14486 /* GradientFill.m */,
 				7816C5BB0E474F6000B395DD /* HotKeyManager.h */,
 				7816C5BC0E474F6000B395DD /* HotKeyManager.m */,
 				78C215E6105FD70300F4C716 /* KeyCodeTranslator.h */,
@@ -708,7 +703,6 @@
 			files = (
 				78E5723E0C1C30C300BDF7EC /* AsyncSocket.m in Sources */,
 				78E5723F0C1C30C300BDF7EC /* main.m in Sources */,
-				78E572420C1C30C300BDF7EC /* GradientFill.m in Sources */,
 				784660250C3145850064140F /* OldEventManager.m in Sources */,
 				7816C5BD0E474F6000B395DD /* HotKeyManager.m in Sources */,
 				78FFD4F30EB5BD5F00B94D63 /* LimeChatApplication.m in Sources */,

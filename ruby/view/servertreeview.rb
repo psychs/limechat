@@ -13,7 +13,7 @@ class ServerTreeView < TreeView
     @bottom_line_color = NSColor.from_rgb(140, 152, 176)
     from = NSColor.from_rgb(173, 187, 208)
     to = NSColor.from_rgb(152, 170, 196)
-    @gradient = GradientFill.gradientWithBeginColor_endColor(from, to)
+    @gradient = NSGradient.alloc.initWithStartingColor_endingColor(from, to)
   end
   
   def acceptsFirstResponder
@@ -31,7 +31,7 @@ class ServerTreeView < TreeView
     @bottom_line_color = @theme.tree_sel_bottom_line_color
     from = @theme.tree_sel_top_color
     to = @theme.tree_sel_bottom_color
-    @gradient = GradientFill.gradientWithBeginColor_endColor(from, to)
+    @gradient = NSGradient.alloc.initWithStartingColor_endingColor(from, to)
   end
   
   def _highlightColorForCell(cell)
@@ -44,7 +44,7 @@ class ServerTreeView < TreeView
     rect = frame.dup
     rect.y += 1
     rect.height -= 2
-    @gradient.fillRect(rect)
+    @gradient.drawInRect_angle(rect, 90)
     
     @top_line_color.set
     rect = frame.dup

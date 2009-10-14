@@ -36,7 +36,7 @@ class MemberListView < ListView
     from = @theme.member_list_sel_top_color
     to = @theme.member_list_sel_bottom_color
     if from && to
-      @gradient = GradientFill.gradientWithBeginColor_endColor(from, to)
+      @gradient = NSGradient.alloc.initWithStartingColor_endingColor(from, to)
     else
       @gradient = nil
     end
@@ -52,7 +52,7 @@ class MemberListView < ListView
       rect = frame.dup
       rect.y += 1
       rect.height -= 2
-      @gradient.fillRect(rect)
+      @gradient.drawInRect_angle(rect, 90)
 
       @top_line_color.set
       rect = frame.dup
