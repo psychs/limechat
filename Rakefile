@@ -115,7 +115,7 @@ module Util
 		      if s =~ /<string>(.+)<\/string>/
 		        return $1
 		      end
-		    elsif s =~ /<key>CFBundleVersion<\/key>/
+		    elsif s =~ /<key>CFBundleShortVersionString<\/key>/
 		      next_line = true
 		    end
 		  end
