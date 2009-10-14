@@ -115,6 +115,8 @@
 		78E572660C1C30CE00BDF7EC /* DccDialog.nib in Resources */ = {isa = PBXBuildFile; fileRef = 7817A0380BF6FFCD005C7737 /* DccDialog.nib */; };
 		78E572690C1C30CE00BDF7EC /* WhoisDialog.nib in Resources */ = {isa = PBXBuildFile; fileRef = 78A86AD90BFFD87500E28592 /* WhoisDialog.nib */; };
 		78F59FE40D78144B0038AC1D /* markedscroller.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78F59FE30D78144B0038AC1D /* markedscroller.rb */; };
+		78FA9F651085AA1400001F13 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78FA9F641085AA1400001F13 /* Sparkle.framework */; };
+		78FA9F6E1085AA1A00001F13 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 78FA9F641085AA1400001F13 /* Sparkle.framework */; };
 		78FFD4F30EB5BD5F00B94D63 /* LimeChatApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 78FFD4F20EB5BD5F00B94D63 /* LimeChatApplication.m */; };
 /* End PBXBuildFile section */
 
@@ -136,6 +138,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				789AF7A51085A043006848B3 /* RubyCocoa.framework in CopyFiles */,
+				78FA9F6E1085AA1A00001F13 /* Sparkle.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -260,6 +263,7 @@
 		78DA4EC00C461D52008780C8 /* servertreeview.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = servertreeview.rb; sourceTree = "<group>"; };
 		78E570D00C1C306500BDF7EC /* LimeChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LimeChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		78F59FE30D78144B0038AC1D /* markedscroller.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = markedscroller.rb; sourceTree = "<group>"; };
+		78FA9F641085AA1400001F13 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = Frameworks/Sparkle.framework; sourceTree = "<group>"; };
 		78FFD4F10EB5BD5F00B94D63 /* LimeChatApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LimeChatApplication.h; path = objc/LimeChatApplication.h; sourceTree = "<group>"; };
 		78FFD4F20EB5BD5F00B94D63 /* LimeChatApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LimeChatApplication.m; path = objc/LimeChatApplication.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -275,6 +279,7 @@
 				78E5723C0C1C30BA00BDF7EC /* Carbon.framework in Frameworks */,
 				78E5723D0C1C30BA00BDF7EC /* CoreServices.framework in Frameworks */,
 				789AF78A10859FEE006848B3 /* RubyCocoa.framework in Frameworks */,
+				78FA9F651085AA1400001F13 /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -352,6 +357,7 @@
 				780253C20C09525900C170D4 /* CoreServices.framework */,
 				788D56F00BB6872B00DDBF69 /* WebKit.framework */,
 				789AF78910859FEE006848B3 /* RubyCocoa.framework */,
+				78FA9F641085AA1400001F13 /* Sparkle.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -829,8 +835,10 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/Frameworks\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/Frameworks\"";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
@@ -861,8 +869,10 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/Frameworks\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/Frameworks\"";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;

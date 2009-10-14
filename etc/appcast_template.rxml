@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+  <rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle">
+  <channel>
+    <title>LimeChat Appcast</title>
+    <link>http://limechat.net/mac/limechat_appcast.xml</link>
+    <description>LimeChat Releases</description>
+    <language>en</language>
+    
+    <item>
+      <title>LimeChat <%= version %></title>
+      <description><![CDATA[
+        <html>
+        <body>
+        <style>
+          body {
+            font-size: medium;
+          }
+          h1 {
+            font-size: large;
+          }
+          li {
+            margin: 0.2em 0;
+          }
+        </style>
+        <h1>LimeChat <%= version %></h1>
+        <ul>
+<% updates.each do |e| -%>
+          <li><%= e %></li>
+<% end -%>
+        </ul>
+        </body>
+        </html>
+      ]]></description>
+      <pubDate><%= ftime %></pubDate>
+      <enclosure url="http://limechat.com/mac/<%= package_fname %>" length="<%= fsize %>" type="application/octet-stream"/>
+    </item>
+    
+  </channel>
+</rss>
