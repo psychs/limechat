@@ -201,12 +201,16 @@ class AppController < NSObject
   end
 
   def windowWillReturnFieldEditor_toObject(sender, obj)
-    if @view_theme && @view_theme.other
-      dic = @field_editor.selectedTextAttributes.mutableCopy
-      dic[NSBackgroundColorAttributeName] = @view_theme.other.input_text_sel_bgcolor
-      @field_editor.setSelectedTextAttributes(dic)
+    if obj == @text
+      if @view_theme && @view_theme.other
+        dic = @field_editor.selectedTextAttributes.mutableCopy
+        dic[NSBackgroundColorAttributeName] = @view_theme.other.input_text_sel_bgcolor
+        @field_editor.setSelectedTextAttributes(dic)
+      end
+      @field_editor
+    else
+      nil
     end
-    @field_editor
   end
 
   def windowDidBecomeMain(sender)
