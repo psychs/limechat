@@ -1918,6 +1918,8 @@ class IRCUnit < NSObject
   end
   
   def receive_dcc_send(m, fname, addr, port, size, ver)
+    return unless eq(m[0], @mynick)
+    
     if /^\d+$/ =~ addr
       a = addr.to_i
       w = a & 0xff; a >>= 8
