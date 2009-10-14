@@ -1936,10 +1936,12 @@ class IRCUnit < NSObject
       path = '~/Desktop'
     end
     
-    @world.dcc.add_receiver(@uid, m.sender_nick, host, port, path, fname, size, ver)
-    SoundPlayer.play(preferences.sound.file_receive_request)
-    @world.notify_on_growl(:file_receive_request, m.sender_nick, fname)
-    NSApp.requestUserAttention(NSInformationalRequest) unless NSApp.isActive
+    if port > 0 && size > 0
+      @world.dcc.add_receiver(@uid, m.sender_nick, host, port, path, fname, size, ver)
+      SoundPlayer.play(preferences.sound.file_receive_request)
+      @world.notify_on_growl(:file_receive_request, m.sender_nick, fname)
+      NSApp.requestUserAttention(NSInformationalRequest) unless NSApp.isActive
+    end
   end
   
   def receive_ctcp_reply(m, text)
