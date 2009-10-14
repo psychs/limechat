@@ -23,12 +23,17 @@ class Preferences
     defaults_accessor :first_port, 1096
     defaults_accessor :last_port, 1115
     defaults_accessor :myaddress, ''
-    defaults_accessor :auto_receive, false
+    #defaults_accessor :auto_receive, false
     
     ADDR_DETECT_JOIN = 2
     ADDR_DETECT_NIC = 1
     ADDR_DETECT_SPECIFY = 0
     defaults_accessor :address_detection_method, ADDR_DETECT_JOIN
+    
+    ACTION_AUTO_ACCEPT = 0
+    ACTION_SHOW_DIALOG = 1
+    ACTION_IGNORE = 2
+    defaults_accessor :action, ACTION_SHOW_DIALOG
   end
   
   class General < Namespace

@@ -1930,17 +1930,18 @@ class IRCUnit < NSObject
     end
     print_both(self, :dcc_send_receive, "Received file transfer request from #{m.sender_nick}, #{fname} (#{size.grouped_by_comma} bytes) #{host}:#{port}")
     
-    if Pathname.new('~/Downloads').expand_path.exist?
-      path = '~/Downloads'
-    else
-      path = '~/Desktop'
-    end
-    
-    if port > 0 && size > 0
-      @world.dcc.add_receiver(@uid, m.sender_nick, host, port, path, fname, size, ver)
-      SoundPlayer.play(preferences.sound.file_receive_request)
-      @world.notify_on_growl(:file_receive_request, m.sender_nick, fname)
-      NSApp.requestUserAttention(NSInformationalRequest) unless NSApp.isActive
+    if preferences.dcc.action != Preferences::Dcc::ACTION_IGNORE
+      if port > 0 && size > 0
+        if Pathname.new('~/Downloads').expand_path.exist?
+          path = '~/Downloads'
+        else
+          path = '~/Desktop'
+        end
+        @world.dcc.add_receiver(@uid, m.sender_nick, host, port, path, fname, size, ver)
+        SoundPlayer.play(preferences.sound.file_receive_request)
+        @world.notify_on_growl(:file_receive_request, m.sender_nick, fname)
+        NSApp.requestUserAttention(NSInformationalRequest) unless NSApp.isActive
+      end
     end
   end
   

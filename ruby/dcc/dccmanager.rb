@@ -204,7 +204,7 @@ class DccManager < NSObject
     c.version = ver
     @receivers.unshift(c)
     
-    c.open if preferences.dcc.auto_receive
+    c.open if preferences.dcc.action == Preferences::Dcc::ACTION_AUTO_ACCEPT
     reload_receiver_table
     show(false)
   end

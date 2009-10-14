@@ -428,6 +428,14 @@ class AppController < NSObject
         preferences.dcc.address_detection_method = 0
       end
       
+      defaults.removeObjectForKey(:pref)
+      defaults.synchronize
+    end
+    
+    # migrate dcc.auto_receive
+    if defaults['Preferences.Dcc.auto_receive']
+      preferences.dcc.action = Preferences::Dcc::ACTION_AUTO_ACCEPT
+      defaults.removeObjectForKey('Preferences.Dcc.auto_receive')
       defaults.synchronize
     end
     
