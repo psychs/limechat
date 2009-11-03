@@ -73,6 +73,7 @@
 		787817C80D860ED30049CF95 /* unicodeutil.rb in Resources */ = {isa = PBXBuildFile; fileRef = 787817C70D860ED30049CF95 /* unicodeutil.rb */; };
 		787898250CF38C510045585B /* filelogger.rb in Resources */ = {isa = PBXBuildFile; fileRef = 787898240CF38C510045585B /* filelogger.rb */; };
 		787A36A20C6A392600DDB70D /* fieldeditortextview.rb in Resources */ = {isa = PBXBuildFile; fileRef = 787A36A10C6A392600DDB70D /* fieldeditortextview.rb */; };
+		78835406109FEA7F00CD2FFF /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78835405109FEA7F00CD2FFF /* SystemConfiguration.framework */; };
 		7884E54E0CDA91F500AF3678 /* SACrashReporter in Resources */ = {isa = PBXBuildFile; fileRef = 7884E5450CDA91F500AF3678 /* SACrashReporter */; };
 		7889CAB90D646E2C003D808E /* WelcomeDialog.nib in Resources */ = {isa = PBXBuildFile; fileRef = 7889CAB70D646E2C003D808E /* WelcomeDialog.nib */; };
 		7889CABF0D647494003D808E /* welcomedialog.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7889CABE0D647494003D808E /* welcomedialog.rb */; };
@@ -228,6 +229,7 @@
 		787898240CF38C510045585B /* filelogger.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = filelogger.rb; sourceTree = "<group>"; };
 		787A36A10C6A392600DDB70D /* fieldeditortextview.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = fieldeditortextview.rb; sourceTree = "<group>"; };
 		787FD46C0BFE960100F2F22D /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
+		78835405109FEA7F00CD2FFF /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = /System/Library/Frameworks/SystemConfiguration.framework; sourceTree = "<absolute>"; };
 		7884E5450CDA91F500AF3678 /* SACrashReporter */ = {isa = PBXFileReference; lastKnownFileType = folder; name = SACrashReporter; path = vendor/SACrashReporter; sourceTree = "<group>"; };
 		7889CAB80D646E2C003D808E /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/WelcomeDialog.nib; sourceTree = "<group>"; };
 		7889CABE0D647494003D808E /* welcomedialog.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = welcomedialog.rb; sourceTree = "<group>"; };
@@ -281,6 +283,7 @@
 				78E5723D0C1C30BA00BDF7EC /* CoreServices.framework in Frameworks */,
 				789AF78A10859FEE006848B3 /* RubyCocoa.framework in Frameworks */,
 				78FA9F651085AA1400001F13 /* Sparkle.framework in Frameworks */,
+				78835406109FEA7F00CD2FFF /* SystemConfiguration.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -357,6 +360,7 @@
 				787FD46C0BFE960100F2F22D /* Carbon.framework */,
 				780253C20C09525900C170D4 /* CoreServices.framework */,
 				788D56F00BB6872B00DDBF69 /* WebKit.framework */,
+				78835405109FEA7F00CD2FFF /* SystemConfiguration.framework */,
 				789AF78910859FEE006848B3 /* RubyCocoa.framework */,
 				78FA9F641085AA1400001F13 /* Sparkle.framework */,
 			);

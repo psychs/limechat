@@ -13,6 +13,7 @@
 #import <netinet/in.h>
 #import <arpa/inet.h>
 #import <netdb.h>
+#import <SystemConfiguration/SystemConfiguration.h>
 
 #pragma mark Declarations
 
@@ -1569,16 +1570,45 @@ static void MyCFWriteStreamCallback (CFWriteStreamRef stream, CFStreamEventType 
 
 - (void)useSSL
 {
-	NSDictionary* settings = [NSDictionary dictionaryWithObjectsAndKeys:
-								   (NSString *)kCFStreamSocketSecurityLevelNegotiatedSSL, kCFStreamSSLLevel,
-								   kCFBooleanTrue, kCFStreamSSLAllowsAnyRoot,
-								   kCFBooleanFalse, kCFStreamSSLValidatesCertificateChain,
-								   kCFNull, kCFStreamSSLPeerName,
-								   kCFBooleanFalse, kCFStreamSSLIsServer,
-								   nil];
-	
-	CFReadStreamSetProperty(theReadStream, kCFStreamPropertySSLSettings, settings);
-	CFWriteStreamSetProperty(theWriteStream, kCFStreamPropertySSLSettings, settings);
+  NSDictionary* settings = [NSDictionary dictionaryWithObjectsAndKeys:
+                                          (NSString*)kCFStreamSocketSecurityLevelNegotiatedSSL, kCFStreamSSLLevel,
+                                          kCFBooleanTrue, kCFStreamSSLAllowsAnyRoot,
+                                          kCFBooleanFalse, kCFStreamSSLValidatesCertificateChain,
+                                          kCFNull, kCFStreamSSLPeerName,
+                                          kCFBooleanFalse, kCFStreamSSLIsServer,
+                                          nil];
+
+  CFReadStreamSetProperty(theReadStream, kCFStreamPropertySSLSettings, settings);
+  CFWriteStreamSetProperty(theWriteStream, kCFStreamPropertySSLSettings, settings);
+}
+
+- (void)useSystemSocksProxy
+{
+  CFDictionaryRef settings = SCDynamicStoreCopyProxies(NULL);
+  CFReadStreamSetProperty(theReadStream, kCFStreamPropertySOCKSProxy, settings);
+  CFWriteStreamSetProperty(theWriteStream, kCFStreamPropertySOCKSProxy, settings);
+  CFRelease(settings);
+}
+
+- (void)useSocksProxyVersion:(int)version host:(NSString*)host port:(int)port user:(NSString*)user password:(NSString*)password
+{
+  NSMutableDictionary* settings = [NSMutableDictionary dictionary];
+  
+  if (version == 4) {
+    [settings setObject:(NSString*)kCFStreamSocketSOCKSVersion4 forKey:(NSString*)kCFStreamPropertySOCKSVersion];
+  }
+  else {
+    [settings setObject:(NSString*)kCFStreamSocketSOCKSVersion5 forKey:(NSString*)kCFStreamPropertySOCKSVersion];
+  }
+  
+  [settings setObject:host forKey:(NSString*)kCFStreamPropertySOCKSProxyHost];
+  [settings setObject:[NSNumber numberWithInt:port] forKey:(NSString*)kCFStreamPropertySOCKSProxyPort];
+
+  if ([user length]) [settings setObject:user forKey:(NSString*)kCFStreamPropertySOCKSUser];
+  if ([password length]) [settings setObject:password forKey:(NSString*)kCFStreamPropertySOCKSPassword];
+
+  CFReadStreamSetProperty(theReadStream, kCFStreamPropertySOCKSProxy, settings);
+  CFWriteStreamSetProperty(theWriteStream, kCFStreamPropertySOCKSProxy, settings);
 }
 
 + (NSString*)posixErrorStringFromErrno:(int)code

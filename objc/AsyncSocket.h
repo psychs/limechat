@@ -133,6 +133,10 @@ typedef enum AsyncSocketError AsyncSocketError;
 /* SSL support */
 - (void) useSSL;
 
+/* Proxy support */
+- (void) useSystemSocksProxy;
+- (void) useSocksProxyVersion:(int)version host:(NSString*)host port:(int)port user:(NSString*)user password:(NSString*)password;
+
 /* The following methods won't block. To not time out, use a negative time interval. If they time out, "onSocket:disconnectWithError:" is called. The tag is for your convenience. You can use it as an array index, step number, state id, pointer, etc., just like the socket's user data. */
 
 /* This will read a certain number of bytes, and call the delegate method when those bytes have been read. If there is an error, partially read data is lost. If the length is 0, this method does nothing and the delegate is not called. */
