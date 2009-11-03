@@ -3,6 +3,7 @@
 
 class TcpClient < NSObject
   attr_accessor :delegate, :host, :port, :ssl
+  attr_accessor :useSystemSocks, :useSocks, :socks_version, :proxy_host, :proxy_port, :proxy_user, :proxy_password
   attr_reader :send_queue_size
   
   def initialize
@@ -10,6 +11,8 @@ class TcpClient < NSObject
     @host = ''
     @port = 0
     @ssl = false
+    @useSystemSocks = false
+    @useSocks = false
     @send_queue_size = 0
   end
   
@@ -81,7 +84,13 @@ class TcpClient < NSObject
   end
   
   def onSocketWillConnect(sock)
-    sock.useSSL if @ssl
+    if @useSystemSocks
+      @sock.useSystemSocksProxy
+    elsif @useSocks
+      @sock.useSocksProxyVersion_host_port_user_password(@socks_version, @proxy_host, @proxy_port, @proxy_user, @proxy_password)
+    elsif @ssl
+      @sock.useSSL
+    end
   end
   
   def onSocket_didConnectToHost_port(sock, host, port)

@@ -220,6 +220,18 @@ class IRCUnit < NSObject
     @conn.host = host
     @conn.port = @config.port.to_i
     @conn.ssl = @config.ssl
+    
+    case @config.proxy
+    when IRCUnitConfig::PROXY_SOCKS_SYSTEM
+      @conn.useSystemSocks = true
+    when IRCUnitConfig::PROXY_SOCKS5,IRCUnitConfig::PROXY_SOCKS4
+      @conn.useSocks = true
+      @conn.socks_version = @config.proxy == IRCUnitConfig::PROXY_SOCKS4 ? 4 : 5
+      @conn.proxy_host = @config.proxy_host
+      @conn.proxy_port = @config.proxy_port
+      @conn.proxy_user = @config.proxy_user
+      @conn.proxy_password = @config.proxy_password
+    end
     @conn.open
   end
   

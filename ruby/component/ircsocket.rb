@@ -5,6 +5,7 @@ require 'timer'
 
 class IRCSocket
   attr_accessor :delegate, :host, :port, :ssl
+  attr_accessor :useSystemSocks, :useSocks, :socks_version, :proxy_host, :proxy_port, :proxy_user, :proxy_password
   
   def initialize
     @sock = TcpClient.alloc.init
@@ -19,6 +20,13 @@ class IRCSocket
     @sock.host = @host
     @sock.port = @port
     @sock.ssl = @ssl
+    @sock.useSystemSocks = @useSystemSocks
+    @sock.useSocks = @useSocks
+    @sock.socks_version = @socks_version
+    @sock.proxy_host = @proxy_host
+    @sock.proxy_port = @proxy_port
+    @sock.proxy_user = @proxy_user
+    @sock.proxy_password = @proxy_password
     @sock.open
   end
   

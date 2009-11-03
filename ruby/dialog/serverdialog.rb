@@ -10,7 +10,8 @@ class ServerDialog < NSObject
   ib_outlet :window
   ib_mapped_outlet :nameText, :hostCombo, :passwordText, :nickText, :usernameText, :realnameText, :auto_connectCheck, :sslCheck
   ib_mapped_outlet :nickPasswordText
-  ib_mapped_int_outlet :portText, :encodingCombo, :fallback_encodingCombo
+  ib_mapped_int_outlet :portText, :encodingCombo, :fallback_encodingCombo, :proxyCombo, :proxy_portText
+  ib_mapped_outlet :proxy_hostText, :proxy_userText, :proxy_passwordText
   ib_mapped_outlet :leaving_commentText, :userinfoText, :invisibleCheck
   ib_mapped_outlet :login_commandsText
   ib_outlet :alt_nicksText
@@ -75,6 +76,7 @@ class ServerDialog < NSObject
     update_connection_page
     update_channels_page
     onEncodingComboChanged(nil)
+    onProxyComboChanged(nil)
     self.class.servers.each {|i| @hostCombo.addItemWithObjectValue(i.split(' ')[0]) }
     show
   end
@@ -131,6 +133,23 @@ class ServerDialog < NSObject
     else
       @fallback_encodingCombo.setEnabled(false)
     end
+  end
+  
+  def onProxyComboChanged(sender)
+    sel = @proxyCombo.selectedItem.tag.to_i
+    case sel
+    when IRCUnitConfig::PROXY_NONE,IRCUnitConfig::PROXY_SOCKS_SYSTEM
+      @proxy_hostText.setEnabled(false)
+      @proxy_portText.setEnabled(false)
+      @proxy_userText.setEnabled(false)
+      @proxy_passwordText.setEnabled(false)
+    when IRCUnitConfig::PROXY_SOCKS4,IRCUnitConfig::PROXY_SOCKS5
+      @proxy_hostText.setEnabled(true)
+      @proxy_portText.setEnabled(true)
+      @proxy_userText.setEnabled(true)
+      @proxy_passwordText.setEnabled(true)
+    end
+    @sslCheck.setEnabled(sel == IRCUnitConfig::PROXY_NONE)
   end
   
   def update_connection_page

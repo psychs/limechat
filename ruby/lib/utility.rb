@@ -3,6 +3,10 @@
 
 require 'numberformat'
 
+NSLCCP949StringEncoding = -2147482590
+NSLCGBKStringEncoding = -2147482063
+NSLCBIG5StringEncoding = -2147481085
+
 class String
   def each_char
     scan(/./) {|c| yield c }

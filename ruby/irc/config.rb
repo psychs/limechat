@@ -57,16 +57,26 @@ class IRCUnitConfig
   include AutoOpMatchable
   attr_accessor :name, :host, :port, :password, :nick, :alt_nicks, :username, :realname, :nickPassword
   attr_accessor :ssl, :auto_connect, :encoding, :fallback_encoding
+  attr_accessor :proxy, :proxy_host, :proxy_port, :proxy_user, :proxy_password
   attr_accessor :channels
   attr_accessor :leaving_comment, :userinfo, :invisible, :login_commands
   attr_accessor :autoop
   attr_accessor :owner, :uid
+  
+  PROXY_NONE = 0
+  PROXY_SOCKS4 = 4
+  PROXY_SOCKS5 = 5
+  PROXY_SOCKS_SYSTEM = 1
+  
   
   def initialize(seed={})
     @name = @host = @password = @nick = @username = @realname = @nickPassword = ''
     @alt_nicks = []
     @port = 6667
     @ssl = false
+    @proxy = PROXY_NONE
+    @proxy_host = @proxy_user = @proxy_password = ''
+    @proxy_port = 1080
     @auto_connect = true
     @leaving_comment = 'Leaving...'
     @userinfo = ''
@@ -81,11 +91,11 @@ class IRCUnitConfig
     when 'ja'
       @encoding = NSISO2022JPStringEncoding
     when 'ko'
-      @encoding = -2147482590
+      @encoding = NSLCCP949StringEncoding
     when 'zh-Hans'
-      @encoding = -2147482063
+      @encoding = NSLCGBKStringEncoding
     when 'zh-Hant'
-      @encoding = -2147481085
+      @encoding = NSLCBIG5StringEncoding
     else
       @encoding = NSUTF8StringEncoding
       @fallback_encoding = NSISOLatin1StringEncoding
