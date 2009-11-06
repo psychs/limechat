@@ -40,7 +40,7 @@ class ServerDialog < NSObject
     'irc.cre.ne.jp (cre)',
     'irc.reicha.net (Reicha)',
     '-',
-    'irc.freenode.net (Freenode)',
+    'chat.freenode.net (freenode)',
     'eu.undernet.org (Undernet)',
     'irc.quakenet.org (QuakeNet)',
     'irc.mozilla.org (Mozilla)',
@@ -48,7 +48,7 @@ class ServerDialog < NSObject
   ]
 
   SERVERS = [
-    'irc.freenode.net (Freenode)',
+    'chat.freenode.net (freenode)',
     'irc.efnet.net (EFnet)',
     'irc.us.ircnet.net (IRCnet)',
     'irc.fr.ircnet.net (IRCnet)',
