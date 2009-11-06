@@ -30,7 +30,6 @@ class ServerDialog < NSObject
   end
   
   JA_SERVERS = [
-    'irc.nara.wide.ad.jp (IRCnet)',
     'irc.tokyo.wide.ad.jp (IRCnet)',
     'irc.fujisawa.wide.ad.jp (IRCnet)',
     'irc.huie.hokudai.ac.jp (IRCnet)',
