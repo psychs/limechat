@@ -387,7 +387,7 @@ class IRCUnit < NSObject
   
   def send_command(s, complete_target=true, target=nil)
     return false unless connected? && s && !s.include?("\0")
-    s = s.dup
+    s = expand_variables(s)
     command = s.token!
     return false if command.empty?
     cmd = command.downcase.to_sym
@@ -1350,6 +1350,10 @@ class IRCUnit < NSObject
     join_channel(c, pass, true)
   end
   
+  def expand_variables(s)
+    s.gsub(/\$nick/, @mynick)
+  end
+  
   
   # protocol
   
@@ -1374,6 +1378,7 @@ class IRCUnit < NSObject
     @config.login_commands.each do |s|
       s = s.dup
       s = $~.post_match if /^\// =~ s
+      s = expand_variables(s)
       send_command(s, false)
     end
     
