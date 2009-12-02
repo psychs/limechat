@@ -579,7 +579,7 @@ class IRCUnit < NSObject
       cmd = :mode
     when :umode
       cmd = :mode
-      s = @mynick
+      s = @mynick + ' ' + s
     end
     
     # cut colon
