@@ -7,28 +7,15 @@
     <language>en-us</language>
 
     <item>
-      <title>1.2</title>
-      <link>http://limechat.net/mac/#v1.2</link>
-      <pubDate>Wed, 14 Oct 2009 17:16:02 +0900</pubDate>
+      <title>1.3</title>
+      <link>http://limechat.net/mac/#v1.3</link>
+      <pubDate>Wed, 02 Dec 2009 22:11:11 +0900</pubDate>
       <content:encoded><![CDATA[
   			<ul>
-          <li>Added Sparkle auto updater</li>
-          <li>Added an option to ignore incoming file transfers</li>
-          <li>Renewed hot key recorder</li>
-          <li>Fixed encoding fallback bug</li>
-          <li>Fixed minor bugs</li>
-  			</ul>
-      ]]></content:encoded>
-    </item>
-
-    <item>
-      <title>1.1</title>
-      <link>http://limechat.net/mac/#v1.1</link>
-      <pubDate>Wed, 26 Aug 2009 15:28:00 +0900</pubDate>
-      <content:encoded><![CDATA[
-  			<ul>
-  				<li>Switched paste service to gist.</li>
-  				<li>Use threaded hostname resolver for Snow Leopard.</li>
+          <li>SOCKS proxy support</li>
+          <li>Expand $nick with current nick in commands</li>
+          <li>Allow parameters for /umode</li>
+          <li>Use chat.freenode.net instead of irc.freenode.net</li>
   			</ul>
       ]]></content:encoded>
     </item>
