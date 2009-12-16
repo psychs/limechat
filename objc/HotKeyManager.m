@@ -11,6 +11,11 @@
 	[super dealloc];
 }
 
+- (BOOL)enabled
+{
+  return handle != 0;
+}
+
 - (BOOL)registerHotKeyCode:(unsigned int)keyCode withModifier:(unsigned int)modifier
 {
 	static UInt32 serial = 0;

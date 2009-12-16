@@ -9,6 +9,7 @@
 	EventHotKeyRef handle;
 }
 
+- (BOOL)enabled;
 - (BOOL)registerHotKeyCode:(unsigned int)keyCode withModifier:(unsigned int)modifier;
 - (void)unregisterHotKey;
 

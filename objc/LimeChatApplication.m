@@ -18,11 +18,12 @@
 - (void)sendEvent:(NSEvent *)e
 {
 	if ([e type] == 14 && [e subtype] == 6) {
-		if ([[self delegate] respondsToSelector:@selector(applicationDidReceiveHotKey:)]) {
-			[[self delegate] applicationDidReceiveHotKey:self];
+		if (hotkey && [hotkey enabled]) {
+			if ([[self delegate] respondsToSelector:@selector(applicationDidReceiveHotKey:)]) {
+				[[self delegate] applicationDidReceiveHotKey:self];
+			}
 		}
 	}
-	
 	[super sendEvent:e];
 }
 
