@@ -59,7 +59,9 @@ class IRCUnit < NSObject
   
   def migrate
     # migrate irc.friend.td.nu to irc.friend-chat.jp
-    @config.host = @config.host.gsub(/^irc.friend.td.nu/, 'irc.friend-chat.jp')
+    if @config.host =~ /irc.friend.td.nu/
+      @config.host = 'irc.friend-chat.jp'
+    end
   end
   
   def update_config(seed)
