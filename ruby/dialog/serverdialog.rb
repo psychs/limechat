@@ -31,10 +31,6 @@ class ServerDialog < NSObject
   
   JA_SERVERS = [
     'irc.ircnet.ne.jp (IRCnet)',
-    'irc.nara.wide.ad.jp (IRCnet)',
-    'irc.fujisawa.wide.ad.jp (IRCnet)',
-    'irc.huie.hokudai.ac.jp (IRCnet)',
-    'irc.media.kyoto-u.ac.jp (IRCnet)',
     '-',
     'irc.friend-chat.jp (Friend)',
     'irc.2ch.net (2ch)',

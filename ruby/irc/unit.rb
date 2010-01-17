@@ -59,8 +59,14 @@ class IRCUnit < NSObject
   
   def migrate
     # migrate irc.friend.td.nu to irc.friend-chat.jp
-    if @config.host =~ /irc.friend.td.nu/
+    if @config.host =~ /^irc.friend.td.nu/
       @config.host = 'irc.friend-chat.jp'
+    end
+    
+    # migrate wide servers
+    case @config.host
+    when /^irc.kyoto.wide.ad.jp/,/^irc.nara.wide.ad.jp/,/^irc.tokyo.wide.ad.jp/,/^irc.fujisawa.wide.ad.jp/,/^irc.huie.hokudai.ac.jp/,/^irc.media.kyoto-u.ac.jp/
+      @config.host = 'irc.ircnet.ne.jp'
     end
   end
   
