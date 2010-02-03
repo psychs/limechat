@@ -7,14 +7,12 @@
     <language>ja</language>
 
     <item>
-      <title>1.4</title>
-      <link>http://limechat.net/mac/ja.html#v1.4</link>
-      <pubDate>Mon, 18 Jan 2010 00:00:00 +0900</pubDate>
+      <title>1.5</title>
+      <link>http://limechat.net/mac/ja.html#v1.5</link>
+      <pubDate>Wed, 03 Feb 2010 21:36:00 +0900</pubDate>
       <content:encoded><![CDATA[
   			<ul>
-          <li>エンコーディング設定に EUC-KR を追加した</li>
-          <li>Wide のサーバを irc.ircnet.ne.jp に読み替えるようにした</li>
-          <li>細かいバグを修正した</li>
+          <li>オペレータがいなくなったときに、自動で rejoin するオプションを追加した。</li>
   			</ul>
       ]]></content:encoded>
     </item>

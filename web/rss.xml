@@ -7,14 +7,12 @@
     <language>en-us</language>
 
     <item>
-      <title>1.4</title>
-      <link>http://limechat.net/mac/#v1.4</link>
-      <pubDate>Mon, 18 Jan 2010 00:00:00 +0900</pubDate>
+      <title>1.5</title>
+      <link>http://limechat.net/mac/#v1.5</link>
+      <pubDate>Wed, 03 Feb 2010 21:36:00 +0900</pubDate>
       <content:encoded><![CDATA[
   			<ul>
-          <li>EUC-KR support</li>
-          <li>Migrate wide.ad.jp servers to irc.ircnet.ne.jp</li>
-          <li>Fixed minor bugs</li>
+          <li>Added auto rejoin option.</li>
   			</ul>
       ]]></content:encoded>
     </item>

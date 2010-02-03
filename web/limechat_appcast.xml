@@ -7,7 +7,7 @@
     <language>en</language>
     
     <item>
-      <title>LimeChat 1.4</title>
+      <title>LimeChat 1.5</title>
       <description><![CDATA[
         <html>
         <body>
@@ -22,17 +22,15 @@
             margin: 0.2em 0;
           }
         </style>
-        <h1>LimeChat 1.4</h1>
+        <h1>LimeChat 1.5</h1>
         <ul>
-          <li>EUC-KR support</li>
-          <li>Migrate wide.ad.jp servers to irc.ircnet.ne.jp</li>
-          <li>Fixed minor bugs</li>
+          <li>Added auto rejoin option.</li>
         </ul>
         </body>
         </html>
       ]]></description>
-      <pubDate>Sun, 17 Jan 2010 23:56:13 +0900</pubDate>
-      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/LimeChat_1.4.tbz" length="684700" type="application/octet-stream"/>
+      <pubDate>Wed, 03 Feb 2010 21:33:08 +0900</pubDate>
+      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/LimeChat_1.5.tbz" length="684923" type="application/octet-stream"/>
     </item>
     
   </channel>
