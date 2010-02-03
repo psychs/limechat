@@ -1340,6 +1340,7 @@ class IRCUnit < NSObject
   end
   
   def check_rejoin(c)
+    return unless preferences.general.auto_rejoin
     return unless c
     return unless c.channel?
     return if c.op?

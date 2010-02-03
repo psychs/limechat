@@ -57,6 +57,7 @@ class Preferences
     defaults_accessor :join_on_doubleclick, true
     defaults_accessor :leave_on_doubleclick, false
     
+    defaults_accessor :auto_rejoin, false
     defaults_accessor :use_growl, true
     defaults_accessor :stop_growl_on_active, true
     
