@@ -647,6 +647,8 @@ class AppController < NSObject
     handler(:tab, :shift) { shiftTab }
     handler(:enter, :ctrl) { sendText(:notice); true }
     handler(:enter, :alt) { @menu.onPasteDialog(nil); true }
+    handler(:']', :cmd) { move(:down, :active); true }
+    handler(:'[', :cmd) { move(:up, :active); true }
     handler(:up, :ctrl) { move(:up); true }
     handler(:down, :ctrl) { move(:down); true }
     handler(:left, :ctrl) { move(:left); true }
