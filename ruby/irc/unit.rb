@@ -65,7 +65,7 @@ class IRCUnit < NSObject
     
     # migrate wide servers
     case @config.host
-    when /^irc.kyoto.wide.ad.jp/,/^irc.nara.wide.ad.jp/,/^irc.tokyo.wide.ad.jp/,/^irc.fujisawa.wide.ad.jp/,/^irc.huie.hokudai.ac.jp/,/^irc.media.kyoto-u.ac.jp/
+    when /^irc.kyoto.wide.ad.jp/,/^irc6?.nara.wide.ad.jp/,/^irc.tokyo.wide.ad.jp/,/^irc6?.fujisawa.wide.ad.jp/
       @config.host = 'irc.ircnet.ne.jp'
     end
   end
