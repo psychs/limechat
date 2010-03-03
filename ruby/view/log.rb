@@ -188,7 +188,27 @@ class LogController < NSObject
     doc = @view.mainFrame.DOMDocument
     return unless doc
     e = doc.getElementById('mark')
-    doc.body.removeChild(e) if e
+    if e
+      doc.body.removeChild(e)
+    end
+  end
+  
+  def go_to_mark
+    return unless @loaded
+    doc = @view.mainFrame.DOMDocument
+    return unless doc
+    e = doc.getElementById('mark')
+    if e
+      y = 0
+      t = e
+      while t
+        if t.is_a?(DOMHTMLElement)
+          y += t[:offsetTop]
+        end
+        t = t.parentNode
+      end
+      doc.body[:scrollTop] = y - 40
+    end
   end
 
   def reload_theme

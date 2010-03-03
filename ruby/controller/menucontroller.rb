@@ -111,7 +111,7 @@ class MenuController < NSObject
 
     when 411  # mark scrollback
       true
-    when 412  # clear mark
+    when 412  # clear mark / go to mark
       true
     when 413  # mark all as read
       true
@@ -531,6 +531,14 @@ class MenuController < NSObject
     sel = @world.selected
     return unless sel
     sel.log.unmark
+  end
+  
+  def onGoToMark(sender)
+    puts 'go to mark'
+    
+    sel = @world.selected
+    return unless sel
+    sel.log.go_to_mark
   end
 
   def onMarkAllAsRead(sender)
