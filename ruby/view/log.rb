@@ -143,7 +143,16 @@ class LogController < NSObject
       s << %| first="#{line.nick_info != @prev_nick_info}"| if line.nick_info
       s << %|>#{h(line.nick)}</span>|
     end
-    s << %[<span class="message" type="#{line.line_type}">#{body}</span>]
+
+    if m = %r!(http://[a-zA-Z0-9_\.\/]*\.(jpg|jpeg|png|gif))!.match(body)
+      url = m[1]
+      s << %[<span class="message" type="#{line.line_type}">#{body}
+             <br>
+             <a href="#{url}"><img src="#{url}" class="inlineimage"/></a>
+             </span>\n]
+    else
+      s << %[<span class="message" type="#{line.line_type}">#{body}</span>\n]
+    end
 
     @prev_nick_info = line.nick_info
 
@@ -564,6 +573,14 @@ class LogController < NSObject
     .line[type=action] .sender:before {
       content: "• ";
       white-space: nowrap;
+    }
+    .inlineimage {
+      margin-top: 10px;
+      margin-bottom: 15px;
+      margin-left: 40px;
+      max-width: 400px;
+      max-height: 300px;
+      -webkit-box-shadow:5px 5px 2px #888;
     }
     .url { word-break: break-all; }
     .address { text-decoration: underline; word-break: break-all; }
