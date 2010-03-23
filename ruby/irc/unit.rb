@@ -62,12 +62,6 @@ class IRCUnit < NSObject
     if @config.host =~ /^irc.friend.td.nu/
       @config.host = 'irc.friend-chat.jp'
     end
-    
-    # migrate wide servers
-    case @config.host
-    when /^irc.kyoto.wide.ad.jp/,/^irc6?.nara.wide.ad.jp/,/^irc.tokyo.wide.ad.jp/,/^irc6?.fujisawa.wide.ad.jp/
-      @config.host = 'irc.ircnet.ne.jp'
-    end
   end
   
   def update_config(seed)
