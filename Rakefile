@@ -27,7 +27,7 @@ task :build do |t|
   build('10.5')
 end
 
-task :package => [:package_app] do |t|
+task :package => :package_app do |t|
 end
 
 task :package_app => :clean do |t|
@@ -42,12 +42,12 @@ end
 
 task :appcast do |t|
   package_fname = "#{APP_SHORT_NAME}_#{app_version}.tbz"
-	package_path = PACKAGES_PATH + package_fname
-	stat = File.stat(package_path)
-	
+  package_path = PACKAGES_PATH + package_fname
+  stat = File.stat(package_path)
+  
   version = app_version
-	fsize = stat.size
-	ftime = stat.mtime.rfc2822
+  fsize = stat.size
+  ftime = stat.mtime.rfc2822
   updates = parse_commit_log
   
   APPCAST_PATH.rmtree
@@ -74,50 +74,51 @@ def embed_framework(sdk)
 end
 
 def package
-	package_path = PACKAGES_PATH + "#{APP_SHORT_NAME}_#{app_version}.tbz"
-	package_path.rmtree
-	TMP_PATH.rmtree
-	TMP_PATH.mkpath
-	APP_BUILD_PATH.cptree(TMP_PATH)
-	
-	DOC_PATH.cptree(TMP_PATH)
-	rmglob(TMP_PATH + '**/ChangeLog.txt')
-	rmglob(TMP_PATH + '**/.DS_Store')
-	
-	Dir.chdir(TMP_PATH) do
-		sh "tar jcf #{package_path} *"
-	end
-	
-	TMP_PATH.rmtree
+  PACKAGES_PATH.mkpath
+  package_path = PACKAGES_PATH + "#{APP_SHORT_NAME}_#{app_version}.tbz"
+  package_path.rmtree
+  TMP_PATH.rmtree
+  TMP_PATH.mkpath
+  APP_BUILD_PATH.cptree(TMP_PATH)
+  
+  DOC_PATH.cptree(TMP_PATH)
+  rmglob(TMP_PATH + '**/ChangeLog.txt')
+  rmglob(TMP_PATH + '**/.DS_Store')
+  
+  Dir.chdir(TMP_PATH) do
+    sh "tar jcf #{package_path} *"
+  end
+  
+  TMP_PATH.rmtree
 end
 
 def package_source
-	source_package_path = PACKAGES_PATH + "#{APP_SHORT_NAME}_#{app_version}_src.tbz"
-	source_package_path.rmtree
-	TMP_PATH.rmtree
-	
-	ROOT_PATH.cptree(TMP_PATH)
-	
-	rmglob(TMP_PATH + 'build')
-	rmglob(TMP_PATH + 'etc')
-	rmglob(TMP_PATH + 'Packages')
-	rmglob(TMP_PATH + 'script')
-	rmglob(TMP_PATH + 'web')
-	rmglob(TMP_PATH + '*.tmproj')
-	rmglob(TMP_PATH + 'MRLimeChat.xcodeproj')
-	rmglob(TMP_PATH + 'LimeChat.xcodeproj/*.mode1*')
-	rmglob(TMP_PATH + 'LimeChat.xcodeproj/*.pbxuser')
-	rmglob(TMP_PATH + '**/*.tm_build_errors')
-	rmglob(TMP_PATH + '**/.gitignore')
-	rmglob(TMP_PATH + '**/.DS_Store')
-	rmglob(TMP_PATH + '**/*~.nib')
-	rmglob(TMP_PATH + '**/._*')
-	
-	Dir.chdir(TMP_PATH) do
-		sh "tar jcf #{source_package_path} *"
-	end
-	
-	TMP_PATH.rmtree
+  source_package_path = PACKAGES_PATH + "#{APP_SHORT_NAME}_#{app_version}_src.tbz"
+  source_package_path.rmtree
+  TMP_PATH.rmtree
+  
+  ROOT_PATH.cptree(TMP_PATH)
+  
+  rmglob(TMP_PATH + 'build')
+  rmglob(TMP_PATH + 'etc')
+  rmglob(TMP_PATH + 'Packages')
+  rmglob(TMP_PATH + 'script')
+  rmglob(TMP_PATH + 'web')
+  rmglob(TMP_PATH + '*.tmproj')
+  rmglob(TMP_PATH + 'MRLimeChat.xcodeproj')
+  rmglob(TMP_PATH + 'LimeChat.xcodeproj/*.mode1*')
+  rmglob(TMP_PATH + 'LimeChat.xcodeproj/*.pbxuser')
+  rmglob(TMP_PATH + '**/*.tm_build_errors')
+  rmglob(TMP_PATH + '**/.gitignore')
+  rmglob(TMP_PATH + '**/.DS_Store')
+  rmglob(TMP_PATH + '**/*~.nib')
+  rmglob(TMP_PATH + '**/._*')
+  
+  Dir.chdir(TMP_PATH) do
+    sh "tar jcf #{source_package_path} *"
+  end
+  
+  TMP_PATH.rmtree
 end
 
 
@@ -207,27 +208,27 @@ end
 
 
 module Util
-	def app_version
-		file = ROOT_PATH + 'Info.plist'
-		file.open do |f|
-		  next_line = false
-		  while s = f.gets
-		    if next_line
-		      next_line = false
-		      if s =~ /<string>(.+)<\/string>/
-		        return $1
-		      end
-		    elsif s =~ /<key>CFBundleShortVersionString<\/key>/
-		      next_line = true
-		    end
-		  end
-		end
-		nil
-	end
-	
-	def rmglob(path)
-	  FileUtils.rm_rf(Dir.glob(path.to_s))
-	end
+  def app_version
+    file = ROOT_PATH + 'Info.plist'
+    file.open do |f|
+      next_line = false
+      while s = f.gets
+        if next_line
+          next_line = false
+          if s =~ /<string>(.+)<\/string>/
+            return $1
+          end
+        elsif s =~ /<key>CFBundleShortVersionString<\/key>/
+          next_line = true
+        end
+      end
+    end
+    nil
+  end
+  
+  def rmglob(path)
+    FileUtils.rm_rf(Dir.glob(path.to_s))
+  end
 end
 include Util
 
