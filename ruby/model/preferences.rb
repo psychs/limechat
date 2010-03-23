@@ -62,10 +62,11 @@ class Preferences
     defaults_accessor :use_growl, true
     defaults_accessor :stop_growl_on_active, true
     
-    defaults_accessor :log_transcript, false
-    defaults_accessor :transcript_folder, '~/Documents/LimeChat Transcripts'
+    defaults_accessor :show_inline_images, false
     defaults_accessor :show_join_leave, true
     defaults_accessor :max_log_lines, 300
+    defaults_accessor :log_transcript, false
+    defaults_accessor :transcript_folder, '~/Documents/LimeChat Transcripts'
     
     defaults_accessor :paste_syntax, 'plain_text'
     defaults_accessor :paste_command, (LanguageSupport.primary_language == 'ja' ? 'notice' : 'privmsg')

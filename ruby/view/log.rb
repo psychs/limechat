@@ -144,8 +144,8 @@ class LogController < NSObject
       s << %|>#{h(line.nick)}</span>|
     end
 
-    if m = %r!(http://[a-zA-Z0-9_\.\/]*\.(jpg|jpeg|png|gif))!.match(body)
-      url = m[1]
+    if preferences.general.show_inline_images && m = %r!https?://[^\s/,'"`?<>　]+/[^\s'"<>　…]*[^\s.,'"?<>　、，。．…]\.(jpg|jpeg|png|gif)!i.match(body)
+      url = m[0]
       s << %[<span class="message" type="#{line.line_type}">#{body}
              <br>
              <a href="#{url}"><img src="#{url}" class="inlineimage"/></a>
@@ -580,7 +580,7 @@ class LogController < NSObject
       margin-left: 40px;
       max-width: 400px;
       max-height: 300px;
-      -webkit-box-shadow:5px 5px 2px #888;
+      -webkit-box-shadow: 5px 5px 2px #888;
     }
     .url { word-break: break-all; }
     .address { text-decoration: underline; word-break: break-all; }
