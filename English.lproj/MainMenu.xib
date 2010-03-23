@@ -12,8 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="106"/>
-			<integer value="327"/>
+			<integer value="313"/>
 			<integer value="233"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
@@ -1144,6 +1143,16 @@
 									<reference key="NSOnImage" ref="821023625"/>
 									<reference key="NSMixedImage" ref="353314363"/>
 									<int key="NSTag">412</int>
+								</object>
+								<object class="NSMenuItem" id="69206960">
+									<reference key="NSMenu" ref="1043433546"/>
+									<string key="NSTitle">Go To Mark</string>
+									<string key="NSKeyEquiv">l</string>
+									<int key="NSKeyEquivModMask">1572864</int>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="821023625"/>
+									<reference key="NSMixedImage" ref="353314363"/>
+									<int key="NSTag">414</int>
 								</object>
 								<object class="NSMenuItem" id="661884468">
 									<reference key="NSMenu" ref="1043433546"/>
@@ -3112,6 +3121,14 @@
 					</object>
 					<int key="connectionID">982</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">onGoToMark:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="69206960"/>
+					</object>
+					<int key="connectionID">998</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -3879,6 +3896,7 @@
 							<reference ref="873782003"/>
 							<reference ref="661884468"/>
 							<reference ref="84156800"/>
+							<reference ref="69206960"/>
 						</object>
 						<reference key="parent" ref="818320124"/>
 					</object>
@@ -4451,6 +4469,11 @@
 						<reference key="object" ref="730010322"/>
 						<reference key="parent" ref="385658135"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">997</int>
+						<reference key="object" ref="69206960"/>
+						<reference key="parent" ref="1043433546"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -4859,6 +4882,7 @@
 					<string>995.IBShouldRemoveOnLegacySave</string>
 					<string>996.IBPluginDependency</string>
 					<string>996.IBShouldRemoveOnLegacySave</string>
+					<string>997.IBPluginDependency</string>
 				</object>
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
@@ -5029,7 +5053,7 @@
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>{{205, 878}, {389, 213}}</string>
+					<string>{{205, 858}, {389, 233}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -5264,6 +5288,7 @@
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="unlocalizedProperties">
@@ -5282,7 +5307,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">996</int>
+			<int key="maxID">998</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -5451,6 +5476,7 @@
 							<string>onDeleteChannel:</string>
 							<string>onDeleteServer:</string>
 							<string>onDisconnect:</string>
+							<string>onGoToMark:</string>
 							<string>onJoin:</string>
 							<string>onJoinChannel:</string>
 							<string>onLeave:</string>
@@ -5494,6 +5520,7 @@
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -6266,6 +6293,10 @@
 		</object>
 		<int key="IBDocument.localizationMode">0</int>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencies">
+			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>
+			<integer value="1050" key="NS.object.0"/>
+		</object>
+		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencyDefaults">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>
 			<integer value="1050" key="NS.object.0"/>
 		</object>

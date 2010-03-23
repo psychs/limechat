@@ -111,9 +111,11 @@ class MenuController < NSObject
 
     when 411  # mark scrollback
       true
-    when 412  # clear mark / go to mark
+    when 412  # clear mark
       true
     when 413  # mark all as read
+      true
+    when 414  # go to mark
       true
     when 421  # make text bigger
       @world.console.view.canMakeTextLarger?
@@ -534,8 +536,6 @@ class MenuController < NSObject
   end
   
   def onGoToMark(sender)
-    puts 'go to mark'
-    
     sel = @world.selected
     return unless sel
     sel.log.go_to_mark

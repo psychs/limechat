@@ -216,7 +216,7 @@ class LogController < NSObject
         end
         t = t.parentNode
       end
-      doc.body[:scrollTop] = y - 40
+      doc.body[:scrollTop] = y - 20
     end
   end
 
