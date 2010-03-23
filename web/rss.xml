@@ -7,12 +7,16 @@
     <language>en-us</language>
 
     <item>
-      <title>1.5</title>
-      <link>http://limechat.net/mac/#v1.5</link>
-      <pubDate>Wed, 03 Feb 2010 21:36:00 +0900</pubDate>
+      <title>1.6</title>
+      <link>http://limechat.net/mac/#v1.6</link>
+      <pubDate>Wed, 24 Mar 2010 01:02:35 +0900</pubDate>
       <content:encoded><![CDATA[
   			<ul>
-          <li>Added auto rejoin option.</li>
+          <li>Added open browser in background option.</li>
+          <li>Show image links in inline option.</li>
+          <li>Added shortcut keys, Cmd+[ / Cmd+] to move up / down channels.</li>
+          <li>Added Go To Mark menu.</li>
+          <li>Allow itms: scheme for URLs.</li>
   			</ul>
       ]]></content:encoded>
     </item>

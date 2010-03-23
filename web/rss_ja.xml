@@ -7,12 +7,16 @@
     <language>ja</language>
 
     <item>
-      <title>1.5</title>
-      <link>http://limechat.net/mac/ja.html#v1.5</link>
-      <pubDate>Wed, 03 Feb 2010 21:36:00 +0900</pubDate>
+      <title>1.6</title>
+      <link>http://limechat.net/mac/ja.html#v1.6</link>
+      <pubDate>Wed, 24 Mar 2010 01:02:35 +0900</pubDate>
       <content:encoded><![CDATA[
   			<ul>
-          <li>オペレータがいなくなったときに、自動で rejoin するオプションを追加した。</li>
+          <li>ブラウザをバックグランドで開くオプションを追加した。</li>
+          <li>インラインで画像を表示するオプションを追加した。</li>
+          <li>Cmd+[ / Cmd+] でチャンネルを移動するようにした。</li>
+          <li>Go To Mark メニューを追加した。</li>
+          <li>itms: スキーマを URL として扱うようにした。</li>
   			</ul>
       ]]></content:encoded>
     </item>
