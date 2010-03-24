@@ -9,15 +9,15 @@
     <item>
       <title>1.7</title>
       <link>http://limechat.net/mac/ja.html#v1.7</link>
-      <pubDate>Wed, 24 Mar 2010 23:18:32 +0900</pubDate>
+      <pubDate>Thu, 25 Mar 2010 00:44:57 +0900</pubDate>
       <content:encoded><![CDATA[
-  	    <ul>
-            <li>インラインで画像を貼り付けるオプションを改善した。</li>
-            <li>Go To Mark メニューを追加した。</li>
-            <li>Sparkle が動作していなかったのを修正した。</li>
-            <li>送信したコマンドをログに表示しないようにした。</li>
-            <li>Cmd+[ / Cmd+] のショートカットキーが日本語キーボードでも動作するようにした。</li>
-          </ul>
+  			<ul>
+          <li>インラインで画像を貼り付けるオプションを改善した。</li>
+          <li>Go To Mark メニューを追加した。</li>
+          <li>Sparkle が動作していなかったのを修正した。</li>
+          <li>送信したコマンドをログに表示しないようにした。</li>
+          <li>Cmd+[ / Cmd+] のショートカットキーが日本語キーボードでも動作するようにした。</li>
+        </ul>
       ]]></content:encoded>
     </item>
 

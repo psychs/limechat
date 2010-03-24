@@ -9,12 +9,12 @@
     <item>
       <title>1.7</title>
       <link>http://limechat.net/mac/#v1.7</link>
-      <pubDate>Wed, 24 Mar 2010 23:18:32 +0900</pubDate>
+      <pubDate>Thu, 25 Mar 2010 00:44:57 +0900</pubDate>
       <content:encoded><![CDATA[
   			<ul>
           <li>Improved around inline images.</li>
           <li>Added Go To Mark menu.</li>
-          <li>Fixed a bug, Sparkle was removed unintentionally.</li>
+          <li>Fixed a bug, Sparkle was not working unintentionally.</li>
           <li>Disabled sent command log.</li>
           <li>Supported Cmd+[ / Cmd+] on non-English keyboards.</li>
         </ul>

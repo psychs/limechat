@@ -15,7 +15,7 @@ WEB_PATH = ROOT_PATH + 'web'
 TEMPLATES_PATH = WEB_PATH + 'templates'
 CHANGELOGS_PATH = WEB_PATH + 'changelogs'
 APPCAST_TEMPLATE_PATH = TEMPLATES_PATH + 'appcast.rxml'
-APPCAST_PATH = WEB_PATH + 'appcast.xml'
+APPCAST_PATH = WEB_PATH + 'limechat_appcast.xml'
 TMP_PATH = Pathname.new("/tmp/#{APP_SHORT_NAME}_build_image")
 
 

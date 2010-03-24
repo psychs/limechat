@@ -45,7 +45,7 @@
 	<key>LCApplicationName</key>
 	<string>LimeChat for Mac</string>
 	<key>SUFeedURL</key>
-	<string>http://cloud.github.com/downloads/psychs/limechat/appcast.xml</string>
+	<string>http://limechat.net/mac/limechat_appcast.xml</string>
 	<key>SUScheduledCheckInterval</key>
 	<integer>86400</integer>
 	<key>SUEnableAutomaticChecks</key>

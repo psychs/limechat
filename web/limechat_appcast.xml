@@ -26,17 +26,17 @@
         <ul>
           <li>Improved around inline images.</li>
           <li>Added Go To Mark menu.</li>
-          <li>Fixed a bug, Sparkle was removed unintentionally.</li>
+          <li>Fixed a bug, Sparkle was not working unintentionally.</li>
           <li>Disabled sent command log.</li>
           <li>Supported Cmd+[ / Cmd+] on non-English keyboards.</li>
         </ul>
         </body>
         </html>
       ]]></description>
-      <pubDate>Wed, 24 Mar 2010 23:18:32 +0900</pubDate>
+      <pubDate>Thu, 25 Mar 2010 00:44:57 +0900</pubDate>
       <enclosure url="http://cloud.github.com/downloads/psychs/limechat/LimeChat_1.7.tbz"
-                  sparkle:version="1.7" length="682283" type="application/octet-stream"
-                  sparkle:dsaSignature="MCwCFDwi80e4sJ4HWSNqR9+Ns2VKSazIAhR+mIWa/3eYpZXG5H31Yi6tM+lAxA=="/>
+                  sparkle:version="1.7" length="682211" type="application/octet-stream"
+                  sparkle:dsaSignature="MCwCFAx4wWblj7RemdkLe6KZSgn/4pCrAhQzWJTWKluhNU/mZjb9l5SgChYNeg=="/>
     </item>
     
   </channel>
