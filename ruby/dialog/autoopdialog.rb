@@ -15,7 +15,7 @@ class AutoOpDialog < NSObject
   
   def start(conf)
     @w = ModelTreeItem.config_to_item(conf)
-    @c = @w.units
+    @c = @w.clients
     @sel = @w
     NSBundle.loadNibNamed_owner('AutoOpDialog', self)
     @edit.setFocusRingType(NSFocusRingTypeNone)
@@ -172,7 +172,7 @@ class AutoOpDialog < NSObject
   def outlineView_numberOfChildrenOfItem(sender, item)
     case item
       when nil; 1
-      when WorldTreeItem; item.units.size
+      when WorldTreeItem; item.clients.size
       when UnitTreeItem; item.channels.size
       else 0
     end
@@ -180,7 +180,7 @@ class AutoOpDialog < NSObject
   
   def outlineView_isItemExpandable(sender, item)
     case item
-      when WorldTreeItem; item.units.size > 0
+      when WorldTreeItem; item.clients.size > 0
       when UnitTreeItem; item.channels.size > 0
       else false
     end
@@ -189,7 +189,7 @@ class AutoOpDialog < NSObject
   def outlineView_child_ofItem(sender, index, item)
     case item
       when nil; @w
-      when WorldTreeItem; item.units[index]
+      when WorldTreeItem; item.clients[index]
       when UnitTreeItem; item.channels[index]
       else nil
     end

@@ -4,7 +4,7 @@
 require 'utility'
 require 'pathname'
 
-class IRCUnit < NSObject
+class IRCClient < NSObject
   attr_accessor :world, :log, :uid
   attr_reader :config, :channels, :mynick, :mymode, :encoding, :myaddress, :isupport, :reconnect
   attr_accessor :property_dialog
@@ -138,11 +138,11 @@ class IRCUnit < NSObject
     @config.name = value
   end
   
-  def unit
+  def client
     self
   end
   
-  def unit?
+  def client?
     true
   end
   
@@ -224,11 +224,11 @@ class IRCUnit < NSObject
     @conn.ssl = @config.ssl
     
     case @config.proxy
-    when IRCUnitConfig::PROXY_SOCKS_SYSTEM
+    when IRCClientConfig::PROXY_SOCKS_SYSTEM
       @conn.useSystemSocks = true
-    when IRCUnitConfig::PROXY_SOCKS5,IRCUnitConfig::PROXY_SOCKS4
+    when IRCClientConfig::PROXY_SOCKS5,IRCClientConfig::PROXY_SOCKS4
       @conn.useSocks = true
-      @conn.socks_version = @config.proxy == IRCUnitConfig::PROXY_SOCKS4 ? 4 : 5
+      @conn.socks_version = @config.proxy == IRCClientConfig::PROXY_SOCKS4 ? 4 : 5
       @conn.proxy_host = @config.proxy_host
       @conn.proxy_port = @config.proxy_port
       @conn.proxy_user = @config.proxy_user
@@ -397,7 +397,7 @@ class IRCUnit < NSObject
     
     if complete_target && target
       sel = target
-    elsif complete_target && @world.selunit == self && @world.selchannel
+    elsif complete_target && @world.selclient == self && @world.selchannel
       sel = @world.selchannel
     else
       sel = nil
@@ -732,8 +732,8 @@ class IRCUnit < NSObject
     @channels.find {|c| c.uid == cid }
   end
   
-  def update_unit_title
-    @world.update_unit_title(self)
+  def update_client_title
+    @world.update_client_title(self)
   end
   
   def update_channel_title(channel)
@@ -986,7 +986,7 @@ class IRCUnit < NSObject
     send(:pass, @config.password) if @config.password && !@config.password.empty?
     send(:nick, @sentnick)
     send(:user, @config.username, mymode.to_s, '*', ":#{@config.realname}")
-    update_unit_title
+    update_client_title
   end
   
   def ircsocket_on_disconnect
@@ -1089,7 +1089,7 @@ class IRCUnit < NSObject
   def need_print_console?(channel)
     channel = nil if channel && channel.is_a?(String)
     channel ||= self
-    return false if !channel.unit? && !channel.config.console
+    return false if !channel.client? && !channel.config.console
     channel != @world.selected || !channel.log.viewing_bottom?
   end
   
@@ -1102,7 +1102,7 @@ class IRCUnit < NSObject
     format = preferences.theme.override_nick_format ? preferences.theme.nick_format : @world.view_theme.other.log_nick_format
     s = format.gsub(/%@/) do |i|
       mark = ''
-      if channel && !channel.unit? && channel.channel?
+      if channel && !channel.client? && channel.channel?
         m = channel.find_member(nick)
         mark = m.mark if m
       end
@@ -1135,7 +1135,7 @@ class IRCUnit < NSObject
     if channel && channel.is_a?(String)
       chname = channel
       channel = self
-    elsif channel.nil? || channel.unit?
+    elsif channel.nil? || channel.client?
       chname = nil
     else
       chname = channel.name
@@ -1162,14 +1162,14 @@ class IRCUnit < NSObject
     end
     if !channel
       click = nil
-    elsif channel.unit? || channel.is_a?(String)
-      click = "unit #{self.uid}"
+    elsif channel.client? || channel.is_a?(String)
+      click = "client #{self.uid}"
     else
       click = "channel #{self.uid} #{channel.uid}"
     end
     
     color_num = 0
-    if nick && channel && !channel.unit?
+    if nick && channel && !channel.client?
       m = channel.find_member(nick)
       if m
         color_num = m.color_number
@@ -1216,7 +1216,7 @@ class IRCUnit < NSObject
     click = nil
     
     color_num = 0
-    if nick && channel && !channel.unit?
+    if nick && channel && !channel.client?
       m = channel.find_member(nick)
       if m
         color_num = m.color_number
@@ -1224,7 +1224,7 @@ class IRCUnit < NSObject
     end
     
     line = LogLine.new(time, place, nickstr, text, kind, mtype, nick, click, identified, color_num)
-    if channel && !channel.unit?
+    if channel && !channel.client?
       key = channel.print(line)
     else
       key = @log.print(line, self)
@@ -1362,7 +1362,7 @@ class IRCUnit < NSObject
   
   def receive_init(m)
     return if login?
-    @world.expand_unit(self)
+    @world.expand_client(self)
     @login = true
     @trying_nick = -1
     @pong_timer = PONG_TIME
@@ -1394,7 +1394,7 @@ class IRCUnit < NSObject
         c.add_member(User.new(c.name))
       end
     end
-    update_unit_title
+    update_client_title
     reload_tree
     
     if !@last_selected_channel && !@channels.empty?
@@ -1483,7 +1483,7 @@ class IRCUnit < NSObject
       end
     end
     
-    update_unit_title
+    update_client_title
     reload_tree
     print_system_both(self, 'Disconnected')
     
@@ -1740,7 +1740,7 @@ class IRCUnit < NSObject
     if eq(nick, @mynick)
       # changed mynick
       @mynick = tonick
-      update_unit_title
+      update_client_title
       print_channel(self, :nick, "You are now known as #{tonick}")
     end
     
@@ -1832,7 +1832,7 @@ class IRCUnit < NSObject
       # user mode
       @mymode.update(modestr)
       print_both(self, :mode, "#{nick} has changed mode: #{modestr}")
-      update_unit_title
+      update_client_title
     end
   end
   
@@ -2012,7 +2012,7 @@ class IRCUnit < NSObject
       return if modestr == '+'
       @mymode.clear
       @mymode.update(modestr)
-      update_unit_title
+      update_client_title
       print_both(self, :reply, "Mode: #{modestr}")
     when 290  # RPL_CAPAB ? on freenode
       kind = m[1]

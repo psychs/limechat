@@ -165,7 +165,7 @@ class DccManager < NSObject
     sel = @sender_table.selectedRows
     sel = sel.map {|i| @senders[i]}
     sel.each do |i|
-      u = @world.find_unit_by_id(i.uid)
+      u = @world.find_client_by_id(i.uid)
       unless u && u.myaddress
         i.set_address_error
         next
@@ -220,7 +220,7 @@ class DccManager < NSObject
     c.full_filename = file
     @senders.unshift(c)
     
-    u = @world.find_unit_by_id(uid)
+    u = @world.find_client_by_id(uid)
     unless u && u.myaddress
       c.set_address_error
       return
@@ -231,8 +231,8 @@ class DccManager < NSObject
     show
   end
   
-  def nick_changed(unit, nick, tonick)
-    ary = (@receivers + @senders).select {|i| i.uid == unit.uid && i.peer_nick == nick}
+  def nick_changed(client, nick, tonick)
+    ary = (@receivers + @senders).select {|i| i.uid == client.uid && i.peer_nick == nick}
     return if ary.empty?
     ary.each {|i| i.peer_nick = tonick}
     reload_sender_table
@@ -317,7 +317,7 @@ class DccManager < NSObject
   
   
   def dccsender_on_listen(s)
-    u = @world.find_unit_by_id(s.uid)
+    u = @world.find_client_by_id(s.uid)
     return unless u
     u.send_file(s.peer_nick, s.port, s.filename, s.size)
   end

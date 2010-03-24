@@ -120,7 +120,7 @@ class GrowlController
       end
     elsif /\A(\d+)\z/ =~ context
       uid = $1.to_i
-      u = @owner.find_unit_by_id(uid)
+      u = @owner.find_client_by_id(uid)
       @owner.select(u) if u
     end
   end

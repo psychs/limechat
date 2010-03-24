@@ -14,28 +14,28 @@ end
 
 class IRCWorldConfig
   include AutoOpMatchable
-  attr_accessor :units
+  attr_accessor :clients
   attr_accessor :autoop
   
   def initialize(seed={})
-    @units = []
+    @clients = []
     @autoop = []
     
     return unless seed
     seed.each do |k,v|
-      next if k == :units
+      next if k == :clients || k == :units
       instance_variable_set("@#{k}", v) if v != nil
     end
-    unitary = seed[:units]
-    if unitary
-      unitary.each {|u| @units << IRCUnitConfig.new(u) }
+
+    if ary = seed[:clients] || seed[:units]
+      ary.each {|u| @clients << IRCClientConfig.new(u) }
     end
   end
   
   def to_dic
     h = {}
     instance_variables.each do |v|
-      next if v == '@units'
+      next if v == '@clients'
       h[v[1..-1].to_sym] = instance_variable_get(v)
     end
     h
@@ -43,7 +43,7 @@ class IRCWorldConfig
   
   def to_s
     s = "=World\n"
-    @units.each {|i| s += i.to_s }
+    @clients.each {|i| s += i.to_s }
     s
   end
   
@@ -53,7 +53,7 @@ class IRCWorldConfig
 end
 
 
-class IRCUnitConfig
+class IRCClientConfig
   include AutoOpMatchable
   attr_accessor :name, :host, :port, :password, :nick, :alt_nicks, :username, :realname, :nickPassword
   attr_accessor :ssl, :auto_connect, :encoding, :fallback_encoding
@@ -198,13 +198,13 @@ module ModelTreeItem
       when IRCWorldConfig
         m = WorldTreeItem.alloc.init
         m.config = c
-        m.units = c.units.map do |i|
+        m.clients = c.clients.map do |i|
           i = config_to_item(i)
           i.owner = m
           i
         end
         m
-      when IRCUnitConfig
+      when IRCClientConfig
         m = UnitTreeItem.alloc.init
         m.config = c
         m.channels = c.channels.map do |i|
@@ -224,7 +224,7 @@ module ModelTreeItem
     case m
       when WorldTreeItem
         c = m.config
-        c.units = m.units.map {|i| item_to_config(i)}
+        c.clients = m.clients.map {|i| item_to_config(i)}
         c
       when UnitTreeItem
         c = m.config
@@ -258,7 +258,7 @@ class ModelTreeItemBase < NSObject
 end
 
 class WorldTreeItem < ModelTreeItemBase
-  attr_accessor :units
+  attr_accessor :clients
   
   def name
     'World'

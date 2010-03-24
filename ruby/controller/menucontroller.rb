@@ -38,7 +38,7 @@ class MenuController < NSObject
     not_active = login && !!c && !c.active?
     active_channel = active && c.channel?
     active_chtalk = active && (c.channel? || c.talk?)
-    login_unit_chtalk = login && (!c || c.channel? || c.talk?)
+    login_client_chtalk = login && (!c || c.channel? || c.talk?)
     op = active_channel && c.op?
 
     tag = i.tag
@@ -53,13 +53,13 @@ class MenuController < NSObject
       true
     when 202  # close current panel without confirmation
       sel = @world.selected
-      @key_window && sel && !sel.unit?
+      @key_window && sel && !sel.client?
     when 203  # close window / close current panel
       if @key_window
         true
       else
         sel = @world.selected
-        sel && !sel.unit?
+        sel && !sel.client?
       end
     when 313  # paste
       return false unless NSPasteboard.generalPasteboard.availableTypeFromArray([NSStringPboardType])
@@ -99,7 +99,7 @@ class MenuController < NSObject
       return false if !win || win != @window
       t = win.firstResponder
       return false unless t
-      u = @world.selunit
+      u = @world.selclient
       return false unless u && u.myaddress
       true
     when 333  # paste dialog
@@ -167,15 +167,15 @@ class MenuController < NSObject
 
     # for members
     when 2001,2002  # whois, talk
-      login_unit_chtalk && count_selected_members?(i)
+      login_client_chtalk && count_selected_members?(i)
     when 2003,2004  # give op, deop
       op && count_selected_members?(i)
     when 2011  # dcc send file
-      login_unit_chtalk && count_selected_members?(i) && !!u.myaddress
+      login_client_chtalk && count_selected_members?(i) && !!u.myaddress
     when 2021  # register to auto op
       count_selected_members?(i)
     when 2101..2105  # ctcp
-      login_unit_chtalk && count_selected_members?(i)
+      login_client_chtalk && count_selected_members?(i)
     when 2031  # kick
       op && count_selected_members?(i)
     when 2032,2033  # ban, kick & ban
@@ -347,7 +347,7 @@ class MenuController < NSObject
     if @key_window
       # for the main window
       sel = @world.selected
-      if sel && !sel.unit?
+      if sel && !sel.client?
         if sel.channel? && sel.active?
           return unless NSRunAlertPanel('LimeChat', %|Do you want to close "#{sel.name}" ?|, 'Close', 'Cancel', nil) == NSAlertDefaultReturn
         end
@@ -363,7 +363,7 @@ class MenuController < NSObject
 
   def onCloseCurrentPanel(sender)
     sel = @world.selected
-    if sel && !sel.unit?
+    if sel && !sel.client?
       @world.destroy_channel(sel)
       @world.save
     end
@@ -381,9 +381,9 @@ class MenuController < NSObject
       return unless s
       s = s.to_s
       sel = @world.selected
-      if sel && !sel.unit? && /(\r\n|\r|\n)[^\r\n]/ =~ s
+      if sel && !sel.client? && /(\r\n|\r|\n)[^\r\n]/ =~ s
         # multi line
-        start_paste_dialog(sel.unit.mynick, sel.unit.uid, sel.uid, s)
+        start_paste_dialog(sel.client.mynick, sel.client.uid, sel.uid, s)
       else
         # single line
         @world.select_text unless NSTextView === t
@@ -452,7 +452,7 @@ class MenuController < NSObject
     return unless sel
     s = @text.stringValue
     @text.setStringValue('')
-    start_paste_dialog(sel.unit.mynick, sel.unit.uid, sel.uid, s, :edit)
+    start_paste_dialog(sel.client.mynick, sel.client.uid, sel.uid, s, :edit)
   end
 
   def onUseSelectionForFind(sender)
@@ -485,7 +485,7 @@ class MenuController < NSObject
     return if !win || win != @window
     t = win.firstResponder
     return unless t
-    u = @world.selunit
+    u = @world.selclient
     return unless u && u.myaddress
     @world.select_text unless NSTextView === t
     e = win.fieldEditor_forObject(false, @text)
@@ -566,26 +566,26 @@ class MenuController < NSObject
 
 
   def onConnect(sender)
-    u = @world.selunit
+    u = @world.selclient
     return unless u
     u.connect
   end
 
   def onDisconnect(sender)
-    u = @world.selunit
+    u = @world.selclient
     return unless u
     u.quit
   end
 
   def onCancelReconnecting(sender)
-    u = @world.selunit
+    u = @world.selclient
     return unless u
     u.cancel_reconnect
   end
 
 
   def onNick(sender)
-    u = @world.selunit
+    u = @world.selclient
     return unless u
     return if @nick_sheet
     @nick_sheet = NickSheet.alloc.init
@@ -597,7 +597,7 @@ class MenuController < NSObject
 
   def nickSheet_onOk(sender, nick)
     @nick_sheet = nil
-    u = @world.find_unit_by_id(sender.uid)
+    u = @world.find_client_by_id(sender.uid)
     return unless u
     u.change_nick(nick)
   end
@@ -607,15 +607,15 @@ class MenuController < NSObject
   end
 
   def onChannelList(sender)
-    u = @world.selunit
+    u = @world.selclient
     return unless u
     u.create_channel_list_dialog
   end
 
 
   def onAddServer(sender)
-    u = @world.selunit
-    config = u ? u.config.dup : IRCUnitConfig.new
+    u = @world.selclient
+    config = u ? u.config.dup : IRCClientConfig.new
     config.name = ''
     config.channels = []
     d = ServerDialog.alloc.init
@@ -631,35 +631,35 @@ class MenuController < NSObject
   end
 
   def newServerDialog_onOk(sender, config)
-    @world.create_unit(config)
+    @world.create_client(config)
     @world.save
   end
 
 
   def onCopyServer(sender)
-    u = @world.selunit
+    u = @world.selclient
     return unless u
     config = u.config.dup
     config.channels = []
-    config.name << '_' while @world.find_unit(config.name)
+    config.name << '_' while @world.find_client(config.name)
     channels = u.channels.select {|c| c.channel? }
     channels.each {|c| config.channels << c.config }
-    n = @world.create_unit(config)
+    n = @world.create_client(config)
     @tree.expandItem(n)
     @world.save
   end
 
   def onDeleteServer(sender)
-    u = @world.selunit
+    u = @world.selclient
     return unless u && !u.connected?
     return unless NSRunAlertPanel('LimeChat', %|Do you want to delete "#{u.name}" ?|, 'Delete', 'Cancel', nil) == NSAlertDefaultReturn
-    @world.destroy_unit(u)
+    @world.destroy_client(u)
     @world.save
   end
 
 
   def onServerProperties(sender)
-    u = @world.selunit
+    u = @world.selclient
     return unless u
     if u.property_dialog
       u.property_dialog.show
@@ -673,13 +673,13 @@ class MenuController < NSObject
   end
 
   def serverDialog_onClose(sender)
-    u = @world.find_unit_by_id(sender.uid)
+    u = @world.find_client_by_id(sender.uid)
     return unless u
     u.property_dialog = nil
   end
 
   def serverDialog_onOk(sender, config)
-    u = @world.find_unit_by_id(sender.uid)
+    u = @world.find_client_by_id(sender.uid)
     return unless u
     u.update_config(config)
     @world.reload_tree
@@ -688,7 +688,7 @@ class MenuController < NSObject
 
 
   def onServerAutoOp(sender)
-    u = @world.selunit
+    u = @world.selclient
     return unless u
     onAutoOp(sender)
     @autoop_dialog.select_item(u.uid)
@@ -780,11 +780,11 @@ class MenuController < NSObject
   end
 
   def newChannelDialog_onOk(sender, config)
-    u = @world.find_unit_by_id(sender.uid)
+    u = @world.find_client_by_id(sender.uid)
     return unless u
     @world.create_channel(u, config)
     @world.save
-    @world.expand_unit(u)
+    @world.expand_client(u)
   end
 
 
@@ -839,7 +839,7 @@ class MenuController < NSObject
 
 
   def whois_selected_members(sender, deselect)
-    u = @world.selunit
+    u = @world.selclient
     return unless u
     selected_members(sender).each {|m| u.send_whois(m.nick) }
     deselect_members(sender) if deselect
@@ -862,7 +862,7 @@ class MenuController < NSObject
   end
 
   def onMemberTalk(sender)
-    u = @world.selunit
+    u = @world.selclient
     return unless u
     selected_members(sender).each do |m|
       c = u.find_channel(m.nick)
@@ -930,7 +930,7 @@ class MenuController < NSObject
 
   def onMemberSendFile(sender)
     @send.cancel(nil) if @send
-    u = @world.selunit
+    u = @world.selclient
     return unless u
     @send_targets = selected_members(sender)
     return unless @send_targets && !@send_targets.empty?
@@ -958,7 +958,7 @@ class MenuController < NSObject
   end
 
   def send_ctcp_query(sender, cmd, param=nil)
-    u = @world.selunit
+    u = @world.selclient
     return unless u && u.login?
     selected_members(sender).each do |m|
       u.send_ctcp_query(m.nick, cmd, param)
@@ -989,7 +989,7 @@ class MenuController < NSObject
   end
 
   def onMemberAutoOp(sender)
-    u = @world.selunit
+    u = @world.selclient
     return unless u && u.login?
     members = selected_members(sender)
     return if members.empty?

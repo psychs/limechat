@@ -134,18 +134,18 @@ class ServerDialog < NSObject
   def onProxyComboChanged(sender)
     sel = @proxyCombo.selectedItem.tag.to_i
     case sel
-    when IRCUnitConfig::PROXY_NONE,IRCUnitConfig::PROXY_SOCKS_SYSTEM
+    when IRCClientConfig::PROXY_NONE,IRCClientConfig::PROXY_SOCKS_SYSTEM
       @proxy_hostText.setEnabled(false)
       @proxy_portText.setEnabled(false)
       @proxy_userText.setEnabled(false)
       @proxy_passwordText.setEnabled(false)
-    when IRCUnitConfig::PROXY_SOCKS4,IRCUnitConfig::PROXY_SOCKS5
+    when IRCClientConfig::PROXY_SOCKS4,IRCClientConfig::PROXY_SOCKS5
       @proxy_hostText.setEnabled(true)
       @proxy_portText.setEnabled(true)
       @proxy_userText.setEnabled(true)
       @proxy_passwordText.setEnabled(true)
     end
-    @sslCheck.setEnabled(sel == IRCUnitConfig::PROXY_NONE)
+    @sslCheck.setEnabled(sel == IRCClientConfig::PROXY_NONE)
   end
   
   def update_connection_page

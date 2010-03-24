@@ -100,7 +100,7 @@
 		78BF64AC0C2885E2004451B2 /* channelmode.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78BF64A40C2885E2004451B2 /* channelmode.rb */; };
 		78BF64AD0C2885E2004451B2 /* config.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78BF64A50C2885E2004451B2 /* config.rb */; };
 		78BF64AE0C2885E2004451B2 /* ircmessage.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78BF64A60C2885E2004451B2 /* ircmessage.rb */; };
-		78BF64AF0C2885E2004451B2 /* unit.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78BF64A70C2885E2004451B2 /* unit.rb */; };
+		78BF64AF0C2885E2004451B2 /* client.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78BF64A70C2885E2004451B2 /* client.rb */; };
 		78BF64B00C2885E2004451B2 /* user.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78BF64A80C2885E2004451B2 /* user.rb */; };
 		78BF64B10C2885E2004451B2 /* usermode.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78BF64A90C2885E2004451B2 /* usermode.rb */; };
 		78BF64B20C2885E2004451B2 /* world.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78BF64AA0C2885E2004451B2 /* world.rb */; };
@@ -252,7 +252,7 @@
 		78BF64A40C2885E2004451B2 /* channelmode.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = channelmode.rb; sourceTree = "<group>"; };
 		78BF64A50C2885E2004451B2 /* config.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = config.rb; sourceTree = "<group>"; };
 		78BF64A60C2885E2004451B2 /* ircmessage.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = ircmessage.rb; sourceTree = "<group>"; };
-		78BF64A70C2885E2004451B2 /* unit.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = unit.rb; sourceTree = "<group>"; };
+		78BF64A70C2885E2004451B2 /* client.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = client.rb; sourceTree = "<group>"; };
 		78BF64A80C2885E2004451B2 /* user.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = user.rb; sourceTree = "<group>"; };
 		78BF64A90C2885E2004451B2 /* usermode.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = usermode.rb; sourceTree = "<group>"; };
 		78BF64AA0C2885E2004451B2 /* world.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = world.rb; sourceTree = "<group>"; };
@@ -540,7 +540,7 @@
 				78BF64A40C2885E2004451B2 /* channelmode.rb */,
 				78BF64A50C2885E2004451B2 /* config.rb */,
 				78BF64A60C2885E2004451B2 /* ircmessage.rb */,
-				78BF64A70C2885E2004451B2 /* unit.rb */,
+				78BF64A70C2885E2004451B2 /* client.rb */,
 				78BF64A80C2885E2004451B2 /* user.rb */,
 				78BF64A90C2885E2004451B2 /* usermode.rb */,
 				78BF64AA0C2885E2004451B2 /* world.rb */,
@@ -637,7 +637,7 @@
 				78BF64AC0C2885E2004451B2 /* channelmode.rb in Resources */,
 				78BF64AD0C2885E2004451B2 /* config.rb in Resources */,
 				78BF64AE0C2885E2004451B2 /* ircmessage.rb in Resources */,
-				78BF64AF0C2885E2004451B2 /* unit.rb in Resources */,
+				78BF64AF0C2885E2004451B2 /* client.rb in Resources */,
 				78BF64B00C2885E2004451B2 /* user.rb in Resources */,
 				78BF64B10C2885E2004451B2 /* usermode.rb in Resources */,
 				78BF64B20C2885E2004451B2 /* world.rb in Resources */,
