@@ -352,21 +352,6 @@ class AppController < NSObject
   private
 
   def prelude
-    # migrate Theme to Themes
-    olddir = Pathname.new('~/Library/LimeChat/Theme').expand_path
-    newdir = Pathname.new('~/Library/LimeChat/Themes').expand_path
-    if olddir.directory? && !newdir.exist?
-      FileUtils.mv(olddir.to_s, newdir.to_s) rescue nil
-    end
-
-    # migrate ~/Library to ~/Library/Application Support
-    olddir = Pathname.new('~/Library/LimeChat/Themes').expand_path
-    newdir = Pathname.new('~/Library/Application Support/LimeChat/Themes').expand_path
-    if olddir.directory? && !newdir.exist?
-      FileUtils.mkpath(Pathname.new('~/Library/Application Support/LimeChat').expand_path.to_s) rescue nil
-      FileUtils.mv(olddir.to_s, newdir.to_s) rescue nil
-    end
-
     # migrate NSUserDefaults keys
     # For now add both the nested hashes and all the key-value pairs in the root
     # with a key which indicates in which section they belong.

@@ -11,7 +11,6 @@
 		51C39169103A18A9009DEFBF /* cocoa_gist.rb in Resources */ = {isa = PBXBuildFile; fileRef = 51C39168103A18A9009DEFBF /* cocoa_gist.rb */; };
 		51F0A51E0EBCF70A00B2C878 /* controls_with_disabled_state.rb in Resources */ = {isa = PBXBuildFile; fileRef = 51F0A51D0EBCF70A00B2C878 /* controls_with_disabled_state.rb */; };
 		7801DD2E0D1AF75F00D8691D /* isupportinfo.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7801DD2D0D1AF75F00D8691D /* isupportinfo.rb */; };
-		7805EE590D11FDCA000A9B55 /* pasternakclient.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7805EE580D11FDCA000A9B55 /* pasternakclient.rb */; };
 		780CCA0E0D8A294000E4BA77 /* keyeventhandler.rb in Resources */ = {isa = PBXBuildFile; fileRef = 780CCA0D0D8A294000E4BA77 /* keyeventhandler.rb */; };
 		780D09F00C2F2C20007C0F4F /* splitter.rb in Resources */ = {isa = PBXBuildFile; fileRef = 780D09EF0C2F2C20007C0F4F /* splitter.rb */; };
 		7816C5BD0E474F6000B395DD /* HotKeyManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7816C5BC0E474F6000B395DD /* HotKeyManager.m */; };
@@ -156,7 +155,6 @@
 		51F0A51D0EBCF70A00B2C878 /* controls_with_disabled_state.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; name = controls_with_disabled_state.rb; path = ruby/view/controls_with_disabled_state.rb; sourceTree = SOURCE_ROOT; };
 		7801DD2D0D1AF75F00D8691D /* isupportinfo.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = isupportinfo.rb; sourceTree = "<group>"; };
 		780253C20C09525900C170D4 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
-		7805EE580D11FDCA000A9B55 /* pasternakclient.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = pasternakclient.rb; sourceTree = "<group>"; };
 		780CCA0D0D8A294000E4BA77 /* keyeventhandler.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = keyeventhandler.rb; sourceTree = "<group>"; };
 		780D09EF0C2F2C20007C0F4F /* splitter.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = splitter.rb; sourceTree = "<group>"; };
 		7816C5BB0E474F6000B395DD /* HotKeyManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HotKeyManager.h; path = objc/HotKeyManager.h; sourceTree = "<group>"; };
@@ -429,7 +427,6 @@
 			children = (
 				780CCA0D0D8A294000E4BA77 /* keyeventhandler.rb */,
 				787817C70D860ED30049CF95 /* unicodeutil.rb */,
-				7805EE580D11FDCA000A9B55 /* pasternakclient.rb */,
 				782647CB0CFE86BB0052E598 /* pastieclient.rb */,
 				78208C190C9D97CD004472E9 /* cocoasheet.rb */,
 				7834E1920C69B5AD003C5D65 /* wildcard.rb */,
@@ -668,7 +665,6 @@
 				782647CC0CFE86BB0052E598 /* pastieclient.rb in Resources */,
 				78B2DF210D0417160092EBDA /* application.icns in Resources */,
 				7896BFE50D0C5E850069453A /* viewtheme.rb in Resources */,
-				7805EE590D11FDCA000A9B55 /* pasternakclient.rb in Resources */,
 				7801DD2E0D1AF75F00D8691D /* isupportinfo.rb in Resources */,
 				783952320D261EEE00382565 /* pluginmanager.rb in Resources */,
 				783952350D261F2500382565 /* plugin.rb in Resources */,

@@ -458,20 +458,4 @@ module OSX
       NSOtherMouseDragged => 'NSOtherMouseDragged',
     }
   end
-  
-  # for compatilibity
-  if RUBYCOCOA_VERSION < '0.13.0'
-    class NSPoint
-      def dup; NSPoint.new(x, y); end
-    end
-    class NSSize
-      def dup; NSSize.new(width, height); end
-    end
-    class NSRect
-      def dup; NSRect.new(origin, size); end
-    end
-    class NSRange
-      def dup; NSRange.new(location, length); end
-    end
-  end
 end
