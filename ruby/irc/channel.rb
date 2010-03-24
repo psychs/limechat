@@ -2,7 +2,7 @@
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
 class IRCChannel < NSObject
-  attr_accessor :unit, :uid, :topic, :names_init, :who_init, :log
+  attr_accessor :client, :uid, :topic, :names_init, :who_init, :log
   attr_reader :config, :members, :mode
   attr_writer :op
   attr_accessor :keyword, :unread, :newtalk
@@ -30,7 +30,7 @@ class IRCChannel < NSObject
   
   def setup(seed)
     @config = seed.dup
-    @mode.info = @unit.isupport.mode
+    @mode.info = @client.isupport.mode
   end
   
   def update_config(seed)
@@ -64,7 +64,7 @@ class IRCChannel < NSObject
     @config.to_dic
   end
   
-  def unit?
+  def client?
     false
   end
   
@@ -236,8 +236,8 @@ class IRCChannel < NSObject
   end
   
   def reload_members
-    if @unit.world.selected == self
-      @unit.world.member_list.reloadData
+    if @client.world.selected == self
+      @client.world.member_list.reloadData
     end
   end
   
@@ -265,9 +265,9 @@ class IRCChannel < NSObject
   end
   
   def compare_members(a, b)
-    if unit.mynick == a.nick
+    if client.mynick == a.nick
       -1
-    elsif unit.mynick == b.nick
+    elsif client.mynick == b.nick
       1
     elsif a.q != b.q
       a.q ? -1 : 1
@@ -293,7 +293,7 @@ class IRCChannel < NSObject
   end
   
   def check_autoop(nick, mask)
-    if @config.match_autoop(mask) || @unit.config.match_autoop(mask) || @unit.world.config.match_autoop(mask)
+    if @config.match_autoop(mask) || @client.config.match_autoop(mask) || @client.world.config.match_autoop(mask)
       add_to_op_queue(nick)
     end
   end
@@ -321,13 +321,13 @@ class IRCChannel < NSObject
   end
   
   def print(line)
-    result = @log.print(line, @unit)
+    result = @log.print(line, @client)
     
     # open log file
     unless @terminating
       if preferences.general.log_transcript
         unless @logfile
-          @logfile = FileLogger.new(@unit, self)
+          @logfile = FileLogger.new(@client, self)
         end
         nickstr = line.nick ? "#{line.nick_info}: " : ""
         s = "#{line.time}#{nickstr}#{line.body}"
@@ -376,14 +376,14 @@ class IRCChannel < NSObject
   def on_timer
     if active?
       @op_wait -= 1 if @op_wait > 0
-      if @unit.ready_to_send? && @op_wait == 0 && @op_queue.size > 0
-        max = @unit.isupport.modes_count
+      if @client.ready_to_send? && @op_wait == 0 && @op_queue.size > 0
+        max = @client.isupport.modes_count
         ary = @op_queue[0...max]
         @op_queue[0...max] = nil
         ary = ary.select {|i| m = find_member(i); m && !m.op? }
         unless ary.empty?
           @op_wait = ary.size * Penalty::MODE_OPT + Penalty::MODE_BASE
-          @unit.change_op(self, ary, :o, true)
+          @client.change_op(self, ary, :o, true)
         end
       end
     end
@@ -407,7 +407,7 @@ class IRCChannel < NSObject
   private
   
   def update_channel_title
-    @unit.update_channel_title(self)
+    @client.update_channel_title(self)
   end
   
   def close_logfile

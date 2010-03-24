@@ -125,7 +125,7 @@ class AppController < NSObject
 
     start_timer
 
-    if @world.units.empty?
+    if @world.clients.empty?
       # start initial setting
       @welcome = WelcomeDialog.alloc.init
       @welcome.delegate = self
@@ -234,8 +234,8 @@ class AppController < NSObject
     return false unless s
     s = s.to_s
     sel = @world.selected
-    if sel && !sel.unit? && /(\r\n|\r|\n)[^\r\n]/ =~ s
-      @menu.start_paste_dialog(sel.unit.mynick, sel.unit.uid, sel.uid, s)
+    if sel && !sel.client? && /(\r\n|\r|\n)[^\r\n]/ =~ s
+      @menu.start_paste_dialog(sel.client.mynick, sel.client.uid, sel.uid, s)
       true
     else
       false
@@ -261,7 +261,7 @@ class AppController < NSObject
         c[:encoding] = NSUTF8StringEncoding
       end
     end
-    u = @world.create_unit(IRCUnitConfig.new(c))
+    u = @world.create_client(IRCClientConfig.new(c))
     @world.save
     u.connect if u.config.auto_connect
   end
@@ -665,7 +665,7 @@ class AppController < NSObject
     handler(:space, :alt) { move(:down, :unread); true }
     handler(:space, :alt, :shift) { move(:up, :unread); true }
     handler('0'..'9', :cmd) {|n| @world.select_channel_at(n.to_s.to_i); true }
-    handler('0'..'9', :cmd, :ctrl) {|n| n = n.to_s.to_i; @world.select_unit_at(n == 0 ? 9 : n-1); true }
+    handler('0'..'9', :cmd, :ctrl) {|n| n = n.to_s.to_i; @world.select_client_at(n == 0 ? 9 : n-1); true }
 
     input_handler(:up) { history_up; true }
     input_handler(:up, :alt) { history_up; true }
@@ -757,7 +757,7 @@ class AppController < NSObject
         if i
           case target
           when :active
-            if !i.unit? && i.active?
+            if !i.client? && i.active?
               @world.select(i)
               break
             end
@@ -776,11 +776,11 @@ class AppController < NSObject
     when :left,:right
       sel = @world.selected
       return false unless sel
-      unit = sel.unit
-      n = @world.units.index(unit)
+      client = sel.client
+      n = @world.clients.index(client)
       return false unless n
       start = n
-      size = @world.units.size
+      size = @world.clients.size
       loop do
         if direction == :left
           n -= 1
@@ -789,19 +789,19 @@ class AppController < NSObject
           n += 1
           n = 0 if n >= size
         end
-        unit = @world.units[n]
-        if unit
+        client = @world.clients[n]
+        if client
           case target
           when :active
-            if unit.login?
-              t = unit.last_selected_channel
-              t = unit unless t
+            if client.login?
+              t = client.last_selected_channel
+              t = client unless t
               @world.select(t)
               break
             end
           else
-            t = unit.last_selected_channel
-            t = unit unless t
+            t = client.last_selected_channel
+            t = client unless t
             @world.select(t)
             break
           end

@@ -6,8 +6,8 @@ require 'utility'
 
 class FileLogger
   
-  def initialize(unit, channel)
-    @unit = unit
+  def initialize(client, channel)
+    @client = client
     @channel = channel
   end
   
@@ -50,7 +50,7 @@ class FileLogger
   
   def build_filename
     base = Pathname.new(preferences.general.transcript_folder).expand_path
-    u = @unit.name.safe_filename
+    u = @client.name.safe_filename
     date = Time.now.strftime('%Y-%m-%d')
     pre = ''
     if !@channel

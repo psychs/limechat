@@ -27,7 +27,7 @@ end
 
 class LogController < NSObject
   attr_accessor :world
-  attr_writer :unit, :channel, :menu, :url_menu, :addr_menu, :chan_menu, :member_menu, :keyword, :theme, :override_font
+  attr_writer :client, :channel, :menu, :url_menu, :addr_menu, :chan_menu, :member_menu, :keyword, :theme, :override_font
   attr_reader :view
 
   def initialize
@@ -124,11 +124,11 @@ class LogController < NSObject
     nil
   end
 
-  def print(line, unit, use_keyword=true)
-    body, key = build_body(line, unit, use_keyword)
+  def print(line, client, use_keyword=true)
+    body, key = build_body(line, client, use_keyword)
 
     unless @loaded
-      @lines << [line, unit, use_keyword]
+      @lines << [line, client, use_keyword]
       return key
     end
 
@@ -405,7 +405,7 @@ class LogController < NSObject
     p $!
   end
 
-  def build_body(line, unit, use_keyword)
+  def build_body(line, client, use_keyword)
     if use_keyword
       case line.line_type
       when :privmsg,:action
@@ -418,8 +418,8 @@ class LogController < NSObject
     if use_keyword
       dislike = @keyword.dislike_words
       like = @keyword.words
-      if unit && @keyword.current_nick && !unit.mynick.empty?
-        like += [unit.mynick]
+      if client && @keyword.current_nick && !client.mynick.empty?
+        like += [client.mynick]
       end
     else
       like = dislike = nil
