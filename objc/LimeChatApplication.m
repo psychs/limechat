@@ -9,6 +9,15 @@
 
 @implementation LimeChatApplication
 
+- (id)init
+{
+	if (self = [super init]) {
+		// migrate from the old .plist
+		CFPreferencesAddSuitePreferencesToApp(kCFPreferencesCurrentApplication, CFSTR("LimeChat"));
+	}
+	return self;
+}
+
 - (void)dealloc
 {
 	[hotkey release];
