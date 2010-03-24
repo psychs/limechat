@@ -13,7 +13,7 @@ DOC_PATH = ROOT_PATH + 'doc'
 PACKAGES_PATH = ROOT_PATH + 'Packages'
 APPCAST_TEMPLATE_PATH = ROOT_PATH + 'etc/appcast_template.rxml'
 WEB_PATH = ROOT_PATH + 'web'
-APPCAST_PATH = WEB_PATH + 'limechat_appcast.xml'
+APPCAST_PATH = PACKAGES_PATH + 'appcast.xml'
 TMP_PATH = Pathname.new("/tmp/#{APP_SHORT_NAME}_build_image")
 
 
@@ -24,56 +24,21 @@ task :clean do |t|
 end
 
 task :build do |t|
-  build('10.5')
-end
-
-task :package => :package_app do |t|
-end
-
-task :package_app => :clean do |t|
-  sdk = '10.5'
-  build(sdk)
-  package
-end
-
-task :package_source do |t|
-  package_source
-end
-
-task :appcast do |t|
-  package_fname = "#{APP_SHORT_NAME}_#{app_version}.tbz"
-  package_path = PACKAGES_PATH + package_fname
-  stat = File.stat(package_path)
-  
-  version = app_version
-  fsize = stat.size
-  ftime = stat.mtime.rfc2822
-  updates = parse_commit_log
-  
-  APPCAST_PATH.rmtree
-  e = ERB.new(File.open(APPCAST_TEMPLATE_PATH).read, nil, '-')
-  s = e.result(binding)
-  File.open(APPCAST_PATH, 'w') do |f|
-    f.write(s)
-  end
-  
-  sh "mate #{WEB_PATH}"
-end
-
-Rake::TestTask.new do |t|
-  t.test_files = FileList['test/**/*_test.rb']
-end
-
-
-def build(sdk)
+  sdk = "10.5"
   sh "xcodebuild -project #{APP_SHORT_NAME}.xcodeproj -target #{APP_SHORT_NAME} -configuration Release -sdk macosx#{sdk} build"
 end
 
-def embed_framework(sdk)
-  sh %Q|/usr/bin/ruby -r etc/package_builder -e "PackageBuilder.build('#{APP_BUILD_PATH}', '#{sdk}')"|
+task :install => [:clean, :build] do |t|
+  sh "killall #{APP_SHORT_NAME}" rescue nil
+  sh "rm -rf /Applications/#{APP_NAME}"
+  sh "sudo mv #{BUILT_APP_PATH} /Applications/"
+  sh "open /Applications/#{APP_NAME}"
 end
 
-def package
+task :package => [:clean, :build, :package] do |t|
+end
+
+task :package_app do |t|
   PACKAGES_PATH.mkpath
   package_path = PACKAGES_PATH + "#{APP_SHORT_NAME}_#{app_version}.tbz"
   package_path.rmtree
@@ -92,33 +57,29 @@ def package
   TMP_PATH.rmtree
 end
 
-def package_source
-  source_package_path = PACKAGES_PATH + "#{APP_SHORT_NAME}_#{app_version}_src.tbz"
-  source_package_path.rmtree
-  TMP_PATH.rmtree
+task :appcast do |t|
+  package_fname = "#{APP_SHORT_NAME}_#{app_version}.tbz"
+  package_path = PACKAGES_PATH + package_fname
+  stat = File.stat(package_path)
   
-  ROOT_PATH.cptree(TMP_PATH)
+  version = app_version
+  fsize = stat.size
+  ftime = stat.mtime.rfc2822
+  updates = parse_commit_log
+  dsa_signature = `ruby Frameworks/Sparkle/SigningTools/sign_update.rb #{package_path} etc/dsa_priv.pem`.chomp
   
-  rmglob(TMP_PATH + 'build')
-  rmglob(TMP_PATH + 'etc')
-  rmglob(TMP_PATH + 'Packages')
-  rmglob(TMP_PATH + 'script')
-  rmglob(TMP_PATH + 'web')
-  rmglob(TMP_PATH + '*.tmproj')
-  rmglob(TMP_PATH + 'MRLimeChat.xcodeproj')
-  rmglob(TMP_PATH + 'LimeChat.xcodeproj/*.mode1*')
-  rmglob(TMP_PATH + 'LimeChat.xcodeproj/*.pbxuser')
-  rmglob(TMP_PATH + '**/*.tm_build_errors')
-  rmglob(TMP_PATH + '**/.gitignore')
-  rmglob(TMP_PATH + '**/.DS_Store')
-  rmglob(TMP_PATH + '**/*~.nib')
-  rmglob(TMP_PATH + '**/._*')
-  
-  Dir.chdir(TMP_PATH) do
-    sh "tar jcf #{source_package_path} *"
+  APPCAST_PATH.rmtree
+  e = ERB.new(File.open(APPCAST_TEMPLATE_PATH).read, nil, '-')
+  s = e.result(binding)
+  File.open(APPCAST_PATH, 'w') do |f|
+    f.write(s)
   end
   
-  TMP_PATH.rmtree
+  sh "mate #{WEB_PATH}"
+end
+
+Rake::TestTask.new do |t|
+  t.test_files = FileList['test/**/*_test.rb']
 end
 
 
