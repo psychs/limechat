@@ -92,7 +92,6 @@ class AppController < NSObject
     @world.dcc = @dcc
 
     @history = InputHistory.new
-    @gc_count = 0
 
     register_key_handlers
 
@@ -300,7 +299,6 @@ class AppController < NSObject
 
   def textEntered(sender)
     sendText(:privmsg)
-    @gc_count = 0
   end
 
   def sendText(cmd)
@@ -337,16 +335,9 @@ class AppController < NSObject
     @timer = nil
   end
 
-  GC_TIME = 600
-
   def timer_onTimer(sender)
     @world.on_timer
     @menu.on_timer
-    @gc_count += 1
-    if @gc_count >= GC_TIME
-      #GC.start
-      @gc_count = 0
-    end
   end
 
   private
