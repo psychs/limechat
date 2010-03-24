@@ -3,58 +3,71 @@
 
 class KeyEventHandler
   def initialize
-    @handlermap = {}
+    @code_handler_map = {}
+    @str_handler_map = {}
   end
   
   def process_key_event(e)
     return false if e.oc_type != NSKeyDown
     im = NSInputManager.currentInputManager
     return false if im && !im.markedRange.empty?
+    
     m = e.modifierFlags
     key = 0
-    key |= 1 if m & NSControlKeyMask > 0
-    key |= 2 if m & NSAlternateKeyMask > 0
-    key |= 4 if m & NSShiftKeyMask > 0
+    key |= 1 if m & NSShiftKeyMask > 0
+    key |= 2 if m & NSControlKeyMask > 0
+    key |= 4 if m & NSAlternateKeyMask > 0
     key |= 8 if m & NSCommandKeyMask > 0
 
-    map = @handlermap[key]
-    return false unless map
-    k = e.keyCode
-    handler = map[k]
-    return false unless handler
-    handler.call(CODEMAP[k])
+    if map = @code_handler_map[key]
+      k = e.keyCode
+      if handler = map[k]
+        handler.call(CODEMAP[k])
+        return true
+      end
+    end
+    
+    s = e.charactersIgnoringModifiers
+    if s && s.length > 0
+      if map = @str_handler_map[key]
+        k = s[0]
+        if handler = map[k]
+          handler.call(s)
+          return true
+        end
+      end
+    end
+    
+    false
   end
   
   def register_key_handler(keys, *mods, &handler)
     m = 0
     mods.each do |i|
       case i
-      when :ctrl;     m |= 1
-      when :alt,:opt; m |= 2
-      when :shift;    m |= 4
+      when :shift;    m |= 1
+      when :ctrl;     m |= 2
+      when :alt,:opt; m |= 4
       when :cmd;      m |= 8
       end
     end
-    keys = self.class.keynames_to_keycodes(keys)
-    map = @handlermap[m]
-    unless map
-      map = {}
-      @handlermap[m] = map
+    
+    unless code_map = @code_handler_map[m]
+      @code_handler_map[m] = code_map = {}
     end
-    keys.each {|i| map[i] = handler }
-  end
-  
-  def self.mods_to_modifier(mods)
-    m = 0
-    mods.each do |i|
+    unless str_map = @str_handler_map[m]
+      @str_handler_map[m] = str_map = {}
+    end
+    
+    keys = self.class.keynames_to_keycodes(keys)
+    keys.each do |i|
       case i
-      when :ctrl;     m |= NSControlKeyMask
-      when :alt,:opt; m |= NSAlternateKeyMask
-      when :shift;    m |= NSShiftKeyMask
-      when :cmd;      m |= NSCommandKeyMask
+      when Numeric
+        code_map[i] = handler
+      when Symbol
+        str_map[i.to_s[0]] = handler
       end
     end
-    m
   end
   
   def self.keynames_to_keycodes(keys)
@@ -68,13 +81,14 @@ class KeyEventHandler
         result.concat(keynames_to_keycodes(i.to_a))
       when Symbol,String
         i = i.to_sym if String === i
-        codes = NAMEMAP[i]
-        if codes
+        if codes = NAMEMAP[i]
           if Array === codes
             result.concat(codes)
           else
             result << codes
           end
+        else
+          result << i
         end
       end
     end
@@ -84,75 +98,13 @@ class KeyEventHandler
   private
 
   CODEMAP = {
-      0 => :a,
-      1 => :s,
-      2 => :d,
-      3 => :f,
-      4 => :h,
-      5 => :g,
-      6 => :z,
-      7 => :x,
-      8 => :c,
-      9 => :v,
-     11 => :b,
-     12 => :q,
-     13 => :w,
-     14 => :e,
-     15 => :r,
-     16 => :y,
-     17 => :t,
-     18 => :"1",
-     19 => :"2",
-     20 => :"3",
-     21 => :"4",
-     22 => :"6",
-     23 => :"5",
-     24 => :"=",
-     25 => :"9",
-     26 => :"7",
-     27 => :-,
-     28 => :"8",
-     29 => :"0",
-     30 => :"]",
-     31 => :o,
-     32 => :u,
-     33 => :"[",
-     34 => :i,
-     35 => :p,
      36 => :enter,
-     37 => :l,
-     38 => :j,
-     39 => :"'",
-     40 => :k,
-     41 => :";",
-     42 => :"\\",
-     43 => :",",
-     44 => :/,
-     45 => :n,
-     46 => :m,
-     47 => :".",
      48 => :tab,
      49 => :space,
-     50 => :`,
      51 => :backspace,
      53 => :esc,
-     65 => :".",
-     67 => :*,
-     69 => :+,
      71 => :clear,
-     75 => :/,
      76 => :enter,
-     78 => :-,
-     82 => :"0",
-     83 => :"1",
-     84 => :"2",
-     85 => :"3",
-     86 => :"4",
-     87 => :"5",
-     88 => :"6",
-     89 => :"7",
-     91 => :"8",
-     92 => :"9",
      96 => :f5,
      97 => :f6,
      98 => :f7,
@@ -182,55 +134,6 @@ class KeyEventHandler
   }
 
   NAMEMAP = {
-    :"'" => 39,
-    :* => 67,
-    :+ => 69,
-    :"," => 43,
-    :- => [27, 78],
-    :"." => [47, 65],
-    :/ => [44, 75],
-    :";" => 41,
-    :"=" => 24,
-    :"[" => 33,
-    :"\\" => 42,
-    :"]" => 30,
-    :` => 50,
-    :"0" => [29, 82],
-    :"1" => [18, 83],
-    :"2" => [19, 84],
-    :"3" => [20, 85],
-    :"4" => [21, 86],
-    :"5" => [23, 87],
-    :"6" => [22, 88],
-    :"7" => [26, 89],
-    :"8" => [28, 91],
-    :"9" => [25, 92],
-    :a => 0,
-    :b => 11,
-    :c => 8,
-    :d => 2,
-    :e => 14,
-    :f => 3,
-    :g => 5,
-    :h => 4,
-    :i => 34,
-    :j => 38,
-    :k => 40,
-    :l => 37,
-    :m => 46,
-    :n => 45,
-    :o => 31,
-    :p => 35,
-    :q => 12,
-    :r => 15,
-    :s => 1,
-    :t => 17,
-    :u => 32,
-    :v => 9,
-    :w => 13,
-    :x => 7,
-    :y => 16,
-    :z => 6,
     :backspace => 51,
     :clear => 71,
     :delete => 117,
