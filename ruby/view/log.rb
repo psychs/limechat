@@ -59,7 +59,7 @@ class LogController < NSObject
     @view.setFrameLoadDelegate(self)
     @view.setUIDelegate(@policy)
     @view.setPolicyDelegate(@policy)
-    #@view.setResourceLoadDelegate(self)
+    @view.setResourceLoadDelegate(self)
     @view.key_delegate = self
     @view.resize_delegate = self
     @view.setAutoresizingMask(NSViewWidthSizable | NSViewHeightSizable)
@@ -143,8 +143,14 @@ class LogController < NSObject
       s << %| first="#{line.nick_info != @prev_nick_info}"| if line.nick_info
       s << %|>#{h(line.nick)}</span>|
     end
+    
+    kind = line.line_type
+    show_inline_image = @channel &&
+                        (kind == :privmsg || kind == :notice || kind == :action) &&
+                        preferences.general.show_inline_images &&
+                        m = %r!https?://[^\s/,'"`?<>　]+/[^\s'"<>　…]*[^\s.,'"?<>　、，。．…]\.(jpg|jpeg|png|gif)!i.match(body)
 
-    if preferences.general.show_inline_images && m = %r!https?://[^\s/,'"`?<>　]+/[^\s'"<>　…]*[^\s.,'"?<>　、，。．…]\.(jpg|jpeg|png|gif)!i.match(body)
+    if show_inline_image
       url = m[0]
       s << %[<span class="message" type="#{line.line_type}">#{body}
              <br>
@@ -348,6 +354,22 @@ class LogController < NSObject
 
     if @theme.js.content
       @js.evaluateWebScript(@theme.js.content)
+    end
+  end
+  
+  def webView_identifierForInitialRequest_fromDataSource(sender, request, dataSource)
+    case request.URL.scheme.to_s.downcase
+    when 'http','https'
+      save_position
+      self
+    else
+      nil
+    end
+  end
+
+  def webView_resource_didFinishLoadingFromDataSource(sender, identifier, dataSource)
+    if identifier
+      restore_position
     end
   end
 
@@ -578,9 +600,9 @@ class LogController < NSObject
       margin-top: 10px;
       margin-bottom: 15px;
       margin-left: 40px;
-      max-width: 400px;
-      max-height: 300px;
-      -webkit-box-shadow: 5px 5px 2px #888;
+      max-width: 200px;
+      max-height: 150px;
+      -webkit-box-shadow: 2px 2px 2px #888;
     }
     .url { word-break: break-all; }
     .address { text-decoration: underline; word-break: break-all; }
