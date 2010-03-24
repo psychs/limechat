@@ -1031,7 +1031,7 @@ class IRCClient < NSObject
   def ircsocket_on_send(m)
     if m.command != :pong
       m.apply! {|i| to_local_encoding(i) }
-      print_debug(:debug_send, m.to_s)
+      #print_debug(:debug_send, m.to_s)
     end
   end
   
