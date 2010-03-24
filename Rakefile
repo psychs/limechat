@@ -75,7 +75,7 @@ task :appcast do |t|
     f.write(s)
   end
   
-  sh "mate #{WEB_PATH}"
+  sh "mate #{APPCAST_PATH}"
 end
 
 Rake::TestTask.new do |t|
