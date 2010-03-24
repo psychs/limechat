@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+  <rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle">
+  <channel>
+    <title>LimeChat Appcast</title>
+    <link>http://limechat.net/mac/limechat_appcast.xml</link>
+    <description>LimeChat Releases</description>
+    <language>en</language>
+    
+    <item>
+      <title>LimeChat 1.7</title>
+      <description><![CDATA[
+        <html>
+        <body>
+        <style>
+          body {
+            font-size: medium;
+          }
+          h1 {
+            font-size: large;
+          }
+          li {
+            margin: 0.2em 0;
+          }
+        </style>
+        <h1>LimeChat 1.7</h1>
+        <ul>
+          <li>Improved around inline images.</li>
+          <li>Added Go To Mark menu.</li>
+          <li>Fixed a bug, Sparkle was removed unintentionally.</li>
+          <li>Disabled sent command log.</li>
+          <li>Supported Cmd+[ / Cmd+] on non-English keyboards.</li>
+        </ul>
+        </body>
+        </html>
+      ]]></description>
+      <pubDate>Wed, 24 Mar 2010 23:18:32 +0900</pubDate>
+      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/LimeChat_1.7.tbz"
+                  sparkle:version="1.7" length="682283" type="application/octet-stream"
+                  sparkle:dsaSignature="MCwCFDwi80e4sJ4HWSNqR9+Ns2VKSazIAhR+mIWa/3eYpZXG5H31Yi6tM+lAxA=="/>
+    </item>
+    
+  </channel>
+</rss>

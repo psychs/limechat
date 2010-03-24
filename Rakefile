@@ -8,25 +8,30 @@ require 'pp'
 APP_SHORT_NAME = defined?(MACRUBY_VERSION) ? 'MRLimeChat' : 'LimeChat'
 APP_NAME = APP_SHORT_NAME + '.app'
 ROOT_PATH = Pathname.new(__FILE__).dirname
-APP_BUILD_PATH = ROOT_PATH + 'build/Release' + APP_NAME
+RELEASE_BUILD_PATH = ROOT_PATH + 'build/Release' + APP_NAME
 DOC_PATH = ROOT_PATH + 'doc'
 PACKAGES_PATH = ROOT_PATH + 'Packages'
-APPCAST_TEMPLATE_PATH = ROOT_PATH + 'etc/appcast_template.rxml'
 WEB_PATH = ROOT_PATH + 'web'
-APPCAST_PATH = PACKAGES_PATH + 'appcast.xml'
+TEMPLATES_PATH = WEB_PATH + 'templates'
+CHANGELOGS_PATH = WEB_PATH + 'changelogs'
+APPCAST_TEMPLATE_PATH = TEMPLATES_PATH + 'appcast.rxml'
+APPCAST_PATH = WEB_PATH + 'appcast.xml'
 TMP_PATH = Pathname.new("/tmp/#{APP_SHORT_NAME}_build_image")
 
 
 task :default => :build
 
+
 task :clean do |t|
   sh "rm -rf build"
 end
+
 
 task :build do |t|
   sdk = "10.5"
   sh "xcodebuild -project #{APP_SHORT_NAME}.xcodeproj -target #{APP_SHORT_NAME} -configuration Release -sdk macosx#{sdk} build"
 end
+
 
 task :install => [:clean, :build] do |t|
   sh "killall #{APP_SHORT_NAME}" rescue nil
@@ -35,8 +40,10 @@ task :install => [:clean, :build] do |t|
   sh "open /Applications/#{APP_NAME}"
 end
 
+
 task :package => [:clean, :build, :package] do |t|
 end
+
 
 task :package_app do |t|
   PACKAGES_PATH.mkpath
@@ -44,10 +51,9 @@ task :package_app do |t|
   package_path.rmtree
   TMP_PATH.rmtree
   TMP_PATH.mkpath
-  APP_BUILD_PATH.cptree(TMP_PATH)
+  RELEASE_BUILD_PATH.cptree(TMP_PATH)
   
   DOC_PATH.cptree(TMP_PATH)
-  rmglob(TMP_PATH + '**/ChangeLog.txt')
   rmglob(TMP_PATH + '**/.DS_Store')
   
   Dir.chdir(TMP_PATH) do
@@ -56,6 +62,7 @@ task :package_app do |t|
   
   TMP_PATH.rmtree
 end
+
 
 task :appcast do |t|
   package_fname = "#{APP_SHORT_NAME}_#{app_version}.tbz"
@@ -75,8 +82,57 @@ task :appcast do |t|
     f.write(s)
   end
   
-  sh "mate #{APPCAST_PATH}"
+  sh "mate #{WEB_PATH}"
 end
+
+
+task :web do |t|
+  rss_templates = ['rss.rxml', 'rss_ja.rxml']
+  html_templates = ['index.rhtml', 'ja.rhtml']
+  
+  change_log = ''
+  version = ''
+  pubdate = ''
+  
+  s = File.open(APPCAST_PATH).read
+  if m = %r!<ul>.+</ul>!m.match(s)
+    change_log = m[0]
+  end
+  if m = %r!sparkle:version="([^"]+)"!m.match(s)
+    version = m[1]
+  end
+  if m = %r!<pubDate>([^<>]+)</pubDate>!m.match(s)
+    pubdate = m[1]
+  end
+  
+  time = Time.rfc2822(pubdate)
+  date = time.strftime("%Y.%m.%d")
+  
+  rss_templates.each do |fname|
+    template_path = TEMPLATES_PATH + fname
+    out_path = WEB_PATH + fname.gsub('.rxml', '.xml')
+    
+    out_path.rmtree
+    e = ERB.new(File.open(template_path).read, nil, '-')
+    s = e.result(binding)
+    File.open(out_path, 'w') do |f|
+      f.write(s)
+    end
+  end
+  
+  html_templates.each do |fname|
+    template_path = TEMPLATES_PATH + fname
+    out_path = WEB_PATH + fname.gsub('.rhtml', '.html')
+    
+    out_path.rmtree
+    e = ERB.new(File.open(template_path).read, nil, '-')
+    s = e.result(binding)
+    File.open(out_path, 'w') do |f|
+      f.write(s)
+    end
+  end
+end
+
 
 Rake::TestTask.new do |t|
   t.test_files = FileList['test/**/*_test.rb']

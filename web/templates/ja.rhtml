@@ -224,7 +224,7 @@ table#shortcutkeys td
 	<h3>Snow Leopard / Leopard</h3>
 	<div class="section">
 		<ol>
-			<li><a href="http://cloud.github.com/downloads/psychs/limechat/LimeChat_1.7.tbz">LimeChat_1.7.tbz</a> をダウンロードする。</li>
+			<li><a href="http://cloud.github.com/downloads/psychs/limechat/LimeChat_<%= version %>.tbz">LimeChat_<%= version %>.tbz</a> をダウンロードする。</li>
 			<li>ダウンロードした tbz パッケージをダブルクリックして解凍し、LimeChat.app をアプリケーションフォルダにコピーする。</li>
 		</ol>
 	</div>
@@ -337,6 +337,11 @@ table#shortcutkeys td
 		更新履歴は <a href="rss_ja.xml">RSS</a> でも配信しています。
 	</p>
 	<dl>
+	  
+    <dt id="v<%= version %>"><%= version %> (<%= date %>)</dt>
+    <dd>
+	    <%= change_log %>
+    </dd>
 	  
     <dt id="v1.7">1.7 (2010.03.24)</dt>
     <dd>

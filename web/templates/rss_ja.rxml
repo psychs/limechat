@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>LimeChat for Mac</title>
+    <link>http://limechat.net/mac/ja.html</link>
+    <description>LimeChat for Mac 更新情報</description>
+    <language>ja</language>
+
+    <item>
+      <title><%= version %></title>
+      <link>http://limechat.net/mac/ja.html#v<%= version %></link>
+      <pubDate><%= pubdate %></pubDate>
+      <content:encoded><![CDATA[
+  			<%= change_log %>
+      ]]></content:encoded>
+    </item>
+
+  </channel>
+</rss>

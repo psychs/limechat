@@ -7,16 +7,17 @@
     <language>en-us</language>
 
     <item>
-      <title>1.6</title>
-      <link>http://limechat.net/mac/#v1.6</link>
-      <pubDate>Wed, 24 Mar 2010 01:02:35 +0900</pubDate>
+      <title>1.7</title>
+      <link>http://limechat.net/mac/#v1.7</link>
+      <pubDate>Wed, 24 Mar 2010 23:18:32 +0900</pubDate>
       <content:encoded><![CDATA[
   			<ul>
-          <li>Added open browser in background option.</li>
-          <li>Show image links in inline option.</li>
-          <li>Added shortcut keys, Cmd+[ / Cmd+] to move up / down channels.</li>
-          <li>Allow itms: scheme for URLs.</li>
-  			</ul>
+          <li>Improved around inline images.</li>
+          <li>Added Go To Mark menu.</li>
+          <li>Fixed a bug, Sparkle was removed unintentionally.</li>
+          <li>Disabled sent command log.</li>
+          <li>Supported Cmd+[ / Cmd+] on non-English keyboards.</li>
+        </ul>
       ]]></content:encoded>
     </item>
 
