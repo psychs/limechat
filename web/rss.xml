@@ -14,7 +14,7 @@
   			<ul>
           <li>Improved around inline images.</li>
           <li>Added Go To Mark menu.</li>
-          <li>Fixed a bug, Sparkle was not working unintentionally.</li>
+          <li>Fixed a bug, Sparkle didn't work unintentionally.</li>
           <li>Disabled sent command log.</li>
           <li>Supported Cmd+[ / Cmd+] on non-English keyboards.</li>
         </ul>
