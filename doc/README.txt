@@ -9,20 +9,21 @@ Satoshi Nakagawa <psychs@limechat.net>
 
 * Thanks To
 
-Yohei Endo          # application icon
-Atsuhisa Shimazawa  # badges
-Shingo Morita       # badges
+Yohei Endo          # Application icon
+Atsuhisa Shimazawa  # Badges
+Shingo Morita       # Badges
 Dustin Voss         # AsyncSocket
 Eloy Duran          # RubyCocoa developer, a patch for bundling RubyCocoa.framework,
                     # SACrashReporter, GrowlNotifier and refactoring around preferences
+Evan Phoenix        # Inline images support
 Fujimoto Hisa       # RubyCocoa creator
-Keiji Yoshimi       # patch for GrowlNotifier and around hot key
+Keiji Yoshimi       # A patch for GrowlNotifier and around hot key
 Laurent Sansonetti  # RubyCocoa developer, many requests and suggestions
 Josh Goebel         # CocoaSheet, many improvements of code and UIs, Pastie creator
-Jun Morimoto        # bug fixes
-Kevin Ballard       # patches around theme support
-Peter Haza          # a patch for context menu on channel name in logs
-Stefan Rusterholz   # many suggestions and patches
+Jun Morimoto        # Bug fixes
+Kevin Ballard       # Patches around theme support
+Peter Haza          # A patch for context menu on channel name in logs
+Stefan Rusterholz   # Many suggestions and patches
 Takashi Tsugo       # Deep Ocean theme
 
 * License (Ruby's)
