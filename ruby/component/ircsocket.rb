@@ -4,6 +4,9 @@
 require 'timer'
 
 class IRCSocket
+  
+  PENALTY_THREASHOLD = 10
+  
   attr_accessor :delegate, :host, :port, :ssl
   attr_accessor :useSystemSocks, :useSocks, :socks_version, :proxy_host, :proxy_port, :proxy_user, :proxy_password
   
@@ -58,16 +61,16 @@ class IRCSocket
   end
   
   def ready_to_send?
-    !@sending && @penalty == 0 && @sendq.empty?
+    @penalty < PENALTY_THREASHOLD
   end
   
   def timer_onTimer(sender)
-    @penalty -= 1 if @penalty > 0
+    @penalty -= 2 if @penalty > 0
     try_to_send
   end
   
   def tcpclient_on_connect(sender)
-    @timer.start(1)
+    @timer.start(2)
     @sendq = []
     @delegate.ircsocket_on_connect if @delegate
   end
@@ -94,24 +97,18 @@ class IRCSocket
   end
   
   def tcpclient_on_write(sender)
-    @sending = false
     try_to_send
   end
   
-  
   private
   
-  PENALTY_THREASHOLD = 3
-  
   def try_to_send
-    return if @sending
-    return if @penalty >= PENALTY_THREASHOLD
-    return if @sendq.empty?
-    @sending = true
-    m = @sendq.shift
-    m.build
-    @penalty += m.penalty
-    @sock.write(m.to_s)
-    @delegate.ircsocket_on_send(m) if @delegate
+    while @penalty < PENALTY_THREASHOLD && !@sendq.empty?
+      m = @sendq.shift
+      m.build
+      @penalty += m.penalty
+      @sock.write(m.to_s)
+      @delegate.ircsocket_on_send(m) if @delegate
+    end
   end
 end
