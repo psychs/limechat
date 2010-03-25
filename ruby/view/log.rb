@@ -151,7 +151,7 @@ class LogController < NSObject
                         m = %r!https?://[^\s/,'"`?<>　]+/[^\s'"<>　…]*[^\s.,'"?<>　、，。．…]\.(jpg|jpeg|png|gif)!i.match(body)
 
     if show_inline_image
-      url = m[0]
+      url = URI.encode(m[0])
       s << %[<span class="message" type="#{line.line_type}">#{body}
              <br>
              <a href="#{url}"><img src="#{url}" class="inlineimage"/></a>
