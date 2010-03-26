@@ -306,14 +306,15 @@ module LogRenderer
     [effects, body]
   end
 
-  #URL_REGEX = /(?:h?ttps?|ftp):\/\/[-_a-zA-Z\d.!~*':@%]+(?:\/[-_a-zA-Z\d.!~*'%;\/?:@&=+$,#()]*)?/
-  #URL_REGEX = /(?:h?ttps?|ftp):\/\/[-_a-zA-Z\d.!~*':@%]+(?:\/[-_a-zA-Z\d.!~*'%;\/?:@&=+$,#()¡-⿻、-힣-￿]*)?/
-  #URL_REGEX = /(?:h?ttps?|ftp):\/\/[-_a-zA-Z\d.!~*':@%]+(?:\/(?:[-_a-zA-Z\d.!~*'%;\/?:@&=+$,#()]*[-_a-zA-Z\d!~*%\/?:@&=+$#])?)?/
-
-  URL_REGEX = /(?:h?ttps?|ftp|itms):\/\/[^\s\/,'"`?<>　]+(?:\/(?:[^\s'"<>　…]*[^\s.,'"?<>　、，。．…])?)?/i
-	ADDRESS_REGEX = /(?:[a-zA-Z\d](?:[-a-zA-Z\d]*[a-zA-Z\d])?\.)(?:[a-zA-Z\d](?:[-a-zA-Z\d]*[a-zA-Z\d])?\.)+[a-zA-Z]{2,6}|(?:[a-f\d]{0,4}:){7}[a-f\d]{0,4}|(?:\d{1,3}\.){3}[\d]{1,3}/
-	FORBIDDEN_AFTER_ADDRESS_REGEX = /\A[a-zA-Z\d_]\z/
-	CHANNEL_REGEX = /[#&][^\s,]+/
+  URL_DOMAIN = %r![^\s\!"#$&'()*+,/;<=>?\[\\\]^_`{|}　、，。．・…]+!
+  URL_REST = %r![^\s"'`<>　、，。．・…]*[^\s"'.?`<>　、，。．・…]!
+  URL_REGEX = %r!(https?|ftp|itms)://#{URL_DOMAIN}(/(#{URL_REST})?)?!i
+  ADDRESS_DOMAIN = /([a-zA-Z0-9]([-a-zA-Z0-9]*[a-zA-Z0-9])?\.)([a-zA-Z0-9]([-a-zA-Z0-9]*[a-zA-Z0-9])?\.)+[a-zA-Z]{2,6}/
+  IPV6_ADDRESS = /([a-f0-9]{0,4}:){7}[a-f0-9]{0,4}/
+  IPV4_ADDRESS = /([0-9]{1,3}\.){3}[0-9]{1,3}/
+  ADDRESS_REGEX = /#{ADDRESS_DOMAIN}|#{IPV6_ADDRESS}|#{IPV4_ADDRESS}/
+  FORBIDDEN_AFTER_ADDRESS_REGEX = /\A[a-zA-Z0-9_]\z/
+  CHANNEL_REGEX = /[#&][^\s,]+/
 
   def process_urls(body)
     urls = []
@@ -323,7 +324,6 @@ module LogRenderer
       left = $~.begin(0)
       right = $~.end(0)
       url = s[left...right]
-      url = 'h' + url if /^ttp/ =~ url
 
       # deal with parenthesis pairs
       open_count = url.count('(')
