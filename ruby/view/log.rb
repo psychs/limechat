@@ -148,7 +148,7 @@ class LogController < NSObject
     show_inline_image = @channel &&
                         (kind == :privmsg || kind == :notice || kind == :action) &&
                         preferences.general.show_inline_images &&
-                        m = %r!https?://[^\s/,'"`?<>　]+/[^\s'"<>　…]*[^\s.,'"?<>　、，。．…]\.(jpg|jpeg|png|gif)!i.match(body)
+                        m = %r!https?://[a-z0-9.,_\-/:;%$~]+\.(jpg|jpeg|png|gif)!i.match(body)
 
     if show_inline_image
       url = URI.encode(m[0])
