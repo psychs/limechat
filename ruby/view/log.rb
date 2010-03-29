@@ -38,6 +38,7 @@ class LogController < NSObject
     @loaded = false
     @max_lines = 300
     @highlight_line_numbers = []
+    @loading_images = 0
   end
 
   def setup(console, initial_bgcolor)
@@ -272,6 +273,7 @@ class LogController < NSObject
   objc_method :webView_didFinishLoadForFrame, 'v@:@@'
   def webView_didFinishLoadForFrame(sender, frame)
     @loaded = true
+    @loading_images = 0
     setup_scroller
     if @html
       body = @view.mainFrame.DOMDocument.body
@@ -360,7 +362,10 @@ class LogController < NSObject
   def webView_identifierForInitialRequest_fromDataSource(sender, request, dataSource)
     case request.URL.scheme.to_s.downcase
     when 'http','https'
-      save_position
+      if @loading_images == 0
+        save_position
+      end
+      @loading_images += 1
       self
     else
       nil
@@ -369,7 +374,12 @@ class LogController < NSObject
 
   def webView_resource_didFinishLoadingFromDataSource(sender, identifier, dataSource)
     if identifier
-      restore_position
+      if @loading_images > 0
+        @loading_images -= 1
+        if @loading_images == 0
+          restore_position
+        end
+      end
     end
   end
 
