@@ -1,6 +1,7 @@
 build
 Packages
 .DS_Store
+.LSOverride
 *.o
 *.ob
 *.pbxuser
