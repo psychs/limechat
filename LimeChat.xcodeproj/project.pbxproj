@@ -75,6 +75,8 @@
 		78364B36116597D00096F3A9 /* KeyRecorderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 78364B2C116597D00096F3A9 /* KeyRecorderCell.m */; };
 		78364C0A11659CD60096F3A9 /* ThinSplitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78364C0911659CD60096F3A9 /* ThinSplitView.m */; };
 		78364DD01165B8790096F3A9 /* MarkedScroller.m in Sources */ = {isa = PBXBuildFile; fileRef = 78364DCF1165B8790096F3A9 /* MarkedScroller.m */; };
+		78364E3E1165BE460096F3A9 /* InputTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 78364E3D1165BE460096F3A9 /* InputTextField.m */; };
+		78364E431165BE640096F3A9 /* TextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 78364E421165BE640096F3A9 /* TextField.m */; };
 		783952320D261EEE00382565 /* pluginmanager.rb in Resources */ = {isa = PBXBuildFile; fileRef = 783952310D261EEE00382565 /* pluginmanager.rb */; };
 		783952350D261F2500382565 /* plugin.rb in Resources */ = {isa = PBXBuildFile; fileRef = 783952340D261F2500382565 /* plugin.rb */; };
 		783D0B2B0CF45C38002CC2FB /* listdialog.rb in Resources */ = {isa = PBXBuildFile; fileRef = 783D0B2A0CF45C38002CC2FB /* listdialog.rb */; };
@@ -85,7 +87,6 @@
 		784BBE971085BC950080898B /* redstar.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 784BBE931085BC950080898B /* redstar.tiff */; };
 		7870BA490E111BD0004B30B4 /* iconcontroller.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7870BA480E111BD0004B30B4 /* iconcontroller.rb */; };
 		78755D730C2AC0B30073FF42 /* logrenderer.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78755D720C2AC0B30073FF42 /* logrenderer.rb */; };
-		7877E0620C65B84E002F13C7 /* textfield.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7877E0610C65B84E002F13C7 /* textfield.rb */; };
 		787817C80D860ED30049CF95 /* unicodeutil.rb in Resources */ = {isa = PBXBuildFile; fileRef = 787817C70D860ED30049CF95 /* unicodeutil.rb */; };
 		787898250CF38C510045585B /* filelogger.rb in Resources */ = {isa = PBXBuildFile; fileRef = 787898240CF38C510045585B /* filelogger.rb */; };
 		787A36A20C6A392600DDB70D /* fieldeditortextview.rb in Resources */ = {isa = PBXBuildFile; fileRef = 787A36A10C6A392600DDB70D /* fieldeditortextview.rb */; };
@@ -102,7 +103,6 @@
 		78AFBCF50C33E314008A8FCD /* kanasupport.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78AFBCF40C33E314008A8FCD /* kanasupport.rb */; };
 		78B063530C2BD19D00CDD242 /* singlelineformatter.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78B063520C2BD19D00CDD242 /* singlelineformatter.rb */; };
 		78B2DF210D0417160092EBDA /* application.icns in Resources */ = {isa = PBXBuildFile; fileRef = 78B2DF1F0D0417160092EBDA /* application.icns */; };
-		78B418B30E4EF5A60065F111 /* inputtextfield.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78B418B20E4EF5A60065F111 /* inputtextfield.rb */; };
 		78BF64AB0C2885E2004451B2 /* channel.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78BF64A30C2885E2004451B2 /* channel.rb */; };
 		78BF64AC0C2885E2004451B2 /* channelmode.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78BF64A40C2885E2004451B2 /* channelmode.rb */; };
 		78BF64AD0C2885E2004451B2 /* config.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78BF64A50C2885E2004451B2 /* config.rb */; };
@@ -230,6 +230,10 @@
 		78364C0911659CD60096F3A9 /* ThinSplitView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThinSplitView.m; sourceTree = "<group>"; };
 		78364DCE1165B8790096F3A9 /* MarkedScroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarkedScroller.h; sourceTree = "<group>"; };
 		78364DCF1165B8790096F3A9 /* MarkedScroller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MarkedScroller.m; sourceTree = "<group>"; };
+		78364E3C1165BE460096F3A9 /* InputTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputTextField.h; sourceTree = "<group>"; };
+		78364E3D1165BE460096F3A9 /* InputTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InputTextField.m; sourceTree = "<group>"; };
+		78364E411165BE640096F3A9 /* TextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextField.h; sourceTree = "<group>"; };
+		78364E421165BE640096F3A9 /* TextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextField.m; sourceTree = "<group>"; };
 		783952310D261EEE00382565 /* pluginmanager.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = pluginmanager.rb; sourceTree = "<group>"; };
 		783952340D261F2500382565 /* plugin.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = plugin.rb; sourceTree = "<group>"; };
 		783D0B2A0CF45C38002CC2FB /* listdialog.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = listdialog.rb; sourceTree = "<group>"; };
@@ -240,7 +244,6 @@
 		784BBE931085BC950080898B /* redstar.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = redstar.tiff; sourceTree = "<group>"; };
 		7870BA480E111BD0004B30B4 /* iconcontroller.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = iconcontroller.rb; sourceTree = "<group>"; };
 		78755D720C2AC0B30073FF42 /* logrenderer.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = logrenderer.rb; sourceTree = "<group>"; };
-		7877E0610C65B84E002F13C7 /* textfield.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = textfield.rb; sourceTree = "<group>"; };
 		787817C70D860ED30049CF95 /* unicodeutil.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = unicodeutil.rb; sourceTree = "<group>"; };
 		787898240CF38C510045585B /* filelogger.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = filelogger.rb; sourceTree = "<group>"; };
 		787A36A10C6A392600DDB70D /* fieldeditortextview.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = fieldeditortextview.rb; sourceTree = "<group>"; };
@@ -258,7 +261,6 @@
 		78AFBCF40C33E314008A8FCD /* kanasupport.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = kanasupport.rb; sourceTree = "<group>"; };
 		78B063520C2BD19D00CDD242 /* singlelineformatter.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = singlelineformatter.rb; sourceTree = "<group>"; };
 		78B2DF1F0D0417160092EBDA /* application.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = application.icns; path = ../icon/application.icns; sourceTree = "<group>"; };
-		78B418B20E4EF5A60065F111 /* inputtextfield.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = inputtextfield.rb; sourceTree = "<group>"; };
 		78BF64A30C2885E2004451B2 /* channel.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = channel.rb; sourceTree = "<group>"; };
 		78BF64A40C2885E2004451B2 /* channelmode.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = channelmode.rb; sourceTree = "<group>"; };
 		78BF64A50C2885E2004451B2 /* config.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = config.rb; sourceTree = "<group>"; };
@@ -453,7 +455,6 @@
 			children = (
 				7896BFE40D0C5E850069453A /* viewtheme.rb */,
 				787A36A10C6A392600DDB70D /* fieldeditortextview.rb */,
-				7877E0610C65B84E002F13C7 /* textfield.rb */,
 				78DA4EBF0C461D52008780C8 /* memberlistview.rb */,
 				78DA4EC00C461D52008780C8 /* servertreeview.rb */,
 				78B063520C2BD19D00CDD242 /* singlelineformatter.rb */,
@@ -466,7 +467,6 @@
 				78229BBE0C288188001DD4C3 /* mainwindow.rb */,
 				78229BBF0C288188001DD4C3 /* tableprogressindicator.rb */,
 				78229BC00C288188001DD4C3 /* treeview.rb */,
-				78B418B20E4EF5A60065F111 /* inputtextfield.rb */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -532,6 +532,10 @@
 				78364C0911659CD60096F3A9 /* ThinSplitView.m */,
 				78364DCE1165B8790096F3A9 /* MarkedScroller.h */,
 				78364DCF1165B8790096F3A9 /* MarkedScroller.m */,
+				78364E3C1165BE460096F3A9 /* InputTextField.h */,
+				78364E3D1165BE460096F3A9 /* InputTextField.m */,
+				78364E411165BE640096F3A9 /* TextField.h */,
+				78364E421165BE640096F3A9 /* TextField.m */,
 			);
 			name = Views;
 			path = objc/Views;
@@ -721,7 +725,6 @@
 				788C5E660C5F4F5A0034C46E /* growlcontroller.rb in Resources */,
 				78AD78E40C61B8F8001E77F4 /* Localizable.strings in Resources */,
 				7890B4E90C659E4700DF983F /* autoopdialog.rb in Resources */,
-				7877E0620C65B84E002F13C7 /* textfield.rb in Resources */,
 				7834E1930C69B5AD003C5D65 /* wildcard.rb in Resources */,
 				787A36A20C6A392600DDB70D /* fieldeditortextview.rb in Resources */,
 				78208C1A0C9D97CD004472E9 /* cocoasheet.rb in Resources */,
@@ -738,7 +741,6 @@
 				787817C80D860ED30049CF95 /* unicodeutil.rb in Resources */,
 				780CCA0E0D8A294000E4BA77 /* keyeventhandler.rb in Resources */,
 				7870BA490E111BD0004B30B4 /* iconcontroller.rb in Resources */,
-				78B418B30E4EF5A60065F111 /* inputtextfield.rb in Resources */,
 				51F0A51E0EBCF70A00B2C878 /* controls_with_disabled_state.rb in Resources */,
 				510D9F6D0EC4FE9900D3BEFB /* abstract_preferences.rb in Resources */,
 				51C39169103A18A9009DEFBF /* cocoa_gist.rb in Resources */,
@@ -782,6 +784,8 @@
 				78364B36116597D00096F3A9 /* KeyRecorderCell.m in Sources */,
 				78364C0A11659CD60096F3A9 /* ThinSplitView.m in Sources */,
 				78364DD01165B8790096F3A9 /* MarkedScroller.m in Sources */,
+				78364E3E1165BE460096F3A9 /* InputTextField.m in Sources */,
+				78364E431165BE640096F3A9 /* TextField.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
