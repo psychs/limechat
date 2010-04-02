@@ -335,7 +335,7 @@ class AppController < NSObject
     @timer = nil
   end
 
-  def timer_onTimer(sender)
+  def timerOnTimer(sender)
     @world.on_timer
     @menu.on_timer
   end

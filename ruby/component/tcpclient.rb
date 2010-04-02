@@ -97,7 +97,7 @@ class TcpClient < NSObject
     return unless check_tag(sock)
     wait_read
     @connecting = false
-    @delegate.tcpclient_on_connect(self) if @delegate
+    @delegate.tcpClientDidConnect(self) if @delegate
   end
   
   def onSocket_willDisconnectWithError(sock, err)
@@ -113,26 +113,26 @@ class TcpClient < NSObject
     
     str = err.localizedDescription.to_s unless str
     
-    @delegate.tcpclient_on_error(self, str) if @delegate
+    @delegate.tcpClient_error(self, str) if @delegate
   end
   
   def onSocketDidDisconnect(sock)
     return unless check_tag(sock)
     close
-    @delegate.tcpclient_on_disconnect(self) if @delegate
+    @delegate.tcpClientDidDisconnect(self) if @delegate
   end
   
   def onSocket_didReadData_withTag(sock, data, tag)
     return unless check_tag(sock)
     @buf << data.rubyString
     wait_read
-    @delegate.tcpclient_on_read(self) if @delegate
+    @delegate.tcpClientDidReceiveData(self) if @delegate
   end
   
   def onSocket_didWriteDataWithTag(sock, tag)
     return unless check_tag(sock)
     @send_queue_size -= 1
-    @delegate.tcpclient_on_write(self) if @delegate
+    @delegate.tcpClientDidSendData(self) if @delegate
   end
   
   

@@ -65,14 +65,14 @@ class DccReceiver
   end
   
   
-  def tcpclient_on_connect(sender)
+  def tcpClientDidConnect(sender)
     @processed_size = 0
     @status = :receiving
     open_file
     @delegate.dccreceiver_on_open(self)
   end
   
-  def tcpclient_on_disconnect(sender)
+  def tcpClientDidDisconnect(sender)
     return if @status == :complete || @status == :error
     @status = :error
     @error = 'Disconnected'
@@ -80,7 +80,7 @@ class DccReceiver
     @delegate.dccreceiver_on_error(self)
   end
   
-  def tcpclient_on_error(sender, err)
+  def tcpClient_error(sender, err)
     return if @status == :complete || @status == :error
     @status = :error
     @error = err
@@ -88,7 +88,7 @@ class DccReceiver
     @delegate.dccreceiver_on_error(self)
   end
   
-  def tcpclient_on_read(sender)
+  def tcpClientDidReceiveData(sender)
     s = @sock.read
     @processed_size += s.size
     @rec += s.size
@@ -111,7 +111,7 @@ class DccReceiver
     end
   end
   
-  def tcpclient_on_write(sender)
+  def tcpClientDidSendData(sender)
   end
   
   def on_timer

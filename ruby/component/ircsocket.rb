@@ -3,13 +3,13 @@
 
 require 'timer'
 
-class IRCSocket
+class IRCSocket < NSObject
   
   attr_accessor :delegate, :host, :port, :ssl
   attr_accessor :useSystemSocks, :useSocks, :socks_version, :proxy_host, :proxy_port, :proxy_user, :proxy_password
   
   def initialize
-    @sock = TcpClient.alloc.init
+    @sock = TCPClient.alloc.init
     @sock.delegate = self
     @timer = Timer.alloc.init
     @timer.delegate = self;
@@ -21,14 +21,14 @@ class IRCSocket
   def open
     @sock.host = @host
     @sock.port = @port
-    @sock.ssl = @ssl
+    @sock.useSSL = @ssl
     @sock.useSystemSocks = @useSystemSocks
     @sock.useSocks = @useSocks
-    @sock.socks_version = @socks_version
-    @sock.proxy_host = @proxy_host
-    @sock.proxy_port = @proxy_port
-    @sock.proxy_user = @proxy_user
-    @sock.proxy_password = @proxy_password
+    @sock.socksVersion = @socks_version
+    @sock.proxyHost = @proxy_host
+    @sock.proxyPort = @proxy_port
+    @sock.proxyUser = @proxy_user
+    @sock.proxyPassword = @proxy_password
     @sock.open
   end
   
@@ -63,40 +63,41 @@ class IRCSocket
     !@sending && @penalty == 0
   end
   
-  def timer_onTimer(sender)
+  def timerOnTimer(sender)
     @penalty -= 2 if @penalty > 0
     @penalty = 0 if @penalty < 0
     try_to_send
   end
   
-  def tcpclient_on_connect(sender)
+  def tcpClientDidConnect(sender)
     @timer.start(2)
     @sendq = []
     @delegate.ircsocket_on_connect if @delegate
   end
   
-  def tcpclient_on_disconnect(sender)
+  def tcpClientDidDisconnect(sender)
     @timer.stop
     @sendq = []
     @delegate.ircsocket_on_disconnect if @delegate
   end
   
-  def tcpclient_on_error(sender, err)
+  def tcpClient_error(sender, err)
     @timer.stop
     @sendq = []
     @delegate.ircsocket_on_error(err) if @delegate
   end
   
-  def tcpclient_on_read(sender)
+  def tcpClientDidReceiveData(sender)
     loop do
-      s = @sock.readline
-      break unless s
+      data = @sock.readLine
+      break unless data
+      s = data.rubyString
       s = s.gsub("\x00", ' ')   # workaround for plum's bug
       @delegate.ircsocket_on_receive(s) if @delegate
     end
   end
   
-  def tcpclient_on_write(sender)
+  def tcpClientDidSendData(sender)
     @sending = false
     try_to_send
   end
@@ -114,7 +115,7 @@ class IRCSocket
     m = @sendq.shift
     m.build
     @penalty += m.penalty
-    @sock.write(m.to_s)
+    @sock.write(NSData.dataWithRubyString(m.to_s))
     @delegate.ircsocket_on_send(m) if @delegate
   end
 end
