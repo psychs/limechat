@@ -812,10 +812,6 @@ class IRCWorld < NSObject
   end
 
   def memberListViewDropFiles_row(files, row)
-    puts "memberListViewDropFiles_row"
-    puts "files: #{files}"
-    puts "row: #{row}"
-    
     u, c = sel
     return unless u && c
     m = c.members[row.to_i]
