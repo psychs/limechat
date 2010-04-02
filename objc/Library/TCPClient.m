@@ -213,6 +213,8 @@
 	if ([delegate respondsToSelector:@selector(tcpClientDidReceiveData:)]) {
 		[delegate tcpClientDidReceiveData:self];
 	}
+
+	[self waitRead];
 }
 
 - (void)onSocket:(AsyncSocket*)sender didWriteDataWithTag:(NSNumber*)aTag

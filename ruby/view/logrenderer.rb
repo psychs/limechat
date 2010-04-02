@@ -2,7 +2,6 @@
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
 require 'nkf'
-require 'unicodeutil'
 
 module LogRenderer
 
@@ -393,7 +392,7 @@ module LogRenderer
     when 2..3
       s = NKF.nkf('-W -w16', s)
       code = s[0] * 256 + s[1]
-      UnicodeUtil.alphabetic?(code)
+      UnicodeHelper.isAlphabeticalCodePoint?(code)
     else
       s = NKF.nkf('-W -w16', s)
       return false if s.length != 4
@@ -401,7 +400,7 @@ module LogRenderer
       low = s[2] * 256 + s[3]
       if (0xd800..0xdbff) === high && (0xdc00..0xdfff) === low
         code = (high - 0xd800) * 0x400 + (low - 0xdc00) + 0x10000
-        UnicodeUtil.alphabetic?(code)
+        UnicodeHelper.isAlphabeticalCodePoint?(code)
       else
         false
       end
