@@ -1004,13 +1004,14 @@ class IRCClient < NSObject
     
     s = to_local_encoding(s, use_fallback)
     s = StringValidator::validate_utf8(s)
-    m = IRCReceivedMessage.new(s)
+    m = IRCMessage.alloc.init
+    m.parseLine(s.to_s)
     #puts m.to_s
     
-    if m.numeric_reply > 0
+    if m.numericReply > 0
       receive_numeric_reply(m)
     else
-      case m.command
+      case m.command.to_s.downcase.to_sym
       when :privmsg,:notice; receive_privmsg_and_notice(m)
       when :join; receive_join(m)
       when :part; receive_part(m)
@@ -1367,7 +1368,7 @@ class IRCClient < NSObject
     @trying_nick = -1
     @pong_timer = PONG_TIME
     @server_hostname = m.sender
-    @mynick = m[0]
+    @mynick = m.paramAt(0).to_s
     @mymode.clear
     @who_queue = []
     @who_wait = 0
@@ -1494,7 +1495,7 @@ class IRCClient < NSObject
   end
   
   def receive_privmsg_and_notice(m)
-    text = m[1]
+    text = m.paramAt(1).to_s
     
     identified = false
     if @identify_ctcp && /\A([+-])\x01/ =~ text || @identify_msg && /\A([+-])/ =~ text
@@ -1522,8 +1523,8 @@ class IRCClient < NSObject
     # Do we need to log somewhere that we ignored a line?
     return if preferences.keyword.ignore_words.any? { |w| text.include?(w) }
     
-    nick = m.sender_nick
-    target = m[0]
+    nick = m.sender.nick.to_s
+    target = m.paramAt(0).to_s
     
     # support for @#channel
     #
@@ -1604,8 +1605,8 @@ class IRCClient < NSObject
   end
   
   def receive_join(m)
-    nick = m.sender_nick
-    chname = m[0]
+    nick = m.sender.nick.to_s
+    chname = m.paramAt(0).to_s
     myself = eq(nick, @mynick)
     
     # workaround for ircd 2.9.5 NJOIN
@@ -1625,32 +1626,32 @@ class IRCClient < NSObject
       reload_tree
       print_system(c, "You have joined the channel")
       unless @join_address
-        @join_address = m.sender_address
+        @join_address = m.sender.address.to_s
         if @address_detection_method == Preferences::Dcc::ADDR_DETECT_JOIN
           @resolver.resolve(@join_address)
         end
       end
     end
     if c && !c.mode.a
-      c.add_member(User.new(nick, m.sender_username, m.sender_address, false, false, njoin))
+      c.add_member(User.new(nick, m.sender.user.to_s, m.sender.address.to_s, false, false, njoin))
       update_channel_title(c)
     end
     if preferences.general.show_join_leave
-      print_both(c || chname, :join, "#{nick} has joined (#{m.sender_username}@#{m.sender_address})")
+      print_both(c || chname, :join, "#{nick} has joined (#{m.sender.user.to_s}@#{m.sender.address.to_s})")
     end
-    check_autoop(c, m.sender_nick, m.sender) unless myself
+    check_autoop(c, m.sender.nick.to_s, m.sender) unless myself
     
     # add member to talk
     c = find_channel(nick)
     if c
-      c.add_member(User.new(nick, m.sender_username, m.sender_address))
+      c.add_member(User.new(nick, m.sender.user.to_s, m.sender.address.to_s))
     end
   end
   
   def receive_part(m)
-    nick = m.sender_nick
-    chname = m[0]
-    comment = m[1]
+    nick = m.sender.nick.to_s
+    chname = m.paramAt(0).to_s
+    comment = m.paramAt(1).to_s
     
     myself = false
     c = find_channel(chname)
@@ -1671,10 +1672,10 @@ class IRCClient < NSObject
   end
   
   def receive_kick(m)
-    nick = m.sender_nick
-    chname = m[0]
-    target = m[1]
-    comment = m[2]
+    nick = m.sender.nick.to_s
+    chname = m.paramAt(0).to_s
+    target = m.paramAt(1).to_s
+    comment = m.paramAt(2).to_s
     
     myself = false
     c = find_channel(chname)
@@ -1698,8 +1699,8 @@ class IRCClient < NSObject
   end
   
   def receive_quit(m)
-    nick = m.sender_nick
-    comment = m[0]
+    nick = m.sender.nick.to_s
+    comment = m.paramAt(0).to_s
     
     @channels.each do |c|
       if c.find_member(nick)
@@ -1717,10 +1718,10 @@ class IRCClient < NSObject
   end
   
   def receive_kill(m)
-    sender = m.sender_nick
+    sender = m.sender.nick.to_s
     sender = m.sender if !sender || sender.empty?
-    target = m[0]
-    comment = m[1]
+    target = m.paramAt(0).to_s
+    comment = m.paramAt(1).to_s
     
     @channels.each do |c|
       if c.find_member(target)
@@ -1734,8 +1735,8 @@ class IRCClient < NSObject
   end
   
   def receive_nick(m)
-    nick = m.sender_nick
-    tonick = m[0]
+    nick = m.sender.nick.to_s
+    tonick = m.paramAt(0).to_s
     
     if eq(nick, @mynick)
       # changed mynick
@@ -1777,8 +1778,8 @@ class IRCClient < NSObject
   end
   
   def receive_mode(m)
-    nick = m.sender_nick
-    target = m[0]
+    nick = m.sender.nick.to_s
+    target = m.paramAt(0).to_s
     modestr = m.sequence(1).rstrip
     
     if target.channelname?
@@ -1837,9 +1838,9 @@ class IRCClient < NSObject
   end
   
   def receive_topic(m)
-    nick = m.sender_nick
-    chname = m[0]
-    topic = m[1]
+    nick = m.sender.nick.to_s
+    chname = m.paramAt(0).to_s
+    topic = m.paramAt(1).to_s
     
     c = find_channel(chname)
     if c
@@ -1850,8 +1851,8 @@ class IRCClient < NSObject
   end
   
   def receive_invite(m)
-    sender = m.sender_nick
-    chname = m[1]
+    sender = m.sender.nick.to_s
+    chname = m.paramAt(1).to_s
     print_both(self, :invite, "#{sender} has invited you to #{chname}")
     notify_event(:invited, nil, sender, chname)
     SoundPlayer.play(preferences.sound.invited)
@@ -1863,19 +1864,19 @@ class IRCClient < NSObject
   end
   
   def receive_error(m)
-    comment = m[0]
+    comment = m.paramAt(0).to_s
     print_error("Error: #{comment}")
   end
   
   def receive_wallops(m)
-    sender = m.sender_nick
+    sender = m.sender.nick.to_s
     sender = m.sender if !sender || sender.empty?
-    comment = m[0]
+    comment = m.paramAt(0).to_s
     print_both(self, :wallops, "Wallops: #{comment}")
   end
   
   def receive_ctcp_query(m, text)
-    nick = m.sender_nick
+    nick = m.sender.nick.to_s
     text = text.dup
     
     command = text.token!
@@ -1950,7 +1951,7 @@ class IRCClient < NSObject
     else
       host = addr
     end
-    print_both(self, :dcc_send_receive, "Received file transfer request from #{m.sender_nick}, #{fname} (#{size.grouped_by_comma} bytes) #{host}:#{port}")
+    print_both(self, :dcc_send_receive, "Received file transfer request from #{m.sender.nick.to_s}, #{fname} (#{size.grouped_by_comma} bytes) #{host}:#{port}")
     
     if preferences.dcc.action != Preferences::Dcc::ACTION_IGNORE
       if port > 0 && size > 0
@@ -1959,16 +1960,16 @@ class IRCClient < NSObject
         else
           path = '~/Desktop'
         end
-        @world.dcc.add_receiver(@uid, m.sender_nick, host, port, path, fname, size, ver)
+        @world.dcc.add_receiver(@uid, m.sender.nick.to_s, host, port, path, fname, size, ver)
         SoundPlayer.play(preferences.sound.file_receive_request)
-        @world.notify_on_growl(:file_receive_request, m.sender_nick, fname)
+        @world.notify_on_growl(:file_receive_request, m.sender.nick.to_s, fname)
         NSApp.requestUserAttention(NSInformationalRequest) unless NSApp.isActive
       end
     end
   end
   
   def receive_ctcp_reply(m, text)
-    nick = m.sender_nick
+    nick = m.sender.nick.to_s
     text = text.dup
     command = text.token!
     return if command.empty?
@@ -1992,7 +1993,7 @@ class IRCClient < NSObject
   end
   
   def receive_numeric_reply(m)
-    n = m.numeric_reply
+    n = m.numericReply
     if 400 <= n && n < 600 && n != 403 && n != 422
       receive_error_numeric_reply(m)
       return
@@ -2005,25 +2006,25 @@ class IRCClient < NSObject
     when 2..4,10,20,42,250..255,265,266,372,375
       print_reply(m)
     when 5  # RPL_ISUPPORT
-      @isupport.update(m.sequence(1))
+      @isupport.update(m.sequence(1).to_s)
       print_reply(m)
     when 221  # RPL_UMODEIS
-      modestr = m[1].rstrip
+      modestr = m.paramAt(1).to_s.rstrip
       return if modestr == '+'
       @mymode.clear
       @mymode.update(modestr)
       update_client_title
       print_both(self, :reply, "Mode: #{modestr}")
     when 290  # RPL_CAPAB ? on freenode
-      kind = m[1]
+      kind = m.paramAt(1).to_s
       case kind.downcase
         when 'identify-msg'; @identify_msg = true
         when 'identify-ctcp'; @identify_ctcp = true
       end
       print_reply(m)
     when 301  # RPL_AWAY
-      nick = m[1]
-      comment = m[2]
+      nick = m.paramAt(1).to_s
+      comment = m.paramAt(2).to_s
       if @in_whois
         d = find_whois_dialog(nick)
         if d
@@ -2035,18 +2036,18 @@ class IRCClient < NSObject
       print_both(c || self, :reply, "#{nick} is away: #{comment}")
     when 311	# RPL_WHOISUSER
       @in_whois = true
-      nick = m[1]
-      username = m[2]
-      host = m[3]
-      realname = m[5]
+      nick = m.paramAt(1).to_s
+      username = m.paramAt(2).to_s
+      host = m.paramAt(3).to_s
+      realname = m.paramAt(5).to_s
       d = create_whois_dialog(nick, username, host, realname)
       unless d
         print_both(self, :reply, "#{nick} is #{realname} (#{username}@#{host})")
       end
     when 312	# RPL_WHOISSERVER
-      nick = m[1]
-      server = m[2]
-      serverinfo = m[3]
+      nick = m.paramAt(1).to_s
+      server = m.paramAt(2).to_s
+      serverinfo = m.paramAt(3).to_s
       if @in_whois
         d = find_whois_dialog(nick)
         if d
@@ -2056,7 +2057,7 @@ class IRCClient < NSObject
       end
       print_both(self, :reply, "#{nick} is on #{server} (#{serverinfo})")
     when 313	# RPL_WHOISOPERATOR
-      nick = m[1]
+      nick = m.paramAt(1).to_s
       if @in_whois
         d = find_whois_dialog(nick)
         if d
@@ -2066,9 +2067,9 @@ class IRCClient < NSObject
       end
       print_both(self, :reply, "#{nick} is an IRC operator")
     when 317	# RPL_WHOISIDLE
-      nick = m[1]
-      idlestr = m[2]
-      signonstr = m[3]
+      nick = m.paramAt(1).to_s
+      idlestr = m.paramAt(2).to_s
+      signonstr = m.paramAt(3).to_s
       sec = idlestr.to_i
       if sec > 0
         min = sec / 60
@@ -2095,8 +2096,8 @@ class IRCClient < NSObject
       print_both(self, :reply, "#{nick} is #{idle} idle") unless idle.empty?
       print_both(self, :reply, "#{nick} logged in at #{signon}") unless signon.empty?
     when 319	# RPL_WHOISCHANNELS
-      nick = m[1]
-      trail = m[2]
+      nick = m.paramAt(1).to_s
+      trail = m.paramAt(2).to_s
       channels = trail.split(' ')
       if @in_whois
         d = find_whois_dialog(nick)
@@ -2109,7 +2110,7 @@ class IRCClient < NSObject
     when 318	# RPL_ENDOFWHOIS
       @in_whois = false
     when 324  # RPL_CHANNELMODEIS
-      chname = m[1]
+      chname = m.paramAt(1).to_s
       modestr = m.sequence(2).rstrip
       return if modestr == '+'
       c = find_channel(chname)
@@ -2131,8 +2132,8 @@ class IRCClient < NSObject
       end
       print_both(c || chname, :reply, "Mode: #{modestr}")
     when 329  # hemp? channel creation time
-      chname = m[1]
-      timestr = m[2]
+      chname = m.paramAt(1).to_s
+      timestr = m.paramAt(2).to_s
       timenum = timestr.to_i
       begin
         time = Time.at(timenum)
@@ -2142,7 +2143,7 @@ class IRCClient < NSObject
         ;
       end
     when 331  # RPL_NOTOPIC
-      chname = m[1]
+      chname = m.paramAt(1).to_s
       c = find_channel(chname)
       if c && c.active?
         c.topic = ''
@@ -2150,8 +2151,8 @@ class IRCClient < NSObject
       end
       print_both(c || chname, :reply, "Topic: ")
     when 332  # RPL_TOPIC
-      chname = m[1]
-      topic = m[2]
+      chname = m.paramAt(1).to_s
+      topic = m.paramAt(2).to_s
       c = find_channel(chname)
       if c && c.active?
         c.topic = topic
@@ -2159,9 +2160,9 @@ class IRCClient < NSObject
       end
       print_both(c || chname, :reply, "Topic: #{topic}")
     when 333  # RPL_TOPIC_WHO_TIME
-      chname = m[1]
-      setter = m[2]
-      timestr = m[3]
+      chname = m.paramAt(1).to_s
+      setter = m.paramAt(2).to_s
+      timestr = m.paramAt(3).to_s
       nick = setter[/^[^!@]+/]
       timenum = timestr.to_i
       begin
@@ -2172,8 +2173,8 @@ class IRCClient < NSObject
         ;
       end
     when 353  # RPL_NAMREPLY
-      chname = m[2]
-      trail = m[3].strip
+      chname = m.paramAt(2).to_s
+      trail = m.paramAt(3).to_s.strip
       c = find_channel(chname)
       if c && c.active? && !c.names_init
         trail.split(' ').each do |nick|
@@ -2195,7 +2196,7 @@ class IRCClient < NSObject
         print_both(c || chname, :reply, "Names: #{trail}")
       end
     when 366  # RPL_ENDOFNAMES
-      chname = m[1]
+      chname = m.paramAt(1).to_s
       c = find_channel(chname)
       if c && c.active? && !c.names_init
         c.names_init = true
@@ -2233,11 +2234,11 @@ class IRCClient < NSObject
         update_channel_title(c)
       end
     when 352	# RPL_WHOREPLY
-      chname = m[1]
-      username = m[2]
-      address = m[3]
-      nick = m[5]
-      mode = m[6]
+      chname = m.paramAt(1).to_s
+      username = m.paramAt(2).to_s
+      address = m.paramAt(3).to_s
+      nick = m.paramAt(5).to_s
+      mode = m.paramAt(6).to_s
       
       c = find_channel(chname)
       if c && c.active? && !c.who_init
@@ -2251,7 +2252,7 @@ class IRCClient < NSObject
         print_unknown_reply(m)
       end
     when 315	# RPL_ENDOFWHO
-      chname = m[1]
+      chname = m.paramAt(1).to_s
       c = find_channel(chname)
       if c && c.active? && !c.who_init
         c.who_init = true
@@ -2262,8 +2263,8 @@ class IRCClient < NSObject
         print_unknown_reply(m)
       end
     when 322	# RPL_LIST
-      chname = m[1]
-      count = m[2]
+      chname = m.paramAt(1).to_s
+      count = m.paramAt(2).to_s
       topic = m.sequence(3)
       unless @in_list
         @in_list = true
@@ -2310,7 +2311,7 @@ when 403	# ERR_NOSUCHCHANNEL
 =end
   
   def receive_error_numeric_reply(m)
-    number = m.numeric_reply
+    number = m.numericReply
     case number
     when 401
       c = find_channel(m[1])
