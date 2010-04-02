@@ -1,8 +1,8 @@
 # Created by Satoshi Nakagawa.
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
-class ListView < NSTableView
-  attr_accessor :keyDelegate, :text_delegate
+class AListView < NSTableView
+  attr_accessor :keyDelegate, :textDelegate
   
   def countSelectedRows
     selectedRowIndexes.count.to_i
@@ -51,26 +51,26 @@ class ListView < NSTableView
     if @keyDelegate
       case e.keyCode
       when 51,117
-        if @keyDelegate.respond_to?(:listView_delete)
+        if @keyDelegate.respond_to?(:listViewDelete)
           sel = selectedRows[0]
           if sel
-            @keyDelegate.listView_delete(self)
+            @keyDelegate.listViewDelete(self)
             return
           end
         end
       when 126
-        if @keyDelegate.respond_to?(:listView_moveUp)
+        if @keyDelegate.respond_to?(:listViewMoveUp)
           sel = selectedRows[0]
           if sel && sel == 0
-            @keyDelegate.listView_moveUp(self)
+            @keyDelegate.listViewMoveUp(self)
             return
           end
         end
       when 123..125 # cursor keys
       when 116,121  # page up/down
       else
-        if @keyDelegate.respond_to?(:listView_keyDown)
-          @keyDelegate.listView_keyDown(e)
+        if @keyDelegate.respond_to?(:listViewKeyDown)
+          @keyDelegate.listViewKeyDown(e)
           return
         end
       end
@@ -79,8 +79,8 @@ class ListView < NSTableView
   end
   
   def textDidEndEditing(note)
-    if @text_delegate
-      @text_delegate.textDidEndEditing(note)
+    if @textDelegate
+      @textDelegate.textDidEndEditing(note)
     end
   end
 end

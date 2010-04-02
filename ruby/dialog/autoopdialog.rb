@@ -235,15 +235,15 @@ class AutoOpDialog < NSObject
     update_buttons
   end
   
-  def listView_moveUp(sender)
+  def listViewMoveUp(sender)
     @edit.focus
   end
   
-  def listView_delete(sender)
+  def listViewDelete(sender)
     onDelete(sender)
   end
   
-  def listView_keyDown(e)
+  def listViewKeyDown(e)
     @edit.focus
     @window.sendEvent(e)
   end

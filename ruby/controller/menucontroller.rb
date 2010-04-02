@@ -201,7 +201,7 @@ class MenuController < NSObject
     if nick_menu?(sender)
       !!@nick
     else
-      @member_list.countselectedRowIndexes.to_a > 0
+      @member_list.countSelectedRows > 0
     end
   end
 

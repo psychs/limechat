@@ -17,7 +17,7 @@ class WelcomeDialog < NSObject
   def start
     NSBundle.loadNibNamed_owner('WelcomeDialog', self)
     tableViewSelectionIsChanging(nil)
-    @channelTable.text_delegate = self
+    @channelTable.textDelegate = self
     ServerDialog.servers.each {|i| @serverCombo.addItemWithObjectValue(i) }
     load
     update_ok_button

@@ -5,7 +5,6 @@
 
 @synthesize keyDelegate;
 
-
 - (int)countSelectedRows
 {
 	return [[self selectedRowIndexes] count];

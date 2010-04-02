@@ -800,7 +800,7 @@ class IRCWorld < NSObject
 
   # list view
 
-  def memberListView_keyDown(e)
+  def memberlistViewKeyDown(e)
     @window.makeFirstResponder(@text)
     select_text
     case e.keyCode.to_i
