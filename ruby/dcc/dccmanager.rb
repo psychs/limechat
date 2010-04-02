@@ -401,7 +401,7 @@ class DccManager < NSObject
     reload_sender_table
   end
   
-  def dialogWindow_escape
+  def dialogWindowEscape
     @window.orderOut(self)
   end
 

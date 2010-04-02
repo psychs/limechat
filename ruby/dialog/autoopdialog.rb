@@ -154,13 +154,13 @@ class AutoOpDialog < NSObject
   
   # window
   
-  def dialogWindow_moveDown
+  def dialogWindowMoveDown
     i = @tree.selectedRowIndexes.to_a[0]
     @tree.select(i+1) if i
     @edit.focus
   end
   
-  def dialogWindow_moveUp
+  def dialogWindowMoveUp
     i = @tree.selectedRowIndexes.to_a[0]
     @tree.select(i-1) if i && i > 0
     @edit.focus

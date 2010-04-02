@@ -75,7 +75,7 @@ class PreferenceDialog < NSObject
     @window.close
   end
   
-  def dialogWindow_escape
+  def dialogWindowEscape
     @window.close
   end
   
