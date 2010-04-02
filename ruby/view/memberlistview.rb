@@ -5,7 +5,7 @@ require 'listview'
 require 'user'
 
 class MemberListView < ListView
-  attr_accessor :key_delegate, :drop_delegate
+  attr_accessor :keyDelegate, :dropDelegate
   attr_writer :theme
   
   def initialize
@@ -17,12 +17,12 @@ class MemberListView < ListView
   end
   
   def keyDown(e)
-    if @key_delegate
+    if @keyDelegate
       case e.keyCode
       when 123..126 # cursor keys
       when 116,121  # page up/down
       else
-        @key_delegate.memberlistViewKeyDown(e)
+        @keyDelegate.memberlistViewKeyDown(e)
         return
       end
     end
@@ -112,7 +112,7 @@ class MemberListView < ListView
       row = dragged_row(info)
       if row >= 0
         # received files
-        @drop_delegate.memberListView_dropFiles(files, row)
+        @dropDelegate.memberListViewDropFiles(files, row)
         true
       else
         false

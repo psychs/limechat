@@ -84,8 +84,8 @@ class AppController < NSObject
 
     @member_list.setTarget(@menu)
     @member_list.setDoubleAction('memberList_doubleClicked:')
-    @member_list.key_delegate = @world
-    @member_list.drop_delegate = @world
+    @member_list.keyDelegate = @world
+    @member_list.dropDelegate = @world
 
     @dcc = DccManager.alloc.init
     @dcc.world = @world

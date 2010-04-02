@@ -4316,7 +4316,7 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>key_delegate</string>
+							<string>keyDelegate</string>
 							<string>textDelegate</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">

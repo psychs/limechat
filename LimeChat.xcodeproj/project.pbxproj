@@ -37,7 +37,6 @@
 		78229BDA0C288188001DD4C3 /* urlopener.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BAC0C288188001DD4C3 /* urlopener.rb */; };
 		78229BDB0C288188001DD4C3 /* userdefaultsaccess.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BAD0C288188001DD4C3 /* userdefaultsaccess.rb */; };
 		78229BDC0C288188001DD4C3 /* utility.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BAE0C288188001DD4C3 /* utility.rb */; };
-		78229BE70C288188001DD4C3 /* listview.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BBB0C288188001DD4C3 /* listview.rb */; };
 		78229BE80C288188001DD4C3 /* log.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BBC0C288188001DD4C3 /* log.rb */; };
 		78229BE90C288188001DD4C3 /* logview.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BBD0C288188001DD4C3 /* logview.rb */; };
 		78229BEA0C288188001DD4C3 /* mainwindow.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BBE0C288188001DD4C3 /* mainwindow.rb */; };
@@ -181,7 +180,6 @@
 		78229BAC0C288188001DD4C3 /* urlopener.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = urlopener.rb; sourceTree = "<group>"; };
 		78229BAD0C288188001DD4C3 /* userdefaultsaccess.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = userdefaultsaccess.rb; sourceTree = "<group>"; };
 		78229BAE0C288188001DD4C3 /* utility.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = utility.rb; sourceTree = "<group>"; };
-		78229BBB0C288188001DD4C3 /* listview.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = listview.rb; sourceTree = "<group>"; };
 		78229BBC0C288188001DD4C3 /* log.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = log.rb; sourceTree = "<group>"; };
 		78229BBD0C288188001DD4C3 /* logview.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = logview.rb; sourceTree = "<group>"; };
 		78229BBE0C288188001DD4C3 /* mainwindow.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = mainwindow.rb; sourceTree = "<group>"; };
@@ -464,7 +462,6 @@
 				787A36A10C6A392600DDB70D /* fieldeditortextview.rb */,
 				78DA4EBF0C461D52008780C8 /* memberlistview.rb */,
 				78755D720C2AC0B30073FF42 /* logrenderer.rb */,
-				78229BBB0C288188001DD4C3 /* listview.rb */,
 				78229BBC0C288188001DD4C3 /* log.rb */,
 				78229BBD0C288188001DD4C3 /* logview.rb */,
 				78229BBE0C288188001DD4C3 /* mainwindow.rb */,
@@ -703,7 +700,6 @@
 				78229BDA0C288188001DD4C3 /* urlopener.rb in Resources */,
 				78229BDB0C288188001DD4C3 /* userdefaultsaccess.rb in Resources */,
 				78229BDC0C288188001DD4C3 /* utility.rb in Resources */,
-				78229BE70C288188001DD4C3 /* listview.rb in Resources */,
 				78229BE80C288188001DD4C3 /* log.rb in Resources */,
 				78229BE90C288188001DD4C3 /* logview.rb in Resources */,
 				78229BEA0C288188001DD4C3 /* mainwindow.rb in Resources */,

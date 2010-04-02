@@ -19,9 +19,9 @@ class AutoOpDialog < NSObject
     @sel = @w
     NSBundle.loadNibNamed_owner('AutoOpDialog', self)
     @edit.setFocusRingType(NSFocusRingTypeNone)
-    @window.key_delegate = self
-    @tree.key_delegate = self
-    @list.key_delegate = self
+    @window.keyDelegate = self
+    @tree.keyDelegate = self
+    @list.keyDelegate = self
     reload_tree
     reload_list
     @tree.expandItem(@w)
