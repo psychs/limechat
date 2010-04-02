@@ -3,6 +3,7 @@
 
 #import "HotKeyManager.h"
 
+
 @implementation HotKeyManager
 
 - (void)dealloc

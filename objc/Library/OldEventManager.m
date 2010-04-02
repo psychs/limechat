@@ -3,11 +3,12 @@
 
 #import "OldEventManager.h"
 
+
 @implementation OldEventManager
 
 + (NSNumber*)getDoubleClickTime
 {
-  return [NSNumber numberWithFloat:GetDblTime()];
+	return [NSNumber numberWithFloat:GetDblTime()];
 }
 
 @end

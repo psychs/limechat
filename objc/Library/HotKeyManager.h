@@ -4,6 +4,7 @@
 #import <Foundation/Foundation.h>
 #import <Carbon/Carbon.h>
 
+
 @interface HotKeyManager : NSObject
 {
 	EventHotKeyRef handle;

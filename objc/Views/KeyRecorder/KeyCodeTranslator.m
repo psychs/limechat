@@ -21,8 +21,8 @@
 
 - (void)dealloc
 {
-  if (layout) CFRelease(layout);
-  [super dealloc];
+	if (layout) CFRelease(layout);
+	[super dealloc];
 }
 
 + (id)sharedInstance

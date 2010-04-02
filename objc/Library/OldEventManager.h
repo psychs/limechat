@@ -3,6 +3,7 @@
 
 #import <Cocoa/Cocoa.h>
 
+
 @interface OldEventManager : NSObject
 
 + (NSNumber*)getDoubleClickTime;

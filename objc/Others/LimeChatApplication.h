@@ -4,6 +4,7 @@
 #import <Cocoa/Cocoa.h>
 #import "HotKeyManager.h"
 
+
 @interface LimeChatApplication : NSApplication
 {
 	HotKeyManager* hotkey;

@@ -536,12 +536,12 @@
 		78364B26116597D00096F3A9 /* KeyRecorder */ = {
 			isa = PBXGroup;
 			children = (
-				78364B27116597D00096F3A9 /* KeyCodeTranslator.h */,
-				78364B28116597D00096F3A9 /* KeyCodeTranslator.m */,
 				78364B29116597D00096F3A9 /* KeyRecorder.h */,
 				78364B2A116597D00096F3A9 /* KeyRecorder.m */,
 				78364B2B116597D00096F3A9 /* KeyRecorderCell.h */,
 				78364B2C116597D00096F3A9 /* KeyRecorderCell.m */,
+				78364B27116597D00096F3A9 /* KeyCodeTranslator.h */,
+				78364B28116597D00096F3A9 /* KeyCodeTranslator.m */,
 			);
 			path = KeyRecorder;
 			sourceTree = "<group>";

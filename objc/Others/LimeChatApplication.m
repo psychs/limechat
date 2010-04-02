@@ -3,9 +3,11 @@
 
 #import "LimeChatApplication.h"
 
+
 @interface NSObject (LimeChatApplicationDelegate)
 - (void)applicationDidReceiveHotKey:(id)sender;
 @end
+
 
 @implementation LimeChatApplication
 
