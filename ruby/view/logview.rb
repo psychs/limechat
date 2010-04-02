@@ -1,17 +1,17 @@
 # Created by Satoshi Nakagawa.
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
-class LogView < WebView
-  attr_accessor :keyDelegate, :resize_delegate
+class ALogView < WebView
+  attr_accessor :keyDelegate, :resizeDelegate
   
   def keyDown(e)
-    @keyDelegate.logView_keyDown(e) if @keyDelegate
+    @keyDelegate.logViewKeyDown(e) if @keyDelegate
   end
   
   def setFrame(rect)
-    @resize_delegate.logView_willResize(rect) if @resize_delegate
+    @resizeDelegate.logViewWillResize(rect) if @resizeDelegate
     super_setFrame(rect)
-    @resize_delegate.logView_didResize(rect) if @resize_delegate
+    @resizeDelegate.logViewDidResize(rect) if @resizeDelegate
   end
   
   objc_method :maintainsInactiveSelection, 'c@:'

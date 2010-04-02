@@ -62,7 +62,7 @@ class LogController < NSObject
     @view.setPolicyDelegate(@policy)
     @view.setResourceLoadDelegate(self)
     @view.keyDelegate = self
-    @view.resize_delegate = self
+    @view.resizeDelegate = self
     @view.setAutoresizingMask(NSViewWidthSizable | NSViewHeightSizable)
     @view.mainFrame.loadHTMLString_baseURL(initial_document, @theme.log.baseurl)
   end
@@ -383,15 +383,15 @@ class LogController < NSObject
     end
   end
 
-  def logView_keyDown(e)
+  def logViewKeyDown(e)
     @world.log_keyDown(e)
   end
 
-  def logView_willResize(rect)
+  def logViewWillResize
     save_position
   end
 
-  def logView_didResize(rect)
+  def logViewDidResize
     restore_position
   end
 

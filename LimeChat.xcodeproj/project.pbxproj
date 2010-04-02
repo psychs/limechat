@@ -117,6 +117,7 @@
 		78E5723B0C1C30BA00BDF7EC /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 788D56F00BB6872B00DDBF69 /* WebKit.framework */; };
 		78E5723C0C1C30BA00BDF7EC /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 787FD46C0BFE960100F2F22D /* Carbon.framework */; };
 		78E5723D0C1C30BA00BDF7EC /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 780253C20C09525900C170D4 /* CoreServices.framework */; };
+		78EFDA3F116604190062548C /* LogView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78EFDA3E116604190062548C /* LogView.m */; };
 		78FA9F651085AA1400001F13 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78FA9F641085AA1400001F13 /* Sparkle.framework */; };
 		78FA9F6E1085AA1A00001F13 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 78FA9F641085AA1400001F13 /* Sparkle.framework */; };
 /* End PBXBuildFile section */
@@ -281,6 +282,8 @@
 		78C2D608115A428C00705817 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = dsa_pub.pem; path = etc/dsa_pub.pem; sourceTree = "<group>"; };
 		78DA4EBF0C461D52008780C8 /* memberlistview.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = memberlistview.rb; sourceTree = "<group>"; };
 		78E570D00C1C306500BDF7EC /* LimeChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LimeChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		78EFDA3D116604190062548C /* LogView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogView.h; sourceTree = "<group>"; };
+		78EFDA3E116604190062548C /* LogView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogView.m; sourceTree = "<group>"; };
 		78FA9F641085AA1400001F13 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = Frameworks/Sparkle.framework; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -555,6 +558,8 @@
 				788AC9011165CF3E00523E80 /* ChatBox.m */,
 				788AC92F1165D27400523E80 /* DialogWindow.h */,
 				788AC9301165D27400523E80 /* DialogWindow.m */,
+				78EFDA3D116604190062548C /* LogView.h */,
+				78EFDA3E116604190062548C /* LogView.m */,
 			);
 			name = Views;
 			path = objc/Views;
@@ -794,6 +799,7 @@
 				788AC9311165D27400523E80 /* DialogWindow.m in Sources */,
 				788AC96E1165D49A00523E80 /* ListView.m in Sources */,
 				788AC9F01165DA0900523E80 /* MemberListView.m in Sources */,
+				78EFDA3F116604190062548C /* LogView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
