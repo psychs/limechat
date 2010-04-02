@@ -163,7 +163,7 @@ class IRCClient < NSObject
   end
   
   def ready_to_send?
-    login? && @conn.ready_to_send?
+    login? && @conn.readyToSend?
   end
   
   def eq(x, y)
@@ -215,13 +215,13 @@ class IRCClient < NSObject
     @retry_timer = RETRY_TIME
     
     @connecting = true
-    @conn = IRCSocket.alloc.init
+    @conn = IRCConnection.alloc.init
     @conn.delegate = self
     host = @config.host
     host = host.split(' ')[0] if host
     @conn.host = host
     @conn.port = @config.port.to_i
-    @conn.ssl = @config.ssl
+    @conn.useSSL = @config.ssl
     
     case @config.proxy
     when IRCClientConfig::PROXY_SOCKS_SYSTEM
@@ -249,7 +249,7 @@ class IRCClient < NSObject
     @quitting = true
     @quit_timer = QUIT_TIME
     @reconnect = false
-    @conn.clear_send_queue
+    @conn.clearSendQueue
     comment = @config.leaving_comment unless comment
     send(:quit, comment)
   end
@@ -795,7 +795,7 @@ class IRCClient < NSObject
     end
     m.apply! {|i| to_common_encoding(i) }
     m.penalty = Penalty::INIT unless login?
-    @conn.send(m)
+    @conn.write(NSData.dataWithRubyString(m.to_s))
   end
   
   def send_raw(*args)
@@ -975,6 +975,7 @@ class IRCClient < NSObject
   # socket
   
   def ircConnectionDidConnect
+    puts 'hehe'
     print_system_both(self, 'Connected')
     @connecting = @login = false
     @connected = @reconnect = true
@@ -994,6 +995,7 @@ class IRCClient < NSObject
   end
   
   def ircConnectionDidReceive(s)
+    s = s.rubyString
     if @encoding == NSUTF8StringEncoding &&
         @config.fallback_encoding != NSUTF8StringEncoding &&
         !StringValidator::valid_utf8?(s)
@@ -1029,10 +1031,10 @@ class IRCClient < NSObject
   end
   
   def ircConnectionWillSend(m)
-    if m.command != :pong
-      m.apply! {|i| to_local_encoding(i) }
-      #print_debug(:debug_send, m.to_s)
-    end
+    #if m.command != :pong
+    #  m.apply! {|i| to_local_encoding(i) }
+    #  #print_debug(:debug_send, m.to_s)
+    #end
   end
   
   def ircConnectionDidError(err)

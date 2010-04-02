@@ -46,6 +46,8 @@
 
 - (void)open;
 - (void)close;
+- (void)clearSendQueue;
+- (void)write:(id)m;
 
 @end
 
@@ -55,7 +57,7 @@
 - (void)ircConnectionDidDisconnect:(IRCConnection*)sender;
 - (void)ircConnectionDidError:(IRCConnection*)sender;
 - (void)ircConnectionDidReceive:(NSData*)data;
-- (void)ircConnectionWillSend:(id)msg;
+- (void)ircConnectionWillSend:(NSData*)data;
 @end
 
 

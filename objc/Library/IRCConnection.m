@@ -55,6 +55,8 @@
 	
 	conn = [TCPClient new];
 	conn.delegate = self;
+	conn.host = host;
+	conn.port = port;
 	conn.useSSL = useSSL;
 	conn.useSystemSocks = useSystemSocks;
 	conn.useSocks = useSocks;
@@ -94,7 +96,12 @@
 	return !sending && penalty == 0;
 }
 
-- (void)send:(id)m
+- (void)clearSendQueue
+{
+	[sendQueue removeAllObjects];
+}
+
+- (void)write:(id)m
 {
 	[sendQueue addObject:m];
 	[self tryToSend];
@@ -109,10 +116,14 @@
 	if (penalty > PENALTY_THREASHOLD) return;
 	
 	sending = YES;
-	id m = [sendQueue objectAtIndex:0];
-	[m build];
-	penalty += [m penalty];
-	[conn write:[m data]];
+	id m = [[[sendQueue objectAtIndex:0] retain] autorelease];
+	[sendQueue removeObjectAtIndex:0];
+	
+	//[m build];
+	//penalty += [m penalty];
+	//[conn write:[m data]];
+	
+	[conn write:m];
 	
 	if ([delegate respondsToSelector:@selector(ircConnectionWillSend:)]) {
 		[delegate ircConnectionWillSend:m];
