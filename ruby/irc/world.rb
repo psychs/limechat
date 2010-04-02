@@ -482,7 +482,7 @@ class IRCWorld < NSObject
     @field_editor.setInsertionPointColor(theme.input_text_color)
     @text.setTextColor(theme.input_text_color)
     @text.setBackgroundColor(theme.input_text_bgcolor)
-    @chat_box.set_input_text_font(theme.input_text_font)
+    @chat_box.setInputTextFont(theme.input_text_font)
   end
 
   def change_tree_theme
