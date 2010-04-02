@@ -215,7 +215,7 @@ class IRCClient < NSObject
     @retry_timer = RETRY_TIME
     
     @connecting = true
-    @conn = IRCSocket.new
+    @conn = IRCSocket.alloc.init
     @conn.delegate = self
     host = @config.host
     host = host.split(' ')[0] if host
@@ -974,7 +974,7 @@ class IRCClient < NSObject
   
   # socket
   
-  def ircsocket_on_connect
+  def ircConnectionDidConnect
     print_system_both(self, 'Connected')
     @connecting = @login = false
     @connected = @reconnect = true
@@ -989,11 +989,11 @@ class IRCClient < NSObject
     update_client_title
   end
   
-  def ircsocket_on_disconnect
+  def ircConnectionDidDisconnect
     change_state_to_off
   end
   
-  def ircsocket_on_receive(s)
+  def ircConnectionDidReceive(s)
     if @encoding == NSUTF8StringEncoding &&
         @config.fallback_encoding != NSUTF8StringEncoding &&
         !StringValidator::valid_utf8?(s)
@@ -1028,14 +1028,14 @@ class IRCClient < NSObject
     end
   end
   
-  def ircsocket_on_send(m)
+  def ircConnectionWillSend(m)
     if m.command != :pong
       m.apply! {|i| to_local_encoding(i) }
       #print_debug(:debug_send, m.to_s)
     end
   end
   
-  def ircsocket_on_error(err)
+  def ircConnectionDidError(err)
     print_error(err)
   end
   

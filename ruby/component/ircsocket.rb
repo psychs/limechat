@@ -72,19 +72,19 @@ class IRCSocket < NSObject
   def tcpClientDidConnect(sender)
     @timer.start(2)
     @sendq = []
-    @delegate.ircsocket_on_connect if @delegate
+    @delegate.ircConnectionDidConnect if @delegate
   end
   
   def tcpClientDidDisconnect(sender)
     @timer.stop
     @sendq = []
-    @delegate.ircsocket_on_disconnect if @delegate
+    @delegate.ircConnectionDidDisconnect if @delegate
   end
   
   def tcpClient_error(sender, err)
     @timer.stop
     @sendq = []
-    @delegate.ircsocket_on_error(err) if @delegate
+    @delegate.ircConnectionDidError(err) if @delegate
   end
   
   def tcpClientDidReceiveData(sender)
@@ -93,7 +93,7 @@ class IRCSocket < NSObject
       break unless data
       s = data.rubyString
       s = s.gsub("\x00", ' ')   # workaround for plum's bug
-      @delegate.ircsocket_on_receive(s) if @delegate
+      @delegate.ircConnectionDidReceive(s) if @delegate
     end
   end
   
@@ -116,6 +116,6 @@ class IRCSocket < NSObject
     m.build
     @penalty += m.penalty
     @sock.write(NSData.dataWithRubyString(m.to_s))
-    @delegate.ircsocket_on_send(m) if @delegate
+    @delegate.ircConnectionWillSend(m) if @delegate
   end
 end
