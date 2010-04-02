@@ -38,7 +38,6 @@
 		78229BDB0C288188001DD4C3 /* userdefaultsaccess.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BAD0C288188001DD4C3 /* userdefaultsaccess.rb */; };
 		78229BDC0C288188001DD4C3 /* utility.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BAE0C288188001DD4C3 /* utility.rb */; };
 		78229BE80C288188001DD4C3 /* log.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BBC0C288188001DD4C3 /* log.rb */; };
-		78229BE90C288188001DD4C3 /* logview.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BBD0C288188001DD4C3 /* logview.rb */; };
 		78229BEA0C288188001DD4C3 /* mainwindow.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BBE0C288188001DD4C3 /* mainwindow.rb */; };
 		782647CC0CFE86BB0052E598 /* pastieclient.rb in Resources */ = {isa = PBXBuildFile; fileRef = 782647CB0CFE86BB0052E598 /* pastieclient.rb */; };
 		78287EB70D742DBD008D5656 /* Themes in CopyFiles */ = {isa = PBXBuildFile; fileRef = 78287EA90D742DAA008D5656 /* Themes */; };
@@ -183,7 +182,6 @@
 		78229BAD0C288188001DD4C3 /* userdefaultsaccess.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = userdefaultsaccess.rb; sourceTree = "<group>"; };
 		78229BAE0C288188001DD4C3 /* utility.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = utility.rb; sourceTree = "<group>"; };
 		78229BBC0C288188001DD4C3 /* log.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = log.rb; sourceTree = "<group>"; };
-		78229BBD0C288188001DD4C3 /* logview.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = logview.rb; sourceTree = "<group>"; };
 		78229BBE0C288188001DD4C3 /* mainwindow.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = mainwindow.rb; sourceTree = "<group>"; };
 		782647CB0CFE86BB0052E598 /* pastieclient.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = pastieclient.rb; sourceTree = "<group>"; };
 		78287EA90D742DAA008D5656 /* Themes */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Themes; path = resource/Themes; sourceTree = "<group>"; };
@@ -469,7 +467,6 @@
 				78DA4EBF0C461D52008780C8 /* memberlistview.rb */,
 				78755D720C2AC0B30073FF42 /* logrenderer.rb */,
 				78229BBC0C288188001DD4C3 /* log.rb */,
-				78229BBD0C288188001DD4C3 /* logview.rb */,
 				78229BBE0C288188001DD4C3 /* mainwindow.rb */,
 			);
 			path = view;
@@ -711,7 +708,6 @@
 				78229BDB0C288188001DD4C3 /* userdefaultsaccess.rb in Resources */,
 				78229BDC0C288188001DD4C3 /* utility.rb in Resources */,
 				78229BE80C288188001DD4C3 /* log.rb in Resources */,
-				78229BE90C288188001DD4C3 /* logview.rb in Resources */,
 				78229BEA0C288188001DD4C3 /* mainwindow.rb in Resources */,
 				78BF64AB0C2885E2004451B2 /* channel.rb in Resources */,
 				78BF64AC0C2885E2004451B2 /* channelmode.rb in Resources */,
