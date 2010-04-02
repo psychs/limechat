@@ -800,7 +800,7 @@ class IRCWorld < NSObject
 
   # list view
 
-  def memberlistViewKeyDown(e)
+  def memberListViewKeyDown(e)
     @window.makeFirstResponder(@text)
     select_text
     case e.keyCode.to_i
@@ -811,12 +811,16 @@ class IRCWorld < NSObject
     end
   end
 
-  def memberListView_dropFiles(files, row)
+  def memberListViewDropFiles_row(files, row)
+    puts "memberListViewDropFiles_row"
+    puts "files: #{files}"
+    puts "row: #{row}"
+    
     u, c = sel
     return unless u && c
-    m = c.members[row]
+    m = c.members[row.to_i]
     if m
-      files.each {|f| @dcc.add_sender(u.uid, m.nick, f, false) }
+      files.to_a.each {|f| @dcc.add_sender(u.uid, m.nick, f, false) }
     end
   end
 

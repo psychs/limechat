@@ -88,7 +88,7 @@ class DccManager < NSObject
 
   def validateMenuItem(i)
     if i.tag < 3100
-      return false if @receiver_table.countselectedRowIndexes.to_a == 0
+      return false if @receiver_table.countSelectedRows == 0
       sel = @receiver_table.selectedRowIndexes.to_a
       sel = sel.map {|e| @receivers[e]}
       case i.tag
@@ -108,7 +108,7 @@ class DccManager < NSObject
         false
       end
     else
-      return false if @sender_table.countselectedRowIndexes.to_a == 0
+      return false if @sender_table.countSelectedRows == 0
       sel = @sender_table.selectedRowIndexes.to_a
       sel = sel.map {|e| @senders[e]}
       case i.tag

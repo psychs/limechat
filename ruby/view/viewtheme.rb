@@ -93,10 +93,10 @@ class OtherViewTheme
   attr_reader :tree_font, :treeBackgroundColor, :tree_highlight_color, :tree_newtalk_color, :tree_unread_color
   attr_reader :tree_active_color, :tree_inactive_color, :tree_sel_active_color, :tree_sel_inactive_color
   attr_reader :treeSelTopLineColor, :treeSelBottomLineColor, :treeSelTopColor, :treeSelBottomColor
-  attr_reader :member_list_font, :member_list_color, :member_list_bgcolor
+  attr_reader :member_list_font, :member_list_color, :memberListBackgroundColor
   attr_reader :member_list_op_color
-  attr_reader :member_list_sel_color, :member_list_sel_top_line_color, :member_list_sel_bottom_line_color
-  attr_reader :member_list_sel_top_color, :member_list_sel_bottom_color
+  attr_reader :member_list_sel_color, :memberListSelTopLineColor, :memberListSelBottomLineColor
+  attr_reader :memberListSelTopColor, :memberListSelBottomColor
 
   def filename=(fname)
     if fname
@@ -149,15 +149,15 @@ class OtherViewTheme
     @treeSelBottomColor = load_color('server-tree', 'selected', 'background', 'bottom-color') || NSColor.from_rgb(152, 170, 196)
     
     @member_list_font = load_font('member-list') || NSFont.systemFontOfSize(NSFont.smallSystemFontSize)
-    @member_list_bgcolor = load_color('member-list', 'background-color') || NSColor.whiteColor
+    @memberListBackgroundColor = load_color('member-list', 'background-color') || NSColor.whiteColor
     @member_list_color = load_color('member-list', 'color') || NSColor.blackColor
     @member_list_op_color = load_color('member-list', 'operator', 'color') || NSColor.blackColor
     
     @member_list_sel_color = load_color('member-list', 'selected', 'color')
-    @member_list_sel_top_line_color = load_color('member-list', 'selected', 'background', 'top-line-color')
-    @member_list_sel_bottom_line_color = load_color('member-list', 'selected', 'background', 'bottom-line-color')
-    @member_list_sel_top_color = load_color('member-list', 'selected', 'background', 'top-color')
-    @member_list_sel_bottom_color = load_color('member-list', 'selected', 'background', 'bottom-color')
+    @memberListSelTopLineColor = load_color('member-list', 'selected', 'background', 'top-line-color')
+    @memberListSelBottomLineColor = load_color('member-list', 'selected', 'background', 'bottom-line-color')
+    @memberListSelTopColor = load_color('member-list', 'selected', 'background', 'top-color')
+    @memberListSelBottomColor = load_color('member-list', 'selected', 'background', 'bottom-color')
   end
   
   def load_font(category)

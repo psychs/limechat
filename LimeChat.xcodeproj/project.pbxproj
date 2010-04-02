@@ -93,6 +93,7 @@
 		788AC9021165CF3E00523E80 /* ChatBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 788AC9011165CF3E00523E80 /* ChatBox.m */; };
 		788AC9311165D27400523E80 /* DialogWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 788AC9301165D27400523E80 /* DialogWindow.m */; };
 		788AC96E1165D49A00523E80 /* ListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 788AC96D1165D49A00523E80 /* ListView.m */; };
+		788AC9F01165DA0900523E80 /* MemberListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 788AC9EF1165DA0900523E80 /* MemberListView.m */; };
 		788C5E660C5F4F5A0034C46E /* growlcontroller.rb in Resources */ = {isa = PBXBuildFile; fileRef = 788C5E650C5F4F5A0034C46E /* growlcontroller.rb */; };
 		7890B4E90C659E4700DF983F /* autoopdialog.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7890B4E80C659E4700DF983F /* autoopdialog.rb */; };
 		7896BFE50D0C5E850069453A /* viewtheme.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7896BFE40D0C5E850069453A /* viewtheme.rb */; };
@@ -258,6 +259,8 @@
 		788AC9301165D27400523E80 /* DialogWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DialogWindow.m; sourceTree = "<group>"; };
 		788AC96C1165D49A00523E80 /* ListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListView.h; sourceTree = "<group>"; };
 		788AC96D1165D49A00523E80 /* ListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListView.m; sourceTree = "<group>"; };
+		788AC9EE1165DA0900523E80 /* MemberListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MemberListView.h; sourceTree = "<group>"; };
+		788AC9EF1165DA0900523E80 /* MemberListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MemberListView.m; sourceTree = "<group>"; };
 		788C5E650C5F4F5A0034C46E /* growlcontroller.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = growlcontroller.rb; sourceTree = "<group>"; };
 		788D56F00BB6872B00DDBF69 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
 		7890B4E80C659E4700DF983F /* autoopdialog.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = autoopdialog.rb; sourceTree = "<group>"; };
@@ -538,6 +541,10 @@
 				78364E591165BFA10096F3A9 /* TreeView.m */,
 				788AC8691165C59500523E80 /* ServerTreeView.h */,
 				788AC86A1165C59500523E80 /* ServerTreeView.m */,
+				788AC96C1165D49A00523E80 /* ListView.h */,
+				788AC96D1165D49A00523E80 /* ListView.m */,
+				788AC9EE1165DA0900523E80 /* MemberListView.h */,
+				788AC9EF1165DA0900523E80 /* MemberListView.m */,
 				788AC8B41165CB5000523E80 /* SingleLineFormatter.h */,
 				788AC8B51165CB5000523E80 /* SingleLineFormatter.m */,
 				788AC8C91165CDA300523E80 /* TextFieldWithDisabledState.h */,
@@ -548,8 +555,6 @@
 				788AC9011165CF3E00523E80 /* ChatBox.m */,
 				788AC92F1165D27400523E80 /* DialogWindow.h */,
 				788AC9301165D27400523E80 /* DialogWindow.m */,
-				788AC96C1165D49A00523E80 /* ListView.h */,
-				788AC96D1165D49A00523E80 /* ListView.m */,
 			);
 			name = Views;
 			path = objc/Views;
@@ -788,6 +793,7 @@
 				788AC9021165CF3E00523E80 /* ChatBox.m in Sources */,
 				788AC9311165D27400523E80 /* DialogWindow.m in Sources */,
 				788AC96E1165D49A00523E80 /* ListView.m in Sources */,
+				788AC9F01165DA0900523E80 /* MemberListView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
