@@ -14,7 +14,6 @@
 		78208C1A0C9D97CD004472E9 /* cocoasheet.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78208C190C9D97CD004472E9 /* cocoasheet.rb */; };
 		78211B530C5F3560004B47DA /* soundplayer.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78211B520C5F3560004B47DA /* soundplayer.rb */; };
 		7821DBE40C2C875700B3EF42 /* pastesheet.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7821DBE30C2C875700B3EF42 /* pastesheet.rb */; };
-		78229BC40C288188001DD4C3 /* ircsocket.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229B920C288188001DD4C3 /* ircsocket.rb */; };
 		78229BC70C288188001DD4C3 /* tcpclient.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229B950C288188001DD4C3 /* tcpclient.rb */; };
 		78229BC80C288188001DD4C3 /* tcpserver.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229B960C288188001DD4C3 /* tcpserver.rb */; };
 		78229BCA0C288188001DD4C3 /* appcontroller.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229B990C288188001DD4C3 /* appcontroller.rb */; };
@@ -104,6 +103,7 @@
 		78B960FA11660A8800831780 /* TCPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 78B960F911660A8800831780 /* TCPClient.m */; };
 		78B961FA1166182600831780 /* Timer.m in Sources */ = {isa = PBXBuildFile; fileRef = 78B961F91166182600831780 /* Timer.m */; };
 		78B9622011661A5D00831780 /* IRCConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 78B9621F11661A5D00831780 /* IRCConnection.m */; };
+		78B9637A11662A9B00831780 /* IRCSendingMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 78B9637911662A9A00831780 /* IRCSendingMessage.m */; };
 		78BF64AB0C2885E2004451B2 /* channel.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78BF64A30C2885E2004451B2 /* channel.rb */; };
 		78BF64AC0C2885E2004451B2 /* channelmode.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78BF64A40C2885E2004451B2 /* channelmode.rb */; };
 		78BF64AD0C2885E2004451B2 /* config.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78BF64A50C2885E2004451B2 /* config.rb */; };
@@ -160,7 +160,6 @@
 		78208C190C9D97CD004472E9 /* cocoasheet.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = cocoasheet.rb; sourceTree = "<group>"; };
 		78211B520C5F3560004B47DA /* soundplayer.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = soundplayer.rb; sourceTree = "<group>"; };
 		7821DBE30C2C875700B3EF42 /* pastesheet.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = pastesheet.rb; sourceTree = "<group>"; };
-		78229B920C288188001DD4C3 /* ircsocket.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = ircsocket.rb; sourceTree = "<group>"; };
 		78229B950C288188001DD4C3 /* tcpclient.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = tcpclient.rb; sourceTree = "<group>"; };
 		78229B960C288188001DD4C3 /* tcpserver.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = tcpserver.rb; sourceTree = "<group>"; };
 		78229B990C288188001DD4C3 /* appcontroller.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = appcontroller.rb; sourceTree = "<group>"; };
@@ -276,6 +275,9 @@
 		78B961F91166182600831780 /* Timer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Timer.m; sourceTree = "<group>"; };
 		78B9621E11661A5D00831780 /* IRCConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCConnection.h; sourceTree = "<group>"; };
 		78B9621F11661A5D00831780 /* IRCConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCConnection.m; sourceTree = "<group>"; };
+		78B9637811662A9A00831780 /* IRCSendingMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCSendingMessage.h; sourceTree = "<group>"; };
+		78B9637911662A9A00831780 /* IRCSendingMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCSendingMessage.m; sourceTree = "<group>"; };
+		78B963A711662E3C00831780 /* IRC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRC.h; sourceTree = "<group>"; };
 		78BF64A30C2885E2004451B2 /* channel.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = channel.rb; sourceTree = "<group>"; };
 		78BF64A40C2885E2004451B2 /* channelmode.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = channelmode.rb; sourceTree = "<group>"; };
 		78BF64A50C2885E2004451B2 /* config.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = config.rb; sourceTree = "<group>"; };
@@ -393,7 +395,6 @@
 			isa = PBXGroup;
 			children = (
 				78AF96570C2C219A006D9E4D /* inputhistory.rb */,
-				78229B920C288188001DD4C3 /* ircsocket.rb */,
 				78229B950C288188001DD4C3 /* tcpclient.rb */,
 				78229B960C288188001DD4C3 /* tcpserver.rb */,
 			);
@@ -519,6 +520,9 @@
 		78364B1F116597D00096F3A9 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				78B963A711662E3C00831780 /* IRC.h */,
+				78B9637811662A9A00831780 /* IRCSendingMessage.h */,
+				78B9637911662A9A00831780 /* IRCSendingMessage.m */,
 			);
 			name = Models;
 			path = objc/Models;
@@ -696,7 +700,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				78229BC40C288188001DD4C3 /* ircsocket.rb in Resources */,
 				78229BC70C288188001DD4C3 /* tcpclient.rb in Resources */,
 				78229BC80C288188001DD4C3 /* tcpserver.rb in Resources */,
 				78229BCA0C288188001DD4C3 /* appcontroller.rb in Resources */,
@@ -810,6 +813,7 @@
 				78B960FA11660A8800831780 /* TCPClient.m in Sources */,
 				78B961FA1166182600831780 /* Timer.m in Sources */,
 				78B9622011661A5D00831780 /* IRCConnection.m in Sources */,
+				78B9637A11662A9B00831780 /* IRCSendingMessage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1001,6 +1005,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ONLY_ACTIVE_ARCH_PRE_XCODE_3_1)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -1016,6 +1021,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1)";
 				ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1 = "ppc i386";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;

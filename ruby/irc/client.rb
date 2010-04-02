@@ -789,13 +789,11 @@ class IRCClient < NSObject
   
   def send(command, *args)
     return unless connected?
-    m = IRCSendingMessage.new(command, *args)
-    if block_given?
-      yield m
-    end
-    m.apply! {|i| to_common_encoding(i) }
-    m.penalty = Penalty::INIT unless login?
-    @conn.write(NSData.dataWithRubyString(m.to_s))
+    m = IRCSendingMessage.alloc.initWithCommand(command)
+    args.each {|e| m.addParameter(e) }
+    #m.penalty = Penalty::INIT unless login?
+    data = to_common_encoding(m.string.to_s)
+    @conn.write(NSData.dataWithRubyString(data))
   end
   
   def send_raw(*args)

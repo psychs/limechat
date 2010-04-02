@@ -21,6 +21,7 @@ module Penalty
 end
 
 
+=begin
 class IRCSendingMessage
   attr_reader :command, :params, :built
   attr_accessor :penalty, :complete_colon
@@ -88,6 +89,7 @@ class IRCSendingMessage
     @raw
   end
 end
+=end
 
 
 class IRCReceivedMessage

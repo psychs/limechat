@@ -1,0 +1,15 @@
+#define PRIVMSG		@"PRIVMSG"
+#define NOTICE		@"NOTICE"
+#define NICK		@"NICK"
+#define MODE		@"MODE"
+#define JOIN		@"JOIN"
+#define NAMES		@"NAMES"
+#define WHO			@"WHO"
+#define LIST		@"LIST"
+#define INVITE		@"INVITE"
+#define WHOIS		@"WHOIS"
+#define WHOWAS		@"WHOWAS"
+#define ISON		@"ISON"
+#define USER		@"USER"
+
+#define IRC_PENALTY_NORMAL	2
