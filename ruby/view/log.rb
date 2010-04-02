@@ -398,8 +398,12 @@ class LogController < NSObject
   def logView_onDoubleClick(s)
     @world.log_doubleClick(s)
   end
+  
+  def markedScrollerContentHeight(sender)
+    sender.superview.contentView.documentRect.height;
+  end
 
-  def scroller_markedPosition(sender)
+  def markedScrollerPositions(sender)
     ary = []
     doc = @view.mainFrame.DOMDocument
     if doc
@@ -413,7 +417,7 @@ class LogController < NSObject
     ary
   end
 
-  def scroller_markColor(sender)
+  def markedScrollerColor(sender)
     @theme.other.log_scroller_highlight_color
   end
 

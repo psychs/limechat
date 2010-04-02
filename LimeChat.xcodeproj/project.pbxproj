@@ -74,6 +74,7 @@
 		78364B35116597D00096F3A9 /* KeyRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 78364B2A116597D00096F3A9 /* KeyRecorder.m */; };
 		78364B36116597D00096F3A9 /* KeyRecorderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 78364B2C116597D00096F3A9 /* KeyRecorderCell.m */; };
 		78364C0A11659CD60096F3A9 /* ThinSplitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78364C0911659CD60096F3A9 /* ThinSplitView.m */; };
+		78364DD01165B8790096F3A9 /* MarkedScroller.m in Sources */ = {isa = PBXBuildFile; fileRef = 78364DCF1165B8790096F3A9 /* MarkedScroller.m */; };
 		783952320D261EEE00382565 /* pluginmanager.rb in Resources */ = {isa = PBXBuildFile; fileRef = 783952310D261EEE00382565 /* pluginmanager.rb */; };
 		783952350D261F2500382565 /* plugin.rb in Resources */ = {isa = PBXBuildFile; fileRef = 783952340D261F2500382565 /* plugin.rb */; };
 		783D0B2B0CF45C38002CC2FB /* listdialog.rb in Resources */ = {isa = PBXBuildFile; fileRef = 783D0B2A0CF45C38002CC2FB /* listdialog.rb */; };
@@ -117,7 +118,6 @@
 		78E5723B0C1C30BA00BDF7EC /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 788D56F00BB6872B00DDBF69 /* WebKit.framework */; };
 		78E5723C0C1C30BA00BDF7EC /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 787FD46C0BFE960100F2F22D /* Carbon.framework */; };
 		78E5723D0C1C30BA00BDF7EC /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 780253C20C09525900C170D4 /* CoreServices.framework */; };
-		78F59FE40D78144B0038AC1D /* markedscroller.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78F59FE30D78144B0038AC1D /* markedscroller.rb */; };
 		78FA9F651085AA1400001F13 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78FA9F641085AA1400001F13 /* Sparkle.framework */; };
 		78FA9F6E1085AA1A00001F13 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 78FA9F641085AA1400001F13 /* Sparkle.framework */; };
 /* End PBXBuildFile section */
@@ -228,6 +228,8 @@
 		78364B391165982C0096F3A9 /* LimeChat_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LimeChat_Prefix.pch; sourceTree = "<group>"; };
 		78364C0811659CD60096F3A9 /* ThinSplitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThinSplitView.h; sourceTree = "<group>"; };
 		78364C0911659CD60096F3A9 /* ThinSplitView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThinSplitView.m; sourceTree = "<group>"; };
+		78364DCE1165B8790096F3A9 /* MarkedScroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarkedScroller.h; sourceTree = "<group>"; };
+		78364DCF1165B8790096F3A9 /* MarkedScroller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MarkedScroller.m; sourceTree = "<group>"; };
 		783952310D261EEE00382565 /* pluginmanager.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = pluginmanager.rb; sourceTree = "<group>"; };
 		783952340D261F2500382565 /* plugin.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = plugin.rb; sourceTree = "<group>"; };
 		783D0B2A0CF45C38002CC2FB /* listdialog.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = listdialog.rb; sourceTree = "<group>"; };
@@ -269,7 +271,6 @@
 		78DA4EBF0C461D52008780C8 /* memberlistview.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = memberlistview.rb; sourceTree = "<group>"; };
 		78DA4EC00C461D52008780C8 /* servertreeview.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = servertreeview.rb; sourceTree = "<group>"; };
 		78E570D00C1C306500BDF7EC /* LimeChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LimeChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		78F59FE30D78144B0038AC1D /* markedscroller.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = markedscroller.rb; sourceTree = "<group>"; };
 		78FA9F641085AA1400001F13 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = Frameworks/Sparkle.framework; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -450,7 +451,6 @@
 		78229BB80C288188001DD4C3 /* view */ = {
 			isa = PBXGroup;
 			children = (
-				78F59FE30D78144B0038AC1D /* markedscroller.rb */,
 				7896BFE40D0C5E850069453A /* viewtheme.rb */,
 				787A36A10C6A392600DDB70D /* fieldeditortextview.rb */,
 				7877E0610C65B84E002F13C7 /* textfield.rb */,
@@ -530,6 +530,8 @@
 				78364B26116597D00096F3A9 /* KeyRecorder */,
 				78364C0811659CD60096F3A9 /* ThinSplitView.h */,
 				78364C0911659CD60096F3A9 /* ThinSplitView.m */,
+				78364DCE1165B8790096F3A9 /* MarkedScroller.h */,
+				78364DCF1165B8790096F3A9 /* MarkedScroller.m */,
 			);
 			name = Views;
 			path = objc/Views;
@@ -733,7 +735,6 @@
 				783952320D261EEE00382565 /* pluginmanager.rb in Resources */,
 				783952350D261F2500382565 /* plugin.rb in Resources */,
 				7889CABF0D647494003D808E /* welcomedialog.rb in Resources */,
-				78F59FE40D78144B0038AC1D /* markedscroller.rb in Resources */,
 				787817C80D860ED30049CF95 /* unicodeutil.rb in Resources */,
 				780CCA0E0D8A294000E4BA77 /* keyeventhandler.rb in Resources */,
 				7870BA490E111BD0004B30B4 /* iconcontroller.rb in Resources */,
@@ -780,6 +781,7 @@
 				78364B35116597D00096F3A9 /* KeyRecorder.m in Sources */,
 				78364B36116597D00096F3A9 /* KeyRecorderCell.m in Sources */,
 				78364C0A11659CD60096F3A9 /* ThinSplitView.m in Sources */,
+				78364DD01165B8790096F3A9 /* MarkedScroller.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
