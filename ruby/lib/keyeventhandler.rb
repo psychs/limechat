@@ -41,7 +41,7 @@ class KeyEventHandler
     false
   end
   
-  def register_key_handler(keys, *mods, &handler)
+  def register_keyHandler(keys, *mods, &handler)
     m = 0
     mods.each do |i|
       case i

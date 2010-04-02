@@ -26,7 +26,7 @@ class AppController < NSObject
 
     @field_editor = FieldEditorTextView.alloc.initWithFrame(NSZeroRect)
     @field_editor.setFieldEditor(true)
-    @field_editor.paste_delegate = self
+    @field_editor.pasteDelegate = self
     @field_editor.setContinuousSpellCheckingEnabled(true)
 
     @text.setFocusRingType(NSFocusRingTypeNone)
@@ -93,7 +93,7 @@ class AppController < NSObject
 
     @history = InputHistory.new
 
-    register_key_handlers
+    register_keyHandlers
 
     nc = NSWorkspace.sharedWorkspace.notificationCenter
     nc.addObserver_selector_name_object(self, :computerWillSleep, NSWorkspaceWillSleepNotification, nil)
@@ -607,14 +607,14 @@ class AppController < NSObject
   # key commands
 
   def handler(*args, &block)
-    @window.register_key_handler(*args, &block)
+    @window.register_keyHandler(*args, &block)
   end
 
   def input_handler(*args, &block)
-    @field_editor.register_key_handler(*args, &block)
+    @field_editor.register_keyHandler(*args, &block)
   end
 
-  def register_key_handlers
+  def register_keyHandlers
     handler(:home) { scroll(:home) }
     handler(:end) { scroll(:end) }
     handler(:pageup) { scroll(:up) }
