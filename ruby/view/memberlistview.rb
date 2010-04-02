@@ -5,7 +5,7 @@ require 'listview'
 require 'user'
 
 class MemberListView < ListView
-  attr_accessor :keyDelegate, :drop_delegate
+  attr_accessor :key_delegate, :drop_delegate
   attr_writer :theme
   
   def initialize
@@ -17,19 +17,19 @@ class MemberListView < ListView
   end
   
   def keyDown(e)
-    if @keyDelegate
+    if @key_delegate
       case e.keyCode
       when 123..126 # cursor keys
       when 116,121  # page up/down
       else
-        @keyDelegate.memberListView_keyDown(e)
+        @key_delegate.memberListView_keyDown(e)
         return
       end
     end
     super_keyDown(e)
   end
   
-  def theme_changed
+  def themeChanged
     @bgcolor = @theme.member_list_bgcolor
     @top_line_color = @theme.member_list_sel_top_line_color
     @bottom_line_color = @theme.member_list_sel_bottom_line_color
@@ -184,7 +184,7 @@ class MemberListViewCell < NSCell
     self.class.theme = theme
   end
   
-  def theme_changed
+  def themeChanged
     self.class.calculate_mark_width(self)
   end
   

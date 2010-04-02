@@ -3,8 +3,8 @@
 
 require 'treeview'
 
-class ServerTreeView < TreeView
-  attr_accessor :responder_delegate
+class AServerTreeView < TreeView
+  attr_accessor :responderDelegate
   attr_writer :theme
   
   def initialize
@@ -17,20 +17,20 @@ class ServerTreeView < TreeView
   end
   
   def acceptsFirstResponder
-    if @responder_delegate
-      @responder_delegate.serverTreeView_acceptFirstResponder
+    if @responderDelegate
+      @responderDelegate.serverTreeViewAcceptsFirstResponder
       false
     else
       true
     end
   end
   
-  def theme_changed
-    @bgcolor = @theme.tree_bgcolor
-    @top_line_color = @theme.tree_sel_top_line_color
-    @bottom_line_color = @theme.tree_sel_bottom_line_color
-    from = @theme.tree_sel_top_color
-    to = @theme.tree_sel_bottom_color
+  def themeChanged
+    @bgcolor = @theme.treeBackgroundColor
+    @top_line_color = @theme.treeSelTopLineColor
+    @bottom_line_color = @theme.treeSelBottomLineColor
+    from = @theme.treeSelTopColor
+    to = @theme.treeSelBottomColor
     @gradient = NSGradient.alloc.initWithStartingColor_endingColor(from, to)
   end
   

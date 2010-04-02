@@ -488,15 +488,15 @@ class IRCWorld < NSObject
   def change_tree_theme
     theme = @view_theme.other
     @tree.setFont(theme.tree_font)
-    @tree.theme_changed
+    @tree.themeChanged
     @tree.setNeedsDisplay(true)
   end
 
   def change_member_list_theme
     theme = @view_theme.other
     @member_list.setFont(theme.member_list_font)
-    @member_list.tableColumns[0].dataCell.theme_changed
-    @member_list.theme_changed
+    @member_list.tableColumns[0].dataCell.themeChanged
+    @member_list.themeChanged
     @member_list.setNeedsDisplay(true)
   end
 
@@ -646,7 +646,7 @@ class IRCWorld < NSObject
 
   # tree
 
-  def serverTreeView_acceptFirstResponder
+  def serverTreeViewAcceptsFirstResponder
     select_text
   end
 

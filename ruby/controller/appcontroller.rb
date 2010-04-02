@@ -71,7 +71,7 @@ class AppController < NSObject
     @world.setup(IRCWorldConfig.new(preferences.load_world))
     @tree.setDataSource(@world)
     @tree.setDelegate(@world)
-    @tree.responder_delegate = @world
+    @tree.responderDelegate = @world
     @tree.reloadData
     @world.setup_tree
 
@@ -84,7 +84,7 @@ class AppController < NSObject
 
     @member_list.setTarget(@menu)
     @member_list.setDoubleAction('memberList_doubleClicked:')
-    @member_list.keyDelegate = @world
+    @member_list.key_delegate = @world
     @member_list.drop_delegate = @world
 
     @dcc = DccManager.alloc.init
