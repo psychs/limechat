@@ -43,7 +43,6 @@
 		78229BE80C288188001DD4C3 /* log.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BBC0C288188001DD4C3 /* log.rb */; };
 		78229BE90C288188001DD4C3 /* logview.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BBD0C288188001DD4C3 /* logview.rb */; };
 		78229BEA0C288188001DD4C3 /* mainwindow.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BBE0C288188001DD4C3 /* mainwindow.rb */; };
-		78229BEB0C288188001DD4C3 /* tableprogressindicator.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BBF0C288188001DD4C3 /* tableprogressindicator.rb */; };
 		782647CC0CFE86BB0052E598 /* pastieclient.rb in Resources */ = {isa = PBXBuildFile; fileRef = 782647CB0CFE86BB0052E598 /* pastieclient.rb */; };
 		78287EB70D742DBD008D5656 /* Themes in CopyFiles */ = {isa = PBXBuildFile; fileRef = 78287EA90D742DAA008D5656 /* Themes */; };
 		7831B94D0C589A7A00E1F931 /* growl.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7831B94C0C589A7A00E1F931 /* growl.rb */; };
@@ -95,6 +94,7 @@
 		788AC86B1165C59500523E80 /* ServerTreeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 788AC86A1165C59500523E80 /* ServerTreeView.m */; };
 		788AC8B61165CB5000523E80 /* SingleLineFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 788AC8B51165CB5000523E80 /* SingleLineFormatter.m */; };
 		788AC8CB1165CDA300523E80 /* TextFieldWithDisabledState.m in Sources */ = {isa = PBXBuildFile; fileRef = 788AC8CA1165CDA300523E80 /* TextFieldWithDisabledState.m */; };
+		788AC8F91165CEB400523E80 /* TableProgressIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 788AC8F81165CEB400523E80 /* TableProgressIndicator.m */; };
 		788C5E660C5F4F5A0034C46E /* growlcontroller.rb in Resources */ = {isa = PBXBuildFile; fileRef = 788C5E650C5F4F5A0034C46E /* growlcontroller.rb */; };
 		7890B4E90C659E4700DF983F /* autoopdialog.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7890B4E80C659E4700DF983F /* autoopdialog.rb */; };
 		7896BFE50D0C5E850069453A /* viewtheme.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7896BFE40D0C5E850069453A /* viewtheme.rb */; };
@@ -188,7 +188,6 @@
 		78229BBC0C288188001DD4C3 /* log.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = log.rb; sourceTree = "<group>"; };
 		78229BBD0C288188001DD4C3 /* logview.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = logview.rb; sourceTree = "<group>"; };
 		78229BBE0C288188001DD4C3 /* mainwindow.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = mainwindow.rb; sourceTree = "<group>"; };
-		78229BBF0C288188001DD4C3 /* tableprogressindicator.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = tableprogressindicator.rb; sourceTree = "<group>"; };
 		782647CB0CFE86BB0052E598 /* pastieclient.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = pastieclient.rb; sourceTree = "<group>"; };
 		78287EA90D742DAA008D5656 /* Themes */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Themes; path = resource/Themes; sourceTree = "<group>"; };
 		7831B94C0C589A7A00E1F931 /* growl.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = growl.rb; sourceTree = "<group>"; };
@@ -258,6 +257,8 @@
 		788AC8B51165CB5000523E80 /* SingleLineFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SingleLineFormatter.m; sourceTree = "<group>"; };
 		788AC8C91165CDA300523E80 /* TextFieldWithDisabledState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextFieldWithDisabledState.h; sourceTree = "<group>"; };
 		788AC8CA1165CDA300523E80 /* TextFieldWithDisabledState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextFieldWithDisabledState.m; sourceTree = "<group>"; };
+		788AC8F71165CEB400523E80 /* TableProgressIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableProgressIndicator.h; sourceTree = "<group>"; };
+		788AC8F81165CEB400523E80 /* TableProgressIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableProgressIndicator.m; sourceTree = "<group>"; };
 		788C5E650C5F4F5A0034C46E /* growlcontroller.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = growlcontroller.rb; sourceTree = "<group>"; };
 		788D56F00BB6872B00DDBF69 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
 		7890B4E80C659E4700DF983F /* autoopdialog.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = autoopdialog.rb; sourceTree = "<group>"; };
@@ -468,7 +469,6 @@
 				78229BBC0C288188001DD4C3 /* log.rb */,
 				78229BBD0C288188001DD4C3 /* logview.rb */,
 				78229BBE0C288188001DD4C3 /* mainwindow.rb */,
-				78229BBF0C288188001DD4C3 /* tableprogressindicator.rb */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -546,6 +546,8 @@
 				788AC8B51165CB5000523E80 /* SingleLineFormatter.m */,
 				788AC8C91165CDA300523E80 /* TextFieldWithDisabledState.h */,
 				788AC8CA1165CDA300523E80 /* TextFieldWithDisabledState.m */,
+				788AC8F71165CEB400523E80 /* TableProgressIndicator.h */,
+				788AC8F81165CEB400523E80 /* TableProgressIndicator.m */,
 			);
 			name = Views;
 			path = objc/Views;
@@ -712,7 +714,6 @@
 				78229BE80C288188001DD4C3 /* log.rb in Resources */,
 				78229BE90C288188001DD4C3 /* logview.rb in Resources */,
 				78229BEA0C288188001DD4C3 /* mainwindow.rb in Resources */,
-				78229BEB0C288188001DD4C3 /* tableprogressindicator.rb in Resources */,
 				78BF64AB0C2885E2004451B2 /* channel.rb in Resources */,
 				78BF64AC0C2885E2004451B2 /* channelmode.rb in Resources */,
 				78BF64AD0C2885E2004451B2 /* config.rb in Resources */,
@@ -796,6 +797,7 @@
 				788AC86B1165C59500523E80 /* ServerTreeView.m in Sources */,
 				788AC8B61165CB5000523E80 /* SingleLineFormatter.m in Sources */,
 				788AC8CB1165CDA300523E80 /* TextFieldWithDisabledState.m in Sources */,
+				788AC8F91165CEB400523E80 /* TableProgressIndicator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
