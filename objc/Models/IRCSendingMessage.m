@@ -9,24 +9,6 @@
 @synthesize penalty;
 @synthesize completeColon;
 
-/*
-- (void)initWithCommand:(NSString*)aCommand, ...
-{
-	command = [[aCommand uppercaseString] retain];
-	penalty = IRC_PENALTY_NORMAL;
-	completeColon = YES;
-	params = [NSMutableArray new];
-	
-	va_list list;
-	va_start(list, aCommand);
-	id param;
-	while (param = va_arg(list, id)) {
-		[params addObject:param];
-	}
-	va_end(list);
-}
-*/
-
 - (id)initWithCommand:(NSString*)aCommand
 {
 	if (self = [super init]) {

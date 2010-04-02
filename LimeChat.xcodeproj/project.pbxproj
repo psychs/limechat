@@ -104,6 +104,11 @@
 		78B961FA1166182600831780 /* Timer.m in Sources */ = {isa = PBXBuildFile; fileRef = 78B961F91166182600831780 /* Timer.m */; };
 		78B9622011661A5D00831780 /* IRCConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 78B9621F11661A5D00831780 /* IRCConnection.m */; };
 		78B9637A11662A9B00831780 /* IRCSendingMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 78B9637911662A9A00831780 /* IRCSendingMessage.m */; };
+		78B964CE1166466700831780 /* IRCPrefix.m in Sources */ = {isa = PBXBuildFile; fileRef = 78B964CD1166466700831780 /* IRCPrefix.m */; };
+		78B964D11166469000831780 /* IRCMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 78B964D01166469000831780 /* IRCMessage.m */; };
+		78B964EA1166489000831780 /* NSDictionaryHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78B964E51166489000831780 /* NSDictionaryHelper.m */; };
+		78B964EB1166489000831780 /* NSStringHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78B964E71166489000831780 /* NSStringHelper.m */; };
+		78B964EC1166489000831780 /* UnicodeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78B964E91166489000831780 /* UnicodeHelper.m */; };
 		78BF64AB0C2885E2004451B2 /* channel.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78BF64A30C2885E2004451B2 /* channel.rb */; };
 		78BF64AC0C2885E2004451B2 /* channelmode.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78BF64A40C2885E2004451B2 /* channelmode.rb */; };
 		78BF64AD0C2885E2004451B2 /* config.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78BF64A50C2885E2004451B2 /* config.rb */; };
@@ -278,6 +283,16 @@
 		78B9637811662A9A00831780 /* IRCSendingMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCSendingMessage.h; sourceTree = "<group>"; };
 		78B9637911662A9A00831780 /* IRCSendingMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCSendingMessage.m; sourceTree = "<group>"; };
 		78B963A711662E3C00831780 /* IRC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRC.h; sourceTree = "<group>"; };
+		78B964CC1166466700831780 /* IRCPrefix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCPrefix.h; sourceTree = "<group>"; };
+		78B964CD1166466700831780 /* IRCPrefix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCPrefix.m; sourceTree = "<group>"; };
+		78B964CF1166469000831780 /* IRCMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCMessage.h; sourceTree = "<group>"; };
+		78B964D01166469000831780 /* IRCMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCMessage.m; sourceTree = "<group>"; };
+		78B964E41166489000831780 /* NSDictionaryHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDictionaryHelper.h; sourceTree = "<group>"; };
+		78B964E51166489000831780 /* NSDictionaryHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDictionaryHelper.m; sourceTree = "<group>"; };
+		78B964E61166489000831780 /* NSStringHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSStringHelper.h; sourceTree = "<group>"; };
+		78B964E71166489000831780 /* NSStringHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSStringHelper.m; sourceTree = "<group>"; };
+		78B964E81166489000831780 /* UnicodeHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnicodeHelper.h; sourceTree = "<group>"; };
+		78B964E91166489000831780 /* UnicodeHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UnicodeHelper.m; sourceTree = "<group>"; };
 		78BF64A30C2885E2004451B2 /* channel.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = channel.rb; sourceTree = "<group>"; };
 		78BF64A40C2885E2004451B2 /* channelmode.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = channelmode.rb; sourceTree = "<group>"; };
 		78BF64A50C2885E2004451B2 /* config.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = config.rb; sourceTree = "<group>"; };
@@ -490,6 +505,12 @@
 		78364B15116597D00096F3A9 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				78B964E41166489000831780 /* NSDictionaryHelper.h */,
+				78B964E51166489000831780 /* NSDictionaryHelper.m */,
+				78B964E61166489000831780 /* NSStringHelper.h */,
+				78B964E71166489000831780 /* NSStringHelper.m */,
+				78B964E81166489000831780 /* UnicodeHelper.h */,
+				78B964E91166489000831780 /* UnicodeHelper.m */,
 			);
 			name = Helpers;
 			path = objc/Helpers;
@@ -523,6 +544,10 @@
 				78B963A711662E3C00831780 /* IRC.h */,
 				78B9637811662A9A00831780 /* IRCSendingMessage.h */,
 				78B9637911662A9A00831780 /* IRCSendingMessage.m */,
+				78B964CC1166466700831780 /* IRCPrefix.h */,
+				78B964CD1166466700831780 /* IRCPrefix.m */,
+				78B964CF1166469000831780 /* IRCMessage.h */,
+				78B964D01166469000831780 /* IRCMessage.m */,
 			);
 			name = Models;
 			path = objc/Models;
@@ -814,6 +839,11 @@
 				78B961FA1166182600831780 /* Timer.m in Sources */,
 				78B9622011661A5D00831780 /* IRCConnection.m in Sources */,
 				78B9637A11662A9B00831780 /* IRCSendingMessage.m in Sources */,
+				78B964CE1166466700831780 /* IRCPrefix.m in Sources */,
+				78B964D11166469000831780 /* IRCMessage.m in Sources */,
+				78B964EA1166489000831780 /* NSDictionaryHelper.m in Sources */,
+				78B964EB1166489000831780 /* NSStringHelper.m in Sources */,
+				78B964EC1166489000831780 /* UnicodeHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
