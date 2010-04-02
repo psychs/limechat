@@ -88,8 +88,8 @@ class DccManager < NSObject
 
   def validateMenuItem(i)
     if i.tag < 3100
-      return false if @receiver_table.countSelectedRows == 0
-      sel = @receiver_table.selectedRows
+      return false if @receiver_table.countselectedRowIndexes.to_a == 0
+      sel = @receiver_table.selectedRowIndexes.to_a
       sel = sel.map {|e| @receivers[e]}
       case i.tag
       when 3001 # start
@@ -108,8 +108,8 @@ class DccManager < NSObject
         false
       end
     else
-      return false if @sender_table.countSelectedRows == 0
-      sel = @sender_table.selectedRows
+      return false if @sender_table.countselectedRowIndexes.to_a == 0
+      sel = @sender_table.selectedRowIndexes.to_a
       sel = sel.map {|e| @senders[e]}
       case i.tag
       when 3101 # start
@@ -125,28 +125,28 @@ class DccManager < NSObject
   end
   
   def startReceiver(sender)
-    sel = @receiver_table.selectedRows
+    sel = @receiver_table.selectedRowIndexes.to_a
     sel = sel.map {|i| @receivers[i]}
     sel.each {|i| i.open}
     reload_receiver_table
   end
   
   def stopReceiver(sender)
-    sel = @receiver_table.selectedRows
+    sel = @receiver_table.selectedRowIndexes.to_a
     sel = sel.map {|i| @receivers[i]}
     sel.each {|i| i.close}
     reload_receiver_table
   end
   
   def deleteReceiver(sender)
-    sel = @receiver_table.selectedRows
+    sel = @receiver_table.selectedRowIndexes.to_a
     sel = sel.map {|i| @receivers[i]}
     sel.each {|i| delete_receiver(i)}
     reload_receiver_table
   end
   
   def openReceiver(sender)
-    sel = @receiver_table.selectedRows
+    sel = @receiver_table.selectedRowIndexes.to_a
     sel = sel.map {|i| @receivers[i]}
     sel = sel.select {|i| i.status == :complete}
     return if sel.empty?
@@ -154,7 +154,7 @@ class DccManager < NSObject
   end
   
   def revealReceivedFileInFinder(sender)
-    sel = @receiver_table.selectedRows
+    sel = @receiver_table.selectedRowIndexes.to_a
     sel = sel.map {|i| @receivers[i]}
     sel = sel.select {|i| i.status == :complete || i.status == :error}
     return if sel.empty?
@@ -162,7 +162,7 @@ class DccManager < NSObject
   end
   
   def startSender(sender)
-    sel = @sender_table.selectedRows
+    sel = @sender_table.selectedRowIndexes.to_a
     sel = sel.map {|i| @senders[i]}
     sel.each do |i|
       u = @world.find_client_by_id(i.uid)
@@ -176,14 +176,14 @@ class DccManager < NSObject
   end
   
   def stopSender(sender)
-    sel = @sender_table.selectedRows
+    sel = @sender_table.selectedRowIndexes.to_a
     sel = sel.map {|i| @senders[i]}
     sel.each {|i| i.close}
     reload_sender_table
   end
   
   def deleteSender(sender)
-    sel = @sender_table.selectedRows
+    sel = @sender_table.selectedRowIndexes.to_a
     sel = sel.map {|i| @senders[i]}
     sel.each {|i| delete_sender(i)}
     reload_sender_table

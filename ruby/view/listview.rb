@@ -2,7 +2,7 @@
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
 class ListView < NSTableView
-  attr_accessor :key_delegate, :text_delegate
+  attr_accessor :keyDelegate, :text_delegate
   
   def countSelectedRows
     selectedRowIndexes.count.to_i
@@ -48,29 +48,29 @@ class ListView < NSTableView
   end
   
   def keyDown(e)
-    if @key_delegate
+    if @keyDelegate
       case e.keyCode
       when 51,117
-        if @key_delegate.respond_to?(:listView_delete)
+        if @keyDelegate.respond_to?(:listView_delete)
           sel = selectedRows[0]
           if sel
-            @key_delegate.listView_delete(self)
+            @keyDelegate.listView_delete(self)
             return
           end
         end
       when 126
-        if @key_delegate.respond_to?(:listView_moveUp)
+        if @keyDelegate.respond_to?(:listView_moveUp)
           sel = selectedRows[0]
           if sel && sel == 0
-            @key_delegate.listView_moveUp(self)
+            @keyDelegate.listView_moveUp(self)
             return
           end
         end
       when 123..125 # cursor keys
       when 116,121  # page up/down
       else
-        if @key_delegate.respond_to?(:listView_keyDown)
-          @key_delegate.listView_keyDown(e)
+        if @keyDelegate.respond_to?(:listView_keyDown)
+          @keyDelegate.listView_keyDown(e)
           return
         end
       end

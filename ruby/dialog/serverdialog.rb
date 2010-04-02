@@ -160,7 +160,7 @@ class ServerDialog < NSObject
   
   def update_channels_page
     t = @channelsTable
-    sel = t.selectedRows[0]
+    sel = t.selectedRowIndexes.to_a[0]
     unless sel
       @editButton.setEnabled(false)
       @deleteButton.setEnabled(false)
@@ -223,7 +223,7 @@ class ServerDialog < NSObject
   	pboard = info.draggingPasteboard
   	return false unless op == NSTableViewDropAbove && pboard.availableTypeFromArray(TABLE_ROW_TYPES)
     ary = @c.channels
-    sel = @channelsTable.selectedRows.map {|i| ary[i.to_i] }
+    sel = @channelsTable.selectedRowIndexes.to_a.map {|i| ary[i.to_i] }
     
     targets = pboard.propertyListForType(TABLE_ROW_TYPE).to_a.map {|i| ary[i.to_i] }
     low = ary[0...row] || []
@@ -243,7 +243,7 @@ class ServerDialog < NSObject
   end
 
   def onAdd(sender)
-    sel = @channelsTable.selectedRows[0]
+    sel = @channelsTable.selectedRowIndexes.to_a[0]
     conf = sel ? @c.channels[sel] : IRCChannelConfig.new
     @sheet = ChannelDialog.alloc.init
     @sheet.delegate = self
@@ -251,7 +251,7 @@ class ServerDialog < NSObject
   end
   
   def onEdit(sender)
-    sel = @channelsTable.selectedRows[0]
+    sel = @channelsTable.selectedRowIndexes.to_a[0]
     return unless sel
     conf = @c.channels[sel]
     @sheet = ChannelDialog.alloc.init
@@ -275,7 +275,7 @@ class ServerDialog < NSObject
   end
   
   def onDelete(sender)
-    sel = @channelsTable.selectedRows[0]
+    sel = @channelsTable.selectedRowIndexes.to_a[0]
     return unless sel
     @c.channels.delete_at(sel)
     count = @c.channels.size

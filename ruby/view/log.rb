@@ -61,7 +61,7 @@ class LogController < NSObject
     @view.setUIDelegate(@policy)
     @view.setPolicyDelegate(@policy)
     @view.setResourceLoadDelegate(self)
-    @view.key_delegate = self
+    @view.keyDelegate = self
     @view.resize_delegate = self
     @view.setAutoresizingMask(NSViewWidthSizable | NSViewHeightSizable)
     @view.mainFrame.loadHTMLString_baseURL(initial_document, @theme.log.baseurl)

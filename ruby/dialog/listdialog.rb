@@ -52,7 +52,7 @@ class ListDialog < NSObject
   
   ib_action :onJoin
   def onJoin(sender)
-    i = @table.selectedRows[0]
+    i = @table.selectedRowIndexes.to_a[0]
     if i
       if @filter.nil?
         list = @list

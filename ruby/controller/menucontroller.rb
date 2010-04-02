@@ -201,7 +201,7 @@ class MenuController < NSObject
     if nick_menu?(sender)
       !!@nick
     else
-      @member_list.countSelectedRows > 0
+      @member_list.countselectedRowIndexes.to_a > 0
     end
   end
 
@@ -219,7 +219,7 @@ class MenuController < NSObject
       m = c.find_member(@nick)
       m ? [m] : []
     else
-      @member_list.selectedRows.map {|i| c.members[i.to_i] }
+      @member_list.selectedRowIndexes.to_a.map {|i| c.members[i.to_i] }
     end
   end
 
@@ -850,7 +850,7 @@ class MenuController < NSObject
     pt = sender.convertPoint_fromView(pt, nil)
     n = sender.rowAtPoint(pt)
     if n >= 0
-      if sender.selectedRows.size > 1
+      if sender.selectedRowIndexes.to_a.size > 1
         sender.select(n)
       end
       whois_selected_members(nil, false)

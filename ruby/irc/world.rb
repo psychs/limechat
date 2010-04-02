@@ -867,7 +867,7 @@ class IRCWorld < NSObject
     reload_tree
     if @selected
       i = @tree.rowForItem(sel)
-      @tree.select(i, true)
+      @tree.select(i)
     end
   end
 

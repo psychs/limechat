@@ -5,7 +5,7 @@ require 'listview'
 require 'user'
 
 class MemberListView < ListView
-  attr_accessor :key_delegate, :drop_delegate
+  attr_accessor :keyDelegate, :drop_delegate
   attr_writer :theme
   
   def initialize
@@ -17,12 +17,12 @@ class MemberListView < ListView
   end
   
   def keyDown(e)
-    if @key_delegate
+    if @keyDelegate
       case e.keyCode
       when 123..126 # cursor keys
       when 116,121  # page up/down
       else
-        @key_delegate.memberListView_keyDown(e)
+        @keyDelegate.memberListView_keyDown(e)
         return
       end
     end

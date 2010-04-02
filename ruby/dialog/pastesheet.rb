@@ -29,7 +29,7 @@ class PasteSheet < CocoaSheet
     @commandPopup.selectItemWithTag(syntax_to_tag(cmd))
     @text.textStorage.setAttributedString(NSAttributedString.alloc.initWithString(str))
     @sheet.setContentSize(size) if size
-    @sheet.key_delegate = self
+    @sheet.keyDelegate = self
   end
   
   def shutdown(button)

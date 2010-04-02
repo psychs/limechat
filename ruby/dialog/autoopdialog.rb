@@ -127,7 +127,7 @@ class AutoOpDialog < NSObject
     masks = @sel.autoop
     i = masks.index(s)
     return if i
-    i = @list.selectedRows[0]
+    i = @list.selectedRowIndexes.to_a[0]
     return unless i
     masks[i] = s
     masks.sort!
@@ -138,7 +138,7 @@ class AutoOpDialog < NSObject
   end
   
   def onDelete(sender)
-    i = @list.selectedRows[0]
+    i = @list.selectedRowIndexes.to_a[0]
     return unless i
     masks = @sel.autoop
     masks.delete_at(i)
@@ -155,13 +155,13 @@ class AutoOpDialog < NSObject
   # window
   
   def dialogWindow_moveDown
-    i = @tree.selectedRows[0]
+    i = @tree.selectedRowIndexes.to_a[0]
     @tree.select(i+1) if i
     @edit.focus
   end
   
   def dialogWindow_moveUp
-    i = @tree.selectedRows[0]
+    i = @tree.selectedRowIndexes.to_a[0]
     @tree.select(i-1) if i && i > 0
     @edit.focus
   end
@@ -200,7 +200,7 @@ class AutoOpDialog < NSObject
   end
   
   def outlineViewSelectionDidChange(notification)
-    i = @tree.selectedRows[0]
+    i = @tree.selectedRowIndexes.to_a[0]
     @sel = i ? @tree.itemAtRow(i) : nil
     @list.deselectAll(self)
     @list.scrollRowToVisible(0)
@@ -227,7 +227,7 @@ class AutoOpDialog < NSObject
   end
   
   def tableViewSelectionDidChange(n)
-    i = @list.selectedRows[0]
+    i = @list.selectedRowIndexes.to_a[0]
     if i
       s = @sel.autoop[i]
       @edit.setStringValue(s)
@@ -256,7 +256,7 @@ class AutoOpDialog < NSObject
     case selector
     when 'moveDown:'
       if @sel.autoop.size > 0
-        sel = @list.selectedRows[0]
+        sel = @list.selectedRowIndexes.to_a[0]
         @list.select(0) unless sel
         @window.makeFirstResponder(@list)
       end
@@ -300,12 +300,12 @@ class AutoOpDialog < NSObject
       @overwriteButton.setEnabled(false)
       return
     end
-    i = @list.selectedRows[0]
+    i = @list.selectedRowIndexes.to_a[0]
     @overwriteButton.setEnabled(!!i)
   end
   
   def update_deleteButton
-    i = @list.selectedRows[0]
+    i = @list.selectedRowIndexes.to_a[0]
     @deleteButton.setEnabled(!!i)
   end
 end

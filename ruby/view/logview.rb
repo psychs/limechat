@@ -2,10 +2,10 @@
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
 class LogView < WebView
-  attr_accessor :key_delegate, :resize_delegate
+  attr_accessor :keyDelegate, :resize_delegate
   
   def keyDown(e)
-    @key_delegate.logView_keyDown(e) if @key_delegate
+    @keyDelegate.logView_keyDown(e) if @keyDelegate
   end
   
   def setFrame(rect)

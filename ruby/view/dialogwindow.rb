@@ -2,10 +2,10 @@
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
 class DialogWindow < NSWindow
-  attr_accessor :key_delegate
+  attr_accessor :keyDelegate
   
   def sendEvent(e)
-    if @key_delegate
+    if @keyDelegate
       if e.oc_type == NSKeyDown
         k = e.keyCode
         m = e.modifierFlags
@@ -18,13 +18,13 @@ class DialogWindow < NSWindow
           # none
           case k
           when 53 # esc
-            if @key_delegate.respond_to?(:dialogWindow_escape)
-              @key_delegate.dialogWindow_escape
+            if @keyDelegate.respond_to?(:dialogWindow_escape)
+              @keyDelegate.dialogWindow_escape
               return
             end
           when 76 #enter
-            if @key_delegate.respond_to?(:dialogWindow_enter)
-              @key_delegate.dialogWindow_enter
+            if @keyDelegate.respond_to?(:dialogWindow_enter)
+              @keyDelegate.dialogWindow_enter
               return
             end
           end
@@ -32,13 +32,13 @@ class DialogWindow < NSWindow
           # cmd or ctrl
           case k
           when 125 #down
-            if @key_delegate.respond_to?(:dialogWindow_moveDown)
-              @key_delegate.dialogWindow_moveDown
+            if @keyDelegate.respond_to?(:dialogWindow_moveDown)
+              @keyDelegate.dialogWindow_moveDown
               return
             end
           when 126 #up
-            if @key_delegate.respond_to?(:dialogWindow_moveUp)
-              @key_delegate.dialogWindow_moveUp
+            if @keyDelegate.respond_to?(:dialogWindow_moveUp)
+              @keyDelegate.dialogWindow_moveUp
               return
             end
           end

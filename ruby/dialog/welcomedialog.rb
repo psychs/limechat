@@ -73,7 +73,7 @@ class WelcomeDialog < NSObject
 
   ib_action :onDeleteChannel
   def onDeleteChannel(sender)
-    n = @channelTable.selectedRows[0]
+    n = @channelTable.selectedRowIndexes.to_a[0]
     if n
       @channels.delete_at(n)
       @channelTable.reloadData
@@ -93,7 +93,7 @@ class WelcomeDialog < NSObject
   end
   
   def tableViewSelectionIsChanging(note)
-    @deleteChannelButton.setEnabled(!@channelTable.selectedRows.empty?)
+    @deleteChannelButton.setEnabled(!@channelTable.selectedRowIndexes.to_a.empty?)
   end
   
   def textDidEndEditing(note)
