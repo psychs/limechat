@@ -39,8 +39,6 @@
 {
 	[self init];
 	
-	tag += 1000;
-	
 	conn = [socket retain];
 	conn.delegate = self;
 	[conn setUserData:[NSNumber numberWithInt:tag]];
