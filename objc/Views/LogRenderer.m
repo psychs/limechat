@@ -71,13 +71,13 @@ NSString* renderRange(NSString* body, flag_t attr, int start, int len)
 		exactWordMatch:(BOOL)exactWordMatch
 {
 	int len = body.length;
-	int start = 0;
 	flag_t attr[len];
-	memset(attr, 0, len*sizeof(flag_t));
+	memset(attr, 0, len * sizeof(flag_t));
 	
 	//
 	// URLs
 	//
+	int start = 0;
 	while (start < len) {
 		NSRange r = [body rangeOfUrlStart:start];
 		if (r.location == NSNotFound) {
