@@ -17,13 +17,13 @@
 #define EFFECT_ATTR				(BOLD_ATTR | UNDERLINE_ATTR | ITALIC_ATTR | COLOR_ATTR)
 
 
-typedef uint16_t flag_t;
+typedef uint16_t attr_t;
 
 
-void setFlag(flag_t* attrBuf, flag_t flag, int start, int len)
+void setFlag(attr_t* attrBuf, attr_t flag, int start, int len)
 {
-	flag_t* target = attrBuf + start;
-	flag_t* end = target + len;
+	attr_t* target = attrBuf + start;
+	attr_t* end = target + len;
 	
 	while (target < end) {
 		*target |= flag;
@@ -31,12 +31,12 @@ void setFlag(flag_t* attrBuf, flag_t flag, int start, int len)
 	}
 }
 
-int getNextAttributeRange(flag_t* attrBuf, int start, int len)
+int getNextAttributeRange(attr_t* attrBuf, int start, int len)
 {
-	flag_t target = attrBuf[start];
+	attr_t target = attrBuf[start];
 	
 	for (int i=start; i<len; ++i) {
-		flag_t t = attrBuf[i];
+		attr_t t = attrBuf[i];
 		if (t != target) {
 			return i - start;
 		}
@@ -45,7 +45,7 @@ int getNextAttributeRange(flag_t* attrBuf, int start, int len)
 	return len - start;
 }
 
-NSString* renderRange(NSString* body, flag_t attr, int start, int len)
+NSString* renderRange(NSString* body, attr_t attr, int start, int len)
 {
 	NSString* content = [body substringWithRange:NSMakeRange(start, len)];
 	
@@ -71,8 +71,8 @@ NSString* renderRange(NSString* body, flag_t attr, int start, int len)
 		exactWordMatch:(BOOL)exactWordMatch
 {
 	int len = body.length;
-	flag_t attrBuf[len];
-	memset(attrBuf, 0, len * sizeof(flag_t));
+	attr_t attrBuf[len];
+	memset(attrBuf, 0, len * sizeof(attr_t));
 	
 	//
 	// URLs
@@ -98,7 +98,7 @@ NSString* renderRange(NSString* body, flag_t attr, int start, int len)
 		int n = getNextAttributeRange(attrBuf, start, len);
 		if (n <= 0) break;
 		
-		flag_t t = attrBuf[start];
+		attr_t t = attrBuf[start];
 		NSString* s = renderRange(body, t, start, n);
 		[result appendString:s];
 		
