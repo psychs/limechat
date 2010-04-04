@@ -108,6 +108,7 @@
 		78BC0C5F1168E5D900A984AA /* IRCSendingMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 78BC0C5B1168E5D900A984AA /* IRCSendingMessage.m */; };
 		78BC0CD81168E7B000A984AA /* IconController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78BC0CD71168E7B000A984AA /* IconController.m */; };
 		78BC0D1D1168EBA600A984AA /* TinyGrowlClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 78BC0D1C1168EBA600A984AA /* TinyGrowlClient.m */; };
+		78BC0D5B1168F06E00A984AA /* FileLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 78BC0D5A1168F06E00A984AA /* FileLogger.m */; };
 		78BF64AB0C2885E2004451B2 /* channel.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78BF64A30C2885E2004451B2 /* channel.rb */; };
 		78BF64AC0C2885E2004451B2 /* channelmode.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78BF64A40C2885E2004451B2 /* channelmode.rb */; };
 		78BF64AD0C2885E2004451B2 /* config.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78BF64A50C2885E2004451B2 /* config.rb */; };
@@ -306,6 +307,8 @@
 		78BC0CD71168E7B000A984AA /* IconController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IconController.m; sourceTree = "<group>"; };
 		78BC0D1B1168EBA600A984AA /* TinyGrowlClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TinyGrowlClient.h; sourceTree = "<group>"; };
 		78BC0D1C1168EBA600A984AA /* TinyGrowlClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TinyGrowlClient.m; sourceTree = "<group>"; };
+		78BC0D591168F06E00A984AA /* FileLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileLogger.h; sourceTree = "<group>"; };
+		78BC0D5A1168F06E00A984AA /* FileLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileLogger.m; sourceTree = "<group>"; };
 		78BF64A30C2885E2004451B2 /* channel.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = channel.rb; sourceTree = "<group>"; };
 		78BF64A40C2885E2004451B2 /* channelmode.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = channelmode.rb; sourceTree = "<group>"; };
 		78BF64A50C2885E2004451B2 /* config.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = config.rb; sourceTree = "<group>"; };
@@ -564,6 +567,8 @@
 				78BC0CD71168E7B000A984AA /* IconController.m */,
 				78BC0D1B1168EBA600A984AA /* TinyGrowlClient.h */,
 				78BC0D1C1168EBA600A984AA /* TinyGrowlClient.m */,
+				78BC0D591168F06E00A984AA /* FileLogger.h */,
+				78BC0D5A1168F06E00A984AA /* FileLogger.m */,
 			);
 			name = Library;
 			path = objc/Library;
@@ -901,6 +906,7 @@
 				78BC0C5F1168E5D900A984AA /* IRCSendingMessage.m in Sources */,
 				78BC0CD81168E7B000A984AA /* IconController.m in Sources */,
 				78BC0D1D1168EBA600A984AA /* TinyGrowlClient.m in Sources */,
+				78BC0D5B1168F06E00A984AA /* FileLogger.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

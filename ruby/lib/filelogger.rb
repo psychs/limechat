@@ -4,7 +4,7 @@
 require 'pathname'
 require 'utility'
 
-class FileLogger
+class AFileLogger
   
   def initialize(client, channel)
     @client = client
@@ -18,14 +18,14 @@ class FileLogger
     end
   end
   
-  def write_line(s)
+  def writeLine(s)
     open unless @file
     if @file
       @file.writeData(NSData.dataWithRubyString(s + "\n"))
     end
   end
   
-  def reopen_if_needed
+  def reopenIfNeeded
     open if @fname != build_filename
   end
 

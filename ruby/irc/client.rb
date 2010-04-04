@@ -1367,7 +1367,7 @@ class IRCClient < NSObject
     @login = true
     @trying_nick = -1
     @pong_timer = PONG_TIME
-    @server_hostname = m.sender
+    @server_hostname = m.sender.raw
     @mynick = m.paramAt(0).to_s
     @mymode.clear
     @who_queue = []
@@ -1719,7 +1719,7 @@ class IRCClient < NSObject
   
   def receive_kill(m)
     sender = m.sender.nick.to_s
-    sender = m.sender if !sender || sender.empty?
+    sender = m.sender.raw if !sender || sender.empty?
     target = m.paramAt(0).to_s
     comment = m.paramAt(1).to_s
     
@@ -1870,7 +1870,7 @@ class IRCClient < NSObject
   
   def receive_wallops(m)
     sender = m.sender.nick.to_s
-    sender = m.sender if !sender || sender.empty?
+    sender = m.sender.raw if !sender || sender.empty?
     comment = m.paramAt(0).to_s
     print_both(self, :wallops, "Wallops: #{comment}")
   end

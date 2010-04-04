@@ -327,11 +327,13 @@ class IRCChannel < NSObject
     unless @terminating
       if preferences.general.log_transcript
         unless @logfile
-          @logfile = FileLogger.new(@client, self)
+          @logfile = FileLogger.alloc.init
+          @logfile.client = @client
+          @logfile.channel = self
         end
         nickstr = line.nick ? "#{line.nick_info}: " : ""
         s = "#{line.time}#{nickstr}#{line.body}"
-        @logfile.write_line(s)
+        @logfile.writeLine(s)
       end
     end
     
@@ -392,7 +394,7 @@ class IRCChannel < NSObject
   def preferences_changed
     if @logfile
       if preferences.general.log_transcript
-        @logfile.reopen_if_needed
+        @logfile.reopenIfNeeded
       else
         close_logfile
       end
@@ -401,7 +403,7 @@ class IRCChannel < NSObject
   end
   
   def date_changed
-    @logfile.reopen_if_needed if @logfile
+    @logfile.reopenIfNeeded if @logfile
   end
   
   private

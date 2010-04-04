@@ -183,7 +183,7 @@ class LogController < NSObject
         attrs['ondblclick'] = 'on_dblclick()'
       end
     end
-    write_line(s, attrs)
+    writeLine(s, attrs)
     key
   end
 
@@ -535,7 +535,7 @@ class LogController < NSObject
     @scroller.setNeedsDisplay(true) if @scroller
   end
 
-  def write_line(html, attrs)
+  def writeLine(html, attrs)
     save_position
     @line_number += 1
     @count += 1
