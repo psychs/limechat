@@ -72,7 +72,6 @@
 		784BBE971085BC950080898B /* redstar.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 784BBE931085BC950080898B /* redstar.tiff */; };
 		7870BA490E111BD0004B30B4 /* iconcontroller.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7870BA480E111BD0004B30B4 /* iconcontroller.rb */; };
 		78755D730C2AC0B30073FF42 /* logrenderer.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78755D720C2AC0B30073FF42 /* logrenderer.rb */; };
-		787817C80D860ED30049CF95 /* unicodeutil.rb in Resources */ = {isa = PBXBuildFile; fileRef = 787817C70D860ED30049CF95 /* unicodeutil.rb */; };
 		787898250CF38C510045585B /* filelogger.rb in Resources */ = {isa = PBXBuildFile; fileRef = 787898240CF38C510045585B /* filelogger.rb */; };
 		78835406109FEA7F00CD2FFF /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78835405109FEA7F00CD2FFF /* SystemConfiguration.framework */; };
 		7884E54E0CDA91F500AF3678 /* SACrashReporter in Resources */ = {isa = PBXBuildFile; fileRef = 7884E5450CDA91F500AF3678 /* SACrashReporter */; };
@@ -237,7 +236,6 @@
 		784BBE931085BC950080898B /* redstar.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = redstar.tiff; sourceTree = "<group>"; };
 		7870BA480E111BD0004B30B4 /* iconcontroller.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = iconcontroller.rb; sourceTree = "<group>"; };
 		78755D720C2AC0B30073FF42 /* logrenderer.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = logrenderer.rb; sourceTree = "<group>"; };
-		787817C70D860ED30049CF95 /* unicodeutil.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = unicodeutil.rb; sourceTree = "<group>"; };
 		787898240CF38C510045585B /* filelogger.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = filelogger.rb; sourceTree = "<group>"; };
 		787FD46C0BFE960100F2F22D /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		78835405109FEA7F00CD2FFF /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = /System/Library/Frameworks/SystemConfiguration.framework; sourceTree = "<absolute>"; };
@@ -468,7 +466,6 @@
 		78229BA70C288188001DD4C3 /* lib */ = {
 			isa = PBXGroup;
 			children = (
-				787817C70D860ED30049CF95 /* unicodeutil.rb */,
 				78208C190C9D97CD004472E9 /* cocoasheet.rb */,
 				7834E1920C69B5AD003C5D65 /* wildcard.rb */,
 				7831B94C0C589A7A00E1F931 /* growl.rb */,
@@ -787,7 +784,6 @@
 				7896BFE50D0C5E850069453A /* viewtheme.rb in Resources */,
 				7801DD2E0D1AF75F00D8691D /* isupportinfo.rb in Resources */,
 				7889CABF0D647494003D808E /* welcomedialog.rb in Resources */,
-				787817C80D860ED30049CF95 /* unicodeutil.rb in Resources */,
 				7870BA490E111BD0004B30B4 /* iconcontroller.rb in Resources */,
 				510D9F6D0EC4FE9900D3BEFB /* abstract_preferences.rb in Resources */,
 				51C39169103A18A9009DEFBF /* cocoa_gist.rb in Resources */,
