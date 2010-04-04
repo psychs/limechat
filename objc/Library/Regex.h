@@ -22,7 +22,7 @@ typedef enum {
 }
 
 - (id)initWithString:(NSString*)pattern;
-- (id)initWithString:(NSString*)pattern option:(URegexOption)option;
+- (id)initWithString:(NSString*)pattern options:(URegexOption)options;
 
 - (NSRange)match:(NSString*)string;
 - (NSRange)match:(NSString*)string start:(int)start;

@@ -523,18 +523,18 @@
 		78364B15116597D00096F3A9 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				78B964E41166489000831780 /* NSDictionaryHelper.h */,
-				78B964E51166489000831780 /* NSDictionaryHelper.m */,
 				78B964E61166489000831780 /* NSStringHelper.h */,
 				78B964E71166489000831780 /* NSStringHelper.m */,
-				78B964E81166489000831780 /* UnicodeHelper.h */,
-				78B964E91166489000831780 /* UnicodeHelper.m */,
+				78B964E41166489000831780 /* NSDictionaryHelper.h */,
+				78B964E51166489000831780 /* NSDictionaryHelper.m */,
 				78C1E7751168559400AC305B /* NSArrayHelper.h */,
 				78C1E7761168559400AC305B /* NSArrayHelper.m */,
-				78C1E86F1168635500AC305B /* SoundPlayer.h */,
-				78C1E8701168635500AC305B /* SoundPlayer.m */,
 				78AFC92611687C5400C64197 /* NSDataHelper.h */,
 				78AFC92711687C5400C64197 /* NSDataHelper.m */,
+				78B964E81166489000831780 /* UnicodeHelper.h */,
+				78B964E91166489000831780 /* UnicodeHelper.m */,
+				78C1E86F1168635500AC305B /* SoundPlayer.h */,
+				78C1E8701168635500AC305B /* SoundPlayer.m */,
 				78AFC9C41168895200C64197 /* GTMDefines.h */,
 				78AFC9C51168895200C64197 /* GTMGarbageCollection.h */,
 				78AFC9C61168895200C64197 /* GTMNSString+HTML.h */,
@@ -679,10 +679,10 @@
 			isa = PBXGroup;
 			children = (
 				78364B14116597D00096F3A9 /* Controllers */,
-				78364B15116597D00096F3A9 /* Helpers */,
-				78364B16116597D00096F3A9 /* Library */,
 				78364B1F116597D00096F3A9 /* Models */,
 				78364B25116597D00096F3A9 /* Views */,
+				78364B16116597D00096F3A9 /* Library */,
+				78364B15116597D00096F3A9 /* Helpers */,
 				78364B20116597D00096F3A9 /* Others */,
 			);
 			name = objc;

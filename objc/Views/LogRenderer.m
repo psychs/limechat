@@ -1,4 +1,5 @@
 #import "LogRenderer.h"
+#import "Regex.h"
 #import "NSStringHelper.h"
 #import "GTMNSString+HTML.h"
 
@@ -61,8 +62,15 @@ NSString* renderRange(NSString* body, attr_t attr, int start, int len)
 }
 
 
+Regex* addressRegex;
+
 
 @implementation LogRenderer
+
++ (void)setUp
+{
+	addressRegex = [[Regex alloc] initWithString:@""];
+}
 
 + (NSArray*)renderBody:(NSString*)body
 			  keywords:(NSArray*)keywords

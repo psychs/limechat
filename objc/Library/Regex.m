@@ -37,10 +37,10 @@ const char* u_errorName(UErrorCode status);
 
 - (id)initWithString:(NSString*)pattern
 {
-	return [self initWithString:pattern option:0];
+	return [self initWithString:pattern options:0];
 }
 
-- (id)initWithString:(NSString*)pattern option:(URegexOption)option
+- (id)initWithString:(NSString*)pattern options:(URegexOption)options
 {
 	[self init];
 	
@@ -49,7 +49,7 @@ const char* u_errorName(UErrorCode status);
 	CFStringGetCharacters((CFStringRef)pattern, CFRangeMake(0, len), buf);
 	
 	int32_t status = 0;
-	regex = uregex_open(buf, len, option, NULL, &status);
+	regex = uregex_open(buf, len, options, NULL, &status);
 	
 	return self;
 }

@@ -1,5 +1,6 @@
 #import "NSStringHelper.h"
 #import "UnicodeHelper.h"
+#import "Regex.h"
 
 
 @implementation NSString (NSStringHelper)
@@ -234,111 +235,62 @@ BOOL isUnicharDigit(unichar c)
 {
 	if (self.length <= start) return NSMakeRange(NSNotFound, 0);
 	
-	NSRange r = [self rangeOfString:@"http" options:NSCaseInsensitiveSearch range:NSMakeRange(start, self.length - start)];
+	static Regex* schemeRegex = nil;
+	if (!schemeRegex) {
+		NSString* pattern = @"(https?|ftp|itms)://[^\\s!\"#$&'()*+,/;<=>?\\[\\\\\\]^_`{|}　、，。．・…]+(/[^\\s\"'`<>　、，。．・…]*)?";
+		schemeRegex = [[Regex alloc] initWithString:pattern options:UREGEX_CASE_INSENSITIVE];
+	}
+	
+	NSRange r = [schemeRegex match:self start:start];
+	[schemeRegex reset];
 	if (r.location == NSNotFound) return r;
-	
-	int n = NSMaxRange(r);
-	if (self.length <= n) return NSMakeRange(NSNotFound, 0);
-	
-	UniChar c = [self characterAtIndex:n];
-	if (c == 's' || c == 'S') {
-		n++;
-		if (self.length <= n) return NSMakeRange(NSNotFound, 0);
-		c = [self characterAtIndex:n];
-	}
-	
-	if (c != ':') return [self rangeOfUrlStart:n];
-	n++;
-	if (self.length <= n) return NSMakeRange(NSNotFound, 0);
-	c = [self characterAtIndex:n];
-	
-	if (c != '/') return [self rangeOfUrlStart:n];
-	n++;
-	if (self.length <= n) return NSMakeRange(NSNotFound, 0);
-	c = [self characterAtIndex:n];
-	
-	if (c != '/') return [self rangeOfUrlStart:n];
-	n++;
-	if (self.length <= n) return NSMakeRange(NSNotFound, 0);
-	
-	
-	int paren = 0;
-	int end = -1;
-	BOOL foundSlash = NO;
-	BOOL allowIdeograph = NO;
-	
-	for (int i=n,size=self.length; i<size; i++) {
-		c = [self characterAtIndex:i];
-		if (c <= 0x20 || c == '<' || c == '>') {
-			end = i;
-			break;
-		}
-		else if (c == '(') {
-			paren++;
-		}
-		else if (c == ')') {
-			paren--;
-		}
-		else if (c == '/') {
-			foundSlash = YES;
-		}
-		else {
-			if (allowIdeograph) {
-				if ([UnicodeHelper isPrivate:c]) {
-					end = i;
-					break;
-				}
-			}
-			else if (foundSlash) {
-				if ([UnicodeHelper isIdeographicOrPrivate:c]) {
-					end = i;
-					break;
-				}
-			}
-			else {
-				if ([UnicodeHelper isPrivate:c]) {
-					end = i;
-					break;
-				}
-				else if ([UnicodeHelper isIdeographic:c]) {
-					allowIdeograph = YES;
-				}
-			}
-		}
-	}
-	
-	if (end < 0) {
-		r = NSMakeRange(r.location, self.length-r.location);
-	}
-	else {
-		r = NSMakeRange(r.location, end-r.location);
-	}
 	
 	NSString* url = [self substringWithRange:r];
 	
-	if ([url hasSuffix:@")."]) {
-		r.length -= 2;
-		++paren;
-		url = [url substringToIndex:url.length - 2];
-	}
-	else if ([url hasSuffix:@"),"]) {
-		r.length -= 2;
-		++paren;
-		url = [url substringToIndex:url.length - 2];
-	}
-	else if ([url hasSuffix:@"."]) {
-		--r.length;
-		url = [url substringToIndex:url.length - 1];
-	}
-	else if ([url hasSuffix:@","]) {
-		--r.length;
-		url = [url substringToIndex:url.length - 1];
+	int len = url.length;
+	UniChar buf[len];
+	CFStringGetCharacters((CFStringRef)url, CFRangeMake(0, len), buf);
+	
+	int paren = 0;
+	
+	for (int i=0; i<len; ++i) {
+		UniChar c = buf[i];
+		if (c == ')') {
+			--paren;
+		}
+		else if (c == '(') {
+			++paren;
+		}
 	}
 	
-	while ([url hasSuffix:@")"] && paren < 0) {
-		--r.length;
-		++paren;
-		url = [url substringToIndex:url.length - 1];
+	if (paren < 0) {
+		// too much ')'
+		for (int i=len-1; i>=0; --i) {
+			UniChar c = buf[i];
+			if (c == ')') {
+				++paren;
+				if (paren == 0) {
+					len = i;
+					r.length = len;
+					break;
+				}
+			}
+			else if (c == '(') {
+				--paren;
+			}
+		}
+	}
+	
+	for (int i=len-1; i>=0; --i) {
+		UniChar c = buf[i];
+		if (c == '.' || c == ',' || c == '?') {
+			;
+		}
+		else {
+			len = i + 1;
+			r.length = len;
+			break;
+		}
 	}
 	
 	return r;
