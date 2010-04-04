@@ -5,21 +5,22 @@
 #import "UnicodeHelper.h"
 
 
-#define URL_ATTR				(1 << 15)
-#define ADDRESS_ATTR			(1 << 14)
-#define CHANNEL_NAME_ATTR		(1 << 13)
-#define KEYWORD_ATTR			(1 << 12)
-#define BOLD_ATTR				(1 << 11)
-#define UNDERLINE_ATTR			(1 << 10)
-#define ITALIC_ATTR				(1 <<  9)
-#define COLOR_ATTR				(1 <<  8)
+#define URL_ATTR				(1 << 31)
+#define ADDRESS_ATTR			(1 << 30)
+#define CHANNEL_NAME_ATTR		(1 << 29)
+#define KEYWORD_ATTR			(1 << 28)
+#define BOLD_ATTR				(1 << 27)
+#define UNDERLINE_ATTR			(1 << 26)
+#define ITALIC_ATTR				(1 << 25)
+#define TEXT_COLOR_ATTR			(1 << 24)
+#define BACKGROUND_COLOR_ATTR	(1 << 23)
 #define BACKGROUND_COLOR_MASK	(0xF0)
 #define TEXT_COLOR_MASK			(0x0F)
 
-#define EFFECT_ATTR				(BOLD_ATTR | UNDERLINE_ATTR | ITALIC_ATTR | COLOR_ATTR)
+#define EFFECT_MASK				(BOLD_ATTR | UNDERLINE_ATTR | ITALIC_ATTR | TEXT_COLOR_ATTR | BACKGROUND_COLOR_ATTR)
 
 
-typedef uint16_t attr_t;
+typedef uint32_t attr_t;
 
 
 static void setFlag(attr_t* attrBuf, attr_t flag, int start, int len)
@@ -93,6 +94,19 @@ static NSString* renderRange(NSString* body, attr_t attr, int start, int len)
 		content = [content gtm_stringByEscapingForHTML];
 		return [NSString stringWithFormat:@"<span class=\"channel\" oncontextmenu=\"on_channel_contextmenu()\">%@</span>", content];
 	}
+	else if (attr & EFFECT_MASK) {
+		// effect
+		content = [content gtm_stringByEscapingForHTML];
+		NSMutableString* s = [NSMutableString stringWithString:@"<span class=\"effect\" style=\""];
+		if (attr & BOLD_ATTR) [s appendString:@"font-weight:bold;"];
+		if (attr & UNDERLINE_ATTR) [s appendString:@"text-decoration:underline;"];
+		if (attr & ITALIC_ATTR) [s appendString:@"font-style:italic;"];
+		[s appendString:@"\""];
+		if (attr & TEXT_COLOR_ATTR) [s appendFormat:@" color-number=\"%d\"", (attr & TEXT_COLOR_MASK)];
+		if (attr & BACKGROUND_COLOR_ATTR) [s appendFormat:@" bgcolor-number=\"%d\"", (attr & BACKGROUND_COLOR_MASK) >> 4];
+		[s appendFormat:@">%@</span>", content];
+		return s;
+	}
 	else {
 		return [content gtm_stringByEscapingForHTML];
 	}
@@ -120,6 +134,121 @@ static Regex* addressRegex;
 	memset(attrBuf, 0, len * sizeof(attr_t));
 	
 	int start;
+	
+	//
+	// effects
+	//
+	UniChar source[len];
+	CFStringGetCharacters((CFStringRef)body, CFRangeMake(0, len), source);
+	
+	attr_t currentAttr = 0;
+	UniChar dest[len];
+	int n = 0;
+	
+	for (int i=0; i<len; i++) {
+		UniChar c = source[i];
+		if (c < 0x20) {
+			switch (c) {
+				case 0x02:
+					if (currentAttr & BOLD_ATTR) {
+						currentAttr &= ~BOLD_ATTR;
+					}
+					else {
+						currentAttr |= BOLD_ATTR;
+					}
+					continue;
+				case 0x03:
+				{
+					int textColor = -1;
+					int backgroundColor = -1;
+					
+					// text color
+					if (i+1 < len) {
+						c = source[i+1];
+						if (IsNumeric(c)) {
+							++i;
+							textColor = c - '0';
+							if (i+1 < len) {
+								c = source[i+1];
+								if (IsNumeric(c)) {
+									++i;
+									textColor = textColor * 10 + c - '0';
+								}
+								if (i+1 < len) {
+									c = source[i+1];
+									if (c == ',') {
+										++i;
+										
+										// background color
+										if (i+1 < len) {
+											c = source[i+1];
+											if (IsNumeric(c)) {
+												++i;
+												backgroundColor = c - '0';
+												if (i+1 < len) {
+													c = source[i+1];
+													if (IsNumeric(c)) {
+														++i;
+														backgroundColor = backgroundColor * 10 + c - '0';
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+						
+						currentAttr &= ~(TEXT_COLOR_ATTR | BACKGROUND_COLOR_ATTR | 0xFF);
+
+						if (backgroundColor >= 0) {
+							backgroundColor %= 16;
+							currentAttr |= BACKGROUND_COLOR_ATTR;
+							currentAttr |= (backgroundColor << 4) & BACKGROUND_COLOR_MASK;
+						}
+						else {
+							currentAttr &= ~(BACKGROUND_COLOR_ATTR | BACKGROUND_COLOR_MASK);
+						}
+						
+						if (textColor >= 0) {
+							textColor %= 16;
+							currentAttr |= TEXT_COLOR_ATTR;
+							currentAttr |= textColor & TEXT_COLOR_MASK;
+						}
+						else {
+							currentAttr &= ~(TEXT_COLOR_ATTR | TEXT_COLOR_MASK);
+						}
+					}
+					continue;
+				}
+				case 0x0F:
+					currentAttr = 0;
+					continue;
+				case 0x16:
+					if (currentAttr & ITALIC_ATTR) {
+						currentAttr &= ~ITALIC_ATTR;
+					}
+					else {
+						currentAttr |= ITALIC_ATTR;
+					}
+					continue;
+				case 0x1F:
+					if (currentAttr & UNDERLINE_ATTR) {
+						currentAttr &= ~UNDERLINE_ATTR;
+					}
+					else {
+						currentAttr |= UNDERLINE_ATTR;
+					}
+					continue;
+			}
+		}
+		
+		attrBuf[n] = currentAttr;
+		dest[n++] = c;
+	}
+	
+	body = [[[NSString alloc] initWithCharacters:dest length:n] autorelease];
+	len = n;
 	
 	//
 	// URL
@@ -212,10 +341,6 @@ static Regex* addressRegex;
 		
 		if (highlightWholeLine && foundKeyword) break;
 	}
-	
-	//
-	// effects
-	//
 	
 	//
 	// address
