@@ -447,7 +447,7 @@ class IRCWorld < NSObject
     @icon.update(highlight, newtalk)
   end
 
-  def reload_theme
+  def reloadTheme
     @view_theme.theme = preferences.theme.name
 
     logs = [@console]
@@ -465,7 +465,7 @@ class IRCWorld < NSObject
       else
         log.overrideFont = nil
       end
-      log.reload_theme
+      log.reloadTheme
     end
 
     change_input_text_theme
@@ -501,16 +501,16 @@ class IRCWorld < NSObject
   end
 
   def preferences_changed
-    @console.max_lines = preferences.general.max_log_lines
+    @console.maxLines = preferences.general.max_log_lines
     @clients.each {|u| u.preferences_changed}
-    reload_theme
+    reloadTheme
   end
 
   def date_changed
     @clients.each {|u| u.date_changed}
   end
 
-  def change_text_size(op)
+  def changeTextSize(op)
     logs = [@console]
     @clients.each do |u|
       logs << u.log
@@ -518,7 +518,7 @@ class IRCWorld < NSObject
         logs << c.log
       end
     end
-    logs.each {|i| i.change_text_size(op)}
+    logs.each {|i| i.changeTextSize(op)}
   end
 
   def reload_plugins
@@ -882,7 +882,7 @@ class IRCWorld < NSObject
     log.client = client
     log.channel = channel
     log.keyword = preferences.keyword
-    log.max_lines = preferences.general.max_log_lines
+    log.maxLines = preferences.general.max_log_lines
     log.theme = @view_theme
     if preferences.theme.override_log_font
       log.overrideFont = [preferences.theme.log_font_name, preferences.theme.log_font_size]

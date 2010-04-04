@@ -397,7 +397,7 @@ class IRCChannel < NSObject
         close_logfile
       end
     end
-    @log.max_lines = preferences.general.max_log_lines
+    @log.maxLines = preferences.general.max_log_lines
   end
   
   def date_changed

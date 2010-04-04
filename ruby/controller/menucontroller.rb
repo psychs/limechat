@@ -509,14 +509,14 @@ class MenuController < NSObject
   def onCopyLogAsHtml(sender)
     sel = @world.selected
     return unless sel
-    s = sel.log.content_string
+    s = sel.log.contentString
     pb = NSPasteboard.generalPasteboard
     pb.declareTypes_owner([NSStringPboardType], self)
     pb.setString_forType(s, NSStringPboardType)
   end
 
   def onCopyConsoleLogAsHtml(sender)
-    s = @world.console.content_string
+    s = @world.console.contentString
     pb = NSPasteboard.generalPasteboard
     pb.declareTypes_owner([NSStringPboardType], self)
     pb.setString_forType(s, NSStringPboardType)
@@ -538,7 +538,7 @@ class MenuController < NSObject
   def onGoToMark(sender)
     sel = @world.selected
     return unless sel
-    sel.log.go_to_mark
+    sel.log.goToMark
   end
 
   def onMarkAllAsRead(sender)
@@ -552,16 +552,16 @@ class MenuController < NSObject
 
 
   def onMakeTextBigger(sender)
-    @world.change_text_size(:bigger)
+    @world.changeTextSize(:bigger)
   end
 
   def onMakeTextSmaller(sender)
-    @world.change_text_size(:smaller)
+    @world.changeTextSize(:smaller)
   end
 
 
   def onReloadTheme(sender)
-    @world.reload_theme
+    @world.reloadTheme
   end
 
 

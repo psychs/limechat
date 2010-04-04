@@ -902,7 +902,7 @@ class IRCClient < NSObject
     elsif @address_detection_method == Preferences::Dcc::ADDR_DETECT_SPECIFY
       @resolver.resolve(preferences.dcc.myaddress)
     end
-    @log.max_lines = preferences.general.max_log_lines
+    @log.maxLines = preferences.general.max_log_lines
     @channels.each {|c| c.preferences_changed}
   end
   
@@ -1091,7 +1091,7 @@ class IRCClient < NSObject
     channel = nil if channel && channel.is_a?(String)
     channel ||= self
     return false if !channel.client? && !channel.config.console
-    channel != @world.selected || !channel.log.viewing_bottom?
+    channel != @world.selected || !channel.log.viewingBottom?
   end
   
   def now

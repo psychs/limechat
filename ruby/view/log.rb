@@ -36,7 +36,7 @@ class LogController < NSObject
     @line_number = 0
     @count = 0
     @loaded = false
-    @max_lines = 300
+    @maxLines = 300
     @highlight_line_numbers = []
     @loading_images = 0
   end
@@ -67,14 +67,14 @@ class LogController < NSObject
     @view.mainFrame.loadHTMLString_baseURL(initial_document, @theme.log.baseurl)
   end
 
-  def max_lines=(n)
-    return if @max_lines == n
-    @max_lines = n
+  def maxLines=(n)
+    return if @maxLines == n
+    @maxLines = n
     return unless @loaded
 
-    if @max_lines > 0 && @count > @max_lines
+    if @maxLines > 0 && @count > @maxLines
       save_position
-      remove_first_line(@count - @max_lines)
+      remove_first_line(@count - @maxLines)
       restore_position
     end
   end
@@ -97,7 +97,7 @@ class LogController < NSObject
 
   BOTTOM_EPSILON = 20
 
-  def viewing_bottom?
+  def viewingBottom?
     return true unless @loaded
     doc = @view.mainFrame.DOMDocument
     return true unless doc
@@ -109,14 +109,14 @@ class LogController < NSObject
   end
 
   def save_position
-    @bottom = viewing_bottom?
+    @bottom = viewingBottom?
   end
 
   def restore_position
     moveToBottom if @bottom
   end
 
-  def content_string
+  def contentString
     return nil unless @loaded
     doc = @view.mainFrame.DOMDocument
     return nil unless doc
@@ -209,7 +209,7 @@ class LogController < NSObject
     end
   end
   
-  def go_to_mark
+  def goToMark
     return unless @loaded
     doc = @view.mainFrame.DOMDocument
     return unless doc
@@ -227,13 +227,13 @@ class LogController < NSObject
     end
   end
 
-  def reload_theme
+  def reloadTheme
     return unless @loaded
     doc = @view.mainFrame.DOMDocument
     return unless doc
     body = doc.body
     @html = body.innerHTML
-    @scroll_bottom = viewing_bottom?
+    @scroll_bottom = viewingBottom?
     @scroll_top = body[:scrollTop]
     #setup(@console, style)
     @view.mainFrame.loadHTMLString_baseURL(initial_document, @theme.log.baseurl)
@@ -251,7 +251,7 @@ class LogController < NSObject
     @scroller.setNeedsDisplay(true)
 	end
 
-  def change_text_size(op)
+  def changeTextSize(op)
     save_position
     if op == :bigger
       view.makeTextLarger(nil)
@@ -528,7 +528,7 @@ class LogController < NSObject
     div.setAttribute__('id', "line#{@line_number}")
     body.appendChild(div)
 
-    remove_first_line if @max_lines > 0 && @count > @max_lines
+    remove_first_line if @maxLines > 0 && @count > @maxLines
 
     if attrs['highlight'] == 'true'
       @highlight_line_numbers << @line_number
