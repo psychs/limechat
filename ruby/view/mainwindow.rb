@@ -3,17 +3,25 @@
 
 class MainWindow < NSWindow
   def initialize
-    @keyHandler = KeyEventHandler.new
+    @keyHandler = KeyEventHandler.alloc.init
   end
   
   def sendEvent(e)
     if e.oc_type == NSKeyDown
-      return if @keyHandler.process_key_event(e)
+      return if @keyHandler.processKeyEvent(e) == 1
     end
     super_sendEvent(e)
   end
   
-  def register_keyHandler(*args, &handler)
-    @keyHandler.register_keyHandler(*args, &handler)
+  def setKeyHandlerTarget(target)
+    @keyHandler.target = target
+  end
+  
+  def registerKeyHandler_key_modifiers(sel, key, mods)
+    @keyHandler.registerSelector_key_modifiers(sel, key, mods)
+  end
+  
+  def registerKeyHandler_character_modifiers(sel, char, mods)
+    @keyHandler.registerSelector_character_modifiers(sel, char, mods)
   end
 end

@@ -10,7 +10,6 @@
 		510D9F6D0EC4FE9900D3BEFB /* abstract_preferences.rb in Resources */ = {isa = PBXBuildFile; fileRef = 510D9F6C0EC4FE9900D3BEFB /* abstract_preferences.rb */; };
 		51C39169103A18A9009DEFBF /* cocoa_gist.rb in Resources */ = {isa = PBXBuildFile; fileRef = 51C39168103A18A9009DEFBF /* cocoa_gist.rb */; };
 		7801DD2E0D1AF75F00D8691D /* isupportinfo.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7801DD2D0D1AF75F00D8691D /* isupportinfo.rb */; };
-		780CCA0E0D8A294000E4BA77 /* keyeventhandler.rb in Resources */ = {isa = PBXBuildFile; fileRef = 780CCA0D0D8A294000E4BA77 /* keyeventhandler.rb */; };
 		78208C1A0C9D97CD004472E9 /* cocoasheet.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78208C190C9D97CD004472E9 /* cocoasheet.rb */; };
 		7821DBE40C2C875700B3EF42 /* pastesheet.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7821DBE30C2C875700B3EF42 /* pastesheet.rb */; };
 		78229BC70C288188001DD4C3 /* tcpclient.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229B950C288188001DD4C3 /* tcpclient.rb */; };
@@ -118,6 +117,7 @@
 		78C1E7771168559400AC305B /* NSArrayHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C1E7761168559400AC305B /* NSArrayHelper.m */; };
 		78C1E7CC11685BDF00AC305B /* MemberListViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C1E7CB11685BDF00AC305B /* MemberListViewCell.m */; };
 		78C1E8711168635500AC305B /* SoundPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C1E8701168635500AC305B /* SoundPlayer.m */; };
+		78C1E8801168652000AC305B /* KeyEventHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C1E87F1168652000AC305B /* KeyEventHandler.m */; };
 		78C2D609115A428C00705817 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 78C2D608115A428C00705817 /* dsa_pub.pem */; };
 		78E572390C1C30BA00BDF7EC /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		78E5723B0C1C30BA00BDF7EC /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 788D56F00BB6872B00DDBF69 /* WebKit.framework */; };
@@ -161,7 +161,6 @@
 		51F0A51D0EBCF70A00B2C878 /* controls_with_disabled_state.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; name = controls_with_disabled_state.rb; path = ruby/view/controls_with_disabled_state.rb; sourceTree = SOURCE_ROOT; };
 		7801DD2D0D1AF75F00D8691D /* isupportinfo.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = isupportinfo.rb; sourceTree = "<group>"; };
 		780253C20C09525900C170D4 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
-		780CCA0D0D8A294000E4BA77 /* keyeventhandler.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = keyeventhandler.rb; sourceTree = "<group>"; };
 		78208C190C9D97CD004472E9 /* cocoasheet.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = cocoasheet.rb; sourceTree = "<group>"; };
 		7821DBE30C2C875700B3EF42 /* pastesheet.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = pastesheet.rb; sourceTree = "<group>"; };
 		78229B950C288188001DD4C3 /* tcpclient.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = tcpclient.rb; sourceTree = "<group>"; };
@@ -306,6 +305,8 @@
 		78C1E7CB11685BDF00AC305B /* MemberListViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MemberListViewCell.m; sourceTree = "<group>"; };
 		78C1E86F1168635500AC305B /* SoundPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundPlayer.h; sourceTree = "<group>"; };
 		78C1E8701168635500AC305B /* SoundPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoundPlayer.m; sourceTree = "<group>"; };
+		78C1E87E1168652000AC305B /* KeyEventHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyEventHandler.h; sourceTree = "<group>"; };
+		78C1E87F1168652000AC305B /* KeyEventHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyEventHandler.m; sourceTree = "<group>"; };
 		78C2D608115A428C00705817 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = dsa_pub.pem; path = etc/dsa_pub.pem; sourceTree = "<group>"; };
 		78E570D00C1C306500BDF7EC /* LimeChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LimeChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		78EFDA3D116604190062548C /* LogView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogView.h; sourceTree = "<group>"; };
@@ -464,7 +465,6 @@
 		78229BA70C288188001DD4C3 /* lib */ = {
 			isa = PBXGroup;
 			children = (
-				780CCA0D0D8A294000E4BA77 /* keyeventhandler.rb */,
 				787817C70D860ED30049CF95 /* unicodeutil.rb */,
 				78208C190C9D97CD004472E9 /* cocoasheet.rb */,
 				7834E1920C69B5AD003C5D65 /* wildcard.rb */,
@@ -539,6 +539,8 @@
 				78B9621F11661A5D00831780 /* IRCConnection.m */,
 				78B9651911664B2600831780 /* InputHistory.h */,
 				78B9651A11664B2600831780 /* InputHistory.m */,
+				78C1E87E1168652000AC305B /* KeyEventHandler.h */,
+				78C1E87F1168652000AC305B /* KeyEventHandler.m */,
 			);
 			name = Library;
 			path = objc/Library;
@@ -783,7 +785,6 @@
 				7801DD2E0D1AF75F00D8691D /* isupportinfo.rb in Resources */,
 				7889CABF0D647494003D808E /* welcomedialog.rb in Resources */,
 				787817C80D860ED30049CF95 /* unicodeutil.rb in Resources */,
-				780CCA0E0D8A294000E4BA77 /* keyeventhandler.rb in Resources */,
 				7870BA490E111BD0004B30B4 /* iconcontroller.rb in Resources */,
 				510D9F6D0EC4FE9900D3BEFB /* abstract_preferences.rb in Resources */,
 				51C39169103A18A9009DEFBF /* cocoa_gist.rb in Resources */,
@@ -852,6 +853,7 @@
 				78C1E7771168559400AC305B /* NSArrayHelper.m in Sources */,
 				78C1E7CC11685BDF00AC305B /* MemberListViewCell.m in Sources */,
 				78C1E8711168635500AC305B /* SoundPlayer.m in Sources */,
+				78C1E8801168652000AC305B /* KeyEventHandler.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

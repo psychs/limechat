@@ -605,48 +605,121 @@ class AppController < NSObject
   end
 
   # key commands
+  
+  KEY_RETURN = 0x24
+  KEY_TAB = 0x30
+  KEY_SPACE = 0x31
+  KEY_BACKSPACE = 0x33
+  KEY_ESCAPE = 0x35
+  KEY_ENTER = 0x4C
+  KEY_HOME = 0x73
+  KEY_PAGE_UP = 0x74
+  KEY_DELETE = 0x75
+  KEY_END = 0x77
+  KEY_PAGE_DOWN = 0x79
+  KEY_LEFT = 0x7B
+  KEY_RIGHT = 0x7C
+  KEY_DOWN = 0x7D
+  KEY_UP = 0x7E
 
-  def handler(*args, &block)
-    @window.register_keyHandler(*args, &block)
+  def handler(sel, key, mods)
+    if key.is_a?(Numeric)
+      @window.registerKeyHandler_key_modifiers(sel, key, mods)
+    else
+      @window.registerKeyHandler_character_modifiers(sel, key[0], mods)
+    end
   end
 
-  def input_handler(*args, &block)
-    @field_editor.register_keyHandler(*args, &block)
+  def input_handler(sel, key, mods)
+    @field_editor.registerKeyHandler_key_modifiers(sel, key, mods)
   end
+  
+  public
+  
+  def onHome(e); scroll(:home); end
+  def onEnd(e); scroll(:end); end
+  def onPageUp(e); scroll(:up); end
+  def onPageDown(e); scroll(:down); end
+  def onTab(e); tab; end
+  def onShiftTab(e); shiftTab; end
+  def onCtrlEnter(e); sendText(:notice); end
+  def onAltEnter(e); @menu.onPasteDialog(nil); end
+  def onCmdClosingBracket(e); move(:down, :active); end
+  def onCmdOpeningBracket(e); move(:up, :active); end
+  def onCtrlUp(e); move(:up); end
+  def onCtrlDown(e); move(:down); end
+  def onCtrlLeft(e); move(:left); end
+  def onCtrlRight(e); move(:right); end
+  def onCmdUp(e); move(:up, :active); end
+  def onCmdDown(e); move(:down, :active); end
+  def onCmdAltLeft(e); move(:left, :active); end
+  def onCmdAltRight(e); move(:right, :active); end
+  def onCtrlTab(e); move(:down, :unread); end
+  def onCtrlShiftTab(e); move(:up, :unread); end
+  def onAltTab(e); @world.select_prev; end
+  def onCmdNumber(e); @world.select_channel_at(e.charactersIgnoringModifiers.to_s.to_i); end
+  def onCtrlCmdNumber(e); n = e.charactersIgnoringModifiers.to_s.to_i; @world.select_client_at(n == 0 ? 9 : n-1); end
+  def onInputUp(e); history_up; end
+  def onInputDown(e); history_down; end
+
+  private
 
   def register_keyHandlers
-    handler(:home) { scroll(:home) }
-    handler(:end) { scroll(:end) }
-    handler(:pageup) { scroll(:up) }
-    handler(:pagedown) { scroll(:down) }
-    handler(:tab) { tab }
-    handler(:tab, :shift) { shiftTab }
-    handler(:enter, :ctrl) { sendText(:notice); true }
-    handler(:enter, :alt) { @menu.onPasteDialog(nil); true }
-    handler(:']', :cmd) { move(:down, :active); true }
-    handler(:'[', :cmd) { move(:up, :active); true }
-    handler(:up, :ctrl) { move(:up); true }
-    handler(:down, :ctrl) { move(:down); true }
-    handler(:left, :ctrl) { move(:left); true }
-    handler(:right, :ctrl) { move(:right); true }
-    handler(:up, :cmd) { move(:up, :active); true }
-    handler(:down, :cmd) { move(:down, :active); true }
-    handler(:up, :cmd, :alt) { move(:up, :active); true }
-    handler(:down, :cmd, :alt) { move(:down, :active); true }
-    handler(:left, :cmd, :alt) { move(:left, :active); true }
-    handler(:right, :cmd, :alt) { move(:right, :active); true }
-    handler(:tab, :ctrl) { move(:down, :unread); true }
-    handler(:tab, :ctrl, :shift) { move(:up, :unread); true }
-    handler(:tab, :alt) { @world.select_prev; true }
-    handler(:space, :alt) { move(:down, :unread); true }
-    handler(:space, :alt, :shift) { move(:up, :unread); true }
-    handler('0'..'9', :cmd) {|n| @world.select_channel_at(n.to_s.to_i); true }
-    handler('0'..'9', :cmd, :ctrl) {|n| n = n.to_s.to_i; @world.select_client_at(n == 0 ? 9 : n-1); true }
-
-    input_handler(:up) { history_up; true }
-    input_handler(:up, :alt) { history_up; true }
-    input_handler(:down) { history_down; true }
-    input_handler(:down, :alt) { history_down; true }
+    @window.setKeyHandlerTarget(self)
+    @field_editor.setKeyHandlerTarget(self)
+    
+    handler('onHome:', KEY_HOME, 0)
+    handler('onEnd:', KEY_END, 0)
+    handler('onPageUp:', KEY_PAGE_UP, 0)
+    handler('onPageDown:', KEY_PAGE_DOWN, 0)
+    handler('onTab:', KEY_TAB, 0)
+    handler('onShiftTab:', KEY_TAB, NSShiftKeyMask)
+    handler('onCtrlEnter:', KEY_ENTER, NSControlKeyMask)
+    handler('onCtrlEnter:', KEY_RETURN, NSControlKeyMask)
+    handler('onAltEnter:', KEY_ENTER, NSAlternateKeyMask)
+    handler('onAltEnter:', KEY_RETURN, NSAlternateKeyMask)
+    handler('onCmdClosingBracket:', ']', NSCommandKeyMask)
+    handler('onCmdOpeningBracket:', '[', NSCommandKeyMask)
+    handler('onCtrlUp:', KEY_UP, NSControlKeyMask)
+    handler('onCtrlDown:', KEY_DOWN, NSControlKeyMask)
+    handler('onCtrlLeft:', KEY_LEFT, NSControlKeyMask)
+    handler('onCtrlRight:', KEY_RIGHT, NSControlKeyMask)
+    handler('onCmdUp:', KEY_UP, NSCommandKeyMask)
+    handler('onCmdUp:', KEY_UP, NSCommandKeyMask|NSAlternateKeyMask)
+    handler('onCmdDown:', KEY_DOWN, NSCommandKeyMask)
+    handler('onCmdDown:', KEY_DOWN, NSCommandKeyMask|NSAlternateKeyMask)
+    handler('onCmdAltLeft:', KEY_LEFT, NSCommandKeyMask|NSAlternateKeyMask)
+    handler('onCmdAltRight:', KEY_RIGHT, NSCommandKeyMask|NSAlternateKeyMask)
+    handler('onCtrlTab:', KEY_TAB, NSControlKeyMask)
+    handler('onCtrlShiftTab:', KEY_TAB, NSControlKeyMask|NSShiftKeyMask)
+    handler('onAltTab:', KEY_TAB, NSAlternateKeyMask)
+    handler('onCtrlTab:', KEY_SPACE, NSAlternateKeyMask)
+    handler('onCtrlShiftTab:', KEY_SPACE, NSAlternateKeyMask|NSShiftKeyMask)
+    handler('onCmdNumber:', '0', NSCommandKeyMask)
+    handler('onCmdNumber:', '1', NSCommandKeyMask)
+    handler('onCmdNumber:', '2', NSCommandKeyMask)
+    handler('onCmdNumber:', '3', NSCommandKeyMask)
+    handler('onCmdNumber:', '4', NSCommandKeyMask)
+    handler('onCmdNumber:', '5', NSCommandKeyMask)
+    handler('onCmdNumber:', '6', NSCommandKeyMask)
+    handler('onCmdNumber:', '7', NSCommandKeyMask)
+    handler('onCmdNumber:', '8', NSCommandKeyMask)
+    handler('onCmdNumber:', '9', NSCommandKeyMask)
+    handler('onCtrlCmdNumber:', '0', NSCommandKeyMask|NSControlKeyMask)
+    handler('onCtrlCmdNumber:', '1', NSCommandKeyMask|NSControlKeyMask)
+    handler('onCtrlCmdNumber:', '2', NSCommandKeyMask|NSControlKeyMask)
+    handler('onCtrlCmdNumber:', '3', NSCommandKeyMask|NSControlKeyMask)
+    handler('onCtrlCmdNumber:', '4', NSCommandKeyMask|NSControlKeyMask)
+    handler('onCtrlCmdNumber:', '5', NSCommandKeyMask|NSControlKeyMask)
+    handler('onCtrlCmdNumber:', '6', NSCommandKeyMask|NSControlKeyMask)
+    handler('onCtrlCmdNumber:', '7', NSCommandKeyMask|NSControlKeyMask)
+    handler('onCtrlCmdNumber:', '8', NSCommandKeyMask|NSControlKeyMask)
+    handler('onCtrlCmdNumber:', '9', NSCommandKeyMask|NSControlKeyMask)
+    
+    input_handler('onInputUp:', KEY_UP, 0)
+    input_handler('onInputUp:', KEY_UP, NSAlternateKeyMask)
+    input_handler('onInputDown:', KEY_DOWN, 0)
+    input_handler('onInputDown:', KEY_DOWN, NSAlternateKeyMask)
   end
 
   def history_up

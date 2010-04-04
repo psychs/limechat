@@ -15,12 +15,16 @@ class FieldEditorTextView < NSTextView
     super_paste(sender)
   end
   
-  def register_keyHandler(*args, &handler)
-    @keyHandler.register_keyHandler(*args, &handler)
+  def setKeyHandlerTarget(target)
+    @keyHandler.target = target
+  end
+  
+  def registerKeyHandler_key_modifiers(sel, key, mods)
+    @keyHandler.registerSelector_key_modifiers(sel, key, mods)
   end
   
   def keyDown(e)
-    return if @keyHandler.process_key_event(e)
+    return if @keyHandler.processKeyEvent(e) == 1
     super_keyDown(e)
   end
 end
