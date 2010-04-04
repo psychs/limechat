@@ -117,6 +117,7 @@
 		78BF64B00C2885E2004451B2 /* user.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78BF64A80C2885E2004451B2 /* user.rb */; };
 		78BF64B10C2885E2004451B2 /* usermode.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78BF64A90C2885E2004451B2 /* usermode.rb */; };
 		78BF64B20C2885E2004451B2 /* world.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78BF64AA0C2885E2004451B2 /* world.rb */; };
+		78C1E7771168559400AC305B /* NSArrayHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C1E7761168559400AC305B /* NSArrayHelper.m */; };
 		78C2D609115A428C00705817 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 78C2D608115A428C00705817 /* dsa_pub.pem */; };
 		78DA4EC10C461D52008780C8 /* memberlistview.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78DA4EBF0C461D52008780C8 /* memberlistview.rb */; };
 		78E572390C1C30BA00BDF7EC /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
@@ -302,6 +303,8 @@
 		78BF64A80C2885E2004451B2 /* user.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = user.rb; sourceTree = "<group>"; };
 		78BF64A90C2885E2004451B2 /* usermode.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = usermode.rb; sourceTree = "<group>"; };
 		78BF64AA0C2885E2004451B2 /* world.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = world.rb; sourceTree = "<group>"; };
+		78C1E7751168559400AC305B /* NSArrayHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSArrayHelper.h; sourceTree = "<group>"; };
+		78C1E7761168559400AC305B /* NSArrayHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSArrayHelper.m; sourceTree = "<group>"; };
 		78C2D608115A428C00705817 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = dsa_pub.pem; path = etc/dsa_pub.pem; sourceTree = "<group>"; };
 		78DA4EBF0C461D52008780C8 /* memberlistview.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = memberlistview.rb; sourceTree = "<group>"; };
 		78E570D00C1C306500BDF7EC /* LimeChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LimeChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -511,6 +514,8 @@
 				78B964E71166489000831780 /* NSStringHelper.m */,
 				78B964E81166489000831780 /* UnicodeHelper.h */,
 				78B964E91166489000831780 /* UnicodeHelper.m */,
+				78C1E7751168559400AC305B /* NSArrayHelper.h */,
+				78C1E7761168559400AC305B /* NSArrayHelper.m */,
 			);
 			name = Helpers;
 			path = objc/Helpers;
@@ -846,6 +851,7 @@
 				78B964EB1166489000831780 /* NSStringHelper.m in Sources */,
 				78B964EC1166489000831780 /* UnicodeHelper.m in Sources */,
 				78B9651B11664B2600831780 /* InputHistory.m in Sources */,
+				78C1E7771168559400AC305B /* NSArrayHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
