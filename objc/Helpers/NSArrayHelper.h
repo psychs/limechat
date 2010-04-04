@@ -3,6 +3,6 @@
 
 @interface NSArray (NSArrayHelper)
 
-- (NSString*)safeStringAtIndex:(int)n;
+- (id)safeObjectAtIndex:(int)n;
 
 @end
