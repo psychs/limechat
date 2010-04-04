@@ -72,13 +72,12 @@
 		return ary;
 	}
 	else if (nick) {
-		[menuController setNick:nick];
-		
 		NSMutableArray* ary = [NSMutableArray array];
 		NSMenuItem* nickItem = [[[NSMenuItem alloc] initWithTitle:nick action:nil keyEquivalent:@""] autorelease];
 		[ary addObject:nickItem];
 		[ary addObject:[NSMenuItem separatorItem]];
 		
+		[menuController setNick:nick];
 		[nick autorelease];
 		nick = nil;
 		
