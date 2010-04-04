@@ -25,6 +25,8 @@
 - (int)firstCharCodePoint;
 - (int)lastCharCodePoint;
 
+- (NSString*)safeFileName;
+
 - (NSString*)stripEffects;
 
 - (NSRange)rangeOfUrl;

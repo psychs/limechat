@@ -3,6 +3,7 @@
 
 #import "FileLogger.h"
 #import "Preferences.h"
+#import "NSStringHelper.h"
 
 
 @interface FileLogger (Private)
@@ -42,6 +43,10 @@
 - (void)writeLine:(NSString*)s
 {
 	[self open];
+	
+	if (file) {
+		[file writeData:[[s stringByAppendingString:@"\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+	}
 }
 
 - (void)reopenIfNeeded
@@ -58,7 +63,25 @@
 	[fileName release];
 	fileName = [[self buildFileName] retain];
 	
-	LOG(@"### filename: %@", fileName);
+	LOG(@"filename: %@", fileName);
+	
+	NSString* dir = [fileName stringByDeletingLastPathComponent];
+	
+	NSFileManager* fm = [NSFileManager defaultManager];
+	BOOL isDir = NO;
+	if (![fm fileExistsAtPath:dir isDirectory:&isDir]) {
+		[fm createDirectoryAtPath:dir withIntermediateDirectories:YES attributes:nil error:NULL];
+	}
+	
+	if (![fm fileExistsAtPath:fileName]) {
+		[fm createFileAtPath:fileName contents:[NSData data] attributes:nil];
+	}
+	
+	[file release];
+	file = [[NSFileHandle fileHandleForUpdatingAtPath:fileName] retain];
+	if (file) {
+		[file seekToEndOfFile];
+	}
 }
 
 - (NSString*)buildFileName
@@ -72,57 +95,22 @@
 		[format setDateFormat:@"YYYY-MM-dd"];
 	}
 	NSString* date = [format stringFromDate:[NSDate date]];
-	NSString* name = [client name];
+	NSString* name = [[client name] safeFileName];
 	NSString* pre = @"";
 	NSString* c = @"";
 	
 	if (!channel) {
 		c = @"Console";
 	}
-	else if ([channel isTalk]) {
+	else if ([channel isTalk] == 1) {
 		c = @"Talk";
-		pre = @"_";
+		pre = [[[channel name] safeFileName] stringByAppendingString:@"_"];
 	}
 	else {
-		c = [channel name];
+		c = [[channel name] safeFileName];
 	}
 	
-	return [base stringByAppendingFormat:@"/%@%@_%@.txt", pre, date, name];
+	return [base stringByAppendingFormat:@"/%@/%@%@_%@.txt", c, pre, date, name];
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 @end

@@ -148,6 +148,12 @@ BOOL isUnicharDigit(unichar c)
 	return '0' <= c && c <= '9';
 }
 
+- (NSString*)safeFileName
+{
+	NSString* s = [self stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
+	return [s stringByReplacingOccurrencesOfString:@":" withString:@"_"];
+}
+
 - (NSString*)stripEffects
 {
 	int len = self.length;
