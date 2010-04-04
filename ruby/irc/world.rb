@@ -17,8 +17,8 @@ class IRCWorld < NSObject
     @clients = []
     @client_id = 0
     @channel_id = 0
-    @growl = GrowlController.new
-    @icon = IconController.new
+    @growl = GrowlController.alloc.init
+    @icon = IconController.alloc.init
     @growl.owner = self
     @today = Date.today
   end

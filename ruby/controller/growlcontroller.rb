@@ -1,7 +1,7 @@
 # Created by Satoshi Nakagawa.
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
-class GrowlController
+class GrowlController < NSObject
   attr_accessor :owner
   
   GROWL_LOGIN_MSG = "Logged in"
@@ -22,30 +22,31 @@ class GrowlController
 
   def register
     return if @growl
-    @growl = Growl::Notifier.sharedInstance
+    @growl = TinyGrowlClient.alloc.init
     @growl.delegate = self
-    all = [GROWL_LOGIN_MSG, GROWL_DISCONNECT_MSG, GROWL_HIGHLIGHT, GROWL_NEW_TALK,
+    @growl.allNotifications = [GROWL_LOGIN_MSG, GROWL_DISCONNECT_MSG, GROWL_HIGHLIGHT, GROWL_NEW_TALK,
             GROWL_CHANNEL_MSG, GROWL_CHANNEL_NOTICE, GROWL_TALK_MSG, GROWL_TALK_NOTICE,
             GROWL_KICKED_MSG, GROWL_INVITED_MSG,
             GROWL_FILE_RECEIVE_REQUEST_MSG, GROWL_FILE_RECEIVE_SUCCEEDED_MSG, GROWL_FILE_RECEIVE_FAILED_MSG,
             GROWL_FILE_SEND_SUCCEEDED_MSG, GROWL_FILE_SEND_FAILED_MSG]
-    default = [GROWL_HIGHLIGHT, GROWL_NEW_TALK]
-    @growl.register(:LimeChat, all, default)
+    @growl.defaultNotifications = [GROWL_HIGHLIGHT, GROWL_NEW_TALK]
+    @growl.registerApplication
+    @lastClickContext = nil
   end
   
   def notify(kind, title, desc, context=nil)
-    priority = :normal
+    priority = 0
     sticky = false
     
     case kind
     when :highlight
       kind = GROWL_HIGHLIGHT
-      priority = :high
+      priority = 1
       sticky = true
       title = "Highlight: #{title}"
     when :newtalk
       kind = GROWL_NEW_TALK
-      priority = :high
+      priority = 1
       sticky = true
       title = "New Talk: #{title}"
     when :channeltext
@@ -73,7 +74,7 @@ class GrowlController
       title = "Disconnected: #{title}"
     when :file_receive_request
       kind = GROWL_FILE_RECEIVE_REQUEST_MSG
-      priority = :high
+      priority = 1
       sticky = true
       desc = "From #{title}\n#{desc}"
       title = "File receive request"
@@ -100,10 +101,19 @@ class GrowlController
       context = 'dcc'
     end
     
-    @growl.notify(kind, title, desc, :click_context => context, :sticky => sticky, :priority => priority)
+    @growl.notifyWithType_title_description_clickContext_sticky_priority_icon(kind, title, desc, context, sticky, priority, nil)
   end
+  
+  public
 
-  def growlNotifier_notificationClicked(sender, context)
+  def tinyGrowlClient_didClick(sender, context)
+    puts "tinyGrowlClient_didClick"
+    
+    return if @lastClickContext && @lastClickContext.isEqual(context)
+    @lastClickContext = context
+    
+    puts "@@@@@@@@@@@@ clicked"
+    
     @owner.window.makeKeyAndOrderFront(nil)
     NSApp.activateIgnoringOtherApps(true)
     
