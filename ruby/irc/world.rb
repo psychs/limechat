@@ -444,7 +444,7 @@ class IRCWorld < NSObject
       end
     end
 
-    @icon.update(highlight, newtalk)
+    @icon.setHighlight_newTalk(highlight, newtalk)
   end
 
   def reloadTheme
