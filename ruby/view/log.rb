@@ -461,11 +461,32 @@ class LogController < NSObject
       like = dislike = nil
     end
 
-    LogRenderer.render_body(line.body, like, dislike, @keyword.whole_line, @keyword.matching_method == Preferences::Keyword::MATCH_EXACT_WORD)
+    #LogRenderer.render_body(line.body, like, dislike, @keyword.whole_line, @keyword.matching_method == Preferences::Keyword::MATCH_EXACT_WORD)
+    ary = LogRenderer.renderBody_keywords_excludeWords_highlightWholeLine_exactWordMatch(line.body, like, dislike, @keyword.whole_line, @keyword.matching_method == Preferences::Keyword::MATCH_EXACT_WORD)
+    ary.to_ruby
   end
 
   def h(s)
-    s ? LogRenderer.escape_str(s) : ''
+    return '' if !s || s.empty?
+    a = ''
+    prev = nil
+    s.each_char do |c|
+      if c == ' ' && prev == ' '
+        a << '&nbsp;'
+        prev = nil
+        next
+      end
+      prev = c
+      a << case c
+        when '<'; '&lt;'
+        when '>'; '&gt;'
+        when '&'; '&amp;'
+        when '"'; '&quot;'
+        when "\t"; '&nbsp;&nbsp;&nbsp;&nbsp;'
+        else c
+      end
+    end
+    a
   end
 
   def remove_first_line(n=1)

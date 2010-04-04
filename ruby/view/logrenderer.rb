@@ -3,7 +3,7 @@
 
 require 'nkf'
 
-module LogRenderer
+module AALogRenderer
 
   def render_body(body, keywords, dislike_words, whole_line, exact_word_match)
     effects, body = process_effects(body)
