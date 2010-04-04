@@ -228,7 +228,7 @@ class AppController < NSObject
     @menu.keyWindowChanged(false)
   end
 
-  def fieldEditorTextView_paste(sender)
+  def fieldEditorTextViewPaste(sender)
     s = NSPasteboard.generalPasteboard.stringForType(NSStringPboardType)
     return false unless s
     s = s.to_s
