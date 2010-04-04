@@ -325,7 +325,7 @@ BOOL isUnicharDigit(unichar c)
 		}
 	}
 	
-	int next = NSMaxRange(r) + 1;
+	int next = NSMaxRange(r);
 	if (next < len) {
 		// check next character
 		UniChar c = [self characterAtIndex:next];
@@ -349,7 +349,7 @@ BOOL isUnicharDigit(unichar c)
 	
 	static Regex* regex = nil;
 	if (!regex) {
-		NSString* pattern = @"[#&][^\\s,]+";
+		NSString* pattern = @"[#&][^\\s,　]+";
 		regex = [[Regex alloc] initWithString:pattern];
 	}
 	
@@ -366,7 +366,7 @@ BOOL isUnicharDigit(unichar c)
 		}
 	}
 	
-	int next = NSMaxRange(r) + 1;
+	int next = NSMaxRange(r);
 	if (next < len) {
 		// check next character
 		UniChar c = [self characterAtIndex:next];

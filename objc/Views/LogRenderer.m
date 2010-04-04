@@ -70,9 +70,14 @@ static NSString* renderRange(NSString* body, attr_t attr, int start, int len)
 		return [NSString stringWithFormat:@"<a href=\"%@\" class=\"url\" oncontextmenu=\"on_url_contextmenu()\">%@</a>", link, content];
 	}
 	else if (attr & ADDRESS_ATTR) {
-		// Address
+		// address
 		content = [content gtm_stringByEscapingForHTML];
 		return [NSString stringWithFormat:@"<span class=\"address\" oncontextmenu=\"on_address_contextmenu()\">%@</span>", content];
+	}
+	else if (attr & CHANNEL_NAME_ATTR) {
+		// channel name
+		content = [content gtm_stringByEscapingForHTML];
+		return [NSString stringWithFormat:@"<span class=\"channel\" oncontextmenu=\"on_channel_contextmenu()\">%@</span>", content];
 	}
 	else {
 		return [content gtm_stringByEscapingForHTML];
@@ -117,7 +122,7 @@ static Regex* addressRegex;
 	}
 	
 	//
-	// Address
+	// address
 	//
 	start = 0;
 	while (start < len) {
@@ -128,6 +133,23 @@ static Regex* addressRegex;
 		
 		if (isClear(attrBuf, r.location, r.length)) {
 			setFlag(attrBuf, ADDRESS_ATTR, r.location, r.length);
+		}
+		
+		start = NSMaxRange(r) + 1;
+	}
+	
+	//
+	// channel name
+	//
+	start = 0;
+	while (start < len) {
+		NSRange r = [body rangeOfChannelNameStart:start];
+		if (r.location == NSNotFound) {
+			break;
+		}
+		
+		if (isClear(attrBuf, r.location, r.length)) {
+			setFlag(attrBuf, CHANNEL_NAME_ATTR, r.location, r.length);
 		}
 		
 		start = NSMaxRange(r) + 1;
