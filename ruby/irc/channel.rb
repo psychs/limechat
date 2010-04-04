@@ -68,6 +68,10 @@ class IRCChannel < NSObject
     false
   end
   
+  def isClient
+    client?
+  end
+  
   def type
     @config.type
   end
@@ -76,12 +80,24 @@ class IRCChannel < NSObject
     @config.type == :channel
   end
   
+  def isChannel
+    channel?
+  end
+  
   def talk?
     @config.type == :talk
   end
   
+  def isTalk
+    talk?
+  end
+  
   def dccchat?
     @config.type == :dccchat
+  end
+  
+  def isDCCChat
+    dccchat?
   end
   
   def active?

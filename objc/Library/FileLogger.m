@@ -2,6 +2,7 @@
 // You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
 #import "FileLogger.h"
+#import "Preferences.h"
 
 
 @interface FileLogger (Private)
@@ -45,6 +46,9 @@
 
 - (void)reopenIfNeeded
 {
+	if (!fileName || ![fileName isEqualToString:[self buildFileName]]) {
+		[self open];
+	}
 }
 
 - (void)open
@@ -52,13 +56,73 @@
 	[self close];
 	
 	[fileName release];
+	fileName = [[self buildFileName] retain];
+	
+	LOG(@"### filename: %@", fileName);
 }
 
 - (NSString*)buildFileName
 {
-	[self close];
+	NSString* base = [NewPreferences stringForKey:@"Preferences.General.transcript_folder"];
+	base = [base stringByExpandingTildeInPath];
 	
-	[fileName release];
+	static NSDateFormatter* format = nil;
+	if (!format) {
+		format = [NSDateFormatter new];
+		[format setDateFormat:@"YYYY-MM-dd"];
+	}
+	NSString* date = [format stringFromDate:[NSDate date]];
+	NSString* name = [client name];
+	NSString* pre = @"";
+	NSString* c = @"";
+	
+	if (!channel) {
+		c = @"Console";
+	}
+	else if ([channel isTalk]) {
+		c = @"Talk";
+		pre = @"_";
+	}
+	else {
+		c = [channel name];
+	}
+	
+	return [base stringByAppendingFormat:@"/%@%@_%@.txt", pre, date, name];
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @end

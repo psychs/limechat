@@ -124,6 +124,7 @@
 		78C1E96E116876AC00AC305B /* MainWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C1E96D116876AC00AC305B /* MainWindow.m */; };
 		78C1E98F1168787000AC305B /* FieldEditorTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C1E98E1168787000AC305B /* FieldEditorTextView.m */; };
 		78C2D609115A428C00705817 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 78C2D608115A428C00705817 /* dsa_pub.pem */; };
+		78DA7D2B1169080700962CC4 /* Preferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DA7D2A1169080700962CC4 /* Preferences.m */; };
 		78E572390C1C30BA00BDF7EC /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		78E5723B0C1C30BA00BDF7EC /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 788D56F00BB6872B00DDBF69 /* WebKit.framework */; };
 		78E5723C0C1C30BA00BDF7EC /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 787FD46C0BFE960100F2F22D /* Carbon.framework */; };
@@ -330,6 +331,8 @@
 		78C1E98D1168787000AC305B /* FieldEditorTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FieldEditorTextView.h; sourceTree = "<group>"; };
 		78C1E98E1168787000AC305B /* FieldEditorTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FieldEditorTextView.m; sourceTree = "<group>"; };
 		78C2D608115A428C00705817 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = dsa_pub.pem; path = etc/dsa_pub.pem; sourceTree = "<group>"; };
+		78DA7D291169080600962CC4 /* Preferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Preferences.h; sourceTree = "<group>"; };
+		78DA7D2A1169080700962CC4 /* Preferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Preferences.m; sourceTree = "<group>"; };
 		78E570D00C1C306500BDF7EC /* LimeChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LimeChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		78EFDA3D116604190062548C /* LogView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogView.h; sourceTree = "<group>"; };
 		78EFDA3E116604190062548C /* LogView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogView.m; sourceTree = "<group>"; };
@@ -577,6 +580,8 @@
 		78364B1F116597D00096F3A9 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				78DA7D291169080600962CC4 /* Preferences.h */,
+				78DA7D2A1169080700962CC4 /* Preferences.m */,
 			);
 			name = Models;
 			path = objc/Models;
@@ -907,6 +912,7 @@
 				78BC0CD81168E7B000A984AA /* IconController.m in Sources */,
 				78BC0D1D1168EBA600A984AA /* TinyGrowlClient.m in Sources */,
 				78BC0D5B1168F06E00A984AA /* FileLogger.m in Sources */,
+				78DA7D2B1169080700962CC4 /* Preferences.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
