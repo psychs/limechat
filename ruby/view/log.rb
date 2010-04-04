@@ -45,7 +45,7 @@ class LogController < NSObject
     @loaded = false
     @console = console
     @policy = LogPolicy.alloc.init
-    @policy.owner = self
+    @policy.menuController = self.world.menuController
     @policy.menu = @menu
     @policy.urlMenu = @urlMenu
     @policy.addrMenu = @addrMenu

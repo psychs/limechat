@@ -3,7 +3,7 @@
 
 @interface LogPolicy : NSObject
 {
-	id owner;
+	id menuController;
 	NSMenu* menu;
 	NSMenu* urlMenu;
 	NSMenu* addrMenu;
@@ -15,7 +15,7 @@
 	NSString* chan;
 }
 
-@property (nonatomic, assign) id owner;
+@property (nonatomic, assign) id menuController;
 @property (nonatomic, retain) NSMenu* menu;
 @property (nonatomic, retain) NSMenu* urlMenu;
 @property (nonatomic, retain) NSMenu* addrMenu;

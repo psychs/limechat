@@ -10,7 +10,7 @@
 
 @implementation LogPolicy
 
-@synthesize owner;
+@synthesize menuController;
 @synthesize menu;
 @synthesize urlMenu;
 @synthesize addrMenu;
@@ -50,7 +50,7 @@
 - (NSArray *)webView:(WebView *)sender contextMenuItemsForElement:(NSDictionary *)element defaultMenuItems:(NSArray *)defaultMenuItems
 {
 	if (url) {
-		[[[owner world] menuController] setUrl:url];
+		[menuController setUrl:url];
 		[url autorelease];
 		url = nil;
 		
@@ -61,7 +61,7 @@
 		return ary;
 	}
 	else if (addr) {
-		[[[owner world] menuController] setAddr:addr];
+		[menuController setAddr:addr];
 		[addr autorelease];
 		addr = nil;
 		
@@ -72,7 +72,7 @@
 		return ary;
 	}
 	else if (nick) {
-		[[[owner world] menuController] setNick:nick];
+		[menuController setNick:nick];
 		
 		NSMutableArray* ary = [NSMutableArray array];
 		NSMenuItem* nickItem = [[[NSMenuItem alloc] initWithTitle:nick action:nil keyEquivalent:@""] autorelease];
@@ -90,7 +90,7 @@
 		return ary;
 	}
 	else if (chan) {
-		[[[owner world] menuController] setChan:chan];
+		[menuController setChan:chan];
 		[chan autorelease];
 		chan = nil;
 		

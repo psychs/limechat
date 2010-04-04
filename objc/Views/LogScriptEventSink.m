@@ -42,9 +42,7 @@
 {
 	NSString* s = NSStringFromSelector(sel);
 	if ([s hasSuffix:@":"]) {
-		s = [s substringToIndex:s.length - 1];
-		LOG(@"webScriptNameForSelector: %@", s);
-		return s;
+		return [s substringToIndex:s.length - 1];
 	}
 	return nil;
 }
