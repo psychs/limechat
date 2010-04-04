@@ -20,9 +20,9 @@
 typedef uint16_t flag_t;
 
 
-void setFlag(flag_t* attr, flag_t flag, int start, int len)
+void setFlag(flag_t* attrBuf, flag_t flag, int start, int len)
 {
-	flag_t* target = attr + start;
+	flag_t* target = attrBuf + start;
 	flag_t* end = target + len;
 	
 	while (target < end) {
@@ -31,12 +31,12 @@ void setFlag(flag_t* attr, flag_t flag, int start, int len)
 	}
 }
 
-int getNextAttributeRange(flag_t* attr, int start, int len)
+int getNextAttributeRange(flag_t* attrBuf, int start, int len)
 {
-	flag_t target = attr[start];
+	flag_t target = attrBuf[start];
 	
 	for (int i=start; i<len; ++i) {
-		flag_t t = attr[i];
+		flag_t t = attrBuf[i];
 		if (t != target) {
 			return i - start;
 		}
@@ -71,8 +71,8 @@ NSString* renderRange(NSString* body, flag_t attr, int start, int len)
 		exactWordMatch:(BOOL)exactWordMatch
 {
 	int len = body.length;
-	flag_t attr[len];
-	memset(attr, 0, len * sizeof(flag_t));
+	flag_t attrBuf[len];
+	memset(attrBuf, 0, len * sizeof(flag_t));
 	
 	//
 	// URLs
@@ -84,7 +84,7 @@ NSString* renderRange(NSString* body, flag_t attr, int start, int len)
 			break;
 		}
 		
-		setFlag(attr, URL_ATTR, r.location, r.length);
+		setFlag(attrBuf, URL_ATTR, r.location, r.length);
 		start = NSMaxRange(r) + 1;
 	}
 	
@@ -95,10 +95,10 @@ NSString* renderRange(NSString* body, flag_t attr, int start, int len)
 	
 	start = 0;
 	while (start < len) {
-		int n = getNextAttributeRange(attr, start, len);
+		int n = getNextAttributeRange(attrBuf, start, len);
 		if (n <= 0) break;
 		
-		flag_t t = attr[start];
+		flag_t t = attrBuf[start];
 		NSString* s = renderRange(body, t, start, n);
 		[result appendString:s];
 		
