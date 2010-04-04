@@ -92,6 +92,7 @@
 		78AD78E40C61B8F8001E77F4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 78AD78E20C61B8F8001E77F4 /* Localizable.strings */; };
 		78AFBCF50C33E314008A8FCD /* kanasupport.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78AFBCF40C33E314008A8FCD /* kanasupport.rb */; };
 		78AFC92811687C5400C64197 /* NSDataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AFC92711687C5400C64197 /* NSDataHelper.m */; };
+		78AFC9AE116886F700C64197 /* LogPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AFC9AD116886F700C64197 /* LogPolicy.m */; };
 		78B2DF210D0417160092EBDA /* application.icns in Resources */ = {isa = PBXBuildFile; fileRef = 78B2DF1F0D0417160092EBDA /* application.icns */; };
 		78B960FA11660A8800831780 /* TCPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 78B960F911660A8800831780 /* TCPClient.m */; };
 		78B961FA1166182600831780 /* Timer.m in Sources */ = {isa = PBXBuildFile; fileRef = 78B961F91166182600831780 /* Timer.m */; };
@@ -266,6 +267,8 @@
 		78AFBCF40C33E314008A8FCD /* kanasupport.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = kanasupport.rb; sourceTree = "<group>"; };
 		78AFC92611687C5400C64197 /* NSDataHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDataHelper.h; sourceTree = "<group>"; };
 		78AFC92711687C5400C64197 /* NSDataHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDataHelper.m; sourceTree = "<group>"; };
+		78AFC9AC116886F700C64197 /* LogPolicy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogPolicy.h; sourceTree = "<group>"; };
+		78AFC9AD116886F700C64197 /* LogPolicy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogPolicy.m; sourceTree = "<group>"; };
 		78B2DF1F0D0417160092EBDA /* application.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = application.icns; path = ../icon/application.icns; sourceTree = "<group>"; };
 		78B960F811660A8800831780 /* TCPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPClient.h; sourceTree = "<group>"; };
 		78B960F911660A8800831780 /* TCPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPClient.m; sourceTree = "<group>"; };
@@ -611,6 +614,8 @@
 				78C1E96D116876AC00AC305B /* MainWindow.m */,
 				78C1E98D1168787000AC305B /* FieldEditorTextView.h */,
 				78C1E98E1168787000AC305B /* FieldEditorTextView.m */,
+				78AFC9AC116886F700C64197 /* LogPolicy.h */,
+				78AFC9AD116886F700C64197 /* LogPolicy.m */,
 			);
 			name = Views;
 			path = objc/Views;
@@ -856,6 +861,7 @@
 				78C1E96E116876AC00AC305B /* MainWindow.m in Sources */,
 				78C1E98F1168787000AC305B /* FieldEditorTextView.m in Sources */,
 				78AFC92811687C5400C64197 /* NSDataHelper.m in Sources */,
+				78AFC9AE116886F700C64197 /* LogPolicy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -810,7 +810,7 @@ class LogPolicy < NSObject
       ary << NSMenuItem.separatorItem
       ary + @memberMenu.itemArray.to_a.map do |i|
         i = i.copy
-        modify_memberMenu_item(i)
+        modifyMemberMenu_item(i)
         i
       end
     elsif @chan
@@ -827,14 +827,14 @@ class LogPolicy < NSObject
     end
   end
 
-  def modify_memberMenu_item(i)
+  def modifyMemberMenuItem(i)
     i.setTag(i.tag.to_i + 500)
-    modify_memberMenu(i.submenu) if i.hasSubmenu
+    modifyMemberMenu(i.submenu) if i.hasSubmenu
   end
 
-  def modify_memberMenu(menu)
+  def modifyMemberMenu(menu)
     menu.itemArray.to_a.each do |i|
-      modify_memberMenu_item(i)
+      modifyMemberMenu_item(i)
     end
   end
 
