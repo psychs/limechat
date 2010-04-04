@@ -70,7 +70,6 @@
 		784BBE971085BC950080898B /* redstar.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 784BBE931085BC950080898B /* redstar.tiff */; };
 		7851ADCC1168981E00AC449F /* LogRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7851ADCB1168981E00AC449F /* LogRenderer.m */; };
 		7851AEF71168A91A00AC449F /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7851AEF61168A91A00AC449F /* libicucore.dylib */; };
-		787898250CF38C510045585B /* filelogger.rb in Resources */ = {isa = PBXBuildFile; fileRef = 787898240CF38C510045585B /* filelogger.rb */; };
 		78835406109FEA7F00CD2FFF /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78835405109FEA7F00CD2FFF /* SystemConfiguration.framework */; };
 		7884E54E0CDA91F500AF3678 /* SACrashReporter in Resources */ = {isa = PBXBuildFile; fileRef = 7884E5450CDA91F500AF3678 /* SACrashReporter */; };
 		7889CABF0D647494003D808E /* welcomedialog.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7889CABE0D647494003D808E /* welcomedialog.rb */; };
@@ -240,7 +239,6 @@
 		7851ADCA1168981E00AC449F /* LogRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogRenderer.h; sourceTree = "<group>"; };
 		7851ADCB1168981E00AC449F /* LogRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogRenderer.m; sourceTree = "<group>"; };
 		7851AEF61168A91A00AC449F /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = /usr/lib/libicucore.dylib; sourceTree = "<absolute>"; };
-		787898240CF38C510045585B /* filelogger.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = filelogger.rb; sourceTree = "<group>"; };
 		787FD46C0BFE960100F2F22D /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		78835405109FEA7F00CD2FFF /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = /System/Library/Frameworks/SystemConfiguration.framework; sourceTree = "<absolute>"; };
 		7884E5450CDA91F500AF3678 /* SACrashReporter */ = {isa = PBXFileReference; lastKnownFileType = folder; name = SACrashReporter; path = vendor/SACrashReporter; sourceTree = "<group>"; };
@@ -499,7 +497,6 @@
 				78229BAC0C288188001DD4C3 /* urlopener.rb */,
 				78229BAD0C288188001DD4C3 /* userdefaultsaccess.rb */,
 				78229BAE0C288188001DD4C3 /* utility.rb */,
-				787898240CF38C510045585B /* filelogger.rb */,
 			);
 			path = lib;
 			sourceTree = "<group>";
@@ -827,7 +824,6 @@
 				7834E1930C69B5AD003C5D65 /* wildcard.rb in Resources */,
 				78208C1A0C9D97CD004472E9 /* cocoasheet.rb in Resources */,
 				7884E54E0CDA91F500AF3678 /* SACrashReporter in Resources */,
-				787898250CF38C510045585B /* filelogger.rb in Resources */,
 				783D0B2B0CF45C38002CC2FB /* listdialog.rb in Resources */,
 				78B2DF210D0417160092EBDA /* application.icns in Resources */,
 				7896BFE50D0C5E850069453A /* viewtheme.rb in Resources */,

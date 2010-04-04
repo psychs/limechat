@@ -45,7 +45,16 @@
 	[self open];
 	
 	if (file) {
-		[file writeData:[[s stringByAppendingString:@"\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+		s = [s stringByAppendingString:@"\n"];
+		
+		NSData* data = [s dataUsingEncoding:NSUTF8StringEncoding];
+		if (!data) {
+			data = [s dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+		}
+		
+		if (data) {
+			[file writeData:data];
+		}
 	}
 }
 
@@ -96,6 +105,8 @@
 	NSString* name = [[client name] safeFileName];
 	NSString* pre = @"";
 	NSString* c = @"";
+	
+	// ### isTalk is not working now
 	
 	if (!channel) {
 		c = @"Console";

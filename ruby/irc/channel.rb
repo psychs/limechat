@@ -89,7 +89,7 @@ class IRCChannel < NSObject
   end
   
   def isTalk
-    talk?
+    @config.type == :talk
   end
   
   def dccchat?
