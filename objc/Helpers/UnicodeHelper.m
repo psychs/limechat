@@ -1,5 +1,6 @@
 #import "UnicodeHelper.h"
 
+
 static unsigned TABLE1[] = {
 9,
 0x00aa, 0x00aa,

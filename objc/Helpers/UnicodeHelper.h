@@ -1,5 +1,6 @@
 #import <Foundation/Foundation.h>
 
+
 @interface UnicodeHelper : NSObject
 
 + (BOOL)isPrivate:(UniChar)c;

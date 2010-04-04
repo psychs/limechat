@@ -2,6 +2,7 @@
 #import "Regex.h"
 #import "NSStringHelper.h"
 #import "GTMNSString+HTML.h"
+#import "UnicodeHelper.h"
 
 
 #define URL_ATTR				(1 << 15)
@@ -138,34 +139,8 @@ static Regex* addressRegex;
 	// keywords
 	//
 	BOOL foundKeyword = NO;
-	if (exactWordMatch) {
-		for (NSString* keyword in keywords) {
-			start = 0;
-			while (start < len) {
-				NSRange r = [body rangeOfString:keyword options:NSCaseInsensitiveSearch range:NSMakeRange(start, len - start)];
-				if (r.location == NSNotFound) {
-					break;
-				}
-				
-				if (isClear(attrBuf, URL_ATTR, r.location, r.length)) {
-					foundKeyword = YES;
-					if (highlightWholeLine) {
-						setFlag(attrBuf, KEYWORD_ATTR, 0, len);
-						break;
-					}
-					else {
-						setFlag(attrBuf, KEYWORD_ATTR, r.location, r.length);
-					}
-				}
-				
-				start = NSMaxRange(r) + 1;
-			}
-			
-			if (highlightWholeLine && foundKeyword) break;
-		}
-	}
-	else {
-		NSMutableArray* excludeRanges = [NSMutableArray array];
+	NSMutableArray* excludeRanges = [NSMutableArray array];
+	if (!exactWordMatch) {
 		for (NSString* excludeWord in excludeWords) {
 			start = 0;
 			while (start < len) {
@@ -177,41 +152,65 @@ static Regex* addressRegex;
 				start = NSMaxRange(r) + 1;
 			}
 		}
-		
-		for (NSString* keyword in keywords) {
-			start = 0;
-			while (start < len) {
-				NSRange r = [body rangeOfString:keyword options:NSCaseInsensitiveSearch range:NSMakeRange(start, len - start)];
-				if (r.location == NSNotFound) {
+	}
+	
+	for (NSString* keyword in keywords) {
+		start = 0;
+		while (start < len) {
+			NSRange r = [body rangeOfString:keyword options:NSCaseInsensitiveSearch range:NSMakeRange(start, len - start)];
+			if (r.location == NSNotFound) {
+				break;
+			}
+			
+			BOOL enabled = YES;
+			for (NSValue* e in excludeRanges) {
+				if (NSIntersectionRange(r, [e rangeValue]).length > 0) {
+					enabled = NO;
 					break;
 				}
-				
-				BOOL enabled = YES;
-				for (NSValue* e in excludeRanges) {
-					if (NSIntersectionRange(r, [e rangeValue]).length > 0) {
-						enabled = NO;
-						break;
+			}
+			
+			if (exactWordMatch) {
+				if (enabled) {
+					int prev = r.location - 1;
+					if (0 <= prev && prev < len) {
+						// check previous character
+						UniChar c = [body characterAtIndex:prev];
+						if ([UnicodeHelper isAlphabeticalCodePoint:c]) {
+							enabled = NO;
+						}
 					}
 				}
 				
 				if (enabled) {
-					if (isClear(attrBuf, URL_ATTR, r.location, r.length)) {
-						foundKeyword = YES;
-						if (highlightWholeLine) {
-							setFlag(attrBuf, KEYWORD_ATTR, 0, len);
-							break;
-						}
-						else {
-							setFlag(attrBuf, KEYWORD_ATTR, r.location, r.length);
+					int next = NSMaxRange(r);
+					if (next < len) {
+						// check next character
+						UniChar c = [body characterAtIndex:next];
+						if ([UnicodeHelper isAlphabeticalCodePoint:c]) {
+							enabled = NO;
 						}
 					}
 				}
-				
-				start = NSMaxRange(r) + 1;
 			}
 			
-			if (highlightWholeLine && foundKeyword) break;
+			if (enabled) {
+				if (isClear(attrBuf, URL_ATTR, r.location, r.length)) {
+					foundKeyword = YES;
+					if (highlightWholeLine) {
+						setFlag(attrBuf, KEYWORD_ATTR, 0, len);
+						break;
+					}
+					else {
+						setFlag(attrBuf, KEYWORD_ATTR, r.location, r.length);
+					}
+				}
+			}
+			
+			start = NSMaxRange(r) + 1;
 		}
+		
+		if (highlightWholeLine && foundKeyword) break;
 	}
 	
 	//
