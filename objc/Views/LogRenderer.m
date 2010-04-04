@@ -32,13 +32,13 @@ static void setFlag(attr_t* attrBuf, attr_t flag, int start, int len)
 	}
 }
 
-static BOOL isClear(attr_t* attrBuf, int start, int len)
+static BOOL isClear(attr_t* attrBuf, attr_t flag, int start, int len)
 {
 	attr_t* target = attrBuf + start;
 	attr_t* end = target + len;
 	
 	while (target < end) {
-		if (*target) return NO;
+		if (*target & flag) return NO;
 		++target;
 	}
 	
@@ -68,6 +68,19 @@ static NSString* renderRange(NSString* body, attr_t attr, int start, int len)
 		NSString* link = content;
 		content = [content gtm_stringByEscapingForHTML];
 		return [NSString stringWithFormat:@"<a href=\"%@\" class=\"url\" oncontextmenu=\"on_url_contextmenu()\">%@</a>", link, content];
+	}
+	else if (attr & KEYWORD_ATTR) {
+		// keyword
+		content = [content gtm_stringByEscapingForHTML];
+		if (attr & ADDRESS_ATTR) {
+			return [NSString stringWithFormat:@"<strong class=\"highlight\"><span class=\"address\" oncontextmenu=\"on_address_contextmenu()\">%@</span></strong>", content];
+		}
+		else if (attr & CHANNEL_NAME_ATTR) {
+			return [NSString stringWithFormat:@"<strong class=\"highlight\"><span class=\"channel\" oncontextmenu=\"on_channel_contextmenu()\">%@</span></strong>", content];
+		}
+		else {
+			return [NSString stringWithFormat:@"<strong class=\"highlight\">%@</strong>", content];
+		}
 	}
 	else if (attr & ADDRESS_ATTR) {
 		// address
@@ -122,6 +135,90 @@ static Regex* addressRegex;
 	}
 	
 	//
+	// keywords
+	//
+	BOOL foundKeyword = NO;
+	if (exactWordMatch) {
+		for (NSString* keyword in keywords) {
+			start = 0;
+			while (start < len) {
+				NSRange r = [body rangeOfString:keyword options:NSCaseInsensitiveSearch range:NSMakeRange(start, len - start)];
+				if (r.location == NSNotFound) {
+					break;
+				}
+				
+				if (isClear(attrBuf, URL_ATTR, r.location, r.length)) {
+					foundKeyword = YES;
+					if (highlightWholeLine) {
+						setFlag(attrBuf, KEYWORD_ATTR, 0, len);
+						break;
+					}
+					else {
+						setFlag(attrBuf, KEYWORD_ATTR, r.location, r.length);
+					}
+				}
+				
+				start = NSMaxRange(r) + 1;
+			}
+			
+			if (highlightWholeLine && foundKeyword) break;
+		}
+	}
+	else {
+		NSMutableArray* excludeRanges = [NSMutableArray array];
+		for (NSString* excludeWord in excludeWords) {
+			start = 0;
+			while (start < len) {
+				NSRange r = [body rangeOfString:excludeWord options:NSCaseInsensitiveSearch range:NSMakeRange(start, len - start)];
+				if (r.location == NSNotFound) {
+					break;
+				}
+				[excludeRanges addObject:[NSValue valueWithRange:r]];
+				start = NSMaxRange(r) + 1;
+			}
+		}
+		
+		for (NSString* keyword in keywords) {
+			start = 0;
+			while (start < len) {
+				NSRange r = [body rangeOfString:keyword options:NSCaseInsensitiveSearch range:NSMakeRange(start, len - start)];
+				if (r.location == NSNotFound) {
+					break;
+				}
+				
+				BOOL enabled = YES;
+				for (NSValue* e in excludeRanges) {
+					if (NSIntersectionRange(r, [e rangeValue]).length > 0) {
+						enabled = NO;
+						break;
+					}
+				}
+				
+				if (enabled) {
+					if (isClear(attrBuf, URL_ATTR, r.location, r.length)) {
+						foundKeyword = YES;
+						if (highlightWholeLine) {
+							setFlag(attrBuf, KEYWORD_ATTR, 0, len);
+							break;
+						}
+						else {
+							setFlag(attrBuf, KEYWORD_ATTR, r.location, r.length);
+						}
+					}
+				}
+				
+				start = NSMaxRange(r) + 1;
+			}
+			
+			if (highlightWholeLine && foundKeyword) break;
+		}
+	}
+	
+	//
+	// effects
+	//
+	
+	//
 	// address
 	//
 	start = 0;
@@ -131,7 +228,7 @@ static Regex* addressRegex;
 			break;
 		}
 		
-		if (isClear(attrBuf, r.location, r.length)) {
+		if (isClear(attrBuf, URL_ATTR, r.location, r.length)) {
 			setFlag(attrBuf, ADDRESS_ATTR, r.location, r.length);
 		}
 		
@@ -148,7 +245,7 @@ static Regex* addressRegex;
 			break;
 		}
 		
-		if (isClear(attrBuf, r.location, r.length)) {
+		if (isClear(attrBuf, URL_ATTR, r.location, r.length)) {
 			setFlag(attrBuf, CHANNEL_NAME_ATTR, r.location, r.length);
 		}
 		
@@ -172,7 +269,7 @@ static Regex* addressRegex;
 		start += n;
 	}
 	
-	return [NSArray arrayWithObjects:result, [NSNumber numberWithBool:0], nil];
+	return [NSArray arrayWithObjects:result, [NSNumber numberWithBool:foundKeyword], nil];
 }
 
 @end
