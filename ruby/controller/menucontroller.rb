@@ -502,7 +502,7 @@ class MenuController < NSObject
     if sel && !sel.empty?
       sel = CGI.escape(sel)
       url = "http://www.google.com/search?ie=UTF-8&q=#{sel}"
-      UrlOpener::openUrl(url)
+      UrlOpener.openUrl(url)
     end
   end
 

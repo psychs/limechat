@@ -3,9 +3,8 @@
 
 require 'preferences'
 
-module UrlOpener
-  
-  def openUrl(str)
+class UrlOpener < NSObject
+  def self.openUrl(str)
     if preferences.general.open_browser_in_background
       urls = [OSX::NSURL.URLWithString(str)]
       OSX::NSWorkspace.sharedWorkspace.openURLs_withAppBundleIdentifier_options_additionalEventParamDescriptor_launchIdentifiers(urls, nil, NSWorkspaceLaunchWithoutActivation, nil, nil)
@@ -14,6 +13,4 @@ module UrlOpener
       OSX::NSWorkspace.sharedWorkspace.openURL(url)
     end
   end
-  
-  extend self
 end

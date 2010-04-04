@@ -130,6 +130,7 @@
 	switch (action) {
 		case WebNavigationTypeLinkClicked:
 			[listener ignore];
+			//@@@
 			[[NSWorkspace sharedWorkspace] openURL:[actionInformation objectForKey:WebActionOriginalURLKey]];
 			break;
 		case WebNavigationTypeOther:
