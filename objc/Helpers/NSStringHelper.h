@@ -15,8 +15,6 @@
 - (int)firstCharCodePoint;
 - (int)lastCharCodePoint;
 
-- (NSString*)decodeAsURIComponent;
-
 - (NSString*)stripEffects;
 
 - (NSRange)rangeOfUrl;
@@ -24,13 +22,6 @@
 
 - (BOOL)isChannelName;
 - (BOOL)isModeChannelName;
-
-- (NSString*)isYouTubeURL;
-- (NSString*)isGoogleMapsURL;
-- (BOOL)isAppStoreURL;
-
-+ (NSString*)preferredLanguage;
-+ (NSString*)localeLanguage;
 
 + (NSString*)bundleString:(NSString*)key;
 

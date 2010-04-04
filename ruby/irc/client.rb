@@ -167,7 +167,7 @@ class IRCClient < NSObject
   end
   
   def eq(x, y)
-    to_common_encoding(x).downcase == to_common_encoding(y).downcase
+    x.downcase == y.downcase
   end
   
   def to_dic
@@ -361,7 +361,8 @@ class IRCClient < NSObject
     return false unless login? && chan && cmd && str && !str.include?("\0")
     str.split(/\r\n|\r|\n/).each do |line|
       next if line.empty?
-      s = to_local_encoding(to_common_encoding(line))
+      #s = to_local_encoding(to_common_encoding(line))
+      s = line
       
       loop do
         break if s.empty?
@@ -616,7 +617,7 @@ class IRCClient < NSObject
     when :privmsg,:notice,:action
       return false unless target
       return false if s.empty?
-      s = to_local_encoding(to_common_encoding(s))
+      #s = to_local_encoding(to_common_encoding(s))
       
       loop do
         break if s.empty?
@@ -992,17 +993,15 @@ class IRCClient < NSObject
   end
   
   def ircConnectionDidReceive(data)
-    s = data.rubyString
     if @encoding == NSUTF8StringEncoding &&
         @config.fallback_encoding != NSUTF8StringEncoding &&
-        !StringValidator::valid_utf8?(s)
+        !data.isValidUTF8?
       use_fallback = true
     else
       use_fallback = false
     end
 
-    s = to_local_encoding(s, use_fallback)
-    s = StringValidator::validate_utf8(s)
+    s = to_local_encoding(data, use_fallback)
     m = IRCMessage.alloc.init
     m.parseLine(s.to_s)
     #puts m.to_s
@@ -1067,19 +1066,17 @@ class IRCClient < NSObject
     s
   end
   
-  def to_local_encoding(s, use_fallback=false)
+  def to_local_encoding(data, use_fallback=false)
     enc = @encoding
     if enc == NSUTF8StringEncoding
       if use_fallback
         enc = @config.fallback_encoding
-      else
-        return s.dup
       end
     end
-    s = KanaSupport::to_iso2022(s) if enc == NSISO2022JPStringEncoding
-    ns = NSString.stringWithCString_encoding(s, enc)
+    #s = KanaSupport::to_iso2022(s) if enc == NSISO2022JPStringEncoding
+    ns = NSString.alloc.initWithData_encoding(data, enc)
     unless ns
-      ns = NSString.stringWithCString_encoding(s, NSASCIIStringEncoding)
+      ns = NSString.alloc.initWithData_encoding(data, NSASCIIStringEncoding)
     end
     ns.to_s
   end

@@ -139,41 +139,6 @@ int ctoi(unsigned char c)
 	}
 }
 
-- (NSString*)decodeAsURIComponent
-{
-	if ([self length] == 0) return self;
-	
-	const char* p = [self UTF8String];
-	char* buf = alloca(strlen(p)+1);
-	char* dst = buf;
-	
-	char* next;
-	while (next = strchr(p, '%')) {
-		if (p < next) {
-			int n = next - p;
-			memcpy(dst, p, n);
-			p += n;
-			dst += n;
-		}
-		
-		++p;
-		if (!*p) break;
-		unsigned char c = *p++;
-		if (!*p) break;
-		unsigned char d = *p++;
-		*dst++ = (ctoi(c) << 4) | ctoi(d);
-	}
-	
-	int n = strlen(p);
-	if (n > 0) {
-		memcpy(dst, p, n);
-		dst += n;
-	}
-	*dst = 0;
-	
-	return [NSString stringWithUTF8String:buf];
-}
-
 BOOL isUnicharDigit(unichar c)
 {
 	return '0' <= c && c <= '9';
@@ -377,82 +342,6 @@ BOOL isUnicharDigit(unichar c)
 	}
 	
 	return r;
-}
-
-- (NSString*)isYouTubeURL
-{
-	NSString* url = self;
-	
-	if ([url hasPrefix:@"http://"]) {
-		if ([url hasPrefix:@"http://youtube.com/"] || [url hasPrefix:@"http://www.youtube.com/"]) {
-			return url;
-		}
-		else {
-			NSRange r = [url rangeOfString:@"youtube.com/"];
-			if (r.location != NSNotFound) {
-				return [NSString stringWithFormat:@"http://youtube.com/%@", [url substringFromIndex:NSMaxRange(r)]];
-			}
-		}
-	}
-	return nil;
-}
-
-- (NSString*)isGoogleMapsURL
-{
-	NSString* url = self;
-	
-	if ([url hasPrefix:@"http://"]) {
-		if ([url hasPrefix:@"http://maps.google."]) {
-			if (![url hasPrefix:@"http://maps.google.com"]) {
-				NSRange r = [url rangeOfString:@"/" options:0 range:NSMakeRange(7, [url length] - 7)];
-				if (r.location == NSNotFound) {
-					url = @"http://maps.google.com/";
-				} else {
-					url = [NSString stringWithFormat:@"http://maps.google.com%@", [url substringFromIndex:r.location]];
-				}
-			}
-			return url;
-		}
-	}
-	return nil;
-}
-
-- (BOOL)isAppStoreURL
-{
-	NSString* url = self;
-	
-	if ([url hasPrefix:@"http://phobos.apple.com"]) {
-		return YES;
-	}
-	
-	return NO;
-}
-
-+ (NSString*)preferredLanguage
-{
-	static NSString* lang = nil;
-	if (!lang) {
-		NSArray* langs = [NSLocale preferredLanguages];
-		if (langs && langs.count > 0) {
-			lang = [[langs objectAtIndex:0] retain];
-		}
-		else {
-			lang = @"en";
-		}
-	}
-	return lang;
-}
-
-+ (NSString*)localeLanguage
-{
-	static NSString* code = nil;
-	if (!code) {
-		CFLocaleRef userLocale = CFLocaleCopyCurrent();
-		code = (NSString*)CFLocaleGetValue(userLocale, kCFLocaleLanguageCode);
-		[code retain];
-		CFRelease(userLocale);
-	}
-	return code;
 }
 
 + (NSString*)bundleString:(NSString*)key

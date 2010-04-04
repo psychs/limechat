@@ -29,7 +29,6 @@
 		78229BD60C288188001DD4C3 /* dialoghelper.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BA80C288188001DD4C3 /* dialoghelper.rb */; };
 		78229BD70C288188001DD4C3 /* numberformat.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BA90C288188001DD4C3 /* numberformat.rb */; };
 		78229BD80C288188001DD4C3 /* persistencehelper.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BAA0C288188001DD4C3 /* persistencehelper.rb */; };
-		78229BD90C288188001DD4C3 /* stringvalidator.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BAB0C288188001DD4C3 /* stringvalidator.rb */; };
 		78229BDA0C288188001DD4C3 /* urlopener.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BAC0C288188001DD4C3 /* urlopener.rb */; };
 		78229BDB0C288188001DD4C3 /* userdefaultsaccess.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BAD0C288188001DD4C3 /* userdefaultsaccess.rb */; };
 		78229BDC0C288188001DD4C3 /* utility.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BAE0C288188001DD4C3 /* utility.rb */; };
@@ -93,6 +92,7 @@
 		789AF7A51085A043006848B3 /* RubyCocoa.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 789AF78910859FEE006848B3 /* RubyCocoa.framework */; };
 		78AD78E40C61B8F8001E77F4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 78AD78E20C61B8F8001E77F4 /* Localizable.strings */; };
 		78AFBCF50C33E314008A8FCD /* kanasupport.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78AFBCF40C33E314008A8FCD /* kanasupport.rb */; };
+		78AFC92811687C5400C64197 /* NSDataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AFC92711687C5400C64197 /* NSDataHelper.m */; };
 		78B2DF210D0417160092EBDA /* application.icns in Resources */ = {isa = PBXBuildFile; fileRef = 78B2DF1F0D0417160092EBDA /* application.icns */; };
 		78B960FA11660A8800831780 /* TCPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 78B960F911660A8800831780 /* TCPClient.m */; };
 		78B961FA1166182600831780 /* Timer.m in Sources */ = {isa = PBXBuildFile; fileRef = 78B961F91166182600831780 /* Timer.m */; };
@@ -180,7 +180,6 @@
 		78229BA80C288188001DD4C3 /* dialoghelper.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = dialoghelper.rb; sourceTree = "<group>"; };
 		78229BA90C288188001DD4C3 /* numberformat.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = numberformat.rb; sourceTree = "<group>"; };
 		78229BAA0C288188001DD4C3 /* persistencehelper.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = persistencehelper.rb; sourceTree = "<group>"; };
-		78229BAB0C288188001DD4C3 /* stringvalidator.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = stringvalidator.rb; sourceTree = "<group>"; };
 		78229BAC0C288188001DD4C3 /* urlopener.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = urlopener.rb; sourceTree = "<group>"; };
 		78229BAD0C288188001DD4C3 /* userdefaultsaccess.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = userdefaultsaccess.rb; sourceTree = "<group>"; };
 		78229BAE0C288188001DD4C3 /* utility.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = utility.rb; sourceTree = "<group>"; };
@@ -267,6 +266,8 @@
 		789AF78910859FEE006848B3 /* RubyCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RubyCocoa.framework; path = Frameworks/RubyCocoa.framework; sourceTree = "<group>"; };
 		78AD78E30C61B8F8001E77F4 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
 		78AFBCF40C33E314008A8FCD /* kanasupport.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = kanasupport.rb; sourceTree = "<group>"; };
+		78AFC92611687C5400C64197 /* NSDataHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDataHelper.h; sourceTree = "<group>"; };
+		78AFC92711687C5400C64197 /* NSDataHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDataHelper.m; sourceTree = "<group>"; };
 		78B2DF1F0D0417160092EBDA /* application.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = application.icns; path = ../icon/application.icns; sourceTree = "<group>"; };
 		78B960F811660A8800831780 /* TCPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPClient.h; sourceTree = "<group>"; };
 		78B960F911660A8800831780 /* TCPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPClient.m; sourceTree = "<group>"; };
@@ -475,7 +476,6 @@
 				78229BA80C288188001DD4C3 /* dialoghelper.rb */,
 				78229BA90C288188001DD4C3 /* numberformat.rb */,
 				78229BAA0C288188001DD4C3 /* persistencehelper.rb */,
-				78229BAB0C288188001DD4C3 /* stringvalidator.rb */,
 				78229BAC0C288188001DD4C3 /* urlopener.rb */,
 				78229BAD0C288188001DD4C3 /* userdefaultsaccess.rb */,
 				78229BAE0C288188001DD4C3 /* utility.rb */,
@@ -515,6 +515,8 @@
 				78C1E7761168559400AC305B /* NSArrayHelper.m */,
 				78C1E86F1168635500AC305B /* SoundPlayer.h */,
 				78C1E8701168635500AC305B /* SoundPlayer.m */,
+				78AFC92611687C5400C64197 /* NSDataHelper.h */,
+				78AFC92711687C5400C64197 /* NSDataHelper.m */,
 			);
 			name = Helpers;
 			path = objc/Helpers;
@@ -756,7 +758,6 @@
 				78229BD60C288188001DD4C3 /* dialoghelper.rb in Resources */,
 				78229BD70C288188001DD4C3 /* numberformat.rb in Resources */,
 				78229BD80C288188001DD4C3 /* persistencehelper.rb in Resources */,
-				78229BD90C288188001DD4C3 /* stringvalidator.rb in Resources */,
 				78229BDA0C288188001DD4C3 /* urlopener.rb in Resources */,
 				78229BDB0C288188001DD4C3 /* userdefaultsaccess.rb in Resources */,
 				78229BDC0C288188001DD4C3 /* utility.rb in Resources */,
@@ -858,6 +859,7 @@
 				78C1E8801168652000AC305B /* KeyEventHandler.m in Sources */,
 				78C1E96E116876AC00AC305B /* MainWindow.m in Sources */,
 				78C1E98F1168787000AC305B /* FieldEditorTextView.m in Sources */,
+				78AFC92811687C5400C64197 /* NSDataHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
