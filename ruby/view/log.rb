@@ -3,26 +3,6 @@
 
 require 'cgi'
 require 'uri'
-require 'logrenderer'
-
-class LogLine
-  attr_accessor :time, :place, :nick, :body
-  attr_accessor :line_type, :member_type
-  attr_accessor :nick_info, :click_info, :identified, :nick_color_number
-
-  def initialize(time, place, nick, body, line_type=:system, member_type=:normal, nick_info=nil, click_info=nil, identified=nil, nick_color_number=nil)
-    @time = time
-    @place = place
-    @nick = nick
-    @body = body
-    @line_type = line_type
-    @member_type = member_type
-    @nick_info = nick_info
-    @click_info = click_info
-    @identified = identified
-    @nick_color_number = nick_color_number
-  end
-end
 
 
 class LogController < NSObject
@@ -137,15 +117,15 @@ class LogController < NSObject
     s << %|<span class="time">#{h(line.time)}</span>| if line.time
     s << %|<span class="place">#{h(line.place)}</span>| if line.place
     if line.nick
-      s << %|<span class="sender" type="#{line.member_type}"|
+      s << %|<span class="sender" type="#{line.memberType.to_s.downcase}"|
       s << %| oncontextmenu="on_nick_contextmenu()"| unless @console
       s << %| identified="#{!!line.identified}"|
-      s << %| colornumber="#{line.nick_color_number}"| if line.member_type == :normal
-      s << %| first="#{line.nick_info != @prev_nick_info}"| if line.nick_info
+      s << %| colornumber="#{line.nickColorNumber}"| if line.memberType.to_s.downcase.to_sym == :normal
+      s << %| first="#{line.nickInfo != @prevNickInfo}"| if line.nickInfo
       s << %|>#{h(line.nick)}</span>|
     end
     
-    kind = line.line_type
+    kind = line.lineType.to_s.downcase.to_sym
     show_inline_image = @channel &&
                         (kind == :privmsg || kind == :notice || kind == :action) &&
                         preferences.general.show_inline_images &&
@@ -153,33 +133,33 @@ class LogController < NSObject
 
     if show_inline_image
       url = URI.encode(m[0])
-      s << %[<span class="message" type="#{line.line_type}">#{body}
+      s << %[<span class="message" type="#{line.lineType.to_s.downcase}">#{body}
              <br>
              <a href="#{url}"><img src="#{url}" class="inlineimage"/></a>
              </span>\n]
     else
-      s << %[<span class="message" type="#{line.line_type}">#{body}</span>\n]
+      s << %[<span class="message" type="#{line.lineType.to_s.downcase}">#{body}</span>\n]
     end
 
-    @prev_nick_info = line.nick_info
+    @prevNickInfo = line.nickInfo
 
     attrs = {}
     alternate = @line_number % 2 == 0 ? 'even' : 'odd'
     attrs['alternate'] = alternate
     klass = 'line'
-    case line.line_type
+    case line.lineType.to_s.downcase.to_sym
     when :privmsg,:notice,:action
       klass << ' text'
     else
       klass << ' event'
     end
     attrs['class'] = klass
-    attrs['type'] = line.line_type.to_s
+    attrs['type'] = line.lineType.to_s
     attrs['highlight'] = "#{!!key}"
-    attrs['nick'] = line.nick_info if line.nick_info
+    attrs['nick'] = line.nickInfo if line.nickInfo
     if @console
-      if line.click_info
-        attrs['clickinfo'] = line.click_info
+      if line.clickInfo
+        attrs['clickinfo'] = line.clickInfo
         attrs['ondblclick'] = 'on_dblclick()'
       end
     end
@@ -443,9 +423,9 @@ class LogController < NSObject
 
   def build_body(line, client, use_keyword)
     if use_keyword
-      case line.line_type
+      case line.lineType.to_s.downcase.to_sym
       when :privmsg,:action
-        use_keyword = false if line.member_type == :myself
+        use_keyword = false if line.memberType.to_s.downcase.to_sym == :myself
       else
         use_keyword = false
       end

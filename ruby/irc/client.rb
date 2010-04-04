@@ -1177,7 +1177,17 @@ class IRCClient < NSObject
       end
     end
     
-    line = LogLine.new(time, place, nickstr, text, kind, mtype, nick, click, identified, color_num)
+    line = LogLine.alloc.init
+    line.time = time
+    line.place = place
+    line.nick = nickstr
+    line.body = text
+    line.lineType = kind
+    line.memberType = mtype
+    line.nickInfo = nick
+    line.clickInfo = click
+    line.identified = identified
+    line.nickColorNumber = color_num
     @world.console.print(line, self)
   end
   
@@ -1224,7 +1234,18 @@ class IRCClient < NSObject
       end
     end
     
-    line = LogLine.new(time, place, nickstr, text, kind, mtype, nick, click, identified, color_num)
+    line = LogLine.alloc.init
+    line.time = time
+    line.place = place
+    line.nick = nickstr
+    line.body = text
+    line.lineType = kind
+    line.memberType = mtype
+    line.nickInfo = nick
+    line.clickInfo = click
+    line.identified = identified
+    line.nickColorNumber = color_num
+    
     if channel && !channel.client?
       key = channel.print(line)
     else
