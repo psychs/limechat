@@ -235,14 +235,14 @@ BOOL isUnicharDigit(unichar c)
 {
 	if (self.length <= start) return NSMakeRange(NSNotFound, 0);
 	
-	static Regex* schemeRegex = nil;
-	if (!schemeRegex) {
+	static Regex* regex = nil;
+	if (!regex) {
 		NSString* pattern = @"(https?|ftp|itms)://[^\\s!\"#$&'()*+,/;<=>?\\[\\\\\\]^_`{|}　、，。．・…]+(/[^\\s\"'`<>　、，。．・…]*)?";
-		schemeRegex = [[Regex alloc] initWithString:pattern options:UREGEX_CASE_INSENSITIVE];
+		regex = [[Regex alloc] initWithString:pattern options:UREGEX_CASE_INSENSITIVE];
 	}
 	
-	NSRange r = [schemeRegex match:self start:start];
-	[schemeRegex reset];
+	NSRange r = [regex match:self start:start];
+	[regex reset];
 	if (r.location == NSNotFound) return r;
 	
 	NSString* url = [self substringWithRange:r];
@@ -290,6 +290,88 @@ BOOL isUnicharDigit(unichar c)
 			len = i + 1;
 			r.length = len;
 			break;
+		}
+	}
+	
+	return r;
+}
+
+- (NSRange)rangeOfAddress
+{
+	return [self rangeOfAddressStart:0];
+}
+
+- (NSRange)rangeOfAddressStart:(int)start
+{
+	int len = self.length;
+	if (len <= start) return NSMakeRange(NSNotFound, 0);
+	
+	static Regex* regex = nil;
+	if (!regex) {
+		NSString* pattern = @"([a-zA-Z0-9]([-a-zA-Z0-9]*[a-zA-Z0-9])?\\.)([a-zA-Z0-9]([-a-zA-Z0-9]*[a-zA-Z0-9])?\\.)+[a-zA-Z]{2,6}|([a-f0-9]{0,4}:){7}[a-f0-9]{0,4}|([0-9]{1,3}\\.){3}[0-9]{1,3}";
+		regex = [[Regex alloc] initWithString:pattern];
+	}
+	
+	NSRange r = [regex match:self start:start];
+	[regex reset];
+	if (r.location == NSNotFound) return r;
+	
+	int prev = r.location - 1;
+	if (0 <= prev && prev < len) {
+		// check previous character
+		UniChar c = [self characterAtIndex:prev];
+		if (IsWordLetter(c)) {
+			return [self rangeOfAddressStart:NSMaxRange(r)];
+		}
+	}
+	
+	int next = NSMaxRange(r) + 1;
+	if (next < len) {
+		// check next character
+		UniChar c = [self characterAtIndex:next];
+		if (IsWordLetter(c)) {
+			return [self rangeOfAddressStart:NSMaxRange(r)];
+		}
+	}
+	
+	return r;
+}
+
+- (NSRange)rangeOfChannelName
+{
+	return [self rangeOfChannelNameStart:0];
+}
+
+- (NSRange)rangeOfChannelNameStart:(int)start
+{
+	int len = self.length;
+	if (len <= start) return NSMakeRange(NSNotFound, 0);
+	
+	static Regex* regex = nil;
+	if (!regex) {
+		NSString* pattern = @"[#&][^\\s,]+";
+		regex = [[Regex alloc] initWithString:pattern];
+	}
+	
+	NSRange r = [regex match:self start:start];
+	[regex reset];
+	if (r.location == NSNotFound) return r;
+	
+	int prev = r.location - 1;
+	if (0 <= prev && prev < len) {
+		// check previous character
+		UniChar c = [self characterAtIndex:prev];
+		if (IsWordLetter(c)) {
+			return [self rangeOfAddressStart:NSMaxRange(r)];
+		}
+	}
+	
+	int next = NSMaxRange(r) + 1;
+	if (next < len) {
+		// check next character
+		UniChar c = [self characterAtIndex:next];
+		if (IsWordLetter(c)) {
+			return [self rangeOfAddressStart:NSMaxRange(r)];
 		}
 	}
 	

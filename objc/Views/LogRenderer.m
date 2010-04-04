@@ -21,7 +21,7 @@
 typedef uint16_t attr_t;
 
 
-void setFlag(attr_t* attrBuf, attr_t flag, int start, int len)
+static void setFlag(attr_t* attrBuf, attr_t flag, int start, int len)
 {
 	attr_t* target = attrBuf + start;
 	attr_t* end = target + len;
@@ -32,7 +32,20 @@ void setFlag(attr_t* attrBuf, attr_t flag, int start, int len)
 	}
 }
 
-int getNextAttributeRange(attr_t* attrBuf, int start, int len)
+static BOOL isClear(attr_t* attrBuf, int start, int len)
+{
+	attr_t* target = attrBuf + start;
+	attr_t* end = target + len;
+	
+	while (target < end) {
+		if (*target) return NO;
+		++target;
+	}
+	
+	return YES;
+}
+
+static int getNextAttributeRange(attr_t* attrBuf, int start, int len)
 {
 	attr_t target = attrBuf[start];
 	
@@ -46,7 +59,7 @@ int getNextAttributeRange(attr_t* attrBuf, int start, int len)
 	return len - start;
 }
 
-NSString* renderRange(NSString* body, attr_t attr, int start, int len)
+static NSString* renderRange(NSString* body, attr_t attr, int start, int len)
 {
 	NSString* content = [body substringWithRange:NSMakeRange(start, len)];
 	
@@ -56,13 +69,18 @@ NSString* renderRange(NSString* body, attr_t attr, int start, int len)
 		content = [content gtm_stringByEscapingForHTML];
 		return [NSString stringWithFormat:@"<a href=\"%@\" class=\"url\" oncontextmenu=\"on_url_contextmenu()\">%@</a>", link, content];
 	}
+	else if (attr & ADDRESS_ATTR) {
+		// Address
+		content = [content gtm_stringByEscapingForHTML];
+		return [NSString stringWithFormat:@"<span class=\"address\" oncontextmenu=\"on_address_contextmenu()\">%@</span>", content];
+	}
 	else {
 		return [content gtm_stringByEscapingForHTML];
 	}
 }
 
 
-Regex* addressRegex;
+static Regex* addressRegex;
 
 
 @implementation LogRenderer
@@ -82,10 +100,12 @@ Regex* addressRegex;
 	attr_t attrBuf[len];
 	memset(attrBuf, 0, len * sizeof(attr_t));
 	
+	int start;
+	
 	//
-	// URLs
+	// URL
 	//
-	int start = 0;
+	start = 0;
 	while (start < len) {
 		NSRange r = [body rangeOfUrlStart:start];
 		if (r.location == NSNotFound) {
@@ -93,6 +113,23 @@ Regex* addressRegex;
 		}
 		
 		setFlag(attrBuf, URL_ATTR, r.location, r.length);
+		start = NSMaxRange(r) + 1;
+	}
+	
+	//
+	// Address
+	//
+	start = 0;
+	while (start < len) {
+		NSRange r = [body rangeOfAddressStart:start];
+		if (r.location == NSNotFound) {
+			break;
+		}
+		
+		if (isClear(attrBuf, r.location, r.length)) {
+			setFlag(attrBuf, ADDRESS_ATTR, r.location, r.length);
+		}
+		
 		start = NSMaxRange(r) + 1;
 	}
 	
