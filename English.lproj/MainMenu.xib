@@ -2416,7 +2416,7 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">member_menu</string>
+						<string key="label">memberMenu</string>
 						<reference key="source" ref="569757849"/>
 						<reference key="destination" ref="765356395"/>
 					</object>
@@ -2728,7 +2728,7 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">url_menu</string>
+						<string key="label">urlMenu</string>
 						<reference key="source" ref="569757849"/>
 						<reference key="destination" ref="1033730691"/>
 					</object>
@@ -2744,7 +2744,7 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">addr_menu</string>
+						<string key="label">addrMenu</string>
 						<reference key="source" ref="569757849"/>
 						<reference key="destination" ref="724085266"/>
 					</object>
@@ -3136,7 +3136,7 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">chan_menu</string>
+						<string key="label">chanMenu</string>
 						<reference key="source" ref="569757849"/>
 						<reference key="destination" ref="229849758"/>
 					</object>
@@ -5375,8 +5375,8 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>addr_menu</string>
-							<string>chan_menu</string>
+							<string>addrMenu</string>
+							<string>chanMenu</string>
 							<string>channel_menu</string>
 							<string>chat_box</string>
 							<string>console_base</string>
@@ -5387,7 +5387,7 @@
 							<string>log_menu</string>
 							<string>log_split</string>
 							<string>member_list</string>
-							<string>member_menu</string>
+							<string>memberMenu</string>
 							<string>menu</string>
 							<string>right_tree_base</string>
 							<string>root_split</string>
@@ -5397,7 +5397,7 @@
 							<string>tree_menu</string>
 							<string>tree_scroller</string>
 							<string>tree_split</string>
-							<string>url_menu</string>
+							<string>urlMenu</string>
 							<string>window</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">

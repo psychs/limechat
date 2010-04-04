@@ -27,7 +27,7 @@ end
 
 class LogController < NSObject
   attr_accessor :world
-  attr_writer :client, :channel, :menu, :url_menu, :addr_menu, :chan_menu, :member_menu, :keyword, :theme, :override_font
+  attr_writer :client, :channel, :menu, :urlMenu, :addrMenu, :chanMenu, :memberMenu, :keyword, :theme, :overrideFont
   attr_reader :view
 
   def initialize
@@ -47,10 +47,10 @@ class LogController < NSObject
     @policy = LogPolicy.alloc.init
     @policy.owner = self
     @policy.menu = @menu
-    @policy.url_menu = @url_menu
-    @policy.addr_menu = @addr_menu
-    @policy.chan_menu = @chan_menu
-    @policy.member_menu = @member_menu
+    @policy.urlMenu = @urlMenu
+    @policy.addrMenu = @addrMenu
+    @policy.chanMenu = @chanMenu
+    @policy.memberMenu = @memberMenu
     @sink = LogScriptEventSink.alloc.init
     @sink.owner = self
     @sink.policy = @policy
@@ -549,9 +549,9 @@ class LogController < NSObject
     end
 
     style = @theme.log.content || ''
-    if @override_font
-      name = @override_font[0]
-      size = @override_font[1] * (72.0 / 96.0)
+    if @overrideFont
+      name = @overrideFont[0]
+      size = @overrideFont[1] * (72.0 / 96.0)
       override_style = <<-EOM
         html, body, body[type], body.normal, body.console {
           font-family: '#{name}';
@@ -783,7 +783,7 @@ end
 
 
 class LogPolicy < NSObject
-  attr_accessor :owner, :menu, :url_menu, :addr_menu, :member_menu, :chan_menu
+  attr_accessor :owner, :menu, :urlMenu, :addrMenu, :memberMenu, :chanMenu
   attr_accessor :url, :addr, :nick, :chan
 
   objc_method :webView_dragDestinationActionMaskForDraggingInfo, 'I@:@@'
@@ -796,11 +796,11 @@ class LogPolicy < NSObject
     if @url
       @owner.world.menu_controller.url = @url
       @url = nil
-      @url_menu.itemArray.to_a.map {|i| i.copy }
+      @urlMenu.itemArray.to_a.map {|i| i.copy }
     elsif @addr
       @owner.world.menu_controller.addr = @addr
       @addr = nil
-      @addr_menu.itemArray.to_a.map {|i| i.copy }
+      @addrMenu.itemArray.to_a.map {|i| i.copy }
     elsif @nick
       target = @nick
       @nick = nil
@@ -808,16 +808,16 @@ class LogPolicy < NSObject
       ary = []
       ary << NSMenuItem.alloc.initWithTitle_action_keyEquivalent(target, nil, '')
       ary << NSMenuItem.separatorItem
-      ary + @member_menu.itemArray.to_a.map do |i|
+      ary + @memberMenu.itemArray.to_a.map do |i|
         i = i.copy
-        modify_member_menu_item(i)
+        modify_memberMenu_item(i)
         i
       end
     elsif @chan
       target = @chan
       @chan = nil
       @owner.world.menu_controller.chan = target
-      @chan_menu.itemArray.to_a.map {|i| i.copy}
+      @chanMenu.itemArray.to_a.map {|i| i.copy}
     else
       if @menu
         @menu.itemArray.to_a.map {|i| i.copy }
@@ -827,14 +827,14 @@ class LogPolicy < NSObject
     end
   end
 
-  def modify_member_menu_item(i)
+  def modify_memberMenu_item(i)
     i.setTag(i.tag.to_i + 500)
-    modify_member_menu(i.submenu) if i.hasSubmenu
+    modify_memberMenu(i.submenu) if i.hasSubmenu
   end
 
-  def modify_member_menu(menu)
+  def modify_memberMenu(menu)
     menu.itemArray.to_a.each do |i|
-      modify_member_menu_item(i)
+      modify_memberMenu_item(i)
     end
   end
 

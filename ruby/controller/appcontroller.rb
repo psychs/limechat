@@ -9,7 +9,7 @@ class AppController < NSObject
   ib_outlet :window, :tree, :log_base, :console_base, :member_list, :text, :chat_box
   ib_outlet :tree_scroller, :left_tree_base, :right_tree_base
   ib_outlet :root_split, :log_split, :info_split, :tree_split
-  ib_outlet :menu, :server_menu, :channel_menu, :member_menu, :tree_menu, :log_menu, :console_menu, :url_menu, :addr_menu, :chan_menu
+  ib_outlet :menu, :server_menu, :channel_menu, :memberMenu, :tree_menu, :log_menu, :console_menu, :urlMenu, :addrMenu, :chanMenu
 
   KInternetEventClass = KAEGetURL = 1196773964
 
@@ -62,10 +62,10 @@ class AppController < NSObject
     @world.tree_menu = @tree_menu
     @world.log_menu = @log_menu
     @world.console_menu = @console_menu
-    @world.url_menu = @url_menu
-    @world.addr_menu = @addr_menu
-    @world.chan_menu = @chan_menu
-    @world.member_menu = @member_menu
+    @world.urlMenu = @urlMenu
+    @world.addrMenu = @addrMenu
+    @world.chanMenu = @chanMenu
+    @world.memberMenu = @memberMenu
     @world.menu_controller = @menu
     @world.view_theme = @view_theme
     @world.setup(IRCWorldConfig.new(preferences.load_world))

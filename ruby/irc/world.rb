@@ -7,7 +7,7 @@ class IRCWorld < NSObject
   attr_accessor :member_list, :dcc, :view_theme, :window
   attr_writer :app, :tree, :log_base, :console_base, :chat_box, :field_editor, :text
   attr_accessor :menu_controller
-  attr_accessor :tree_default_menu, :server_menu, :channel_menu, :tree_menu, :log_menu, :console_menu, :url_menu, :addr_menu, :chan_menu, :member_menu
+  attr_accessor :tree_default_menu, :server_menu, :channel_menu, :tree_menu, :log_menu, :console_menu, :urlMenu, :addrMenu, :chanMenu, :memberMenu
   attr_reader :clients, :selected, :prev_selected, :console, :config
 
   AUTO_CONNECT_DELAY = 1
@@ -461,9 +461,9 @@ class IRCWorld < NSObject
 
     logs.each do |log|
       if preferences.theme.override_log_font
-        log.override_font = [preferences.theme.log_font_name, preferences.theme.log_font_size]
+        log.overrideFont = [preferences.theme.log_font_name, preferences.theme.log_font_size]
       else
-        log.override_font = nil
+        log.overrideFont = nil
       end
       log.reload_theme
     end
@@ -874,10 +874,10 @@ class IRCWorld < NSObject
   def create_log(client, channel=nil, console=false)
     log = LogController.alloc.init
     log.menu = console ? @console_menu : @log_menu
-    log.url_menu = @url_menu
-    log.addr_menu = @addr_menu
-    log.chan_menu = @chan_menu
-    log.member_menu = @member_menu
+    log.urlMenu = @urlMenu
+    log.addrMenu = @addrMenu
+    log.chanMenu = @chanMenu
+    log.memberMenu = @memberMenu
     log.world = self
     log.client = client
     log.channel = channel
@@ -885,9 +885,9 @@ class IRCWorld < NSObject
     log.max_lines = preferences.general.max_log_lines
     log.theme = @view_theme
     if preferences.theme.override_log_font
-      log.override_font = [preferences.theme.log_font_name, preferences.theme.log_font_size]
+      log.overrideFont = [preferences.theme.log_font_name, preferences.theme.log_font_size]
     else
-      log.override_font = nil
+      log.overrideFont = nil
     end
     log.setup(console, @view_theme.other.input_text_bgcolor)
     log.view.setHostWindow(@window)
