@@ -34,7 +34,6 @@
 		78229BDB0C288188001DD4C3 /* userdefaultsaccess.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BAD0C288188001DD4C3 /* userdefaultsaccess.rb */; };
 		78229BDC0C288188001DD4C3 /* utility.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BAE0C288188001DD4C3 /* utility.rb */; };
 		78229BE80C288188001DD4C3 /* log.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BBC0C288188001DD4C3 /* log.rb */; };
-		78229BEA0C288188001DD4C3 /* mainwindow.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BBE0C288188001DD4C3 /* mainwindow.rb */; };
 		78287EB70D742DBD008D5656 /* Themes in CopyFiles */ = {isa = PBXBuildFile; fileRef = 78287EA90D742DAA008D5656 /* Themes */; };
 		7831B94D0C589A7A00E1F931 /* growl.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7831B94C0C589A7A00E1F931 /* growl.rb */; };
 		78347ED31158D4B00073E2F0 /* AutoOpDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78347EB91158D4B00073E2F0 /* AutoOpDialog.xib */; };
@@ -118,6 +117,7 @@
 		78C1E7CC11685BDF00AC305B /* MemberListViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C1E7CB11685BDF00AC305B /* MemberListViewCell.m */; };
 		78C1E8711168635500AC305B /* SoundPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C1E8701168635500AC305B /* SoundPlayer.m */; };
 		78C1E8801168652000AC305B /* KeyEventHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C1E87F1168652000AC305B /* KeyEventHandler.m */; };
+		78C1E96E116876AC00AC305B /* MainWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C1E96D116876AC00AC305B /* MainWindow.m */; };
 		78C2D609115A428C00705817 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 78C2D608115A428C00705817 /* dsa_pub.pem */; };
 		78E572390C1C30BA00BDF7EC /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		78E5723B0C1C30BA00BDF7EC /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 788D56F00BB6872B00DDBF69 /* WebKit.framework */; };
@@ -185,7 +185,6 @@
 		78229BAD0C288188001DD4C3 /* userdefaultsaccess.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = userdefaultsaccess.rb; sourceTree = "<group>"; };
 		78229BAE0C288188001DD4C3 /* utility.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = utility.rb; sourceTree = "<group>"; };
 		78229BBC0C288188001DD4C3 /* log.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = log.rb; sourceTree = "<group>"; };
-		78229BBE0C288188001DD4C3 /* mainwindow.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = mainwindow.rb; sourceTree = "<group>"; };
 		78287EA90D742DAA008D5656 /* Themes */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Themes; path = resource/Themes; sourceTree = "<group>"; };
 		7831B94C0C589A7A00E1F931 /* growl.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = growl.rb; sourceTree = "<group>"; };
 		78347EBA1158D4B00073E2F0 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/AutoOpDialog.xib; sourceTree = "<group>"; };
@@ -307,6 +306,8 @@
 		78C1E8701168635500AC305B /* SoundPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoundPlayer.m; sourceTree = "<group>"; };
 		78C1E87E1168652000AC305B /* KeyEventHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyEventHandler.h; sourceTree = "<group>"; };
 		78C1E87F1168652000AC305B /* KeyEventHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyEventHandler.m; sourceTree = "<group>"; };
+		78C1E96C116876AC00AC305B /* MainWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainWindow.h; sourceTree = "<group>"; };
+		78C1E96D116876AC00AC305B /* MainWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainWindow.m; sourceTree = "<group>"; };
 		78C2D608115A428C00705817 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = dsa_pub.pem; path = etc/dsa_pub.pem; sourceTree = "<group>"; };
 		78E570D00C1C306500BDF7EC /* LimeChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LimeChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		78EFDA3D116604190062548C /* LogView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogView.h; sourceTree = "<group>"; };
@@ -489,7 +490,6 @@
 				787A36A10C6A392600DDB70D /* fieldeditortextview.rb */,
 				78755D720C2AC0B30073FF42 /* logrenderer.rb */,
 				78229BBC0C288188001DD4C3 /* log.rb */,
-				78229BBE0C288188001DD4C3 /* mainwindow.rb */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -608,6 +608,8 @@
 				788AC9301165D27400523E80 /* DialogWindow.m */,
 				78EFDA3D116604190062548C /* LogView.h */,
 				78EFDA3E116604190062548C /* LogView.m */,
+				78C1E96C116876AC00AC305B /* MainWindow.h */,
+				78C1E96D116876AC00AC305B /* MainWindow.m */,
 			);
 			name = Views;
 			path = objc/Views;
@@ -757,7 +759,6 @@
 				78229BDB0C288188001DD4C3 /* userdefaultsaccess.rb in Resources */,
 				78229BDC0C288188001DD4C3 /* utility.rb in Resources */,
 				78229BE80C288188001DD4C3 /* log.rb in Resources */,
-				78229BEA0C288188001DD4C3 /* mainwindow.rb in Resources */,
 				78BF64AB0C2885E2004451B2 /* channel.rb in Resources */,
 				78BF64AC0C2885E2004451B2 /* channelmode.rb in Resources */,
 				78BF64AD0C2885E2004451B2 /* config.rb in Resources */,
@@ -854,6 +855,7 @@
 				78C1E7CC11685BDF00AC305B /* MemberListViewCell.m in Sources */,
 				78C1E8711168635500AC305B /* SoundPlayer.m in Sources */,
 				78C1E8801168652000AC305B /* KeyEventHandler.m in Sources */,
+				78C1E96E116876AC00AC305B /* MainWindow.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
