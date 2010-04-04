@@ -973,7 +973,6 @@ class IRCClient < NSObject
   # socket
   
   def ircConnectionDidConnect
-    puts 'hehe'
     print_system_both(self, 'Connected')
     @connecting = @login = false
     @connected = @reconnect = true
@@ -992,8 +991,8 @@ class IRCClient < NSObject
     change_state_to_off
   end
   
-  def ircConnectionDidReceive(s)
-    s = s.rubyString
+  def ircConnectionDidReceive(data)
+    s = data.rubyString
     if @encoding == NSUTF8StringEncoding &&
         @config.fallback_encoding != NSUTF8StringEncoding &&
         !StringValidator::valid_utf8?(s)
@@ -1001,7 +1000,7 @@ class IRCClient < NSObject
     else
       use_fallback = false
     end
-    
+
     s = to_local_encoding(s, use_fallback)
     s = StringValidator::validate_utf8(s)
     m = IRCMessage.alloc.init
@@ -1078,7 +1077,11 @@ class IRCClient < NSObject
       end
     end
     s = KanaSupport::to_iso2022(s) if enc == NSISO2022JPStringEncoding
-    NSString.stringWithCString_encoding(s, enc).to_s
+    ns = NSString.stringWithCString_encoding(s, enc)
+    unless ns
+      ns = NSString.stringWithCString_encoding(s, NSASCIIStringEncoding)
+    end
+    ns.to_s
   end
   
   def reload_tree
@@ -1250,7 +1253,7 @@ class IRCClient < NSObject
   end
   
   def print_reply(m)
-    text = m.sequence(1)
+    text = m.sequence(1).to_s
     print_both(self, :reply, text)
   end
   
@@ -1515,7 +1518,7 @@ class IRCClient < NSObject
         receive_ctcp_reply(m, text)
       end
     else
-      receive_text(m, m.command, text, identified)
+      receive_text(m, m.command.to_s.downcase.to_sym, text, identified)
     end
   end
   
@@ -1780,7 +1783,7 @@ class IRCClient < NSObject
   def receive_mode(m)
     nick = m.sender.nick.to_s
     target = m.paramAt(0).to_s
-    modestr = m.sequence(1).rstrip
+    modestr = m.sequence(1).to_s.rstrip
     
     if target.channelname?
       # channel mode
@@ -1860,7 +1863,7 @@ class IRCClient < NSObject
   
   def receive_ping(m)
     @pong_timer = PONG_TIME
-    send(:pong, m.sequence)
+    send(:pong, m.sequence(0).to_s)
   end
   
   def receive_error(m)
@@ -2111,7 +2114,7 @@ class IRCClient < NSObject
       @in_whois = false
     when 324  # RPL_CHANNELMODEIS
       chname = m.paramAt(1).to_s
-      modestr = m.sequence(2).rstrip
+      modestr = m.sequence(2).to_s.rstrip
       return if modestr == '+'
       c = find_channel(chname)
       if c && c.active?
@@ -2265,7 +2268,7 @@ class IRCClient < NSObject
     when 322	# RPL_LIST
       chname = m.paramAt(1).to_s
       count = m.paramAt(2).to_s
-      topic = m.sequence(3)
+      topic = m.sequence(3).to_s
       unless @in_list
         @in_list = true
         if @list_dialog
