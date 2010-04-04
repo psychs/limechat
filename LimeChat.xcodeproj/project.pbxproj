@@ -52,7 +52,6 @@
 		78364B2D116597D00096F3A9 /* AsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 78364B18116597D00096F3A9 /* AsyncSocket.m */; };
 		78364B2E116597D00096F3A9 /* HostResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = 78364B1A116597D00096F3A9 /* HostResolver.m */; };
 		78364B2F116597D00096F3A9 /* HotKeyManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 78364B1C116597D00096F3A9 /* HotKeyManager.m */; };
-		78364B30116597D00096F3A9 /* OldEventManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 78364B1E116597D00096F3A9 /* OldEventManager.m */; };
 		78364B31116597D00096F3A9 /* LimeChatApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 78364B22116597D00096F3A9 /* LimeChatApplication.m */; };
 		78364B32116597D00096F3A9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 78364B23116597D00096F3A9 /* main.m */; };
 		78364B33116597D00096F3A9 /* rb_main.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78364B24116597D00096F3A9 /* rb_main.rb */; };
@@ -212,8 +211,6 @@
 		78364B1A116597D00096F3A9 /* HostResolver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HostResolver.m; sourceTree = "<group>"; };
 		78364B1B116597D00096F3A9 /* HotKeyManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotKeyManager.h; sourceTree = "<group>"; };
 		78364B1C116597D00096F3A9 /* HotKeyManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotKeyManager.m; sourceTree = "<group>"; };
-		78364B1D116597D00096F3A9 /* OldEventManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OldEventManager.h; sourceTree = "<group>"; };
-		78364B1E116597D00096F3A9 /* OldEventManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OldEventManager.m; sourceTree = "<group>"; };
 		78364B21116597D00096F3A9 /* LimeChatApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LimeChatApplication.h; sourceTree = "<group>"; };
 		78364B22116597D00096F3A9 /* LimeChatApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LimeChatApplication.m; sourceTree = "<group>"; };
 		78364B23116597D00096F3A9 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -554,24 +551,22 @@
 			children = (
 				78364B17116597D00096F3A9 /* AsyncSocket.h */,
 				78364B18116597D00096F3A9 /* AsyncSocket.m */,
-				78364B19116597D00096F3A9 /* HostResolver.h */,
-				78364B1A116597D00096F3A9 /* HostResolver.m */,
-				78364B1B116597D00096F3A9 /* HotKeyManager.h */,
-				78364B1C116597D00096F3A9 /* HotKeyManager.m */,
-				78364B1D116597D00096F3A9 /* OldEventManager.h */,
-				78364B1E116597D00096F3A9 /* OldEventManager.m */,
-				78B961F81166182600831780 /* Timer.h */,
-				78B961F91166182600831780 /* Timer.m */,
 				78B960F811660A8800831780 /* TCPClient.h */,
 				78B960F911660A8800831780 /* TCPClient.m */,
+				78364B19116597D00096F3A9 /* HostResolver.h */,
+				78364B1A116597D00096F3A9 /* HostResolver.m */,
 				78B9621E11661A5D00831780 /* IRCConnection.h */,
 				78B9621F11661A5D00831780 /* IRCConnection.m */,
+				78364B1B116597D00096F3A9 /* HotKeyManager.h */,
+				78364B1C116597D00096F3A9 /* HotKeyManager.m */,
+				78B961F81166182600831780 /* Timer.h */,
+				78B961F91166182600831780 /* Timer.m */,
 				78B9651911664B2600831780 /* InputHistory.h */,
 				78B9651A11664B2600831780 /* InputHistory.m */,
-				78C1E87E1168652000AC305B /* KeyEventHandler.h */,
-				78C1E87F1168652000AC305B /* KeyEventHandler.m */,
 				78BC096D1168BF6A00A984AA /* Regex.h */,
 				78BC096E1168BF6A00A984AA /* Regex.m */,
+				78C1E87E1168652000AC305B /* KeyEventHandler.h */,
+				78C1E87F1168652000AC305B /* KeyEventHandler.m */,
 			);
 			name = Library;
 			path = objc/Library;
@@ -637,12 +632,12 @@
 				788AC9011165CF3E00523E80 /* ChatBox.m */,
 				788AC92F1165D27400523E80 /* DialogWindow.h */,
 				788AC9301165D27400523E80 /* DialogWindow.m */,
-				78EFDA3D116604190062548C /* LogView.h */,
-				78EFDA3E116604190062548C /* LogView.m */,
 				78C1E96C116876AC00AC305B /* MainWindow.h */,
 				78C1E96D116876AC00AC305B /* MainWindow.m */,
 				78C1E98D1168787000AC305B /* FieldEditorTextView.h */,
 				78C1E98E1168787000AC305B /* FieldEditorTextView.m */,
+				78EFDA3D116604190062548C /* LogView.h */,
+				78EFDA3E116604190062548C /* LogView.m */,
 				78AFC9AC116886F700C64197 /* LogPolicy.h */,
 				78AFC9AD116886F700C64197 /* LogPolicy.m */,
 				78AFC9BD116888E800C64197 /* LogScriptEventSink.h */,
@@ -857,7 +852,6 @@
 				78364B2D116597D00096F3A9 /* AsyncSocket.m in Sources */,
 				78364B2E116597D00096F3A9 /* HostResolver.m in Sources */,
 				78364B2F116597D00096F3A9 /* HotKeyManager.m in Sources */,
-				78364B30116597D00096F3A9 /* OldEventManager.m in Sources */,
 				78364B31116597D00096F3A9 /* LimeChatApplication.m in Sources */,
 				78364B32116597D00096F3A9 /* main.m in Sources */,
 				78364B34116597D00096F3A9 /* KeyCodeTranslator.m in Sources */,
