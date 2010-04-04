@@ -68,6 +68,7 @@ class IRCChannel < NSObject
     false
   end
   
+  objc_method 'isClient', 'i@:'
   def isClient
     client?
   end
@@ -80,6 +81,7 @@ class IRCChannel < NSObject
     @config.type == :channel
   end
   
+  objc_method 'isChannel', 'i@:'
   def isChannel
     channel?
   end
@@ -88,14 +90,16 @@ class IRCChannel < NSObject
     @config.type == :talk
   end
   
+  objc_method 'isTalk', 'i@:'
   def isTalk
-    @config.type == :talk
+    talk?
   end
   
   def dccchat?
     @config.type == :dccchat
   end
   
+  objc_method 'isDCCChat', 'i@:'
   def isDCCChat
     dccchat?
   end

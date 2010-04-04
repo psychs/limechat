@@ -106,12 +106,10 @@
 	NSString* pre = @"";
 	NSString* c = @"";
 	
-	// ### isTalk is not working now
-	
 	if (!channel) {
 		c = @"Console";
 	}
-	else if ([channel isTalk] == 1) {
+	else if ([channel isTalk]) {
 		c = @"Talk";
 		pre = [[[channel name] safeFileName] stringByAppendingString:@"_"];
 	}
