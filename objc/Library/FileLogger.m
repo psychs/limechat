@@ -63,8 +63,6 @@
 	[fileName release];
 	fileName = [[self buildFileName] retain];
 	
-	LOG(@"filename: %@", fileName);
-	
 	NSString* dir = [fileName stringByDeletingLastPathComponent];
 	
 	NSFileManager* fm = [NSFileManager defaultManager];
