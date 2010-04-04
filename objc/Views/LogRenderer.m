@@ -9,20 +9,57 @@
 #define KEYWORD_ATTR			(1 << 12)
 #define BOLD_ATTR				(1 << 11)
 #define UNDERLINE_ATTR			(1 << 10)
-#define REVERSE_ATTR			(1 <<  9)
+#define ITALIC_ATTR				(1 <<  9)
 #define COLOR_ATTR				(1 <<  8)
 #define BACKGROUND_COLOR_MASK	(0xF0)
 #define TEXT_COLOR_MASK			(0x0F)
+
+#define EFFECT_ATTR				(BOLD_ATTR | UNDERLINE_ATTR | ITALIC_ATTR | COLOR_ATTR)
 
 
 typedef uint16_t flag_t;
 
 
-@interface LogRenderer (Private)
-void setFlag(flag_t* attr, flag_t flag, int start, int len);
-int getNextAttributeRange(flag_t* attr, int start, int len);
-NSString* renderRange(NSString* body, flag_t attr, int start, int len);
-@end
+void setFlag(flag_t* attr, flag_t flag, int start, int len)
+{
+	flag_t* target = attr + start;
+	flag_t* end = target + len;
+	
+	while (target < end) {
+		*target |= flag;
+		++target;
+	}
+}
+
+int getNextAttributeRange(flag_t* attr, int start, int len)
+{
+	flag_t target = attr[start];
+	
+	for (int i=start; i<len; ++i) {
+		flag_t t = attr[i];
+		if (t != target) {
+			return i - start;
+		}
+	}
+	
+	return len - start;
+}
+
+NSString* renderRange(NSString* body, flag_t attr, int start, int len)
+{
+	NSString* content = [body substringWithRange:NSMakeRange(start, len)];
+	
+	if (attr & URL_ATTR) {
+		// URL
+		NSString* link = content;
+		content = [content gtm_stringByEscapingForHTML];
+		return [NSString stringWithFormat:@"<a href=\"%@\" class=\"url\" oncontextmenu=\"on_url_contextmenu()\">%@</a>", link, content];
+	}
+	else {
+		return [content gtm_stringByEscapingForHTML];
+	}
+}
+
 
 
 @implementation LogRenderer
@@ -69,48 +106,6 @@ NSString* renderRange(NSString* body, flag_t attr, int start, int len);
 	}
 	
 	return [NSArray arrayWithObjects:result, [NSNumber numberWithBool:0], nil];
-}
-
-
-
-void setFlag(flag_t* attr, flag_t flag, int start, int len)
-{
-	flag_t* target = attr + start;
-	flag_t* end = target + len;
-	
-	while (target < end) {
-		*target |= flag;
-		++target;
-	}
-}
-
-int getNextAttributeRange(flag_t* attr, int start, int len)
-{
-	flag_t target = attr[start];
-	
-	for (int i=start; i<len; ++i) {
-		flag_t t = attr[i];
-		if (t != target) {
-			return i - start;
-		}
-	}
-	
-	return len - start;
-}
-
-NSString* renderRange(NSString* body, flag_t attr, int start, int len)
-{
-	NSString* content = [body substringWithRange:NSMakeRange(start, len)];
-	
-	if (attr & URL_ATTR) {
-		// URL
-		NSString* link = content;
-		content = [content gtm_stringByEscapingForHTML];
-		return [NSString stringWithFormat:@"<a href=\"%@\" class=\"url\" oncontextmenu=\"on_url_contextmenu()\">%@</a>", link, content];
-	}
-	else {
-		return [content gtm_stringByEscapingForHTML];
-	}
 }
 
 @end
