@@ -66,7 +66,7 @@ class AppController < NSObject
     @world.addrMenu = @addrMenu
     @world.chanMenu = @chanMenu
     @world.memberMenu = @memberMenu
-    @world.menu_controller = @menu
+    @world.menuController = @menu
     @world.view_theme = @view_theme
     @world.setup(IRCWorldConfig.new(preferences.load_world))
     @tree.setDataSource(@world)

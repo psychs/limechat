@@ -6,7 +6,7 @@ require 'date'
 class IRCWorld < NSObject
   attr_accessor :member_list, :dcc, :view_theme, :window
   attr_writer :app, :tree, :log_base, :console_base, :chat_box, :field_editor, :text
-  attr_accessor :menu_controller
+  attr_accessor :menuController
   attr_accessor :tree_default_menu, :server_menu, :channel_menu, :tree_menu, :log_menu, :console_menu, :urlMenu, :addrMenu, :chanMenu, :memberMenu
   attr_reader :clients, :selected, :prev_selected, :console, :config
 
