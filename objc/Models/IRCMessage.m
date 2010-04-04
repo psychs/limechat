@@ -96,6 +96,11 @@
 	}
 }
 
+- (NSString*)sequence
+{
+	return [self sequence:0];
+}
+
 - (NSString*)sequence:(int)index
 {
 	NSMutableString* s = [NSMutableString string];

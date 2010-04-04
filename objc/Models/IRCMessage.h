@@ -16,7 +16,9 @@
 @property (nonatomic, retain) NSMutableArray* params;
 
 - (id)initWithLine:(NSString*)line;
+
 - (NSString*)paramAt:(int)index;
+- (NSString*)sequence;
 - (NSString*)sequence:(int)index;
 
 @end
