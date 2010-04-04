@@ -118,8 +118,8 @@
 		78BF64B10C2885E2004451B2 /* usermode.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78BF64A90C2885E2004451B2 /* usermode.rb */; };
 		78BF64B20C2885E2004451B2 /* world.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78BF64AA0C2885E2004451B2 /* world.rb */; };
 		78C1E7771168559400AC305B /* NSArrayHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C1E7761168559400AC305B /* NSArrayHelper.m */; };
+		78C1E7CC11685BDF00AC305B /* MemberListViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C1E7CB11685BDF00AC305B /* MemberListViewCell.m */; };
 		78C2D609115A428C00705817 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 78C2D608115A428C00705817 /* dsa_pub.pem */; };
-		78DA4EC10C461D52008780C8 /* memberlistview.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78DA4EBF0C461D52008780C8 /* memberlistview.rb */; };
 		78E572390C1C30BA00BDF7EC /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		78E5723B0C1C30BA00BDF7EC /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 788D56F00BB6872B00DDBF69 /* WebKit.framework */; };
 		78E5723C0C1C30BA00BDF7EC /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 787FD46C0BFE960100F2F22D /* Carbon.framework */; };
@@ -305,8 +305,9 @@
 		78BF64AA0C2885E2004451B2 /* world.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = world.rb; sourceTree = "<group>"; };
 		78C1E7751168559400AC305B /* NSArrayHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSArrayHelper.h; sourceTree = "<group>"; };
 		78C1E7761168559400AC305B /* NSArrayHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSArrayHelper.m; sourceTree = "<group>"; };
+		78C1E7CA11685BDF00AC305B /* MemberListViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MemberListViewCell.h; sourceTree = "<group>"; };
+		78C1E7CB11685BDF00AC305B /* MemberListViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MemberListViewCell.m; sourceTree = "<group>"; };
 		78C2D608115A428C00705817 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = dsa_pub.pem; path = etc/dsa_pub.pem; sourceTree = "<group>"; };
-		78DA4EBF0C461D52008780C8 /* memberlistview.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = memberlistview.rb; sourceTree = "<group>"; };
 		78E570D00C1C306500BDF7EC /* LimeChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LimeChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		78EFDA3D116604190062548C /* LogView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogView.h; sourceTree = "<group>"; };
 		78EFDA3E116604190062548C /* LogView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogView.m; sourceTree = "<group>"; };
@@ -489,7 +490,6 @@
 			children = (
 				7896BFE40D0C5E850069453A /* viewtheme.rb */,
 				787A36A10C6A392600DDB70D /* fieldeditortextview.rb */,
-				78DA4EBF0C461D52008780C8 /* memberlistview.rb */,
 				78755D720C2AC0B30073FF42 /* logrenderer.rb */,
 				78229BBC0C288188001DD4C3 /* log.rb */,
 				78229BBE0C288188001DD4C3 /* mainwindow.rb */,
@@ -593,6 +593,8 @@
 				788AC96D1165D49A00523E80 /* ListView.m */,
 				788AC9EE1165DA0900523E80 /* MemberListView.h */,
 				788AC9EF1165DA0900523E80 /* MemberListView.m */,
+				78C1E7CA11685BDF00AC305B /* MemberListViewCell.h */,
+				78C1E7CB11685BDF00AC305B /* MemberListViewCell.m */,
 				788AC8B41165CB5000523E80 /* SingleLineFormatter.h */,
 				788AC8B51165CB5000523E80 /* SingleLineFormatter.m */,
 				788AC8C91165CDA300523E80 /* TextFieldWithDisabledState.h */,
@@ -767,7 +769,6 @@
 				78755D730C2AC0B30073FF42 /* logrenderer.rb in Resources */,
 				7821DBE40C2C875700B3EF42 /* pastesheet.rb in Resources */,
 				78AFBCF50C33E314008A8FCD /* kanasupport.rb in Resources */,
-				78DA4EC10C461D52008780C8 /* memberlistview.rb in Resources */,
 				7831B94D0C589A7A00E1F931 /* growl.rb in Resources */,
 				78211B530C5F3560004B47DA /* soundplayer.rb in Resources */,
 				788C5E660C5F4F5A0034C46E /* growlcontroller.rb in Resources */,
@@ -852,6 +853,7 @@
 				78B964EC1166489000831780 /* UnicodeHelper.m in Sources */,
 				78B9651B11664B2600831780 /* InputHistory.m in Sources */,
 				78C1E7771168559400AC305B /* NSArrayHelper.m in Sources */,
+				78C1E7CC11685BDF00AC305B /* MemberListViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

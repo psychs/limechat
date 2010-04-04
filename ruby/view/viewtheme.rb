@@ -93,9 +93,9 @@ class OtherViewTheme
   attr_reader :tree_font, :treeBackgroundColor, :tree_highlight_color, :tree_newtalk_color, :tree_unread_color
   attr_reader :tree_active_color, :tree_inactive_color, :tree_sel_active_color, :tree_sel_inactive_color
   attr_reader :treeSelTopLineColor, :treeSelBottomLineColor, :treeSelTopColor, :treeSelBottomColor
-  attr_reader :member_list_font, :member_list_color, :memberListBackgroundColor
-  attr_reader :member_list_op_color
-  attr_reader :member_list_sel_color, :memberListSelTopLineColor, :memberListSelBottomLineColor
+  attr_reader :member_list_font, :memberListColor, :memberListBackgroundColor
+  attr_reader :memberListOpColor
+  attr_reader :memberListSelColor, :memberListSelTopLineColor, :memberListSelBottomLineColor
   attr_reader :memberListSelTopColor, :memberListSelBottomColor
 
   def filename=(fname)
@@ -150,10 +150,10 @@ class OtherViewTheme
     
     @member_list_font = load_font('member-list') || NSFont.systemFontOfSize(NSFont.smallSystemFontSize)
     @memberListBackgroundColor = load_color('member-list', 'background-color') || NSColor.whiteColor
-    @member_list_color = load_color('member-list', 'color') || NSColor.blackColor
-    @member_list_op_color = load_color('member-list', 'operator', 'color') || NSColor.blackColor
+    @memberListColor = load_color('member-list', 'color') || NSColor.blackColor
+    @memberListOpColor = load_color('member-list', 'operator', 'color') || NSColor.blackColor
     
-    @member_list_sel_color = load_color('member-list', 'selected', 'color')
+    @memberListSelColor = load_color('member-list', 'selected', 'color')
     @memberListSelTopLineColor = load_color('member-list', 'selected', 'background', 'top-line-color')
     @memberListSelBottomLineColor = load_color('member-list', 'selected', 'background', 'bottom-line-color')
     @memberListSelTopColor = load_color('member-list', 'selected', 'background', 'top-color')

@@ -29,6 +29,10 @@ class User
     @q || @a || @o
   end
   
+  def op
+    op?
+  end
+  
   def mark
     if @q
       '~'
