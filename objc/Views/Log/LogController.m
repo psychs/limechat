@@ -366,6 +366,7 @@
 	}
 	
 	LogLineType type = line.lineType;
+	NSString* typeStr = [LogLine lineTypeString:type];
 	BOOL isText = type == LOG_LINE_TYPE_PRIVMSG || type == LOG_LINE_TYPE_NOTICE || type == LOG_LINE_TYPE_ACTION;
 	BOOL showInlineImage = NO;
 	
@@ -384,13 +385,13 @@
 		if (r.location != NSNotFound) {
 			showInlineImage = YES;
 			NSString* url = [body substringWithRange:r];
-			[s appendFormat:@"<span class=\"message\" type=\"%@\">%@<br/>", type, body];
+			[s appendFormat:@"<span class=\"message\" type=\"%@\">%@<br/>", typeStr, body];
 			[s appendFormat:@"<a href=\"%@\"><img src=\"%@\" class=\"inlineimage\"/></a></span>", url, url];
 		}
 	}
 	
 	if (!showInlineImage) {
-		[s appendFormat:@"<span class=\"message\" type=\"%@\">%@</span>", type, body];
+		[s appendFormat:@"<span class=\"message\" type=\"%@\">%@</span>", typeStr, body];
 	}
 	
 	NSString* klass = isText ? @"line text" : @"line event";

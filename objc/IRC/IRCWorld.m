@@ -40,6 +40,8 @@
 @synthesize addrMenu;
 @synthesize chanMenu;
 @synthesize memberMenu;
+@synthesize consoleLog;
+@synthesize selectedItem;
 
 @synthesize clients;
 
@@ -65,10 +67,10 @@
 
 - (void)setup:(IRCWorldConfig*)seed
 {
-	consoleLog = [self createLogWithClient:nil channel:nil console:YES];
+	consoleLog = [[self createLogWithClient:nil channel:nil console:YES] retain];
 	consoleBase.contentView = consoleLog.view;
 	
-	dummyLog = [self createLogWithClient:nil channel:nil console:YES];
+	dummyLog = [[self createLogWithClient:nil channel:nil console:YES] retain];
 	logBase.contentView = dummyLog.view;
 	
 	config = [seed mutableCopy];
@@ -81,6 +83,30 @@
 - (void)setupTree
 {
 	LOG_METHOD
+	
+	[tree setTarget:self];
+	[tree setDoubleAction:@selector(outlineViewDoubleClicked:)];
+	// @@@drag
+	
+	IRCClient* client = nil;;
+	for (IRCClient* e in clients) {
+		if (e.config.autoConnect) {
+			client = e;
+			break;
+		}
+	}
+	
+	if (client) {
+		[tree expandItem:client];
+		int n = [tree rowForItem:client];
+		if (client.channels.count) ++n;
+		[tree select:n];
+	}
+	else if (clients.count > 0) {
+		[tree select:0];
+	}
+	
+	[self outlineViewSelectionDidChange:nil];
 }
 
 #pragma mark -
@@ -223,6 +249,11 @@
 
 #pragma mark -
 #pragma mark NSOutlineView Delegate
+
+- (void)outlineViewDoubleClicked:(id)sender
+{
+	LOG_METHOD
+}
 
 - (NSInteger)outlineView:(NSOutlineView *)sender numberOfChildrenOfItem:(id)item
 {

@@ -58,4 +58,6 @@
 - (void)deactivate;
 - (void)closeDialogs;
 
+- (BOOL)print:(LogLine*)line;
+
 @end

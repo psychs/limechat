@@ -48,6 +48,7 @@
 @property (nonatomic, assign) IRCWorld* world;
 @property (nonatomic, retain) LogController* log;
 
+@property (nonatomic, readonly) NSString* name;
 @property (nonatomic, readonly) IRCClientConfig* config;
 @property (nonatomic, readonly) NSMutableArray* channels;
 @property (nonatomic, assign) int uid;

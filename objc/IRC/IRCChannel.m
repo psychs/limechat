@@ -119,6 +119,15 @@
 {
 }
 
+- (BOOL)print:(LogLine*)line
+{
+	BOOL result = [log print:line useKeyword:YES];
+	
+	// write to log file
+	
+	return result;
+}
+
 #pragma mark -
 #pragma mark IRCTreeItem
 
@@ -162,7 +171,6 @@
 
 - (void)tableView:(NSTableView *)sender willDisplayCell:(id)aCell forTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
-	LOG_METHOD
 }
 
 @end
