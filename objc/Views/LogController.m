@@ -362,14 +362,15 @@
 		[s appendFormat:@">%@</span>", [line.nick gtm_stringByEscapingForHTML]];
 	}
 	
-	//
-	// @@@ should expand images
-	//
 	NSString* type = line.lineType;
 	BOOL isText = [type isEqualToString:@"privmsg"] || [type isEqualToString:@"notice"] || [type isEqualToString:@"action"];
 	BOOL showInlineImage = NO;
 	
 	if (isText) {
+		//
+		// expand image URLs
+		// @@@ should check preferences
+		//
 		static Regex* imageRegex = nil;
 		if (!imageRegex) {
 			NSString* pattern = @"https?://[a-z0-9.,_\\-/:;%$~]+\\.(jpg|jpeg|png|gif)";
