@@ -364,7 +364,7 @@ class ALogController < NSObject
   end
 
   def logViewKeyDown(e)
-    @world.log_keyDown(e)
+    @world.logKeyDown(e)
   end
 
   def logViewWillResize

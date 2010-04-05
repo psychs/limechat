@@ -124,24 +124,42 @@
 	DOMHTMLDocument* doc = (DOMHTMLDocument*)[[view mainFrame] DOMDocument];
 	if (!doc) return;
 	DOMHTMLElement* body = [doc body];
-	[body setValue:[body valueForKey:@"scrollHeight"] forKey:@"scrollTop"];
+	[body setValue:[NSNumber numberWithInt:0] forKey:@"scrollTop"];
 }
 
 - (void)moveToBottom
 {
+	if (!loaded) return;
+	DOMHTMLDocument* doc = (DOMHTMLDocument*)[[view mainFrame] DOMDocument];
+	if (!doc) return;
+	DOMHTMLElement* body = [doc body];
+	[body setValue:[body valueForKey:@"scrollHeight"] forKey:@"scrollTop"];
 }
 
 - (BOOL)viewingBottom
 {
-	return YES;
+	if (!loaded) return YES;
+	DOMHTMLDocument* doc = (DOMHTMLDocument*)[[view mainFrame] DOMDocument];
+	if (!doc) return YES;
+	DOMHTMLElement* body = [doc body];
+	int viewHeight = view.frame.size.height;
+	int scrollHeight = [[body valueForKey:@"scrollHeight"] intValue];
+	int scrollTop = [[body valueForKey:@"scrollTop"] intValue];
+	
+	if (viewHeight == 0) return YES;
+	return scrollTop + viewHeight >= scrollHeight - BOTTOM_EPSILON;
 }
 
 - (void)savePosition
 {
+	bottom = [self viewingBottom];
 }
 
 - (void)restorePosition
 {
+	if (bottom) {
+		[self moveToBottom];
+	}
 }
 
 - (NSString*)contentString
@@ -438,8 +456,27 @@
 	//@@@
 }
 
+- (void)logViewKeyDown:(NSEvent *)e
+{
+	LOG_METHOD
+	//[world logKeyDown:e];
+}
 
+- (void)logViewOnDoubleClick:(NSEvent *)e
+{
+	LOG_METHOD
+	//[world log_doubleClick:e];
+}
 
+- (void)logViewWillResize
+{
+	[self savePosition];
+}
+
+- (void)logViewDidResize
+{
+	[self restorePosition];
+}
 
 
 
