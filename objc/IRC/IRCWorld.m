@@ -227,6 +227,22 @@
 	return c;
 }
 
+- (IRCChannel*)createTalk:(NSString*)nick client:(IRCClient*)client
+{
+	IRCChannelConfig* seed = [[IRCChannelConfig new] autorelease];
+	seed.name = nick;
+	seed.type = CHANNEL_TYPE_TALK;
+	IRCChannel* c = [self createChannel:seed client:client reload:YES adjust:YES];
+	
+	if (client.loggedIn) {
+		[c activate];
+		
+		// @@@ add members
+	}
+	
+	return c;
+}
+
 - (LogController*)createLogWithClient:(IRCClient*)client channel:(IRCChannel*)channel console:(BOOL)console
 {
 	LogController* c = [[LogController new] autorelease];

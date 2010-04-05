@@ -63,17 +63,17 @@
 	
 	[dic setInt:type forKey:@"type"];
 	
-	[dic setObject:name forKey:@"name"];
-	[dic setObject:password forKey:@"password"];
+	if (name) [dic setObject:name forKey:@"name"];
+	if (password) [dic setObject:password forKey:@"password"];
 	
 	[dic setBool:autoJoin forKey:@"auto_join"];
 	[dic setBool:logToConsole forKey:@"console"];
 	[dic setBool:growl forKey:@"growl"];
 	
-	[dic setObject:mode forKey:@"mode"];
-	[dic setObject:topic forKey:@"topic"];
+	if (mode) [dic setObject:mode forKey:@"mode"];
+	if (topic) [dic setObject:topic forKey:@"topic"];
 	
-	[dic setObject:autoOp forKey:@"autoop"];
+	if (autoOp) [dic setObject:autoOp forKey:@"autoop"];
 	
 	return dic;
 }

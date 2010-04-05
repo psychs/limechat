@@ -30,7 +30,7 @@
 	
 	BOOL connecting;
 	BOOL connected;
-	BOOL login;
+	BOOL loggedIn;
 	BOOL quitting;
 	NSStringEncoding encoding;
 	
@@ -53,6 +53,7 @@
 @property (nonatomic, readonly) IRCClientConfig* config;
 @property (nonatomic, readonly) NSMutableArray* channels;
 @property (nonatomic, assign) int uid;
+@property (nonatomic, readonly) BOOL loggedIn;
 
 - (void)setup:(IRCClientConfig*)seed;
 

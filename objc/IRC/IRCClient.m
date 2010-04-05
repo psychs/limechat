@@ -53,6 +53,7 @@
 @synthesize config;
 @synthesize channels;
 @synthesize uid;
+@synthesize loggedIn;
 
 - (id)init
 {
@@ -233,7 +234,7 @@
 	[conn autorelease];
 	conn = nil;
 	
-	connecting = connected = login = quitting = NO;
+	connecting = connected = loggedIn = quitting = NO;
 	[myNick release];
 	myNick = @"";
 	[sentNick release];
@@ -676,14 +677,23 @@
 		else {
 			// talk
 			IRCChannel* c = [self findChannel:nick];
-			//BOOL newTalk = NO;
+			BOOL newTalk = NO;
 			if (!c && type != LOG_LINE_TYPE_NOTICE) {
-				//c = [world createTalk:];
+				c = [world createTalk:nick client:self];
+				newTalk = YES;
 			}
 			
-			//
-			// @@@ not implemented
-			//
+			BOOL keyword = [self printBoth:(c ?: (id)target) type:type nick:nick text:text identified:identified];
+			
+			if (type == LOG_LINE_TYPE_NOTICE) {
+				;
+			}
+			else {
+				id t = c ?: (id)self;
+				[t setUnreadState];
+				if (keyword) [t setKeywordState];
+				if (newTalk) [c setNewTalkState];
+			}
 		}
 	}
 	else {
@@ -776,11 +786,11 @@
 
 - (void)receiveInit:(IRCMessage*)m
 {
-	if (login) return;
+	if (loggedIn) return;
 	
 	[world expandClient:self];
 	
-	login = YES;
+	loggedIn = YES;
 	tryingNick = -1;
 	
 	[serverHostname release];
@@ -860,7 +870,7 @@
 - (void)ircConnectionDidConnect:(IRCConnection*)sender
 {
 	[self printSystemBoth:self text:@"Connected"];
-	connecting = login = NO;
+	connecting = loggedIn = NO;
 	connected = reconnectEnabled = YES;
 	encoding = config.encoding;
 	

@@ -114,32 +114,32 @@
 {
 	NSMutableDictionary* dic = [NSMutableDictionary dictionary];
 	
-	[dic setObject:name forKey:@"name"];
+	if (name) [dic setObject:name forKey:@"name"];
 	
-	[dic setObject:host forKey:@"host"];
+	if (host) [dic setObject:host forKey:@"host"];
 	[dic setInt:port forKey:@"port"];
 	[dic setBool:useSSL forKey:@"ssl"];
 	
-	[dic setObject:nick forKey:@"nick"];
-	[dic setObject:password forKey:@"password"];
-	[dic setObject:username forKey:@"username"];
-	[dic setObject:nickPassword forKey:@"nickPassword"];
-	[dic setObject:altNicks forKey:@"alt_nicks"];
+	if (nick) [dic setObject:nick forKey:@"nick"];
+	if (password) [dic setObject:password forKey:@"password"];
+	if (username) [dic setObject:username forKey:@"username"];
+	if (nickPassword) [dic setObject:nickPassword forKey:@"nickPassword"];
+	if (altNicks) [dic setObject:altNicks forKey:@"alt_nicks"];
 	
 	[dic setInt:proxyType forKey:@"proxy"];
-	[dic setObject:proxyHost forKey:@"proxy_host"];
+	if (proxyHost) [dic setObject:proxyHost forKey:@"proxy_host"];
 	[dic setInt:proxyPort forKey:@"proxy_port"];
-	[dic setObject:proxyUser forKey:@"proxy_user"];
-	[dic setObject:proxyPassword forKey:@"proxy_password"];
+	if (proxyUser) [dic setObject:proxyUser forKey:@"proxy_user"];
+	if (proxyPassword) [dic setObject:proxyPassword forKey:@"proxy_password"];
 	
 	[dic setBool:autoConnect forKey:@"auto_connect"];
 	[dic setInt:encoding forKey:@"encoding"];
 	[dic setInt:fallbackEncoding forKey:@"fallback_encoding"];
-	[dic setObject:leavingComment forKey:@"leaving_comment"];
-	[dic setObject:userInfo forKey:@"userinfo"];
+	if (leavingComment) [dic setObject:leavingComment forKey:@"leaving_comment"];
+	if (userInfo) [dic setObject:userInfo forKey:@"userinfo"];
 	[dic setBool:invisibleMode forKey:@"invisible"];
 	
-	[dic setObject:loginCommands forKey:@"login_commands"];
+	if (altNicks) [dic setObject:loginCommands forKey:@"login_commands"];
 	
 	NSMutableArray* channelAry = [NSMutableArray array];
 	for (IRCChannelConfig* e in channels) {
