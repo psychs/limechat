@@ -372,6 +372,7 @@
 	if ([t isNewTalk]) return;
 	[t setIsNewTalk:YES];
 	[self reloadTree];
+	if (![NSApp isActive]) [NSApp requestUserAttention:NSInformationalRequest];
 	[world updateIcon];
 }
 
@@ -381,7 +382,6 @@
 	if ([t isUnread]) return;
 	[t setIsUnread:YES];
 	[self reloadTree];
-	if (![NSApp isActive]) [NSApp requestUserAttention:NSInformationalRequest];
 	[world updateIcon];
 }
 
@@ -684,7 +684,7 @@
 		
 		IRCChannel* c = [self findChannel:target];
 		BOOL keyword = [self printBoth:(c ?: (id)target) type:type nick:nick text:text identified:identified];
-		
+
 		id t = c ?: (id)self;
 		[self setUnreadState:t];
 		if (keyword) [self setKeywordState:t];
