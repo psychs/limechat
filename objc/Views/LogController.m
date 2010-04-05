@@ -3,6 +3,7 @@
 
 #import "LogController.h"
 #import "LogRenderer.h"
+#import "Regex.h"
 #import "GTMNSString+HTML.h"
 
 
@@ -81,6 +82,9 @@
 	[super dealloc];
 }
 
+#pragma mark -
+#pragma mark Properties
+
 - (void)setMaxLines:(int)value
 {
 	if (maxLines == value) return;
@@ -94,6 +98,9 @@
 		[self restorePosition];
 	}
 }
+
+#pragma mark -
+#pragma mark Utilities
 
 - (void)setUp
 {
@@ -358,33 +365,50 @@
 	//
 	// @@@ should expand images
 	//
-	[s appendFormat:@"<span class=\"message\" type=\"%@\">%@</span>", line.lineType, body];
-	
-	[prevNickInfo autorelease];
-	prevNickInfo = [line.nickInfo retain];
-	
-	NSString* klass;
 	NSString* type = line.lineType;
-	if ([type isEqualToString:@"privmsg"] || [type isEqualToString:@"notice"] || [type isEqualToString:@"action"]) {
-		klass = @"line text";
+	BOOL isText = [type isEqualToString:@"privmsg"] || [type isEqualToString:@"notice"] || [type isEqualToString:@"action"];
+	BOOL showInlineImage = NO;
+	
+	if (isText) {
+		static Regex* imageRegex = nil;
+		if (!imageRegex) {
+			NSString* pattern = @"https?://[a-z0-9.,_\\-/:;%$~]+\\.(jpg|jpeg|png|gif)";
+			imageRegex = [[Regex alloc] initWithString:pattern options:UREGEX_CASE_INSENSITIVE];
+		}
+		
+		NSRange r = [imageRegex match:body];
+		if (r.location != NSNotFound) {
+			showInlineImage = YES;
+			NSString* url = [body substringWithRange:r];
+			[s appendFormat:@"<span class=\"message\" type=\"%@\">%@<br/>", type, body];
+			[s appendFormat:@"<a href=\"%@\"><img src=\"%@\" class=\"inlineimage\"/></a></span>", url, url];
+		}
 	}
-	else {
-		klass = @"line event";
+	
+	if (!showInlineImage) {
+		[s appendFormat:@"<span class=\"message\" type=\"%@\">%@</span>", type, body];
 	}
+	
+	NSString* klass = isText ? @"line text" : @"line event";
 	
 	NSMutableDictionary* attrs = [NSMutableDictionary dictionary];
 	[attrs setObject:(lineNumber % 2 == 0 ? @"even" : @"odd") forKey:@"alternate"];
 	[attrs setObject:klass forKey:@"class"];
 	[attrs setObject:type forKey:@"type"];
 	[attrs setObject:(key ? @"true" : @"false") forKey:@"highlight"];
-	
 	if (console && line.clickInfo) {
 		[attrs setObject:line.clickInfo forKey:@"clickinfo"];
 		[attrs setObject:@"on_dblclick()" forKey:@"ondblclick"];
 	}
 	
 	[self writeLine:s attributes:attrs];
-
+	
+	//
+	// remember nick info
+	//
+	[prevNickInfo autorelease];
+	prevNickInfo = [line.nickInfo retain];
+	
 	return key;
 }
 
@@ -637,6 +661,9 @@
 	}
 }
 
+#pragma mark -
+#pragma mark WebView Delegate
+
 - (void)webView:(WebView *)sender didClearWindowObject:(WebScriptObject *)windowObject forFrame:(WebFrame *)frame
 {
 	[js release];
@@ -743,6 +770,34 @@
 	// evaluate theme js
 }
 
+- (id)webView:(WebView *)sender identifierForInitialRequest:(NSURLRequest *)request fromDataSource:(WebDataSource *)dataSource
+{
+	NSString* scheme = [[[request URL] scheme] lowercaseString];
+	if ([scheme isEqualToString:@"http"] || [scheme isEqualToString:@"https"]) {
+		if (loadingImages == 0) {
+			[self savePosition];
+		}
+		++loadingImages;
+		return self;
+	}
+	return nil;
+}
+
+- (void)webView:(WebView *)sender resource:(id)identifier didFinishLoadingFromDataSource:(WebDataSource *)dataSource
+{
+	if (identifier) {
+		if (loadingImages > 0) {
+			--loadingImages;
+		}
+		if (loadingImages == 0) {
+			[self restorePosition];
+		}
+	}
+}
+
+#pragma mark -
+#pragma mark LogView Delegate
+
 - (void)logViewKeyDown:(NSEvent *)e
 {
 	LOG_METHOD
@@ -764,6 +819,9 @@
 {
 	[self restorePosition];
 }
+
+#pragma mark -
+#pragma mark MarkedScroller Delegate
 
 - (NSArray*)markedScrollerPositions:(MarkedScroller*)sender
 {
