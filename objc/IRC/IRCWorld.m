@@ -7,6 +7,9 @@
 #import "IRCClientConfig.h"
 
 
+#define AUTO_CONNECT_DELAY	1
+
+
 @interface IRCWorld (Private)
 - (IRCClient*)createClient:(IRCClientConfig*)seed reload:(BOOL)reload;
 - (IRCChannel*)createChannel:(IRCChannelConfig*)seed client:(IRCClient*)client reload:(BOOL)reload adjust:(BOOL)adjust;
@@ -93,26 +96,33 @@
 
 - (void)onTimer
 {
+	for (IRCClient* c in clients) {
+		[c onTimer];
+	}
 }
 
 - (void)autoConnect
 {
-	LOG_METHOD
+	int delay = 0;
+	
+	for (IRCClient* c in clients) {
+		if (c.config.autoConnect) {
+			[c autoConnect:delay];
+			delay += AUTO_CONNECT_DELAY;
+		}
+	}
 }
 
 - (void)terminate
 {
-	LOG_METHOD
 }
 
 - (void)updateTitle
 {
-	LOG_METHOD
 }
 
 - (void)updateIcon
 {
-	LOG_METHOD
 }
 
 - (void)reloadTree
@@ -129,7 +139,6 @@
 
 - (void)adjustSelection
 {
-	LOG_METHOD
 }
 
 - (IRCClient*)createClient:(IRCClientConfig*)seed reload:(BOOL)reload
@@ -272,13 +281,9 @@
 		[memberList reloadData];
 	}
 	
-	LOG(@"1");
-	
 	[memberList deselectAll:nil];
 	[memberList scrollRowToVisible:0];
 	[[selectedItem log].view clearSel];
-	
-	LOG(@"2");
 	
 	[self updateTitle];
 	[self reloadTree];
@@ -287,7 +292,6 @@
 
 - (void)serverTreeViewAcceptsFirstResponder
 {
-	LOG_METHOD
 }
 
 @end

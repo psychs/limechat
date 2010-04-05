@@ -6,6 +6,7 @@
 #import "IRCClientConfig.h"
 #import "IRCChannel.h"
 #import "LogController.h"
+#import "IRCConnection.h"
 
 
 @class IRCWorld;
@@ -19,6 +20,29 @@
 	IRCClientConfig* config;
 	NSMutableArray* channels;
 	int uid;
+	
+	IRCConnection* conn;
+	int connectDelay;
+	BOOL reconnectEnabled;
+	int reconnectTime;
+	BOOL retryEnabled;
+	int retryTime;
+	
+	BOOL connecting;
+	BOOL connected;
+	BOOL login;
+	BOOL quitting;
+	NSStringEncoding encoding;
+	
+	NSString* inputNick;
+	NSString* sentNick;
+	NSString* myNick;
+	int tryingNick;
+	
+	NSString* joinMyAddress;
+	BOOL inWhois;
+	BOOL identifyMsg;
+	BOOL identifyCTCP;
 }
 
 @property (nonatomic, assign) IRCWorld* world;
@@ -29,6 +53,12 @@
 @property (nonatomic, assign) int uid;
 
 - (void)setup:(IRCClientConfig*)seed;
+
+- (void)autoConnect:(int)delay;
+- (void)onTimer;
+
+- (void)connect;
+- (void)disconnect;
 
 - (IRCChannel*)findChannel:(NSString*)name;
 - (int)indexOfTalkChannel;

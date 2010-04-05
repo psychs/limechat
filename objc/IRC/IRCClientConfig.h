@@ -4,6 +4,14 @@
 #import <Cocoa/Cocoa.h>
 
 
+typedef enum {
+	PROXY_NONE = 0,
+	PROXY_SOCKS_SYSTEM = 1,
+	PROXY_SOCKS4 = 4,
+	PROXY_SOCKS5 = 5,
+} ProxyType;
+
+
 @interface IRCClientConfig : NSObject <NSMutableCopying>
 {
 	NSString* name;
@@ -22,7 +30,7 @@
 	NSMutableArray* altNicks;
 	
 	// proxy
-	int proxy;
+	ProxyType proxyType;
 	NSString* proxyHost;
 	int proxyPort;
 	NSString* proxyUser;
@@ -56,7 +64,7 @@
 @property (nonatomic, retain) NSString* nickPassword;
 @property (nonatomic, readonly) NSMutableArray* altNicks;
 
-@property (nonatomic, assign) int proxy;
+@property (nonatomic, assign) ProxyType proxyType;
 @property (nonatomic, retain) NSString* proxyHost;
 @property (nonatomic, assign) int proxyPort;
 @property (nonatomic, retain) NSString* proxyUser;

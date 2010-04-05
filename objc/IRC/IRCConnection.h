@@ -13,6 +13,7 @@
 	NSString* host;
 	int port;
 	BOOL useSSL;
+	NSStringEncoding encoding;
 	
 	BOOL useSystemSocks;
 	BOOL useSocks;
@@ -33,6 +34,7 @@
 @property (nonatomic, retain) NSString* host;
 @property (nonatomic, assign) int port;
 @property (nonatomic, assign) BOOL useSSL;
+@property (nonatomic, assign) NSStringEncoding encoding;
 
 @property (nonatomic, assign) BOOL useSystemSocks;
 @property (nonatomic, assign) BOOL useSocks;
@@ -49,8 +51,10 @@
 
 - (void)open;
 - (void)close;
+
 - (void)clearSendQueue;
-- (void)write:(id)m;
+
+- (void)sendLine:(NSString*)line;
 
 @end
 
@@ -58,9 +62,9 @@
 @interface NSObject (IRCConnectionDelegate)
 - (void)ircConnectionDidConnect:(IRCConnection*)sender;
 - (void)ircConnectionDidDisconnect:(IRCConnection*)sender;
-- (void)ircConnectionDidError:(IRCConnection*)sender;
+- (void)ircConnectionDidError:(NSString*)error;
 - (void)ircConnectionDidReceive:(NSData*)data;
-- (void)ircConnectionWillSend:(NSData*)data;
+- (void)ircConnectionWillSend:(NSString*)line;
 @end
 
 

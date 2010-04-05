@@ -3,6 +3,9 @@
 
 #import "LogController.h"
 #import "LogRenderer.h"
+#import "IRCWorld.h"
+#import "IRCClient.h"
+#import "IRCChannel.h"
 #import "Regex.h"
 #import "GTMNSString+HTML.h"
 
@@ -161,11 +164,11 @@
 	if (!doc) return YES;
 	DOMHTMLElement* body = [doc body];
 	int viewHeight = view.frame.size.height;
-	int scrollHeight = [[body valueForKey:@"scrollHeight"] intValue];
-	int scrollTop = [[body valueForKey:@"scrollTop"] intValue];
+	int height = [[body valueForKey:@"scrollHeight"] intValue];
+	int top = [[body valueForKey:@"scrollTop"] intValue];
 	
 	if (viewHeight == 0) return YES;
-	return scrollTop + viewHeight >= scrollHeight - BOTTOM_EPSILON;
+	return top + viewHeight >= height - BOTTOM_EPSILON;
 }
 
 - (void)savePosition
@@ -354,16 +357,16 @@
 	if (line.time) [s appendFormat:@"<span class=\"time\">%@</span>", [line.time gtm_stringByEscapingForHTML]];
 	if (line.place) [s appendFormat:@"<span class=\"place\">%@</span>", [line.place gtm_stringByEscapingForHTML]];
 	if (line.nick) {
-		[s appendFormat:@"<span class=\"sender\" type=\"%@\"", line.memberType];
+		[s appendFormat:@"<span class=\"sender\" type=\"%@\"", [LogLine memberTypeString:line.memberType]];
 		if (!console) [s appendString:@" oncontextmenu=\"on_nick_contextmenu()\""];
 		[s appendFormat:@" identified=\"%@\"", line.identified ? @"true" : @"false"];
-		if ([line.memberType isEqualToString:@"normal"]) [s appendFormat:@" colornumber=\"%d\"", line.nickColorNumber];
+		if (line.memberType == LOG_MEMBER_TYPE_NORMAL) [s appendFormat:@" colornumber=\"%d\"", line.nickColorNumber];
 		if (line.nickInfo) [s appendFormat:@" first=\"%@\"", [line.nickInfo isEqualToString:prevNickInfo] ? @"false" : @"true"];
 		[s appendFormat:@">%@</span>", [line.nick gtm_stringByEscapingForHTML]];
 	}
 	
-	NSString* type = line.lineType;
-	BOOL isText = [type isEqualToString:@"privmsg"] || [type isEqualToString:@"notice"] || [type isEqualToString:@"action"];
+	LogLineType type = line.lineType;
+	BOOL isText = type == LOG_LINE_TYPE_PRIVMSG || type == LOG_LINE_TYPE_NOTICE || type == LOG_LINE_TYPE_ACTION;
 	BOOL showInlineImage = NO;
 	
 	if (isText) {
@@ -395,7 +398,7 @@
 	NSMutableDictionary* attrs = [NSMutableDictionary dictionary];
 	[attrs setObject:(lineNumber % 2 == 0 ? @"even" : @"odd") forKey:@"alternate"];
 	[attrs setObject:klass forKey:@"class"];
-	[attrs setObject:type forKey:@"type"];
+	[attrs setObject:[LogLine lineTypeString:type] forKey:@"type"];
 	[attrs setObject:(key ? @"true" : @"false") forKey:@"highlight"];
 	if (console && line.clickInfo) {
 		[attrs setObject:line.clickInfo forKey:@"clickinfo"];
@@ -416,9 +419,9 @@
 - (NSArray*)buildBody:(LogLine*)line useKeyword:(BOOL)useKeyword
 {
 	if (useKeyword) {
-		NSString* type = line.lineType;
-		if ([type isEqualToString:@"privmsg"] || [type isEqualToString:@"action"]) {
-			if ([line.memberType isEqualToString:@"myself"]) {
+		LogLineType type = line.lineType;
+		if (type == LOG_LINE_TYPE_PRIVMSG || type == LOG_LINE_TYPE_ACTION) {
+			if (line.memberType == LOG_MEMBER_TYPE_MYSELF) {
 				useKeyword = NO;
 			}
 		}
@@ -445,7 +448,7 @@
 					exactWordMatch:YES];
 }
 
-- (void)writeLine:(NSString*)html attributes:(NSDictionary*)attrs
+- (void)writeLine:(NSString*)aHtml attributes:(NSDictionary*)attrs
 {
 	[self savePosition];
 	
@@ -456,7 +459,7 @@
 	if (!doc) return;
 	DOMHTMLElement* body = [doc body];
 	DOMHTMLElement* div = (DOMHTMLElement*)[doc createElement:@"div"];
-	[div setInnerHTML:html];
+	[div setInnerHTML:aHtml];
 	
 	for (NSString* key in attrs) {
 		NSString* value = [attrs objectForKey:key];

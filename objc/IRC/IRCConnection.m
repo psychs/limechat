@@ -4,6 +4,9 @@
 #import "IRCConnection.h"
 
 
+#define PENALTY_THREASHOLD	5
+
+
 @interface IRCConnection (Private)
 - (void)tryToSend;
 @end
@@ -16,6 +19,7 @@
 @synthesize host;
 @synthesize port;
 @synthesize useSSL;
+@synthesize encoding;
 
 @synthesize useSystemSocks;
 @synthesize useSocks;
@@ -28,6 +32,7 @@
 - (id)init
 {
 	if (self = [super init]) {
+		encoding = NSUTF8StringEncoding;
 		sendQueue = [NSMutableArray new];
 		timer = [Timer new];
 		timer.delegate = self;
@@ -104,32 +109,39 @@
 	[sendQueue removeAllObjects];
 }
 
-- (void)write:(id)m
+- (void)sendLine:(NSString*)line
 {
-	[sendQueue addObject:m];
+	[sendQueue addObject:line];
 	[self tryToSend];
 }
 
 - (void)tryToSend
 {
-	const int PENALTY_THREASHOLD = 3;
-	
 	if ([sendQueue count] == 0) return;
 	if (sending) return;
 	if (penalty > PENALTY_THREASHOLD) return;
 	
-	sending = YES;
-	id m = [[[sendQueue objectAtIndex:0] retain] autorelease];
+	NSString* s = [sendQueue objectAtIndex:0];
+	s = [s stringByAppendingString:@"\r\n"];
 	[sendQueue removeObjectAtIndex:0];
 	
-	//[m build];
-	//penalty += [m penalty];
-	//[conn write:[m data]];
+	NSData* data = [s dataUsingEncoding:encoding];
+	if (!data) {
+		data = [s dataUsingEncoding:encoding allowLossyConversion:YES];
+		if (!data) {
+			data = [s dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+		}
+	}
 	
-	[conn write:m];
-	
-	if ([delegate respondsToSelector:@selector(ircConnectionWillSend:)]) {
-		[delegate ircConnectionWillSend:m];
+	if (data) {
+		sending = YES;
+		penalty += 2;
+		
+		[conn write:data];
+		
+		if ([delegate respondsToSelector:@selector(ircConnectionWillSend:)]) {
+			[delegate ircConnectionWillSend:s];
+		}
 	}
 }
 
@@ -156,7 +168,7 @@
 	[sendQueue removeAllObjects];
 	
 	if ([delegate respondsToSelector:@selector(ircConnectionDidError:)]) {
-		[delegate ircConnectionDidError:self];
+		[delegate ircConnectionDidError:error];
 	}
 }
 

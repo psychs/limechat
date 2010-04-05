@@ -9,6 +9,11 @@
 #import "MarkedScroller.h"
 
 
+@class IRCWorld;
+@class IRCClient;
+@class IRCChannel;
+
+
 @interface LogController : NSObject
 {
 	LogView* view;
@@ -17,9 +22,9 @@
 	MarkedScroller* scroller;
 	WebScriptObject* js;
 
-	id world;
-	id client;
-	id channel;
+	IRCWorld* world;
+	IRCClient* client;
+	IRCChannel* channel;
 	NSMenu* menu;
 	NSMenu* urlMenu;
 	NSMenu* addrMenu;
@@ -46,9 +51,9 @@
 }
 
 @property (nonatomic, readonly) LogView* view;
-@property (nonatomic, assign) id world;
-@property (nonatomic, assign) id client;
-@property (nonatomic, assign) id channel;
+@property (nonatomic, assign) IRCWorld* world;
+@property (nonatomic, assign) IRCClient* client;
+@property (nonatomic, assign) IRCChannel* channel;
 @property (nonatomic, retain) NSMenu* menu;
 @property (nonatomic, retain) NSMenu* urlMenu;
 @property (nonatomic, retain) NSMenu* addrMenu;

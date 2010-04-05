@@ -14,5 +14,6 @@
 #define WHOWAS		@"WHOWAS"
 #define ISON		@"ISON"
 #define USER		@"USER"
+#define PASS		@"PASS"
 
 #define IRC_PENALTY_NORMAL	2

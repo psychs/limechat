@@ -21,7 +21,7 @@
 @synthesize nickPassword;
 @synthesize altNicks;
 
-@synthesize proxy;
+@synthesize proxyType;
 @synthesize proxyHost;
 @synthesize proxyPort;
 @synthesize proxyUser;
@@ -59,7 +59,7 @@
 		nickPassword = [[dic stringForKey:@"nickPassword"] retain];
 		[altNicks addObjectsFromArray:[dic arrayForKey:@"alt_nicks"]];
 
-		proxy = [dic intForKey:@"proxy"];
+		proxyType = [dic intForKey:@"proxy"];
 		proxyHost = [[dic stringForKey:@"proxy_host"] retain];
 		proxyPort = [dic intForKey:@"proxy_port"];
 		proxyUser = [[dic stringForKey:@"proxy_user"] retain];
@@ -126,7 +126,7 @@
 	[dic setObject:nickPassword forKey:@"nickPassword"];
 	[dic setObject:altNicks forKey:@"alt_nicks"];
 	
-	[dic setInt:proxy forKey:@"proxy"];
+	[dic setInt:proxyType forKey:@"proxy"];
 	[dic setObject:proxyHost forKey:@"proxy_host"];
 	[dic setInt:proxyPort forKey:@"proxy_port"];
 	[dic setObject:proxyUser forKey:@"proxy_user"];
