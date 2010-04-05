@@ -130,6 +130,9 @@
 		78CFA5631169C84100B7AC6B /* IRCChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CFA5621169C84100B7AC6B /* IRCChannel.m */; };
 		78CFA57F116A078D00B7AC6B /* IRCWorld.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CFA57E116A078D00B7AC6B /* IRCWorld.m */; };
 		78CFA582116A079500B7AC6B /* IRCClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CFA581116A079500B7AC6B /* IRCClient.m */; };
+		78CFA71D116A1BDD00B7AC6B /* IRCChannelConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CFA718116A1BDD00B7AC6B /* IRCChannelConfig.m */; };
+		78CFA71E116A1BDD00B7AC6B /* IRCClientConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CFA71A116A1BDD00B7AC6B /* IRCClientConfig.m */; };
+		78CFA71F116A1BDD00B7AC6B /* IRCWorldConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CFA71C116A1BDD00B7AC6B /* IRCWorldConfig.m */; };
 		78DA7D2B1169080700962CC4 /* Preferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DA7D2A1169080700962CC4 /* Preferences.m */; };
 		78E572390C1C30BA00BDF7EC /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		78E5723B0C1C30BA00BDF7EC /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 788D56F00BB6872B00DDBF69 /* WebKit.framework */; };
@@ -350,6 +353,12 @@
 		78CFA57E116A078D00B7AC6B /* IRCWorld.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCWorld.m; sourceTree = "<group>"; };
 		78CFA580116A079500B7AC6B /* IRCClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCClient.h; sourceTree = "<group>"; };
 		78CFA581116A079500B7AC6B /* IRCClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCClient.m; sourceTree = "<group>"; };
+		78CFA717116A1BDD00B7AC6B /* IRCChannelConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCChannelConfig.h; sourceTree = "<group>"; };
+		78CFA718116A1BDD00B7AC6B /* IRCChannelConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCChannelConfig.m; sourceTree = "<group>"; };
+		78CFA719116A1BDD00B7AC6B /* IRCClientConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCClientConfig.h; sourceTree = "<group>"; };
+		78CFA71A116A1BDD00B7AC6B /* IRCClientConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCClientConfig.m; sourceTree = "<group>"; };
+		78CFA71B116A1BDD00B7AC6B /* IRCWorldConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCWorldConfig.h; sourceTree = "<group>"; };
+		78CFA71C116A1BDD00B7AC6B /* IRCWorldConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCWorldConfig.m; sourceTree = "<group>"; };
 		78DA7D291169080600962CC4 /* Preferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Preferences.h; sourceTree = "<group>"; };
 		78DA7D2A1169080700962CC4 /* Preferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Preferences.m; sourceTree = "<group>"; };
 		78E570D00C1C306500BDF7EC /* LimeChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LimeChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -749,6 +758,12 @@
 				78CFA581116A079500B7AC6B /* IRCClient.m */,
 				78CFA5611169C84100B7AC6B /* IRCChannel.h */,
 				78CFA5621169C84100B7AC6B /* IRCChannel.m */,
+				78CFA71B116A1BDD00B7AC6B /* IRCWorldConfig.h */,
+				78CFA71C116A1BDD00B7AC6B /* IRCWorldConfig.m */,
+				78CFA719116A1BDD00B7AC6B /* IRCClientConfig.h */,
+				78CFA71A116A1BDD00B7AC6B /* IRCClientConfig.m */,
+				78CFA717116A1BDD00B7AC6B /* IRCChannelConfig.h */,
+				78CFA718116A1BDD00B7AC6B /* IRCChannelConfig.m */,
 				783E6CD011699BEE00DF6820 /* IRCUser.h */,
 				783E6CD111699BEE00DF6820 /* IRCUser.m */,
 				78BC0C541168E5D900A984AA /* IRCConnection.h */,
@@ -963,6 +978,9 @@
 				78CFA5631169C84100B7AC6B /* IRCChannel.m in Sources */,
 				78CFA57F116A078D00B7AC6B /* IRCWorld.m in Sources */,
 				78CFA582116A079500B7AC6B /* IRCClient.m in Sources */,
+				78CFA71D116A1BDD00B7AC6B /* IRCChannelConfig.m in Sources */,
+				78CFA71E116A1BDD00B7AC6B /* IRCClientConfig.m in Sources */,
+				78CFA71F116A1BDD00B7AC6B /* IRCWorldConfig.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

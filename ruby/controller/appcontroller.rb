@@ -69,7 +69,7 @@ class AppController < NSObject
     @world.memberMenu = @memberMenu
     @world.menuController = @menu
     @world.viewTheme = @viewTheme
-    @world.setup(IRCWorldConfig.new(preferences.load_world))
+    @world.setup(IRCWorldConfig.alloc.initWithDictionary(NewPreferences.loadWorld))
     @tree.setDataSource(@world)
     @tree.setDelegate(@world)
     @tree.responderDelegate = @world

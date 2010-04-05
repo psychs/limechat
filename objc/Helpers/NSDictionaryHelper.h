@@ -9,6 +9,8 @@
 - (int)intForKey:(NSString*)key;
 - (long long)longLongForKey:(NSString*)key;
 - (NSString*)stringForKey:(NSString*)key;
+- (NSDictionary*)dictionaryForKey:(NSString*)key;
+- (NSArray*)arrayForKey:(NSString*)key;
 
 @end
 

@@ -12,7 +12,7 @@ module AutoOpMatchable
   end
 end
 
-class IRCWorldConfig
+class AIRCWorldConfig
   include AutoOpMatchable
   attr_accessor :clients
   attr_accessor :autoop
@@ -53,7 +53,7 @@ class IRCWorldConfig
 end
 
 
-class IRCClientConfig
+class AIRCClientConfig
   include AutoOpMatchable
   attr_accessor :name, :host, :port, :password, :nick, :alt_nicks, :username, :realname, :nickPassword
   attr_accessor :ssl, :autoConnect, :encoding, :fallback_encoding
@@ -144,7 +144,7 @@ class IRCClientConfig
 end
 
 
-class IRCChannelConfig
+class AIRCChannelConfig
   include AutoOpMatchable
   attr_accessor :name, :password, :mode, :topic, :auto_join, :console, :keyword, :unread, :growl
   attr_reader :type

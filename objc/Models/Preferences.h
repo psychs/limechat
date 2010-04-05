@@ -6,7 +6,10 @@
 
 @interface NewPreferences : NSObject
 
++ (NSDictionary*)loadWorld;
+
 + (BOOL)boolForKey:(NSString*)key;
 + (NSString*)stringForKey:(NSString*)key;
++ (NSDictionary*)dictionaryForKey:(NSString*)key;
 
 @end

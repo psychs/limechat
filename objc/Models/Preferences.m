@@ -6,6 +6,11 @@
 
 @implementation NewPreferences
 
++ (NSDictionary*)loadWorld
+{
+	return [self dictionaryForKey:@"world"];
+}
+
 + (BOOL)boolForKey:(NSString*)key
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
@@ -17,6 +22,16 @@
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
 	NSString* s = [ud objectForKey:key];
 	if ([s isKindOfClass:[NSString class]]) {
+		return s;
+	}
+	return nil;
+}
+
++ (NSDictionary*)dictionaryForKey:(NSString*)key
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	NSDictionary* s = [ud objectForKey:key];
+	if ([s isKindOfClass:[NSDictionary class]]) {
 		return s;
 	}
 	return nil;

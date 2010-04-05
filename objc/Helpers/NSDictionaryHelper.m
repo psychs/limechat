@@ -9,48 +9,55 @@
 - (BOOL)boolForKey:(NSString*)key
 {
 	id obj = [self objectForKey:key];
-	
-	int n = 0;
-	if (obj && [obj respondsToSelector:@selector(intValue)]) {
-		n = [obj intValue];
+	if ([obj respondsToSelector:@selector(boolValue)]) {
+		return [obj boolValue];
 	}
-	
-	return n != 0;
+	return NO;
 }
 
 - (int)intForKey:(NSString*)key
 {
 	id obj = [self objectForKey:key];
-	
-	int n = 0;
-	if (obj && [obj respondsToSelector:@selector(intValue)]) {
-		n = [obj intValue];
+	if ([obj respondsToSelector:@selector(intValue)]) {
+		return [obj intValue];
 	}
-	
-	return n;
+	return 0;
 }
 
 - (long long)longLongForKey:(NSString*)key
 {
 	id obj = [self objectForKey:key];
-	
-	long long n = 0;
-	if (obj && [obj respondsToSelector:@selector(longLongValue)]) {
-		n = [obj longLongValue];
+	if ([obj respondsToSelector:@selector(longLongValue)]) {
+		return [obj longLongValue];
 	}
-	
-	return n;
+	return 0;
 }
 
 - (NSString*)stringForKey:(NSString*)key
 {
 	id obj = [self objectForKey:key];
-	
-	if (obj && [obj isKindOfClass:[NSString class]]) {
+	if ([obj isKindOfClass:[NSString class]]) {
 		return obj;
 	}
-	
-	return @"";
+	return nil;
+}
+
+- (NSDictionary*)dictionaryForKey:(NSString*)key
+{
+	id obj = [self objectForKey:key];
+	if ([obj isKindOfClass:[NSDictionary class]]) {
+		return obj;
+	}
+	return nil;
+}
+
+- (NSArray*)arrayForKey:(NSString*)key
+{
+	id obj = [self objectForKey:key];
+	if ([obj isKindOfClass:[NSArray class]]) {
+		return obj;
+	}
+	return nil;
 }
 
 @end
