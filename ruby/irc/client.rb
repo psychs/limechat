@@ -1174,7 +1174,7 @@ class IRCClient < NSObject
     if nick && channel && !channel.client?
       m = channel.find_member(nick)
       if m
-        color_num = m.color_number
+        color_num = m.colorNumber
       end
     end
     
@@ -1231,7 +1231,7 @@ class IRCClient < NSObject
     if nick && channel && !channel.client?
       m = channel.find_member(nick)
       if m
-        color_num = m.color_number
+        color_num = m.colorNumber
       end
     end
     

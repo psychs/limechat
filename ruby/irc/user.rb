@@ -1,7 +1,7 @@
 # Created by Satoshi Nakagawa.
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
-class User
+class AUser
   attr_accessor :nick, :username, :address, :q, :a, :o, :h, :v
   attr_reader :canonicalNick, :incoming_weight, :outgoing_weight
   
