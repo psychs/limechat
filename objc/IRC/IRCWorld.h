@@ -79,5 +79,6 @@
 - (void)setupTree;
 - (void)onTimer;
 - (void)autoConnect;
+- (void)expandClient:(IRCClient*)client;
 
 @end

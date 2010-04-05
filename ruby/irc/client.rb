@@ -1968,7 +1968,7 @@ class AIRCClient < NSObject
       when :userinfo
         send_ctcp_reply(nick, command, @config.userinfo)
       when :clientinfo
-        send_ctcp_reply(nick, command, _('CtcpClientInfo').to_s)
+        send_ctcp_reply(nick, command, _('CTCPClientInfo').to_s)
       else
         print_both(self, :reply, "CTCP-query unknown(#{command}) from #{nick}")
         return

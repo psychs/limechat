@@ -163,6 +163,11 @@
 	reloadingTree = NO;
 }
 
+- (void)expandClient:(IRCClient*)client
+{
+	[tree expandItem:client];
+}
+
 - (void)adjustSelection
 {
 }

@@ -9,8 +9,12 @@
 
 - (BOOL)isClient;
 
-- (void)resetState;
 - (LogController*)log;
+
+- (void)resetState;
+- (void)setUnreadState;
+- (void)setKeywordState;
+- (void)setNewTalkState;
 
 - (int)numberOfChildren;
 - (id)childAtIndex:(int)index;

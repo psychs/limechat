@@ -39,6 +39,7 @@
 	NSString* myNick;
 	int tryingNick;
 	
+	NSString* serverHostname;
 	NSString* joinMyAddress;
 	BOOL inWhois;
 	BOOL identifyMsg;

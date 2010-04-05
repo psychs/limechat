@@ -8,6 +8,11 @@
 
 @implementation NSString (NSStringHelper)
 
+- (BOOL)isEqualNoCase:(NSString*)other
+{
+	return [self caseInsensitiveCompare:other] == NSOrderedSame;
+}
+
 - (BOOL)isEmpty
 {
 	return [self length] == 0;
