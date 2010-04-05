@@ -31,6 +31,11 @@
 	config = [seed mutableCopy];
 }
 
+- (NSString*)name
+{
+	return config.name;
+}
+
 - (BOOL)isChannel
 {
 	return config.type == CHANNEL_TYPE_CHANNEL;
@@ -39,6 +44,15 @@
 - (BOOL)isTalk
 {
 	return config.type == CHANNEL_TYPE_TALK;
+}
+
+- (NSString*)typeStr
+{
+	switch (config.type) {
+		case CHANNEL_TYPE_CHANNEL: return @"channel";
+		case CHANNEL_TYPE_TALK: return @"talk";
+	}
+	return nil;
 }
 
 - (int)numberOfChildren

@@ -25,8 +25,10 @@
 @property (nonatomic, readonly) IRCChannelConfig* config;
 @property (nonatomic, assign) int uid;
 
+@property (nonatomic, readonly) NSString* name;
 @property (nonatomic, readonly) BOOL isChannel;
 @property (nonatomic, readonly) BOOL isTalk;
+@property (nonatomic, readonly) NSString* typeStr;
 
 - (void)setup:(IRCChannelConfig*)seed;
 

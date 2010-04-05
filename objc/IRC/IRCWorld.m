@@ -131,14 +131,12 @@
 	[c setup:seed];
 	
 	for (IRCChannelConfig* e in seed.channels) {
-		;
+		[self createChannel:e client:c reload:NO adjust:NO];
 	}
 	
 	[clients addObject:c];
 	
-	if (reload) {
-		[self reloadTree];
-	}
+	if (reload) [self reloadTree];
 	
 	return c;
 }
@@ -171,13 +169,8 @@
 			break;
 	}
 	
-	if (reload) {
-		[self reloadTree];
-	}
-	
-	if (adjust) {
-		[self adjustSelection];
-	}
+	if (reload) [self reloadTree];
+	if (adjust) [self adjustSelection];
 	
 	return c;
 }
