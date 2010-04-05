@@ -49,6 +49,8 @@
 	if (self = [super init]) {
 		bottom = YES;
 		maxLines = 300;
+		lines = [NSMutableArray new];
+		highlightedLineNumbers = [NSMutableArray new];
 	}
 	return self;
 }
@@ -250,6 +252,7 @@
 	BOOL key = [[result objectAtIndex:1] intValue];
 	
 	if (!loaded) {
+		LOG(@"!!!not yet loaded");
 		NSArray* ary = [NSArray arrayWithObjects:line, [NSNumber numberWithBool:useKeyword], nil];
 		[lines addObject:ary];
 		return key;
@@ -643,6 +646,32 @@
 - (void)logViewDidResize
 {
 	[self restorePosition];
+}
+
+- (NSArray*)markedScrollerPositions:(MarkedScroller*)sender
+{
+	NSMutableArray* result = [NSMutableArray array];
+	
+	DOMHTMLDocument* doc = (DOMHTMLDocument*)[[view mainFrame] DOMDocument];
+	if (doc) {
+		for (NSNumber* n in highlightedLineNumbers) {
+			NSString* key = [NSString stringWithFormat:@"line%d", [n intValue]];
+			DOMHTMLElement* e = (DOMHTMLElement*)[doc getElementById:key];
+			if (e) {
+				int pos = [[e valueForKey:@"offsetTop"] intValue] + [[e valueForKey:@"offsetHeight"] intValue] / 2;
+				[result addObject:[NSNumber numberWithInt:pos]];
+			}
+		}
+	}
+	
+	return result;
+}
+
+- (NSColor*)markedScrollerColor:(MarkedScroller*)sender
+{
+	//return [NSColor redColor];
+	
+	[[theme other] log_scroller_highlight_color];
 }
 
 @end
