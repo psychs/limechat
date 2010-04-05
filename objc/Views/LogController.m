@@ -18,7 +18,7 @@
 @interface LogController (Private)
 - (void)savePosition;
 - (void)restorePosition;
-- (void)removeFirstLine:(int)n;
+- (void)removeLinesFromTop:(int)n;
 - (NSArray*)buildBody:(LogLine*)line useKeyword:(BOOL)useKeyword;
 - (void)writeLine:(NSString*)str attributes:(NSDictionary*)attrs;
 - (NSString*)initialDocument;
@@ -85,11 +85,12 @@
 {
 	if (maxLines == value) return;
 	maxLines = value;
+	
 	if (!loaded) return;
 	
 	if (maxLines > 0 && count > maxLines) {
 		[self savePosition];
-		[self removeFirstLine:count - maxLines];
+		[self removeLinesFromTop:count - maxLines];
 		[self restorePosition];
 	}
 }
@@ -273,8 +274,61 @@
 	[self restorePosition];
 }
 
-- (void)removeFirstLine:(int)n
+- (void)removeLinesFromTop:(int)n
 {
+	if (!loaded || n <= 0 || count <= 0) return;
+	
+	DOMHTMLDocument* doc = (DOMHTMLDocument*)[[view mainFrame] DOMDocument];
+	if (!doc) return;
+	DOMHTMLElement* body = [doc body];
+	
+	// remeber scroll top
+	int top = [[body valueForKey:@"scrollTop"] intValue];
+	int delta = 0;
+	
+	NSString* lastLineId = nil;
+	
+	for (int i=0; i<n; ++i) {
+		DOMHTMLElement* node = (DOMHTMLElement*)[body firstChild];
+		if ([node isKindOfClass:[DOMHTMLHRElement class]]) {
+			// the first node is the mark
+			DOMHTMLElement* nextSibling = (DOMHTMLElement*)[node nextSibling];
+			if (nextSibling) {
+				delta += [[nextSibling valueForKey:@"offsetTop"] intValue] - [[node valueForKey:@"offsetTop"] intValue];
+			}
+			[body removeChild:node];
+			node = nextSibling;
+		}
+		DOMHTMLElement* nextSibling = (DOMHTMLElement*)[node nextSibling];
+		if (nextSibling) {
+			delta += [[nextSibling valueForKey:@"offsetTop"] intValue] - [[node valueForKey:@"offsetTop"] intValue];
+		}
+		lastLineId = [[[node valueForKey:@"id"] retain] autorelease];
+		[body removeChild:node];
+	}
+	
+	// scroll back by delta
+	if (delta > 0) {
+		[body setValue:[NSNumber numberWithInt:top - delta] forKey:@"scrollTop"];
+	}
+	
+	// updating highlight line numbers
+	if (highlightedLineNumbers.count > 0 && lastLineId && lastLineId.length > 4) {
+		NSString* s = [lastLineId substringFromIndex:4];
+		int num = [s intValue];
+		while (highlightedLineNumbers.count > 0) {
+			int i = [[highlightedLineNumbers objectAtIndex:0] intValue];
+			if (num < i) break;
+			[highlightedLineNumbers removeObjectAtIndex:0];
+		}
+	}
+	
+	count -= n;
+	if (count < 0) count = 0;
+	
+	if (scroller) {
+		[scroller setNeedsDisplay];
+	}
 }
 
 - (BOOL)print:(LogLine*)line useKeyword:(BOOL)useKeyword
@@ -387,7 +441,7 @@
 	[body appendChild:div];
 	
 	if (maxLines > 0 && count > maxLines) {
-		[self removeFirstLine:1];
+		[self removeLinesFromTop:1];
 	}
 	
 	if ([[attrs objectForKey:@"highlight"] isEqualToString:@"true"]) {
