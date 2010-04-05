@@ -4,9 +4,11 @@
 #import "IRCWorld.h"
 #import "IRCClient.h"
 #import "IRCChannel.h"
+#import "IRCClientConfig.h"
 
 
 @interface IRCWorld (Private)
+- (IRCClient*)createClient:(IRCClientConfig*)seed reload:(BOOL)reload;
 - (LogController*)createLogWithClient:(IRCClient*)client channel:(IRCChannel*)channel console:(BOOL)console;
 @end
 
@@ -49,6 +51,7 @@
 {
 	[consoleLog release];
 	[dummyLog release];
+	[config release];
 	[clients release];
 	[super dealloc];
 }
@@ -63,6 +66,12 @@
 	
 	dummyLog = [self createLogWithClient:nil channel:nil console:YES];
 	[logBase setContentView:dummyLog.view];
+	
+	config = [seed mutableCopy];
+	for (IRCClientConfig* e in config.clients) {
+		[self createClient:e reload:YES];
+	}
+	[config.clients removeAllObjects];
 }
 
 - (void)setupTree
@@ -93,6 +102,32 @@
 - (void)terminate
 {
 	LOG_METHOD
+}
+
+- (void)reloadTree
+{
+	LOG_METHOD
+}
+
+- (IRCClient*)createClient:(IRCClientConfig*)seed reload:(BOOL)reload
+{
+	++clientId;
+	
+	IRCClient* c = [[IRCClient new] autorelease];
+	c.uid = clientId;
+	c.world = self;
+	c.log = [self createLogWithClient:c channel:nil console:NO];
+	[c setup:seed];
+	
+	for (IRCChannelConfig* e in seed.channels) {
+		;
+	}
+	
+	[clients addObject:c];
+	
+	if (reload) [self reloadTree];
+	
+	return c;
 }
 
 - (LogController*)createLogWithClient:(IRCClient*)client channel:(IRCChannel*)channel console:(BOOL)console

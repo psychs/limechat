@@ -42,6 +42,8 @@
 	
 	IRCWorldConfig* config;
 	NSMutableArray* clients;
+	
+	int clientId;
 }
 
 @property (nonatomic, assign) LimeChatApplication* app;

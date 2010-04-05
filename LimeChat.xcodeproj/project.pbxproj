@@ -359,6 +359,7 @@
 		78CFA71A116A1BDD00B7AC6B /* IRCClientConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCClientConfig.m; sourceTree = "<group>"; };
 		78CFA71B116A1BDD00B7AC6B /* IRCWorldConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCWorldConfig.h; sourceTree = "<group>"; };
 		78CFA71C116A1BDD00B7AC6B /* IRCWorldConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCWorldConfig.m; sourceTree = "<group>"; };
+		78CFA8BC116A2F1500B7AC6B /* IRCTreeItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCTreeItem.h; sourceTree = "<group>"; };
 		78DA7D291169080600962CC4 /* Preferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Preferences.h; sourceTree = "<group>"; };
 		78DA7D2A1169080700962CC4 /* Preferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Preferences.m; sourceTree = "<group>"; };
 		78E570D00C1C306500BDF7EC /* LimeChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LimeChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -752,6 +753,7 @@
 		78BC0C521168E5D800A984AA /* IRC */ = {
 			isa = PBXGroup;
 			children = (
+				78CFA8BC116A2F1500B7AC6B /* IRCTreeItem.h */,
 				78CFA57D116A078D00B7AC6B /* IRCWorld.h */,
 				78CFA57E116A078D00B7AC6B /* IRCWorld.m */,
 				78CFA580116A079500B7AC6B /* IRCClient.h */,
