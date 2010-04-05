@@ -39,7 +39,7 @@ class MenuController < NSObject
     active_channel = active && c.channel?
     active_chtalk = active && (c.channel? || c.talk?)
     login_client_chtalk = login && (!c || c.channel? || c.talk?)
-    op = active_channel && c.op?
+    op = active_channel && c.isOp?
 
     tag = i.tag
     tag -= 500 if nick_menu?(i)
@@ -209,7 +209,8 @@ class MenuController < NSObject
     c = @world.selchannel
     unless c
       if nick_menu?(sender)
-        m = User.new(@nick)
+        m = IRCUser.alloc.init
+        m.nick = @nick
         return [m]
       else
         return []
@@ -877,7 +878,7 @@ class MenuController < NSObject
 
   def change_op(sender, mode, plus)
     u, c = @world.sel
-    return unless u && u.login? && c && c.active? && c.channel? && c.op?
+    return unless u && u.login? && c && c.active? && c.channel? && c.isOp?
     u.change_op(c, selected_members(sender), mode, plus)
     deselect_members(sender)
   end
@@ -895,7 +896,7 @@ class MenuController < NSObject
 
   def onMemberKick(sender)
     u, c = @world.sel
-    return unless u && u.login? && c && c.active? && c.channel? && c.op?
+    return unless u && u.login? && c && c.active? && c.channel? && c.isOp?
     ary = selected_members(sender)
     ary.each {|i| u.kick(c.name, i.nick) }
     deselect_members(sender)
@@ -903,7 +904,7 @@ class MenuController < NSObject
 
   def onMemberBan(sender)
     u, c = @world.sel
-    return unless u && u.login? && c && c.active? && c.channel? && c.op? && c.who_init
+    return unless u && u.login? && c && c.active? && c.channel? && c.isOp? && c.who_init
     ary = selected_members(sender)
     ary.each {|i| u.ban(c.name, '*', '*', i.address) }
     deselect_members(sender)
@@ -911,7 +912,7 @@ class MenuController < NSObject
 
   def onMemberKickBan(sender)
     u, c = @world.sel
-    return unless u && u.login? && c && c.active? && c.channel? && c.op? && c.who_init
+    return unless u && u.login? && c && c.active? && c.channel? && c.isOp? && c.who_init
     ary = selected_members(sender)
     ary.each do |i|
       u.ban(c.name, '*', '*', i.address)

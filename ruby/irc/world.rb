@@ -224,8 +224,14 @@ class IRCWorld < NSObject
     c = create_channel(client, IRCChannelConfig.new({:name => nick, :type => :talk}))
     if client.login?
       c.activate
-      c.add_member(User.new(client.mynick))
-      c.add_member(User.new(nick))
+      
+      m = IRCUser.alloc.init
+      m.nick = client.mynick
+      c.add_member(m)
+      
+      m = IRCUser.alloc.init
+      m.nick = nick
+      c.add_member(m)
     end
     c
   end
@@ -372,9 +378,9 @@ class IRCWorld < NSObject
         end
         title =
           if c.channel?
-            op = if c.op?
+            op = if c.isOp?
               m = c.find_member(u.mynick)
-              if m && m.op?
+              if m && m.isOp?
                 m.mark
               else
                 ''

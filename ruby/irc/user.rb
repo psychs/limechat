@@ -3,7 +3,7 @@
 
 class User
   attr_accessor :nick, :username, :address, :q, :a, :o, :h, :v
-  attr_reader :canonical_nick, :incoming_weight, :outgoing_weight
+  attr_reader :canonicalNick, :incoming_weight, :outgoing_weight
   
   def initialize(nick, *args)
     self.nick = nick
@@ -22,15 +22,15 @@ class User
   
   def nick=(nick)
     @nick = nick
-    @canonical_nick = nick.downcase
+    @canonicalNick = nick.downcase
   end
   
-  def op?
+  def isOp?
     @q || @a || @o
   end
   
   def op
-    op?
+    isOp?
   end
   
   def mark
@@ -68,8 +68,8 @@ class User
   # and who is talking to you... incoming messages are not weighted
   # as highly as the messages you send to someone
   #
-  # outgoing_conversation! is called when someone sends you a message
-  # incoming_conversation! is called when you talk to someone
+  # outgoingConversation is called when someone sends you a message
+  # incomingConversation is called when you talk to someone
   #
   # the conventions are probably backwards if you think of them from
   # the wrong able, I'm open to suggestions - Josh Goebel
@@ -79,17 +79,17 @@ class User
     incoming_weight + outgoing_weight
   end
   
-  def outgoing_conversation!
+  def outgoingConversation
     change = (outgoing_weight == 0) ? 20 : 5
     @outgoing_weight += change
   end
   
-  def incoming_conversation!
+  def incomingConversation
     change = (incoming_weight == 0) ? 100 : 20
     @incoming_weight += change
   end
   
-  def conversation!
+  def conversation
     change = (outgoing_weight == 0) ? 4 : 1
     @outgoing_weight += change
   end

@@ -112,7 +112,7 @@ class IRCChannel < NSObject
     @active
   end
   
-  def op?
+  def isOp?
     @op
   end
   
@@ -147,8 +147,8 @@ class IRCChannel < NSObject
   def add_member(member, autoreload=true)
     if i = find_member_index(member.nick)
       m = @members[i]
-      m.username = member.username unless member.username.empty?
-      m.address = member.username unless member.address.empty?
+      m.username = member.username
+      m.address = member.address
       m.q = member.q
       m.a = member.a
       m.o = member.o
@@ -197,7 +197,16 @@ class IRCChannel < NSObject
   def update_or_add_member(nick, username, address, q, a, o, h, v)
     i = find_member_index(nick)
     unless i
-      sorted_insert(User.new(nick, username, address, q, a, o, h, v))
+      m = IRCUser.alloc.init
+      m.nick = nick
+      m.username = username
+      m.address = address
+      m.q = q
+      m.a = a
+      m.o = h
+      m.h = h
+      m.v = v
+      sorted_insert(m)
       return
     end
     
@@ -247,12 +256,12 @@ class IRCChannel < NSObject
   
   def find_member_index(nick)
     t = nick.downcase
-    @members.index {|m| m.canonical_nick == t }
+    @members.index {|m| m.canonicalNick == t }
   end
   
   def find_member(nick)
     t = nick.downcase
-    @members.find {|m| m.canonical_nick == t }
+    @members.find {|m| m.canonicalNick == t }
   end
   
   def count_members
@@ -296,23 +305,23 @@ class IRCChannel < NSObject
     elsif a.q != b.q
       a.q ? -1 : 1
     elsif a.q && b.q
-      a.canonical_nick <=> b.canonical_nick
+      a.canonicalNick <=> b.canonicalNick
     elsif a.a != b.a
       a.a ? -1 : 1
     elsif a.a && b.a
-      a.canonical_nick <=> b.canonical_nick
+      a.canonicalNick <=> b.canonicalNick
     elsif a.o != b.o
       a.o ? -1 : 1
     elsif a.o && b.o
-      a.canonical_nick <=> b.canonical_nick
+      a.canonicalNick <=> b.canonicalNick
     elsif a.h != b.h
       a.h ? -1 : 1
     elsif a.h && b.h
-      a.canonical_nick <=> b.canonical_nick
+      a.canonicalNick <=> b.canonicalNick
     elsif a.v != b.v
       a.v ? -1 : 1
     else
-      a.canonical_nick <=> b.canonical_nick
+      a.canonicalNick <=> b.canonicalNick
     end
   end
   
@@ -324,7 +333,7 @@ class IRCChannel < NSObject
   
   def check_all_autoop
     @members.each do |m|
-      if !m.op? && !m.nick.empty? && !m.username.empty? && !m.address.empty?
+      if !m.isOp? && !m.nick.empty? && !m.username.empty? && !m.address.empty?
         check_autoop(m.nick, "#{m.nick}!#{m.username}@#{m.address}")
       end
     end
@@ -406,7 +415,7 @@ class IRCChannel < NSObject
         max = @client.isupport.modes_count
         ary = @op_queue[0...max]
         @op_queue[0...max] = nil
-        ary = ary.select {|i| m = find_member(i); m && !m.op? }
+        ary = ary.select {|i| m = find_member(i); m && !m.isOp? }
         unless ary.empty?
           @op_wait = ary.size * Penalty::MODE_OPT + Penalty::MODE_BASE
           @client.change_op(self, ary, :o, true)

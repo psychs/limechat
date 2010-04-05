@@ -476,7 +476,7 @@ class AppController < NSObject
                   who whois|
       nicks = nicks.select {|i| i[0...pre.size] == downpre }
     else
-      nicks = c.members.sort_by {|i| [-i.weight, i.canonical_nick] }.map {|i| i.nick }
+      nicks = c.members.sort_by {|i| [-i.weight, i.canonicalNick] }.map {|i| i.nick }
       nicks = nicks.select {|i| i[0...pre.size].downcase == downpre }
       nicks -= [u.mynick]
     end

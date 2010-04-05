@@ -291,7 +291,7 @@ class IRCClient < NSObject
   end
   
   def change_op(channel, members, mode, plus)
-    return unless login? && channel && channel.active? && channel.channel? && channel.op?
+    return unless login? && channel && channel.active? && channel.channel? && channel.isOp?
     members = members.map {|n| String === n ? channel.find_member(n) : n }
     members = members.compact
     members = members.select {|m| m.__send__(mode) != plus }
@@ -306,12 +306,12 @@ class IRCClient < NSObject
   end
   
   def check_all_autoop(channel)
-    return unless login? && channel && channel.active? && channel.channel? && channel.op?
+    return unless login? && channel && channel.active? && channel.channel? && channel.isOp?
     channel.check_all_autoop
   end
   
   def check_autoop(channel, nick, mask)
-    return unless login? && channel && channel.active? && channel.channel? && channel.op?
+    return unless login? && channel && channel.active? && channel.channel? && channel.isOp?
     channel.check_autoop(nick, mask)
   end
   
@@ -382,7 +382,7 @@ class IRCClient < NSObject
       if cmd == :privmsg
         if line =~ /\A([^\s:]+):\s/ || line =~ /\A@([^\s:]+)\s/ || line =~ /[>＞]\s?([^\s]+)\z/
           recipient = chan.find_member($1)
-          recipient.incoming_conversation! if recipient
+          recipient.incomingConversation if recipient
         end
       end
     end
@@ -1360,7 +1360,7 @@ class IRCClient < NSObject
     return unless preferences.general.auto_rejoin
     return unless c
     return unless c.channel?
-    return if c.op?
+    return if c.isOp?
     return if @mymode.r
     return if c.count_members > 1
     return unless c.name.modechannelname?
@@ -1413,8 +1413,14 @@ class IRCClient < NSObject
         c.stored_topic = nil
       elsif c.talk?
         c.activate
-        c.add_member(User.new(@mynick))
-        c.add_member(User.new(c.name))
+        
+        m = IRCUser.alloc.init
+        m.nick = @mynick
+        c.add_member(m)
+        
+        m = IRCUser.alloc.init
+        m.nick = c.name
+        c.add_member(m)
       end
     end
     update_client_title
@@ -1577,10 +1583,10 @@ class IRCClient < NSObject
             pattern = Regexp.escape(@mynick.sub(/\A_+/, '').sub(/_+\z/, ''))
             if text =~ /#{pattern}/i
               # if we're being directly spoken to
-              sender.outgoing_conversation!
+              sender.outgoingConversation
             else
               # the other conversations
-              sender.conversation!
+              sender.conversation
             end
           end
         end
@@ -1655,7 +1661,12 @@ class IRCClient < NSObject
       end
     end
     if c && !c.mode.a
-      c.add_member(User.new(nick, m.sender.user.to_s, m.sender.address.to_s, false, false, njoin))
+      u = IRCUser.alloc.init
+      u.nick = nick
+      u.username = m.sender.user
+      u.address = m.sender.address
+      u.o = njoin
+      c.add_member(u)
       update_channel_title(c)
     end
     if preferences.general.show_join_leave
@@ -1666,7 +1677,11 @@ class IRCClient < NSObject
     # add member to talk
     c = find_channel(nick)
     if c
-      c.add_member(User.new(nick, m.sender.user.to_s, m.sender.address.to_s))
+      u = IRCUser.alloc.init
+      u.nick = nick
+      u.username = m.sender.user
+      u.address = m.sender.address
+      c.add_member(u)
     end
   end
   
@@ -1838,10 +1853,10 @@ class IRCClient < NSObject
             m = c.find_member(t)
             if m
               myself = true
-              prev = m.op?
+              prev = m.isOp?
               c.change_member_op(t, mode, plus)
-              c.op = m.op?
-              if !prev && c.op? && c.who_init
+              c.op = m.isOp?
+              if !prev && c.isOp? && c.who_init
                 check_all_autoop(c)
               end
             end
@@ -2205,7 +2220,9 @@ class IRCClient < NSObject
           if /^([~&@%+])(.+)/ =~ nick
             op, nick = $1, $2
           end
-          m = User.new(nick)
+          
+          m = IRCUser.alloc.init
+          m.nick = nick
           m.q = op == '~'
           m.a = op == '&'
           m.o = op == '@' || m.q
@@ -2225,7 +2242,7 @@ class IRCClient < NSObject
       if c && c.active? && !c.names_init
         c.names_init = true
         
-        if c.count_members <= 1 && c.op?
+        if c.count_members <= 1 && c.isOp?
           if chname.modechannelname?
             m = c.config.mode
             if m && !m.empty?
@@ -2282,7 +2299,7 @@ class IRCClient < NSObject
         c.who_init = true
         c.reload_members
         #print_system(c, "Members list has been initialized")
-        check_all_autoop(c) if c.op?
+        check_all_autoop(c) if c.isOp?
       else
         print_unknown_reply(m)
       end

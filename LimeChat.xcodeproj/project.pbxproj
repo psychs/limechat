@@ -71,6 +71,7 @@
 		783E6C90116995C100DF6820 /* MemberListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 783E6C8D116995C100DF6820 /* MemberListView.m */; };
 		783E6C91116995C100DF6820 /* MemberListViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 783E6C8F116995C100DF6820 /* MemberListViewCell.m */; };
 		783E6C9D1169976A00DF6820 /* IRCISupportInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 783E6C9C1169976A00DF6820 /* IRCISupportInfo.m */; };
+		783E6CD211699BEE00DF6820 /* IRCUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 783E6CD111699BEE00DF6820 /* IRCUser.m */; };
 		78496EFD0C2890200084A836 /* preferencedialog.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78496EFC0C2890200084A836 /* preferencedialog.rb */; };
 		784BBE941085BC950080898B /* bluestar.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 784BBE901085BC950080898B /* bluestar.tiff */; };
 		784BBE951085BC950080898B /* keyrecorder_erase.png in Resources */ = {isa = PBXBuildFile; fileRef = 784BBE911085BC950080898B /* keyrecorder_erase.png */; };
@@ -250,6 +251,8 @@
 		783E6C8F116995C100DF6820 /* MemberListViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MemberListViewCell.m; sourceTree = "<group>"; };
 		783E6C9B1169976A00DF6820 /* IRCISupportInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCISupportInfo.h; sourceTree = "<group>"; };
 		783E6C9C1169976A00DF6820 /* IRCISupportInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCISupportInfo.m; sourceTree = "<group>"; };
+		783E6CD011699BEE00DF6820 /* IRCUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCUser.h; sourceTree = "<group>"; };
+		783E6CD111699BEE00DF6820 /* IRCUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCUser.m; sourceTree = "<group>"; };
 		78496EFC0C2890200084A836 /* preferencedialog.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = preferencedialog.rb; sourceTree = "<group>"; };
 		784BBE901085BC950080898B /* bluestar.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = bluestar.tiff; sourceTree = "<group>"; };
 		784BBE911085BC950080898B /* keyrecorder_erase.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = keyrecorder_erase.png; sourceTree = "<group>"; };
@@ -742,6 +745,8 @@
 				78BC0C5B1168E5D900A984AA /* IRCSendingMessage.m */,
 				783E6C9B1169976A00DF6820 /* IRCISupportInfo.h */,
 				783E6C9C1169976A00DF6820 /* IRCISupportInfo.m */,
+				783E6CD011699BEE00DF6820 /* IRCUser.h */,
+				783E6CD111699BEE00DF6820 /* IRCUser.m */,
 			);
 			name = IRC;
 			path = objc/IRC;
@@ -939,6 +944,7 @@
 				783E6C90116995C100DF6820 /* MemberListView.m in Sources */,
 				783E6C91116995C100DF6820 /* MemberListViewCell.m in Sources */,
 				783E6C9D1169976A00DF6820 /* IRCISupportInfo.m in Sources */,
+				783E6CD211699BEE00DF6820 /* IRCUser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
