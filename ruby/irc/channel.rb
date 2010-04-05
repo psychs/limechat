@@ -77,6 +77,10 @@ class IRCChannel < NSObject
     @config.type
   end
   
+  def typeStr
+    @config.type.to_s
+  end
+  
   def channel?
     @config.type == :channel
   end

@@ -252,7 +252,6 @@
 	BOOL key = [[result objectAtIndex:1] intValue];
 	
 	if (!loaded) {
-		LOG(@"!!!not yet loaded");
 		NSArray* ary = [NSArray arrayWithObjects:line, [NSNumber numberWithBool:useKeyword], nil];
 		[lines addObject:ary];
 		return key;
@@ -372,16 +371,35 @@
 
 - (NSString*)initialDocument
 {
+	NSString* bodyClass = console ? @"console" : @"normal";
+	NSMutableString* bodyAttrs = [NSMutableString string];
+	if (channel) {
+		[bodyAttrs appendFormat:@"type=\"%@\"", [channel typeStr]];
+		if ([channel isChannel]) {
+			[bodyAttrs appendFormat:@"channelname=\"%@\"", [[channel name] gtm_stringByEscapingForHTML]];
+		}
+	}
+	else if (console) {
+		[bodyAttrs appendString:@"type=\"console\""];
+	}
+	else {
+		[bodyAttrs appendString:@"type=\"server\""];
+	}
+	
+	//NSString* style = [[theme log] content];
+	NSString* style = nil;
+	
 	NSMutableString* s = [NSMutableString string];
 	
 	[s appendString:@"<html>"];
-	[s appendString:@"<head>"];
+	[s appendFormat:@"<head class=\"%@\" %@>", bodyClass, bodyAttrs];
 	[s appendString:@"<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">"];
 	[s appendString:@"<meta http-equiv=\"Content-Script-Type\" content=\"text/javascript\">"];
 	[s appendString:@"<meta http-equiv=\"Content-Style-Type\" content=\"text/css\">"];
 	[s appendFormat:@"<style>%@</style>", [self defaultCSS]];
+	if (style) [s appendFormat:@"<style><!-- %@ --></style>", style];
 	[s appendString:@"</head>"];
-	[s appendString:@"<body></body>"];
+	[s appendFormat:@"<body class=\"%@\" %@></body>", bodyClass, bodyAttrs];
 	[s appendString:@"</html>"];
 	
 	return s;
@@ -547,7 +565,7 @@
 	[self setUpScroller];
 	
 	if (html) {
-		;
+		//@@@@@@@@@@@@@@@
 	}
 	else {
 		[self moveToBottom];
