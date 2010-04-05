@@ -63,14 +63,19 @@
 		78364E431165BE640096F3A9 /* TextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 78364E421165BE640096F3A9 /* TextField.m */; };
 		78364E5A1165BFA10096F3A9 /* TreeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78364E591165BFA10096F3A9 /* TreeView.m */; };
 		783D0B2B0CF45C38002CC2FB /* listdialog.rb in Resources */ = {isa = PBXBuildFile; fileRef = 783D0B2A0CF45C38002CC2FB /* listdialog.rb */; };
-		783E686911695A5600DF6820 /* LogLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 783E686811695A5600DF6820 /* LogLine.m */; };
-		783E689411695EDB00DF6820 /* LogController.m in Sources */ = {isa = PBXBuildFile; fileRef = 783E689311695EDB00DF6820 /* LogController.m */; };
+		783E6C85116995A500DF6820 /* LogController.m in Sources */ = {isa = PBXBuildFile; fileRef = 783E6C7A116995A500DF6820 /* LogController.m */; };
+		783E6C86116995A500DF6820 /* LogLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 783E6C7C116995A500DF6820 /* LogLine.m */; };
+		783E6C87116995A500DF6820 /* LogPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 783E6C7E116995A500DF6820 /* LogPolicy.m */; };
+		783E6C88116995A500DF6820 /* LogRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 783E6C80116995A500DF6820 /* LogRenderer.m */; };
+		783E6C89116995A500DF6820 /* LogScriptEventSink.m in Sources */ = {isa = PBXBuildFile; fileRef = 783E6C82116995A500DF6820 /* LogScriptEventSink.m */; };
+		783E6C8A116995A500DF6820 /* LogView.m in Sources */ = {isa = PBXBuildFile; fileRef = 783E6C84116995A500DF6820 /* LogView.m */; };
+		783E6C90116995C100DF6820 /* MemberListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 783E6C8D116995C100DF6820 /* MemberListView.m */; };
+		783E6C91116995C100DF6820 /* MemberListViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 783E6C8F116995C100DF6820 /* MemberListViewCell.m */; };
 		78496EFD0C2890200084A836 /* preferencedialog.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78496EFC0C2890200084A836 /* preferencedialog.rb */; };
 		784BBE941085BC950080898B /* bluestar.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 784BBE901085BC950080898B /* bluestar.tiff */; };
 		784BBE951085BC950080898B /* keyrecorder_erase.png in Resources */ = {isa = PBXBuildFile; fileRef = 784BBE911085BC950080898B /* keyrecorder_erase.png */; };
 		784BBE961085BC950080898B /* keyrecorder_erase_pushed.png in Resources */ = {isa = PBXBuildFile; fileRef = 784BBE921085BC950080898B /* keyrecorder_erase_pushed.png */; };
 		784BBE971085BC950080898B /* redstar.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 784BBE931085BC950080898B /* redstar.tiff */; };
-		7851ADCC1168981E00AC449F /* LogRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7851ADCB1168981E00AC449F /* LogRenderer.m */; };
 		7851AEF71168A91A00AC449F /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7851AEF61168A91A00AC449F /* libicucore.dylib */; };
 		78835406109FEA7F00CD2FFF /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78835405109FEA7F00CD2FFF /* SystemConfiguration.framework */; };
 		7884E54E0CDA91F500AF3678 /* SACrashReporter in Resources */ = {isa = PBXBuildFile; fileRef = 7884E5450CDA91F500AF3678 /* SACrashReporter */; };
@@ -82,7 +87,6 @@
 		788AC9021165CF3E00523E80 /* ChatBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 788AC9011165CF3E00523E80 /* ChatBox.m */; };
 		788AC9311165D27400523E80 /* DialogWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 788AC9301165D27400523E80 /* DialogWindow.m */; };
 		788AC96E1165D49A00523E80 /* ListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 788AC96D1165D49A00523E80 /* ListView.m */; };
-		788AC9F01165DA0900523E80 /* MemberListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 788AC9EF1165DA0900523E80 /* MemberListView.m */; };
 		788C5E660C5F4F5A0034C46E /* growlcontroller.rb in Resources */ = {isa = PBXBuildFile; fileRef = 788C5E650C5F4F5A0034C46E /* growlcontroller.rb */; };
 		7890B4E90C659E4700DF983F /* autoopdialog.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7890B4E80C659E4700DF983F /* autoopdialog.rb */; };
 		7896BFE50D0C5E850069453A /* viewtheme.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7896BFE40D0C5E850069453A /* viewtheme.rb */; };
@@ -91,8 +95,6 @@
 		78AD78E40C61B8F8001E77F4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 78AD78E20C61B8F8001E77F4 /* Localizable.strings */; };
 		78AFBCF50C33E314008A8FCD /* kanasupport.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78AFBCF40C33E314008A8FCD /* kanasupport.rb */; };
 		78AFC92811687C5400C64197 /* NSDataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AFC92711687C5400C64197 /* NSDataHelper.m */; };
-		78AFC9AE116886F700C64197 /* LogPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AFC9AD116886F700C64197 /* LogPolicy.m */; };
-		78AFC9BF116888E800C64197 /* LogScriptEventSink.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AFC9BE116888E800C64197 /* LogScriptEventSink.m */; };
 		78AFC9CA1168895200C64197 /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AFC9C71168895200C64197 /* GTMNSString+HTML.m */; };
 		78AFC9CB1168895200C64197 /* GTMNSString+URLArguments.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AFC9C91168895200C64197 /* GTMNSString+URLArguments.m */; };
 		78B2DF210D0417160092EBDA /* application.icns in Resources */ = {isa = PBXBuildFile; fileRef = 78B2DF1F0D0417160092EBDA /* application.icns */; };
@@ -119,7 +121,6 @@
 		78BF64B10C2885E2004451B2 /* usermode.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78BF64A90C2885E2004451B2 /* usermode.rb */; };
 		78BF64B20C2885E2004451B2 /* world.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78BF64AA0C2885E2004451B2 /* world.rb */; };
 		78C1E7771168559400AC305B /* NSArrayHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C1E7761168559400AC305B /* NSArrayHelper.m */; };
-		78C1E7CC11685BDF00AC305B /* MemberListViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C1E7CB11685BDF00AC305B /* MemberListViewCell.m */; };
 		78C1E8711168635500AC305B /* SoundPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C1E8701168635500AC305B /* SoundPlayer.m */; };
 		78C1E8801168652000AC305B /* KeyEventHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C1E87F1168652000AC305B /* KeyEventHandler.m */; };
 		78C1E96E116876AC00AC305B /* MainWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C1E96D116876AC00AC305B /* MainWindow.m */; };
@@ -130,7 +131,6 @@
 		78E5723B0C1C30BA00BDF7EC /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 788D56F00BB6872B00DDBF69 /* WebKit.framework */; };
 		78E5723C0C1C30BA00BDF7EC /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 787FD46C0BFE960100F2F22D /* Carbon.framework */; };
 		78E5723D0C1C30BA00BDF7EC /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 780253C20C09525900C170D4 /* CoreServices.framework */; };
-		78EFDA3F116604190062548C /* LogView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78EFDA3E116604190062548C /* LogView.m */; };
 		78FA9F651085AA1400001F13 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78FA9F641085AA1400001F13 /* Sparkle.framework */; };
 		78FA9F6E1085AA1A00001F13 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 78FA9F641085AA1400001F13 /* Sparkle.framework */; };
 /* End PBXBuildFile section */
@@ -233,17 +233,27 @@
 		78364E581165BFA10096F3A9 /* TreeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TreeView.h; sourceTree = "<group>"; };
 		78364E591165BFA10096F3A9 /* TreeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TreeView.m; sourceTree = "<group>"; };
 		783D0B2A0CF45C38002CC2FB /* listdialog.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = listdialog.rb; sourceTree = "<group>"; };
-		783E686711695A5600DF6820 /* LogLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogLine.h; sourceTree = "<group>"; };
-		783E686811695A5600DF6820 /* LogLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogLine.m; sourceTree = "<group>"; };
-		783E689211695EDB00DF6820 /* LogController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogController.h; sourceTree = "<group>"; };
-		783E689311695EDB00DF6820 /* LogController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogController.m; sourceTree = "<group>"; };
+		783E6C79116995A500DF6820 /* LogController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogController.h; sourceTree = "<group>"; };
+		783E6C7A116995A500DF6820 /* LogController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogController.m; sourceTree = "<group>"; };
+		783E6C7B116995A500DF6820 /* LogLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogLine.h; sourceTree = "<group>"; };
+		783E6C7C116995A500DF6820 /* LogLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogLine.m; sourceTree = "<group>"; };
+		783E6C7D116995A500DF6820 /* LogPolicy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogPolicy.h; sourceTree = "<group>"; };
+		783E6C7E116995A500DF6820 /* LogPolicy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogPolicy.m; sourceTree = "<group>"; };
+		783E6C7F116995A500DF6820 /* LogRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogRenderer.h; sourceTree = "<group>"; };
+		783E6C80116995A500DF6820 /* LogRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogRenderer.m; sourceTree = "<group>"; };
+		783E6C81116995A500DF6820 /* LogScriptEventSink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogScriptEventSink.h; sourceTree = "<group>"; };
+		783E6C82116995A500DF6820 /* LogScriptEventSink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogScriptEventSink.m; sourceTree = "<group>"; };
+		783E6C83116995A500DF6820 /* LogView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogView.h; sourceTree = "<group>"; };
+		783E6C84116995A500DF6820 /* LogView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogView.m; sourceTree = "<group>"; };
+		783E6C8C116995C100DF6820 /* MemberListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MemberListView.h; sourceTree = "<group>"; };
+		783E6C8D116995C100DF6820 /* MemberListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MemberListView.m; sourceTree = "<group>"; };
+		783E6C8E116995C100DF6820 /* MemberListViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MemberListViewCell.h; sourceTree = "<group>"; };
+		783E6C8F116995C100DF6820 /* MemberListViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MemberListViewCell.m; sourceTree = "<group>"; };
 		78496EFC0C2890200084A836 /* preferencedialog.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = preferencedialog.rb; sourceTree = "<group>"; };
 		784BBE901085BC950080898B /* bluestar.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = bluestar.tiff; sourceTree = "<group>"; };
 		784BBE911085BC950080898B /* keyrecorder_erase.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = keyrecorder_erase.png; sourceTree = "<group>"; };
 		784BBE921085BC950080898B /* keyrecorder_erase_pushed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = keyrecorder_erase_pushed.png; sourceTree = "<group>"; };
 		784BBE931085BC950080898B /* redstar.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = redstar.tiff; sourceTree = "<group>"; };
-		7851ADCA1168981E00AC449F /* LogRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogRenderer.h; sourceTree = "<group>"; };
-		7851ADCB1168981E00AC449F /* LogRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogRenderer.m; sourceTree = "<group>"; };
 		7851AEF61168A91A00AC449F /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = /usr/lib/libicucore.dylib; sourceTree = "<absolute>"; };
 		787FD46C0BFE960100F2F22D /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		78835405109FEA7F00CD2FFF /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = /System/Library/Frameworks/SystemConfiguration.framework; sourceTree = "<absolute>"; };
@@ -263,8 +273,6 @@
 		788AC9301165D27400523E80 /* DialogWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DialogWindow.m; sourceTree = "<group>"; };
 		788AC96C1165D49A00523E80 /* ListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListView.h; sourceTree = "<group>"; };
 		788AC96D1165D49A00523E80 /* ListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListView.m; sourceTree = "<group>"; };
-		788AC9EE1165DA0900523E80 /* MemberListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MemberListView.h; sourceTree = "<group>"; };
-		788AC9EF1165DA0900523E80 /* MemberListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MemberListView.m; sourceTree = "<group>"; };
 		788C5E650C5F4F5A0034C46E /* growlcontroller.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = growlcontroller.rb; sourceTree = "<group>"; };
 		788D56F00BB6872B00DDBF69 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
 		7890B4E80C659E4700DF983F /* autoopdialog.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = autoopdialog.rb; sourceTree = "<group>"; };
@@ -274,10 +282,6 @@
 		78AFBCF40C33E314008A8FCD /* kanasupport.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = kanasupport.rb; sourceTree = "<group>"; };
 		78AFC92611687C5400C64197 /* NSDataHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDataHelper.h; sourceTree = "<group>"; };
 		78AFC92711687C5400C64197 /* NSDataHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDataHelper.m; sourceTree = "<group>"; };
-		78AFC9AC116886F700C64197 /* LogPolicy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogPolicy.h; sourceTree = "<group>"; };
-		78AFC9AD116886F700C64197 /* LogPolicy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogPolicy.m; sourceTree = "<group>"; };
-		78AFC9BD116888E800C64197 /* LogScriptEventSink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogScriptEventSink.h; sourceTree = "<group>"; };
-		78AFC9BE116888E800C64197 /* LogScriptEventSink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogScriptEventSink.m; sourceTree = "<group>"; };
 		78AFC9C41168895200C64197 /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
 		78AFC9C51168895200C64197 /* GTMGarbageCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMGarbageCollection.h; sourceTree = "<group>"; };
 		78AFC9C61168895200C64197 /* GTMNSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GTMNSString+HTML.h"; sourceTree = "<group>"; };
@@ -324,8 +328,6 @@
 		78BF64AA0C2885E2004451B2 /* world.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = world.rb; sourceTree = "<group>"; };
 		78C1E7751168559400AC305B /* NSArrayHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSArrayHelper.h; sourceTree = "<group>"; };
 		78C1E7761168559400AC305B /* NSArrayHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSArrayHelper.m; sourceTree = "<group>"; };
-		78C1E7CA11685BDF00AC305B /* MemberListViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MemberListViewCell.h; sourceTree = "<group>"; };
-		78C1E7CB11685BDF00AC305B /* MemberListViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MemberListViewCell.m; sourceTree = "<group>"; };
 		78C1E86F1168635500AC305B /* SoundPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundPlayer.h; sourceTree = "<group>"; };
 		78C1E8701168635500AC305B /* SoundPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoundPlayer.m; sourceTree = "<group>"; };
 		78C1E87E1168652000AC305B /* KeyEventHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyEventHandler.h; sourceTree = "<group>"; };
@@ -338,8 +340,6 @@
 		78DA7D291169080600962CC4 /* Preferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Preferences.h; sourceTree = "<group>"; };
 		78DA7D2A1169080700962CC4 /* Preferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Preferences.m; sourceTree = "<group>"; };
 		78E570D00C1C306500BDF7EC /* LimeChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LimeChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		78EFDA3D116604190062548C /* LogView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogView.h; sourceTree = "<group>"; };
-		78EFDA3E116604190062548C /* LogView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogView.m; sourceTree = "<group>"; };
 		78FA9F641085AA1400001F13 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = Frameworks/Sparkle.framework; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -606,6 +606,8 @@
 		78364B25116597D00096F3A9 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				783E6C78116995A500DF6820 /* Log */,
+				783E6C8B116995C100DF6820 /* MemberList */,
 				78364B26116597D00096F3A9 /* KeyRecorder */,
 				78364C0811659CD60096F3A9 /* ThinSplitView.h */,
 				78364C0911659CD60096F3A9 /* ThinSplitView.m */,
@@ -615,42 +617,26 @@
 				78364E3D1165BE460096F3A9 /* InputTextField.m */,
 				78364E411165BE640096F3A9 /* TextField.h */,
 				78364E421165BE640096F3A9 /* TextField.m */,
-				78364E581165BFA10096F3A9 /* TreeView.h */,
-				78364E591165BFA10096F3A9 /* TreeView.m */,
 				788AC8691165C59500523E80 /* ServerTreeView.h */,
 				788AC86A1165C59500523E80 /* ServerTreeView.m */,
+				78364E581165BFA10096F3A9 /* TreeView.h */,
+				78364E591165BFA10096F3A9 /* TreeView.m */,
 				788AC96C1165D49A00523E80 /* ListView.h */,
 				788AC96D1165D49A00523E80 /* ListView.m */,
-				788AC9EE1165DA0900523E80 /* MemberListView.h */,
-				788AC9EF1165DA0900523E80 /* MemberListView.m */,
-				78C1E7CA11685BDF00AC305B /* MemberListViewCell.h */,
-				78C1E7CB11685BDF00AC305B /* MemberListViewCell.m */,
-				788AC8B41165CB5000523E80 /* SingleLineFormatter.h */,
-				788AC8B51165CB5000523E80 /* SingleLineFormatter.m */,
-				788AC8C91165CDA300523E80 /* TextFieldWithDisabledState.h */,
-				788AC8CA1165CDA300523E80 /* TextFieldWithDisabledState.m */,
-				788AC8F71165CEB400523E80 /* TableProgressIndicator.h */,
-				788AC8F81165CEB400523E80 /* TableProgressIndicator.m */,
-				788AC9001165CF3E00523E80 /* ChatBox.h */,
-				788AC9011165CF3E00523E80 /* ChatBox.m */,
-				788AC92F1165D27400523E80 /* DialogWindow.h */,
-				788AC9301165D27400523E80 /* DialogWindow.m */,
 				78C1E96C116876AC00AC305B /* MainWindow.h */,
 				78C1E96D116876AC00AC305B /* MainWindow.m */,
+				788AC92F1165D27400523E80 /* DialogWindow.h */,
+				788AC9301165D27400523E80 /* DialogWindow.m */,
 				78C1E98D1168787000AC305B /* FieldEditorTextView.h */,
 				78C1E98E1168787000AC305B /* FieldEditorTextView.m */,
-				78EFDA3D116604190062548C /* LogView.h */,
-				78EFDA3E116604190062548C /* LogView.m */,
-				78AFC9AC116886F700C64197 /* LogPolicy.h */,
-				78AFC9AD116886F700C64197 /* LogPolicy.m */,
-				78AFC9BD116888E800C64197 /* LogScriptEventSink.h */,
-				78AFC9BE116888E800C64197 /* LogScriptEventSink.m */,
-				7851ADCA1168981E00AC449F /* LogRenderer.h */,
-				7851ADCB1168981E00AC449F /* LogRenderer.m */,
-				783E686711695A5600DF6820 /* LogLine.h */,
-				783E686811695A5600DF6820 /* LogLine.m */,
-				783E689211695EDB00DF6820 /* LogController.h */,
-				783E689311695EDB00DF6820 /* LogController.m */,
+				788AC8B41165CB5000523E80 /* SingleLineFormatter.h */,
+				788AC8B51165CB5000523E80 /* SingleLineFormatter.m */,
+				788AC8F71165CEB400523E80 /* TableProgressIndicator.h */,
+				788AC8F81165CEB400523E80 /* TableProgressIndicator.m */,
+				788AC8C91165CDA300523E80 /* TextFieldWithDisabledState.h */,
+				788AC8CA1165CDA300523E80 /* TextFieldWithDisabledState.m */,
+				788AC9001165CF3E00523E80 /* ChatBox.h */,
+				788AC9011165CF3E00523E80 /* ChatBox.m */,
 			);
 			name = Views;
 			path = objc/Views;
@@ -667,6 +653,36 @@
 				78364B28116597D00096F3A9 /* KeyCodeTranslator.m */,
 			);
 			path = KeyRecorder;
+			sourceTree = "<group>";
+		};
+		783E6C78116995A500DF6820 /* Log */ = {
+			isa = PBXGroup;
+			children = (
+				783E6C79116995A500DF6820 /* LogController.h */,
+				783E6C7A116995A500DF6820 /* LogController.m */,
+				783E6C7B116995A500DF6820 /* LogLine.h */,
+				783E6C7C116995A500DF6820 /* LogLine.m */,
+				783E6C7D116995A500DF6820 /* LogPolicy.h */,
+				783E6C7E116995A500DF6820 /* LogPolicy.m */,
+				783E6C7F116995A500DF6820 /* LogRenderer.h */,
+				783E6C80116995A500DF6820 /* LogRenderer.m */,
+				783E6C81116995A500DF6820 /* LogScriptEventSink.h */,
+				783E6C82116995A500DF6820 /* LogScriptEventSink.m */,
+				783E6C83116995A500DF6820 /* LogView.h */,
+				783E6C84116995A500DF6820 /* LogView.m */,
+			);
+			path = Log;
+			sourceTree = "<group>";
+		};
+		783E6C8B116995C100DF6820 /* MemberList */ = {
+			isa = PBXGroup;
+			children = (
+				783E6C8C116995C100DF6820 /* MemberListView.h */,
+				783E6C8D116995C100DF6820 /* MemberListView.m */,
+				783E6C8E116995C100DF6820 /* MemberListViewCell.h */,
+				783E6C8F116995C100DF6820 /* MemberListViewCell.m */,
+			);
+			path = MemberList;
 			sourceTree = "<group>";
 		};
 		784BBE8F1085BC950080898B /* images */ = {
@@ -890,8 +906,6 @@
 				788AC9021165CF3E00523E80 /* ChatBox.m in Sources */,
 				788AC9311165D27400523E80 /* DialogWindow.m in Sources */,
 				788AC96E1165D49A00523E80 /* ListView.m in Sources */,
-				788AC9F01165DA0900523E80 /* MemberListView.m in Sources */,
-				78EFDA3F116604190062548C /* LogView.m in Sources */,
 				78B960FA11660A8800831780 /* TCPClient.m in Sources */,
 				78B961FA1166182600831780 /* Timer.m in Sources */,
 				78B964EA1166489000831780 /* NSDictionaryHelper.m in Sources */,
@@ -899,17 +913,13 @@
 				78B964EC1166489000831780 /* UnicodeHelper.m in Sources */,
 				78B9651B11664B2600831780 /* InputHistory.m in Sources */,
 				78C1E7771168559400AC305B /* NSArrayHelper.m in Sources */,
-				78C1E7CC11685BDF00AC305B /* MemberListViewCell.m in Sources */,
 				78C1E8711168635500AC305B /* SoundPlayer.m in Sources */,
 				78C1E8801168652000AC305B /* KeyEventHandler.m in Sources */,
 				78C1E96E116876AC00AC305B /* MainWindow.m in Sources */,
 				78C1E98F1168787000AC305B /* FieldEditorTextView.m in Sources */,
 				78AFC92811687C5400C64197 /* NSDataHelper.m in Sources */,
-				78AFC9AE116886F700C64197 /* LogPolicy.m in Sources */,
-				78AFC9BF116888E800C64197 /* LogScriptEventSink.m in Sources */,
 				78AFC9CA1168895200C64197 /* GTMNSString+HTML.m in Sources */,
 				78AFC9CB1168895200C64197 /* GTMNSString+URLArguments.m in Sources */,
-				7851ADCC1168981E00AC449F /* LogRenderer.m in Sources */,
 				78BC096F1168BF6A00A984AA /* Regex.m in Sources */,
 				78BC0C5C1168E5D900A984AA /* IRCConnection.m in Sources */,
 				78BC0C5D1168E5D900A984AA /* IRCMessage.m in Sources */,
@@ -919,8 +929,14 @@
 				78BC0D1D1168EBA600A984AA /* TinyGrowlClient.m in Sources */,
 				78BC0D5B1168F06E00A984AA /* FileLogger.m in Sources */,
 				78DA7D2B1169080700962CC4 /* Preferences.m in Sources */,
-				783E686911695A5600DF6820 /* LogLine.m in Sources */,
-				783E689411695EDB00DF6820 /* LogController.m in Sources */,
+				783E6C85116995A500DF6820 /* LogController.m in Sources */,
+				783E6C86116995A500DF6820 /* LogLine.m in Sources */,
+				783E6C87116995A500DF6820 /* LogPolicy.m in Sources */,
+				783E6C88116995A500DF6820 /* LogRenderer.m in Sources */,
+				783E6C89116995A500DF6820 /* LogScriptEventSink.m in Sources */,
+				783E6C8A116995A500DF6820 /* LogView.m in Sources */,
+				783E6C90116995C100DF6820 /* MemberListView.m in Sources */,
+				783E6C91116995C100DF6820 /* MemberListViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
