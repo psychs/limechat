@@ -7,9 +7,9 @@ require 'pathname'
 class IRCClient < NSObject
   attr_accessor :world, :log, :uid
   attr_reader :config, :channels, :mynick, :mymode, :encoding, :myaddress, :isupport, :reconnect
-  attr_accessor :property_dialog
+  attr_accessor :propertyDialog
   attr_accessor :keyword, :unread
-  attr_accessor :last_selected_channel, :last_input_text
+  attr_accessor :last_selected_channel, :lastInputText
   
   RECONNECT_TIME = 20
   RETRY_TIME = 240
@@ -35,10 +35,10 @@ class IRCClient < NSObject
     @who_wait = 0
     @timer_queue = []
     @resolver = HostResolver.alloc.initWithDelegate(self)
-    reset_state
+    resetState
   end
   
-  def reset_state
+  def resetState
     @keyword = @unread = false
   end
   
@@ -64,7 +64,7 @@ class IRCClient < NSObject
     end
   end
   
-  def update_config(seed)
+  def updateConfig(seed)
     @config = seed.dup
     chans = @config.channels
     @config.channels = nil
@@ -73,7 +73,7 @@ class IRCClient < NSObject
     chans.each do |i|
       c = find_channel(i.name)
       if c
-        c.update_config(i)
+        c.updateConfig(i)
         ary << c
         @channels.delete(c)
       else
@@ -105,11 +105,11 @@ class IRCClient < NSObject
     @channels = ary + chs + nochs
   end
   
-  def update_autoop(conf)
+  def updateAutoOp(conf)
     @config.autoop = conf.autoop
     conf.channels.each do |i|
       c = find_channel(i.name)
-      c.update_autoop(i) if c
+      c.updateAutoOp(i) if c
     end
   end
   
@@ -125,7 +125,7 @@ class IRCClient < NSObject
   
   def terminate
     quit
-    close_dialogs
+    closeDialogs
     @channels.each {|c| c.terminate }
     disconnect
   end
@@ -170,19 +170,19 @@ class IRCClient < NSObject
     x.downcase == y.downcase
   end
   
-  def to_dic
-    h = @config.to_dic
+  def dictionaryValue
+    h = @config.dictionaryValue
     chs = @channels.select {|i| i.channel? }
     unless chs.empty?
-      h[:channels] = chs.map {|i| i.to_dic }
+      h[:channels] = chs.map {|i| i.dictionaryValue }
     end
     h
   end
   
-  def close_dialogs
-    if @property_dialog
-      @property_dialog.close
-      @property_dialog = nil
+  def closeDialogs
+    if @propertyDialog
+      @propertyDialog.close
+      @propertyDialog = nil
     end
     @whois_dialogs.each {|d| d.close }
     @whois_dialogs.clear
@@ -292,7 +292,7 @@ class IRCClient < NSObject
   
   def change_op(channel, members, mode, plus)
     return unless login? && channel && channel.active? && channel.channel? && channel.isOp?
-    members = members.map {|n| String === n ? channel.find_member(n) : n }
+    members = members.map {|n| String === n ? channel.findMember(n) : n }
     members = members.compact
     members = members.select {|m| m.__send__(mode) != plus }
     members = members.map {|m| m.nick }
@@ -305,14 +305,14 @@ class IRCClient < NSObject
     end
   end
   
-  def check_all_autoop(channel)
+  def checkAllAutoOp(channel)
     return unless login? && channel && channel.active? && channel.channel? && channel.isOp?
-    channel.check_all_autoop
+    channel.checkAllAutoOp
   end
   
-  def check_autoop(channel, nick, mask)
+  def checkAutoop_mask(channel, nick, mask)
     return unless login? && channel && channel.active? && channel.channel? && channel.isOp?
-    channel.check_autoop(nick, mask)
+    channel.checkAutoop_mask(nick, mask)
   end
   
   def input_text(str, cmd)
@@ -381,7 +381,7 @@ class IRCClient < NSObject
       # only watch private messages
       if cmd == :privmsg
         if line =~ /\A([^\s:]+):\s/ || line =~ /\A@([^\s:]+)\s/ || line =~ /[>＞]\s?([^\s]+)\z/
-          recipient = chan.find_member($1)
+          recipient = chan.findMember($1)
           recipient.incomingConversation if recipient
         end
       end
@@ -710,11 +710,11 @@ class IRCClient < NSObject
   
   # model
   
-  def number_of_children
+  def numberOfChildren
     @channels.size
   end
   
-  def child_at(index)
+  def childAt(index)
     @channels[index]
   end
   
@@ -738,8 +738,8 @@ class IRCClient < NSObject
     @world.update_client_title(self)
   end
   
-  def update_channel_title(channel)
-    @world.update_channel_title(channel)
+  def updateChannelTitle(channel)
+    @world.updateChannelTitle(channel)
   end
   
   
@@ -805,7 +805,7 @@ class IRCClient < NSObject
   
   # timer
   
-  def on_timer
+  def onTimer
     if login?
       check_quitting
       check_pong
@@ -841,7 +841,7 @@ class IRCClient < NSObject
       end
     end
     
-    @channels.each {|c| c.on_timer}
+    @channels.each {|c| c.onTimer}
   end
   
   def check_quitting
@@ -890,7 +890,7 @@ class IRCClient < NSObject
     end
   end
 
-  def preferences_changed
+  def preferencesChanged
     if @address_detection_method != preferences.dcc.address_detection_method
       @address_detection_method = preferences.dcc.address_detection_method
       @myaddress = nil
@@ -904,11 +904,11 @@ class IRCClient < NSObject
       @resolver.resolve(preferences.dcc.myaddress)
     end
     @log.maxLines = preferences.general.max_log_lines
-    @channels.each {|c| c.preferences_changed}
+    @channels.each {|c| c.preferencesChanged}
   end
   
-  def date_changed
-    @channels.each {|c| c.date_changed}
+  def dateChanged
+    @channels.each {|c| c.dateChanged}
   end
 
   # whois dialogs
@@ -1105,7 +1105,7 @@ class IRCClient < NSObject
     s = format.gsub(/%@/) do |i|
       mark = ''
       if channel && !channel.client? && channel.channel?
-        m = channel.find_member(nick)
+        m = channel.findMember(nick)
         mark = m.mark if m
       end
       mark.empty? ? ' ' : mark
@@ -1172,7 +1172,7 @@ class IRCClient < NSObject
     
     color_num = 0
     if nick && channel && !channel.client?
-      m = channel.find_member(nick)
+      m = channel.findMember(nick)
       if m
         color_num = m.colorNumber
       end
@@ -1229,7 +1229,7 @@ class IRCClient < NSObject
     
     color_num = 0
     if nick && channel && !channel.client?
-      m = channel.find_member(nick)
+      m = channel.findMember(nick)
       if m
         color_num = m.colorNumber
       end
@@ -1362,7 +1362,7 @@ class IRCClient < NSObject
     return unless c.channel?
     return if c.isOp?
     return if @mymode.r
-    return if c.count_members > 1
+    return if c.countMembers > 1
     return unless c.name.modechannelname?
     return if c.mode.a
     
@@ -1372,7 +1372,7 @@ class IRCClient < NSObject
     topic = nil if topic.empty?
     
     part_channel(c)
-    c.stored_topic = topic
+    c.storedTopic = topic
     join_channel(c, pass, true)
   end
   
@@ -1410,17 +1410,17 @@ class IRCClient < NSObject
     
     @channels.each do |c|
       if c.channel?
-        c.stored_topic = nil
+        c.storedTopic = nil
       elsif c.talk?
         c.activate
         
         m = IRCUser.alloc.init
         m.nick = @mynick
-        c.add_member(m)
+        c.addMember_reload(m)
         
         m = IRCUser.alloc.init
         m.nick = c.name
-        c.add_member(m)
+        c.addMember_reload(m)
       end
     end
     update_client_title
@@ -1578,7 +1578,7 @@ class IRCClient < NSObject
         
         if c
           # track the conversation to auto-complete
-          sender = c.find_member(nick)
+          sender = c.findMember(nick)
           if sender
             pattern = Regexp.escape(@mynick.sub(/\A_+/, '').sub(/_+\z/, ''))
             if text =~ /#{pattern}/i
@@ -1666,13 +1666,13 @@ class IRCClient < NSObject
       u.username = m.sender.user
       u.address = m.sender.address
       u.o = njoin
-      c.add_member(u)
-      update_channel_title(c)
+      c.addMember_reload(u)
+      updateChannelTitle(c)
     end
     if preferences.general.show_join_leave
       print_both(c || chname, :join, "#{nick} has joined (#{m.sender.user.to_s}@#{m.sender.address.to_s})")
     end
-    check_autoop(c, m.sender.nick.to_s, m.sender) unless myself
+    checkAutoop_mask(c, m.sender.nick.to_s, m.sender) unless myself
     
     # add member to talk
     c = find_channel(nick)
@@ -1681,7 +1681,7 @@ class IRCClient < NSObject
       u.nick = nick
       u.username = m.sender.user
       u.address = m.sender.address
-      c.add_member(u)
+      c.addMember_reload(u)
     end
   end
   
@@ -1698,8 +1698,8 @@ class IRCClient < NSObject
         c.deactivate
         reload_tree
       end
-      c.remove_member(nick)
-      update_channel_title(c)
+      c.removeMember_reload(nick)
+      updateChannelTitle(c)
       check_rejoin(c) unless myself
     end
     if preferences.general.show_join_leave
@@ -1728,8 +1728,8 @@ class IRCClient < NSObject
         # rejoin
         join_channel(c, c.mode.k) unless eq(nick, @mynick)
       end
-      c.remove_member(target)
-      update_channel_title(c)
+      c.removeMember_reload(target)
+      updateChannelTitle(c)
       check_rejoin(c) unless myself
     end
     print_both(c || chname, :kick, "#{nick} has kicked #{target} (#{comment})")
@@ -1740,12 +1740,12 @@ class IRCClient < NSObject
     comment = m.paramAt(0).to_s
     
     @channels.each do |c|
-      if c.find_member(nick)
+      if c.findMember(nick)
         if preferences.general.show_join_leave
           print_channel(c, :quit, "#{nick} has left IRC (#{comment})")
         end
-        c.remove_member(nick)
-        update_channel_title(c)
+        c.removeMember_reload(nick)
+        updateChannelTitle(c)
         check_rejoin(c)
       end
     end
@@ -1761,10 +1761,10 @@ class IRCClient < NSObject
     comment = m.paramAt(1).to_s
     
     @channels.each do |c|
-      if c.find_member(target)
+      if c.findMember(target)
         print_channel(c, :kill, "#{sender} has made #{target} to leave IRC (#{comment})")
-        c.remove_member(target)
-        update_channel_title(c)
+        c.removeMember_reload(target)
+        updateChannelTitle(c)
         check_rejoin(c)
       end
     end
@@ -1783,10 +1783,10 @@ class IRCClient < NSObject
     end
     
     @channels.each do |c|
-      if c.find_member(nick)
+      if c.findMember(nick)
         # rename channel member
         print_channel(c, :nick, "#{nick} is now known as #{tonick}")
-        c.rename_member(nick, tonick)
+        c.renameMember_to(nick, tonick)
       end
     end
     
@@ -1802,7 +1802,7 @@ class IRCClient < NSObject
       # rename talk
       c.name = tonick
       reload_tree
-      update_channel_title(c)
+      updateChannelTitle(c)
     end
     
     # rename nick on whois dialog
@@ -1829,11 +1829,11 @@ class IRCClient < NSObject
         # enter/leave anonymous mode
         if c.mode.a != prev_a
           if c.mode.a
-            me = c.find_member(@mynick)
-            c.clear_members
-            c.add_member(me)
+            me = c.findMember(@mynick)
+            c.clearMembers
+            c.addMember_reload(me)
           else
-            c.who_init = false
+            c.whoInit = false
             send(:who, c.name)
           end
         end
@@ -1850,22 +1850,22 @@ class IRCClient < NSObject
           myself = false
           if (mode == :q || mode == :a || mode == :o) && eq(t, @mynick)
             # mode change for myself
-            m = c.find_member(t)
+            m = c.findMember(t)
             if m
               myself = true
               prev = m.isOp?
-              c.change_member_op(t, mode, plus)
+              c.changeMember_mode_value(t, mode, plus)
               c.op = m.isOp?
-              if !prev && c.isOp? && c.who_init
-                check_all_autoop(c)
+              if !prev && c.isOp? && c.whoInit
+                checkAllAutoOp(c)
               end
             end
           end
-          c.change_member_op(t, mode, plus) unless myself
+          c.changeMember_mode_value(t, mode, plus) unless myself
         end
 =end
 
-        update_channel_title(c)
+        updateChannelTitle(c)
       end
       print_both(c || target, :mode, "#{nick} has changed mode: #{modestr}")
     else
@@ -1884,7 +1884,7 @@ class IRCClient < NSObject
     c = find_channel(chname)
     if c
       c.topic = topic
-      update_channel_title(c)
+      updateChannelTitle(c)
     end
     print_both(c || chname, :topic, "#{nick} has set topic: #{topic}")
   end
@@ -2159,15 +2159,15 @@ class IRCClient < NSObject
         c.mode.update(modestr)
         if c.mode.a != prev_a
           if c.mode.a
-            me = c.find_member(@mynick)
-            c.clear_members
-            c.add_member(me)
+            me = c.findMember(@mynick)
+            c.clearMembers
+            c.addMember_reload(me)
           else
-            c.who_init = false
+            c.whoInit = false
             send(:who, c.name)
           end
         end
-        update_channel_title(c)
+        updateChannelTitle(c)
       end
       print_both(c || chname, :reply, "Mode: #{modestr}")
     when 329  # hemp? channel creation time
@@ -2186,7 +2186,7 @@ class IRCClient < NSObject
       c = find_channel(chname)
       if c && c.active?
         c.topic = ''
-        update_channel_title(c)
+        updateChannelTitle(c)
       end
       print_both(c || chname, :reply, "Topic: ")
     when 332  # RPL_TOPIC
@@ -2195,7 +2195,7 @@ class IRCClient < NSObject
       c = find_channel(chname)
       if c && c.active?
         c.topic = topic
-        update_channel_title(c)
+        updateChannelTitle(c)
       end
       print_both(c || chname, :reply, "Topic: #{topic}")
     when 333  # RPL_TOPIC_WHO_TIME
@@ -2215,7 +2215,7 @@ class IRCClient < NSObject
       chname = m.paramAt(2).to_s
       trail = m.paramAt(3).to_s.strip
       c = find_channel(chname)
-      if c && c.active? && !c.names_init
+      if c && c.active? && !c.namesInit
         trail.split(' ').each do |nick|
           if /^([~&@%+])(.+)/ =~ nick
             op, nick = $1, $2
@@ -2228,21 +2228,21 @@ class IRCClient < NSObject
           m.o = op == '@' || m.q
           m.h = op == '%'
           m.v = op == '+'
-          c.add_member(m, false)
+          c.addMember_reload(m, false)
           c.op = (m.q || m.a || m.o) if eq(m.nick, @mynick)
         end
-        c.reload_members
-        update_channel_title(c)
+        c.reloadMembers
+        updateChannelTitle(c)
       else
         print_both(c || chname, :reply, "Names: #{trail}")
       end
     when 366  # RPL_ENDOFNAMES
       chname = m.paramAt(1).to_s
       c = find_channel(chname)
-      if c && c.active? && !c.names_init
-        c.names_init = true
+      if c && c.active? && !c.namesInit
+        c.namesInit = true
         
-        if c.count_members <= 1 && c.isOp?
+        if c.countMembers <= 1 && c.isOp?
           if chname.modechannelname?
             m = c.config.mode
             if m && !m.empty?
@@ -2253,11 +2253,11 @@ class IRCClient < NSObject
           send(:mode, chname)
         end
         
-        if c.count_members <= 1 && chname.modechannelname?
-          topic = c.stored_topic
+        if c.countMembers <= 1 && chname.modechannelname?
+          topic = c.storedTopic
           if topic && !topic.empty?
             send(:topic, chname, topic)
-            c.stored_topic = nil
+            c.storedTopic = nil
           else
             topic = c.config.topic
             if topic && !topic.empty?
@@ -2266,13 +2266,13 @@ class IRCClient < NSObject
           end
         end
         
-        if c.count_members > 1
+        if c.countMembers > 1
           @who_queue << chname
         else
-          c.who_init = true
+          c.whoInit = true
         end
         
-        update_channel_title(c)
+        updateChannelTitle(c)
       end
     when 352	# RPL_WHOREPLY
       chname = m.paramAt(1).to_s
@@ -2282,24 +2282,24 @@ class IRCClient < NSObject
       mode = m.paramAt(6).to_s
       
       c = find_channel(chname)
-      if c && c.active? && !c.who_init
+      if c && c.active? && !c.whoInit
         q = mode.include?('~')
         a = mode.include?('&')
         o = mode.include?('@') || q
         h = mode.include?('%')
         v = mode.include?('+')
-        c.update_or_add_member(nick, username, address, q, a, o, h, v)
+        c.updateOrAddMember_username_address_q_a_o_h_v(nick, username, address, q, a, o, h, v)
       else
         print_unknown_reply(m)
       end
     when 315	# RPL_ENDOFWHO
       chname = m.paramAt(1).to_s
       c = find_channel(chname)
-      if c && c.active? && !c.who_init
-        c.who_init = true
-        c.reload_members
+      if c && c.active? && !c.whoInit
+        c.whoInit = true
+        c.reloadMembers
         #print_system(c, "Members list has been initialized")
-        check_all_autoop(c) if c.isOp?
+        checkAllAutoOp(c) if c.isOp?
       else
         print_unknown_reply(m)
       end

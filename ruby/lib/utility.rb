@@ -225,7 +225,7 @@ module OSX
     def -(v); NSSize.new(width - v, height - v); end
     
     def self.from_dic(d); NSSize.new(d[:w], d[:h]); end
-    def to_dic; { :w => width, :h => height }; end
+    def dictionaryValue; { :w => width, :h => height }; end
     
     def inspect
       "#<#{self.class.to_s.gsub(/^OSX::/, '')} (#{width}, #{height})>"
@@ -254,7 +254,7 @@ module OSX
       n
     end
     def self.from_dic(d); NSRect.new(d[:x], d[:y], d[:w], d[:h]); end
-    def to_dic; { :x => x, :y => y, :w => width, :h => height }; end
+    def dictionaryValue; { :x => x, :y => y, :w => width, :h => height }; end
     def self.from_center(p, width, height)
       NSRect.new(p.x - width/2, p.y - height/2, width, height)
     end

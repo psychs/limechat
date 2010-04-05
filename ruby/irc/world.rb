@@ -43,7 +43,7 @@ class IRCWorld < NSObject
   end
 
   def save
-    preferences.save_world(to_dic)
+    preferences.save_world(dictionaryValue)
   end
 
   def setup_tree
@@ -86,11 +86,11 @@ class IRCWorld < NSObject
     save
   end
 
-  def update_autoop(w)
+  def updateAutoOp(w)
     @config.autoop = w.autoop
     w.clients.each do |i|
       u = find_client_by_id(i.uid)
-      u.update_autoop(i) if u
+      u.updateAutoOp(i) if u
     end
     save
   end
@@ -130,10 +130,10 @@ class IRCWorld < NSObject
     [selclient, selchannel]
   end
 
-  def to_dic
-    h = @config.to_dic
+  def dictionaryValue
+    h = @config.dictionaryValue
     unless @clients.empty?
-      h[:clients] = @clients.map {|i| i.to_dic }
+      h[:clients] = @clients.map {|i| i.dictionaryValue }
     end
     h
   end
@@ -227,11 +227,11 @@ class IRCWorld < NSObject
       
       m = IRCUser.alloc.init
       m.nick = client.mynick
-      c.add_member(m)
+      c.addMember_reload(m)
       
       m = IRCUser.alloc.init
       m.nick = nick
-      c.add_member(m)
+      c.addMember_reload(m)
     end
     c
   end
@@ -343,7 +343,7 @@ class IRCWorld < NSObject
     update_title if @selected.client == client
   end
 
-  def update_channel_title(channel)
+  def updateChannelTitle(channel)
     return unless channel
     update_title if @selected == channel
   end
@@ -370,7 +370,7 @@ class IRCWorld < NSObject
         c = sel
         nick = u.mynick
         chname = c.name
-        count = c.count_members
+        count = c.countMembers
         mode = c.mode.masked_str
         topic = c.topic
         if topic =~ /\A(.{25})/
@@ -379,7 +379,7 @@ class IRCWorld < NSObject
         title =
           if c.channel?
             op = if c.isOp?
-              m = c.find_member(u.mynick)
+              m = c.findMember(u.mynick)
               if m && m.isOp?
                 m.mark
               else
@@ -506,14 +506,14 @@ class IRCWorld < NSObject
     @member_list.setNeedsDisplay(true)
   end
 
-  def preferences_changed
+  def preferencesChanged
     @console.maxLines = preferences.general.max_log_lines
-    @clients.each {|u| u.preferences_changed}
+    @clients.each {|u| u.preferencesChanged}
     reloadTheme
   end
 
-  def date_changed
-    @clients.each {|u| u.date_changed}
+  def dateChanged
+    @clients.each {|u| u.dateChanged}
   end
 
   def changeTextSize(op)
@@ -584,10 +584,10 @@ class IRCWorld < NSObject
   def outlineViewSelectionDidChange(note)
     selitem = @tree.itemAtRow(@tree.selectedRow)
     if @selected != selitem
-      @selected.last_input_text = @text.stringValue.to_s if @selected
+      @selected.lastInputText = @text.stringValue.to_s if @selected
       @app.addToHistory
       if selitem
-        @text.setStringValue(selitem.last_input_text || '')
+        @text.setStringValue(selitem.lastInputText || '')
       else
         @text.setStringValue('')
       end
@@ -601,7 +601,7 @@ class IRCWorld < NSObject
       @member_list.reloadData
       return
     end
-    selitem.reset_state
+    selitem.resetState
     @selected = selitem
     @log_base.setContentView(selitem.log.view)
     if selitem.client?
@@ -634,16 +634,16 @@ class IRCWorld < NSObject
 
   def outlineView_numberOfChildrenOfItem(sender, item)
     return @clients.size unless item
-    item.number_of_children
+    item.numberOfChildren
   end
 
   def outlineView_isItemExpandable(sender, item)
-    item.number_of_children > 0
+    item.numberOfChildren > 0
   end
 
   def outlineView_child_ofItem(sender, index, item)
     return @clients[index] unless item
-    item.child_at(index)
+    item.childAt(index)
   end
 
   def outlineView_objectValueForTableColumn_byItem(sender, column, item)
@@ -828,14 +828,14 @@ class IRCWorld < NSObject
 
   # timer
 
-  def on_timer
-    @clients.each {|u| u.on_timer }
-    @dcc.on_timer
+  def onTimer
+    @clients.each {|u| u.onTimer }
+    @dcc.onTimer
 
     date = Date.today
     if @today != date
       @today = date
-      date_changed
+      dateChanged
     end
   end
 
@@ -865,7 +865,7 @@ class IRCWorld < NSObject
       end
     end
     if target.client?
-      target.channels.each {|c| c.close_dialogs }
+      target.channels.each {|c| c.closeDialogs }
       @clients.delete(target)
     else
       target.client.channels.delete(target)

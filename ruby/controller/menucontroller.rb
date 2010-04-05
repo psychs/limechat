@@ -179,7 +179,7 @@ class MenuController < NSObject
     when 2031  # kick
       op && count_selected_members?(i)
     when 2032,2033  # ban, kick & ban
-      op && count_selected_members?(i) && c.who_init
+      op && count_selected_members?(i) && c.whoInit
     when 2041,2042  # give voice, devoice
       op && count_selected_members?(i)
 
@@ -217,7 +217,7 @@ class MenuController < NSObject
       end
     end
     if nick_menu?(sender)
-      m = c.find_member(@nick)
+      m = c.findMember(@nick)
       m ? [m] : []
     else
       @member_list.selectedRowIndexes.to_a.map {|i| c.members[i.to_i] }
@@ -289,9 +289,9 @@ class MenuController < NSObject
     "#{nick}!#{username}@#{address}"
   end
 
-  def on_timer
+  def onTimer
     if @paste_sheet
-      @paste_sheet.on_timer
+      @paste_sheet.onTimer
     end
   end
 
@@ -307,7 +307,7 @@ class MenuController < NSObject
 
   def preferenceDialog_onClose(sender)
     preferences.save
-    @world.preferences_changed
+    @world.preferencesChanged
     @pref_dialog = nil
   end
 
@@ -322,7 +322,7 @@ class MenuController < NSObject
   end
 
   def autoOpDialog_onOk(sender, conf)
-    @world.update_autoop(conf)
+    @world.updateAutoOp(conf)
   end
 
   def autoOpDialog_onClose(sender)
@@ -413,7 +413,7 @@ class MenuController < NSObject
   end
 
   def pasteSheet_onSend(sender, s, button, syntax, cmd, size, mode, short_text)
-    preferences.save_window('paste_sheet', size.to_dic)
+    preferences.save_window('paste_sheet', size.dictionaryValue)
     unless @short_text
       preferences.general.paste_syntax = syntax
       preferences.general.paste_command = cmd
@@ -435,7 +435,7 @@ class MenuController < NSObject
   end
 
   def pasteSheet_onCancel(sender, syntax, cmd, size, mode, short_text)
-    preferences.save_window('paste_sheet', size.to_dic)
+    preferences.save_window('paste_sheet', size.dictionaryValue)
     unless @short_text
       preferences.general.paste_syntax = syntax
       preferences.general.paste_command = cmd
@@ -662,27 +662,27 @@ class MenuController < NSObject
   def onServerProperties(sender)
     u = @world.selclient
     return unless u
-    if u.property_dialog
-      u.property_dialog.show
+    if u.propertyDialog
+      u.propertyDialog.show
       return
     end
     d = ServerDialog.alloc.init
     d.parent = @window
     d.delegate = self
-    u.property_dialog = d
+    u.propertyDialog = d
     d.start(u.store_config, u.uid)
   end
 
   def serverDialog_onClose(sender)
     u = @world.find_client_by_id(sender.uid)
     return unless u
-    u.property_dialog = nil
+    u.propertyDialog = nil
   end
 
   def serverDialog_onOk(sender, config)
     u = @world.find_client_by_id(sender.uid)
     return unless u
-    u.update_config(config)
+    u.updateConfig(config)
     @world.reload_tree
     @world.save
   end
@@ -801,27 +801,27 @@ class MenuController < NSObject
   def onChannelProperties(sender)
     u, c = @world.sel
     return unless u && c
-    if c.property_dialog
-      c.property_dialog.show
+    if c.propertyDialog
+      c.propertyDialog.show
       return
     end
     d = ChannelDialog.alloc.init
     d.parent = @window
     d.delegate = self
-    c.property_dialog = d
+    c.propertyDialog = d
     d.start(c.config, u.uid, c.uid)
   end
 
   def channelDialog_onClose(sender)
     c = @world.find_channel_by_id(sender.uid, sender.cid)
     return unless c
-    c.property_dialog = nil
+    c.propertyDialog = nil
   end
 
   def channelDialog_onOk(sender, config)
     c = @world.find_channel_by_id(sender.uid, sender.cid)
     return unless c
-    c.update_config(config)
+    c.updateConfig(config)
     @world.save
   end
 
@@ -904,7 +904,7 @@ class MenuController < NSObject
 
   def onMemberBan(sender)
     u, c = @world.sel
-    return unless u && u.login? && c && c.active? && c.channel? && c.isOp? && c.who_init
+    return unless u && u.login? && c && c.active? && c.channel? && c.isOp? && c.whoInit
     ary = selected_members(sender)
     ary.each {|i| u.ban(c.name, '*', '*', i.address) }
     deselect_members(sender)
@@ -912,7 +912,7 @@ class MenuController < NSObject
 
   def onMemberKickBan(sender)
     u, c = @world.sel
-    return unless u && u.login? && c && c.active? && c.channel? && c.isOp? && c.who_init
+    return unless u && u.login? && c && c.active? && c.channel? && c.isOp? && c.whoInit
     ary = selected_members(sender)
     ary.each do |i|
       u.ban(c.name, '*', '*', i.address)

@@ -163,7 +163,7 @@ class AppController < NSObject
   def applicationDidBecomeActive(notification)
     sel = @world.selected
     if sel
-      sel.reset_state
+      sel.resetState
       @world.update_icon
     end
     @tree.setNeedsDisplay(true)
@@ -295,7 +295,7 @@ class AppController < NSObject
   def update_layout
     @window.alphaValue = preferences.theme.transparency
     select_3column_layout(preferences.general.main_window_layout == Preferences::General::LAYOUT_3_COLUMNS)
-    @world.preferences_changed
+    @world.preferencesChanged
   end
 
   def textEntered(sender)
@@ -337,8 +337,8 @@ class AppController < NSObject
   end
 
   def timerOnTimer(sender)
-    @world.on_timer
-    @menu.on_timer
+    @world.onTimer
+    @menu.onTimer
   end
 
   private
@@ -593,7 +593,7 @@ class AppController < NSObject
   end
 
   def save_window_state
-    win = @window.frame.to_dic
+    win = @window.frame.dictionaryValue
     split = {
       :root => @root_split.position,
       :log => @log_split.position,

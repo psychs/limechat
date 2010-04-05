@@ -104,7 +104,7 @@ class ListDialog < NSObject
     end
   end
 
-  def sorted_insert(ary, item)
+  def sortedInsert(ary, item)
     # do a binary search
     # once the range hits a length of 5 (arbitrary)
     # switch to linear search
@@ -148,8 +148,8 @@ class ListDialog < NSObject
   end
   
   def add_item(item)
-    sorted_insert @list, item
-    sorted_insert @flist, item if item_matches_filter?(item) unless @flist.nil?
+    sortedInsert @list, item
+    sortedInsert @flist, item if item_matches_filter?(item) unless @flist.nil?
     note_number_of_rows_changed
   end
   
@@ -210,7 +210,7 @@ class ListDialog < NSObject
   def save_window_state
     if @window
       c = {
-        :window => @window.frame.to_dic,
+        :window => @window.frame.dictionaryValue,
         :tablecols => get_table_header_settings(@table),
       }
       preferences.save_window('channel_list_window', c)

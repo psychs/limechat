@@ -2,13 +2,13 @@
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
 class IRCChannel < NSObject
-  attr_accessor :client, :uid, :topic, :names_init, :who_init, :log
+  attr_accessor :client, :uid, :topic, :namesInit, :whoInit, :log
   attr_reader :config, :members, :mode
   attr_writer :op
   attr_accessor :keyword, :unread, :newtalk
-  attr_accessor :property_dialog
-  attr_accessor :stored_topic
-  attr_accessor :last_input_text
+  attr_accessor :propertyDialog
+  attr_accessor :storedTopic
+  attr_accessor :lastInputText
   
   def initialize
     @topic = ''
@@ -16,15 +16,15 @@ class IRCChannel < NSObject
     @mode = ChannelMode.new
     @op = false
     @active = false
-    @names_init = false
-    @who_init = false
+    @namesInit = false
+    @whoInit = false
     @op_queue = []
     @op_wait = 0
     @terminating = false
-    reset_state
+    resetState
   end
   
-  def reset_state
+  def resetState
     @keyword = @unread = @newtalk = false
   end
   
@@ -33,18 +33,18 @@ class IRCChannel < NSObject
     @mode.info = @client.isupport
   end
   
-  def update_config(seed)
+  def updateConfig(seed)
     @config = seed.dup
   end
 
-  def update_autoop(conf)
+  def updateAutoOp(conf)
     @config.autoop = conf.autoop
   end
   
   def terminate
     @terminating = true
-    close_dialogs
-    close_logfile
+    closeDialogs
+    closeLogFile
   end
   
   def name
@@ -60,8 +60,8 @@ class IRCChannel < NSObject
     @config.password
   end
   
-  def to_dic
-    @config.to_dic
+  def dictionaryValue
+    @config.dictionaryValue
   end
   
   def client?
@@ -122,11 +122,11 @@ class IRCChannel < NSObject
     @mode.clear
     @op = false
     @topic = ''
-    @names_init = false
-    @who_init = false
+    @namesInit = false
+    @whoInit = false
     @op_queue = []
     @op_wait = 0
-    reload_members
+    reloadMembers
   end
   
   def deactivate
@@ -134,18 +134,18 @@ class IRCChannel < NSObject
     @members.clear
     @op = false
     @op_queue = []
-    reload_members
+    reloadMembers
   end
   
-  def close_dialogs
-    if @property_dialog
-      @property_dialog.close
-      @property_dialog = nil
+  def closeDialogs
+    if @propertyDialog
+      @propertyDialog.close
+      @propertyDialog = nil
     end
   end
   
-  def add_member(member, autoreload=true)
-    if i = find_member_index(member.nick)
+  def addMember_reload(member, autoreload=true)
+    if i = findMemberIndex(member.nick)
       m = @members[i]
       m.username = member.username
       m.address = member.address
@@ -155,32 +155,32 @@ class IRCChannel < NSObject
       m.h = member.h
       m.v = member.v
       @members.delete_at(i)
-      sorted_insert(m)
+      sortedInsert(m)
     else
-      sorted_insert(member)
+      sortedInsert(member)
     end
     
-    reload_members if autoreload
+    reloadMembers if autoreload
   end
   
-  def remove_member(nick, autoreload=true)
-    if i = find_member_index(nick)
+  def removeMember_reload(nick, autoreload=true)
+    if i = findMemberIndex(nick)
       @members.delete_at(i)
     end
-    remove_from_op_queue(nick)
+    removeFromOpQueue(nick)
     
-    reload_members if autoreload
+    reloadMembers if autoreload
   end
   
-  def rename_member(nick, tonick)
-    i = find_member_index(nick)
+  def renameMember_to(nick, tonick)
+    i = findMemberIndex(nick)
     return unless i
     
     m = @members[i]
-    remove_member(tonick, false)
+    removeMember_reload(tonick, false)
     m.nick = tonick
     @members.delete_at(i)
-    sorted_insert(m)
+    sortedInsert(m)
 
     # update op queue
     #
@@ -191,11 +191,11 @@ class IRCChannel < NSObject
       @op_queue << tonick.downcase
     end
     
-    reload_members
+    reloadMembers
   end
   
-  def update_or_add_member(nick, username, address, q, a, o, h, v)
-    i = find_member_index(nick)
+  def updateOrAddMember_username_address_q_a_o_h_v(nick, username, address, q, a, o, h, v)
+    i = findMemberIndex(nick)
     unless i
       m = IRCUser.alloc.init
       m.nick = nick
@@ -206,7 +206,7 @@ class IRCChannel < NSObject
       m.o = h
       m.h = h
       m.v = v
-      sorted_insert(m)
+      sortedInsert(m)
       return
     end
     
@@ -220,11 +220,11 @@ class IRCChannel < NSObject
     m.v = v
     
     @members.delete_at(i)
-    sorted_insert(m)
+    sortedInsert(m)
   end
   
-  def change_member_op(nick, type, value)
-    i = find_member_index(nick)
+  def changeMember_mode_value(nick, type, value)
+    i = findMemberIndex(nick)
     return unless i
     
     m = @members[i]
@@ -238,43 +238,43 @@ class IRCChannel < NSObject
     end
     
     @members.delete_at(i)
-    sorted_insert(m)
+    sortedInsert(m)
     
     # update op queue
     #
     if (type == :o || type == :a || type == :q) && value
-      remove_from_op_queue(nick)
+      removeFromOpQueue(nick)
     end
     
-    reload_members
+    reloadMembers
   end
   
-  def clear_members
+  def clearMembers
     @members.clear
-    reload_members
+    reloadMembers
   end
   
-  def find_member_index(nick)
+  def findMemberIndex(nick)
     t = nick.downcase
     @members.index {|m| m.canonicalNick == t }
   end
   
-  def find_member(nick)
+  def findMember(nick)
     t = nick.downcase
     @members.find {|m| m.canonicalNick == t }
   end
   
-  def count_members
+  def countMembers
     @members.size
   end
   
-  def reload_members
+  def reloadMembers
     if @client.world.selected == self
       @client.world.member_list.reloadData
     end
   end
   
-  def sorted_insert(item)
+  def sortedInsert(item)
     # do a binary search
     # once the range hits a length of 5 (arbitrary)
     # switch to linear search
@@ -325,28 +325,28 @@ class IRCChannel < NSObject
     end
   end
   
-  def check_autoop(nick, mask)
+  def checkAutoop_mask(nick, mask)
     if @config.match_autoop(mask) || @client.config.match_autoop(mask) || @client.world.config.match_autoop(mask)
-      add_to_op_queue(nick)
+      addToOpQueue(nick)
     end
   end
   
-  def check_all_autoop
+  def checkAllAutoOp
     @members.each do |m|
       if !m.isOp? && !m.nick.empty? && !m.username.empty? && !m.address.empty?
-        check_autoop(m.nick, "#{m.nick}!#{m.username}@#{m.address}")
+        checkAutoop_mask(m.nick, "#{m.nick}!#{m.username}@#{m.address}")
       end
     end
   end
   
-  def add_to_op_queue(nick)
+  def addToOpQueue(nick)
     t = nick.downcase
     unless @op_queue.find {|i| i == t }
       @op_queue << t
     end
   end
   
-  def remove_from_op_queue(nick)
+  def removeFromOpQueue(nick)
     t = nick.downcase
     if index = @op_queue.index {|i| i == t }
       @op_queue.delete_at(index)
@@ -375,11 +375,11 @@ class IRCChannel < NSObject
   
   # model
   
-  def number_of_children
+  def numberOfChildren
     0
   end
 
-  def child_at(index)
+  def childAt(index)
     nil
   end
 
@@ -408,14 +408,14 @@ class IRCChannel < NSObject
   
   # timer
   
-  def on_timer
+  def onTimer
     if active?
       @op_wait -= 1 if @op_wait > 0
       if @client.ready_to_send? && @op_wait == 0 && @op_queue.size > 0
         max = @client.isupport.modes_count
         ary = @op_queue[0...max]
         @op_queue[0...max] = nil
-        ary = ary.select {|i| m = find_member(i); m && !m.isOp? }
+        ary = ary.select {|i| m = findMember(i); m && !m.isOp? }
         unless ary.empty?
           @op_wait = ary.size * Penalty::MODE_OPT + Penalty::MODE_BASE
           @client.change_op(self, ary, :o, true)
@@ -424,28 +424,28 @@ class IRCChannel < NSObject
     end
   end
   
-  def preferences_changed
+  def preferencesChanged
     if @logfile
       if preferences.general.log_transcript
         @logfile.reopenIfNeeded
       else
-        close_logfile
+        closeLogFile
       end
     end
     @log.maxLines = preferences.general.max_log_lines
   end
   
-  def date_changed
+  def dateChanged
     @logfile.reopenIfNeeded if @logfile
   end
   
   private
   
-  def update_channel_title
-    @client.update_channel_title(self)
+  def updateChannelTitle
+    @client.updateChannelTitle(self)
   end
   
-  def close_logfile
+  def closeLogFile
     if @logfile
       @logfile.close
       @logfile = nil

@@ -32,7 +32,7 @@ class IRCWorldConfig
     end
   end
   
-  def to_dic
+  def dictionaryValue
     h = {}
     instance_variables.each do |v|
       next if v == '@clients'
@@ -111,7 +111,7 @@ class IRCClientConfig
     end
   end
   
-  def to_dic
+  def dictionaryValue
     h = {}
     instance_variables.each do |v|
       next if v == '@channels'
@@ -163,7 +163,7 @@ class IRCChannelConfig
     end
   end
   
-  def to_dic
+  def dictionaryValue
     h = {}
     instance_variables.each do |v|
       next if v == '@type'

@@ -257,9 +257,9 @@ class DccManager < NSObject
     @clear_button.setEnabled(!!(rsel || ssel))
   end
   
-  def on_timer
-    @receivers.each {|i| i.on_timer }
-    @senders.each {|i| i.on_timer }
+  def onTimer
+    @receivers.each {|i| i.onTimer }
+    @senders.each {|i| i.onTimer }
     reload_receiver_table
     reload_sender_table
   end
@@ -435,7 +435,7 @@ class DccManager < NSObject
 
   def save_window_state
     return unless @loaded
-    win = @window.frame.to_dic
+    win = @window.frame.dictionaryValue
     win.merge! :split => @splitter.position
     preferences.save_window('dcc_window', win)
   end

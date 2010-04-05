@@ -118,7 +118,7 @@ class DccSender
     end
   end
   
-  def on_timer
+  def onTimer
     return if @status != :sending
     @records << @rec
     @records.shift if @records.size > RECORDS_LEN

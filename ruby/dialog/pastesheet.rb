@@ -83,7 +83,7 @@ class PasteSheet < CocoaSheet
     set_waiting
   end
   
-  def on_timer
+  def onTimer
     if @conn
       @interval -= 1
       if @interval <= 0

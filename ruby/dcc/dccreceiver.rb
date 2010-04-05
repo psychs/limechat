@@ -114,7 +114,7 @@ class DccReceiver
   def tcpClientDidSendData(sender)
   end
   
-  def on_timer
+  def onTimer
     return if @status != :receiving
     @records << @rec
     @records.shift if @records.size > RECORDS_LEN
