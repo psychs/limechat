@@ -4,7 +4,7 @@
 #import <Cocoa/Cocoa.h>
 
 
-@interface IRCClientConfig : NSObject
+@interface IRCClientConfig : NSObject <NSMutableCopying>
 {
 	NSString* name;
 	

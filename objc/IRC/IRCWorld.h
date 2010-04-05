@@ -9,6 +9,8 @@
 #import "ChatBox.h"
 #import "FieldEditorTextView.h"
 #import "MemberListView.h"
+#import "LogController.h"
+#import "IRCWorldConfig.h"
 
 
 @interface IRCWorld : NSObject
@@ -17,8 +19,8 @@
 	MainWindow* window;
 	ServerTreeView* tree;
 	InputTextField* text;
-	NSView* logBase;
-	NSView* consoleBase;
+	NSBox* logBase;
+	NSBox* consoleBase;
 	ChatBox* chatBox;
 	FieldEditorTextView* fieldEditor;
 	MemberListView* memberList;
@@ -35,6 +37,10 @@
 	NSMenu* chanMenu;
 	NSMenu* memberMenu;
 	
+	LogController* consoleLog;
+	LogController* dummyLog;
+	
+	IRCWorldConfig* config;
 	NSMutableArray* clients;
 }
 
@@ -42,8 +48,8 @@
 @property (nonatomic, assign) MainWindow* window;
 @property (nonatomic, assign) ServerTreeView* tree;
 @property (nonatomic, assign) InputTextField* text;
-@property (nonatomic, assign) NSView* logBase;
-@property (nonatomic, assign) NSView* consoleBase;
+@property (nonatomic, assign) NSBox* logBase;
+@property (nonatomic, assign) NSBox* consoleBase;
 @property (nonatomic, assign) ChatBox* chatBox;
 @property (nonatomic, assign) FieldEditorTextView* fieldEditor;
 @property (nonatomic, assign) MemberListView* memberList;
@@ -63,7 +69,7 @@
 @property (nonatomic, readonly) NSMutableArray* clients;
 @property (nonatomic, readonly) id selected;
 
-- (void)setup:(id)config;
+- (void)setup:(IRCWorldConfig*)seed;
 - (void)setupTree;
 - (void)onTimer;
 - (void)autoConnect;

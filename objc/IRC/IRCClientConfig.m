@@ -152,4 +152,9 @@
 	return dic;
 }
 
+- (id)mutableCopyWithZone:(NSZone *)zone
+{
+	return [[IRCClientConfig allocWithZone:zone] initWithDictionary:[self dictionaryValue]];
+}
+
 @end

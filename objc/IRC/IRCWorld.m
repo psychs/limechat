@@ -2,6 +2,13 @@
 // You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
 #import "IRCWorld.h"
+#import "IRCClient.h"
+#import "IRCChannel.h"
+
+
+@interface IRCWorld (Private)
+- (LogController*)createLogWithClient:(IRCClient*)client channel:(IRCChannel*)channel console:(BOOL)console;
+@end
 
 
 @implementation IRCWorld
@@ -40,6 +47,8 @@
 
 - (void)dealloc
 {
+	[consoleLog release];
+	[dummyLog release];
 	[clients release];
 	[super dealloc];
 }
@@ -47,11 +56,13 @@
 #pragma mark -
 #pragma mark Init
 
-- (void)setup:(id)config
+- (void)setup:(IRCWorldConfig*)seed
 {
-	LOG_METHOD
+	consoleLog = [self createLogWithClient:nil channel:nil console:YES];
+	[consoleBase setContentView:consoleLog.view];
 	
-	LOG(@"%@", config);
+	dummyLog = [self createLogWithClient:nil channel:nil console:YES];
+	[logBase setContentView:dummyLog.view];
 }
 
 - (void)setupTree
@@ -82,6 +93,29 @@
 - (void)terminate
 {
 	LOG_METHOD
+}
+
+- (LogController*)createLogWithClient:(IRCClient*)client channel:(IRCChannel*)channel console:(BOOL)console
+{
+	LogController* c = [[LogController new] autorelease];
+	c.menu = console ? consoleMenu : logMenu;
+	c.urlMenu = urlMenu;
+	c.addrMenu = addrMenu;
+	c.chanMenu = chanMenu;
+	c.memberMenu = memberMenu;
+	c.world = self;
+	c.client = client;
+	c.channel = channel;
+	c.keyword = nil;	//@@@
+	c.maxLines = 300;
+	c.theme = nil;	//@@@
+	c.overrideFont = nil;	//@@@
+	c.console = console;
+	//c.initialBackgroundColor = [NSColor blueColor];
+	[c setUp];
+	[c.view setHostWindow:window];
+	if (consoleLog) [c.view setTextSizeMultiplier:consoleLog.view.textSizeMultiplier];
+	return c;
 }
 
 #pragma mark -

@@ -4,7 +4,7 @@
 #import <Cocoa/Cocoa.h>
 
 
-@interface IRCChannelConfig : NSObject
+@interface IRCChannelConfig : NSObject <NSMutableCopying>
 {
 	NSString* name;
 	NSString* password;

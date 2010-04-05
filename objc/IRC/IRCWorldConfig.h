@@ -4,7 +4,7 @@
 #import <Cocoa/Cocoa.h>
 
 
-@interface IRCWorldConfig : NSObject
+@interface IRCWorldConfig : NSObject <NSMutableCopying>
 {
 	NSMutableArray* clients;
 	NSMutableArray* autoOp;

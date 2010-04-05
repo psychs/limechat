@@ -71,4 +71,9 @@
 	return dic;
 }
 
+- (id)mutableCopyWithZone:(NSZone *)zone
+{
+	return [[IRCChannelConfig allocWithZone:zone] initWithDictionary:[self dictionaryValue]];
+}
+
 @end
