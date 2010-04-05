@@ -11,6 +11,8 @@
 #import "MemberListView.h"
 #import "LogController.h"
 #import "IRCWorldConfig.h"
+#import "IRCClientConfig.h"
+#import "IRCChannelConfig.h"
 
 
 @interface IRCWorld : NSObject
@@ -77,8 +79,13 @@
 
 - (void)setup:(IRCWorldConfig*)seed;
 - (void)setupTree;
+- (void)save;
+
 - (void)onTimer;
 - (void)autoConnect;
 - (void)expandClient:(IRCClient*)client;
+
+- (IRCClient*)createClient:(IRCClientConfig*)seed reload:(BOOL)reload;
+- (IRCChannel*)createChannel:(IRCChannelConfig*)seed client:(IRCClient*)client reload:(BOOL)reload adjust:(BOOL)adjust;
 
 @end

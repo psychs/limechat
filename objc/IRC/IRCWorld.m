@@ -11,8 +11,6 @@
 
 
 @interface IRCWorld (Private)
-- (IRCClient*)createClient:(IRCClientConfig*)seed reload:(BOOL)reload;
-- (IRCChannel*)createChannel:(IRCChannelConfig*)seed client:(IRCClient*)client reload:(BOOL)reload adjust:(BOOL)adjust;
 - (LogController*)createLogWithClient:(IRCClient*)client channel:(IRCChannel*)channel console:(BOOL)console;
 @end
 
@@ -107,6 +105,10 @@
 	}
 	
 	[self outlineViewSelectionDidChange:nil];
+}
+
+- (void)save
+{
 }
 
 #pragma mark -

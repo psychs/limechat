@@ -662,8 +662,7 @@
 		//
 		
 		IRCChannel* c = [self findChannel:target];
-		LOG(@"### %@ %@", c, target);
-		BOOL keyword = [self printBoth:(c ?: (id)target) type:type text:text];
+		BOOL keyword = [self printBoth:(c ?: (id)target) type:type nick:nick text:text identified:identified];
 		
 		id t = c ?: (id)self;
 		[t setUnreadState];
@@ -703,6 +702,36 @@
 
 - (void)receiveJoin:(IRCMessage*)m
 {
+	NSString* nick = m.sender.nick;
+	NSString* chname = [m paramAt:0];
+	BOOL myself = [nick isEqualNoCase:myNick];
+
+	BOOL njoin = NO;
+	if ([chname hasSuffix:@"\x07o"]) {
+		njoin = YES;
+		chname = [chname substringToIndex:chname.length - 2];
+	}
+	
+	IRCChannel* c = [self findChannel:chname];
+	
+	if (myself) {
+		if (!c) {
+			IRCChannelConfig* seed = [[IRCChannelConfig new] autorelease];
+			seed.name = chname;
+			[world createChannel:seed client:self reload:YES adjust:YES];
+			[world save];
+		}
+		[c activate];
+		[self reloadTree];
+		[self printSystem:c text:@"You have joined the channel"];
+		
+		if (!joinMyAddress) {
+			joinMyAddress = [m.sender.address retain];
+		}
+	}
+	
+	NSString* text = [NSString stringWithFormat:@"%@ has joined (%@@%@)", nick, m.sender.user, m.sender.address];
+	[self printBoth:(c ?: (id)chname) type:LOG_LINE_TYPE_JOIN text:text];
 }
 
 - (void)receivePart:(IRCMessage*)m
