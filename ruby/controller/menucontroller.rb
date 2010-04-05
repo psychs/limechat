@@ -552,11 +552,11 @@ class MenuController < NSObject
 
 
   def onMakeTextBigger(sender)
-    @world.changeTextSize(:bigger)
+    @world.changeTextSize(true)
   end
 
   def onMakeTextSmaller(sender)
-    @world.changeTextSize(:smaller)
+    @world.changeTextSize(false)
   end
 
 

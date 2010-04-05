@@ -61,7 +61,8 @@
 	[policy release];
 	[sink release];
 	[scroller release];
-	
+	[js release];
+
 	[menu release];
 	[urlMenu release];
 	[addrMenu release];
@@ -77,7 +78,6 @@
 	
 	[prevNickInfo release];
 	[html release];
-	[js release];
 	[super dealloc];
 }
 
@@ -231,14 +231,46 @@
 
 - (void)reloadTheme
 {
+	if (!loaded) return;
+	
+	DOMHTMLDocument* doc = (DOMHTMLDocument*)[[view mainFrame] DOMDocument];
+	if (!doc) return;
+	DOMHTMLElement* body = [doc body];
+	if (!body) return;
+	
+	[html release];
+	html = [[body innerHTML] retain];
+	scrollBottom = [self viewingBottom];
+	scrollTop = [[body valueForKey:@"scrollTop"] intValue];
+	
+	[[view mainFrame] loadHTMLString:[self initialDocument] baseURL:nil];
+	[scroller setNeedsDisplay];
 }
 
 - (void)clear
 {
+	if (!loaded) return;
+	
+	[html release];
+	html = nil;
+	loaded = NO;
+	
+	[[view mainFrame] loadHTMLString:[self initialDocument] baseURL:nil];
+	[scroller setNeedsDisplay];
 }
 
 - (void)changeTextSize:(BOOL)bigger
 {
+	[self savePosition];
+	
+	if (bigger) {
+		[view makeTextLarger:nil];
+	}
+	else {
+		[view makeTextSmaller:nil];
+	}
+	
+	[self restorePosition];
 }
 
 - (void)removeFirstLine:(int)n
@@ -565,7 +597,20 @@
 	[self setUpScroller];
 	
 	if (html) {
-		//@@@@@@@@@@@@@@@
+		DOMHTMLDocument* doc = (DOMHTMLDocument*)[[view mainFrame] DOMDocument];
+		if (doc) {
+			DOMHTMLElement* body = [doc body];
+			[body setInnerHTML:html];
+			[html release];
+			html = nil;
+			
+			if (scrollBottom) {
+				[self moveToBottom];
+			}
+			else if (scrollTop) {
+				[body setValue:[NSNumber numberWithInt:scrollTop] forKey:@"scrollTop"];
+			}
+		}
 	}
 	else {
 		[self moveToBottom];
@@ -689,7 +734,7 @@
 {
 	//return [NSColor redColor];
 	
-	[[theme other] log_scroller_highlight_color];
+	return [[theme other] log_scroller_highlight_color];
 }
 
 @end

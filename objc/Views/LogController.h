@@ -15,7 +15,8 @@
 	LogPolicy* policy;
 	LogScriptEventSink* sink;
 	MarkedScroller* scroller;
-	
+	WebScriptObject* js;
+
 	id world;
 	id client;
 	id channel;
@@ -40,7 +41,8 @@
 	int loadingImages;
 	NSString* prevNickInfo;
 	NSString* html;
-	WebScriptObject* js;
+	BOOL scrollBottom;
+	int scrollTop;
 }
 
 @property (nonatomic, readonly) LogView* view;
