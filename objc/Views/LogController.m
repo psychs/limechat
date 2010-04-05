@@ -164,19 +164,59 @@
 
 - (NSString*)contentString
 {
-	return @"";
+	if (!loaded) return @"";
+	DOMHTMLDocument* doc = (DOMHTMLDocument*)[[view mainFrame] DOMDocument];
+	if (!doc) return @"";
+	return [(DOMHTMLElement*)[[doc body] parentNode] outerHTML];
 }
 
 - (void)mark
 {
+	if (!loaded) return;
+	
+	[self savePosition];
+	[self unmark];
+	
+	DOMHTMLDocument* doc = (DOMHTMLDocument*)[[view mainFrame] DOMDocument];
+	if (!doc) return;
+	DOMHTMLElement* body = [doc body];
+	DOMHTMLElement* e = (DOMHTMLElement*)[doc createElement:@"hr"];
+	[e setAttribute:@"id" value:@"mark"];
+	[body appendChild:e];
+	
+	[self restorePosition];
 }
 
 - (void)unmark
 {
+	if (!loaded) return;
+	
+	DOMHTMLDocument* doc = (DOMHTMLDocument*)[[view mainFrame] DOMDocument];
+	if (!doc) return;
+	DOMHTMLElement* e = (DOMHTMLElement*)[doc getElementById:@"mark"];
+	if (e) {
+		[[doc body] removeChild:e];
+	}
 }
 
 - (void)goToMark
 {
+	if (!loaded) return;
+	
+	DOMHTMLDocument* doc = (DOMHTMLDocument*)[[view mainFrame] DOMDocument];
+	if (!doc) return;
+	DOMHTMLElement* e = (DOMHTMLElement*)[doc getElementById:@"mark"];
+	if (e) {
+		int y = 0;
+		DOMHTMLElement* t = e;
+		while (t) {
+			if ([t isKindOfClass:[DOMHTMLElement class]]) {
+				y += [[t valueForKey:@"offsetTop"] intValue];
+			}
+			t = (DOMHTMLElement*)[t parentNode];
+		}
+		[[doc body] setValue:[NSNumber numberWithInt:y - 20] forKey:@"scrollTop"];
+	}
 }
 
 - (void)reloadTheme
