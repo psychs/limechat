@@ -44,9 +44,14 @@
 	[super dealloc];
 }
 
+#pragma mark -
+#pragma mark Init
+
 - (void)setup:(id)config
 {
 	LOG_METHOD
+	
+	LOG(@"%@", config);
 }
 
 - (void)setupTree
@@ -54,10 +59,16 @@
 	LOG_METHOD
 }
 
+#pragma mark -
+#pragma mark Properties
+
 - (id)selected
 {
 	return nil;
 }
+
+#pragma mark -
+#pragma mark Utilities
 
 - (void)onTimer
 {
@@ -73,18 +84,8 @@
 	LOG_METHOD
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
+#pragma mark -
+#pragma mark NSOutlineView Delegate
 
 - (NSInteger)outlineView:(NSOutlineView *)sender numberOfChildrenOfItem:(id)item
 {
@@ -110,32 +111,5 @@
 {
 	LOG_METHOD
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 @end
