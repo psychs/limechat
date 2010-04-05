@@ -27,8 +27,8 @@
 	id menuController;
 	id dcc;
 	id viewTheme;
-	NSMenu* serverMenu;
-	NSMenu* channelMenu;
+	NSMenuItem* serverMenu;
+	NSMenuItem* channelMenu;
 	NSMenu* treeMenu;
 	NSMenu* logMenu;
 	NSMenu* consoleMenu;
@@ -45,6 +45,7 @@
 	
 	int itemId;
 	BOOL reloadingTree;
+	id selectedItem;
 }
 
 @property (nonatomic, assign) LimeChatApplication* app;
@@ -59,8 +60,8 @@
 @property (nonatomic, assign) id menuController;
 @property (nonatomic, assign) id dcc;
 @property (nonatomic, assign) id viewTheme;
-@property (nonatomic, assign) NSMenu* serverMenu;
-@property (nonatomic, assign) NSMenu* channelMenu;
+@property (nonatomic, assign) NSMenuItem* serverMenu;
+@property (nonatomic, assign) NSMenuItem* channelMenu;
 @property (nonatomic, assign) NSMenu* treeMenu;
 @property (nonatomic, assign) NSMenu* logMenu;
 @property (nonatomic, assign) NSMenu* consoleMenu;

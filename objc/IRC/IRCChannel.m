@@ -96,11 +96,6 @@
 #pragma mark -
 #pragma mark Utilities
 
-- (void)resetState
-{
-	isKeyword = isUnread = isNewTalk = NO;
-}
-
 - (void)terminate
 {
 }
@@ -124,10 +119,18 @@
 {
 }
 
-
-
 #pragma mark -
 #pragma mark IRCTreeItem
+
+- (BOOL)isClient
+{
+	return NO;
+}
+
+- (void)resetState
+{
+	isKeyword = isUnread = isNewTalk = NO;
+}
 
 - (int)numberOfChildren
 {
@@ -144,9 +147,22 @@
 	return config.name;
 }
 
-- (BOOL)isClient
+#pragma mark -
+#pragma mark NSTableViwe Delegate
+
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)sender
 {
-	return NO;
+	return 3;
+}
+
+- (id)tableView:(NSTableView *)sender objectValueForTableColumn:(NSTableColumn *)column row:(NSInteger)row
+{
+	return @"test";
+}
+
+- (void)tableView:(NSTableView *)sender willDisplayCell:(id)aCell forTableColumn:(NSTableColumn *)column row:(NSInteger)row
+{
+	LOG_METHOD
 }
 
 @end

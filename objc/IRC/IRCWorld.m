@@ -63,10 +63,10 @@
 - (void)setup:(IRCWorldConfig*)seed
 {
 	consoleLog = [self createLogWithClient:nil channel:nil console:YES];
-	[consoleBase setContentView:consoleLog.view];
+	consoleBase.contentView = consoleLog.view;
 	
 	dummyLog = [self createLogWithClient:nil channel:nil console:YES];
-	[logBase setContentView:dummyLog.view];
+	logBase.contentView = dummyLog.view;
 	
 	config = [seed mutableCopy];
 	for (IRCClientConfig* e in config.clients) {
@@ -101,6 +101,16 @@
 }
 
 - (void)terminate
+{
+	LOG_METHOD
+}
+
+- (void)updateTitle
+{
+	LOG_METHOD
+}
+
+- (void)updateIcon
 {
 	LOG_METHOD
 }
@@ -225,6 +235,54 @@
 - (id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(NSTableColumn *)tableColumn byItem:(id)item
 {
 	return [item label];
+}
+
+- (void)outlineViewSelectionDidChange:(NSNotification *)note
+{
+	id nextItem = [tree itemAtRow:[tree selectedRow]];
+	
+	[text focus];
+	
+	[selectedItem autorelease];
+	selectedItem = [nextItem retain];
+	
+	if (!selectedItem) {
+		logBase.contentView = dummyLog.view;
+		tree.menu = treeMenu;
+		memberList.dataSource = nil;
+		memberList.delegate = nil;
+		[memberList reloadData];
+		return;
+	}
+	
+	[selectedItem resetState];
+	
+	logBase.contentView = [selectedItem log].view;
+	
+	if ([selectedItem isClient]) {
+		tree.menu = [serverMenu submenu];
+		memberList.dataSource = nil;
+		memberList.delegate = nil;
+		[memberList reloadData];
+	}
+	else {
+		tree.menu = [channelMenu submenu];
+		memberList.dataSource = selectedItem;
+		memberList.delegate = selectedItem;
+		[memberList reloadData];
+	}
+	
+	LOG(@"1");
+	
+	[memberList deselectAll:nil];
+	[memberList scrollRowToVisible:0];
+	[[selectedItem log].view clearSel];
+	
+	LOG(@"2");
+	
+	[self updateTitle];
+	[self reloadTree];
+	[self updateIcon];
 }
 
 - (void)serverTreeViewAcceptsFirstResponder

@@ -79,6 +79,10 @@ static NSMutableParagraphStyle* nickStyle;
 
 - (void)drawInteriorWithFrame:(NSRect)frame inView:(NSView*)view
 {
+	//@@@
+	[super drawInteriorWithFrame:frame inView:view];
+	return;
+	
 	NSWindow* window = view.window;
 	NSColor* color = nil;
 	

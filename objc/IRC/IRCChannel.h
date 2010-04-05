@@ -53,7 +53,6 @@
 - (void)updateConfig:(IRCChannelConfig*)seed;
 - (void)updateAutoOp:(IRCChannelConfig*)seed;
 
-- (void)resetState;
 - (void)terminate;
 - (void)activate;
 - (void)deactivate;

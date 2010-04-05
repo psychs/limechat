@@ -59,6 +59,15 @@
 #pragma mark -
 #pragma mark IRCTreeItem
 
+- (BOOL)isClient
+{
+	return YES;
+}
+
+- (void)resetState
+{
+}
+
 - (int)numberOfChildren
 {
 	return channels.count;
@@ -72,11 +81,6 @@
 - (NSString*)label
 {
 	return config.name;
-}
-
-- (BOOL)isClient
-{
-	return YES;
 }
 
 @end
