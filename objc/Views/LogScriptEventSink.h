@@ -17,5 +17,4 @@
 @property (nonatomic, assign) id owner;
 @property (nonatomic, retain) id policy;
 
-
 @end

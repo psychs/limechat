@@ -9,6 +9,12 @@
 #define BOTTOM_EPSILON	20
 
 
+
+@interface NSScrollView (Private)
+- (void)setAllowsHorizontalScrolling:(BOOL)value;
+@end
+
+
 @interface LogController (Private)
 - (void)savePosition;
 - (void)restorePosition;
@@ -68,6 +74,8 @@
 	[highlightedLineNumbers release];
 	
 	[prevNickInfo release];
+	[html release];
+	[js release];
 	[super dealloc];
 }
 
@@ -488,12 +496,131 @@
 	return s;
 }
 
+- (void)setUpScroller
+{
+	WebFrameView* frame = [[view mainFrame] frameView];
+	if (!frame) return;
+	
+	NSScrollView* scrollView = nil;
+	for (NSView* v in [frame subviews]) {
+		if ([v isKindOfClass:[NSScrollView class]]) {
+			scrollView = (NSScrollView*)v;
+			break;
+		}
+	}
+	
+	if (!scrollView) return;
+	
+	[scrollView setHasHorizontalScroller:NO];
+	if ([scrollView respondsToSelector:@selector(setAllowsHorizontalScrolling:)]) {
+		[(id)scrollView setAllowsHorizontalScrolling:NO];
+	}
+	
+	NSScroller* old = [scrollView verticalScroller];
+	if (old && ![old isKindOfClass:[MarkedScroller class]]) {
+		if (scroller) {
+			[scroller removeFromSuperview];
+			[scroller release];
+		}
+		
+		scroller = [[MarkedScroller alloc] initWithFrame:NSMakeRect(-16, -64, 16, 64)];
+		scroller.dataSource = self;
+		[scroller setFloatValue:[old floatValue] knobProportion:[old knobProportion]];
+		[scrollView setVerticalScroller:scroller];
+	}
+}
+
+- (void)webView:(WebView *)sender didClearWindowObject:(WebScriptObject *)windowObject forFrame:(WebFrame *)frame
+{
+	[js release];
+	js = [windowObject retain];
+	[js setValue:sink forKey:@"app"];
+}
+
 - (void)webView:(WebView *)sender didFinishLoadForFrame:(WebFrame *)frame
 {
 	loaded = YES;
 	loadingImages = 0;
+	[self setUpScroller];
 	
-	//@@@
+	if (html) {
+		;
+	}
+	else {
+		[self moveToBottom];
+		bottom = YES;
+	}
+	
+	for (NSArray* ary in lines) {
+		LogLine* line = [ary objectAtIndex:0];
+		BOOL useKeyword = [[ary objectAtIndex:1] boolValue];
+		[self print:line useKeyword:useKeyword];
+	}
+	[lines removeAllObjects];
+	
+	DOMHTMLDocument* doc = (DOMHTMLDocument*)[[view mainFrame] DOMDocument];
+	if (!doc) return;
+	DOMHTMLElement* body = [doc body];
+	DOMHTMLElement* e = (DOMHTMLElement*)[body firstChild];
+	while (e) {
+		DOMHTMLElement* next = (DOMHTMLElement*)[e nextSibling];
+		if (![e isKindOfClass:[DOMHTMLDivElement class]] && ![e isKindOfClass:[DOMHTMLHRElement class]]) {
+			[body removeChild:e];
+		}
+		e = next;
+	}
+	
+	NSMutableString* s = [NSMutableString string];
+	
+	if (console) {
+		[s appendString:@"function on_dblclick() {"];
+		[s appendString:@"  var t = event.target;"];
+		[s appendString:@"  while (t && !(t.tagName == 'DIV' && t.className.match(/^line /))) {"];
+		[s appendString:@"    t = t.parentNode;"];
+		[s appendString:@"  }"];
+		[s appendString:@"  if (t) {"];
+		[s appendString:@"    app.onDblClick(t.getAttribute('clickinfo'));"];
+		[s appendString:@"  }"];
+		[s appendString:@"  event.stopPropagation();"];
+		[s appendString:@"}"];
+		[s appendString:@"function on_mousedown() {"];
+		[s appendString:@"  if (app.shouldStopDoubleClick(event)) {"];
+		[s appendString:@"    event.preventDefault();"];
+		[s appendString:@"  }"];
+		[s appendString:@"  event.stopPropagation();"];
+		[s appendString:@"}"];
+		[s appendString:@"function on_url_contextmenu() {"];
+		[s appendString:@"  var t = event.target;"];
+		[s appendString:@"  app.setUrl(t.innerHTML);"];
+		[s appendString:@"}"];
+		[s appendString:@"function on_address_contextmenu() {"];
+		[s appendString:@"  var t = event.target;"];
+		[s appendString:@"  app.setAddr(t.innerHTML);"];
+		[s appendString:@"}"];
+		[s appendString:@"document.addEventListener('mousedown', on_mousedown, false);"];	}
+	else {
+		[s appendString:@"function on_url_contextmenu() {"];
+		[s appendString:@"  var t = event.target;"];
+		[s appendString:@"  app.setUrl(t.innerHTML);"];
+		[s appendString:@"}"];
+		[s appendString:@"function on_address_contextmenu() {"];
+		[s appendString:@"  var t = event.target;"];
+		[s appendString:@"  app.setAddr(t.innerHTML);"];
+		[s appendString:@"}"];
+		[s appendString:@"function on_nick_contextmenu() {"];
+		[s appendString:@"  var t = event.target;"];
+		[s appendString:@"  app.setNick(t.parentNode.getAttribute('nick'));"];
+		[s appendString:@"}"];
+		[s appendString:@"function on_channel_contextmenu() {"];
+		[s appendString:@"  var t = event.target;"];
+		[s appendString:@"  app.setChan(t.innerHTML);"];
+		[s appendString:@"}"];
+	}
+	
+	[js evaluateWebScript:s];
+	
+	// @@@
+	// evaluate theme js
 }
 
 - (void)logViewKeyDown:(NSEvent *)e
@@ -502,7 +629,7 @@
 	//[world logKeyDown:e];
 }
 
-- (void)logViewOnDoubleClick:(NSEvent *)e
+- (void)logViewOnDoubleClick:(NSString*)e
 {
 	LOG_METHOD
 	//[world log_doubleClick:e];
@@ -517,52 +644,5 @@
 {
 	[self restorePosition];
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 @end

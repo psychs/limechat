@@ -39,6 +39,8 @@
 	NSMutableArray* highlightedLineNumbers;
 	int loadingImages;
 	NSString* prevNickInfo;
+	NSString* html;
+	WebScriptObject* js;
 }
 
 @property (nonatomic, readonly) LogView* view;

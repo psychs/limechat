@@ -2,6 +2,7 @@
 // You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
 #import "LogScriptEventSink.h"
+#import "GTMNSString+HTML.h"
 
 
 #define DOUBLE_CLICK_RADIUS	3
