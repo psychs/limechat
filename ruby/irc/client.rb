@@ -27,7 +27,7 @@ class IRCClient < NSObject
     @myaddress = nil
     @join_address = nil
     @encoding = NSISO2022JPStringEncoding
-    @isupport = ISupportInfo.new
+    @isupport = IRCISupportInfo.alloc.init
     @in_whois = false
     @identify_msg = false
     @identify_ctcp = false
@@ -296,6 +296,7 @@ class IRCClient < NSObject
     members = members.compact
     members = members.select {|m| m.__send__(mode) != plus }
     members = members.map {|m| m.nick }
+    
     max = @isupport.modes_count
     until members.empty?
       t = members[0...max]
@@ -1822,13 +1823,14 @@ class IRCClient < NSObject
           end
         end
         
+=begin
         info.each do |h|
-          next unless h[:op_mode]
+          next unless h.op
           
           # process op modes
-          mode = h[:mode]
-          plus = h[:plus]
-          t = h[:param]
+          mode = h.mode
+          plus = h.plus
+          t = h.param
           
           myself = false
           if (mode == :q || mode == :a || mode == :o) && eq(t, @mynick)
@@ -1846,7 +1848,8 @@ class IRCClient < NSObject
           end
           c.change_member_op(t, mode, plus) unless myself
         end
-        
+=end
+
         update_channel_title(c)
       end
       print_both(c || target, :mode, "#{nick} has changed mode: #{modestr}")

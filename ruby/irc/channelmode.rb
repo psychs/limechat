@@ -27,21 +27,21 @@ class ChannelMode
   SIMPLE_MODES = [:p, :s, :m, :n, :t, :i, :a, :q, :r]
   
   def update(modestr)
-    i = @info.parse_modestr(modestr)
-    i.each do |h|
-      unless h[:op_mode]
-        mode = h[:mode]
-        plus = h[:plus]
-        if h[:simple_mode] && SIMPLE_MODES.include?(mode)
+    ary = @info.parseMode(modestr)
+    ary.each do |h|
+      unless h.op
+        mode = h.mode
+        plus = h.plus
+        if h.simpleMode && SIMPLE_MODES.include?(mode)
           instance_variable_set("@#{mode}", plus)
         else
           case mode
           when :k
-            param = h[:param] || ''
+            param = h.param || ''
             @k = plus ? param : ''
           when :l
             if plus
-              param = h[:param] || 0
+              param = h.param || 0
               @l = param.to_i
             else
               @l = 0
@@ -50,7 +50,7 @@ class ChannelMode
         end
       end
     end
-    i
+    ary
   end
   
   def get_change_str(mode)

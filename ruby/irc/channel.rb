@@ -30,7 +30,7 @@ class IRCChannel < NSObject
   
   def setup(seed)
     @config = seed.dup
-    @mode.info = @client.isupport.mode
+    @mode.info = @client.isupport
   end
   
   def update_config(seed)
