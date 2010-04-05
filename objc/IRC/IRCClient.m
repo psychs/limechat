@@ -30,10 +30,16 @@
 	[super dealloc];
 }
 
+#pragma mark -
+#pragma mark Init
+
 - (void)setup:(IRCClientConfig*)seed
 {
 	config = [seed mutableCopy];
 }
+
+#pragma mark -
+#pragma mark Utilities
 
 - (IRCChannel*)findChannel:(NSString*)name
 {
@@ -50,6 +56,9 @@
 	return -1;
 }
 
+#pragma mark -
+#pragma mark IRCTreeItem
+
 - (int)numberOfChildren
 {
 	return channels.count;
@@ -63,6 +72,11 @@
 - (NSString*)label
 {
 	return config.name;
+}
+
+- (BOOL)isClient
+{
+	return YES;
 }
 
 @end

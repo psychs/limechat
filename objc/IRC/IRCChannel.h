@@ -17,6 +17,16 @@
 	
 	IRCChannelConfig* config;
 	int uid;
+	
+	NSString* topic;
+	
+	BOOL isKeyword;
+	BOOL isUnread;
+	BOOL isNewTalk;
+	BOOL isActive;
+	BOOL hasOp;
+	BOOL namesInit;
+	BOOL whoInit;
 }
 
 @property (nonatomic, assign) IRCClient* client;
@@ -25,11 +35,28 @@
 @property (nonatomic, readonly) IRCChannelConfig* config;
 @property (nonatomic, assign) int uid;
 
-@property (nonatomic, readonly) NSString* name;
+@property (nonatomic, assign) NSString* name;
+@property (nonatomic, readonly) NSString* password;
 @property (nonatomic, readonly) BOOL isChannel;
 @property (nonatomic, readonly) BOOL isTalk;
 @property (nonatomic, readonly) NSString* typeStr;
+@property (nonatomic, retain) NSString* topic;
+@property (nonatomic, assign) BOOL isKeyword;
+@property (nonatomic, assign) BOOL isUnread;
+@property (nonatomic, assign) BOOL isNewTalk;
+@property (nonatomic, assign) BOOL isActive;
+@property (nonatomic, assign) BOOL hasOp;
+@property (nonatomic, assign) BOOL namesInit;
+@property (nonatomic, assign) BOOL whoInit;
 
 - (void)setup:(IRCChannelConfig*)seed;
+- (void)updateConfig:(IRCChannelConfig*)seed;
+- (void)updateAutoOp:(IRCChannelConfig*)seed;
+
+- (void)resetState;
+- (void)terminate;
+- (void)activate;
+- (void)deactivate;
+- (void)closeDialogs;
 
 @end

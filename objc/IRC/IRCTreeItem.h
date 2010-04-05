@@ -9,5 +9,6 @@
 - (int)numberOfChildren;
 - (id)childAtIndex:(int)index;
 - (NSString*)label;
+- (BOOL)isClient;
 
 @end
