@@ -43,7 +43,8 @@
 	IRCWorldConfig* config;
 	NSMutableArray* clients;
 	
-	int clientId;
+	int itemId;
+	BOOL reloadingTree;
 }
 
 @property (nonatomic, assign) LimeChatApplication* app;

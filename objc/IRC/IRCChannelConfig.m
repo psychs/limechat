@@ -7,6 +7,8 @@
 
 @implementation IRCChannelConfig
 
+@synthesize type;
+
 @synthesize name;
 @synthesize password;
 
@@ -22,7 +24,10 @@
 - (id)initWithDictionary:(NSDictionary*)dic
 {
 	if (self = [super init]) {
+		type = CHANNEL_TYPE_CHANNEL;
 		autoOp = [NSMutableArray new];
+		
+		type = [dic intForKey:@"type"];
 		
 		name = [[dic stringForKey:@"name"] retain];
 		password = [[dic stringForKey:@"password"] retain];
@@ -55,6 +60,8 @@
 - (NSDictionary*)dictionaryValue
 {
 	NSMutableDictionary* dic = [NSMutableDictionary dictionary];
+	
+	[dic setInt:type forKey:@"type"];
 	
 	[dic setObject:name forKey:@"name"];
 	[dic setObject:password forKey:@"password"];

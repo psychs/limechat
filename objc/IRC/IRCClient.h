@@ -4,6 +4,7 @@
 #import <Cocoa/Cocoa.h>
 #import "IRCTreeItem.h"
 #import "IRCClientConfig.h"
+#import "IRCChannel.h"
 #import "LogController.h"
 
 
@@ -28,5 +29,8 @@
 @property (nonatomic, assign) int uid;
 
 - (void)setup:(IRCClientConfig*)seed;
+
+- (IRCChannel*)findChannel:(NSString*)name;
+- (int)indexOfTalkChannel;
 
 @end

@@ -6,4 +6,8 @@
 
 @protocol IRCTreeItem
 
+- (int)numberOfChildren;
+- (id)childAtIndex:(int)index;
+- (NSString*)label;
+
 @end

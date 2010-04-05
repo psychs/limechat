@@ -9,6 +9,7 @@
 
 @interface IRCWorld (Private)
 - (IRCClient*)createClient:(IRCClientConfig*)seed reload:(BOOL)reload;
+- (IRCChannel*)createChannel:(IRCChannelConfig*)seed client:(IRCClient*)client reload:(BOOL)reload adjust:(BOOL)adjust;
 - (LogController*)createLogWithClient:(IRCClient*)client channel:(IRCChannel*)channel console:(BOOL)console;
 @end
 
@@ -106,15 +107,25 @@
 
 - (void)reloadTree
 {
+	if (reloadingTree) {
+		[tree setNeedsDisplay];
+		return;
+	}
+	
+	reloadingTree = YES;
+	[tree reloadData];
+	reloadingTree = NO;
+}
+
+- (void)adjustSelection
+{
 	LOG_METHOD
 }
 
 - (IRCClient*)createClient:(IRCClientConfig*)seed reload:(BOOL)reload
 {
-	++clientId;
-	
 	IRCClient* c = [[IRCClient new] autorelease];
-	c.uid = clientId;
+	c.uid = ++itemId;
 	c.world = self;
 	c.log = [self createLogWithClient:c channel:nil console:NO];
 	[c setup:seed];
@@ -125,7 +136,48 @@
 	
 	[clients addObject:c];
 	
-	if (reload) [self reloadTree];
+	if (reload) {
+		[self reloadTree];
+	}
+	
+	return c;
+}
+
+- (IRCChannel*)createChannel:(IRCChannelConfig*)seed client:(IRCClient*)client reload:(BOOL)reload adjust:(BOOL)adjust
+{
+	IRCChannel* c = [client findChannel:seed.name];
+	if (c) return c;
+	
+	c = [[IRCChannel new] autorelease];
+	c.uid = ++itemId;
+	c.client = client;
+	[c setup:seed];
+	c.log = [self createLogWithClient:client channel:c console:NO];
+	
+	switch (seed.type) {
+		case CHANNEL_TYPE_CHANNEL:
+		{
+			int n = [client indexOfTalkChannel];
+			if (n >= 0) {
+				[client.channels insertObject:c atIndex:n];
+			}
+			else {
+				[client.channels addObject:c];
+			}
+			break;
+		}
+		default:
+			[client.channels addObject:c];
+			break;
+	}
+	
+	if (reload) {
+		[self reloadTree];
+	}
+	
+	if (adjust) {
+		[self adjustSelection];
+	}
 	
 	return c;
 }
@@ -148,8 +200,12 @@
 	c.console = console;
 	//c.initialBackgroundColor = [NSColor blueColor];
 	[c setUp];
+	
 	[c.view setHostWindow:window];
-	if (consoleLog) [c.view setTextSizeMultiplier:consoleLog.view.textSizeMultiplier];
+	if (consoleLog) {
+		[c.view setTextSizeMultiplier:consoleLog.view.textSizeMultiplier];
+	}
+	
 	return c;
 }
 
@@ -158,22 +214,24 @@
 
 - (NSInteger)outlineView:(NSOutlineView *)sender numberOfChildrenOfItem:(id)item
 {
-	return 1;
+	if (!item) return clients.count;
+	return [item numberOfChildren];
 }
 
 - (BOOL)outlineView:(NSOutlineView *)sender isItemExpandable:(id)item
 {
-	return NO;
+	return [item numberOfChildren] > 0;
 }
 
 - (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(id)item
 {
-	return @"test";
+	if (!item) return [clients objectAtIndex:index];
+	return [item childAtIndex:index];
 }
 
 - (id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(NSTableColumn *)tableColumn byItem:(id)item
 {
-	return @"test";
+	return [item label];
 }
 
 - (void)serverTreeViewAcceptsFirstResponder

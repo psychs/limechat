@@ -32,6 +32,37 @@
 
 - (void)setup:(IRCClientConfig*)seed
 {
+	config = [seed mutableCopy];
+}
+
+- (IRCChannel*)findChannel:(NSString*)name
+{
+	return nil;
+}
+
+- (int)indexOfTalkChannel
+{
+	int i = 0;
+	for (IRCChannel* e in channels) {
+		if (e.isTalk) return i;
+		++i;
+	}
+	return -1;
+}
+
+- (int)numberOfChildren
+{
+	return channels.count;
+}
+
+- (id)childAtIndex:(int)index
+{
+	return [channels objectAtIndex:index];
+}
+
+- (NSString*)label
+{
+	return config.name;
 }
 
 @end

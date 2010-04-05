@@ -4,16 +4,29 @@
 #import <Cocoa/Cocoa.h>
 #import "IRCTreeItem.h"
 #import "IRCChannelConfig.h"
+#import "LogController.h"
+
+
+@class IRCClient;
 
 
 @interface IRCChannel : NSObject <IRCTreeItem>
 {
+	IRCClient* client;
+	LogController* log;
+	
 	IRCChannelConfig* config;
-	int cid;
+	int uid;
 }
 
+@property (nonatomic, assign) IRCClient* client;
+@property (nonatomic, retain) LogController* log;
+
 @property (nonatomic, readonly) IRCChannelConfig* config;
-@property (nonatomic, assign) int cid;
+@property (nonatomic, assign) int uid;
+
+@property (nonatomic, readonly) BOOL isChannel;
+@property (nonatomic, readonly) BOOL isTalk;
 
 - (void)setup:(IRCChannelConfig*)seed;
 

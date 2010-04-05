@@ -4,8 +4,16 @@
 #import <Cocoa/Cocoa.h>
 
 
+typedef enum {
+	CHANNEL_TYPE_CHANNEL,
+	CHANNEL_TYPE_TALK,
+} ChannelType;
+
+
 @interface IRCChannelConfig : NSObject <NSMutableCopying>
 {
+	ChannelType type;
+	
 	NSString* name;
 	NSString* password;
 	
@@ -18,6 +26,8 @@
 	
 	NSMutableArray* autoOp;
 }
+
+@property (nonatomic, assign) ChannelType type;
 
 @property (nonatomic, retain) NSString* name;
 @property (nonatomic, retain) NSString* password;
