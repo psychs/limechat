@@ -64,6 +64,7 @@
 		78364E5A1165BFA10096F3A9 /* TreeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78364E591165BFA10096F3A9 /* TreeView.m */; };
 		783D0B2B0CF45C38002CC2FB /* listdialog.rb in Resources */ = {isa = PBXBuildFile; fileRef = 783D0B2A0CF45C38002CC2FB /* listdialog.rb */; };
 		783E686911695A5600DF6820 /* LogLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 783E686811695A5600DF6820 /* LogLine.m */; };
+		783E689411695EDB00DF6820 /* LogController.m in Sources */ = {isa = PBXBuildFile; fileRef = 783E689311695EDB00DF6820 /* LogController.m */; };
 		78496EFD0C2890200084A836 /* preferencedialog.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78496EFC0C2890200084A836 /* preferencedialog.rb */; };
 		784BBE941085BC950080898B /* bluestar.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 784BBE901085BC950080898B /* bluestar.tiff */; };
 		784BBE951085BC950080898B /* keyrecorder_erase.png in Resources */ = {isa = PBXBuildFile; fileRef = 784BBE911085BC950080898B /* keyrecorder_erase.png */; };
@@ -234,6 +235,8 @@
 		783D0B2A0CF45C38002CC2FB /* listdialog.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = listdialog.rb; sourceTree = "<group>"; };
 		783E686711695A5600DF6820 /* LogLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogLine.h; sourceTree = "<group>"; };
 		783E686811695A5600DF6820 /* LogLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogLine.m; sourceTree = "<group>"; };
+		783E689211695EDB00DF6820 /* LogController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogController.h; sourceTree = "<group>"; };
+		783E689311695EDB00DF6820 /* LogController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogController.m; sourceTree = "<group>"; };
 		78496EFC0C2890200084A836 /* preferencedialog.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = preferencedialog.rb; sourceTree = "<group>"; };
 		784BBE901085BC950080898B /* bluestar.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = bluestar.tiff; sourceTree = "<group>"; };
 		784BBE911085BC950080898B /* keyrecorder_erase.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = keyrecorder_erase.png; sourceTree = "<group>"; };
@@ -646,6 +649,8 @@
 				7851ADCB1168981E00AC449F /* LogRenderer.m */,
 				783E686711695A5600DF6820 /* LogLine.h */,
 				783E686811695A5600DF6820 /* LogLine.m */,
+				783E689211695EDB00DF6820 /* LogController.h */,
+				783E689311695EDB00DF6820 /* LogController.m */,
 			);
 			name = Views;
 			path = objc/Views;
@@ -915,6 +920,7 @@
 				78BC0D5B1168F06E00A984AA /* FileLogger.m in Sources */,
 				78DA7D2B1169080700962CC4 /* Preferences.m in Sources */,
 				783E686911695A5600DF6820 /* LogLine.m in Sources */,
+				783E689411695EDB00DF6820 /* LogController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

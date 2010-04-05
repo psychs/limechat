@@ -889,7 +889,9 @@ class IRCWorld < NSObject
     else
       log.overrideFont = nil
     end
-    log.setup(console, @view_theme.other.input_text_bgcolor)
+    log.console = console
+    log.initialBackgroundColor = @view_theme.other.input_text_bgcolor
+    log.setUp
     log.view.setHostWindow(@window)
     log.view.setTextSizeMultiplier(@console.view.textSizeMultiplier) if @console
     log

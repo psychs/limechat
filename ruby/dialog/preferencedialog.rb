@@ -222,14 +222,14 @@ class PreferenceDialog < NSObject
   end
   
   def onOpenThemePath(sender)
-    path = Pathname.new(ViewTheme.USER_BASE)
+    path = Pathname.new(ViewTheme.USERBASE)
     unless path.exist?
       path.mkpath rescue nil
     end
     files = Dir.glob(path.to_s + '/*') rescue []
     if files.empty?
       # copy sample themes
-      FileUtils.cp(Dir.glob(ViewTheme.RESOURCE_BASE + '/Sample.*'), ViewTheme.USER_BASE) rescue nil
+      FileUtils.cp(Dir.glob(ViewTheme.RESOURCEBASE + '/Sample.*'), ViewTheme.USERBASE) rescue nil
     end
     NSWorkspace.sharedWorkspace.openFile(path.to_s)
   end
@@ -245,7 +245,7 @@ class PreferenceDialog < NSObject
     @theme.addItemWithTitle('Default')
     @theme.itemAtIndex(0).setTag(0)
     
-    [ViewTheme.RESOURCE_BASE, ViewTheme.USER_BASE].each_with_index do |base,tag|
+    [ViewTheme.RESOURCEBASE, ViewTheme.USERBASE].each_with_index do |base,tag|
       files = Pathname.glob(base + '/*.css') + Pathname.glob(base + '/*.yaml')
       files.map! {|i| i.basename('.*').to_s}
       files.delete('Sample') if tag == 0
@@ -262,7 +262,7 @@ class PreferenceDialog < NSObject
       end
     end
     
-    kind, name = ViewTheme.extract_name(preferences.theme.name)
+    kind, name = ViewTheme.extractName(preferences.theme.name)
     target_tag = kind == 'resource' ? 0 : 1
     
     count = @theme.numberOfItems
@@ -279,9 +279,9 @@ class PreferenceDialog < NSObject
     sel = @theme.selectedItem
     fname = sel.title.to_s
     if sel.tag == 0
-      preferences.theme.name = ViewTheme.resource_filename(fname)
+      preferences.theme.name = ViewTheme.resourceFilename(fname)
     else
-      preferences.theme.name = ViewTheme.user_filename(fname)
+      preferences.theme.name = ViewTheme.userFilename(fname)
     end
   end
 end

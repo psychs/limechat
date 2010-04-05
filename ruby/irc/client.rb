@@ -1091,7 +1091,7 @@ class IRCClient < NSObject
     channel = nil if channel && channel.is_a?(String)
     channel ||= self
     return false if !channel.client? && !channel.config.console
-    channel != @world.selected || !channel.log.viewingBottom?
+    channel != @world.selected || !channel.log.viewingBottom
   end
   
   def now
@@ -1188,7 +1188,7 @@ class IRCClient < NSObject
     line.clickInfo = click
     line.identified = identified
     line.nickColorNumber = color_num
-    @world.console.print(line, self)
+    @world.console.print_useKeyword(line, true)
   end
   
   def print_channel(channel, kind, nick, text=nil, identified=nil)
@@ -1249,7 +1249,7 @@ class IRCClient < NSObject
     if channel && !channel.client?
       key = channel.print(line)
     else
-      key = @log.print(line, self)
+      key = @log.print_useKeyword(line, true)
     end
     key
   end

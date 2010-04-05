@@ -36,7 +36,8 @@ class AppController < NSObject
     @info_split.setFixedViewIndex(1)
     @tree_split.setHidden(true)
 
-    @view_theme = ViewTheme.new(preferences.theme.name)
+    @view_theme = ViewTheme.alloc.init
+    @view_theme.theme = preferences.theme.name
     @tree.theme = @view_theme.other
     @member_list.theme = @view_theme.other
     cell = MemberListViewCell.alloc.init
@@ -394,7 +395,7 @@ class AppController < NSObject
     
     # initialize theme directory
     FileUtils.mkpath(Pathname.new('~/Library/Application Support/LimeChat/Themes').expand_path.to_s) rescue nil
-    FileUtils.cp(Dir.glob(ViewTheme.RESOURCE_BASE + '/Sample.*'), newdir.to_s) rescue nil
+    FileUtils.cp(Dir.glob(ViewTheme.RESOURCEBASE + '/Sample.*'), newdir.to_s) rescue nil
     
     # migrate ADDR_DETECT_NIC to ADDR_DETECT_JOIN
     if preferences.dcc.address_detection_method == Preferences::Dcc::ADDR_DETECT_NIC

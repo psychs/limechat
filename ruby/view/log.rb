@@ -5,7 +5,7 @@ require 'cgi'
 require 'uri'
 
 
-class LogController < NSObject
+class ALogController < NSObject
   attr_accessor :world
   attr_writer :client, :channel, :menu, :urlMenu, :addrMenu, :chanMenu, :memberMenu, :keyword, :theme, :overrideFont
   attr_reader :view
@@ -77,7 +77,7 @@ class LogController < NSObject
 
   BOTTOM_EPSILON = 20
 
-  def viewingBottom?
+  def viewingBottom
     return true unless @loaded
     doc = @view.mainFrame.DOMDocument
     return true unless doc
@@ -89,7 +89,7 @@ class LogController < NSObject
   end
 
   def save_position
-    @bottom = viewingBottom?
+    @bottom = viewingBottom
   end
 
   def restore_position
@@ -213,7 +213,7 @@ class LogController < NSObject
     return unless doc
     body = doc.body
     @html = body.innerHTML
-    @scroll_bottom = viewingBottom?
+    @scroll_bottom = viewingBottom
     @scroll_top = body[:scrollTop]
     #setup(@console, style)
     @view.mainFrame.loadHTMLString_baseURL(initial_document, @theme.log.baseurl)
@@ -432,7 +432,7 @@ class LogController < NSObject
     end
 
     if use_keyword
-      dislike = @keyword.dislike_words
+      dislike = @keyword.dislikeWords
       like = @keyword.words
       if client && @keyword.current_nick && !client.mynick.empty?
         like += [client.mynick]

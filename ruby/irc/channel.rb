@@ -341,7 +341,7 @@ class IRCChannel < NSObject
   end
   
   def print(line)
-    result = @log.print(line, @client)
+    result = @log.print_useKeyword(line, true)
     
     # open log file
     unless @terminating

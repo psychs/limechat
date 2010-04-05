@@ -5,18 +5,18 @@ require 'pathname'
 require 'yaml'
 require 'utility'
 
-class ViewTheme
+class ViewTheme < NSObject
   
-  RESOURCE_BASE = (Pathname.new(NSBundle.mainBundle.resourcePath.fileSystemRepresentation).parent.expand_path + 'Themes').to_s
-  USER_BASE = '~/Library/Application Support/LimeChat/Themes'.expand_path
+  RESOURCEBASE = (Pathname.new(NSBundle.mainBundle.resourcePath.fileSystemRepresentation).parent.expand_path + 'Themes').to_s
+  USERBASE = '~/Library/Application Support/LimeChat/Themes'.expand_path
   
-  def self.RESOURCE_BASE; RESOURCE_BASE; end
-  def self.USER_BASE; USER_BASE; end
+  def self.RESOURCEBASE; RESOURCEBASE; end
+  def self.USERBASE; USERBASE; end
   
-  def self.resource_filename(fname); "resource:#{fname}"; end
-  def self.user_filename(fname); "user:#{fname}"; end
+  def self.resourceFilename(fname); "resource:#{fname}"; end
+  def self.userFilename(fname); "user:#{fname}"; end
   
-  def self.extract_name(name)
+  def self.extractName(name)
     if name =~ /\A([a-z]+):(.*)\z/
       [$1, $2]
     else
@@ -27,21 +27,20 @@ class ViewTheme
   
   attr_reader :name, :log, :other, :js
   
-  def initialize(name)
+  def initialize
     @log = LogTheme.new
     @other = OtherViewTheme.new
     @js = CustomJSFile.new
-    self.theme = name
   end
   
   def theme=(name)
     if name
       @name = name.dup
-      kind, fname = ViewTheme.extract_name(@name)
+      kind, fname = ViewTheme.extractName(@name)
       if kind == 'resource'
-        fullname = "#{RESOURCE_BASE}/#{fname}"
+        fullname = "#{RESOURCEBASE}/#{fname}"
       else
-        fullname = "#{USER_BASE}/#{fname}"
+        fullname = "#{USERBASE}/#{fname}"
       end
       @log.filename = Pathname.new(fullname + '.css')
       @other.filename = Pathname.new(fullname + '.yaml')
@@ -60,7 +59,7 @@ class ViewTheme
 end
 
 
-class LogTheme
+class LogTheme < NSObject
   attr_reader :content, :baseurl
   
   def filename=(fname)
