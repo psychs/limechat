@@ -11,19 +11,26 @@
 @synthesize clients;
 @synthesize autoOp;
 
-- (id)initWithDictionary:(NSDictionary*)dic
+- (id)init
 {
 	if (self = [super init]) {
 		clients = [NSMutableArray new];
 		autoOp = [NSMutableArray new];
-		
-		for (NSDictionary* e in [dic arrayForKey:@"clients"]) {
-			IRCClientConfig* c = [[[IRCClientConfig alloc] initWithDictionary:e] autorelease];
-			[clients addObject:c];
-		}
-		
-		[autoOp addObjectsFromArray:[dic arrayForKey:@"autoop"]];
 	}
+	return self;
+}
+
+- (id)initWithDictionary:(NSDictionary*)dic
+{
+	[self init];
+	
+	for (NSDictionary* e in [dic arrayForKey:@"clients"]) {
+		IRCClientConfig* c = [[[IRCClientConfig alloc] initWithDictionary:e] autorelease];
+		[clients addObject:c];
+	}
+	
+	[autoOp addObjectsFromArray:[dic arrayForKey:@"autoop"]];
+	
 	return self;
 }
 

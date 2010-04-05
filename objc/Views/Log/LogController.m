@@ -402,6 +402,7 @@
 	[attrs setObject:[LogLine lineTypeString:type] forKey:@"type"];
 	[attrs setObject:(key ? @"true" : @"false") forKey:@"highlight"];
 	if (console && line.clickInfo) {
+		LOG(@"set dblclick ok");
 		[attrs setObject:line.clickInfo forKey:@"clickinfo"];
 		[attrs setObject:@"on_dblclick()" forKey:@"ondblclick"];
 	}
@@ -805,14 +806,12 @@
 
 - (void)logViewKeyDown:(NSEvent *)e
 {
-	LOG_METHOD
-	//[world logKeyDown:e];
+	[world logKeyDown:e];
 }
 
 - (void)logViewOnDoubleClick:(NSString*)e
 {
-	LOG_METHOD
-	//[world log_doubleClick:e];
+	[world logDoubleClick:e];
 }
 
 - (void)logViewWillResize

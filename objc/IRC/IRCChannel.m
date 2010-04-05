@@ -136,21 +136,6 @@
 	return NO;
 }
 
-- (void)setUnreadState
-{
-	isUnread = YES;
-}
-
-- (void)setKeywordState
-{
-	isKeyword = YES;
-}
-
-- (void)setNewTalkState
-{
-	isNewTalk = YES;
-}
-
 - (void)resetState
 {
 	isKeyword = isUnread = isNewTalk = NO;

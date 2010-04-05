@@ -14,6 +14,10 @@
 
 
 @interface IRCClient (Private)
+- (void)setKeywordState:(id)target;
+- (void)setNewTalkState:(id)target;
+- (void)setUnreadState:(id)target;
+
 - (void)receivePrivmsgAndNotice:(IRCMessage*)message;
 - (void)receiveJoin:(IRCMessage*)message;
 - (void)receivePart:(IRCMessage*)message;
@@ -225,6 +229,7 @@
 
 - (void)reloadTree
 {
+	[world reloadTree];
 }
 
 - (void)changeStateOff
@@ -351,6 +356,35 @@
 	}
 }
 
+- (void)setKeywordState:(id)t
+{
+	if ([NSApp isActive] && [world selectedItem] == t) return;
+	if ([t isKeyword]) return;
+	[t setIsKeyword:YES];
+	[self reloadTree];
+	if (![NSApp isActive]) [NSApp requestUserAttention:NSInformationalRequest];
+	[world updateIcon];
+}
+
+- (void)setNewTalkState:(id)t
+{
+	if ([NSApp isActive] && [world selectedItem] == t) return;
+	if ([t isNewTalk]) return;
+	[t setIsNewTalk:YES];
+	[self reloadTree];
+	[world updateIcon];
+}
+
+- (void)setUnreadState:(id)t
+{
+	if ([NSApp isActive] && [world selectedItem] == t) return;
+	if ([t isUnread]) return;
+	[t setIsUnread:YES];
+	[self reloadTree];
+	if (![NSApp isActive]) [NSApp requestUserAttention:NSInformationalRequest];
+	[world updateIcon];
+}
+
 #pragma mark -
 #pragma mark Print
 
@@ -439,13 +473,11 @@
 		//@@@ nick number
 	}
 	
-	if (channel) {
-		if (channel.isClient) {
-			clickContext = [NSString stringWithFormat:@"client %d", uid];
-		}
-		else {
-			clickContext = [NSString stringWithFormat:@"channel %d %d", uid, channel.uid];
-		}
+	if (channel && !channel.isClient) {
+		clickContext = [NSString stringWithFormat:@"channel %d %d", uid, channel.uid];
+	}
+	else {
+		clickContext = [NSString stringWithFormat:@"client %d", uid];
 	}
 	
 	LogLine* c = [[LogLine new] autorelease];
@@ -456,7 +488,7 @@
 	c.lineType = type;
 	c.memberType = memberType;
 	c.nickInfo = nick;
-	c.clickInfo = nil;
+	c.clickInfo = clickContext;
 	c.identified = identified;
 	c.nickColorNumber = colorNumber;
 	
@@ -564,18 +596,6 @@
 	return YES;
 }
 
-- (void)setUnreadState
-{
-}
-
-- (void)setKeywordState
-{
-}
-
-- (void)setNewTalkState
-{
-}
-
 - (void)resetState
 {
 }
@@ -666,8 +686,8 @@
 		BOOL keyword = [self printBoth:(c ?: (id)target) type:type nick:nick text:text identified:identified];
 		
 		id t = c ?: (id)self;
-		[t setUnreadState];
-		if (keyword) [t setKeywordState];
+		[self setUnreadState:t];
+		if (keyword) [self setKeywordState:t];
 	}
 	else if ([target isEqualNoCase:myNick]) {
 		if (!nick.length || [nick contains:@"."]) {
@@ -690,9 +710,9 @@
 			}
 			else {
 				id t = c ?: (id)self;
-				[t setUnreadState];
-				if (keyword) [t setKeywordState];
-				if (newTalk) [c setNewTalkState];
+				[self setUnreadState:t];
+				if (keyword) [self setKeywordState:t];
+				if (newTalk) [self setNewTalkState:t];
 			}
 		}
 	}
@@ -782,6 +802,8 @@
 
 - (void)receivePing:(IRCMessage*)m
 {
+	LOG_METHOD
+	[self send:PONG, [m sequence:0], nil];
 }
 
 - (void)receiveInit:(IRCMessage*)m

@@ -21,26 +21,37 @@
 
 @synthesize autoOp;
 
-- (id)initWithDictionary:(NSDictionary*)dic
+- (id)init
 {
 	if (self = [super init]) {
 		type = CHANNEL_TYPE_CHANNEL;
 		autoOp = [NSMutableArray new];
 		
-		type = [dic intForKey:@"type"];
-		
-		name = [[dic stringForKey:@"name"] retain];
-		password = [[dic stringForKey:@"password"] retain];
-		
-		autoJoin = [dic boolForKey:@"auto_join"];
-		logToConsole = [dic boolForKey:@"console"];
-		growl = [dic boolForKey:@"growl"];
-
-		mode = [[dic stringForKey:@"mode"] retain];
-		topic = [[dic stringForKey:@"topic"] retain];
-
-		[autoOp addObjectsFromArray:[dic arrayForKey:@"autoop"]];
+		autoJoin = YES;
+		logToConsole = YES;
+		growl = YES;
 	}
+	return self;
+}
+
+- (id)initWithDictionary:(NSDictionary*)dic
+{
+	[self init];
+	
+	type = [dic intForKey:@"type"];
+	
+	name = [[dic stringForKey:@"name"] retain];
+	password = [[dic stringForKey:@"password"] retain];
+	
+	autoJoin = [dic boolForKey:@"auto_join"];
+	logToConsole = [dic boolForKey:@"console"];
+	growl = [dic boolForKey:@"growl"];
+
+	mode = [[dic stringForKey:@"mode"] retain];
+	topic = [[dic stringForKey:@"topic"] retain];
+
+	[autoOp addObjectsFromArray:[dic arrayForKey:@"autoop"]];
+	
 	return self;
 }
 

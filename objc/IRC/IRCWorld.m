@@ -271,6 +271,19 @@
 }
 
 #pragma mark -
+#pragma mark Log Delegate
+
+- (void)logKeyDown:(NSEvent*)e
+{
+	LOG_METHOD
+}
+
+- (void)logDoubleClick:(NSString*)s
+{
+	LOG(@"logDoubleClick: %@", s);
+}
+
+#pragma mark -
 #pragma mark NSOutlineView Delegate
 
 - (void)outlineViewDoubleClicked:(id)sender

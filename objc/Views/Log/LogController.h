@@ -82,4 +82,6 @@
 
 - (BOOL)print:(LogLine*)line useKeyword:(BOOL)useKeyword;
 
+- (void)logViewOnDoubleClick:(NSString*)e;
+
 @end

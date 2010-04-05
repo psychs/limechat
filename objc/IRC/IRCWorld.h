@@ -83,10 +83,16 @@
 
 - (void)onTimer;
 - (void)autoConnect;
+
+- (void)updateIcon;
+- (void)reloadTree;
 - (void)expandClient:(IRCClient*)client;
 
 - (IRCClient*)createClient:(IRCClientConfig*)seed reload:(BOOL)reload;
 - (IRCChannel*)createChannel:(IRCChannelConfig*)seed client:(IRCClient*)client reload:(BOOL)reload adjust:(BOOL)adjust;
 - (IRCChannel*)createTalk:(NSString*)nick client:(IRCClient*)client;
+
+- (void)logKeyDown:(NSEvent*)e;
+- (void)logDoubleClick:(NSString*)s;
 
 @end

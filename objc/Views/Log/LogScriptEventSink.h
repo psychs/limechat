@@ -4,10 +4,14 @@
 #import <Cocoa/Cocoa.h>
 
 
+@class LogController;
+@class LogPolicy;
+
+
 @interface LogScriptEventSink : NSObject
 {
-	id owner;
-	id policy;
+	LogController* owner;
+	LogPolicy* policy;
 	
 	int x;
 	int y;

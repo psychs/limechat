@@ -39,48 +39,55 @@
 
 @synthesize uid;
 
-- (id)initWithDictionary:(NSDictionary*)dic
+- (id)init
 {
 	if (self = [super init]) {
 		altNicks = [NSMutableArray new];
 		loginCommands = [NSMutableArray new];
 		autoOp = [NSMutableArray new];
 		channels = [NSMutableArray new];
-		
-		name = [[dic stringForKey:@"name"] retain];
-		
-		host = [[dic stringForKey:@"host"] retain];
-		port = [dic intForKey:@"port"];
-		useSSL = [dic boolForKey:@"ssl"];
-		
-		nick = [[dic stringForKey:@"nick"] retain];
-		password = [[dic stringForKey:@"password"] retain];
-		username = [[dic stringForKey:@"username"] retain];
-		nickPassword = [[dic stringForKey:@"nickPassword"] retain];
-		[altNicks addObjectsFromArray:[dic arrayForKey:@"alt_nicks"]];
-
-		proxyType = [dic intForKey:@"proxy"];
-		proxyHost = [[dic stringForKey:@"proxy_host"] retain];
-		proxyPort = [dic intForKey:@"proxy_port"];
-		proxyUser = [[dic stringForKey:@"proxy_user"] retain];
-		proxyPassword = [[dic stringForKey:@"proxy_password"] retain];
-
-		autoConnect = [dic boolForKey:@"auto_connect"];
-		encoding = [dic intForKey:@"encoding"];
-		fallbackEncoding = [dic intForKey:@"fallback_encoding"];
-		leavingComment = [[dic stringForKey:@"leaving_comment"] retain];
-		userInfo = [[dic stringForKey:@"userinfo"] retain];
-		invisibleMode = [dic boolForKey:@"invisible"];
-		
-		[loginCommands addObjectsFromArray:[dic arrayForKey:@"login_commands"]];
-		
-		for (NSDictionary* e in [dic arrayForKey:@"channels"]) {
-			IRCChannelConfig* c = [[[IRCChannelConfig alloc] initWithDictionary:e] autorelease];
-			[channels addObject:c];
-		}
-		
-		[autoOp addObjectsFromArray:[dic arrayForKey:@"autoop"]];
 	}
+	return self;
+}
+
+- (id)initWithDictionary:(NSDictionary*)dic
+{
+	[self init];
+	
+	name = [[dic stringForKey:@"name"] retain];
+	
+	host = [[dic stringForKey:@"host"] retain];
+	port = [dic intForKey:@"port"];
+	useSSL = [dic boolForKey:@"ssl"];
+	
+	nick = [[dic stringForKey:@"nick"] retain];
+	password = [[dic stringForKey:@"password"] retain];
+	username = [[dic stringForKey:@"username"] retain];
+	nickPassword = [[dic stringForKey:@"nickPassword"] retain];
+	[altNicks addObjectsFromArray:[dic arrayForKey:@"alt_nicks"]];
+
+	proxyType = [dic intForKey:@"proxy"];
+	proxyHost = [[dic stringForKey:@"proxy_host"] retain];
+	proxyPort = [dic intForKey:@"proxy_port"];
+	proxyUser = [[dic stringForKey:@"proxy_user"] retain];
+	proxyPassword = [[dic stringForKey:@"proxy_password"] retain];
+
+	autoConnect = [dic boolForKey:@"auto_connect"];
+	encoding = [dic intForKey:@"encoding"];
+	fallbackEncoding = [dic intForKey:@"fallback_encoding"];
+	leavingComment = [[dic stringForKey:@"leaving_comment"] retain];
+	userInfo = [[dic stringForKey:@"userinfo"] retain];
+	invisibleMode = [dic boolForKey:@"invisible"];
+	
+	[loginCommands addObjectsFromArray:[dic arrayForKey:@"login_commands"]];
+	
+	for (NSDictionary* e in [dic arrayForKey:@"channels"]) {
+		IRCChannelConfig* c = [[[IRCChannelConfig alloc] initWithDictionary:e] autorelease];
+		[channels addObject:c];
+	}
+	
+	[autoOp addObjectsFromArray:[dic arrayForKey:@"autoop"]];
+	
 	return self;
 }
 

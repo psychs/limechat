@@ -3,6 +3,8 @@
 
 #import "LogScriptEventSink.h"
 #import "GTMNSString+HTML.h"
+#import "LogController.h"
+#import "LogPolicy.h"
 
 
 #define DOUBLE_CLICK_RADIUS	3
