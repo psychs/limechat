@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		510D9F6D0EC4FE9900D3BEFB /* abstract_preferences.rb in Resources */ = {isa = PBXBuildFile; fileRef = 510D9F6C0EC4FE9900D3BEFB /* abstract_preferences.rb */; };
 		51C39169103A18A9009DEFBF /* cocoa_gist.rb in Resources */ = {isa = PBXBuildFile; fileRef = 51C39168103A18A9009DEFBF /* cocoa_gist.rb */; };
-		7801DD2E0D1AF75F00D8691D /* isupportinfo.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7801DD2D0D1AF75F00D8691D /* isupportinfo.rb */; };
 		78208C1A0C9D97CD004472E9 /* cocoasheet.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78208C190C9D97CD004472E9 /* cocoasheet.rb */; };
 		7821DBE40C2C875700B3EF42 /* pastesheet.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7821DBE30C2C875700B3EF42 /* pastesheet.rb */; };
 		78229BC70C288188001DD4C3 /* tcpclient.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229B950C288188001DD4C3 /* tcpclient.rb */; };
@@ -166,7 +165,6 @@
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		510D9F6C0EC4FE9900D3BEFB /* abstract_preferences.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; name = abstract_preferences.rb; path = "../vendor/rubycocoa-prefs/lib/abstract_preferences.rb"; sourceTree = "<group>"; };
 		51C39168103A18A9009DEFBF /* cocoa_gist.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; name = cocoa_gist.rb; path = vendor/cocoa_gist/lib/cocoa_gist.rb; sourceTree = SOURCE_ROOT; };
-		7801DD2D0D1AF75F00D8691D /* isupportinfo.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = isupportinfo.rb; sourceTree = "<group>"; };
 		780253C20C09525900C170D4 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
 		78208C190C9D97CD004472E9 /* cocoasheet.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = cocoasheet.rb; sourceTree = "<group>"; };
 		7821DBE30C2C875700B3EF42 /* pastesheet.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = pastesheet.rb; sourceTree = "<group>"; };
@@ -760,7 +758,6 @@
 				78BF64A80C2885E2004451B2 /* user.rb */,
 				78BF64A90C2885E2004451B2 /* usermode.rb */,
 				78BF64AA0C2885E2004451B2 /* world.rb */,
-				7801DD2D0D1AF75F00D8691D /* isupportinfo.rb */,
 			);
 			path = irc;
 			sourceTree = "<group>";
@@ -858,7 +855,6 @@
 				783D0B2B0CF45C38002CC2FB /* listdialog.rb in Resources */,
 				78B2DF210D0417160092EBDA /* application.icns in Resources */,
 				7896BFE50D0C5E850069453A /* viewtheme.rb in Resources */,
-				7801DD2E0D1AF75F00D8691D /* isupportinfo.rb in Resources */,
 				7889CABF0D647494003D808E /* welcomedialog.rb in Resources */,
 				510D9F6D0EC4FE9900D3BEFB /* abstract_preferences.rb in Resources */,
 				51C39169103A18A9009DEFBF /* cocoa_gist.rb in Resources */,
