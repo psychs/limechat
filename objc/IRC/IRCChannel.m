@@ -4,6 +4,6 @@
 #import "IRCChannel.h"
 
 
-@implementation AIRCChannel
+@implementation IRCChannel
 
 @end

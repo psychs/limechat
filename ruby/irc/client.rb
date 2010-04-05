@@ -4,7 +4,7 @@
 require 'utility'
 require 'pathname'
 
-class IRCClient < NSObject
+class AIRCClient < NSObject
   attr_accessor :world, :log, :uid
   attr_reader :config, :channels, :mynick, :mymode, :encoding, :myaddress, :isupport, :reconnect
   attr_accessor :propertyDialog
@@ -192,7 +192,7 @@ class IRCClient < NSObject
     end
   end
   
-  def auto_connect(delay)
+  def autoConnect(delay)
     if delay == 0
       connect
     else
@@ -1101,7 +1101,7 @@ class IRCClient < NSObject
   end
   
   def format_nick(channel, nick)
-    format = preferences.theme.override_nick_format ? preferences.theme.nick_format : @world.view_theme.other.log_nick_format
+    format = preferences.theme.override_nick_format ? preferences.theme.nick_format : @world.viewTheme.other.log_nick_format
     s = format.gsub(/%@/) do |i|
       mark = ''
       if channel && !channel.client? && channel.channel?

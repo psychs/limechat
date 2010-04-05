@@ -92,7 +92,7 @@ class OtherViewTheme
   attr_reader :tree_font, :treeBackgroundColor, :tree_highlight_color, :tree_newtalk_color, :tree_unread_color
   attr_reader :tree_active_color, :tree_inactive_color, :tree_sel_active_color, :tree_sel_inactive_color
   attr_reader :treeSelTopLineColor, :treeSelBottomLineColor, :treeSelTopColor, :treeSelBottomColor
-  attr_reader :member_list_font, :memberListColor, :memberListBackgroundColor
+  attr_reader :memberList_font, :memberListColor, :memberListBackgroundColor
   attr_reader :memberListOpColor
   attr_reader :memberListSelColor, :memberListSelTopLineColor, :memberListSelBottomLineColor
   attr_reader :memberListSelTopColor, :memberListSelBottomColor
@@ -147,7 +147,7 @@ class OtherViewTheme
     @treeSelTopColor = load_color('server-tree', 'selected', 'background', 'top-color') || NSColor.from_rgb(173, 187, 208)
     @treeSelBottomColor = load_color('server-tree', 'selected', 'background', 'bottom-color') || NSColor.from_rgb(152, 170, 196)
     
-    @member_list_font = load_font('member-list') || NSFont.systemFontOfSize(NSFont.smallSystemFontSize)
+    @memberList_font = load_font('member-list') || NSFont.systemFontOfSize(NSFont.smallSystemFontSize)
     @memberListBackgroundColor = load_color('member-list', 'background-color') || NSColor.whiteColor
     @memberListColor = load_color('member-list', 'color') || NSColor.blackColor
     @memberListOpColor = load_color('member-list', 'operator', 'color') || NSColor.blackColor

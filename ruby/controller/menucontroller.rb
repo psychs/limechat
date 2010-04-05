@@ -5,7 +5,7 @@ require 'uri'
 require 'cgi'
 
 class MenuController < NSObject
-  attr_writer :app, :world, :window, :text, :tree, :member_list
+  attr_writer :app, :world, :window, :text, :tree, :memberList
   attr_accessor :url, :addr, :nick, :chan
   ib_outlet :closeWindowItem, :closeCurrentPanelItem
 
@@ -201,7 +201,7 @@ class MenuController < NSObject
     if nick_menu?(sender)
       !!@nick
     else
-      @member_list.countSelectedRows > 0
+      @memberList.countSelectedRows > 0
     end
   end
 
@@ -220,13 +220,13 @@ class MenuController < NSObject
       m = c.findMember(@nick)
       m ? [m] : []
     else
-      @member_list.selectedRowIndexes.to_a.map {|i| c.members[i.to_i] }
+      @memberList.selectedRowIndexes.to_a.map {|i| c.members[i.to_i] }
     end
   end
 
   def deselect_members(sender)
     unless nick_menu?(sender)
-      @member_list.deselectAll(nil)
+      @memberList.deselectAll(nil)
     end
   end
 
@@ -846,7 +846,7 @@ class MenuController < NSObject
     deselect_members(sender) if deselect
   end
 
-  def memberList_doubleClicked(sender)
+  def memberListDoubleClicked(sender)
     pt = @window.mouseLocationOutsideOfEventStream
     pt = sender.convertPoint_fromView(pt, nil)
     n = sender.rowAtPoint(pt)

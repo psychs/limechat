@@ -4,10 +4,10 @@ describe "AppController" do
   tests AppController
   
   def after_setup
-    ib_outlets :member_list => MemberListView.alloc.init,
+    ib_outlets :memberList => MemberListView.alloc.init,
                :info_split => Splitter.alloc.init
     
-    member_list.addTableColumn(NSTableColumn.alloc.init)
+    memberList.addTableColumn(NSTableColumn.alloc.init)
     info_split.stubs(:updatePosition)
   end
   
@@ -20,8 +20,8 @@ describe "AppController" do
   it "should instantiate a ViewTheme and MemberListView with the theme from the preferences" do
     preferences.theme.stubs(:name).returns('resource:Default')
     controller.awakeFromNib
-    assigns(:view_theme).name.should == preferences.theme.name
-    member_list.instance_variable_get(:@theme).instance_variable_get(:@filename).basename.to_s.should == 'Default.yaml'
+    assigns(:viewTheme).name.should == preferences.theme.name
+    memberList.instance_variable_get(:@theme).instance_variable_get(:@filename).basename.to_s.should == 'Default.yaml'
   end
   
   it "should select the 3 column main window layout if defined in the preferences" do

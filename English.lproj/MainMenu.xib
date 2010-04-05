@@ -2328,7 +2328,7 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">log_base</string>
+						<string key="label">logBase</string>
 						<reference key="source" ref="569757849"/>
 						<reference key="destination" ref="138097393"/>
 					</object>
@@ -2368,7 +2368,7 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">console_base</string>
+						<string key="label">consoleBase</string>
 						<reference key="source" ref="569757849"/>
 						<reference key="destination" ref="922168936"/>
 					</object>
@@ -2376,7 +2376,7 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">member_list</string>
+						<string key="label">memberList</string>
 						<reference key="source" ref="569757849"/>
 						<reference key="destination" ref="88410196"/>
 					</object>
@@ -2400,7 +2400,7 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">server_menu</string>
+						<string key="label">serverMenu</string>
 						<reference key="source" ref="569757849"/>
 						<reference key="destination" ref="22865942"/>
 					</object>
@@ -2408,7 +2408,7 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">channel_menu</string>
+						<string key="label">channelMenu</string>
 						<reference key="source" ref="569757849"/>
 						<reference key="destination" ref="575385311"/>
 					</object>
@@ -2576,7 +2576,7 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">tree_menu</string>
+						<string key="label">treeMenu</string>
 						<reference key="source" ref="569757849"/>
 						<reference key="destination" ref="66757708"/>
 					</object>
@@ -2608,7 +2608,7 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">log_menu</string>
+						<string key="label">logMenu</string>
 						<reference key="source" ref="569757849"/>
 						<reference key="destination" ref="705667632"/>
 					</object>
@@ -2624,7 +2624,7 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">console_menu</string>
+						<string key="label">consoleMenu</string>
 						<reference key="source" ref="569757849"/>
 						<reference key="destination" ref="257329189"/>
 					</object>
@@ -2968,7 +2968,7 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">chat_box</string>
+						<string key="label">chatBox</string>
 						<reference key="source" ref="569757849"/>
 						<reference key="destination" ref="532908918"/>
 					</object>
@@ -5377,24 +5377,24 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>addrMenu</string>
 							<string>chanMenu</string>
-							<string>channel_menu</string>
-							<string>chat_box</string>
-							<string>console_base</string>
-							<string>console_menu</string>
+							<string>channelMenu</string>
+							<string>chatBox</string>
+							<string>consoleBase</string>
+							<string>consoleMenu</string>
 							<string>info_split</string>
 							<string>left_tree_base</string>
-							<string>log_base</string>
-							<string>log_menu</string>
+							<string>logBase</string>
+							<string>logMenu</string>
 							<string>log_split</string>
-							<string>member_list</string>
+							<string>memberList</string>
 							<string>memberMenu</string>
 							<string>menu</string>
 							<string>right_tree_base</string>
 							<string>root_split</string>
-							<string>server_menu</string>
+							<string>serverMenu</string>
 							<string>text</string>
 							<string>tree</string>
-							<string>tree_menu</string>
+							<string>treeMenu</string>
 							<string>tree_scroller</string>
 							<string>tree_split</string>
 							<string>urlMenu</string>

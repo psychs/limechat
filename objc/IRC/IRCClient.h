@@ -4,7 +4,7 @@
 #import <Cocoa/Cocoa.h>
 
 
-@interface IRCChannel : NSObject
+@interface IRCClient : NSObject
 {
 }
 @end

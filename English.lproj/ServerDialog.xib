@@ -2153,7 +2153,7 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">auto_connectCheck</string>
+						<string key="label">autoConnectCheck</string>
 						<reference key="source" ref="108852464"/>
 						<reference key="destination" ref="250491753"/>
 					</object>
@@ -4405,7 +4405,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>addButton</string>
 							<string>alt_nicksText</string>
-							<string>auto_connectCheck</string>
+							<string>autoConnectCheck</string>
 							<string>channelsTable</string>
 							<string>delegate</string>
 							<string>deleteButton</string>

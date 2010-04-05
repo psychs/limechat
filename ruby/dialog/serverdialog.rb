@@ -8,7 +8,7 @@ class ServerDialog < NSObject
   attr_accessor :delegate, :prefix, :parent
   attr_reader :uid
   ib_outlet :window
-  ib_mapped_outlet :nameText, :hostCombo, :passwordText, :nickText, :usernameText, :realnameText, :auto_connectCheck, :sslCheck
+  ib_mapped_outlet :nameText, :hostCombo, :passwordText, :nickText, :usernameText, :realnameText, :autoConnectCheck, :sslCheck
   ib_mapped_outlet :nickPasswordText
   ib_mapped_int_outlet :portText, :encodingCombo, :fallback_encodingCombo, :proxyCombo, :proxy_portText
   ib_mapped_outlet :proxy_hostText, :proxy_userText, :proxy_passwordText

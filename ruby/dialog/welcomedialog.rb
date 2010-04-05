@@ -51,7 +51,7 @@ class WelcomeDialog < NSObject
       :nick => @nickText.stringValue.to_s,
       :host => @serverCombo.stringValue.to_s,
       :channels => @channels,
-      :auto_connect => @autoConnectCheck.state.to_i != 0,
+      :autoConnect => @autoConnectCheck.state.to_i != 0,
     }
     fire_event('onOk', c)
     @window.close

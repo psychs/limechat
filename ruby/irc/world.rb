@@ -3,12 +3,13 @@
 
 require 'date'
 
-class IRCWorld < NSObject
-  attr_accessor :member_list, :dcc, :view_theme, :window
-  attr_writer :app, :tree, :log_base, :console_base, :chat_box, :field_editor, :text
+class AIRCWorld < NSObject
+  attr_accessor :memberList, :dcc, :viewTheme, :window
+  attr_writer :app, :tree, :logBase, :consoleBase, :chatBox, :fieldEditor, :text
   attr_accessor :menuController
-  attr_accessor :tree_default_menu, :server_menu, :channel_menu, :tree_menu, :log_menu, :console_menu, :urlMenu, :addrMenu, :chanMenu, :memberMenu
-  attr_reader :clients, :selected, :prev_selected, :console, :config
+  attr_accessor :serverMenu, :channelMenu, :treeMenu, :logMenu
+  attr_accessor :consoleMenu, :urlMenu, :addrMenu, :chanMenu, :memberMenu
+  attr_reader :clients, :selected, :prevSelected, :console, :config
 
   AUTO_CONNECT_DELAY = 1
   RECONNECT_AFTER_WAKE_UP_DELAY = 5
@@ -25,16 +26,16 @@ class IRCWorld < NSObject
 
   def setup(seed)
     @console = create_log(nil, nil, true)
-    @console_base.setContentView(@console.view)
+    @consoleBase.setContentView(@console.view)
     @dummylog = create_log(nil, nil, true)
-    @log_base.setContentView(@dummylog.view)
+    @logBase.setContentView(@dummylog.view)
 
     @config = seed.dup
     @config.clients.each {|u| create_client(u) } if @config.clients
     @config.clients = nil
 
     change_input_text_theme
-    change_member_list_theme
+    change_memberList_theme
     change_tree_theme
     register_growl
 
@@ -46,12 +47,12 @@ class IRCWorld < NSObject
     preferences.save_world(dictionaryValue)
   end
 
-  def setup_tree
+  def setupTree
     @tree.setTarget(self)
     @tree.setDoubleAction('outlineView_doubleClicked:')
   	@tree.registerForDraggedTypes(TREE_DRAG_ITEM_TYPES);
 
-    client = @clients.find {|u| u.config.auto_connect }
+    client = @clients.find {|u| u.config.autoConnect }
     if client
       expand_client(client)
       unless client.channels.empty?
@@ -101,12 +102,12 @@ class IRCWorld < NSObject
     w
   end
 
-  def auto_connect(after_wake_up=false)
+  def autoConnect(after_wake_up=false)
     delay = 0
     delay += RECONNECT_AFTER_WAKE_UP_DELAY if after_wake_up
     @clients.each do |u|
-      if (!after_wake_up) && u.config.auto_connect || after_wake_up && u.reconnect
-        u.auto_connect(delay)
+      if (!after_wake_up) && u.config.autoConnect || after_wake_up && u.reconnect
+        u.autoConnect(delay)
         delay += AUTO_CONNECT_DELAY
       end
     end
@@ -278,19 +279,19 @@ class IRCWorld < NSObject
     @text.focus
   end
 
-  def store_prev_selected
+  def store_prevSelected
     if !@selected
-      @prev_selected = nil
+      @prevSelected = nil
     elsif @selected.client?
-      @prev_selected = [@selected.uid, nil]
+      @prevSelected = [@selected.uid, nil]
     else
-      @prev_selected = [@selected.client.uid, @selected.uid]
+      @prevSelected = [@selected.client.uid, @selected.uid]
     end
   end
 
   def select_prev
-    return unless @prev_selected
-    uid, cid = @prev_selected
+    return unless @prevSelected
+    uid, cid = @prevSelected
     if cid
       i = find_channel_by_id(uid, cid)
     else
@@ -300,14 +301,14 @@ class IRCWorld < NSObject
   end
 
   def select(item)
-    store_prev_selected
+    store_prevSelected
     select_text
     unless item
       @selected = nil
-      @log_base.setContentView(@dummylog.view)
-      @member_list.setDataSource(nil)
-      @member_list.reloadData
-      @tree.setMenu(@tree_menu)
+      @logBase.setContentView(@dummylog.view)
+      @memberList.setDataSource(nil)
+      @memberList.reloadData
+      @tree.setMenu(@treeMenu)
       return
     end
     @tree.expandItem(item.client) unless item.client?
@@ -454,7 +455,7 @@ class IRCWorld < NSObject
   end
 
   def reloadTheme
-    @view_theme.theme = preferences.theme.name
+    @viewTheme.theme = preferences.theme.name
 
     logs = [@console]
 
@@ -476,34 +477,34 @@ class IRCWorld < NSObject
 
     change_input_text_theme
     change_tree_theme
-    change_member_list_theme
+    change_memberList_theme
 
     #sel = selected
-    #@log_base.setContentView(sel.log.view) if sel
-    #@console_base.setContentView(@console.view)
+    #@logBase.setContentView(sel.log.view) if sel
+    #@consoleBase.setContentView(@console.view)
   end
 
   def change_input_text_theme
-    theme = @view_theme.other
-    @field_editor.setInsertionPointColor(theme.input_text_color)
+    theme = @viewTheme.other
+    @fieldEditor.setInsertionPointColor(theme.input_text_color)
     @text.setTextColor(theme.input_text_color)
     @text.setBackgroundColor(theme.input_text_bgcolor)
-    @chat_box.setInputTextFont(theme.input_text_font)
+    @chatBox.setInputTextFont(theme.input_text_font)
   end
 
   def change_tree_theme
-    theme = @view_theme.other
+    theme = @viewTheme.other
     @tree.setFont(theme.tree_font)
     @tree.themeChanged
     @tree.setNeedsDisplay(true)
   end
 
-  def change_member_list_theme
-    theme = @view_theme.other
-    @member_list.setFont(theme.member_list_font)
-    @member_list.tableColumns[0].dataCell.themeChanged
-    @member_list.themeChanged
-    @member_list.setNeedsDisplay(true)
+  def change_memberList_theme
+    theme = @viewTheme.other
+    @memberList.setFont(theme.memberList_font)
+    @memberList.tableColumns[0].dataCell.themeChanged
+    @memberList.themeChanged
+    @memberList.setNeedsDisplay(true)
   end
 
   def preferencesChanged
@@ -577,7 +578,7 @@ class IRCWorld < NSObject
   end
 
   def outlineViewSelectionIsChanging(note)
-    store_prev_selected
+    store_prevSelected
     outlineViewSelectionDidChange(note)
   end
 
@@ -594,31 +595,31 @@ class IRCWorld < NSObject
       select_text
     end
     unless selitem
-      @log_base.setContentView(@dummylog.view)
-      @tree.setMenu(@tree_menu)
-      @member_list.setDataSource(nil)
-      @member_list.setDelegate(nil)
-      @member_list.reloadData
+      @logBase.setContentView(@dummylog.view)
+      @tree.setMenu(@treeMenu)
+      @memberList.setDataSource(nil)
+      @memberList.setDelegate(nil)
+      @memberList.reloadData
       return
     end
     selitem.resetState
     @selected = selitem
-    @log_base.setContentView(selitem.log.view)
+    @logBase.setContentView(selitem.log.view)
     if selitem.client?
-      @tree.setMenu(@server_menu.submenu)
-      @member_list.setDataSource(nil)
-      @member_list.setDelegate(nil)
-      @member_list.reloadData
+      @tree.setMenu(@serverMenu.submenu)
+      @memberList.setDataSource(nil)
+      @memberList.setDelegate(nil)
+      @memberList.reloadData
       selitem.last_selected_channel = nil
     else
-      @tree.setMenu(@channel_menu.submenu)
-      @member_list.setDataSource(selitem)
-      @member_list.setDelegate(selitem)
-      @member_list.reloadData
+      @tree.setMenu(@channelMenu.submenu)
+      @memberList.setDataSource(selitem)
+      @memberList.setDelegate(selitem)
+      @memberList.reloadData
       selitem.client.last_selected_channel = selitem
     end
-    @member_list.deselectAll(self)
-    @member_list.scrollRowToVisible(0)
+    @memberList.deselectAll(self)
+    @memberList.scrollRowToVisible(0)
     @selected.log.view.clearSel
     update_title
     reload_tree
@@ -657,7 +658,7 @@ class IRCWorld < NSObject
   end
 
   def outlineView_willDisplayCell_forTableColumn_item(sender, cell, col, item)
-    theme = @view_theme.other
+    theme = @viewTheme.other
 
     if item.keyword
       textcolor = theme.tree_highlight_color
@@ -879,7 +880,7 @@ class IRCWorld < NSObject
 
   def create_log(client, channel=nil, console=false)
     log = LogController.alloc.init
-    log.menu = console ? @console_menu : @log_menu
+    log.menu = console ? @consoleMenu : @logMenu
     log.urlMenu = @urlMenu
     log.addrMenu = @addrMenu
     log.chanMenu = @chanMenu
@@ -889,14 +890,14 @@ class IRCWorld < NSObject
     log.channel = channel
     log.keyword = preferences.keyword
     log.maxLines = preferences.general.max_log_lines
-    log.theme = @view_theme
+    log.theme = @viewTheme
     if preferences.theme.override_log_font
       log.overrideFont = [preferences.theme.log_font_name, preferences.theme.log_font_size]
     else
       log.overrideFont = nil
     end
     log.console = console
-    log.initialBackgroundColor = @view_theme.other.input_text_bgcolor
+    log.initialBackgroundColor = @viewTheme.other.input_text_bgcolor
     log.setUp
     log.view.setHostWindow(@window)
     log.view.setTextSizeMultiplier(@console.view.textSizeMultiplier) if @console

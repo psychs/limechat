@@ -56,7 +56,7 @@ end
 class IRCClientConfig
   include AutoOpMatchable
   attr_accessor :name, :host, :port, :password, :nick, :alt_nicks, :username, :realname, :nickPassword
-  attr_accessor :ssl, :auto_connect, :encoding, :fallback_encoding
+  attr_accessor :ssl, :autoConnect, :encoding, :fallback_encoding
   attr_accessor :proxy, :proxy_host, :proxy_port, :proxy_user, :proxy_password
   attr_accessor :channels
   attr_accessor :leaving_comment, :userinfo, :invisible, :login_commands
@@ -77,7 +77,7 @@ class IRCClientConfig
     @proxy = PROXY_NONE
     @proxy_host = @proxy_user = @proxy_password = ''
     @proxy_port = 1080
-    @auto_connect = true
+    @autoConnect = true
     @leaving_comment = 'Leaving...'
     @userinfo = ''
     @invisible = true

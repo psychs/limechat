@@ -1,7 +1,7 @@
 # Created by Satoshi Nakagawa.
 # You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
-class IRCChannel < NSObject
+class AIRCChannel < NSObject
   attr_accessor :client, :uid, :topic, :namesInit, :whoInit, :log
   attr_reader :config, :members, :mode
   attr_writer :op
@@ -270,7 +270,7 @@ class IRCChannel < NSObject
   
   def reloadMembers
     if @client.world.selected == self
-      @client.world.member_list.reloadData
+      @client.world.memberList.reloadData
     end
   end
   

@@ -6,10 +6,10 @@ require 'pathname'
 require 'preferences'
 
 class AppController < NSObject
-  ib_outlet :window, :tree, :log_base, :console_base, :member_list, :text, :chat_box
+  ib_outlet :window, :tree, :logBase, :consoleBase, :memberList, :text, :chatBox
   ib_outlet :tree_scroller, :left_tree_base, :right_tree_base
   ib_outlet :root_split, :log_split, :info_split, :tree_split
-  ib_outlet :menu, :server_menu, :channel_menu, :memberMenu, :tree_menu, :log_menu, :console_menu, :urlMenu, :addrMenu, :chanMenu
+  ib_outlet :menu, :serverMenu, :channelMenu, :memberMenu, :treeMenu, :logMenu, :consoleMenu, :urlMenu, :addrMenu, :chanMenu
 
   KInternetEventClass = KAEGetURL = 1196773964
 
@@ -24,10 +24,10 @@ class AppController < NSObject
       NSApp.registerHotKey_modifierFlags(preferences.general.hotkey_key_code, preferences.general.hotkey_modifier_flags)
     end
 
-    @field_editor = FieldEditorTextView.alloc.initWithFrame(NSZeroRect)
-    @field_editor.setFieldEditor(true)
-    @field_editor.pasteDelegate = self
-    @field_editor.setContinuousSpellCheckingEnabled(true)
+    @fieldEditor = FieldEditorTextView.alloc.initWithFrame(NSZeroRect)
+    @fieldEditor.setFieldEditor(true)
+    @fieldEditor.pasteDelegate = self
+    @fieldEditor.setContinuousSpellCheckingEnabled(true)
 
     @text.setFocusRingType(NSFocusRingTypeNone)
     @window.makeFirstResponder(@text)
@@ -36,13 +36,13 @@ class AppController < NSObject
     @info_split.setFixedViewIndex(1)
     @tree_split.setHidden(true)
 
-    @view_theme = ViewTheme.alloc.init
-    @view_theme.theme = preferences.theme.name
-    @tree.theme = @view_theme.other
-    @member_list.theme = @view_theme.other
+    @viewTheme = ViewTheme.alloc.init
+    @viewTheme.theme = preferences.theme.name
+    @tree.theme = @viewTheme.other
+    @memberList.theme = @viewTheme.other
     cell = MemberListViewCell.alloc.init
-    cell.setup(@view_theme.other)
-    @member_list.tableColumns[0].setDataCell(cell)
+    cell.setup(@viewTheme.other)
+    @memberList.tableColumns[0].setDataCell(cell)
 
     load_window_state
     @window.alphaValue = preferences.theme.transparency
@@ -53,40 +53,40 @@ class AppController < NSObject
     @world.window = @window
     @world.tree = @tree
     @world.text = @text
-    @world.log_base = @log_base
-    @world.console_base = @console_base
-    @world.chat_box = @chat_box
-    @world.field_editor = @field_editor
-    @world.member_list = @member_list
-    @world.server_menu = @server_menu
-    @world.channel_menu = @channel_menu
-    @world.tree_menu = @tree_menu
-    @world.log_menu = @log_menu
-    @world.console_menu = @console_menu
+    @world.logBase = @logBase
+    @world.consoleBase = @consoleBase
+    @world.chatBox = @chatBox
+    @world.fieldEditor = @fieldEditor
+    @world.memberList = @memberList
+    @world.serverMenu = @serverMenu
+    @world.channelMenu = @channelMenu
+    @world.treeMenu = @treeMenu
+    @world.logMenu = @logMenu
+    @world.consoleMenu = @consoleMenu
     @world.urlMenu = @urlMenu
     @world.addrMenu = @addrMenu
     @world.chanMenu = @chanMenu
     @world.memberMenu = @memberMenu
     @world.menuController = @menu
-    @world.view_theme = @view_theme
+    @world.viewTheme = @viewTheme
     @world.setup(IRCWorldConfig.new(preferences.load_world))
     @tree.setDataSource(@world)
     @tree.setDelegate(@world)
     @tree.responderDelegate = @world
     @tree.reloadData
-    @world.setup_tree
+    @world.setupTree
 
     @menu.app = self
     @menu.world = @world
     @menu.window = @window
     @menu.tree = @tree
-    @menu.member_list = @member_list
+    @menu.memberList = @memberList
     @menu.text = @text
 
-    @member_list.setTarget(@menu)
-    @member_list.setDoubleAction('memberList_doubleClicked:')
-    @member_list.keyDelegate = @world
-    @member_list.dropDelegate = @world
+    @memberList.setTarget(@menu)
+    @memberList.setDoubleAction('memberListDoubleClicked:')
+    @memberList.keyDelegate = @world
+    @memberList.dropDelegate = @world
 
     @dcc = DccManager.alloc.init
     @dcc.world = @world
@@ -108,7 +108,7 @@ class AppController < NSObject
   end
 
   def computerDidWake(sender)
-    @world.auto_connect(true)
+    @world.autoConnect(true)
   end
 
   def terminateWithoutConfirm(sender)
@@ -117,7 +117,7 @@ class AppController < NSObject
   end
 
   def applicationDidFinishLaunching(sender)
-    SACrashReporter.submit
+    #SACrashReporter.submit
 
     ws = NSWorkspace.sharedWorkspace
     nc = ws.notificationCenter
@@ -125,16 +125,16 @@ class AppController < NSObject
 
     start_timer
 
-    if @world.clients.empty?
-      # start initial setting
-      @welcome = WelcomeDialog.alloc.init
-      @welcome.delegate = self
-      @welcome.start
-    else
+    #if @world.clients.empty?
+    #  # start initial setting
+    #  @welcome = WelcomeDialog.alloc.init
+    #  @welcome.delegate = self
+    #  @welcome.start
+    #else
       # show the main window and start auto connecting
       @window.makeKeyAndOrderFront(nil)
-      @world.auto_connect
-    end
+      @world.autoConnect
+    #end
   end
 
   def applicationShouldTerminate(sender)
@@ -202,23 +202,23 @@ class AppController < NSObject
 
   def windowWillReturnFieldEditor_toObject(sender, obj)
     if obj == @text
-      if @view_theme && @view_theme.other
-        dic = @field_editor.selectedTextAttributes.mutableCopy
-        dic[NSBackgroundColorAttributeName] = @view_theme.other.input_text_sel_bgcolor
-        @field_editor.setSelectedTextAttributes(dic)
+      if @viewTheme && @viewTheme.other
+        dic = @fieldEditor.selectedTextAttributes.mutableCopy
+        dic[NSBackgroundColorAttributeName] = @viewTheme.other.input_text_sel_bgcolor
+        @fieldEditor.setSelectedTextAttributes(dic)
       end
-      @field_editor
+      @fieldEditor
     else
       nil
     end
   end
 
   def windowDidBecomeMain(sender)
-    @member_list.setNeedsDisplay(true)
+    @memberList.setNeedsDisplay(true)
   end
 
   def windowDidResignMain(sender)
-    @member_list.setNeedsDisplay(true)
+    @memberList.setNeedsDisplay(true)
   end
 
   def windowDidBecomeKey(sender)
@@ -263,7 +263,7 @@ class AppController < NSObject
     end
     u = @world.create_client(IRCClientConfig.new(c))
     @world.save
-    u.connect if u.config.auto_connect
+    u.connect if u.config.autoConnect
   end
 
   def welcomeDialog_onClose(sender)
@@ -568,7 +568,7 @@ class AppController < NSObject
       
       spell_checking = win[:spell_checking]
       if spell_checking != nil
-        @field_editor.setContinuousSpellCheckingEnabled(spell_checking)
+        @fieldEditor.setContinuousSpellCheckingEnabled(spell_checking)
       end
     else
       scr = NSScreen.screens[0]
@@ -599,7 +599,7 @@ class AppController < NSObject
       :log => @log_split.position,
       :info => @info_split.position,
       :tree => @tree_split.position,
-      :spell_checking => @field_editor.isContinuousSpellCheckingEnabled,
+      :spell_checking => @fieldEditor.isContinuousSpellCheckingEnabled,
     }
     win.merge!(split)
     preferences.save_window('main_window', win)
@@ -632,7 +632,7 @@ class AppController < NSObject
   end
 
   def input_handler(sel, key, mods)
-    @field_editor.registerKeyHandler_key_modifiers(sel, key, mods)
+    @fieldEditor.registerKeyHandler_key_modifiers(sel, key, mods)
   end
   
   public
@@ -667,7 +667,7 @@ class AppController < NSObject
 
   def register_keyHandlers
     @window.setKeyHandlerTarget(self)
-    @field_editor.setKeyHandlerTarget(self)
+    @fieldEditor.setKeyHandlerTarget(self)
     
     handler('onHome:', KEY_HOME, 0)
     handler('onEnd:', KEY_END, 0)
