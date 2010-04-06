@@ -5,10 +5,10 @@ describe "AppController" do
   
   def after_setup
     ib_outlets :memberList => MemberListView.alloc.init,
-               :info_split => Splitter.alloc.init
+               :infoSplitter => Splitter.alloc.init
     
     memberList.addTableColumn(NSTableColumn.alloc.init)
-    info_split.stubs(:updatePosition)
+    infoSplitter.stubs(:updatePosition)
   end
   
   it "should register the hotkey with NSApp if necessary" do

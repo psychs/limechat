@@ -136,6 +136,11 @@
 	return NO;
 }
 
+- (IRCClient*)client
+{
+	return client;
+}
+
 - (void)resetState
 {
 	isKeyword = isUnread = isNewTalk = NO;

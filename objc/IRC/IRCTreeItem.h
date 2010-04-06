@@ -5,10 +5,13 @@
 #import "LogController.h"
 
 
+@class IRCClient;
+
+
 @protocol IRCTreeItem
 
 - (BOOL)isClient;
-
+- (IRCClient*)client;
 - (LogController*)log;
 
 - (void)resetState;

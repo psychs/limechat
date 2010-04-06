@@ -80,8 +80,6 @@
 
 - (void)setupTree
 {
-	LOG_METHOD
-	
 	[tree setTarget:self];
 	[tree setDoubleAction:@selector(outlineViewDoubleClicked:)];
 	// @@@drag
@@ -143,6 +141,17 @@
 
 - (void)terminate
 {
+}
+
+- (void)selectText
+{
+	[text focus];
+}
+
+- (BOOL)sendText:(NSString*)s command:(NSString*)command
+{
+	if (!selectedItem) return NO;
+	return [(IRCClient*)[selectedItem client] sendText:s command:command];
 }
 
 - (void)updateTitle

@@ -360,14 +360,14 @@
 		[s appendFormat:@"<span class=\"sender\" type=\"%@\"", [LogLine memberTypeString:line.memberType]];
 		if (!console) [s appendString:@" oncontextmenu=\"on_nick_contextmenu()\""];
 		[s appendFormat:@" identified=\"%@\"", line.identified ? @"true" : @"false"];
-		if (line.memberType == LOG_MEMBER_TYPE_NORMAL) [s appendFormat:@" colornumber=\"%d\"", line.nickColorNumber];
+		if (line.memberType == MEMBER_TYPE_NORMAL) [s appendFormat:@" colornumber=\"%d\"", line.nickColorNumber];
 		if (line.nickInfo) [s appendFormat:@" first=\"%@\"", [line.nickInfo isEqualToString:prevNickInfo] ? @"false" : @"true"];
 		[s appendFormat:@">%@</span>", [line.nick gtm_stringByEscapingForHTML]];
 	}
 	
 	LogLineType type = line.lineType;
 	NSString* typeStr = [LogLine lineTypeString:type];
-	BOOL isText = type == LOG_LINE_TYPE_PRIVMSG || type == LOG_LINE_TYPE_NOTICE || type == LOG_LINE_TYPE_ACTION;
+	BOOL isText = type == LINE_TYPE_PRIVMSG || type == LINE_TYPE_NOTICE || type == LINE_TYPE_ACTION;
 	BOOL showInlineImage = NO;
 	
 	if (isText) {
@@ -421,8 +421,8 @@
 {
 	if (useKeyword) {
 		LogLineType type = line.lineType;
-		if (type == LOG_LINE_TYPE_PRIVMSG || type == LOG_LINE_TYPE_ACTION) {
-			if (line.memberType == LOG_MEMBER_TYPE_MYSELF) {
+		if (type == LINE_TYPE_PRIVMSG || type == LINE_TYPE_ACTION) {
+			if (line.memberType == MEMBER_TYPE_MYSELF) {
 				useKeyword = NO;
 			}
 		}

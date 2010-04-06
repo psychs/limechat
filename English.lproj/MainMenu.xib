@@ -2888,7 +2888,7 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">tree_split</string>
+						<string key="label">treeSplitter</string>
 						<reference key="source" ref="569757849"/>
 						<reference key="destination" ref="228709641"/>
 					</object>
@@ -2896,7 +2896,7 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">root_split</string>
+						<string key="label">rootSplitter</string>
 						<reference key="source" ref="569757849"/>
 						<reference key="destination" ref="159433215"/>
 					</object>
@@ -2904,7 +2904,7 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">log_split</string>
+						<string key="label">logSplitter</string>
 						<reference key="source" ref="569757849"/>
 						<reference key="destination" ref="392853548"/>
 					</object>
@@ -2912,7 +2912,7 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">info_split</string>
+						<string key="label">infoSplitter</string>
 						<reference key="source" ref="569757849"/>
 						<reference key="destination" ref="1006686548"/>
 					</object>
@@ -2928,7 +2928,7 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">left_tree_base</string>
+						<string key="label">leftTreeBase</string>
 						<reference key="source" ref="569757849"/>
 						<reference key="destination" ref="290372734"/>
 					</object>
@@ -2936,7 +2936,7 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">right_tree_base</string>
+						<string key="label">rightTreeBase</string>
 						<reference key="source" ref="569757849"/>
 						<reference key="destination" ref="966973983"/>
 					</object>
@@ -2944,7 +2944,7 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">tree_scroller</string>
+						<string key="label">treeScrollView</string>
 						<reference key="source" ref="569757849"/>
 						<reference key="destination" ref="1046264392"/>
 					</object>
@@ -5381,22 +5381,22 @@
 							<string>chatBox</string>
 							<string>consoleBase</string>
 							<string>consoleMenu</string>
-							<string>info_split</string>
-							<string>left_tree_base</string>
+							<string>infoSplitter</string>
+							<string>leftTreeBase</string>
 							<string>logBase</string>
 							<string>logMenu</string>
-							<string>log_split</string>
+							<string>logSplitter</string>
 							<string>memberList</string>
 							<string>memberMenu</string>
 							<string>menu</string>
-							<string>right_tree_base</string>
-							<string>root_split</string>
+							<string>rightTreeBase</string>
+							<string>rootSplitter</string>
 							<string>serverMenu</string>
 							<string>text</string>
 							<string>tree</string>
 							<string>treeMenu</string>
-							<string>tree_scroller</string>
-							<string>tree_split</string>
+							<string>treeScrollView</string>
+							<string>treeSplitter</string>
 							<string>urlMenu</string>
 							<string>window</string>
 						</object>

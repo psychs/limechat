@@ -15,9 +15,12 @@
 #import "IRCChannelConfig.h"
 
 
+@class AppController;
+
+
 @interface IRCWorld : NSObject
 {
-	LimeChatApplication* app;
+	AppController* app;
 	MainWindow* window;
 	ServerTreeView* tree;
 	InputTextField* text;
@@ -50,7 +53,7 @@
 	id selectedItem;
 }
 
-@property (nonatomic, assign) LimeChatApplication* app;
+@property (nonatomic, assign) AppController* app;
 @property (nonatomic, assign) MainWindow* window;
 @property (nonatomic, assign) ServerTreeView* tree;
 @property (nonatomic, assign) InputTextField* text;
@@ -83,6 +86,9 @@
 
 - (void)onTimer;
 - (void)autoConnect;
+
+- (void)selectText;
+- (BOOL)sendText:(NSString*)s command:(NSString*)command;
 
 - (void)updateIcon;
 - (void)reloadTree;

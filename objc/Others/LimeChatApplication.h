@@ -14,3 +14,8 @@
 - (void)unregisterHotKey;
 
 @end
+
+
+@interface NSObject (LimeChatApplicationDelegate)
+- (void)applicationDidReceiveHotKey:(id)sender;
+@end

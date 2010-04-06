@@ -14,6 +14,9 @@
 
 
 @interface IRCClient (Private)
+- (void)sendLine:(NSString*)str;
+- (void)send:(NSString*)str, ...;
+
 - (void)setKeywordState:(id)target;
 - (void)setNewTalkState:(id)target;
 - (void)setUnreadState:(id)target;
@@ -167,6 +170,23 @@
 	}
 	
 	[self changeStateOff];
+}
+
+- (BOOL)sendText:(NSString*)s command:(NSString*)command
+{
+	if (!connected) return NO;
+	
+	id sel = world.selectedItem;
+	if (!sel) return NO;
+	
+	if ([sel isClient]) {
+		[self send:command, s, nil];
+	}
+	else {
+		[self send:command, [sel name], s, nil];
+	}
+	
+	return YES;
 }
 
 - (void)sendLine:(NSString*)str
@@ -432,7 +452,7 @@
 	NSString* channelName = nil;
 	NSString* place = nil;
 	NSString* nickStr = nil;
-	LogLineType memberType = LOG_MEMBER_TYPE_NORMAL;
+	LogLineType memberType = MEMBER_TYPE_NORMAL;
 	int colorNumber = 0;
 	id clickContext = nil;
 	
@@ -457,7 +477,7 @@
 	}
 	
 	if (nick.length > 0) {
-		if (type == LOG_LINE_TYPE_ACTION) {
+		if (type == LINE_TYPE_ACTION) {
 			nickStr = [NSString stringWithFormat:@"%@ "];
 		}
 		else {
@@ -466,7 +486,7 @@
 	}
 	
 	if (nick && [nick isEqualToString:myNick]) {
-		memberType = LOG_MEMBER_TYPE_MYSELF;
+		memberType = MEMBER_TYPE_MYSELF;
 	}
 	
 	if (nick && channel && !channel.isClient) {
@@ -507,7 +527,7 @@
 	IRCChannel* channel = nil;
 	NSString* place = nil;
 	NSString* nickStr = nil;
-	LogLineType memberType = LOG_MEMBER_TYPE_NORMAL;
+	LogLineType memberType = MEMBER_TYPE_NORMAL;
 	int colorNumber = 0;
 	
 	if (chan && [chan isKindOfClass:[NSString class]]) {
@@ -520,7 +540,7 @@
 	}
 	
 	if (nick.length > 0) {
-		if (type == LOG_LINE_TYPE_ACTION) {
+		if (type == LINE_TYPE_ACTION) {
 			nickStr = [NSString stringWithFormat:@"%@ "];
 		}
 		else {
@@ -529,7 +549,7 @@
 	}
 	
 	if (nick && [nick isEqualToString:myNick]) {
-		memberType = LOG_MEMBER_TYPE_MYSELF;
+		memberType = MEMBER_TYPE_MYSELF;
 	}
 	
 	if (nick && channel && !channel.isClient) {
@@ -562,30 +582,30 @@
 
 - (void)printSystem:(id)channel text:(NSString*)text
 {
-	[self printChannel:channel type:LOG_LINE_TYPE_SYSTEM text:text];
+	[self printChannel:channel type:LINE_TYPE_SYSTEM text:text];
 }
 
 - (void)printSystemBoth:(id)channel text:(NSString*)text
 {
-	[self printBoth:channel type:LOG_LINE_TYPE_SYSTEM text:text];
+	[self printBoth:channel type:LINE_TYPE_SYSTEM text:text];
 }
 
 - (void)printReply:(IRCMessage*)m
 {
 	NSString* text = [m sequence:1];
-	[self printBoth:self type:LOG_LINE_TYPE_REPLY text:text];
+	[self printBoth:self type:LINE_TYPE_REPLY text:text];
 }
 
 - (void)printUnknownReply:(IRCMessage*)m
 {
 	NSString* text = [NSString stringWithFormat:@"Reply(%d): %@", m.numericReply, [m sequence:1]];
-	[self printBoth:self type:LOG_LINE_TYPE_REPLY text:text];
+	[self printBoth:self type:LINE_TYPE_REPLY text:text];
 }
 
 - (void)printErrorReply:(IRCMessage*)m
 {
 	NSString* text = [NSString stringWithFormat:@"Error(%d): %@", m.numericReply, [m sequence:1]];
-	[self printBoth:self type:LOG_LINE_TYPE_ERROR_REPLY text:text];
+	[self printBoth:self type:LINE_TYPE_ERROR_REPLY text:text];
 }
 
 #pragma mark -
@@ -594,6 +614,11 @@
 - (BOOL)isClient
 {
 	return YES;
+}
+
+- (IRCClient*)client
+{
+	return self;
 }
 
 - (void)resetState
@@ -665,12 +690,12 @@
 	NSString* nick = m.sender.nick;
 	NSString* target = [m paramAt:0];
 	
-	LogLineType type = LOG_LINE_TYPE_PRIVMSG;
+	LogLineType type = LINE_TYPE_PRIVMSG;
 	if ([cmd isEqualToString:NOTICE]) {
-		type = LOG_LINE_TYPE_NOTICE;
+		type = LINE_TYPE_NOTICE;
 	}
 	else if ([cmd isEqualToString:ACTION]) {
-		type = LOG_LINE_TYPE_ACTION;
+		type = LINE_TYPE_ACTION;
 	}
 	
 	if ([target hasPrefix:@"@"]) {
@@ -698,14 +723,14 @@
 			// talk
 			IRCChannel* c = [self findChannel:nick];
 			BOOL newTalk = NO;
-			if (!c && type != LOG_LINE_TYPE_NOTICE) {
+			if (!c && type != LINE_TYPE_NOTICE) {
 				c = [world createTalk:nick client:self];
 				newTalk = YES;
 			}
 			
 			BOOL keyword = [self printBoth:(c ?: (id)target) type:type nick:nick text:text identified:identified];
 			
-			if (type == LOG_LINE_TYPE_NOTICE) {
+			if (type == LINE_TYPE_NOTICE) {
 				;
 			}
 			else {
@@ -761,7 +786,7 @@
 	}
 	
 	NSString* text = [NSString stringWithFormat:@"%@ has joined (%@@%@)", nick, m.sender.user, m.sender.address];
-	[self printBoth:(c ?: (id)chname) type:LOG_LINE_TYPE_JOIN text:text];
+	[self printBoth:(c ?: (id)chname) type:LINE_TYPE_JOIN text:text];
 }
 
 - (void)receivePart:(IRCMessage*)m

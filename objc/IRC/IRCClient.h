@@ -63,6 +63,8 @@
 - (void)connect;
 - (void)disconnect;
 
+- (BOOL)sendText:(NSString*)s command:(NSString*)command;
+
 - (IRCChannel*)findChannel:(NSString*)name;
 - (int)indexOfTalkChannel;
 

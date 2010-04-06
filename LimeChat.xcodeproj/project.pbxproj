@@ -138,6 +138,7 @@
 		78E5723B0C1C30BA00BDF7EC /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 788D56F00BB6872B00DDBF69 /* WebKit.framework */; };
 		78E5723C0C1C30BA00BDF7EC /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 787FD46C0BFE960100F2F22D /* Carbon.framework */; };
 		78E5723D0C1C30BA00BDF7EC /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 780253C20C09525900C170D4 /* CoreServices.framework */; };
+		78EF6EDF116ADA5400731FDF /* AppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78EF6EDE116ADA5400731FDF /* AppController.m */; };
 		78FA9F651085AA1400001F13 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78FA9F641085AA1400001F13 /* Sparkle.framework */; };
 		78FA9F6E1085AA1A00001F13 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 78FA9F641085AA1400001F13 /* Sparkle.framework */; };
 /* End PBXBuildFile section */
@@ -363,6 +364,8 @@
 		78DA7D291169080600962CC4 /* Preferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Preferences.h; sourceTree = "<group>"; };
 		78DA7D2A1169080700962CC4 /* Preferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Preferences.m; sourceTree = "<group>"; };
 		78E570D00C1C306500BDF7EC /* LimeChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LimeChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		78EF6EDD116ADA5400731FDF /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
+		78EF6EDE116ADA5400731FDF /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppController.m; sourceTree = "<group>"; };
 		78FA9F641085AA1400001F13 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = Frameworks/Sparkle.framework; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -542,6 +545,8 @@
 		78364B14116597D00096F3A9 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				78EF6EDD116ADA5400731FDF /* AppController.h */,
+				78EF6EDE116ADA5400731FDF /* AppController.m */,
 			);
 			name = Controllers;
 			path = objc/Controllers;
@@ -983,6 +988,7 @@
 				78CFA71D116A1BDD00B7AC6B /* IRCChannelConfig.m in Sources */,
 				78CFA71E116A1BDD00B7AC6B /* IRCClientConfig.m in Sources */,
 				78CFA71F116A1BDD00B7AC6B /* IRCWorldConfig.m in Sources */,
+				78EF6EDF116ADA5400731FDF /* AppController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
