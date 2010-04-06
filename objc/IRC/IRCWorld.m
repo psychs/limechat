@@ -336,7 +336,6 @@
 	c.world = self;
 	c.client = client;
 	c.channel = channel;
-	c.keyword = nil;	//@@@
 	c.maxLines = 300;
 	c.theme = nil;	//@@@
 	c.overrideFont = nil;	//@@@

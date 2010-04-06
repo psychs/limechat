@@ -67,6 +67,7 @@
 @property (nonatomic, assign) BOOL isKeyword;
 @property (nonatomic, assign) BOOL isUnread;
 @property (nonatomic, readonly) BOOL isNewTalk;
+@property (nonatomic, readonly) NSString* myNick;
 @property (nonatomic, readonly) NSString* myAddress;
 
 @property (nonatomic, retain) IRCChannel* lastSelectedChannel;

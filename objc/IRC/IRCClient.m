@@ -68,6 +68,7 @@
 @synthesize isKeyword;
 @synthesize isUnread;
 
+@synthesize myNick;
 @synthesize myAddress;
 
 @synthesize lastSelectedChannel;

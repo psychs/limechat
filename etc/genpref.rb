@@ -103,9 +103,8 @@ s.each_line do |line|
       h =
 <<EOM
 + (#{type})#{camel};
-+ (void)set#{capital}:(#{type})value;
-
 EOM
+#+ (void)set#{capital}:(#{type})value;
       header << h
 
       if default_value
@@ -144,7 +143,7 @@ EOM
 
 EOM
       
-      source << l
+      #source << l
     end
   end
 end
