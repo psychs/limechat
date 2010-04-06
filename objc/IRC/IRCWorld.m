@@ -284,7 +284,16 @@
 
 - (void)logKeyDown:(NSEvent*)e
 {
-	LOG_METHOD
+	[window makeFirstResponder:text];
+	[self selectText];
+	
+	switch (e.keyCode) {
+		case KEY_RETURN:
+		case KEY_ENTER:
+			return;
+	}
+	
+	[window sendEvent:e];
 }
 
 - (void)logDoubleClick:(NSString*)s
@@ -368,6 +377,19 @@
 
 - (void)serverTreeViewAcceptsFirstResponder
 {
+}
+
+#pragma mark -
+#pragma mark memberListView Delegate
+
+- (void)memberListViewKeyDown:(NSEvent*)e
+{
+	[self logKeyDown:e];
+}
+
+- (void)memberListViewDropFiles:(NSArray*)files row:(NSNumber*)row
+{
+	LOG_METHOD
 }
 
 @end

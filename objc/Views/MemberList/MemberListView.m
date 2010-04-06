@@ -57,7 +57,7 @@
 				if ([keyDelegate respondsToSelector:@selector(memberListViewKeyDown:)]) {
 					[keyDelegate memberListViewKeyDown:e];
 				}
-				break;
+				return;
 		}
 	}
 	
