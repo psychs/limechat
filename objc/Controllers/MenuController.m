@@ -142,7 +142,7 @@
 		}
 		case 332:	// paste my address
 		{
-			if ([NSApp keyWindow] != window) return NO;
+			if (![window isKeyWindow]) return NO;
 			id t = [window firstResponder];
 			if (!t) return NO;
 			IRCClient* u = world.selectedClient;
@@ -231,6 +231,9 @@
 	return YES;
 }
 
+#pragma mark -
+#pragma mark Utilities
+
 - (WebView*)currentWebView
 {
 	id t = [window firstResponder];
@@ -252,6 +255,9 @@
 		return [memberList countSelectedRows] > 0;
 	}
 }
+
+#pragma mark -
+#pragma mark Menu Items
 
 - (void)onPreferences:(id)sender
 {

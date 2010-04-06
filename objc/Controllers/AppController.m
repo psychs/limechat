@@ -122,10 +122,13 @@
 		[sel resetState];
 		[world updateIcon];
 	}
+	
+	[tree setNeedsDisplay];
 }
 
 - (void)applicationDidResignActive:(NSNotification *)note
 {
+	[tree setNeedsDisplay];
 }
 
 - (void)applicationDidReceiveHotKey:(id)sender
