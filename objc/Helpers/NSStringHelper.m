@@ -251,7 +251,7 @@ BOOL isUnicharDigit(unichar c)
 	
 	static Regex* regex = nil;
 	if (!regex) {
-		NSString* pattern = @"(https?|ftp|itms)://[^\\s!\"#$&'()*+,/;<=>?\\[\\\\\\]^_`{|}　、，。．・…]+(/[^\\s\"'`<>　、，。．・…]*)?";
+		NSString* pattern = @"(?<![a-zA-Z0-9_])(https?|ftp|itms)://[^\\s!\"#$&'()*+,/;<=>?\\[\\\\\\]^_`{|}　、，。．・…]+(/[^\\s\"'`<>　、，。．・…]*)?";
 		regex = [[Regex alloc] initWithString:pattern options:UREGEX_CASE_INSENSITIVE];
 	}
 	
@@ -363,7 +363,7 @@ BOOL isUnicharDigit(unichar c)
 	
 	static Regex* regex = nil;
 	if (!regex) {
-		NSString* pattern = @"[#&][^\\s,　]+";
+		NSString* pattern = @"(?<![a-zA-Z0-9_])[#&][^\\s,　]+";
 		regex = [[Regex alloc] initWithString:pattern];
 	}
 	

@@ -116,14 +116,10 @@ static NSString* renderRange(NSString* body, attr_t attr, int start, int len)
 }
 
 
-static Regex* addressRegex;
-
-
 @implementation LogRenderer
 
 + (void)setUp
 {
-	addressRegex = [[Regex alloc] initWithString:@""];
 }
 
 + (NSArray*)renderBody:(NSString*)body
