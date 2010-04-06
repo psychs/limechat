@@ -187,7 +187,7 @@
 {
 	if (!connected) return NO;
 	
-	id sel = world.selectedItem;
+	id sel = world.selected;
 	if (!sel) return NO;
 	if ([sel isClient]) {
 		[self sendLine:s];
@@ -389,7 +389,7 @@
 
 - (void)setKeywordState:(id)t
 {
-	if ([NSApp isActive] && [world selectedItem] == t) return;
+	if ([NSApp isActive] && world.selected == t) return;
 	if ([t isKeyword]) return;
 	[t setIsKeyword:YES];
 	[self reloadTree];
@@ -399,7 +399,7 @@
 
 - (void)setNewTalkState:(id)t
 {
-	if ([NSApp isActive] && [world selectedItem] == t) return;
+	if ([NSApp isActive] && world.selected == t) return;
 	if ([t isNewTalk]) return;
 	[t setIsNewTalk:YES];
 	[self reloadTree];
@@ -409,7 +409,7 @@
 
 - (void)setUnreadState:(id)t
 {
-	if ([NSApp isActive] && [world selectedItem] == t) return;
+	if ([NSApp isActive] && world.selected == t) return;
 	if ([t isUnread]) return;
 	[t setIsUnread:YES];
 	[self reloadTree];
@@ -434,7 +434,7 @@
 	if (!channel.isClient && !channel.config.logToConsole) {
 		return NO;
 	}
-	return channel != world.selectedItem || !channel.log.viewingBottom;
+	return channel != world.selected || !channel.log.viewingBottom;
 }
 
 - (BOOL)printBoth:(id)chan type:(LogLineType)type text:(NSString*)text

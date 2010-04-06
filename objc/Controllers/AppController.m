@@ -117,7 +117,7 @@
 
 - (void)applicationDidBecomeActive:(NSNotification *)note
 {
-	id sel = world.selectedItem;
+	id sel = world.selected;
 	if (sel) {
 		[sel resetState];
 		[world updateIcon];
@@ -290,7 +290,7 @@ typedef enum {
 - (void)scroll:(ScrollKind)op
 {
 	if ([window firstResponder] == [text currentEditor]) {
-		id sel = world.selectedItem;
+		id sel = world.selected;
 		if (sel) {
 			LogController* log = [sel log];
 			LogView* view = log.view;
@@ -345,7 +345,7 @@ typedef enum {
 - (void)move:(MoveKind)dir target:(MoveKind)target
 {
 	if (dir == MOVE_UP || dir == MOVE_DOWN) {
-		id sel = world.selectedItem;
+		id sel = world.selected;
 		if (!sel) return;
 		int n = [tree rowForItem:sel];
 		if (n < 0) return;
@@ -386,9 +386,8 @@ typedef enum {
 		}
 	}
 	else if (dir == MOVE_LEFT || dir == MOVE_RIGHT) {
-		id sel = world.selectedItem;
-		if (!sel) return;
-		IRCClient* client = (IRCClient*)[sel client];
+		IRCClient* client = world.selectedClient;
+		if (!client) return;
 		NSUInteger pos = [world.clients indexOfObjectIdenticalTo:client];
 		if (pos == NSNotFound) return;
 		int n = pos;
@@ -480,6 +479,29 @@ typedef enum {
 {
 }
 
+- (void)selectChannelAtNumber:(NSEvent*)e
+{
+	NSString* s = [e charactersIgnoringModifiers];
+	if (s.length) {
+		UniChar c = [s characterAtIndex:0];
+		int n = c - '0';
+		LOG(@"select channel @ %d", n);
+		
+		id sel = world.selected;
+	}
+}
+
+- (void)selectServerAtNumber:(NSEvent*)e
+{
+	NSString* s = [e charactersIgnoringModifiers];
+	if (s.length) {
+		UniChar c = [s characterAtIndex:0];
+		int n = c - '0';
+		n = (n == 0) ? 9 : (n - 1);
+		LOG(@"select server @ %d", n);
+	}
+}
+
 - (void)tag:(NSEvent*)e
 {
 }
@@ -566,8 +588,12 @@ typedef enum {
 	[self handler:@selector(selectPreviousUnreadChannel:) code:KEY_SPACE mods:NSAlternateKeyMask|NSShiftKeyMask];
 	[self handler:@selector(selectPreviousSelection:) code:KEY_TAB mods:NSAlternateKeyMask];
 	
-	// cmd+num
-	// ctrl+cmd+num
+	for (int i=0; i<=9; ++i) {
+		[self handler:@selector(selectChannelAtNumber:) char:'0'+i mods:NSCommandKeyMask];
+	}
+	for (int i=0; i<=9; ++i) {
+		[self handler:@selector(selectServerAtNumber:) char:'0'+i mods:NSCommandKeyMask|NSControlKeyMask];
+	}
 	
 	[self inputHandler:@selector(inputHistoryUp:) code:KEY_UP mods:0];
 	[self inputHandler:@selector(inputHistoryUp:) code:KEY_UP mods:NSAlternateKeyMask];

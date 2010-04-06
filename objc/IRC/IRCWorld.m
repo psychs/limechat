@@ -40,7 +40,7 @@
 @synthesize chanMenu;
 @synthesize memberMenu;
 @synthesize consoleLog;
-@synthesize selectedItem;
+@synthesize selected;
 
 @synthesize clients;
 
@@ -113,9 +113,11 @@
 #pragma mark -
 #pragma mark Properties
 
-- (id)selected
+- (IRCClient*)selectedClient
 {
-	return nil;
+	if (!selected) return nil;
+	if ([selected isClient]) return selected;
+	return (IRCClient*)[selected client];
 }
 
 #pragma mark -
@@ -146,14 +148,14 @@
 
 - (void)select:(id)item
 {
-	if (selectedItem == item) return;
+	if (selected == item) return;
 	
 	[self storePreviousSelection];
 	[self selectText];
 	
 	if (!item) {
-		[selectedItem autorelease];
-		selectedItem = nil;
+		self.selected = nil;
+		
 		[logBase setContentView:dummyLog.view];
 		memberList.dataSource = nil;
 		[memberList reloadData];
@@ -161,8 +163,8 @@
 		return;
 	}
 
-	IRCClient* client = (IRCClient*)[item client];
 	BOOL isClient = [item isClient];
+	IRCClient* client = (IRCClient*)[item client];
 
 	if (!isClient) [tree expandItem:client];
 	
@@ -180,8 +182,8 @@
 
 - (BOOL)sendText:(NSString*)s command:(NSString*)command
 {
-	if (!selectedItem) return NO;
-	return [(IRCClient*)[selectedItem client] sendText:s command:command];
+	if (!selected) return NO;
+	return [(IRCClient*)[selected client] sendText:s command:command];
 }
 
 - (void)updateTitle
@@ -377,10 +379,9 @@
 	
 	[text focus];
 	
-	[selectedItem autorelease];
-	selectedItem = [nextItem retain];
+	self.selected = nextItem;
 	
-	if (!selectedItem) {
+	if (!selected) {
 		logBase.contentView = dummyLog.view;
 		tree.menu = treeMenu;
 		memberList.dataSource = nil;
@@ -389,11 +390,11 @@
 		return;
 	}
 	
-	[selectedItem resetState];
+	[selected resetState];
 	
-	logBase.contentView = [selectedItem log].view;
+	logBase.contentView = [selected log].view;
 	
-	if ([selectedItem isClient]) {
+	if ([selected isClient]) {
 		tree.menu = [serverMenu submenu];
 		memberList.dataSource = nil;
 		memberList.delegate = nil;
@@ -401,14 +402,14 @@
 	}
 	else {
 		tree.menu = [channelMenu submenu];
-		memberList.dataSource = selectedItem;
-		memberList.delegate = selectedItem;
+		memberList.dataSource = selected;
+		memberList.delegate = selected;
 		[memberList reloadData];
 	}
 	
 	[memberList deselectAll:nil];
 	[memberList scrollRowToVisible:0];
-	[[selectedItem log].view clearSel];
+	[[selected log].view clearSel];
 	
 	[self updateTitle];
 	[self reloadTree];

@@ -50,7 +50,7 @@
 	
 	int itemId;
 	BOOL reloadingTree;
-	id selectedItem;
+	id selected;
 }
 
 @property (nonatomic, assign) AppController* app;
@@ -75,10 +75,10 @@
 @property (nonatomic, assign) NSMenu* chanMenu;
 @property (nonatomic, assign) NSMenu* memberMenu;
 @property (nonatomic, readonly) LogController* consoleLog;
-@property (nonatomic, readonly) id selectedItem;
 
 @property (nonatomic, readonly) NSMutableArray* clients;
-@property (nonatomic, readonly) id selected;
+@property (nonatomic, retain) id selected;
+@property (nonatomic, readonly) IRCClient* selectedClient;
 
 - (void)setup:(IRCWorldConfig*)seed;
 - (void)setupTree;
