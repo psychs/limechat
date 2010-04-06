@@ -44,6 +44,11 @@
 	BOOL inWhois;
 	BOOL identifyMsg;
 	BOOL identifyCTCP;
+	
+	BOOL isKeyword;
+	BOOL isUnread;
+	
+	IRCChannel* lastSelectedChannel;
 }
 
 @property (nonatomic, assign) IRCWorld* world;
@@ -54,6 +59,11 @@
 @property (nonatomic, readonly) NSMutableArray* channels;
 @property (nonatomic, assign) int uid;
 @property (nonatomic, readonly) BOOL loggedIn;
+@property (nonatomic, assign) BOOL isKeyword;
+@property (nonatomic, assign) BOOL isUnread;
+@property (nonatomic, readonly) BOOL isNewTalk;
+
+@property (nonatomic, retain) IRCChannel* lastSelectedChannel;
 
 - (void)setup:(IRCClientConfig*)seed;
 

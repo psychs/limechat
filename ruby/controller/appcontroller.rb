@@ -692,11 +692,13 @@ class AAppController < NSObject
     handler('onCmdDown:', KEY_DOWN, NSCommandKeyMask|NSAlternateKeyMask)
     handler('onCmdAltLeft:', KEY_LEFT, NSCommandKeyMask|NSAlternateKeyMask)
     handler('onCmdAltRight:', KEY_RIGHT, NSCommandKeyMask|NSAlternateKeyMask)
+    
     handler('onCtrlTab:', KEY_TAB, NSControlKeyMask)
     handler('onCtrlShiftTab:', KEY_TAB, NSControlKeyMask|NSShiftKeyMask)
     handler('onAltTab:', KEY_TAB, NSAlternateKeyMask)
     handler('onCtrlTab:', KEY_SPACE, NSAlternateKeyMask)
     handler('onCtrlShiftTab:', KEY_SPACE, NSAlternateKeyMask|NSShiftKeyMask)
+    
     handler('onCmdNumber:', '0', NSCommandKeyMask)
     handler('onCmdNumber:', '1', NSCommandKeyMask)
     handler('onCmdNumber:', '2', NSCommandKeyMask)

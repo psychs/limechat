@@ -62,6 +62,11 @@
 @synthesize uid;
 @synthesize loggedIn;
 
+@synthesize isKeyword;
+@synthesize isUnread;
+
+@synthesize lastSelectedChannel;
+
 - (id)init
 {
 	if (self = [super init]) {
@@ -83,6 +88,7 @@
 	[myNick release];
 	[serverHostname release];
 	[joinMyAddress release];
+	[lastSelectedChannel release];
 	[super dealloc];
 }
 
@@ -100,6 +106,11 @@
 - (NSString*)name
 {
 	return config.name;
+}
+
+- (BOOL)isNewTalk
+{
+	return NO;
 }
 
 #pragma mark -
@@ -614,6 +625,11 @@
 - (BOOL)isClient
 {
 	return YES;
+}
+
+- (BOOL)isActive
+{
+	return loggedIn;
 }
 
 - (IRCClient*)client

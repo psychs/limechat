@@ -87,6 +87,8 @@
 - (void)onTimer;
 - (void)autoConnect;
 
+- (void)select:(id)item;
+
 - (void)selectText;
 - (BOOL)sendText:(NSString*)s command:(NSString*)command;
 

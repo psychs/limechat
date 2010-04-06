@@ -11,6 +11,7 @@
 
 
 @interface IRCWorld (Private)
+- (void)storePreviousSelection;
 - (LogController*)createLogWithClient:(IRCClient*)client channel:(IRCChannel*)channel console:(BOOL)console;
 @end
 
@@ -143,6 +144,35 @@
 {
 }
 
+- (void)select:(id)item
+{
+	if (selectedItem == item) return;
+	
+	[self storePreviousSelection];
+	[self selectText];
+	
+	if (!item) {
+		[selectedItem autorelease];
+		selectedItem = nil;
+		[logBase setContentView:dummyLog.view];
+		memberList.dataSource = nil;
+		[memberList reloadData];
+		tree.menu = treeMenu;
+		return;
+	}
+
+	IRCClient* client = (IRCClient*)[item client];
+	BOOL isClient = [item isClient];
+
+	if (!isClient) [tree expandItem:client];
+	
+	int i = [tree rowForItem:item];
+	if (i < 0) return;
+	[tree select:i];
+	
+	client.lastSelectedChannel = isClient ? nil : (IRCChannel*)item;
+}
+
 - (void)selectText
 {
 	[text focus];
@@ -181,6 +211,11 @@
 
 - (void)adjustSelection
 {
+}
+
+- (void)storePreviousSelection
+{
+	LOG_METHOD
 }
 
 - (IRCClient*)createClient:(IRCClientConfig*)seed reload:(BOOL)reload
@@ -329,6 +364,11 @@
 - (id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(NSTableColumn *)tableColumn byItem:(id)item
 {
 	return [item label];
+}
+
+- (void)outlineViewSelectionIsChanging:(NSNotification *)note
+{
+	[self storePreviousSelection];
 }
 
 - (void)outlineViewSelectionDidChange:(NSNotification *)note

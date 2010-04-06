@@ -4,6 +4,7 @@
 #import "NSDictionaryHelper.h"
 #import "IRC.h"
 #import "IRCWorld.h"
+#import "IRCClient.h"
 
 
 #define KInternetEventClass	1196773964
@@ -279,9 +280,322 @@
 	[ud synchronize];
 }
 
-- (void)registerKeyHandlers
+typedef enum {
+	SCROLL_TOP,
+	SCROLL_BOTTOM,
+	SCROLL_PAGE_UP,
+	SCROLL_PAGE_DOWN,
+} ScrollKind;
+
+- (void)scroll:(ScrollKind)op
+{
+	if ([window firstResponder] == [text currentEditor]) {
+		id sel = world.selectedItem;
+		if (sel) {
+			LogController* log = [sel log];
+			LogView* view = log.view;
+			switch (op) {
+				case SCROLL_TOP:
+					[log moveToTop];
+					break;
+				case SCROLL_BOTTOM:
+					[log moveToBottom];
+					break;
+				case SCROLL_PAGE_UP:
+					[view scrollPageUp:nil];
+					break;
+				case SCROLL_PAGE_DOWN:
+					[view scrollPageDown:nil];
+					break;
+			}
+		}
+	}
+}
+
+- (void)scrollToTop:(NSEvent*)e
+{
+	[self scroll:SCROLL_TOP];
+}
+
+- (void)scrollToBottom:(NSEvent*)e
+{
+	[self scroll:SCROLL_BOTTOM];
+}
+
+- (void)scrollPageUp:(NSEvent*)e
+{
+	[self scroll:SCROLL_PAGE_UP];
+}
+
+- (void)scrollPageDown:(NSEvent*)e
+{
+	[self scroll:SCROLL_PAGE_DOWN];
+}
+
+typedef enum {
+	MOVE_UP,
+	MOVE_DOWN,
+	MOVE_LEFT,
+	MOVE_RIGHT,
+	MOVE_ALL,
+	MOVE_ACTIVE,
+	MOVE_UNREAD,
+} MoveKind;
+
+- (void)move:(MoveKind)dir target:(MoveKind)target
+{
+	if (dir == MOVE_UP || dir == MOVE_DOWN) {
+		id sel = world.selectedItem;
+		if (!sel) return;
+		int n = [tree rowForItem:sel];
+		if (n < 0) return;
+		int start = n;
+		int count = [tree numberOfRows];
+		if (count <= 1) return;
+		while (1) {
+			if (dir == MOVE_UP) {
+				--n;
+				if (n < 0) n = count - 1;
+			}
+			else {
+				++n;
+				if (count <= n) n = 0;
+			}
+			
+			if (n == start) break;
+			
+			id i = [tree itemAtRow:n];
+			if (i) {
+				if (target == MOVE_ACTIVE) {
+					if (![i isClient] && [i isActive]) {
+						[world select:i];
+						break;
+					}
+				}
+				else if (target == MOVE_UNREAD) {
+					if ([i isUnread]) {
+						[world select:i];
+						break;
+					}
+				}
+				else {
+					[world select:i];
+					break;
+				}
+			}
+		}
+	}
+	else if (dir == MOVE_LEFT || dir == MOVE_RIGHT) {
+		id sel = world.selectedItem;
+		if (!sel) return;
+		IRCClient* client = (IRCClient*)[sel client];
+		NSUInteger pos = [world.clients indexOfObjectIdenticalTo:client];
+		if (pos == NSNotFound) return;
+		int n = pos;
+		int start = n;
+		int count = world.clients.count;
+		if (count <= 1) return;
+		while (1) {
+			if (dir == MOVE_LEFT) {
+				--n;
+				if (n < 0) n = count - 1;
+			}
+			else {
+				++n;
+				if (count <= n) n = 0;
+			}
+			
+			if (n == start) break;
+			
+			client = [world.clients objectAtIndex:n];
+			if (client) {
+				if (target == MOVE_ACTIVE) {
+					if (client.loggedIn) {
+						id t = client.lastSelectedChannel ?: (id)client;
+						[world select:t];
+						break;
+					}
+				}
+				else {
+					id t = client.lastSelectedChannel ?: (id)client;
+					[world select:t];
+					break;
+				}
+			}
+		}
+	}
+}
+
+- (void)selectPreviousChannel:(NSEvent*)e
+{
+	[self move:MOVE_UP target:MOVE_ALL];
+}
+
+- (void)selectNextChannel:(NSEvent*)e
+{
+	[self move:MOVE_DOWN target:MOVE_ALL];
+}
+
+- (void)selectPreviousUnreadChannel:(NSEvent*)e
+{
+	[self move:MOVE_UP target:MOVE_UNREAD];
+}
+
+- (void)selectNextUnreadChannel:(NSEvent*)e
+{
+	[self move:MOVE_DOWN target:MOVE_UNREAD];
+}
+
+- (void)selectPreviousActiveChannel:(NSEvent*)e
+{
+	[self move:MOVE_UP target:MOVE_ACTIVE];
+}
+
+- (void)selectNextActiveChannel:(NSEvent*)e
+{
+	[self move:MOVE_DOWN target:MOVE_ACTIVE];
+}
+
+- (void)selectPreviousServer:(NSEvent*)e
+{
+	[self move:MOVE_LEFT target:MOVE_ALL];
+}
+
+- (void)selectNextServer:(NSEvent*)e
+{
+	[self move:MOVE_RIGHT target:MOVE_ALL];
+}
+
+- (void)selectPreviousActiveServer:(NSEvent*)e
+{
+	[self move:MOVE_LEFT target:MOVE_ACTIVE];
+}
+
+- (void)selectNextActiveServer:(NSEvent*)e
+{
+	[self move:MOVE_RIGHT target:MOVE_ACTIVE];
+}
+
+- (void)selectPreviousSelection:(NSEvent*)e
 {
 }
+
+- (void)tag:(NSEvent*)e
+{
+}
+
+- (void)shiftTab:(NSEvent*)e
+{
+}
+
+- (void)sendPrivmsg:(NSEvent*)e
+{
+}
+
+- (void)sendNotice:(NSEvent*)e
+{
+}
+
+- (void)showPasteDialog:(NSEvent*)e
+{
+}
+
+- (void)inputHistoryUp:(NSEvent*)e
+{
+	NSString* s = [inputHistory up:[text stringValue]];
+	if (s) {
+		[text setStringValue:s];
+		[world selectText];
+	}
+}
+
+- (void)inputHistoryDown:(NSEvent*)e
+{
+	NSString* s = [inputHistory down:[text stringValue]];
+	if (s) {
+		[text setStringValue:s];
+		[world selectText];
+	}
+}
+
+- (void)handler:(SEL)sel code:(int)keyCode mods:(NSUInteger)mods
+{
+	[window registerKeyHandler:sel key:keyCode modifiers:mods];
+}
+
+- (void)handler:(SEL)sel char:(UniChar)c mods:(NSUInteger)mods
+{
+	[window registerKeyHandler:sel character:c modifiers:mods];
+}
+
+- (void)inputHandler:(SEL)sel code:(int)keyCode mods:(NSUInteger)mods
+{
+	[fieldEditor registerKeyHandler:sel key:keyCode modifiers:mods];
+}
+
+- (void)registerKeyHandlers
+{
+	[window setKeyHandlerTarget:self];
+	[fieldEditor setKeyHandlerTarget:self];
+	
+	[self handler:@selector(scrollToTop:) code:KEY_HOME mods:0];
+	[self handler:@selector(scrollToBottom:) code:KEY_END mods:0];
+	[self handler:@selector(scrollPageUp:) code:KEY_PAGE_UP mods:0];
+	[self handler:@selector(scrollPageDown:) code:KEY_PAGE_DOWN mods:0];
+	[self handler:@selector(tab:) code:KEY_TAB mods:0];
+	[self handler:@selector(shiftTab:) code:KEY_TAB mods:NSShiftKeyMask];
+	[self handler:@selector(sendNotice:) code:KEY_ENTER mods:NSControlKeyMask];
+	[self handler:@selector(sendNotice:) code:KEY_RETURN mods:NSControlKeyMask];
+	[self handler:@selector(showPasteDialog:) code:KEY_ENTER mods:NSAlternateKeyMask];
+	[self handler:@selector(showPasteDialog:) code:KEY_RETURN mods:NSAlternateKeyMask];
+	[self handler:@selector(selectPreviousActiveChannel:) char:'[' mods:NSCommandKeyMask];
+	[self handler:@selector(selectNextActiveChannel:) char:']' mods:NSCommandKeyMask];
+	[self handler:@selector(selectPreviousChannel:) code:KEY_UP mods:NSControlKeyMask];
+	[self handler:@selector(selectNextChannel:) code:KEY_DOWN mods:NSControlKeyMask];
+	[self handler:@selector(selectPreviousServer:) code:KEY_LEFT mods:NSControlKeyMask];
+	[self handler:@selector(selectNextServer:) code:KEY_RIGHT mods:NSControlKeyMask];
+	[self handler:@selector(selectPreviousActiveChannel:) code:KEY_UP mods:NSCommandKeyMask];
+	[self handler:@selector(selectPreviousActiveChannel:) code:KEY_UP mods:NSCommandKeyMask|NSAlternateKeyMask];
+	[self handler:@selector(selectNextActiveChannel:) code:KEY_DOWN mods:NSCommandKeyMask];
+	[self handler:@selector(selectNextActiveChannel:) code:KEY_DOWN mods:NSCommandKeyMask|NSAlternateKeyMask];
+	[self handler:@selector(selectPreviousActiveServer:) code:KEY_LEFT mods:NSCommandKeyMask|NSAlternateKeyMask];
+	[self handler:@selector(selectNextActiveServer:) code:KEY_RIGHT mods:NSCommandKeyMask|NSAlternateKeyMask];
+	[self handler:@selector(selectNextUnreadChannel:) code:KEY_TAB mods:NSControlKeyMask];
+	[self handler:@selector(selectPreviousUnreadChannel:) code:KEY_TAB mods:NSControlKeyMask|NSShiftKeyMask];
+	[self handler:@selector(selectNextUnreadChannel:) code:KEY_SPACE mods:NSAlternateKeyMask];
+	[self handler:@selector(selectPreviousUnreadChannel:) code:KEY_SPACE mods:NSAlternateKeyMask|NSShiftKeyMask];
+	[self handler:@selector(selectPreviousSelection:) code:KEY_TAB mods:NSAlternateKeyMask];
+	
+	// cmd+num
+	// ctrl+cmd+num
+	
+	[self inputHandler:@selector(inputHistoryUp:) code:KEY_UP mods:0];
+	[self inputHandler:@selector(inputHistoryUp:) code:KEY_UP mods:NSAlternateKeyMask];
+	[self inputHandler:@selector(inputHistoryDown:) code:KEY_DOWN mods:0];
+	[self inputHandler:@selector(inputHistoryDown:) code:KEY_DOWN mods:NSAlternateKeyMask];
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 - (void)prelude
 {

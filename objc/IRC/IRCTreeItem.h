@@ -11,6 +11,12 @@
 @protocol IRCTreeItem
 
 - (BOOL)isClient;
+- (BOOL)isActive;
+
+- (BOOL)isKeyword;
+- (BOOL)isUnread;
+- (BOOL)isNewTalk;
+
 - (IRCClient*)client;
 - (LogController*)log;
 
