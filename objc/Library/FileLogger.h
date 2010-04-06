@@ -4,17 +4,21 @@
 #import <Cocoa/Cocoa.h>
 
 
+@class IRCClient;
+@class IRCChannel;
+
+
 @interface FileLogger : NSObject
 {
-	id client;
-	id channel;
+	IRCClient* client;
+	IRCChannel* channel;
 	
 	NSString* fileName;
 	NSFileHandle* file;
 }
 
-@property (nonatomic, assign) id client;
-@property (nonatomic, assign) id channel;
+@property (nonatomic, assign) IRCClient* client;
+@property (nonatomic, assign) IRCChannel* channel;
 
 
 @end

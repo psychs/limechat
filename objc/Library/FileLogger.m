@@ -3,6 +3,8 @@
 
 #import "FileLogger.h"
 #import "Preferences.h"
+#import "IRCClient.h"
+#import "IRCChannel.h"
 #import "NSStringHelper.h"
 
 

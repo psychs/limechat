@@ -8,6 +8,7 @@
 #import "FieldEditorTextView.h"
 #import "IRCWorld.h"
 #import "InputHistory.h"
+#import "MenuController.h"
 
 
 @interface AppController : NSObject
@@ -26,7 +27,7 @@
 	IBOutlet ThinSplitView* logSplitter;
 	IBOutlet ThinSplitView* infoSplitter;
 	IBOutlet ThinSplitView* treeSplitter;
-	IBOutlet id menu;
+	IBOutlet MenuController* menu;
 	IBOutlet NSMenuItem* serverMenu;
 	IBOutlet NSMenuItem* channelMenu;
 	IBOutlet NSMenu* memberMenu;

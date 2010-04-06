@@ -76,6 +76,7 @@
 		784BBE961085BC950080898B /* keyrecorder_erase_pushed.png in Resources */ = {isa = PBXBuildFile; fileRef = 784BBE921085BC950080898B /* keyrecorder_erase_pushed.png */; };
 		784BBE971085BC950080898B /* redstar.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 784BBE931085BC950080898B /* redstar.tiff */; };
 		7851AEF71168A91A00AC449F /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7851AEF61168A91A00AC449F /* libicucore.dylib */; };
+		787BE9DD116B45E9003AE47D /* MenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 787BE9DC116B45E9003AE47D /* MenuController.m */; };
 		78835406109FEA7F00CD2FFF /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78835405109FEA7F00CD2FFF /* SystemConfiguration.framework */; };
 		7884E54E0CDA91F500AF3678 /* SACrashReporter in Resources */ = {isa = PBXBuildFile; fileRef = 7884E5450CDA91F500AF3678 /* SACrashReporter */; };
 		7889CABF0D647494003D808E /* welcomedialog.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7889CABE0D647494003D808E /* welcomedialog.rb */; };
@@ -258,6 +259,8 @@
 		784BBE921085BC950080898B /* keyrecorder_erase_pushed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = keyrecorder_erase_pushed.png; sourceTree = "<group>"; };
 		784BBE931085BC950080898B /* redstar.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = redstar.tiff; sourceTree = "<group>"; };
 		7851AEF61168A91A00AC449F /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = /usr/lib/libicucore.dylib; sourceTree = "<absolute>"; };
+		787BE9DB116B45E9003AE47D /* MenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuController.h; sourceTree = "<group>"; };
+		787BE9DC116B45E9003AE47D /* MenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuController.m; sourceTree = "<group>"; };
 		787FD46C0BFE960100F2F22D /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		78835405109FEA7F00CD2FFF /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = /System/Library/Frameworks/SystemConfiguration.framework; sourceTree = "<absolute>"; };
 		7884E5450CDA91F500AF3678 /* SACrashReporter */ = {isa = PBXFileReference; lastKnownFileType = folder; name = SACrashReporter; path = vendor/SACrashReporter; sourceTree = "<group>"; };
@@ -533,6 +536,8 @@
 			children = (
 				78EF6EDD116ADA5400731FDF /* AppController.h */,
 				78EF6EDE116ADA5400731FDF /* AppController.m */,
+				787BE9DB116B45E9003AE47D /* MenuController.h */,
+				787BE9DC116B45E9003AE47D /* MenuController.m */,
 			);
 			name = Controllers;
 			path = objc/Controllers;
@@ -965,6 +970,7 @@
 				78CFA71E116A1BDD00B7AC6B /* IRCClientConfig.m in Sources */,
 				78CFA71F116A1BDD00B7AC6B /* IRCWorldConfig.m in Sources */,
 				78EF6EDF116ADA5400731FDF /* AppController.m in Sources */,
+				787BE9DD116B45E9003AE47D /* MenuController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

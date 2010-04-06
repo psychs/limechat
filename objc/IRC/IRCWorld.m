@@ -120,6 +120,13 @@
 	return (IRCClient*)[selected client];
 }
 
+- (IRCChannel*)selectedChannel
+{
+	if (!selected) return nil;
+	if ([selected isClient]) return nil;
+	return (IRCChannel*)selected;
+}
+
 #pragma mark -
 #pragma mark Utilities
 

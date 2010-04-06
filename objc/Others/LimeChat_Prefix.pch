@@ -20,3 +20,5 @@
 	#define START_WATCH	;
 	#define END_WATCH ;
 #endif
+
+#define _(s)	NSLocalizedString(s, nil)

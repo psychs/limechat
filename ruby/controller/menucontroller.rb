@@ -4,7 +4,7 @@
 require 'uri'
 require 'cgi'
 
-class MenuController < NSObject
+class AMenuController < NSObject
   attr_writer :app, :world, :window, :text, :tree, :memberList
   attr_accessor :url, :addr, :nick, :chan
   ib_outlet :closeWindowItem, :closeCurrentPanelItem

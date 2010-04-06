@@ -30,6 +30,7 @@
 	
 	BOOL connecting;
 	BOOL connected;
+	BOOL reconnecting;
 	BOOL loggedIn;
 	BOOL quitting;
 	NSStringEncoding encoding;
@@ -41,6 +42,7 @@
 	
 	NSString* serverHostname;
 	NSString* joinMyAddress;
+	NSString* myAddress;
 	BOOL inWhois;
 	BOOL identifyMsg;
 	BOOL identifyCTCP;
@@ -58,10 +60,14 @@
 @property (nonatomic, readonly) IRCClientConfig* config;
 @property (nonatomic, readonly) NSMutableArray* channels;
 @property (nonatomic, assign) int uid;
+@property (nonatomic, readonly) BOOL connecting;
+@property (nonatomic, readonly) BOOL connected;
+@property (nonatomic, readonly) BOOL reconnecting;
 @property (nonatomic, readonly) BOOL loggedIn;
 @property (nonatomic, assign) BOOL isKeyword;
 @property (nonatomic, assign) BOOL isUnread;
 @property (nonatomic, readonly) BOOL isNewTalk;
+@property (nonatomic, readonly) NSString* myAddress;
 
 @property (nonatomic, retain) IRCChannel* lastSelectedChannel;
 

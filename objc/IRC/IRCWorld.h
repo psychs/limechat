@@ -13,6 +13,7 @@
 #import "IRCWorldConfig.h"
 #import "IRCClientConfig.h"
 #import "IRCChannelConfig.h"
+#import "MenuController.h"
 
 
 @class AppController;
@@ -29,7 +30,7 @@
 	ChatBox* chatBox;
 	FieldEditorTextView* fieldEditor;
 	MemberListView* memberList;
-	id menuController;
+	MenuController* menuController;
 	id dcc;
 	id viewTheme;
 	NSMenuItem* serverMenu;
@@ -62,7 +63,7 @@
 @property (nonatomic, assign) ChatBox* chatBox;
 @property (nonatomic, assign) FieldEditorTextView* fieldEditor;
 @property (nonatomic, assign) MemberListView* memberList;
-@property (nonatomic, assign) id menuController;
+@property (nonatomic, assign) MenuController* menuController;
 @property (nonatomic, assign) id dcc;
 @property (nonatomic, assign) id viewTheme;
 @property (nonatomic, assign) NSMenuItem* serverMenu;
@@ -79,6 +80,7 @@
 @property (nonatomic, readonly) NSMutableArray* clients;
 @property (nonatomic, retain) id selected;
 @property (nonatomic, readonly) IRCClient* selectedClient;
+@property (nonatomic, readonly) IRCChannel* selectedChannel;
 
 - (void)setup:(IRCWorldConfig*)seed;
 - (void)setupTree;

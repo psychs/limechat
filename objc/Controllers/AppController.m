@@ -84,7 +84,12 @@
 	[tree reloadData];
 	[world setupTree];
 	
-	//@@@ menu controller
+	menu.app = self;
+	menu.world = world;
+	menu.window = window;
+	menu.tree = tree;
+	menu.memberList = memberList;
+	menu.text = text;
 	
 	memberList.target = menu;
 	[memberList setDoubleAction:@selector(memberListDoubleClicked:)];
@@ -108,11 +113,6 @@
 	[window makeFirstResponder:text];
 	[window makeKeyAndOrderFront:nil];
 	[world autoConnect];
-}
-
-- (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender
-{
-	return NSTerminateNow;
 }
 
 - (void)applicationDidBecomeActive:(NSNotification *)note
@@ -140,12 +140,18 @@
 	}
 }
 
+- (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender
+{
+	return NSTerminateNow;
+}
+
 - (void)applicationWillTerminate:(NSNotification *)note
 {
 	// unregister URL handler
 	NSAppleEventManager* em = [NSAppleEventManager sharedAppleEventManager];
 	[em removeEventHandlerForEventClass:KInternetEventClass andEventID:KAEGetURL];
 	
+	[menu terminate];
 	[NSApp unregisterHotKey];
 	[self saveWindowState];
 }
@@ -598,28 +604,6 @@ typedef enum {
 	[self inputHandler:@selector(inputHistoryDown:) code:KEY_DOWN mods:0];
 	[self inputHandler:@selector(inputHistoryDown:) code:KEY_DOWN mods:NSAlternateKeyMask];
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 - (void)prelude
 {

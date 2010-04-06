@@ -60,10 +60,15 @@
 @synthesize config;
 @synthesize channels;
 @synthesize uid;
+@synthesize connecting;
+@synthesize connected;
+@synthesize reconnecting;
 @synthesize loggedIn;
 
 @synthesize isKeyword;
 @synthesize isUnread;
+
+@synthesize myAddress;
 
 @synthesize lastSelectedChannel;
 
@@ -88,6 +93,7 @@
 	[myNick release];
 	[serverHostname release];
 	[joinMyAddress release];
+	[myAddress release];
 	[lastSelectedChannel release];
 	[super dealloc];
 }
