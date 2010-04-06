@@ -300,23 +300,31 @@ static NSString* renderRange(NSString* body, attr_t attr, int start, int len)
 			
 			if (exactWordMatch) {
 				if (enabled) {
-					int prev = r.location - 1;
-					if (0 <= prev && prev < len) {
-						// check previous character
-						UniChar c = [body characterAtIndex:prev];
-						if ([UnicodeHelper isAlphabeticalCodePoint:c]) {
-							enabled = NO;
+					// check head character
+					UniChar c = [body characterAtIndex:r.location];
+					if ([UnicodeHelper isAlphabeticalCodePoint:c]) {
+						int prev = r.location - 1;
+						if (0 <= prev && prev < len) {
+							// check previous character
+							UniChar c = [body characterAtIndex:prev];
+							if ([UnicodeHelper isAlphabeticalCodePoint:c]) {
+								enabled = NO;
+							}
 						}
 					}
 				}
 				
 				if (enabled) {
-					int next = NSMaxRange(r);
-					if (next < len) {
-						// check next character
-						UniChar c = [body characterAtIndex:next];
-						if ([UnicodeHelper isAlphabeticalCodePoint:c]) {
-							enabled = NO;
+					// check tail character
+					UniChar c = [body characterAtIndex:NSMaxRange(r)-1];
+					if ([UnicodeHelper isAlphabeticalCodePoint:c]) {
+						int next = NSMaxRange(r);
+						if (next < len) {
+							// check next character
+							UniChar c = [body characterAtIndex:next];
+							if ([UnicodeHelper isAlphabeticalCodePoint:c]) {
+								enabled = NO;
+							}
 						}
 					}
 				}

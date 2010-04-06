@@ -30,7 +30,6 @@
 	NSMenu* addrMenu;
 	NSMenu* chanMenu;
 	NSMenu* memberMenu;
-	id keyword;
 	id theme;
 	id overrideFont;
 	int maxLines;
@@ -59,7 +58,6 @@
 @property (nonatomic, retain) NSMenu* addrMenu;
 @property (nonatomic, retain) NSMenu* chanMenu;
 @property (nonatomic, retain) NSMenu* memberMenu;
-@property (nonatomic, retain) id keyword;
 @property (nonatomic, retain) id theme;
 @property (nonatomic, retain) id overrideFont;
 @property (nonatomic, assign) BOOL console;

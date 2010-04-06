@@ -2,6 +2,7 @@
 // You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
 #import "LogController.h"
+#import "Preferences.h"
 #import "LogRenderer.h"
 #import "IRCWorld.h"
 #import "IRCClient.h"
@@ -41,7 +42,6 @@
 @synthesize addrMenu;
 @synthesize chanMenu;
 @synthesize memberMenu;
-@synthesize keyword;
 @synthesize theme;
 @synthesize overrideFont;
 @synthesize maxLines;
@@ -72,7 +72,6 @@
 	[addrMenu release];
 	[chanMenu release];
 	[memberMenu release];
-	[keyword release];
 	[theme release];
 	[overrideFont release];
 	[initialBackgroundColor release];
@@ -435,11 +434,14 @@
 	NSArray* excludeWords = nil;
 	
 	if (useKeyword) {
-		excludeWords = [keyword dislike_words];
-		keywords = [keyword words];
+		keywords = [NewPreferences keywordWords];
+		excludeWords = [NewPreferences keywordDislikeWords];
 		
-		//BOOL currentNick = [keyword current_nick];
-		// @@@ add my nick
+		if ([NewPreferences keywordCurrentNick]) {
+			NSMutableArray* ary = [keywords mutableCopy];
+			[ary insertObject:client.myNick atIndex:0];
+			keywords = ary;
+		}
 	}
 	
 	return [LogRenderer renderBody:line.body
