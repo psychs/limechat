@@ -370,7 +370,7 @@
 	BOOL isText = type == LINE_TYPE_PRIVMSG || type == LINE_TYPE_NOTICE || type == LINE_TYPE_ACTION;
 	BOOL showInlineImage = NO;
 	
-	if (isText) {
+	if (isText && !console) {
 		//
 		// expand image URLs
 		// @@@ should check preferences
