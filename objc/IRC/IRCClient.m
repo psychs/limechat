@@ -668,7 +668,7 @@
 		identified = [text hasPrefix:@"+"];
 		text = [text substringFromIndex:1];
 	}
-	else if (identifyMsg && [text hasPrefix:@"+"] || [text hasPrefix:@"-"]) {
+	else if (identifyMsg && ([text hasPrefix:@"+"] || [text hasPrefix:@"-"])) {
 		identified = [text hasPrefix:@"+"];
 		text = [text substringFromIndex:1];
 	}
