@@ -218,6 +218,7 @@
 			return [self checkSelectedMembers:item];
 		case 2101 ... 2105:	// CTCP
 			return LOGIN_CHANTALK && [self checkSelectedMembers:item];
+		case 2032:	// ban
 		case 2033:	// kick & ban
 			return OP && [self checkSelectedMembers:item] && c.whoInit;
 			
