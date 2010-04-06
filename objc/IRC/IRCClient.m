@@ -178,12 +178,12 @@
 	
 	id sel = world.selectedItem;
 	if (!sel) return NO;
-	
 	if ([sel isClient]) {
-		[self send:command, s, nil];
+		[self sendLine:s];
 	}
 	else {
 		[self send:command, [sel name], s, nil];
+		[self printBoth:sel type:LINE_TYPE_PRIVMSG nick:myNick text:s identified:YES];
 	}
 	
 	return YES;
