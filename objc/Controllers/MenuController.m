@@ -341,14 +341,23 @@
 
 - (void)onConnect:(id)sender
 {
+	IRCClient* u = world.selectedClient;
+	if (!u) return;
+	[u connect];
 }
 
 - (void)onDisconnect:(id)sender
 {
+	IRCClient* u = world.selectedClient;
+	if (!u) return;
+	[u disconnect];
 }
 
 - (void)onCancelReconnecting:(id)sender
 {
+	IRCClient* u = world.selectedClient;
+	if (!u) return;
+	[u cancelReconnect];
 }
 
 - (void)onNick:(id)sender

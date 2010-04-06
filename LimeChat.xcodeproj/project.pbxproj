@@ -722,13 +722,22 @@
 			children = (
 				78364B14116597D00096F3A9 /* Controllers */,
 				78364B1F116597D00096F3A9 /* Models */,
-				78364B25116597D00096F3A9 /* Views */,
 				78BC0C521168E5D800A984AA /* IRC */,
+				78364B25116597D00096F3A9 /* Views */,
+				787BEB4A116B5E9B003AE47D /* Dialogs */,
 				78364B16116597D00096F3A9 /* Library */,
 				78364B15116597D00096F3A9 /* Helpers */,
 				78364B20116597D00096F3A9 /* Others */,
 			);
 			name = objc;
+			sourceTree = "<group>";
+		};
+		787BEB4A116B5E9B003AE47D /* Dialogs */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Dialogs;
+			path = objc/Dialogs;
 			sourceTree = "<group>";
 		};
 		78A47CF40BF6DE6B001C5B15 /* ruby */ = {

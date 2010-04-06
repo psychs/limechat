@@ -189,6 +189,15 @@
 	[self changeStateOff];
 }
 
+- (void)cancelReconnect
+{
+	LOG_METHOD
+}
+
+- (void)joinChannel:(IRCChannel*)channel
+{
+}
+
 - (BOOL)sendText:(NSString*)s command:(NSString*)command
 {
 	if (!connected) return NO;

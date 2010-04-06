@@ -254,7 +254,6 @@
 
 - (void)storePreviousSelection
 {
-	LOG_METHOD
 }
 
 - (IRCClient*)createClient:(IRCClientConfig*)seed reload:(BOOL)reload
