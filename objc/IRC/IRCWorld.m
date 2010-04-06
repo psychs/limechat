@@ -175,6 +175,36 @@
 	client.lastSelectedChannel = isClient ? nil : (IRCChannel*)item;
 }
 
+- (void)selectChannelAt:(int)n
+{
+	IRCClient* c = self.selectedClient;
+	if (!c) return;
+	if (n == 0) {
+		[self select:c];
+	}
+	else {
+		--n;
+		if (0 <= n && n < c.channels.count) {
+			IRCChannel* e = [c.channels objectAtIndex:n];
+			[self select:e];
+		}
+	}
+}
+
+- (void)selectClientAt:(int)n
+{
+	if (0 <= n && n < clients.count) {
+		IRCClient* c = [clients objectAtIndex:n];
+		IRCChannel* e = c.lastSelectedChannel;
+		if (e) {
+			[self select:e];
+		}
+		else {
+			[self select:c];
+		}
+	}
+}
+
 - (void)selectText
 {
 	[text focus];

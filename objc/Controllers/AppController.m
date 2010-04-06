@@ -485,9 +485,7 @@ typedef enum {
 	if (s.length) {
 		UniChar c = [s characterAtIndex:0];
 		int n = c - '0';
-		LOG(@"select channel @ %d", n);
-		
-		id sel = world.selected;
+		[world selectChannelAt:n];
 	}
 }
 
@@ -498,7 +496,7 @@ typedef enum {
 		UniChar c = [s characterAtIndex:0];
 		int n = c - '0';
 		n = (n == 0) ? 9 : (n - 1);
-		LOG(@"select server @ %d", n);
+		[world selectClientAt:n];
 	}
 }
 
