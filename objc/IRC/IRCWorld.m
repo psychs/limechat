@@ -340,7 +340,7 @@
 	c.theme = nil;	//@@@
 	c.overrideFont = nil;	//@@@
 	c.console = console;
-	//c.initialBackgroundColor = [NSColor blueColor];
+	c.initialBackgroundColor = [NSColor whiteColor];
 	[c setUp];
 	
 	[c.view setHostWindow:window];
