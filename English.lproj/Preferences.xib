@@ -3447,6 +3447,22 @@
 					</object>
 					<int key="connectionID">4353</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">hotKey</string>
+						<reference key="source" ref="523994250"/>
+						<reference key="destination" ref="399851948"/>
+					</object>
+					<int key="connectionID">4354</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">delegate</string>
+						<reference key="source" ref="399851948"/>
+						<reference key="destination" ref="523994250"/>
+					</object>
+					<int key="connectionID">4355</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -5433,9 +5449,9 @@
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>{{741, 672}, {443, 397}}</string>
+					<string>{{750, 638}, {443, 397}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{741, 672}, {443, 397}}</string>
+					<string>{{750, 638}, {443, 397}}</string>
 					<boolean value="YES"/>
 					<boolean value="YES"/>
 					<string>{213, 107}</string>
@@ -5518,7 +5534,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">4353</int>
+			<int key="maxID">4355</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -5776,6 +5792,7 @@
 							<string>delegate</string>
 							<string>excludeWordsArrayController</string>
 							<string>excludeWordsTable</string>
+							<string>hotKey</string>
 							<string>ignoreWordsArrayController</string>
 							<string>ignoreWordsTable</string>
 							<string>keywordsArrayController</string>
@@ -5786,6 +5803,7 @@
 							<string>id</string>
 							<string>NSArrayController</string>
 							<string>NSTableView</string>
+							<string>KeyRecorder</string>
 							<string>NSArrayController</string>
 							<string>NSTableView</string>
 							<string>NSArrayController</string>

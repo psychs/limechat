@@ -21,8 +21,6 @@ typedef enum {
 + (BOOL)confirmQuit;
 + (BOOL)connectOnDoubleclick;
 + (BOOL)disconnectOnDoubleclick;
-+ (int)hotkeyKeyCode;
-+ (int)hotkeyModifierFlags;
 + (BOOL)joinOnDoubleclick;
 + (BOOL)leaveOnDoubleclick;
 + (BOOL)logTranscript;
@@ -65,6 +63,11 @@ typedef enum {
 + (double)themeTransparency;
 
 + (NSDictionary*)loadWorld;
+
++ (int)hotKeyKeyCode;
++ (void)setHotKeyKeyCode:(int)value;
++ (NSUInteger)hotKeyModifierFlags;
++ (void)setHotKeyModifierFlags:(NSUInteger)value;
 
 + (NSArray*)keywords;
 + (NSArray*)excludeWords;

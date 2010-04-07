@@ -43,7 +43,12 @@
 	NSAppleEventManager* em = [NSAppleEventManager sharedAppleEventManager];
 	[em setEventHandler:self andSelector:@selector(handleURLEvent:withReplyEvent:) forEventClass:KInternetEventClass andEventID:KAEGetURL];
 	
-	// @@@ hotkey
+	// hot key
+	int keyCode = [NewPreferences hotKeyKeyCode];
+	NSUInteger modifierFlags = [NewPreferences hotKeyModifierFlags];
+	if (keyCode) {
+		[(LimeChatApplication*)NSApp registerHotKey:keyCode modifierFlags:modifierFlags];
+	}
 	
 	rootSplitter.fixedViewIndex = 1;
 	logSplitter.fixedViewIndex = 1;
@@ -138,7 +143,7 @@
 
 - (void)applicationDidReceiveHotKey:(id)sender
 {
-	if ([window isVisible] || ![NSApp isActive]) {
+	if (![window isVisible] || ![NSApp isActive]) {
 		[NSApp activateIgnoringOtherApps:YES];
 		[window makeKeyAndOrderFront:nil];
 		[text focus];

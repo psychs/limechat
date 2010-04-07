@@ -78,22 +78,6 @@
 	return [obj boolValue];
 }
 
-+ (int)hotkeyKeyCode
-{
-	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	id obj = [ud objectForKey:@"Preferences.General.hotkey_key_code"];
-	if (!obj) return 0;
-	return [obj intValue];
-}
-
-+ (int)hotkeyModifierFlags
-{
-	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	id obj = [ud objectForKey:@"Preferences.General.hotkey_modifier_flags"];
-	if (!obj) return 0;
-	return [obj intValue];
-}
-
 + (BOOL)joinOnDoubleclick
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
@@ -413,6 +397,38 @@
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
 	return [ud objectForKey:@"world"];
+}
+
+#pragma mark -
+#pragma mark World
+
+
++ (int)hotKeyKeyCode
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	id obj = [ud objectForKey:@"Preferences.General.hotkey_key_code"];
+	if (!obj) return 0;
+	return [obj intValue];
+}
+
++ (void)setHotKeyKeyCode:(int)value
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	[ud setInteger:value forKey:@"Preferences.General.hotkey_key_code"];
+}
+
++ (NSUInteger)hotKeyModifierFlags
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	id obj = [ud objectForKey:@"Preferences.General.hotkey_modifier_flags"];
+	if (!obj) return 0;
+	return [obj integerValue];
+}
+
++ (void)setHotKeyModifierFlags:(NSUInteger)value
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	[ud setInteger:value forKey:@"Preferences.General.hotkey_modifier_flags"];
 }
 
 #pragma mark -

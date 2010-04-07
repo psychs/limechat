@@ -38,6 +38,7 @@
 	if (!hotkey) {
 		hotkey = [HotKeyManager new];
 	}
+	[hotkey unregisterHotKey];
 	[hotkey registerHotKeyCode:keyCode withModifier:modFlags];
 }
 

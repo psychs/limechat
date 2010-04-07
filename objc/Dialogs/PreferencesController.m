@@ -2,6 +2,13 @@
 // You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
 #import "PreferencesController.h"
+#import "Preferences.h"
+#import "LimeChatApplication.h"
+
+
+@interface PreferencesController (Private)
+- (void)loadHotKey;
+@end
 
 
 @implementation PreferencesController
@@ -26,6 +33,8 @@
 
 - (void)show
 {
+	[self loadHotKey];
+	
 	[self.window makeKeyAndOrderFront:nil];
 }
 
@@ -66,6 +75,31 @@
 - (CGFloat)fontPointSize
 {
 	return 12;
+}
+
+#pragma mark -
+#pragma mark Hot Key
+
+- (void)loadHotKey
+{
+	hotKey.keyCode = [NewPreferences hotKeyKeyCode];
+	hotKey.modifierFlags = [NewPreferences hotKeyModifierFlags];
+}
+
+- (void)keyRecorderDidChangeKey:(KeyRecorder*)sender
+{
+	int code = hotKey.keyCode;
+	NSUInteger mods = hotKey.modifierFlags;
+	
+	[NewPreferences setHotKeyKeyCode:code];
+	[NewPreferences setHotKeyModifierFlags:mods];
+	
+	if (hotKey.keyCode) {
+		[(LimeChatApplication*)NSApp registerHotKey:code modifierFlags:mods];
+	}
+	else {
+		[(LimeChatApplication*)NSApp unregisterHotKey];
+	}
 }
 
 #pragma mark -

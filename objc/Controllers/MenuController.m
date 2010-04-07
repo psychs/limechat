@@ -93,12 +93,11 @@
 		case 203:	// close window / close current panel
 			if (KEY_WINDOW) {
 				[closeWindowItem setTitle:_(@"CloseCurrentPanelMenuTitle")];
-				return YES;
 			}
 			else {
 				[closeWindowItem setTitle:_(@"CloseWindowMenuTitle")];
-				return u && c;
 			}
+			return YES;
 		case 313:	// paste
 		{
 			if (![[NSPasteboard generalPasteboard] availableTypeFromArray:[NSArray arrayWithObject:NSStringPboardType]]) {
