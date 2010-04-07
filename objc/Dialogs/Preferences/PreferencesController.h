@@ -18,6 +18,7 @@
 	IBOutlet NSArrayController* excludeWordsArrayController;
 	IBOutlet NSArrayController* ignoreWordsArrayController;
 	IBOutlet NSPopUpButton* transcriptFolderButton;
+	IBOutlet NSPopUpButton* themeButton;
 	
 	NSMutableArray* sounds;
 	

@@ -3,6 +3,7 @@
 
 #import "PreferencesController.h"
 #import "Preferences.h"
+#import "ViewTheme.h"
 #import "LimeChatApplication.h"
 #import "SoundWrapper.h"
 
@@ -15,6 +16,7 @@
 @interface PreferencesController (Private)
 - (void)loadHotKey;
 - (void)updateTranscriptFolder;
+- (void)updateTheme;
 @end
 
 
@@ -44,6 +46,7 @@
 {
 	[self loadHotKey];
 	[self updateTranscriptFolder];
+	[self updateTheme];
 	
 	[self.window makeKeyAndOrderFront:nil];
 }
@@ -289,6 +292,106 @@
 }
 
 #pragma mark -
+#pragma mark Theme
+
+- (void)updateTheme
+{
+	//
+	// update menu
+	//
+	
+	[themeButton removeAllItems];
+	[themeButton addItemWithTitle:@"Default"];
+	[[themeButton itemAtIndex:0] setTag:0];
+	
+	NSFileManager* fm = [NSFileManager defaultManager];
+	NSArray* ary = [NSArray arrayWithObjects:[ViewTheme resourceBasePath], [ViewTheme userBasePath], nil];
+	int tag = 0;
+	
+	for (NSString* path in ary) {
+		NSMutableSet* set = [NSMutableSet set];
+		NSArray* files = [fm contentsOfDirectoryAtPath:path error:NULL];
+		for (NSString* file in files) {
+			if ([file hasSuffix:@".css"] || [file hasSuffix:@".yaml"]) {
+				NSString* baseName = [file stringByDeletingPathExtension];
+				if (tag == 0 && [baseName isEqualToString:@"Sample"]) {
+					continue;
+				}
+				[set addObject:baseName];
+			}
+		}
+		
+		files = [[set allObjects] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
+		if (files.count) {
+			[themeButton.menu addItem:[NSMenuItem separatorItem]];
+			
+			int i = 0;
+			for (NSString* f in files) {
+				NSMenuItem* item = [[NSMenuItem alloc] initWithTitle:f action:nil keyEquivalent:@""];
+				[item setTag:tag];
+				[themeButton.menu addItem:item];
+				++i;
+			}
+		}
+		
+		++tag;
+	}
+	
+	//
+	// select current one
+	//
+	
+	NSArray* kindAndName = [ViewTheme extractFileName:[NewPreferences themeName]];
+	if (!kindAndName) {
+		[themeButton selectItemAtIndex:0];
+		return;
+	}
+	
+	NSString* kind = [kindAndName objectAtIndex:0];
+	NSString* name = [kindAndName objectAtIndex:1];
+	
+	int targetTag = 0;
+	if (![kind isEqualToString:@"resource"]) {
+		targetTag = 1;
+	}
+	
+	int count = [themeButton numberOfItems];
+	for (int i=0; i<count; i++) {
+		NSMenuItem* item = [themeButton itemAtIndex:i];
+		if ([item tag] == targetTag && [[item title] isEqualToString:name]) {
+			[themeButton selectItemAtIndex:i];
+			break;
+		}
+	}
+}
+
+- (void)onChangedTheme:(id)sender
+{
+	NSMenuItem* item = [themeButton selectedItem];
+	NSString* name = [item title];
+	if (item.tag == 0) {
+		[NewPreferences setThemeName:[ViewTheme buildResourceFileName:name]];
+	}
+	else {
+		[NewPreferences setThemeName:[ViewTheme buildUserFileName:name]];
+	}
+}
+
+- (void)onOpenThemePath:(id)sender
+{
+	NSString* path = [ViewTheme userBasePath];
+	[[NSWorkspace sharedWorkspace] openFile:path];
+}
+
+- (void)onSelectFont:(id)sender
+{
+}
+
+- (void)onChangedTransparency:(id)sender
+{
+}
+
+#pragma mark -
 #pragma mark Actions
 
 - (void)editTable:(NSTableView*)table
@@ -317,22 +420,6 @@
 }
 
 - (void)onLayoutChanged:(id)sender
-{
-}
-
-- (void)onChangedTheme:(id)sender
-{
-}
-
-- (void)onOpenThemePath:(id)sender
-{
-}
-
-- (void)onSelectFont:(id)sender
-{
-}
-
-- (void)onChangedTransparency:(id)sender
 {
 }
 

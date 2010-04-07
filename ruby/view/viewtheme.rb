@@ -5,7 +5,7 @@ require 'pathname'
 require 'yaml'
 require 'utility'
 
-class ViewTheme < NSObject
+class AViewTheme < NSObject
   
   RESOURCEBASE = (Pathname.new(NSBundle.mainBundle.resourcePath.fileSystemRepresentation).parent.expand_path + 'Themes').to_s
   USERBASE = '~/Library/Application Support/LimeChat/Themes'.expand_path

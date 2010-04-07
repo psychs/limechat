@@ -5,6 +5,7 @@
 #import "IRC.h"
 #import "IRCWorld.h"
 #import "IRCClient.h"
+#import "ViewTheme.h"
 
 
 #define KInternetEventClass	1196773964
@@ -120,6 +121,8 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)note
 {
+	[ViewTheme createUserDirectory];
+	
 	[window makeFirstResponder:text];
 	[window makeKeyAndOrderFront:nil];
 	[world autoConnect];

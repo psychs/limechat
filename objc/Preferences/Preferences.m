@@ -208,6 +208,23 @@
 	return [ud objectForKey:@"Preferences.Keyword.words"];
 }
 
+#pragma mark -
+#pragma mark Theme
+
++ (NSString*)themeName
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	id obj = [ud objectForKey:@"Preferences.Theme.name"];
+	if (!obj) return @"resource:Default";
+	return obj;
+}
+
++ (void)setThemeName:(NSString*)value
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	[ud setObject:value forKey:@"Preferences.Theme.name"];
+}
+
 + (NSString*)themeLogFontName
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
@@ -222,14 +239,6 @@
 	id obj = [ud objectForKey:@"Preferences.Theme.log_font_size"];
 	if (!obj) return 12;
 	return [obj doubleValue];
-}
-
-+ (NSString*)themeName
-{
-	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	id obj = [ud objectForKey:@"Preferences.Theme.name"];
-	if (!obj) return @"resource:Default";
-	return obj;
 }
 
 + (NSString*)themeNickFormat

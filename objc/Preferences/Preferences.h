@@ -35,9 +35,12 @@ typedef enum {
 + (BOOL)keywordCurrentNick;
 + (int)keywordMatchingMethod;
 + (BOOL)keywordWholeLine;
+
++ (NSString*)themeName;
++ (void)setThemeName:(NSString*)value;
+
 + (NSString*)themeLogFontName;
 + (double)themeLogFontSize;
-+ (NSString*)themeName;
 + (NSString*)themeNickFormat;
 + (BOOL)themeOverrideLogFont;
 + (BOOL)themeOverrideNickFormat;
