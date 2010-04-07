@@ -364,7 +364,7 @@
 	}
 	
 	LogLineType type = line.lineType;
-	NSString* typeStr = [LogLine lineTypeString:type];
+	NSString* lineTypeString = [LogLine lineTypeString:type];
 	BOOL isText = type == LINE_TYPE_PRIVMSG || type == LINE_TYPE_NOTICE || type == LINE_TYPE_ACTION;
 	BOOL showInlineImage = NO;
 	
@@ -382,13 +382,13 @@
 		if (r.location != NSNotFound) {
 			showInlineImage = YES;
 			NSString* url = [body substringWithRange:r];
-			[s appendFormat:@"<span class=\"message\" type=\"%@\">%@<br/>", typeStr, body];
+			[s appendFormat:@"<span class=\"message\" type=\"%@\">%@<br/>", lineTypeString, body];
 			[s appendFormat:@"<a href=\"%@\"><img src=\"%@\" class=\"inlineimage\"/></a></span>", url, url];
 		}
 	}
 	
 	if (!showInlineImage) {
-		[s appendFormat:@"<span class=\"message\" type=\"%@\">%@</span>", typeStr, body];
+		[s appendFormat:@"<span class=\"message\" type=\"%@\">%@</span>", lineTypeString, body];
 	}
 	
 	NSString* klass = isText ? @"line text" : @"line event";
@@ -494,7 +494,7 @@
 	NSString* bodyClass = console ? @"console" : @"normal";
 	NSMutableString* bodyAttrs = [NSMutableString string];
 	if (channel) {
-		[bodyAttrs appendFormat:@"type=\"%@\"", [channel typeStr]];
+		[bodyAttrs appendFormat:@"type=\"%@\"", [channel channelTypeString]];
 		if ([channel isChannel]) {
 			[bodyAttrs appendFormat:@"channelname=\"%@\"", [[channel name] gtm_stringByEscapingForHTML]];
 		}

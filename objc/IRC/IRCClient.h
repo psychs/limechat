@@ -12,10 +12,9 @@
 @class IRCWorld;
 
 
-@interface IRCClient : NSObject <IRCTreeItem>
+@interface IRCClient : IRCTreeItem
 {
 	IRCWorld* world;
-	LogController* log;
 	
 	IRCClientConfig* config;
 	NSMutableArray* channels;
@@ -47,14 +46,10 @@
 	BOOL identifyMsg;
 	BOOL identifyCTCP;
 	
-	BOOL isKeyword;
-	BOOL isUnread;
-	
 	IRCChannel* lastSelectedChannel;
 }
 
 @property (nonatomic, assign) IRCWorld* world;
-@property (nonatomic, retain) LogController* log;
 
 @property (nonatomic, readonly) NSString* name;
 @property (nonatomic, readonly) IRCClientConfig* config;
@@ -64,9 +59,6 @@
 @property (nonatomic, readonly) BOOL connected;
 @property (nonatomic, readonly) BOOL reconnecting;
 @property (nonatomic, readonly) BOOL loggedIn;
-@property (nonatomic, assign) BOOL isKeyword;
-@property (nonatomic, assign) BOOL isUnread;
-@property (nonatomic, readonly) BOOL isNewTalk;
 @property (nonatomic, readonly) NSString* myNick;
 @property (nonatomic, readonly) NSString* myAddress;
 

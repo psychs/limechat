@@ -30,7 +30,6 @@
 
 - (void)dealloc
 {
-	[log release];
 	[config release];
 	[topic release];
 	[super dealloc];
@@ -84,7 +83,7 @@
 	return config.type == CHANNEL_TYPE_TALK;
 }
 
-- (NSString*)typeStr
+- (NSString*)channelTypeString
 {
 	switch (config.type) {
 		case CHANNEL_TYPE_CHANNEL: return @"channel";

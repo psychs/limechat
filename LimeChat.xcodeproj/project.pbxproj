@@ -106,6 +106,7 @@
 		788AC96E1165D49A00523E80 /* ListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 788AC96D1165D49A00523E80 /* ListView.m */; };
 		788C5E660C5F4F5A0034C46E /* growlcontroller.rb in Resources */ = {isa = PBXBuildFile; fileRef = 788C5E650C5F4F5A0034C46E /* growlcontroller.rb */; };
 		7890B4E90C659E4700DF983F /* autoopdialog.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7890B4E80C659E4700DF983F /* autoopdialog.rb */; };
+		78914ACD116CF556008B772D /* IRCTreeItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 78914ACC116CF556008B772D /* IRCTreeItem.m */; };
 		7896BFE50D0C5E850069453A /* viewtheme.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7896BFE40D0C5E850069453A /* viewtheme.rb */; };
 		789AF78A10859FEE006848B3 /* RubyCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 789AF78910859FEE006848B3 /* RubyCocoa.framework */; };
 		789AF7A51085A043006848B3 /* RubyCocoa.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 789AF78910859FEE006848B3 /* RubyCocoa.framework */; };
@@ -330,6 +331,8 @@
 		788C5E650C5F4F5A0034C46E /* growlcontroller.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = growlcontroller.rb; sourceTree = "<group>"; };
 		788D56F00BB6872B00DDBF69 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
 		7890B4E80C659E4700DF983F /* autoopdialog.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = autoopdialog.rb; sourceTree = "<group>"; };
+		78914ACB116CF556008B772D /* IRCTreeItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCTreeItem.h; sourceTree = "<group>"; };
+		78914ACC116CF556008B772D /* IRCTreeItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCTreeItem.m; sourceTree = "<group>"; };
 		7896BFE40D0C5E850069453A /* viewtheme.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = viewtheme.rb; sourceTree = "<group>"; };
 		789AF78910859FEE006848B3 /* RubyCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RubyCocoa.framework; path = Frameworks/RubyCocoa.framework; sourceTree = "<group>"; };
 		78AD78E30C61B8F8001E77F4 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -399,7 +402,6 @@
 		78CFA71A116A1BDD00B7AC6B /* IRCClientConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCClientConfig.m; sourceTree = "<group>"; };
 		78CFA71B116A1BDD00B7AC6B /* IRCWorldConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCWorldConfig.h; sourceTree = "<group>"; };
 		78CFA71C116A1BDD00B7AC6B /* IRCWorldConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCWorldConfig.m; sourceTree = "<group>"; };
-		78CFA8BC116A2F1500B7AC6B /* IRCTreeItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCTreeItem.h; sourceTree = "<group>"; };
 		78E345C0116C6A9A00990CCB /* Preferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Preferences.h; sourceTree = "<group>"; };
 		78E345C1116C6A9A00990CCB /* Preferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Preferences.m; sourceTree = "<group>"; };
 		78E345CE116C6ACD00990CCB /* PreferencesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreferencesController.h; sourceTree = "<group>"; };
@@ -840,13 +842,14 @@
 		78BC0C521168E5D800A984AA /* IRC */ = {
 			isa = PBXGroup;
 			children = (
-				78CFA8BC116A2F1500B7AC6B /* IRCTreeItem.h */,
 				78CFA57D116A078D00B7AC6B /* IRCWorld.h */,
 				78CFA57E116A078D00B7AC6B /* IRCWorld.m */,
 				78CFA580116A079500B7AC6B /* IRCClient.h */,
 				78CFA581116A079500B7AC6B /* IRCClient.m */,
 				78CFA5611169C84100B7AC6B /* IRCChannel.h */,
 				78CFA5621169C84100B7AC6B /* IRCChannel.m */,
+				78914ACB116CF556008B772D /* IRCTreeItem.h */,
+				78914ACC116CF556008B772D /* IRCTreeItem.m */,
 				78CFA71B116A1BDD00B7AC6B /* IRCWorldConfig.h */,
 				78CFA71C116A1BDD00B7AC6B /* IRCWorldConfig.m */,
 				78CFA719116A1BDD00B7AC6B /* IRCClientConfig.h */,
@@ -1108,6 +1111,7 @@
 				782C566B116CBEF900F30316 /* SyckInput.m in Sources */,
 				782C5673116CBF1200F30316 /* YAMLCategories.m in Sources */,
 				782C57C2116CCE0200F30316 /* NSColorHelper.m in Sources */,
+				78914ACD116CF556008B772D /* IRCTreeItem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

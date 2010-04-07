@@ -55,7 +55,6 @@
 @implementation IRCClient
 
 @synthesize world;
-@synthesize log;
 
 @synthesize config;
 @synthesize channels;
@@ -84,7 +83,6 @@
 
 - (void)dealloc
 {
-	[log release];
 	[config release];
 	[channels release];
 	[conn close];
