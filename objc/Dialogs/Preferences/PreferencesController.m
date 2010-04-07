@@ -52,6 +52,10 @@
 	[logFont release];
 	logFont = [[NSFont fontWithName:[NewPreferences themeLogFontName] size:[NewPreferences themeLogFontSize]] retain];
 	
+	if (![self.window isVisible]) {
+		[self.window center];
+	}
+	
 	[self.window makeKeyAndOrderFront:nil];
 }
 
@@ -451,7 +455,7 @@
 
 - (void)windowWillClose:(NSNotification *)note
 {
-	LOG_METHOD
+	[[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 @end
