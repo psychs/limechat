@@ -1,0 +1,7 @@
+Syck cocoa 0.1
+
+The YAML project should work in XCode without any alterations. It builds a statically linked framework to syck. The header files should explain everything. Currently syck is not used for output, due to encoding constraints, and a slightly quirky method is used. This might/should be replaced with something that works in a similar way to Apple's keyed archivers.
+
+Included is Kyle Hammond's very good Base64 code to handle data in YAML. Currently Altivec is disabled in his code, if you want to enable it change the COMPILE_FOR_ALTIVEC define at the top of GSNSDataExtensions.m.
+
+If you have any problems/queries contact will@thimbleby.net

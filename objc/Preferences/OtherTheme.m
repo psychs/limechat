@@ -2,6 +2,7 @@
 // You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
 #import "OtherTheme.h"
+#import "YAML.h"
 
 
 @implementation OtherTheme
@@ -34,6 +35,11 @@
 - (void)reload
 {
 	LOG(@"### loading: %@", fileName);
+	
+	NSData* data = [NSData dataWithContentsOfFile:fileName];
+	id obj = yaml_parse_raw_utf8(data.bytes, data.length);
+	
+	LOG(@"%@", obj);
 }
 
 @end
