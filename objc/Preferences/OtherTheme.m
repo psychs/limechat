@@ -213,7 +213,7 @@
 	treeFont = [self loadFont:@"server-tree"] ?: [NSFont systemFontOfSize:0];
 	[treeFont retain];
 	
-	treeBgColor = [self loadColor:@"server-tree", @"background-color", nil] ?: [NSColor whiteColor];
+	treeBgColor = [self loadColor:@"server-tree", @"background-color", nil] ?: DEVICE_RGB(229, 237, 247);
 	[treeBgColor retain];
 	
 	treeHighlightColor = [self loadColor:@"server-tree", @"highlight", @"color", nil] ?: [NSColor magentaColor];
@@ -226,12 +226,12 @@
 	[treeUnreadColor retain];
 
 	
-	treeUnreadColor = [self loadColor:@"server-tree", @"normal", @"active", @"color", nil] ?: [NSColor blackColor];
-	[treeUnreadColor retain];
+	treeActiveColor = [self loadColor:@"server-tree", @"normal", @"active", @"color", nil] ?: [NSColor blackColor];
+	[treeActiveColor retain];
 	
-	treeUnreadColor = [self loadColor:@"server-tree", @"normal", @"inactive", @"color", nil] ?: [NSColor lightGrayColor];
-	[treeUnreadColor retain];
-
+	treeInactiveColor = [self loadColor:@"server-tree", @"normal", @"inactive", @"color", nil] ?: [NSColor lightGrayColor];
+	[treeInactiveColor retain];
+	
 
 	treeSelActiveColor = [self loadColor:@"server-tree", @"selected", @"active", @"color", nil] ?: [NSColor blackColor];
 	[treeSelActiveColor retain];

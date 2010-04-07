@@ -497,6 +497,13 @@
 	[self updateIcon];
 }
 
+- (void)outlineView:(NSOutlineView *)outlineView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn item:(id)item
+{
+	OtherTheme* theme = viewTheme.other;
+	
+	[cell setTextColor:theme.treeActiveColor];
+}
+
 - (void)serverTreeViewAcceptsFirstResponder
 {
 }
