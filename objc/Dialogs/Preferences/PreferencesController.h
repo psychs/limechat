@@ -17,8 +17,11 @@
 	IBOutlet NSArrayController* keywordsArrayController;
 	IBOutlet NSArrayController* excludeWordsArrayController;
 	IBOutlet NSArrayController* ignoreWordsArrayController;
+	IBOutlet NSPopUpButton* transcriptFolderButton;
 	
 	NSMutableArray* sounds;
+	
+	NSOpenPanel* transcriptFolderOpenPanel;
 }
 
 @property (nonatomic, assign) id delegate;

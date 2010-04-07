@@ -116,7 +116,20 @@ EOM
       end
 
       if default_value
-        l =
+        if objc_type == 'object'
+          l =
+<<EOM
++ (#{type})#{camel}
+{
+  NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+  id obj = [ud objectForKey:@"#{key}"];
+  if (!obj) return #{default_value};
+  return obj;
+}
+
+EOM
+        else
+          l =
 <<EOM
 + (#{type})#{camel}
 {
@@ -127,6 +140,7 @@ EOM
 }
 
 EOM
+        end
       else
         l =
 <<EOM

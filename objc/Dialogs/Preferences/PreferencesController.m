@@ -9,6 +9,7 @@
 
 @interface PreferencesController (Private)
 - (void)loadHotKey;
+- (void)updateTranscriptFolder;
 @end
 
 
@@ -27,6 +28,7 @@
 - (void)dealloc
 {
 	[sounds release];
+	[transcriptFolderOpenPanel release];
 	[super dealloc];
 }
 
@@ -36,6 +38,7 @@
 - (void)show
 {
 	[self loadHotKey];
+	[self updateTranscriptFolder];
 	
 	[self.window makeKeyAndOrderFront:nil];
 }
@@ -181,6 +184,65 @@
 }
 
 #pragma mark -
+#pragma mark Transcript Folder Popup
+
+- (void)updateTranscriptFolder
+{
+	NSString* path = [NewPreferences transcriptFolder];
+	path = [path stringByExpandingTildeInPath];
+	NSString* dirName = [path lastPathComponent];
+	
+	NSImage* icon = [[NSWorkspace sharedWorkspace] iconForFile:path];
+	[icon setSize:NSMakeSize(16, 16)];
+	
+	NSMenuItem* item = [transcriptFolderButton itemAtIndex:0];
+	[item setTitle:dirName];
+	[item setImage:icon];
+}
+
+- (void)transcriptFolderPanelDidEnd:(NSOpenPanel *)panel returnCode:(int)returnCode contextInfo:(void  *)contextInfo
+{
+	[transcriptFolderButton selectItem:[transcriptFolderButton itemAtIndex:0]];
+	
+	if (returnCode == NSOKButton) {
+		NSString* path = [[panel filenames] objectAtIndex:0];
+		
+		// create directory
+		NSFileManager* fm = [NSFileManager defaultManager];
+		BOOL isDir;
+		if (![fm fileExistsAtPath:path isDirectory:&isDir]) {
+			[fm createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:NULL];
+		}
+		
+		[NewPreferences setTranscriptFolder:[path stringByAbbreviatingWithTildeInPath]];
+		[self updateTranscriptFolder];
+	}
+		
+	[transcriptFolderOpenPanel autorelease];
+	transcriptFolderOpenPanel = nil;
+}
+
+- (void)onTranscriptFolderChanged:(id)sender
+{
+	if ([[transcriptFolderButton selectedItem] tag] != 2) return;
+	
+	NSString* path = [NewPreferences transcriptFolder];
+	path = [path stringByExpandingTildeInPath];
+	NSString* parentPath = [path stringByDeletingLastPathComponent];
+	
+	NSOpenPanel* d = [NSOpenPanel openPanel];
+	[d setCanChooseFiles:NO];
+	[d setCanChooseDirectories:YES];
+	[d setResolvesAliases:YES];
+	[d setAllowsMultipleSelection:NO];
+	[d setCanCreateDirectories:YES];
+	[d beginForDirectory:parentPath file:nil types:nil modelessDelegate:self didEndSelector:@selector(transcriptFolderPanelDidEnd:returnCode:contextInfo:) contextInfo:nil];
+	
+	[transcriptFolderOpenPanel release];
+	transcriptFolderOpenPanel = [d retain];
+}
+
+#pragma mark -
 #pragma mark Actions
 
 - (void)editTable:(NSTableView*)table
@@ -206,10 +268,6 @@
 {
 	[ignoreWordsArrayController add:nil];
 	[self performSelector:@selector(editTable:) withObject:ignoreWordsTable afterDelay:0];
-}
-
-- (void)onTranscriptFolderChanged:(id)sender
-{
 }
 
 - (void)onLayoutChanged:(id)sender

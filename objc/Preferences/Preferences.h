@@ -32,7 +32,6 @@ typedef enum {
 + (BOOL)showInlineImages;
 + (BOOL)showJoinLeave;
 + (BOOL)stopGrowlOnActive;
-+ (NSString*)transcriptFolder;
 + (int)tabAction;
 + (BOOL)useGrowl;
 + (BOOL)useHotkey;
@@ -48,6 +47,9 @@ typedef enum {
 + (BOOL)themeOverrideTimestampFormat;
 + (NSString*)themeTimestampFormat;
 + (double)themeTransparency;
+
++ (NSString*)transcriptFolder;
++ (void)setTranscriptFolder:(NSString*)value;
 
 + (NSString*)soundChanneltext;
 + (void)setSoundChanneltext:(NSString*)value;

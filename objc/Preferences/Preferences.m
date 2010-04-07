@@ -43,7 +43,7 @@
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
 	id obj = [ud objectForKey:@"Preferences.Dcc.myaddress"];
 	if (!obj) return @"";
-	return [obj objectValue];
+	return obj;
 }
 
 + (BOOL)autoRejoin
@@ -131,7 +131,7 @@
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
 	id obj = [ud objectForKey:@"Preferences.General.paste_command"];
 	if (!obj) return @"privmsg";
-	return [obj objectValue];
+	return obj;
 }
 
 + (NSString*)pasteSyntax
@@ -139,7 +139,7 @@
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
 	id obj = [ud objectForKey:@"Preferences.General.paste_syntax"];
 	if (!obj) return [[[ud objectForKey:@"AppleLanguages"] objectAtIndex:0] isEqualToString:@"ja"] ? @"notice" : @"privmsg";
-	return [obj objectValue];
+	return obj;
 }
 
 + (BOOL)showInlineImages
@@ -164,14 +164,6 @@
 	id obj = [ud objectForKey:@"Preferences.General.stop_growl_on_active"];
 	if (!obj) return NO;
 	return [obj boolValue];
-}
-
-+ (NSString*)transcriptFolder
-{
-	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	id obj = [ud objectForKey:@"Preferences.General.transcript_folder"];
-	if (!obj) return @"~/Documents/LimeChat Transcripts";
-	return [obj objectValue];
 }
 
 + (int)tabAction
@@ -245,7 +237,7 @@
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
 	id obj = [ud objectForKey:@"Preferences.Theme.log_font_name"];
 	if (!obj) return @"Lucida Grande";
-	return [obj objectValue];
+	return obj;
 }
 
 + (double)themeLogFontSize
@@ -261,7 +253,7 @@
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
 	id obj = [ud objectForKey:@"Preferences.Theme.name"];
 	if (!obj) return @"resource:Default";
-	return [obj objectValue];
+	return obj;
 }
 
 + (NSString*)themeNickFormat
@@ -269,7 +261,7 @@
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
 	id obj = [ud objectForKey:@"Preferences.Theme.nick_format"];
 	if (!obj) return @"%n: ";
-	return [obj objectValue];
+	return obj;
 }
 
 + (BOOL)themeOverrideLogFont
@@ -301,7 +293,7 @@
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
 	id obj = [ud objectForKey:@"Preferences.Theme.timestamp_format"];
 	if (!obj) return @"%H:%M";
-	return [obj objectValue];
+	return obj;
 }
 
 + (double)themeTransparency
@@ -310,6 +302,23 @@
 	id obj = [ud objectForKey:@"Preferences.Theme.transparency"];
 	if (!obj) return 1;
 	return [obj doubleValue];
+}
+
+#pragma mark -
+#pragma mark Transcript Folder
+
++ (NSString*)transcriptFolder
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	id obj = [ud objectForKey:@"Preferences.General.transcript_folder"];
+	if (!obj) return @"~/Documents/LimeChat Transcripts";
+	return obj;
+}
+
++ (void)setTranscriptFolder:(NSString*)value
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	[ud setObject:value forKey:@"Preferences.General.transcript_folder"];
 }
 
 #pragma mark -
