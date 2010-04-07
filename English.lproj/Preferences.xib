@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="101"/>
+			<integer value="99"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1067,7 +1067,7 @@
 								</object>
 								<object class="NSTabViewItem" id="937542876">
 									<object class="NSView" key="NSView" id="528046259">
-										<reference key="NSNextResponder" ref="460984590"/>
+										<nil key="NSNextResponder"/>
 										<int key="NSvFlags">256</int>
 										<object class="NSMutableArray" key="NSSubviews">
 											<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1314,7 +1314,6 @@
 											</object>
 										</object>
 										<string key="NSFrame">{{10, 33}, {439, 355}}</string>
-										<reference key="NSSuperview" ref="460984590"/>
 									</object>
 									<string key="NSLabel">Event</string>
 									<reference key="NSColor" ref="326222776"/>
@@ -2071,7 +2070,7 @@
 								</object>
 								<object class="NSTabViewItem" id="13480775">
 									<object class="NSView" key="NSView" id="706443587">
-										<nil key="NSNextResponder"/>
+										<reference key="NSNextResponder" ref="460984590"/>
 										<int key="NSvFlags">256</int>
 										<object class="NSMutableArray" key="NSSubviews">
 											<bool key="EncodedWithXMLCoder">YES</bool>
@@ -2253,20 +2252,21 @@
 											</object>
 										</object>
 										<string key="NSFrame">{{10, 33}, {439, 355}}</string>
+										<reference key="NSSuperview" ref="460984590"/>
 									</object>
 									<string key="NSLabel">Log</string>
 									<reference key="NSColor" ref="326222776"/>
 									<reference key="NSTabView" ref="460984590"/>
 								</object>
 							</object>
-							<reference key="NSSelectedTabViewItem" ref="937542876"/>
+							<reference key="NSSelectedTabViewItem" ref="13480775"/>
 							<reference key="NSFont" ref="325354301"/>
 							<int key="NSTvFlags">0</int>
 							<bool key="NSAllowTruncatedLabels">YES</bool>
 							<bool key="NSDrawsBackground">YES</bool>
 							<object class="NSMutableArray" key="NSSubviews">
 								<bool key="EncodedWithXMLCoder">YES</bool>
-								<reference ref="528046259"/>
+								<reference ref="706443587"/>
 							</object>
 						</object>
 					</object>
@@ -5921,7 +5921,7 @@
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">objc/Dialogs/PreferencesController.h</string>
+						<string key="minorKey">objc/Dialogs/Preferences/PreferencesController.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
