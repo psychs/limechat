@@ -67,4 +67,6 @@
 + (NSString*)stringForKey:(NSString*)key;
 + (NSDictionary*)dictionaryForKey:(NSString*)key;
 
++ (void)migrate;
+
 @end
