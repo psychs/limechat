@@ -39,19 +39,6 @@ typedef enum {
 + (BOOL)keywordCurrentNick;
 + (int)keywordMatchingMethod;
 + (BOOL)keywordWholeLine;
-+ (NSString*)soundChanneltext;
-+ (NSString*)soundDisconnect;
-+ (NSString*)soundFileReceiveFailure;
-+ (NSString*)soundFileReceiveRequest;
-+ (NSString*)soundFileReceiveSuccess;
-+ (NSString*)soundFileSendFailure;
-+ (NSString*)soundFileSendSuccess;
-+ (NSString*)soundHighlight;
-+ (NSString*)soundInvited;
-+ (NSString*)soundKicked;
-+ (NSString*)soundLogin;
-+ (NSString*)soundNewtalk;
-+ (NSString*)soundTalktext;
 + (NSString*)themeLogFontName;
 + (double)themeLogFontSize;
 + (NSString*)themeName;
@@ -61,6 +48,33 @@ typedef enum {
 + (BOOL)themeOverrideTimestampFormat;
 + (NSString*)themeTimestampFormat;
 + (double)themeTransparency;
+
++ (NSString*)soundChanneltext;
++ (void)setSoundChanneltext:(NSString*)value;
++ (NSString*)soundDisconnect;
++ (void)setSoundDisconnect:(NSString*)value;
++ (NSString*)soundFileReceiveFailure;
++ (void)setSoundFileReceiveFailure:(NSString*)value;
++ (NSString*)soundFileReceiveRequest;
++ (void)setSoundFileReceiveRequest:(NSString*)value;
++ (NSString*)soundFileReceiveSuccess;
++ (void)setSoundFileReceiveSuccess:(NSString*)value;
++ (NSString*)soundFileSendFailure;
++ (void)setSoundFileSendFailure:(NSString*)value;
++ (NSString*)soundFileSendSuccess;
++ (void)setSoundFileSendSuccess:(NSString*)value;
++ (NSString*)soundHighlight;
++ (void)setSoundHighlight:(NSString*)value;
++ (NSString*)soundInvited;
++ (void)setSoundInvited:(NSString*)value;
++ (NSString*)soundKicked;
++ (void)setSoundKicked:(NSString*)value;
++ (NSString*)soundLogin;
++ (void)setSoundLogin:(NSString*)value;
++ (NSString*)soundNewtalk;
++ (void)setSoundNewtalk:(NSString*)value;
++ (NSString*)soundTalktext;
++ (void)setSoundTalktext:(NSString*)value;
 
 + (NSDictionary*)loadWorld;
 

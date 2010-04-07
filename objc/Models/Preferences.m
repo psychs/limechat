@@ -240,84 +240,6 @@
 	return [ud objectForKey:@"Preferences.Keyword.words"];
 }
 
-+ (NSString*)soundChanneltext
-{
-	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	return [ud objectForKey:@"Preferences.Sound.channeltext"];
-}
-
-+ (NSString*)soundDisconnect
-{
-	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	return [ud objectForKey:@"Preferences.Sound.disconnect"];
-}
-
-+ (NSString*)soundFileReceiveFailure
-{
-	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	return [ud objectForKey:@"Preferences.Sound.file_receive_failure"];
-}
-
-+ (NSString*)soundFileReceiveRequest
-{
-	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	return [ud objectForKey:@"Preferences.Sound.file_receive_request"];
-}
-
-+ (NSString*)soundFileReceiveSuccess
-{
-	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	return [ud objectForKey:@"Preferences.Sound.file_receive_success"];
-}
-
-+ (NSString*)soundFileSendFailure
-{
-	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	return [ud objectForKey:@"Preferences.Sound.file_send_failure"];
-}
-
-+ (NSString*)soundFileSendSuccess
-{
-	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	return [ud objectForKey:@"Preferences.Sound.file_send_success"];
-}
-
-+ (NSString*)soundHighlight
-{
-	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	return [ud objectForKey:@"Preferences.Sound.highlight"];
-}
-
-+ (NSString*)soundInvited
-{
-	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	return [ud objectForKey:@"Preferences.Sound.invited"];
-}
-
-+ (NSString*)soundKicked
-{
-	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	return [ud objectForKey:@"Preferences.Sound.kicked"];
-}
-
-+ (NSString*)soundLogin
-{
-	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	return [ud objectForKey:@"Preferences.Sound.login"];
-}
-
-+ (NSString*)soundNewtalk
-{
-	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	return [ud objectForKey:@"Preferences.Sound.newtalk"];
-}
-
-+ (NSString*)soundTalktext
-{
-	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	return [ud objectForKey:@"Preferences.Sound.talktext"];
-}
-
 + (NSString*)themeLogFontName
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
@@ -388,6 +310,165 @@
 	id obj = [ud objectForKey:@"Preferences.Theme.transparency"];
 	if (!obj) return 1;
 	return [obj doubleValue];
+}
+
+#pragma mark -
+#pragma mark Sounds
+
++ (NSString*)soundChanneltext
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	return [ud objectForKey:@"Preferences.Sound.channeltext"];
+}
+
++ (void)setSoundChanneltext:(NSString*)value
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	[ud setObject:value forKey:@"Preferences.Sound.channeltext"];
+}
+
++ (NSString*)soundDisconnect
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	return [ud objectForKey:@"Preferences.Sound.disconnect"];
+}
+
++ (void)setSoundDisconnect:(NSString*)value
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	[ud setObject:value forKey:@"Preferences.Sound.disconnect"];
+}
+
++ (NSString*)soundFileReceiveFailure
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	return [ud objectForKey:@"Preferences.Sound.file_receive_failure"];
+}
+
++ (void)setSoundFileReceiveFailure:(NSString*)value
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	[ud setObject:value forKey:@"Preferences.Sound.file_receive_failure"];
+}
+
++ (NSString*)soundFileReceiveRequest
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	return [ud objectForKey:@"Preferences.Sound.file_receive_request"];
+}
+
++ (void)setSoundFileReceiveRequest:(NSString*)value
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	[ud setObject:value forKey:@"Preferences.Sound.file_receive_request"];
+}
+
++ (NSString*)soundFileReceiveSuccess
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	return [ud objectForKey:@"Preferences.Sound.file_receive_success"];
+}
+
++ (void)setSoundFileReceiveSuccess:(NSString*)value
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	[ud setObject:value forKey:@"Preferences.Sound.file_receive_success"];
+}
+
++ (NSString*)soundFileSendFailure
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	return [ud objectForKey:@"Preferences.Sound.file_send_failure"];
+}
+
++ (void)setSoundFileSendFailure:(NSString*)value
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	[ud setObject:value forKey:@"Preferences.Sound.file_send_failure"];
+}
+
++ (NSString*)soundFileSendSuccess
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	return [ud objectForKey:@"Preferences.Sound.file_send_success"];
+}
+
++ (void)setSoundFileSendSuccess:(NSString*)value
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	[ud setObject:value forKey:@"Preferences.Sound.file_send_success"];
+}
+
++ (NSString*)soundHighlight
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	return [ud objectForKey:@"Preferences.Sound.highlight"];
+}
+
++ (void)setSoundHighlight:(NSString*)value
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	[ud setObject:value forKey:@"Preferences.Sound.highlight"];
+}
+
++ (NSString*)soundInvited
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	return [ud objectForKey:@"Preferences.Sound.invited"];
+}
+
++ (void)setSoundInvited:(NSString*)value
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	[ud setObject:value forKey:@"Preferences.Sound.invited"];
+}
+
++ (NSString*)soundKicked
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	return [ud objectForKey:@"Preferences.Sound.kicked"];
+}
+
++ (void)setSoundKicked:(NSString*)value
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	[ud setObject:value forKey:@"Preferences.Sound.kicked"];
+}
+
++ (NSString*)soundLogin
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	return [ud objectForKey:@"Preferences.Sound.login"];
+}
+
++ (void)setSoundLogin:(NSString*)value
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	[ud setObject:value forKey:@"Preferences.Sound.login"];
+}
+
++ (NSString*)soundNewtalk
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	return [ud objectForKey:@"Preferences.Sound.newtalk"];
+}
+
++ (void)setSoundNewtalk:(NSString*)value
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	[ud setObject:value forKey:@"Preferences.Sound.newtalk"];
+}
+
++ (NSString*)soundTalktext
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	return [ud objectForKey:@"Preferences.Sound.talktext"];
+}
+
++ (void)setSoundTalktext:(NSString*)value
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	[ud setObject:value forKey:@"Preferences.Sound.talktext"];
 }
 
 #pragma mark -

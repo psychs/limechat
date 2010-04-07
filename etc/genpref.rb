@@ -100,12 +100,20 @@ s.each_line do |line|
       camel = (ary[0..0] + ary[1..-1].map {|e| e.capitalize }).join
       capital = ary.map {|e| e.capitalize }.join
       
-      h =
+      if m = /^sound/i.match(camel)
+        h =
+<<EOM
++ (#{type})#{camel};
++ (void)set#{capital}:(#{type})value;
+EOM
+        header << h
+      else
+        h =
 <<EOM
 + (#{type})#{camel};
 EOM
-#+ (void)set#{capital}:(#{type})value;
-      header << h
+        header << h
+      end
 
       if default_value
         l =
@@ -133,7 +141,8 @@ EOM
       
       source << l
 
-      l =
+      if m = /^sound/i.match(camel)
+        l =
 <<EOM
 + (void)set#{capital}:(#{type})value
 {
@@ -142,8 +151,9 @@ EOM
 }
 
 EOM
-      
-      #source << l
+
+        source << l
+      end
     end
   end
 end

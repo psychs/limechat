@@ -130,6 +130,7 @@
 		78CFA71E116A1BDD00B7AC6B /* IRCClientConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CFA71A116A1BDD00B7AC6B /* IRCClientConfig.m */; };
 		78CFA71F116A1BDD00B7AC6B /* IRCWorldConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CFA71C116A1BDD00B7AC6B /* IRCWorldConfig.m */; };
 		78DA7D2B1169080700962CC4 /* Preferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DA7D2A1169080700962CC4 /* Preferences.m */; };
+		78E34528116C60B600990CCB /* SoundWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78E34527116C60B600990CCB /* SoundWrapper.m */; };
 		78E572390C1C30BA00BDF7EC /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		78E5723B0C1C30BA00BDF7EC /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 788D56F00BB6872B00DDBF69 /* WebKit.framework */; };
 		78E5723C0C1C30BA00BDF7EC /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 787FD46C0BFE960100F2F22D /* Carbon.framework */; };
@@ -357,6 +358,8 @@
 		78CFA8BC116A2F1500B7AC6B /* IRCTreeItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCTreeItem.h; sourceTree = "<group>"; };
 		78DA7D291169080600962CC4 /* Preferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Preferences.h; sourceTree = "<group>"; };
 		78DA7D2A1169080700962CC4 /* Preferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Preferences.m; sourceTree = "<group>"; };
+		78E34526116C60B600990CCB /* SoundWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundWrapper.h; sourceTree = "<group>"; };
+		78E34527116C60B600990CCB /* SoundWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoundWrapper.m; sourceTree = "<group>"; };
 		78E570D00C1C306500BDF7EC /* LimeChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LimeChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		78EF6EDD116ADA5400731FDF /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		78EF6EDE116ADA5400731FDF /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppController.m; sourceTree = "<group>"; };
@@ -740,6 +743,8 @@
 			children = (
 				7846C707116B913000A08C89 /* PreferencesController.h */,
 				7846C708116B913000A08C89 /* PreferencesController.m */,
+				78E34526116C60B600990CCB /* SoundWrapper.h */,
+				78E34527116C60B600990CCB /* SoundWrapper.m */,
 			);
 			name = Dialogs;
 			path = objc/Dialogs;
@@ -986,6 +991,7 @@
 				78EF6EDF116ADA5400731FDF /* AppController.m in Sources */,
 				787BE9DD116B45E9003AE47D /* MenuController.m in Sources */,
 				7846C709116B913000A08C89 /* PreferencesController.m in Sources */,
+				78E34528116C60B600990CCB /* SoundWrapper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

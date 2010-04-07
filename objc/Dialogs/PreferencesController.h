@@ -9,6 +9,8 @@
 {
 	id delegate;
 	
+	IBOutlet KeyRecorder* hotKey;
+	
 	IBOutlet NSTableView* keywordsTable;
 	IBOutlet NSTableView* excludeWordsTable;
 	IBOutlet NSTableView* ignoreWordsTable;
@@ -16,13 +18,15 @@
 	IBOutlet NSArrayController* excludeWordsArrayController;
 	IBOutlet NSArrayController* ignoreWordsArrayController;
 	
-	IBOutlet KeyRecorder* hotKey;
+	NSMutableArray* sounds;
 }
 
 @property (nonatomic, assign) id delegate;
 @property (nonatomic, assign) int maxLogLines;
 @property (nonatomic, assign) NSString* fontDisplayName;
 @property (nonatomic, assign) CGFloat fontPointSize;
+@property (nonatomic, readonly) NSArray* availableSounds;
+@property (nonatomic, readonly) NSMutableArray* sounds;
 
 - (void)show;
 
