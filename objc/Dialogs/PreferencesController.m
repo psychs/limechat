@@ -71,6 +71,31 @@
 #pragma mark -
 #pragma mark Actions
 
+- (void)editTable:(NSTableView*)table
+{
+	int row = [table numberOfRows] - 1;
+	[table scrollRowToVisible:row];
+	[table editColumn:0 row:row withEvent:nil select:YES];
+}
+
+- (void)onAddKeyword:(id)sender
+{
+	[keywordsArrayController add:nil];
+	[self performSelector:@selector(editTable:) withObject:keywordsTable afterDelay:0];
+}
+
+- (void)onAddExcludeWord:(id)sender
+{
+	[excludeWordsArrayController add:nil];
+	[self performSelector:@selector(editTable:) withObject:excludeWordsTable afterDelay:0];
+}
+
+- (void)onAddIgnoreWord:(id)sender
+{
+	[ignoreWordsArrayController add:nil];
+	[self performSelector:@selector(editTable:) withObject:ignoreWordsTable afterDelay:0];
+}
+
 - (void)onTranscriptFolderChanged:(id)sender
 {
 }
@@ -88,18 +113,6 @@
 }
 
 - (void)onSelectFont:(id)sender
-{
-}
-
-- (void)onAddHighlightWord:(id)sender
-{
-}
-
-- (void)onAddDislikeWord:(id)sender
-{
-}
-
-- (void)onAddIgnoreWord:(id)sender
 {
 }
 

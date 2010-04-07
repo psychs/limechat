@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="3710"/>
+			<integer value="11"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -2278,12 +2278,6 @@
 				<string key="NSMaxSize">{1.79769e+308, 1.79769e+308}</string>
 			</object>
 			<object class="NSUserDefaultsController" id="1032655829">
-				<object class="NSMutableArray" key="NSDeclaredKeys">
-					<bool key="EncodedWithXMLCoder">YES</bool>
-					<string>keywords</string>
-					<string>excludeWords</string>
-					<string>ignoreWords</string>
-				</object>
 				<bool key="NSSharedInstance">YES</bool>
 			</object>
 			<object class="NSArrayController" id="737951276">
@@ -2293,7 +2287,6 @@
 				</object>
 				<bool key="NSEditable">YES</bool>
 				<object class="_NSManagedProxy" key="_NSManagedProxy"/>
-				<bool key="NSAvoidsEmptySelection">YES</bool>
 				<bool key="NSPreservesSelection">YES</bool>
 				<bool key="NSSelectsInsertedObjects">YES</bool>
 				<bool key="NSFilterRestrictsInsertion">YES</bool>
@@ -2306,7 +2299,6 @@
 				</object>
 				<bool key="NSEditable">YES</bool>
 				<object class="_NSManagedProxy" key="_NSManagedProxy"/>
-				<bool key="NSAvoidsEmptySelection">YES</bool>
 				<bool key="NSPreservesSelection">YES</bool>
 				<bool key="NSSelectsInsertedObjects">YES</bool>
 				<bool key="NSFilterRestrictsInsertion">YES</bool>
@@ -2319,7 +2311,6 @@
 				</object>
 				<bool key="NSEditable">YES</bool>
 				<object class="_NSManagedProxy" key="_NSManagedProxy"/>
-				<bool key="NSAvoidsEmptySelection">YES</bool>
 				<bool key="NSPreservesSelection">YES</bool>
 				<bool key="NSSelectsInsertedObjects">YES</bool>
 				<bool key="NSFilterRestrictsInsertion">YES</bool>
@@ -2706,7 +2697,7 @@
 						<string key="label">enabled: values.Preferences.Keyword.matching_method</string>
 						<reference key="source" ref="815888114"/>
 						<reference key="destination" ref="1032655829"/>
-						<object class="NSNibBindingConnector" key="connector">
+						<object class="NSNibBindingConnector" key="connector" id="474514078">
 							<reference key="NSSource" ref="815888114"/>
 							<reference key="NSDestination" ref="1032655829"/>
 							<string key="NSLabel">enabled: values.Preferences.Keyword.matching_method</string>
@@ -2976,30 +2967,6 @@
 						<reference key="destination" ref="623153485"/>
 					</object>
 					<int key="connectionID">3640</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onAddHighlightWord:</string>
-						<reference key="source" ref="523994250"/>
-						<reference key="destination" ref="377123624"/>
-					</object>
-					<int key="connectionID">3851</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onAddDislikeWord:</string>
-						<reference key="source" ref="523994250"/>
-						<reference key="destination" ref="654326576"/>
-					</object>
-					<int key="connectionID">3852</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onAddIgnoreWord:</string>
-						<reference key="source" ref="523994250"/>
-						<reference key="destination" ref="1063290249"/>
-					</object>
-					<int key="connectionID">3853</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -3317,6 +3284,168 @@
 						</object>
 					</object>
 					<int key="connectionID">4332</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">keywordsArrayController</string>
+						<reference key="source" ref="523994250"/>
+						<reference key="destination" ref="737951276"/>
+					</object>
+					<int key="connectionID">4333</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">excludeWordsArrayController</string>
+						<reference key="source" ref="523994250"/>
+						<reference key="destination" ref="592554260"/>
+					</object>
+					<int key="connectionID">4334</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">ignoreWordsArrayController</string>
+						<reference key="source" ref="523994250"/>
+						<reference key="destination" ref="372783997"/>
+					</object>
+					<int key="connectionID">4335</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">onAddKeyword:</string>
+						<reference key="source" ref="523994250"/>
+						<reference key="destination" ref="377123624"/>
+					</object>
+					<int key="connectionID">4336</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">onAddExcludeWord:</string>
+						<reference key="source" ref="523994250"/>
+						<reference key="destination" ref="654326576"/>
+					</object>
+					<int key="connectionID">4337</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">onAddIgnoreWord:</string>
+						<reference key="source" ref="523994250"/>
+						<reference key="destination" ref="1063290249"/>
+					</object>
+					<int key="connectionID">4338</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">remove:</string>
+						<reference key="source" ref="372783997"/>
+						<reference key="destination" ref="550229891"/>
+					</object>
+					<int key="connectionID">4339</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">remove:</string>
+						<reference key="source" ref="592554260"/>
+						<reference key="destination" ref="815888114"/>
+					</object>
+					<int key="connectionID">4340</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">remove:</string>
+						<reference key="source" ref="737951276"/>
+						<reference key="destination" ref="627355222"/>
+					</object>
+					<int key="connectionID">4341</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">keywordsTable</string>
+						<reference key="source" ref="523994250"/>
+						<reference key="destination" ref="199676028"/>
+					</object>
+					<int key="connectionID">4342</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">excludeWordsTable</string>
+						<reference key="source" ref="523994250"/>
+						<reference key="destination" ref="399651909"/>
+					</object>
+					<int key="connectionID">4343</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">ignoreWordsTable</string>
+						<reference key="source" ref="523994250"/>
+						<reference key="destination" ref="1064042539"/>
+					</object>
+					<int key="connectionID">4344</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: canRemove</string>
+						<reference key="source" ref="627355222"/>
+						<reference key="destination" ref="737951276"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="627355222"/>
+							<reference key="NSDestination" ref="737951276"/>
+							<string key="NSLabel">enabled: canRemove</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">canRemove</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">4346</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: canRemove</string>
+						<reference key="source" ref="550229891"/>
+						<reference key="destination" ref="372783997"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="550229891"/>
+							<reference key="NSDestination" ref="372783997"/>
+							<string key="NSLabel">enabled: canRemove</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">canRemove</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">4349</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled2: canRemove</string>
+						<reference key="source" ref="815888114"/>
+						<reference key="destination" ref="592554260"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="815888114"/>
+							<reference key="NSDestination" ref="592554260"/>
+							<string key="NSLabel">enabled2: canRemove</string>
+							<string key="NSBinding">enabled2</string>
+							<string key="NSKeyPath">canRemove</string>
+							<object class="NSDictionary" key="NSOptions">
+								<bool key="EncodedWithXMLCoder">YES</bool>
+								<object class="NSArray" key="dict.sortedKeys">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<string>NSMultipleValuesPlaceholder</string>
+									<string>NSNoSelectionPlaceholder</string>
+									<string>NSNotApplicablePlaceholder</string>
+									<string>NSNullPlaceholder</string>
+								</object>
+								<object class="NSMutableArray" key="dict.values">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<integer value="-1"/>
+									<integer value="-1"/>
+									<integer value="-1"/>
+									<integer value="-1"/>
+								</object>
+							</object>
+							<reference key="NSPreviousConnector" ref="474514078"/>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">4353</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -5389,7 +5518,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">4332</int>
+			<int key="maxID">4353</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -5617,9 +5746,9 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>onAddDislikeWord:</string>
-							<string>onAddHighlightWord:</string>
+							<string>onAddExcludeWord:</string>
 							<string>onAddIgnoreWord:</string>
+							<string>onAddKeyword:</string>
 							<string>onChangedTheme:</string>
 							<string>onChangedTransparency:</string>
 							<string>onLayoutChanged:</string>
@@ -5641,8 +5770,27 @@
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">delegate</string>
-						<string key="NS.object.0">id</string>
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>delegate</string>
+							<string>excludeWordsArrayController</string>
+							<string>excludeWordsTable</string>
+							<string>ignoreWordsArrayController</string>
+							<string>ignoreWordsTable</string>
+							<string>keywordsArrayController</string>
+							<string>keywordsTable</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
+							<string>NSArrayController</string>
+							<string>NSTableView</string>
+							<string>NSArrayController</string>
+							<string>NSTableView</string>
+							<string>NSArrayController</string>
+							<string>NSTableView</string>
+						</object>
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
