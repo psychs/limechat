@@ -271,6 +271,10 @@
 {
 }
 
+- (void)updateChannelTitle:(IRCChannel*)c
+{
+}
+
 - (void)reloadTree
 {
 	[world reloadTree];
@@ -934,6 +938,38 @@
 			[self receiveInit:m];
 			[self printReply:m];
 			break;
+		case 353:	// RPL_NAMREPLY
+		{
+			NSString* chname = [m paramAt:2];
+			NSString* trail = [m paramAt:3];
+			IRCChannel* c = [self findChannel:chname];
+			if (c && c.isActive && !c.namesInit) {
+				NSArray* ary = [trail componentsSeparatedByString:@" "];
+				for (NSString* nick in ary) {
+					if (!nick.length) continue;
+					UniChar u = [nick characterAtIndex:0];
+					char op = ' ';
+					if (u == '@' || u == '~' || u == '&' || u == '%' || u == '+') {
+						op = u;
+						nick = [nick substringFromIndex:1];
+					}
+					
+					IRCUser* m = [[IRCUser new] autorelease];
+					m.nick = nick;
+					m.q = op == '~';
+					m.a = op == '&';
+					m.o = op == '@' || m.q;
+					m.h = op == '%';
+					m.v = op == '+';
+					[c addMember:m];
+					[self updateChannelTitle:c];
+				}
+			}
+			else {
+				[self printBoth:c ?: (id)chname type:LINE_TYPE_REPLY text:[NSString stringWithFormat:@"Names: %@", trail]];
+			}
+			break;
+		}
 		default:
 			[self printUnknownReply:m];
 			break;

@@ -5,6 +5,7 @@
 #import "IRCTreeItem.h"
 #import "IRCChannelConfig.h"
 #import "LogController.h"
+#import "IRCUser.h"
 
 
 @class IRCClient;
@@ -15,6 +16,7 @@
 	IRCClient* client;
 	IRCChannelConfig* config;
 	
+	NSMutableArray* members;
 	NSString* topic;
 	
 	BOOL isActive;
@@ -47,5 +49,17 @@
 - (void)closeDialogs;
 
 - (BOOL)print:(LogLine*)line;
+
+- (void)addMember:(IRCUser*)user;
+- (void)addMember:(IRCUser*)user reload:(BOOL)reload;
+- (void)removeMember:(NSString*)nick;
+- (void)removeMember:(NSString*)nick reload:(BOOL)reload;
+- (void)renameMember:(NSString*)fromNick to:(NSString*)toNick;
+- (void)updateOrAddMember:(IRCUser*)user;
+- (void)changeMember:(NSString*)nick mode:(char)mode value:(BOOL)value;
+- (void)clearMembers;
+- (int)indexOfMember:(NSString*)nick;
+- (int)numberOfMembers;
+- (void)reloadMemberList;
 
 @end

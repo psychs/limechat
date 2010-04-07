@@ -7,7 +7,7 @@
 @implementation IRCUser
 
 @synthesize nick;
-@synthesize canonicalNick;
+@synthesize lowerNick;
 @synthesize username;
 @synthesize address;
 @synthesize q;
@@ -38,8 +38,8 @@
 		[nick release];
 		nick = [value retain];
 		
-		[canonicalNick release];
-		canonicalNick = [[nick lowercaseString] retain];
+		[lowerNick release];
+		lowerNick = [[nick lowercaseString] retain];
 	}
 }
 

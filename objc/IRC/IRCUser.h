@@ -7,7 +7,7 @@
 @interface IRCUser : NSObject
 {
 	NSString* nick;
-	NSString* canonicalNick;
+	NSString* lowerNick;
 	NSString* username;
 	NSString* address;
 	BOOL q;
@@ -20,7 +20,7 @@
 }
 
 @property (nonatomic, retain) NSString* nick;
-@property (nonatomic, readonly) NSString* canonicalNick;
+@property (nonatomic, readonly) NSString* lowerNick;
 @property (nonatomic, retain) NSString* username;
 @property (nonatomic, retain) NSString* address;
 @property (nonatomic, assign) BOOL q;
@@ -31,5 +31,7 @@
 @property (nonatomic, readonly) char mark;
 @property (nonatomic, readonly) BOOL isOp;
 @property (nonatomic, readonly) int colorNumber;
+
+- (NSComparisonResult)compare:(IRCUser*)other;
 
 @end

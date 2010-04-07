@@ -2,6 +2,9 @@
 // You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
 #import "IRCChannel.h"
+#import "IRCClient.h"
+#import "IRCWorld.h"
+#import "MemberListViewCell.h"
 
 
 @implementation IRCChannel
@@ -21,6 +24,7 @@
 - (id)init
 {
 	if (self = [super init]) {
+		members = [NSMutableArray new];
 	}
 	return self;
 }
@@ -28,6 +32,7 @@
 - (void)dealloc
 {
 	[config release];
+	[members release];
 	[topic release];
 	[super dealloc];
 }
@@ -125,6 +130,155 @@
 }
 
 #pragma mark -
+#pragma mark Member List
+
+- (void)sortedInsert:(IRCUser*)item
+{
+	int left = 0;
+	int right = members.count;
+	
+	while (right - left > 5) {
+		int center = (left + right) / 2;
+		IRCUser* t = [members objectAtIndex:center];
+		if ([t compare:item] == NSOrderedAscending) {
+			left = center + 1;
+		}
+		else {
+			right = center;
+		}
+	}
+	
+	for (int i=left; i<right; ++i) {
+		IRCUser* t = [members objectAtIndex:i];
+		if ([t compare:item] == NSOrderedAscending) {
+			[members insertObject:item atIndex:i];
+		}
+	}
+	[members addObject:item];
+}
+
+- (void)addMember:(IRCUser*)user
+{
+	[self addMember:user reload:YES];
+}
+
+- (void)addMember:(IRCUser*)user reload:(BOOL)reload
+{
+	int n = [self indexOfMember:user.nick];
+	if (n >= 0) {
+		[[[members objectAtIndex:n] retain] autorelease];
+		[members removeObjectAtIndex:n];
+	}
+	
+	[self sortedInsert:user];
+	
+	if (reload) [self reloadMemberList];
+}
+
+- (void)removeMember:(NSString*)nick
+{
+	[self removeMember:nick reload:YES];
+}
+
+- (void)removeMember:(NSString*)nick reload:(BOOL)reload
+{
+	int n = [self indexOfMember:nick];
+	if (n >= 0) {
+		[[[members objectAtIndex:n] retain] autorelease];
+		[members removeObjectAtIndex:n];
+	}
+
+	if (reload) [self reloadMemberList];
+}
+
+- (void)renameMember:(NSString*)fromNick to:(NSString*)toNick
+{
+	int n = [self indexOfMember:fromNick];
+	if (n < 0) return;
+	
+	IRCUser* m = [members objectAtIndex:n];
+	[[m retain] autorelease];
+	[self removeMember:toNick reload:NO];
+	
+	m.nick = toNick;
+	
+	[[[members objectAtIndex:n] retain] autorelease];
+	[members removeObjectAtIndex:n];
+	
+	[self sortedInsert:m];
+	
+	//
+	// @@@ update op queue
+	//
+}
+
+- (void)updateOrAddMember:(IRCUser*)user
+{
+	int n = [self indexOfMember:user.nick];
+	if (n >= 0) {
+		[[[members objectAtIndex:n] retain] autorelease];
+		[members removeObjectAtIndex:n];
+	}
+	
+	[self sortedInsert:user];
+}
+
+- (void)changeMember:(NSString*)nick mode:(char)mode value:(BOOL)value
+{
+	int n = [self indexOfMember:nick];
+	if (n < 0) return;
+	
+	IRCUser* m = [members objectAtIndex:n];
+	
+	switch (mode) {
+		case 'q': m.q = value; break;
+		case 'a': m.a = value; break;
+		case 'o': m.o = value; break;
+		case 'h': m.h = value; break;
+		case 'v': m.v = value; break;
+	}
+	
+	[[[members objectAtIndex:n] retain] autorelease];
+	[members removeObjectAtIndex:n];
+	
+	[self sortedInsert:m];
+	[self reloadMemberList];
+}
+
+- (void)clearMembers
+{
+	[members removeAllObjects];
+	[self reloadMemberList];
+}
+
+- (int)indexOfMember:(NSString*)nick
+{
+	NSString* lowerNick = [nick lowercaseString];
+	
+	int i = 0;
+	for (IRCUser* m in members) {
+		if ([m.lowerNick isEqualToString:lowerNick]) {
+			return i;
+		}
+		++i;
+	}
+	
+	return -1;
+}
+
+- (int)numberOfMembers
+{
+	return members.count;
+}
+
+- (void)reloadMemberList
+{
+	if (client.world.selected == self) {
+		[client.world.memberList reloadData];
+	}
+}
+
+#pragma mark -
 #pragma mark IRCTreeItem
 
 - (BOOL)isClient
@@ -162,16 +316,17 @@
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)sender
 {
-	return 3;
+	return members.count;
 }
 
 - (id)tableView:(NSTableView *)sender objectValueForTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
-	return @"test";
+	return @"";
 }
 
-- (void)tableView:(NSTableView *)sender willDisplayCell:(id)aCell forTableColumn:(NSTableColumn *)column row:(NSInteger)row
+- (void)tableView:(NSTableView *)sender willDisplayCell:(MemberListViewCell*)cell forTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
+	cell.member = [members objectAtIndex:row];
 }
 
 @end
