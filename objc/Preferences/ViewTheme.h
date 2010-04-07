@@ -17,6 +17,8 @@
 @property (nonatomic, readonly) LogTheme* log;
 @property (nonatomic, readonly) OtherTheme* other;
 
+- (void)reload;
+
 + (void)createUserDirectory;
 
 + (NSString*)buildResourceFileName:(NSString*)name;

@@ -72,6 +72,12 @@ static NSString* userBasePath;
 	other.fileName = nil;
 }
 
+- (void)reload
+{
+	[log reload];
+	[other reload];
+}
+
 + (void)createUserDirectory
 {
 	NSFileManager* fm = [NSFileManager defaultManager];
