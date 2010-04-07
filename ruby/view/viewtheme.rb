@@ -59,7 +59,7 @@ class AViewTheme < NSObject
 end
 
 
-class LogTheme < NSObject
+class ALogTheme < NSObject
   attr_reader :content, :baseurl
   
   def filename=(fname)
@@ -86,7 +86,7 @@ class LogTheme < NSObject
 end
 
 
-class OtherViewTheme
+class AOtherViewTheme
   attr_reader :log_nick_format, :log_scroller_highlight_color
   attr_reader :input_text_font, :input_text_color, :input_text_bgcolor, :input_text_sel_bgcolor
   attr_reader :tree_font, :treeBackgroundColor, :tree_highlight_color, :tree_newtalk_color, :tree_unread_color

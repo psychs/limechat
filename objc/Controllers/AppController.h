@@ -9,6 +9,7 @@
 #import "IRCWorld.h"
 #import "InputHistory.h"
 #import "MenuController.h"
+#import "ViewTheme.h"
 
 
 @interface AppController : NSObject
@@ -40,6 +41,7 @@
 	
 	FieldEditorTextView* fieldEditor;
 	IRCWorld* world;
+	ViewTheme* viewTheme;
 	InputHistory* inputHistory;
 	
 	BOOL terminating;

@@ -134,8 +134,7 @@
 	view.keyDelegate = self;
 	view.resizeDelegate = self;
 	view.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
-	//[[view mainFrame] loadHTMLString:[self initialDocument] baseURL:[[theme log] baseurl]];
-	[[view mainFrame] loadHTMLString:[self initialDocument] baseURL:nil];
+	[[view mainFrame] loadHTMLString:[self initialDocument] baseURL:[[theme log] baseUrl]];
 }
 
 - (void)moveToTop
@@ -253,7 +252,7 @@
 	scrollBottom = [self viewingBottom];
 	scrollTop = [[body valueForKey:@"scrollTop"] intValue];
 	
-	[[view mainFrame] loadHTMLString:[self initialDocument] baseURL:nil];
+	[[view mainFrame] loadHTMLString:[self initialDocument] baseURL:[[theme log] baseUrl]];
 	[scroller setNeedsDisplay];
 }
 
@@ -265,7 +264,7 @@
 	html = nil;
 	loaded = NO;
 	
-	[[view mainFrame] loadHTMLString:[self initialDocument] baseURL:nil];
+	[[view mainFrame] loadHTMLString:[self initialDocument] baseURL:[[theme log] baseUrl]];
 	[scroller setNeedsDisplay];
 }
 
@@ -507,8 +506,7 @@
 		[bodyAttrs appendString:@"type=\"server\""];
 	}
 	
-	//NSString* style = [[theme log] content];
-	NSString* style = nil;
+	NSString* style = [[theme log] content];
 	
 	NSMutableString* s = [NSMutableString string];
 	
@@ -853,9 +851,10 @@
 
 - (NSColor*)markedScrollerColor:(MarkedScroller*)sender
 {
-	//return [NSColor redColor];
+	return [NSColor redColor];
 	
-	return [[theme other] log_scroller_highlight_color];
+	//@@@
+	//return [[theme other] log_scroller_highlight_color];
 }
 
 @end

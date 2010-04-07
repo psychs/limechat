@@ -337,7 +337,7 @@
 	c.client = client;
 	c.channel = channel;
 	c.maxLines = 300;
-	c.theme = nil;	//@@@
+	c.theme = viewTheme;
 	c.overrideFont = nil;	//@@@
 	c.console = console;
 	c.initialBackgroundColor = [NSColor whiteColor];
@@ -427,7 +427,7 @@
 	
 	[selected resetState];
 	
-	logBase.contentView = [selected log].view;
+	logBase.contentView = [[selected log] view];
 	
 	if ([selected isClient]) {
 		tree.menu = [serverMenu submenu];
@@ -444,7 +444,7 @@
 	
 	[memberList deselectAll:nil];
 	[memberList scrollRowToVisible:0];
-	[[selected log].view clearSel];
+	[[[selected log] view] clearSel];
 	
 	[self updateTitle];
 	[self reloadTree];

@@ -7,6 +7,7 @@
 #import "LogScriptEventSink.h"
 #import "LogLine.h"
 #import "MarkedScroller.h"
+#import "ViewTheme.h"
 
 
 @class IRCWorld;
@@ -30,7 +31,7 @@
 	NSMenu* addrMenu;
 	NSMenu* chanMenu;
 	NSMenu* memberMenu;
-	id theme;
+	ViewTheme* theme;
 	id overrideFont;
 	int maxLines;
 	BOOL console;
@@ -58,7 +59,7 @@
 @property (nonatomic, retain) NSMenu* addrMenu;
 @property (nonatomic, retain) NSMenu* chanMenu;
 @property (nonatomic, retain) NSMenu* memberMenu;
-@property (nonatomic, retain) id theme;
+@property (nonatomic, retain) ViewTheme* theme;
 @property (nonatomic, retain) id overrideFont;
 @property (nonatomic, assign) BOOL console;
 @property (nonatomic, retain) NSColor* initialBackgroundColor;

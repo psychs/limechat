@@ -14,6 +14,7 @@
 #import "IRCClientConfig.h"
 #import "IRCChannelConfig.h"
 #import "MenuController.h"
+#import "ViewTheme.h"
 
 
 @class AppController;
@@ -32,7 +33,7 @@
 	MemberListView* memberList;
 	MenuController* menuController;
 	id dcc;
-	id viewTheme;
+	ViewTheme* viewTheme;
 	NSMenuItem* serverMenu;
 	NSMenuItem* channelMenu;
 	NSMenu* treeMenu;
@@ -65,7 +66,7 @@
 @property (nonatomic, assign) MemberListView* memberList;
 @property (nonatomic, assign) MenuController* menuController;
 @property (nonatomic, assign) id dcc;
-@property (nonatomic, assign) id viewTheme;
+@property (nonatomic, assign) ViewTheme* viewTheme;
 @property (nonatomic, assign) NSMenuItem* serverMenu;
 @property (nonatomic, assign) NSMenuItem* channelMenu;
 @property (nonatomic, assign) NSMenu* treeMenu;

@@ -1,4 +1,8 @@
+// Created by Satoshi Nakagawa.
+// You can redistribute it and/or modify it under the Ruby's license or the GPL2.
+
 #import "ViewTheme.h"
+#import "Preferences.h"
 
 
 static NSString* resourceBasePath;
@@ -13,10 +17,12 @@ static NSString* userBasePath;
 @implementation ViewTheme
 
 @synthesize name;
+@synthesize log;
 
 - (id)init
 {
 	if (self = [super init]) {
+		log = [LogTheme new];
 	}
 	return self;
 }
@@ -24,6 +30,7 @@ static NSString* userBasePath;
 - (void)dealloc
 {
 	[name release];
+	[log release];
 	[super dealloc];
 }
 
@@ -39,7 +46,25 @@ static NSString* userBasePath;
 
 - (void)load
 {
-	if (!name) return;
+	if (name) {
+		NSArray* kindAndName = [ViewTheme extractFileName:[NewPreferences themeName]];
+		if (kindAndName) {
+			NSString* kind = [kindAndName objectAtIndex:0];
+			NSString* fname = [kindAndName objectAtIndex:1];
+			NSString* fullName = nil;
+			if ([kind isEqualToString:@"resource"]) {
+				fullName = [[ViewTheme resourceBasePath] stringByAppendingPathComponent:fname];
+			}
+			else {
+				fullName = [[ViewTheme userBasePath] stringByAppendingPathComponent:fname];
+			}
+			
+			log.fileName = [fullName stringByAppendingString:@".css"];
+			return;
+		}
+	}
+	
+	log.fileName = nil;
 }
 
 + (void)createUserDirectory

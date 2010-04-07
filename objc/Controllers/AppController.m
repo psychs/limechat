@@ -27,6 +27,7 @@
 {
 	[fieldEditor release];
 	[world release];
+	[viewTheme release];
 	[inputHistory release];
 	[super dealloc];
 }
@@ -63,6 +64,9 @@
 	
 	[text setFocusRingType:NSFocusRingTypeNone];
 	
+	viewTheme = [ViewTheme new];
+	viewTheme.name = [NewPreferences themeName];
+	
 	[self loadWindowState];
 	[self set3columnLayout:NO];
 	
@@ -86,7 +90,7 @@
 	world.addrMenu = addrMenu;
 	world.chanMenu = chanMenu;
 	world.memberMenu = memberMenu;
-	world.viewTheme = nil;
+	world.viewTheme = viewTheme;
 	[world setup:seed];
 	
 	tree.dataSource = world;
