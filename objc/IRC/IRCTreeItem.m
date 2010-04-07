@@ -6,6 +6,7 @@
 
 @implementation IRCTreeItem
 
+@synthesize uid;
 @synthesize log;
 @synthesize isKeyword;
 @synthesize isUnread;

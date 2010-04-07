@@ -438,7 +438,7 @@
 		excludeWords = [NewPreferences excludeWords];
 		
 		if ([NewPreferences keywordCurrentNick]) {
-			NSMutableArray* ary = [keywords mutableCopy];
+			NSMutableArray* ary = [[keywords mutableCopy] autorelease];
 			[ary insertObject:client.myNick atIndex:0];
 			keywords = ary;
 		}

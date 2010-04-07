@@ -47,11 +47,7 @@ BOOL yamlClass(id object)
 
 - (id)copyWithZone:(NSZone *)zone
 {
-	YAMLWrapper *w = [YAMLWrapper allocWithZone:zone];
-	
-	[w initWrapperWithData:data tag:tag];
-	
-	return [w autorelease];
+	return [[YAMLWrapper allocWithZone:zone] initWrapperWithData:data tag:tag];
 }
 
 - (id)data

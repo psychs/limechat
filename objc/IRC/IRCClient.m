@@ -58,7 +58,6 @@
 
 @synthesize config;
 @synthesize channels;
-@synthesize uid;
 @synthesize connecting;
 @synthesize connected;
 @synthesize reconnecting;
@@ -986,9 +985,9 @@
 		enc = config.fallbackEncoding;
 	}
 	
-	NSString* s = [[NSString alloc] initWithData:data encoding:enc];
+	NSString* s = [[[NSString alloc] initWithData:data encoding:enc] autorelease];
 	if (!s) {
-		s = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+		s = [[[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding] autorelease];
 		if (!s) return;
 	}
 	

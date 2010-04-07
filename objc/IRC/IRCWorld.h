@@ -15,6 +15,7 @@
 #import "IRCChannelConfig.h"
 #import "MenuController.h"
 #import "ViewTheme.h"
+#import "IRCTreeItem.h"
 
 
 @class AppController;
@@ -52,7 +53,7 @@
 	
 	int itemId;
 	BOOL reloadingTree;
-	id selected;
+	IRCTreeItem* selected;
 }
 
 @property (nonatomic, assign) AppController* app;
@@ -79,7 +80,7 @@
 @property (nonatomic, readonly) LogController* consoleLog;
 
 @property (nonatomic, readonly) NSMutableArray* clients;
-@property (nonatomic, retain) id selected;
+@property (nonatomic, retain) IRCTreeItem* selected;
 @property (nonatomic, readonly) IRCClient* selectedClient;
 @property (nonatomic, readonly) IRCChannel* selectedChannel;
 

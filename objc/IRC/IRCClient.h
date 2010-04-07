@@ -18,7 +18,6 @@
 	
 	IRCClientConfig* config;
 	NSMutableArray* channels;
-	int uid;
 	
 	IRCConnection* conn;
 	int connectDelay;
@@ -54,7 +53,7 @@
 @property (nonatomic, readonly) NSString* name;
 @property (nonatomic, readonly) IRCClientConfig* config;
 @property (nonatomic, readonly) NSMutableArray* channels;
-@property (nonatomic, assign) int uid;
+
 @property (nonatomic, readonly) BOOL connecting;
 @property (nonatomic, readonly) BOOL connected;
 @property (nonatomic, readonly) BOOL reconnecting;

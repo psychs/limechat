@@ -13,9 +13,7 @@
 @interface IRCChannel : IRCTreeItem
 {
 	IRCClient* client;
-	
 	IRCChannelConfig* config;
-	int uid;
 	
 	NSString* topic;
 	
@@ -26,9 +24,7 @@
 }
 
 @property (nonatomic, assign) IRCClient* client;
-
 @property (nonatomic, readonly) IRCChannelConfig* config;
-@property (nonatomic, assign) int uid;
 
 @property (nonatomic, assign) NSString* name;
 @property (nonatomic, readonly) NSString* password;

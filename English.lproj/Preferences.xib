@@ -2351,22 +2351,6 @@
 					<int key="connectionID">23</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">sound_table</string>
-						<reference key="source" ref="523994250"/>
-						<reference key="destination" ref="687623475"/>
-					</object>
-					<int key="connectionID">105</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">theme</string>
-						<reference key="source" ref="523994250"/>
-						<reference key="destination" ref="623153485"/>
-					</object>
-					<int key="connectionID">297</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
 						<string key="label">onOpenThemePath:</string>
 						<reference key="source" ref="523994250"/>
@@ -2381,38 +2365,6 @@
 						<reference key="destination" ref="711178030"/>
 					</object>
 					<int key="connectionID">442</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">theme_nick_format</string>
-						<reference key="source" ref="523994250"/>
-						<reference key="destination" ref="912988938"/>
-					</object>
-					<int key="connectionID">543</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">hotkey</string>
-						<reference key="source" ref="523994250"/>
-						<reference key="destination" ref="399851948"/>
-					</object>
-					<int key="connectionID">989</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">keyword_dislike_words_caption</string>
-						<reference key="source" ref="523994250"/>
-						<reference key="destination" ref="919072055"/>
-					</object>
-					<int key="connectionID">1119</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">keyword_whole_line</string>
-						<reference key="source" ref="523994250"/>
-						<reference key="destination" ref="212721296"/>
-					</object>
-					<int key="connectionID">1120</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -2957,30 +2909,6 @@
 						<reference key="destination" ref="623153485"/>
 					</object>
 					<int key="connectionID">3640</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">highlightTable</string>
-						<reference key="source" ref="523994250"/>
-						<reference key="destination" ref="199676028"/>
-					</object>
-					<int key="connectionID">3917</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">dislikeTable</string>
-						<reference key="source" ref="523994250"/>
-						<reference key="destination" ref="399651909"/>
-					</object>
-					<int key="connectionID">3918</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">ignoreTable</string>
-						<reference key="source" ref="523994250"/>
-						<reference key="destination" ref="1064042539"/>
-					</object>
-					<int key="connectionID">3919</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -5791,6 +5719,20 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">objc/Library/TinyGrowlClient.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">objc/Library/YAML/YAML.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">objc/Library/YAML/YAMLCategories.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">

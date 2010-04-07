@@ -124,8 +124,7 @@
 - (IRCClient*)selectedClient
 {
 	if (!selected) return nil;
-	if ([selected isClient]) return selected;
-	return (IRCClient*)[selected client];
+	return [selected client];
 }
 
 - (IRCChannel*)selectedChannel

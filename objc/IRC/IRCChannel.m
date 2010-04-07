@@ -7,10 +7,7 @@
 @implementation IRCChannel
 
 @synthesize client;
-@synthesize log;
-
 @synthesize config;
-@synthesize uid;
 
 @synthesize topic;
 @synthesize isKeyword;

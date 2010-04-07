@@ -338,7 +338,7 @@ typedef enum {
 - (void)scroll:(ScrollKind)op
 {
 	if ([window firstResponder] == [text currentEditor]) {
-		id sel = world.selected;
+		IRCTreeItem* sel = world.selected;
 		if (sel) {
 			LogController* log = [sel log];
 			LogView* view = log.view;

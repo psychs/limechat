@@ -337,7 +337,7 @@
 			
 			int i = 0;
 			for (NSString* f in files) {
-				NSMenuItem* item = [[NSMenuItem alloc] initWithTitle:f action:nil keyEquivalent:@""];
+				NSMenuItem* item = [[[NSMenuItem alloc] initWithTitle:f action:nil keyEquivalent:@""] autorelease];
 				[item setTag:tag];
 				[themeButton.menu addItem:item];
 				++i;

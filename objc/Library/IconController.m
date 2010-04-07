@@ -14,7 +14,7 @@
 	
 	NSImage* icon = [NSImage imageNamed:@"NSApplicationIcon"];
 	if (highlight || newTalk) {
-		icon = [icon copy];
+		icon = [[icon copy] autorelease];
 		[icon lockFocus];
 		
 		if (highlight) {
