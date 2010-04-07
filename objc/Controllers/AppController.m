@@ -6,6 +6,7 @@
 #import "IRCWorld.h"
 #import "IRCClient.h"
 #import "ViewTheme.h"
+#import "MemberListViewCell.h"
 
 
 #define KInternetEventClass	1196773964
@@ -66,9 +67,15 @@
 	
 	viewTheme = [ViewTheme new];
 	viewTheme.name = [NewPreferences themeName];
+	tree.theme = viewTheme.other;
+	memberList.theme = viewTheme.other;
+	MemberListViewCell* cell = [[MemberListViewCell new] autorelease];
+	[cell setup:viewTheme.other];
+	[[[memberList tableColumns] objectAtIndex:0] setDataCell:cell];
 	
 	[self loadWindowState];
-	[self set3columnLayout:NO];
+	[window setAlphaValue:[NewPreferences themeTransparency]];
+	[self set3columnLayout:[NewPreferences mainWindowLayout] == 1];
 	
 	IRCWorldConfig* seed = [[[IRCWorldConfig alloc] initWithDictionary:[NewPreferences loadWorld]] autorelease];
 	

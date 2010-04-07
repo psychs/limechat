@@ -289,7 +289,7 @@
 	OtherTheme* theme = viewTheme.other;
 	
 	[memberList setFont:theme.memberListFont];
-	//[[[[memberList tableColumns] objectAtIndex:0] dataCell] themeChanged];
+	[[[[memberList tableColumns] objectAtIndex:0] dataCell] themeChanged];
 	[memberList themeChanged];
 	[memberList setNeedsDisplay];
 }
