@@ -18,11 +18,13 @@ static NSString* userBasePath;
 
 @synthesize name;
 @synthesize log;
+@synthesize other;
 
 - (id)init
 {
 	if (self = [super init]) {
 		log = [LogTheme new];
+		other = [OtherTheme new];
 	}
 	return self;
 }
@@ -31,6 +33,7 @@ static NSString* userBasePath;
 {
 	[name release];
 	[log release];
+	[other release];
 	[super dealloc];
 }
 
@@ -60,11 +63,13 @@ static NSString* userBasePath;
 			}
 			
 			log.fileName = [fullName stringByAppendingString:@".css"];
+			other.fileName = [fullName stringByAppendingString:@".yaml"];
 			return;
 		}
 	}
 	
 	log.fileName = nil;
+	other.fileName = nil;
 }
 
 + (void)createUserDirectory

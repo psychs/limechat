@@ -33,6 +33,7 @@
 		78287EB70D742DBD008D5656 /* Themes in CopyFiles */ = {isa = PBXBuildFile; fileRef = 78287EA90D742DAA008D5656 /* Themes */; };
 		782B99C9116C91AB00304B3C /* ViewTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 782B99C8116C91AB00304B3C /* ViewTheme.m */; };
 		782B9C3B116CAD1300304B3C /* LogTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 782B9C3A116CAD1300304B3C /* LogTheme.m */; };
+		782B9CCF116CB1DD00304B3C /* OtherTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 782B9CCE116CB1DD00304B3C /* OtherTheme.m */; };
 		78347ED31158D4B00073E2F0 /* AutoOpDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78347EB91158D4B00073E2F0 /* AutoOpDialog.xib */; };
 		78347ED41158D4B00073E2F0 /* ChannelDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78347EBB1158D4B00073E2F0 /* ChannelDialog.xib */; };
 		78347ED51158D4B00073E2F0 /* CommentSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78347EBD1158D4B00073E2F0 /* CommentSheet.xib */; };
@@ -199,6 +200,8 @@
 		782B99C8116C91AB00304B3C /* ViewTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewTheme.m; sourceTree = "<group>"; };
 		782B9C39116CAD1300304B3C /* LogTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogTheme.h; sourceTree = "<group>"; };
 		782B9C3A116CAD1300304B3C /* LogTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogTheme.m; sourceTree = "<group>"; };
+		782B9CCD116CB1DD00304B3C /* OtherTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OtherTheme.h; sourceTree = "<group>"; };
+		782B9CCE116CB1DD00304B3C /* OtherTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OtherTheme.m; sourceTree = "<group>"; };
 		78347EBA1158D4B00073E2F0 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/AutoOpDialog.xib; sourceTree = "<group>"; };
 		78347EBC1158D4B00073E2F0 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/ChannelDialog.xib; sourceTree = "<group>"; };
 		78347EBE1158D4B00073E2F0 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/CommentSheet.xib; sourceTree = "<group>"; };
@@ -812,6 +815,8 @@
 				782B99C8116C91AB00304B3C /* ViewTheme.m */,
 				782B9C39116CAD1300304B3C /* LogTheme.h */,
 				782B9C3A116CAD1300304B3C /* LogTheme.m */,
+				782B9CCD116CB1DD00304B3C /* OtherTheme.h */,
+				782B9CCE116CB1DD00304B3C /* OtherTheme.m */,
 			);
 			name = Preferences;
 			path = objc/Preferences;
@@ -1012,6 +1017,7 @@
 				78E345D3116C6ACD00990CCB /* SoundWrapper.m in Sources */,
 				782B99C9116C91AB00304B3C /* ViewTheme.m in Sources */,
 				782B9C3B116CAD1300304B3C /* LogTheme.m in Sources */,
+				782B9CCF116CB1DD00304B3C /* OtherTheme.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

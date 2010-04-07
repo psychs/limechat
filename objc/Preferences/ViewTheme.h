@@ -3,16 +3,19 @@
 
 #import <Cocoa/Cocoa.h>
 #import "LogTheme.h"
+#import "OtherTheme.h"
 
 
 @interface ViewTheme : NSObject
 {
 	NSString* name;
 	LogTheme* log;
+	OtherTheme* other;
 }
 
 @property (nonatomic, retain) NSString* name;
 @property (nonatomic, readonly) LogTheme* log;
+@property (nonatomic, readonly) OtherTheme* other;
 
 + (void)createUserDirectory;
 
