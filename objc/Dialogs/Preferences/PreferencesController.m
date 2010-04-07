@@ -7,7 +7,7 @@
 #import "SoundWrapper.h"
 
 
-#define LOG_MAX_LINES_MIN	100
+#define LINES_MIN			100
 #define PORT_MIN			1024
 #define PORT_MAX			65535
 
@@ -103,8 +103,8 @@
 {
 	if ([key isEqualToString:@"maxLogLines"]) {
 		int n = [*value intValue];
-		if (n < LOG_MAX_LINES_MIN) {
-			*value = [NSNumber numberWithInt:LOG_MAX_LINES_MIN];
+		if (n < LINES_MIN) {
+			*value = [NSNumber numberWithInt:LINES_MIN];
 		}
 	}
 	else if ([key isEqualToString:@"dccFirstPort"]) {
@@ -334,6 +334,14 @@
 
 - (void)onChangedTransparency:(id)sender
 {
+}
+
+#pragma mark -
+#pragma mark NSWindow Delegate
+
+- (void)windowWillClose:(NSNotification *)note
+{
+	LOG_METHOD
 }
 
 @end
