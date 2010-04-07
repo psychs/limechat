@@ -631,6 +631,55 @@ typedef enum {
 
 - (void)prelude
 {
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	int version = [ud integerForKey:@"version"];
+	
+	if (version == 0) {
+		// migrate string arrays
+		
+		NSString* oldKey;
+		NSString* newKey;
+		NSArray* ary;
+		
+		oldKey = @"Preferences.Keyword.words";
+		newKey = @"keywords";
+		ary = [ud objectForKey:oldKey];
+		if (ary) {
+			NSMutableArray* result = [NSMutableArray array];
+			for (NSString* s in ary) {
+				[result addObject:[NSMutableDictionary dictionaryWithObject:s forKey:@"string"]];
+			}
+			[ud setObject:result forKey:newKey];
+			[ud removeObjectForKey:oldKey];
+		}
+		
+		oldKey = @"Preferences.Keyword.dislike_words";
+		newKey = @"excludeWords";
+		ary = [ud objectForKey:oldKey];
+		if (ary) {
+			NSMutableArray* result = [NSMutableArray array];
+			for (NSString* s in ary) {
+				[result addObject:[NSMutableDictionary dictionaryWithObject:s forKey:@"string"]];
+			}
+			[ud setObject:result forKey:newKey];
+			[ud removeObjectForKey:oldKey];
+		}
+		
+		oldKey = @"Preferences.Keyword.ignore_words";
+		newKey = @"ignoreWords";
+		ary = [ud objectForKey:oldKey];
+		if (ary) {
+			NSMutableArray* result = [NSMutableArray array];
+			for (NSString* s in ary) {
+				[result addObject:[NSMutableDictionary dictionaryWithObject:s forKey:@"string"]];
+			}
+			[ud setObject:result forKey:newKey];
+			[ud removeObjectForKey:oldKey];
+		}
+		
+		[ud setInteger:1 forKey:@"version"];
+		[ud synchronize];
+	}
 }
 
 @end
