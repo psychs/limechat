@@ -21,8 +21,8 @@
 	IBOutlet NSPopUpButton* themeButton;
 	
 	NSMutableArray* sounds;
-	
 	NSOpenPanel* transcriptFolderOpenPanel;
+	NSFont* logFont;
 }
 
 @property (nonatomic, assign) id delegate;

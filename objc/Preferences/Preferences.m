@@ -233,12 +233,24 @@
 	return obj;
 }
 
++ (void)setThemeLogFontName:(NSString*)value
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	[ud setObject:value forKey:@"Preferences.Theme.log_font_name"];
+}
+
 + (double)themeLogFontSize
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
 	id obj = [ud objectForKey:@"Preferences.Theme.log_font_size"];
 	if (!obj) return 12;
 	return [obj doubleValue];
+}
+
++ (void)setThemeLogFontSize:(double)value
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	[ud setDouble:value forKey:@"Preferences.Theme.log_font_size"];
 }
 
 + (NSString*)themeNickFormat

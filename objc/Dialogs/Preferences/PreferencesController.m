@@ -36,6 +36,7 @@
 {
 	[sounds release];
 	[transcriptFolderOpenPanel release];
+	[logFont release];
 	[super dealloc];
 }
 
@@ -48,6 +49,9 @@
 	[self updateTranscriptFolder];
 	[self updateTheme];
 	
+	[logFont release];
+	logFont = [[NSFont fontWithName:[NewPreferences themeLogFontName] size:[NewPreferences themeLogFontSize]] retain];
+	
 	[self.window makeKeyAndOrderFront:nil];
 }
 
@@ -56,20 +60,22 @@
 
 - (void)setFontDisplayName:(NSString*)value
 {
+	[NewPreferences setThemeLogFontName:value];
 }
 
 - (NSString*)fontDisplayName
 {
-	return @"";
+	return [NewPreferences themeLogFontName];
 }
 
 - (void)setFontPointSize:(CGFloat)value
 {
+	[NewPreferences setThemeLogFontSize:value];
 }
 
 - (CGFloat)fontPointSize
 {
-	return 12;
+	return [NewPreferences themeLogFontSize];
 }
 
 - (int)dccFirstPort
@@ -375,6 +381,7 @@
 	else {
 		[NewPreferences setThemeName:[ViewTheme buildUserFileName:name]];
 	}
+	[self onLayoutChanged:nil];
 }
 
 - (void)onOpenThemePath:(id)sender
@@ -385,10 +392,25 @@
 
 - (void)onSelectFont:(id)sender
 {
+	NSFontManager* fm = [NSFontManager sharedFontManager];
+	[fm setSelectedFont:logFont isMultiple:NO];
+	[fm orderFrontFontPanel:self];
+}
+
+- (void)changeFont:(id)sender
+{
+	[logFont autorelease];
+	logFont = [[sender convertFont:logFont] retain];
+	
+	[self setValue:logFont.fontName forKey:@"fontDisplayName"];
+	[self setValue:[NSNumber numberWithDouble:logFont.pointSize] forKey:@"fontPointSize"];
+	
+	[self onLayoutChanged:nil];
 }
 
 - (void)onChangedTransparency:(id)sender
 {
+	[self onLayoutChanged:nil];
 }
 
 #pragma mark -
@@ -421,6 +443,7 @@
 
 - (void)onLayoutChanged:(id)sender
 {
+	LOG_METHOD
 }
 
 #pragma mark -

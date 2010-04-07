@@ -38,9 +38,10 @@ typedef enum {
 
 + (NSString*)themeName;
 + (void)setThemeName:(NSString*)value;
-
 + (NSString*)themeLogFontName;
++ (void)setThemeLogFontName:(NSString*)value;
 + (double)themeLogFontSize;
++ (void)setThemeLogFontSize:(double)value;
 + (NSString*)themeNickFormat;
 + (BOOL)themeOverrideLogFont;
 + (BOOL)themeOverrideNickFormat;
