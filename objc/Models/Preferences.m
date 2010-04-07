@@ -406,38 +406,121 @@
 	return [obj doubleValue];
 }
 
+#pragma mark -
+#pragma mark World
 
 + (NSDictionary*)loadWorld
 {
-	return [self dictionaryForKey:@"world"];
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	return [ud objectForKey:@"world"];
 }
 
-+ (BOOL)boolForKey:(NSString*)key
-{
-	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	return [ud boolForKey:key];
-}
+#pragma mark -
+#pragma mark Keywords
 
-+ (NSString*)stringForKey:(NSString*)key
+static NSMutableArray* keywords;
+static NSMutableArray* excludeWords;
+static NSMutableArray* ignoreWords;
+
++ (void)loadKeywords
 {
-	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	NSString* s = [ud objectForKey:key];
-	if ([s isKindOfClass:[NSString class]]) {
-		return s;
+	if (keywords) {
+		[keywords removeAllObjects];
 	}
-	return nil;
+	else {
+		keywords = [NSMutableArray new];
+	}
+	
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	NSArray* ary = [ud objectForKey:@"keywords"];
+	for (NSDictionary* e in ary) {
+		NSString* s = [e objectForKey:@"string"];
+		if (s) [keywords addObject:s];
+	}
 }
 
-+ (NSDictionary*)dictionaryForKey:(NSString*)key
++ (void)loadExcludeWords
+{
+	if (excludeWords) {
+		[excludeWords removeAllObjects];
+	}
+	else {
+		excludeWords = [NSMutableArray new];
+	}
+	
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	NSArray* ary = [ud objectForKey:@"excludeWords"];
+	for (NSDictionary* e in ary) {
+		NSString* s = [e objectForKey:@"string"];
+		if (s) [excludeWords addObject:s];
+	}
+}
+
++ (void)loadIgnoreWords
+{
+	if (ignoreWords) {
+		[ignoreWords removeAllObjects];
+	}
+	else {
+		ignoreWords = [NSMutableArray new];
+	}
+	
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	NSArray* ary = [ud objectForKey:@"ignoreWords"];
+	for (NSDictionary* e in ary) {
+		NSString* s = [e objectForKey:@"string"];
+		if (s) [ignoreWords addObject:s];
+	}
+}
+
++ (NSArray*)keywords
+{
+	return keywords;
+}
+
++ (NSArray*)excludeWords
+{
+	return excludeWords;
+}
+
++ (NSArray*)ignoreWords
+{
+	return ignoreWords;
+}
+
+#pragma mark -
+#pragma mark KVO
+
++ (void)observeValueForKeyPath:(NSString*)key
+					  ofObject:(id)object
+						change:(NSDictionary *)change
+					   context:(void *)context
+{
+	if ([key isEqualToString:@"keywords"]) {
+		[self loadKeywords];
+	}
+	else if ([key isEqualToString:@"excludeWords"]) {
+		[self loadExcludeWords];
+	}
+	else if ([key isEqualToString:@"ignoreWords"]) {
+		[self loadIgnoreWords];
+	}
+}
+
++ (void)initPreferences
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	NSDictionary* s = [ud objectForKey:key];
-	if ([s isKindOfClass:[NSDictionary class]]) {
-		return s;
-	}
-	return nil;
+	[ud addObserver:self forKeyPath:@"keywords" options:NSKeyValueObservingOptionNew context:NULL];
+	[ud addObserver:self forKeyPath:@"excludeWords" options:NSKeyValueObservingOptionNew context:NULL];
+	[ud addObserver:self forKeyPath:@"ignoreWords" options:NSKeyValueObservingOptionNew context:NULL];
+	
+	[self loadKeywords];
+	[self loadExcludeWords];
+	[self loadIgnoreWords];
 }
 
+#pragma mark -
+#pragma mark Migration
 
 + (void)migrate
 {

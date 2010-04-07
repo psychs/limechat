@@ -36,7 +36,9 @@
 - (void)awakeFromNib
 {
 	[self prelude];
-	
+
+	[NewPreferences initPreferences];
+
 	// register URL handler
 	NSAppleEventManager* em = [NSAppleEventManager sharedAppleEventManager];
 	[em setEventHandler:self andSelector:@selector(handleURLEvent:withReplyEvent:) forEventClass:KInternetEventClass andEventID:KAEGetURL];

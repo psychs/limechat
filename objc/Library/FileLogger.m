@@ -95,7 +95,7 @@
 
 - (NSString*)buildFileName
 {
-	NSString* base = [NewPreferences stringForKey:@"Preferences.General.transcript_folder"];
+	NSString* base = [NewPreferences transcriptFolder];
 	base = [base stringByExpandingTildeInPath];
 	
 	static NSDateFormatter* format = nil;

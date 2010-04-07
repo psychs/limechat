@@ -432,23 +432,26 @@
 	
 	NSArray* keywords = nil;
 	NSArray* excludeWords = nil;
+	BOOL exactWordMatch = NO;
 	
 	if (useKeyword) {
-		keywords = [NewPreferences keywordWords];
-		excludeWords = [NewPreferences keywordDislikeWords];
+		keywords = [NewPreferences keywords];
+		excludeWords = [NewPreferences excludeWords];
 		
 		if ([NewPreferences keywordCurrentNick]) {
 			NSMutableArray* ary = [keywords mutableCopy];
 			[ary insertObject:client.myNick atIndex:0];
 			keywords = ary;
 		}
+		
+		exactWordMatch = [NewPreferences keywordMatchingMethod] == KEYWORD_MATCH_EXACT;
 	}
 	
 	return [LogRenderer renderBody:line.body
 						  keywords:keywords
 					  excludeWords:excludeWords
 				highlightWholeLine:NO
-					exactWordMatch:YES];
+					exactWordMatch:exactWordMatch];
 }
 
 - (void)writeLine:(NSString*)aHtml attributes:(NSDictionary*)attrs

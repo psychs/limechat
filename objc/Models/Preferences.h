@@ -4,6 +4,12 @@
 #import <Cocoa/Cocoa.h>
 
 
+typedef enum {
+	KEYWORD_MATCH_PARTIAL,
+	KEYWORD_MATCH_EXACT,
+} KeywordMatchType;
+
+
 @interface NewPreferences : NSObject
 
 + (int)dccAction;
@@ -33,11 +39,8 @@
 + (BOOL)useGrowl;
 + (BOOL)useHotkey;
 + (BOOL)keywordCurrentNick;
-+ (NSArray*)keywordDislikeWords;
-+ (NSArray*)keywordIgnoreWords;
 + (int)keywordMatchingMethod;
 + (BOOL)keywordWholeLine;
-+ (NSArray*)keywordWords;
 + (NSString*)soundChanneltext;
 + (NSString*)soundDisconnect;
 + (NSString*)soundFileReceiveFailure;
@@ -63,10 +66,11 @@
 
 + (NSDictionary*)loadWorld;
 
-+ (BOOL)boolForKey:(NSString*)key;
-+ (NSString*)stringForKey:(NSString*)key;
-+ (NSDictionary*)dictionaryForKey:(NSString*)key;
++ (NSArray*)keywords;
++ (NSArray*)excludeWords;
++ (NSArray*)ignoreWords;
 
++ (void)initPreferences;
 + (void)migrate;
 
 @end
