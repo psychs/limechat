@@ -36,6 +36,7 @@
 		782B9CCF116CB1DD00304B3C /* OtherTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 782B9CCE116CB1DD00304B3C /* OtherTheme.m */; };
 		782C566B116CBEF900F30316 /* SyckInput.m in Sources */ = {isa = PBXBuildFile; fileRef = 782C566A116CBEF900F30316 /* SyckInput.m */; };
 		782C5673116CBF1200F30316 /* YAMLCategories.m in Sources */ = {isa = PBXBuildFile; fileRef = 782C5670116CBF1200F30316 /* YAMLCategories.m */; };
+		782C57C2116CCE0200F30316 /* NSColorHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 782C57C1116CCE0200F30316 /* NSColorHelper.m */; };
 		78347ED31158D4B00073E2F0 /* AutoOpDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78347EB91158D4B00073E2F0 /* AutoOpDialog.xib */; };
 		78347ED41158D4B00073E2F0 /* ChannelDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78347EBB1158D4B00073E2F0 /* ChannelDialog.xib */; };
 		78347ED51158D4B00073E2F0 /* CommentSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78347EBD1158D4B00073E2F0 /* CommentSheet.xib */; };
@@ -219,6 +220,8 @@
 		782C566E116CBF1200F30316 /* YAML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YAML.h; sourceTree = "<group>"; };
 		782C566F116CBF1200F30316 /* YAMLCategories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YAMLCategories.h; sourceTree = "<group>"; };
 		782C5670116CBF1200F30316 /* YAMLCategories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YAMLCategories.m; sourceTree = "<group>"; };
+		782C57C0116CCE0200F30316 /* NSColorHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSColorHelper.h; sourceTree = "<group>"; };
+		782C57C1116CCE0200F30316 /* NSColorHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSColorHelper.m; sourceTree = "<group>"; };
 		78347EBA1158D4B00073E2F0 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/AutoOpDialog.xib; sourceTree = "<group>"; };
 		78347EBC1158D4B00073E2F0 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/ChannelDialog.xib; sourceTree = "<group>"; };
 		78347EBE1158D4B00073E2F0 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/CommentSheet.xib; sourceTree = "<group>"; };
@@ -603,6 +606,8 @@
 				78C1E7761168559400AC305B /* NSArrayHelper.m */,
 				78AFC92611687C5400C64197 /* NSDataHelper.h */,
 				78AFC92711687C5400C64197 /* NSDataHelper.m */,
+				782C57C0116CCE0200F30316 /* NSColorHelper.h */,
+				782C57C1116CCE0200F30316 /* NSColorHelper.m */,
 				78B964E81166489000831780 /* UnicodeHelper.h */,
 				78B964E91166489000831780 /* UnicodeHelper.m */,
 				78C1E86F1168635500AC305B /* SoundPlayer.h */,
@@ -1102,6 +1107,7 @@
 				783FE8E8116CBBD70015C18A /* GTMBase64.m in Sources */,
 				782C566B116CBEF900F30316 /* SyckInput.m in Sources */,
 				782C5673116CBF1200F30316 /* YAMLCategories.m in Sources */,
+				782C57C2116CCE0200F30316 /* NSColorHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

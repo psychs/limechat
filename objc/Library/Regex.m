@@ -43,6 +43,11 @@ const char* u_errorName(UErrorCode status);
 	return [self initWithString:pattern options:0];
 }
 
+- (id)initWithStringNoCase:(NSString*)pattern
+{
+	return [self initWithString:pattern options:UREGEX_CASE_INSENSITIVE];
+}
+
 - (id)initWithString:(NSString*)pattern options:(URegexOption)options
 {
 	[self init];

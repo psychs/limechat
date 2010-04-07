@@ -7,6 +7,11 @@
 @interface OtherTheme : NSObject
 {
 	NSString* fileName;
+	NSDictionary* content;
+	
+	NSString* logNickFormat;
+	NSColor* logScrollerMarkColor;
+	NSColor* inputTextBgColor;
 }
 
 @property (nonatomic, retain) NSString* fileName;
