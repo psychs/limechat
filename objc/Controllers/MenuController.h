@@ -3,6 +3,7 @@
 #import "InputTextField.h"
 #import "ServerTreeView.h"
 #import "MemberListView.h"
+#import "PreferencesController.h"
 
 
 @class AppController;
@@ -26,6 +27,7 @@
 	NSString* nick;
 	NSString* chan;
 	
+	PreferencesController* preferencesController;
 	NSMutableArray* serverDialogs;
 	NSMutableArray* channelDialogs;
 	NSMutableArray* pasteClients;

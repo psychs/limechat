@@ -57,6 +57,7 @@
 	[nick release];
 	[chan release];
 	
+	[preferencesController release];
 	[serverDialogs release];
 	[channelDialogs release];
 	[pasteClients release];
@@ -262,6 +263,11 @@
 
 - (void)onPreferences:(id)sender
 {
+	if (!preferencesController) {
+		preferencesController = [PreferencesController new];
+		preferencesController.delegate = self;
+	}
+	[preferencesController show];
 }
 
 - (void)onAutoOp:(id)sender
@@ -274,6 +280,11 @@
 
 - (void)onCloseWindow:(id)sender
 {
+	if ([window isKeyWindow]) {
+	}
+	else {
+		[[NSApp keyWindow] performClose:nil];
+	}
 }
 
 - (void)onCloseCurrentPanel:(id)sender

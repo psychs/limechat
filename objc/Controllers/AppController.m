@@ -30,6 +30,9 @@
 	[super dealloc];
 }
 
+#pragma mark -
+#pragma mark NSApplication Delegate
+
 - (void)awakeFromNib
 {
 	[self prelude];
@@ -159,6 +162,9 @@
 	[self saveWindowState];
 }
 
+#pragma mark -
+#pragma mark NSWorkspace Notifications
+
 - (void)computerWillSleep:(NSNotification*)note
 {
 }
@@ -173,6 +179,15 @@
 	[NSApp terminate:nil];
 }
 
+- (void)handleURLEvent:(NSAppleEventDescriptor*)event withReplyEvent:(NSAppleEventDescriptor*)replyEvent
+{
+	//NSString* url = [[event descriptorAtIndex:1] stringValue];
+	//LOG(@"%@", url);
+}
+
+#pragma mark -
+#pragma mark NSWindow Delegate
+
 - (id)windowWillReturnFieldEditor:(NSWindow *)sender toObject:(id)client
 {
 	if (client == text) {
@@ -183,11 +198,8 @@
 	}
 }
 
-- (void)handleURLEvent:(NSAppleEventDescriptor*)event withReplyEvent:(NSAppleEventDescriptor*)replyEvent
-{
-	//NSString* url = [[event descriptorAtIndex:1] stringValue];
-	//LOG(@"%@", url);
-}
+#pragma mark -
+#pragma mark Utilities
 
 - (void)sendText:(NSString*)command
 {
@@ -229,6 +241,9 @@
 		treeScrollView.frame = rightTreeBase.bounds;
 	}
 }
+
+#pragma mark -
+#pragma mark Preferences
 
 - (void)loadWindowState
 {
@@ -288,6 +303,9 @@
 	[ud setObject:dic forKey:@"main_window"];
 	[ud synchronize];
 }
+
+#pragma mark -
+#pragma mark Keyboard Navigation
 
 typedef enum {
 	SCROLL_TOP,
@@ -607,6 +625,9 @@ typedef enum {
 	[self inputHandler:@selector(inputHistoryDown:) code:KEY_DOWN mods:0];
 	[self inputHandler:@selector(inputHistoryDown:) code:KEY_DOWN mods:NSAlternateKeyMask];
 }
+
+#pragma mark -
+#pragma mark Migration
 
 - (void)prelude
 {
