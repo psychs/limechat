@@ -412,6 +412,11 @@
 	[self onLayoutChanged:nil];
 }
 
+- (void)onOverrideFontChanged:(id)sender
+{
+	[self onLayoutChanged:nil];
+}
+
 - (void)onChangedTransparency:(id)sender
 {
 	[self onLayoutChanged:nil];

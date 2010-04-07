@@ -39,11 +39,11 @@
 	[self prelude];
 
 	[NewPreferences initPreferences];
-
+	
 	// register URL handler
 	NSAppleEventManager* em = [NSAppleEventManager sharedAppleEventManager];
 	[em setEventHandler:self andSelector:@selector(handleURLEvent:withReplyEvent:) forEventClass:KInternetEventClass andEventID:KAEGetURL];
-	
+
 	// hot key
 	int keyCode = [NewPreferences hotKeyKeyCode];
 	NSUInteger modifierFlags = [NewPreferences hotKeyModifierFlags];

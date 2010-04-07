@@ -42,6 +42,7 @@
 - (void)onChangedTheme:(id)sender;
 - (void)onOpenThemePath:(id)sender;
 - (void)onSelectFont:(id)sender;
+- (void)onOverrideFontChanged:(id)sender;
 - (void)onChangedTransparency:(id)sender;
 
 @end

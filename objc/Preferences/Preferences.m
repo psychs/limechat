@@ -664,7 +664,7 @@ static NSMutableArray* ignoreWords;
 	[ud addObserver:self forKeyPath:@"keywords" options:NSKeyValueObservingOptionNew context:NULL];
 	[ud addObserver:self forKeyPath:@"excludeWords" options:NSKeyValueObservingOptionNew context:NULL];
 	[ud addObserver:self forKeyPath:@"ignoreWords" options:NSKeyValueObservingOptionNew context:NULL];
-	
+
 	[self loadKeywords];
 	[self loadExcludeWords];
 	[self loadIgnoreWords];
