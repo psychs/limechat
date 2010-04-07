@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="99"/>
+			<integer value="246"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1322,7 +1322,7 @@
 								<object class="NSTabViewItem" id="702502324">
 									<string key="NSIdentifier">Item 5</string>
 									<object class="NSView" key="NSView" id="891492072">
-										<nil key="NSNextResponder"/>
+										<reference key="NSNextResponder" ref="460984590"/>
 										<int key="NSvFlags">256</int>
 										<object class="NSMutableArray" key="NSSubviews">
 											<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1772,6 +1772,7 @@
 											</object>
 										</object>
 										<string key="NSFrame">{{10, 33}, {439, 355}}</string>
+										<reference key="NSSuperview" ref="460984590"/>
 									</object>
 									<string key="NSLabel">Theme</string>
 									<reference key="NSColor" ref="326222776"/>
@@ -2070,7 +2071,7 @@
 								</object>
 								<object class="NSTabViewItem" id="13480775">
 									<object class="NSView" key="NSView" id="706443587">
-										<reference key="NSNextResponder" ref="460984590"/>
+										<nil key="NSNextResponder"/>
 										<int key="NSvFlags">256</int>
 										<object class="NSMutableArray" key="NSSubviews">
 											<bool key="EncodedWithXMLCoder">YES</bool>
@@ -2252,21 +2253,20 @@
 											</object>
 										</object>
 										<string key="NSFrame">{{10, 33}, {439, 355}}</string>
-										<reference key="NSSuperview" ref="460984590"/>
 									</object>
 									<string key="NSLabel">Log</string>
 									<reference key="NSColor" ref="326222776"/>
 									<reference key="NSTabView" ref="460984590"/>
 								</object>
 							</object>
-							<reference key="NSSelectedTabViewItem" ref="13480775"/>
+							<reference key="NSSelectedTabViewItem" ref="702502324"/>
 							<reference key="NSFont" ref="325354301"/>
 							<int key="NSTvFlags">0</int>
 							<bool key="NSAllowTruncatedLabels">YES</bool>
 							<bool key="NSDrawsBackground">YES</bool>
 							<object class="NSMutableArray" key="NSSubviews">
 								<bool key="EncodedWithXMLCoder">YES</bool>
-								<reference ref="706443587"/>
+								<reference ref="891492072"/>
 							</object>
 						</object>
 					</object>
@@ -2805,22 +2805,6 @@
 						</object>
 					</object>
 					<int key="connectionID">3030</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: values.Preferences.Dcc.first_port</string>
-						<reference key="source" ref="764110021"/>
-						<reference key="destination" ref="1032655829"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="764110021"/>
-							<reference key="NSDestination" ref="1032655829"/>
-							<string key="NSLabel">value: values.Preferences.Dcc.first_port</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">values.Preferences.Dcc.first_port</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">3092</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -3565,6 +3549,26 @@
 						<reference key="destination" ref="488180517"/>
 					</object>
 					<int key="connectionID">4398</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: dccFirstPort</string>
+						<reference key="source" ref="764110021"/>
+						<reference key="destination" ref="523994250"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="764110021"/>
+							<reference key="NSDestination" ref="523994250"/>
+							<string key="NSLabel">value: dccFirstPort</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">dccFirstPort</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSValidatesImmediately</string>
+								<boolean value="YES" key="NS.object.0"/>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">4401</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -5643,7 +5647,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">4398</int>
+			<int key="maxID">4401</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">

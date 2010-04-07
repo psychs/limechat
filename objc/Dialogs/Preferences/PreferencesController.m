@@ -7,6 +7,11 @@
 #import "SoundWrapper.h"
 
 
+#define LOG_MAX_LINES_MIN	100
+#define PORT_MIN			1024
+#define PORT_MAX			65535
+
+
 @interface PreferencesController (Private)
 - (void)loadHotKey;
 - (void)updateTranscriptFolder;
@@ -46,24 +51,6 @@
 #pragma mark -
 #pragma mark KVC Properties
 
-- (void)setDccLastPort:(int)value
-{
-}
-
-- (int)dccLastPort
-{
-	return 1196;
-}
-
-- (void)setMaxLogLines:(int)value
-{
-}
-
-- (int)maxLogLines
-{
-	return 300;
-}
-
 - (void)setFontDisplayName:(NSString*)value
 {
 }
@@ -80,6 +67,65 @@
 - (CGFloat)fontPointSize
 {
 	return 12;
+}
+
+- (int)dccFirstPort
+{
+	return [NewPreferences dccFirstPort];
+}
+
+- (void)setDccFirstPort:(int)value
+{
+	[NewPreferences setDccFirstPort:value];
+}
+
+- (int)dccLastPort
+{
+	return [NewPreferences dccLastPort];
+}
+
+- (void)setDccLastPort:(int)value
+{
+	[NewPreferences setDccLastPort:value];
+}
+
+- (int)maxLogLines
+{
+	return [NewPreferences maxLogLines];
+}
+
+- (void)setMaxLogLines:(int)value
+{
+	[NewPreferences setMaxLogLines:value];
+}
+
+- (BOOL)validateValue:(id *)value forKey:(NSString *)key error:(NSError **)error
+{
+	if ([key isEqualToString:@"maxLogLines"]) {
+		int n = [*value intValue];
+		if (n < LOG_MAX_LINES_MIN) {
+			*value = [NSNumber numberWithInt:LOG_MAX_LINES_MIN];
+		}
+	}
+	else if ([key isEqualToString:@"dccFirstPort"]) {
+		int n = [*value intValue];
+		if (n < PORT_MIN) {
+			*value = [NSNumber numberWithInt:PORT_MIN];
+		}
+		else if (PORT_MAX < n) {
+			*value = [NSNumber numberWithInt:PORT_MAX];
+		}
+	}
+	else if ([key isEqualToString:@"dccLastPort"]) {
+		int n = [*value intValue];
+		if (n < PORT_MIN) {
+			*value = [NSNumber numberWithInt:PORT_MIN];
+		}
+		else if (PORT_MAX < n) {
+			*value = [NSNumber numberWithInt:PORT_MAX];
+		}
+	}
+	return YES;
 }
 
 #pragma mark -

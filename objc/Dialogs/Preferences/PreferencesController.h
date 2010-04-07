@@ -25,7 +25,6 @@
 }
 
 @property (nonatomic, assign) id delegate;
-@property (nonatomic, assign) int maxLogLines;
 @property (nonatomic, assign) NSString* fontDisplayName;
 @property (nonatomic, assign) CGFloat fontPointSize;
 @property (nonatomic, readonly) NSArray* availableSounds;

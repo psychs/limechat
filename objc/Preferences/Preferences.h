@@ -14,8 +14,6 @@ typedef enum {
 
 + (int)dccAction;
 + (int)dccAddressDetectionMethod;
-+ (int)dccFirstPort;
-+ (int)dccLastPort;
 + (NSString*)dccMyaddress;
 + (BOOL)autoRejoin;
 + (BOOL)confirmQuit;
@@ -25,7 +23,6 @@ typedef enum {
 + (BOOL)leaveOnDoubleclick;
 + (BOOL)logTranscript;
 + (int)mainWindowLayout;
-+ (int)maxLogLines;
 + (BOOL)openBrowserInBackground;
 + (NSString*)pasteCommand;
 + (NSString*)pasteSyntax;
@@ -47,6 +44,14 @@ typedef enum {
 + (BOOL)themeOverrideTimestampFormat;
 + (NSString*)themeTimestampFormat;
 + (double)themeTransparency;
+
++ (int)dccFirstPort;
++ (void)setDccFirstPort:(int)value;
++ (int)dccLastPort;
++ (void)setDccLastPort:(int)value;
+
++ (int)maxLogLines;
++ (void)setMaxLogLines:(int)value;
 
 + (NSString*)transcriptFolder;
 + (void)setTranscriptFolder:(NSString*)value;

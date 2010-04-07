@@ -22,22 +22,6 @@
 	return [obj intValue];
 }
 
-+ (int)dccFirstPort
-{
-	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	id obj = [ud objectForKey:@"Preferences.Dcc.first_port"];
-	if (!obj) return 1096;
-	return [obj intValue];
-}
-
-+ (int)dccLastPort
-{
-	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	id obj = [ud objectForKey:@"Preferences.Dcc.last_port"];
-	if (!obj) return 1115;
-	return [obj intValue];
-}
-
 + (NSString*)dccMyaddress
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
@@ -107,14 +91,6 @@
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
 	id obj = [ud objectForKey:@"Preferences.General.main_window_layout"];
 	if (!obj) return 0;
-	return [obj intValue];
-}
-
-+ (int)maxLogLines
-{
-	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	id obj = [ud objectForKey:@"Preferences.General.max_log_lines"];
-	if (!obj) return 300;
 	return [obj intValue];
 }
 
@@ -302,6 +278,54 @@
 	id obj = [ud objectForKey:@"Preferences.Theme.transparency"];
 	if (!obj) return 1;
 	return [obj doubleValue];
+}
+
+#pragma mark -
+#pragma mark DCC Ports
+
++ (int)dccFirstPort
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	id obj = [ud objectForKey:@"Preferences.Dcc.first_port"];
+	if (!obj) return 1096;
+	return [obj intValue];
+}
+
++ (void)setDccFirstPort:(int)value
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	[ud setInteger:value forKey:@"Preferences.Dcc.first_port"];
+}
+
++ (int)dccLastPort
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	id obj = [ud objectForKey:@"Preferences.Dcc.last_port"];
+	if (!obj) return 1115;
+	return [obj intValue];
+}
+
++ (void)setDccLastPort:(int)value
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	[ud setInteger:value forKey:@"Preferences.Dcc.last_port"];
+}
+
+#pragma mark -
+#pragma mark Max Log Lines
+
++ (int)maxLogLines
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	id obj = [ud objectForKey:@"Preferences.General.max_log_lines"];
+	if (!obj) return 300;
+	return [obj intValue];
+}
+
++ (void)setMaxLogLines:(int)value
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	[ud setInteger:value forKey:@"Preferences.General.max_log_lines"];
 }
 
 #pragma mark -
