@@ -9,6 +9,7 @@
 @interface OtherTheme (Private)
 - (NSString*)loadString:(NSString*)key, ...;
 - (NSColor*)loadColor:(NSString*)key, ...;
+- (NSFont*)loadFont:(NSString*)key;
 @end
 
 
@@ -30,6 +31,8 @@
 	
 	[logNickFormat release];
 	[logScrollerMarkColor release];
+	
+	[inputTextFont release];
 	[inputTextBgColor release];
 	
 	[super dealloc];
@@ -56,6 +59,9 @@
 	[logScrollerMarkColor release];
 	logScrollerMarkColor = nil;
 	
+	[inputTextFont release];
+	inputTextFont = nil;
+	
 	[inputTextBgColor release];
 	inputTextBgColor = nil;
 	
@@ -76,6 +82,9 @@
 	
 	inputTextBgColor = [self loadColor:@"input-text", @"background-color"] ?: [NSColor whiteColor];
 	[inputTextBgColor retain];
+	
+	inputTextFont = [self loadFont:@"input-text"] ?: [NSFont systemFontOfSize:0];
+	[inputTextFont retain];
 }
 
 - (NSString*)loadString:(NSString*)key, ...
@@ -107,6 +116,55 @@
 	
 	NSString* s = (NSString*)dic;
 	return [NSColor fromCSS:s];
+}
+
+- (NSFont*)loadFont:(NSString*)key
+{
+	NSDictionary* dic = [content objectForKey:key];
+	
+	if (![dic isKindOfClass:[NSDictionary class]]) return nil;
+	
+	NSString* family = [dic objectForKey:@"font-family"];
+	NSNumber* sizeNum = [dic objectForKey:@"font-size"];
+	NSString* weight = [dic objectForKey:@"font-weight"];
+	NSString* style = [dic objectForKey:@"font-style"];
+	
+	CGFloat size = 0;
+	if (sizeNum) {
+		size = [sizeNum floatValue];
+	}
+	else {
+		size = [NSFont systemFontSize];
+	}
+	
+	NSFont* font = nil;
+	if (family) {
+		font = [NSFont fontWithName:family size:size];
+	}
+	else {
+		font = [NSFont systemFontOfSize:size];
+	}
+	
+	if (!font) {
+		font = [NSFont systemFontOfSize:0];
+	}
+	
+	NSFontManager* fm = [NSFontManager sharedFontManager];
+	if ([weight isEqualToString:@"bold"]) {
+		NSFont* to = [fm convertFont:font toHaveTrait:NSBoldFontMask];
+		if (to) {
+			font = to;
+		}
+	}
+	
+	if ([style isEqualToString:@"italic"]) {
+		NSFont* to = [fm convertFont:font toHaveTrait:NSItalicFontMask];
+		if (to) {
+			font = to;
+		}
+	}
+	
+	return font;
 }
 
 @end

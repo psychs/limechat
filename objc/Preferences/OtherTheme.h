@@ -11,6 +11,8 @@
 	
 	NSString* logNickFormat;
 	NSColor* logScrollerMarkColor;
+	
+	NSFont* inputTextFont;
 	NSColor* inputTextBgColor;
 }
 
