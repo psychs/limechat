@@ -201,11 +201,10 @@ static NSImage* eraseButtonPushedImage;
 	
 	int k = [e keyCode];
 	NSUInteger m = [e modifierFlags];
-	BOOL ctrl  = (m & NSControlKeyMask) != 0;
+	BOOL ctrl = (m & NSControlKeyMask) != 0;
 	BOOL shift = (m & NSShiftKeyMask) != 0;
-	BOOL alt   = (m & NSAlternateKeyMask) != 0;
-	BOOL cmd   = (m & NSCommandKeyMask) != 0;
-	//BOOL func  = (m & NSFunctionKeyMask) != 0;
+	BOOL alt = (m & NSAlternateKeyMask) != 0;
+	BOOL cmd = (m & NSCommandKeyMask) != 0;
 	
 	//LOG(@"performKeyEquivalent: %d %d", k, m);
 	
@@ -252,7 +251,7 @@ static NSImage* eraseButtonPushedImage;
 	modifierFlags = m;
 	[self setNeedsDisplay];
 	
-	if (keyCode != prevKeyCode && modifierFlags != prevModifierFlags) {
+	if (keyCode != prevKeyCode || modifierFlags != prevModifierFlags) {
 		if ([delegate respondsToSelector:@selector(keyRecorderDidChangeKey:)]) {
 			[delegate keyRecorderDidChangeKey:self];
 		}
