@@ -3,12 +3,13 @@
 
 #import <Cocoa/Cocoa.h>
 #import "ListView.h"
+#import "OtherTheme.h"
 
 
 @interface MemberListView : ListView
 {
 	id dropDelegate;
-	id theme;
+	OtherTheme* theme;
 	
 	NSColor* bgColor;
 	NSColor* topLineColor;
@@ -17,7 +18,9 @@
 }
 
 @property (nonatomic, assign) id dropDelegate;
-@property (nonatomic, retain) id theme;
+@property (nonatomic, retain) OtherTheme* theme;
+
+- (void)themeChanged;
 
 @end
 

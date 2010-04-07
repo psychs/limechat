@@ -2,16 +2,18 @@
 // You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
 #import <Cocoa/Cocoa.h>
+#import "OtherTheme.h"
+#import "IRCUser.h"
 
 
 @interface MemberListViewCell : NSCell
 {
-	id member;
+	IRCUser* member;
 }
 
-@property (nonatomic, retain) id member;
+@property (nonatomic, retain) IRCUser* member;
 
-- (void)setup:(id)theme;
+- (void)setup:(OtherTheme*)theme;
 - (void)themeChanged;
 
 @end

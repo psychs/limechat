@@ -5,6 +5,7 @@
 #import "IRCClient.h"
 #import "IRCChannel.h"
 #import "IRCClientConfig.h"
+#import "Preferences.h"
 
 
 #define AUTO_CONNECT_DELAY	1
@@ -12,6 +13,9 @@
 
 @interface IRCWorld (Private)
 - (void)storePreviousSelection;
+- (void)changeInputTextTheme;
+- (void)changeTreeTheme;
+- (void)changeMemberListTheme;
 - (LogController*)createLogWithClient:(IRCClient*)client channel:(IRCChannel*)channel console:(BOOL)console;
 @end
 
@@ -77,6 +81,10 @@
 		[self createClient:e reload:YES];
 	}
 	[config.clients removeAllObjects];
+	
+	[self changeInputTextTheme];
+	[self changeTreeTheme];
+	[self changeMemberListTheme];
 }
 
 - (void)setupTree
@@ -246,6 +254,44 @@
 - (void)expandClient:(IRCClient*)client
 {
 	[tree expandItem:client];
+}
+
+- (void)reloadTheme
+{
+	viewTheme.name = [NewPreferences themeName];
+	
+	[self changeInputTextTheme];
+	[self changeTreeTheme];
+	[self changeMemberListTheme];
+}
+
+- (void)changeInputTextTheme
+{
+	OtherTheme* theme = viewTheme.other;
+	
+	[fieldEditor setInsertionPointColor:theme.inputTextColor];
+	[text setTextColor:theme.inputTextColor];
+	[text setBackgroundColor:theme.inputTextBgColor];
+	[chatBox setInputTextFont:theme.inputTextFont];
+}
+
+- (void)changeTreeTheme
+{
+	OtherTheme* theme = viewTheme.other;
+	
+	[tree setFont:theme.treeFont];
+	[tree themeChanged];
+	[tree setNeedsDisplay];
+}
+
+- (void)changeMemberListTheme
+{
+	OtherTheme* theme = viewTheme.other;
+	
+	[memberList setFont:theme.memberListFont];
+	//[[[[memberList tableColumns] objectAtIndex:0] dataCell] themeChanged];
+	[memberList themeChanged];
+	[memberList setNeedsDisplay];
 }
 
 - (void)adjustSelection

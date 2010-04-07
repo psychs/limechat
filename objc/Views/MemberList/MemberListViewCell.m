@@ -8,7 +8,7 @@
 #define MARK_RIGHT_MARGIN	2
 
 
-static id theme;
+static OtherTheme* theme;
 static int markWidth;
 static NSMutableParagraphStyle* markStyle;
 static NSMutableParagraphStyle* nickStyle;
@@ -79,10 +79,6 @@ static NSMutableParagraphStyle* nickStyle;
 
 - (void)drawInteriorWithFrame:(NSRect)frame inView:(NSView*)view
 {
-	//@@@
-	[super drawInteriorWithFrame:frame inView:view];
-	return;
-	
 	NSWindow* window = view.window;
 	NSColor* color = nil;
 	
@@ -94,7 +90,7 @@ static NSMutableParagraphStyle* nickStyle;
 			color = [theme memberListSelColor] ?: [NSColor selectedControlTextColor];
 		}
 	}
-	else if ([member op]) {
+	else if ([member isOp]) {
 		color = [theme memberListOpColor];
 	}
 	else {

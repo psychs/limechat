@@ -71,12 +71,12 @@
 	[bottomLineColor release];
 	[gradient release];
 	
-	bgColor = [[theme memberListBackgroundColor] retain];
-	topLineColor = [[theme memberListSelTopLineColor] retain];
-	bottomLineColor = [[theme memberListSelBottomLineColor] retain];
+	bgColor = [theme.memberListBgColor retain];
+	topLineColor = [theme.memberListSelTopLineColor retain];
+	bottomLineColor = [theme.memberListSelBottomLineColor retain];
 	
-	NSColor* start = [theme memberListSelTopColor];
-	NSColor* end = [theme memberListSelBottomColor];
+	NSColor* start = theme.memberListSelTopColor;
+	NSColor* end = theme.memberListSelBottomColor;
 	if (start && end) {
 		gradient = [[NSGradient alloc] initWithStartingColor:start endingColor:end];
 	}

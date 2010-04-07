@@ -101,6 +101,8 @@
 - (void)reloadTree;
 - (void)expandClient:(IRCClient*)client;
 
+- (void)reloadTheme;
+
 - (IRCClient*)createClient:(IRCClientConfig*)seed reload:(BOOL)reload;
 - (IRCChannel*)createChannel:(IRCChannelConfig*)seed client:(IRCClient*)client reload:(BOOL)reload adjust:(BOOL)adjust;
 - (IRCChannel*)createTalk:(NSString*)nick client:(IRCClient*)client;

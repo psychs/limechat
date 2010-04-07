@@ -62,12 +62,12 @@
 	[bottomLineColor release];
 	[gradient release];
 
-	bgColor = [[theme treeBackgroundColor] retain];
-	topLineColor = [[theme treeSelTopLineColor] retain];
-	bottomLineColor = [[theme treeSelBottomLineColor] retain];
+	bgColor = [theme.treeBgColor retain];
+	topLineColor = [theme.treeSelTopLineColor retain];
+	bottomLineColor = [theme.treeSelBottomLineColor retain];
 	
-	NSColor* start = [theme treeSelTopColor];
-	NSColor* end = [theme treeSelBottomColor];
+	NSColor* start = theme.treeSelTopColor;
+	NSColor* end = theme.treeSelBottomColor;
 	gradient = [[NSGradient alloc] initWithStartingColor:start endingColor:end];
 }
 

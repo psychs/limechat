@@ -3,12 +3,13 @@
 
 #import <Cocoa/Cocoa.h>
 #import "TreeView.h"
+#import "OtherTheme.h"
 
 
 @interface ServerTreeView : TreeView
 {
 	id responderDelegate;
-	id theme;
+	OtherTheme* theme;
 	
 	NSColor* bgColor;
 	NSColor* topLineColor;
@@ -17,7 +18,9 @@
 }
 
 @property (nonatomic, assign) id responderDelegate;
-@property (nonatomic, retain) id theme;
+@property (nonatomic, retain) OtherTheme* theme;
+
+- (void)themeChanged;
 
 @end
 
