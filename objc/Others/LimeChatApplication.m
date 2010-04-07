@@ -33,7 +33,7 @@
 	[super sendEvent:e];
 }
 
-- (void)registerHotKey:(int)keyCode modifierFlags:(int)modFlags
+- (void)registerHotKey:(int)keyCode modifierFlags:(NSUInteger)modFlags
 {
 	if (!hotkey) {
 		hotkey = [HotKeyManager new];

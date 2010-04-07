@@ -2,6 +2,7 @@
 // You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
 #import <Cocoa/Cocoa.h>
+#import "KeyRecorder.h"
 
 
 @interface PreferencesController : NSWindowController
@@ -14,6 +15,8 @@
 	IBOutlet NSArrayController* keywordsArrayController;
 	IBOutlet NSArrayController* excludeWordsArrayController;
 	IBOutlet NSArrayController* ignoreWordsArrayController;
+	
+	IBOutlet KeyRecorder* hotKey;
 }
 
 @property (nonatomic, assign) id delegate;

@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="11"/>
+			<integer value="45"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -67,7 +67,7 @@
 										<characters key="NS.bytes">1</characters>
 									</object>
 									<object class="NSView" key="NSView" id="697370398">
-										<reference key="NSNextResponder" ref="460984590"/>
+										<nil key="NSNextResponder"/>
 										<int key="NSvFlags">256</int>
 										<object class="NSMutableArray" key="NSSubviews">
 											<bool key="EncodedWithXMLCoder">YES</bool>
@@ -727,7 +727,6 @@
 											</object>
 										</object>
 										<string key="NSFrame">{{10, 33}, {439, 355}}</string>
-										<reference key="NSSuperview" ref="460984590"/>
 									</object>
 									<string key="NSLabel">Highlight</string>
 									<reference key="NSColor" ref="326222776"/>
@@ -735,7 +734,7 @@
 								</object>
 								<object class="NSTabViewItem" id="320289833">
 									<object class="NSView" key="NSView" id="367708041">
-										<nil key="NSNextResponder"/>
+										<reference key="NSNextResponder" ref="460984590"/>
 										<int key="NSvFlags">256</int>
 										<object class="NSMutableArray" key="NSSubviews">
 											<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1061,6 +1060,7 @@
 											</object>
 										</object>
 										<string key="NSFrame">{{10, 33}, {439, 355}}</string>
+										<reference key="NSSuperview" ref="460984590"/>
 									</object>
 									<string key="NSLabel">Interface</string>
 									<reference key="NSColor" ref="326222776"/>
@@ -2259,14 +2259,14 @@
 									<reference key="NSTabView" ref="460984590"/>
 								</object>
 							</object>
-							<reference key="NSSelectedTabViewItem" ref="261255148"/>
+							<reference key="NSSelectedTabViewItem" ref="320289833"/>
 							<reference key="NSFont" ref="325354301"/>
 							<int key="NSTvFlags">0</int>
 							<bool key="NSAllowTruncatedLabels">YES</bool>
 							<bool key="NSDrawsBackground">YES</bool>
 							<object class="NSMutableArray" key="NSSubviews">
 								<bool key="EncodedWithXMLCoder">YES</bool>
-								<reference ref="697370398"/>
+								<reference ref="367708041"/>
 							</object>
 						</object>
 					</object>
@@ -2697,7 +2697,7 @@
 						<string key="label">enabled: values.Preferences.Keyword.matching_method</string>
 						<reference key="source" ref="815888114"/>
 						<reference key="destination" ref="1032655829"/>
-						<object class="NSNibBindingConnector" key="connector" id="474514078">
+						<object class="NSNibBindingConnector" key="connector" id="636406179">
 							<reference key="NSSource" ref="815888114"/>
 							<reference key="NSDestination" ref="1032655829"/>
 							<string key="NSLabel">enabled: values.Preferences.Keyword.matching_method</string>
@@ -3441,7 +3441,7 @@
 									<integer value="-1"/>
 								</object>
 							</object>
-							<reference key="NSPreviousConnector" ref="474514078"/>
+							<reference key="NSPreviousConnector" ref="636406179"/>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>

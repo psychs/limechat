@@ -9,7 +9,7 @@
 {
 	id delegate;
 	int keyCode;
-	int modifierFlags;
+	NSUInteger modifierFlags;
 	
 	BOOL recording;
 	BOOL eraseButtonPushed;
@@ -18,7 +18,7 @@
 
 @property (nonatomic, assign) IBOutlet id delegate;
 @property (nonatomic, assign) int keyCode;
-@property (nonatomic, assign) int modifierFlags;
+@property (nonatomic, assign) NSUInteger modifierFlags;
 @property (nonatomic, readonly) BOOL valid;
 
 @end

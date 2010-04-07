@@ -11,7 +11,7 @@
 }
 
 - (BOOL)enabled;
-- (BOOL)registerHotKeyCode:(unsigned int)keyCode withModifier:(unsigned int)modifier;
+- (BOOL)registerHotKeyCode:(int)keyCode withModifier:(NSUInteger)modifier;
 - (void)unregisterHotKey;
 
 @end

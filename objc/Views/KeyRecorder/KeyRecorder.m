@@ -64,7 +64,7 @@ static NSImage* eraseButtonPushedImage;
 	}
 }
 
-- (void)setModifierFlags:(int)value
+- (void)setModifierFlags:(NSUInteger)value
 {
 	if (modifierFlags != value) {
 		modifierFlags = value;
@@ -158,7 +158,7 @@ static NSImage* eraseButtonPushedImage;
 	if (!recording || self.window.firstResponder != self) return;
 	
 	int k = [e keyCode];
-	int m = [e modifierFlags];
+	NSUInteger m = [e modifierFlags];
 	BOOL ctrl  = (m & NSControlKeyMask) != 0;
 	BOOL alt   = (m & NSAlternateKeyMask) != 0;
 	BOOL cmd   = (m & NSCommandKeyMask) != 0;
@@ -200,7 +200,7 @@ static NSImage* eraseButtonPushedImage;
 	if (!recording || self.window.firstResponder != self) return NO;
 	
 	int k = [e keyCode];
-	int m = [e modifierFlags];
+	NSUInteger m = [e modifierFlags];
 	BOOL ctrl  = (m & NSControlKeyMask) != 0;
 	BOOL shift = (m & NSShiftKeyMask) != 0;
 	BOOL alt   = (m & NSAlternateKeyMask) != 0;
@@ -245,7 +245,7 @@ static NSImage* eraseButtonPushedImage;
 	}
 	
 	int prevKeyCode = keyCode;
-	int prevModifierFlags = modifierFlags;
+	NSUInteger prevModifierFlags = modifierFlags;
 	
 	recording = NO;
 	keyCode = k;
@@ -265,7 +265,7 @@ static NSImage* eraseButtonPushedImage;
 - (void)clearKey
 {
 	int prevKeyCode = keyCode;
-	int prevModifierFlags = modifierFlags;
+	NSUInteger prevModifierFlags = modifierFlags;
 	
 	recording = NO;
 	keyCode = 0;

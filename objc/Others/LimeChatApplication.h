@@ -10,7 +10,7 @@
 	HotKeyManager* hotkey;
 }
 
-- (void)registerHotKey:(int)keyCode modifierFlags:(int)modFlags;
+- (void)registerHotKey:(int)keyCode modifierFlags:(NSUInteger)modFlags;
 - (void)unregisterHotKey;
 
 @end

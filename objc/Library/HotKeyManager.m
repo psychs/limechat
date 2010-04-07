@@ -17,7 +17,7 @@
   return handle != 0;
 }
 
-- (BOOL)registerHotKeyCode:(unsigned int)keyCode withModifier:(unsigned int)modifier
+- (BOOL)registerHotKeyCode:(int)keyCode withModifier:(NSUInteger)modifier
 {
 	static UInt32 serial = 0;
 	
