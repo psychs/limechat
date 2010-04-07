@@ -78,7 +78,7 @@
 	[self set3columnLayout:[NewPreferences mainWindowLayout] == 1];
 	
 	IRCWorldConfig* seed = [[[IRCWorldConfig alloc] initWithDictionary:[NewPreferences loadWorld]] autorelease];
-	
+
 	world = [IRCWorld new];
 	world.app = self;
 	world.window = window;
@@ -99,7 +99,7 @@
 	world.memberMenu = memberMenu;
 	world.viewTheme = viewTheme;
 	[world setup:seed];
-	
+
 	tree.dataSource = world;
 	tree.delegate = world;
 	tree.responderDelegate = world;

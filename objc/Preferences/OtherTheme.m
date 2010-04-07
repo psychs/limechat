@@ -181,13 +181,12 @@
 	memberListSelBottomColor = nil;
 	
 	
-	if (!fileName) return;
+	//if (!fileName) return;
 	
 	NSData* data = [NSData dataWithContentsOfFile:fileName];
 	NSDictionary* dic = yaml_parse_raw_utf8(data.bytes, data.length);
 	
-	if (![dic isKindOfClass:[NSDictionary class]]) return;
-	
+	//if (![dic isKindOfClass:[NSDictionary class]]) return;
 	
 	content = [dic retain];
 	
