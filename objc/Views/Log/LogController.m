@@ -432,6 +432,7 @@
 	
 	NSArray* keywords = nil;
 	NSArray* excludeWords = nil;
+	BOOL wholeLine = NO;
 	BOOL exactWordMatch = NO;
 	
 	if (useKeyword) {
@@ -444,13 +445,14 @@
 			keywords = ary;
 		}
 		
+		wholeLine = [NewPreferences keywordWholeLine];
 		exactWordMatch = [NewPreferences keywordMatchingMethod] == KEYWORD_MATCH_EXACT;
 	}
 	
 	return [LogRenderer renderBody:line.body
 						  keywords:keywords
 					  excludeWords:excludeWords
-				highlightWholeLine:NO
+				highlightWholeLine:wholeLine
 					exactWordMatch:exactWordMatch];
 }
 
