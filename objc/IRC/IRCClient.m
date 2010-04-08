@@ -1299,6 +1299,28 @@
 			[self printBoth:nil type:LINE_TYPE_REPLY text:text];
 			break;
 		}
+		case 290:	// RPL_CAPAB on freenode
+		{
+			NSString* kind = [m paramAt:1];
+			kind = [kind lowercaseString];
+			
+			if ([kind isEqualToString:@"identify-msg"]) {
+				identifyMsg = YES;
+			}
+			else if ([kind isEqualToString:@"identify-ctcp"]) {
+				identifyCTCP = YES;
+			}
+			
+			[self printReply:m];
+			break;
+		}
+		//case 301:	// RPL_AWAY
+		//case 310:	// RPL_WHOISUSER
+		//case 312:	// RPL_WHOISUSER
+		//case 313:	// RPL_WHOISOPERATOR
+		//case 317:	// RPL_WHOISIDLE
+		//case 319:	// RPL_WHOISCHANNELS
+		//case 318:	// RPL_ENDOFWHOIS
 		case 324:	// RPL_CHANNELMODEIS
 		{
 			NSString* chname = [m paramAt:1];
@@ -1332,6 +1354,10 @@
 			[self printBoth:(c ?: (id)chname) type:LINE_TYPE_REPLY text:text];
 			break;
 		}
+		//case 329:	// hemp ? channel creation time
+		//case 331:	// RPL_NOTOPIC
+		//case 332:	// RPL_TOPIC
+		//case 333:	// RPL_TOPIC_WHO_TIME
 		case 353:	// RPL_NAMREPLY
 		{
 			NSString* chname = [m paramAt:2];
@@ -1399,7 +1425,7 @@
 				}
 				
 				if ([c numberOfMembers] > 1) {
-					// add to who queue
+					// @@@add to who queue
 				}
 				else {
 					c.whoInit = YES;
@@ -1409,6 +1435,10 @@
 			}
 			break;
 		}
+		//case 352:	// RPL_WHOREPLY
+		//case 315:	// RPL_ENDOFWHO
+		//case 322:	// RPL_LIST
+		//case 323:	// RPL_LISTEND
 		default:
 			[self printUnknownReply:m];
 			break;
