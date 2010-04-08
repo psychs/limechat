@@ -5,6 +5,7 @@
 #import "IRC.h"
 #import "IRCWorld.h"
 #import "IRCMessage.h"
+#import "Preferences.h"
 #import "NSStringHelper.h"
 #import "NSDataHelper.h"
 
@@ -436,9 +437,22 @@
 #pragma mark -
 #pragma mark Print
 
+#define TIME_BUFFER_SIZE	256
+
 - (NSString*)now
 {
-	return @"00:00 ";
+	NSString* format = @"%H:%M";
+	if ([NewPreferences themeOverrideTimestampFormat]) {
+		format = [NewPreferences themeTimestampFormat];
+	}
+	
+	time_t global = time(NULL);
+	struct tm* local = localtime(&global);
+	char buf[TIME_BUFFER_SIZE+1];
+	strftime(buf, TIME_BUFFER_SIZE, [format UTF8String], local);
+	buf[TIME_BUFFER_SIZE] = 0;
+	NSString* result = [[[NSString alloc] initWithBytes:buf length:strlen(buf) encoding:NSUTF8StringEncoding] autorelease];
+	return result;
 }
 
 - (BOOL)needPrintConsole:(id)chan
@@ -483,6 +497,10 @@
 	LogLineType memberType = MEMBER_TYPE_NORMAL;
 	int colorNumber = 0;
 	id clickContext = nil;
+	
+	if (time.length) {
+		time = [time stringByAppendingString:@" "];
+	}
 	
 	if (chan && [chan isKindOfClass:[NSString class]]) {
 		channel = (IRCChannel*)self;
@@ -560,6 +578,10 @@
 	NSString* nickStr = nil;
 	LogLineType memberType = MEMBER_TYPE_NORMAL;
 	int colorNumber = 0;
+	
+	if (time.length) {
+		time = [time stringByAppendingString:@" "];
+	}
 	
 	if (chan && [chan isKindOfClass:[NSString class]]) {
 		channelName = chan;
