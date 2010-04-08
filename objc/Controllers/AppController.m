@@ -264,7 +264,7 @@
 	}
 	[text focus];
 	
-	// completion
+	// @@@ clear completion status
 }
 
 - (void)textEntered:(id)sender
@@ -580,24 +580,29 @@ typedef enum {
 	}
 }
 
-- (void)tag:(NSEvent*)e
+- (void)tab:(NSEvent*)e
 {
+	LOG_METHOD
 }
 
 - (void)shiftTab:(NSEvent*)e
 {
+	LOG_METHOD
 }
 
 - (void)sendPrivmsg:(NSEvent*)e
 {
+	LOG_METHOD
 }
 
 - (void)sendNotice:(NSEvent*)e
 {
+	LOG_METHOD
 }
 
 - (void)showPasteDialog:(NSEvent*)e
 {
+	LOG_METHOD
 }
 
 - (void)inputHistoryUp:(NSEvent*)e
