@@ -518,7 +518,10 @@
 	}
 	
 	if (nick && channel && !channel.isClient) {
-		//@@@ nick number
+		IRCUser* user = [channel findMember:nick];
+		if (user) {
+			colorNumber = user.colorNumber;
+		}
 	}
 	
 	if (channel && !channel.isClient) {
@@ -581,7 +584,10 @@
 	}
 	
 	if (nick && channel && !channel.isClient) {
-		//@@@ nick number
+		IRCUser* user = [channel findMember:nick];
+		if (user) {
+			colorNumber = user.colorNumber;
+		}
 	}
 	
 	LogLine* c = [[LogLine new] autorelease];

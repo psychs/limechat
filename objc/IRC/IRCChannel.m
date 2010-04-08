@@ -270,6 +270,13 @@
 	return -1;
 }
 
+- (IRCUser*)findMember:(NSString*)nick
+{
+	int n = [self indexOfMember:nick];
+	if (n < 0) return nil;
+	return [members objectAtIndex:n];
+}
+
 - (int)numberOfMembers
 {
 	return members.count;

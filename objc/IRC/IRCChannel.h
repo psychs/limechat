@@ -59,6 +59,7 @@
 - (void)changeMember:(NSString*)nick mode:(char)mode value:(BOOL)value;
 - (void)clearMembers;
 - (int)indexOfMember:(NSString*)nick;
+- (IRCUser*)findMember:(NSString*)nick;
 - (int)numberOfMembers;
 - (void)reloadMemberList;
 

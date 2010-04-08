@@ -5,6 +5,9 @@
 #import "NSStringHelper.h"
 
 
+#define COLOR_NUMBER_MAX	16
+
+
 @implementation IRCUser
 
 @synthesize nick;
@@ -61,6 +64,7 @@
 	return o || a || q;
 }
 
+//@@@ for ruby code
 - (BOOL)op
 {
 	return [self isOp];
@@ -69,8 +73,7 @@
 - (int)colorNumber
 {
 	if (colorNumber < 0) {
-		colorNumber = 0;
-		//@@@
+		colorNumber = CFHash(canonicalNick) % COLOR_NUMBER_MAX;
 	}
 	return colorNumber;
 }
