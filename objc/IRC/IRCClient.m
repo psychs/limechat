@@ -1198,6 +1198,7 @@
 		{
 			NSString* chname = [m paramAt:2];
 			NSString* trail = [m paramAt:3];
+			
 			IRCChannel* c = [self findChannel:chname];
 			if (c && c.isActive && !c.namesInit) {
 				NSArray* ary = [trail componentsSeparatedByString:@" "];
@@ -1217,9 +1218,11 @@
 					m.o = op == '@' || m.q;
 					m.h = op == '%';
 					m.v = op == '+';
+					m.isMyself = [nick isEqualNoCase:myNick];
 					[c addMember:m];
 					[self updateChannelTitle:c];
 				}
+				c.namesInit = YES;
 			}
 			else {
 				[self printBoth:c ?: (id)chname type:LINE_TYPE_REPLY text:[NSString stringWithFormat:@"Names: %@", trail]];
