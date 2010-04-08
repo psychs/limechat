@@ -70,6 +70,7 @@
 
 - (void)connect;
 - (void)disconnect;
+- (void)quit;
 - (void)cancelReconnect;
 
 - (void)changeNick:(NSString*)newNick;

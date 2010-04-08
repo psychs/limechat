@@ -55,6 +55,7 @@
 - (void)printReply:(IRCMessage*)m;
 - (void)printUnknownReply:(IRCMessage*)m;
 - (void)printErrorReply:(IRCMessage*)m;
+- (void)printError:(NSString*)error;
 @end
 
 
@@ -191,6 +192,19 @@
 	}
 	
 	[self changeStateOff];
+}
+
+- (void)quit
+{
+	if (!loggedIn) {
+		[self disconnect];
+		return;
+	}
+	
+	quitting = YES;
+	reconnectEnabled = NO;
+	[conn clearSendQueue];
+	[self send:QUIT, config.leavingComment, nil];
 }
 
 - (void)cancelReconnect
@@ -666,19 +680,24 @@
 - (void)printReply:(IRCMessage*)m
 {
 	NSString* text = [m sequence:1];
-	[self printBoth:self type:LINE_TYPE_REPLY text:text];
+	[self printBoth:nil type:LINE_TYPE_REPLY text:text];
 }
 
 - (void)printUnknownReply:(IRCMessage*)m
 {
 	NSString* text = [NSString stringWithFormat:@"Reply(%d): %@", m.numericReply, [m sequence:1]];
-	[self printBoth:self type:LINE_TYPE_REPLY text:text];
+	[self printBoth:nil type:LINE_TYPE_REPLY text:text];
 }
 
 - (void)printErrorReply:(IRCMessage*)m
 {
 	NSString* text = [NSString stringWithFormat:@"Error(%d): %@", m.numericReply, [m sequence:1]];
-	[self printBoth:self type:LINE_TYPE_ERROR_REPLY text:text];
+	[self printBoth:nil type:LINE_TYPE_ERROR_REPLY text:text];
+}
+
+- (void)printError:(NSString*)error
+{
+	[self printBoth:nil type:LINE_TYPE_ERROR text:error];
 }
 
 #pragma mark -
@@ -908,7 +927,7 @@
 
 - (void)receiveError:(IRCMessage*)m
 {
-	LOG(@"ERROR %@", m.sequence);
+	[self printError:m.sequence];
 }
 
 - (void)receivePing:(IRCMessage*)m
@@ -1093,13 +1112,12 @@
 
 - (void)ircConnectionDidDisconnect:(IRCConnection*)sender
 {
-	LOG_METHOD
 	[self changeStateOff];
 }
 
 - (void)ircConnectionDidError:(NSString*)error
 {
-	LOG(@"Error: %@", error);
+	[self printError:error];
 }
 
 - (void)ircConnectionDidReceive:(NSData*)data

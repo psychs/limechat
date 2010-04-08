@@ -438,7 +438,7 @@
 {
 	IRCClient* u = world.selectedClient;
 	if (!u) return;
-	[u disconnect];
+	[u quit];
 }
 
 - (void)onCancelReconnecting:(id)sender

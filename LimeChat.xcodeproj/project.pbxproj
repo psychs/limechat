@@ -7,25 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		51C39169103A18A9009DEFBF /* cocoa_gist.rb in Resources */ = {isa = PBXBuildFile; fileRef = 51C39168103A18A9009DEFBF /* cocoa_gist.rb */; };
-		78208C1A0C9D97CD004472E9 /* cocoasheet.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78208C190C9D97CD004472E9 /* cocoasheet.rb */; };
-		7821DBE40C2C875700B3EF42 /* pastesheet.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7821DBE30C2C875700B3EF42 /* pastesheet.rb */; };
-		78229BC70C288188001DD4C3 /* tcpclient.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229B950C288188001DD4C3 /* tcpclient.rb */; };
-		78229BC80C288188001DD4C3 /* tcpserver.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229B960C288188001DD4C3 /* tcpserver.rb */; };
-		78229BCD0C288188001DD4C3 /* dccmanager.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229B9D0C288188001DD4C3 /* dccmanager.rb */; };
-		78229BCE0C288188001DD4C3 /* dccreceiver.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229B9E0C288188001DD4C3 /* dccreceiver.rb */; };
-		78229BCF0C288188001DD4C3 /* dccsender.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229B9F0C288188001DD4C3 /* dccsender.rb */; };
-		78229BD00C288188001DD4C3 /* channeldialog.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BA10C288188001DD4C3 /* channeldialog.rb */; };
-		78229BD10C288188001DD4C3 /* commentsheet.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BA20C288188001DD4C3 /* commentsheet.rb */; };
-		78229BD20C288188001DD4C3 /* modesheet.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BA30C288188001DD4C3 /* modesheet.rb */; };
-		78229BD30C288188001DD4C3 /* nicksheet.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BA40C288188001DD4C3 /* nicksheet.rb */; };
-		78229BD40C288188001DD4C3 /* serverdialog.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BA50C288188001DD4C3 /* serverdialog.rb */; };
-		78229BD50C288188001DD4C3 /* whoisdialog.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BA60C288188001DD4C3 /* whoisdialog.rb */; };
-		78229BD60C288188001DD4C3 /* dialoghelper.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BA80C288188001DD4C3 /* dialoghelper.rb */; };
-		78229BD70C288188001DD4C3 /* numberformat.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BA90C288188001DD4C3 /* numberformat.rb */; };
-		78229BD80C288188001DD4C3 /* persistencehelper.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BAA0C288188001DD4C3 /* persistencehelper.rb */; };
-		78229BDB0C288188001DD4C3 /* userdefaultsaccess.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BAD0C288188001DD4C3 /* userdefaultsaccess.rb */; };
-		78229BDC0C288188001DD4C3 /* utility.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78229BAE0C288188001DD4C3 /* utility.rb */; };
 		78287EB70D742DBD008D5656 /* Themes in CopyFiles */ = {isa = PBXBuildFile; fileRef = 78287EA90D742DAA008D5656 /* Themes */; };
 		782B99C9116C91AB00304B3C /* ViewTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 782B99C8116C91AB00304B3C /* ViewTheme.m */; };
 		782B9C3B116CAD1300304B3C /* LogTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 782B9C3A116CAD1300304B3C /* LogTheme.m */; };
@@ -46,7 +27,6 @@
 		78347EDD1158D4B00073E2F0 /* ServerDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78347ECD1158D4B00073E2F0 /* ServerDialog.xib */; };
 		78347EDE1158D4B00073E2F0 /* WelcomeDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78347ECF1158D4B00073E2F0 /* WelcomeDialog.xib */; };
 		78347EDF1158D4B00073E2F0 /* WhoisDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78347ED11158D4B00073E2F0 /* WhoisDialog.xib */; };
-		7834E1930C69B5AD003C5D65 /* wildcard.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7834E1920C69B5AD003C5D65 /* wildcard.rb */; };
 		78364B2D116597D00096F3A9 /* AsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 78364B18116597D00096F3A9 /* AsyncSocket.m */; };
 		78364B2E116597D00096F3A9 /* HostResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = 78364B1A116597D00096F3A9 /* HostResolver.m */; };
 		78364B2F116597D00096F3A9 /* HotKeyManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 78364B1C116597D00096F3A9 /* HotKeyManager.m */; };
@@ -60,7 +40,6 @@
 		78364E3E1165BE460096F3A9 /* InputTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 78364E3D1165BE460096F3A9 /* InputTextField.m */; };
 		78364E431165BE640096F3A9 /* TextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 78364E421165BE640096F3A9 /* TextField.m */; };
 		78364E5A1165BFA10096F3A9 /* TreeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78364E591165BFA10096F3A9 /* TreeView.m */; };
-		783D0B2B0CF45C38002CC2FB /* listdialog.rb in Resources */ = {isa = PBXBuildFile; fileRef = 783D0B2A0CF45C38002CC2FB /* listdialog.rb */; };
 		783E6C85116995A500DF6820 /* LogController.m in Sources */ = {isa = PBXBuildFile; fileRef = 783E6C7A116995A500DF6820 /* LogController.m */; };
 		783E6C86116995A500DF6820 /* LogLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 783E6C7C116995A500DF6820 /* LogLine.m */; };
 		783E6C87116995A500DF6820 /* LogPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 783E6C7E116995A500DF6820 /* LogPolicy.m */; };
@@ -94,7 +73,6 @@
 		787BE9DD116B45E9003AE47D /* MenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 787BE9DC116B45E9003AE47D /* MenuController.m */; };
 		78835406109FEA7F00CD2FFF /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78835405109FEA7F00CD2FFF /* SystemConfiguration.framework */; };
 		7884E54E0CDA91F500AF3678 /* SACrashReporter in Resources */ = {isa = PBXBuildFile; fileRef = 7884E5450CDA91F500AF3678 /* SACrashReporter */; };
-		7889CABF0D647494003D808E /* welcomedialog.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7889CABE0D647494003D808E /* welcomedialog.rb */; };
 		788AC86B1165C59500523E80 /* ServerTreeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 788AC86A1165C59500523E80 /* ServerTreeView.m */; };
 		788AC8B61165CB5000523E80 /* SingleLineFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 788AC8B51165CB5000523E80 /* SingleLineFormatter.m */; };
 		788AC8CB1165CDA300523E80 /* TextFieldWithDisabledState.m in Sources */ = {isa = PBXBuildFile; fileRef = 788AC8CA1165CDA300523E80 /* TextFieldWithDisabledState.m */; };
@@ -102,11 +80,8 @@
 		788AC9021165CF3E00523E80 /* ChatBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 788AC9011165CF3E00523E80 /* ChatBox.m */; };
 		788AC9311165D27400523E80 /* DialogWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 788AC9301165D27400523E80 /* DialogWindow.m */; };
 		788AC96E1165D49A00523E80 /* ListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 788AC96D1165D49A00523E80 /* ListView.m */; };
-		788C5E660C5F4F5A0034C46E /* growlcontroller.rb in Resources */ = {isa = PBXBuildFile; fileRef = 788C5E650C5F4F5A0034C46E /* growlcontroller.rb */; };
-		7890B4E90C659E4700DF983F /* autoopdialog.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7890B4E80C659E4700DF983F /* autoopdialog.rb */; };
 		78914ACD116CF556008B772D /* IRCTreeItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 78914ACC116CF556008B772D /* IRCTreeItem.m */; };
 		78AD78E40C61B8F8001E77F4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 78AD78E20C61B8F8001E77F4 /* Localizable.strings */; };
-		78AFBCF50C33E314008A8FCD /* kanasupport.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78AFBCF40C33E314008A8FCD /* kanasupport.rb */; };
 		78AFC92811687C5400C64197 /* NSDataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AFC92711687C5400C64197 /* NSDataHelper.m */; };
 		78AFC9CA1168895200C64197 /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AFC9C71168895200C64197 /* GTMNSString+HTML.m */; };
 		78AFC9CB1168895200C64197 /* GTMNSString+URLArguments.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AFC9C91168895200C64197 /* GTMNSString+URLArguments.m */; };
@@ -125,10 +100,6 @@
 		78BC0CD81168E7B000A984AA /* IconController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78BC0CD71168E7B000A984AA /* IconController.m */; };
 		78BC0D1D1168EBA600A984AA /* TinyGrowlClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 78BC0D1C1168EBA600A984AA /* TinyGrowlClient.m */; };
 		78BC0D5B1168F06E00A984AA /* FileLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 78BC0D5A1168F06E00A984AA /* FileLogger.m */; };
-		78BF64AC0C2885E2004451B2 /* channelmode.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78BF64A40C2885E2004451B2 /* channelmode.rb */; };
-		78BF64AD0C2885E2004451B2 /* config.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78BF64A50C2885E2004451B2 /* config.rb */; };
-		78BF64AE0C2885E2004451B2 /* ircmessage.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78BF64A60C2885E2004451B2 /* ircmessage.rb */; };
-		78BF64B10C2885E2004451B2 /* usermode.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78BF64A90C2885E2004451B2 /* usermode.rb */; };
 		78C1E7771168559400AC305B /* NSArrayHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C1E7761168559400AC305B /* NSArrayHelper.m */; };
 		78C1E8711168635500AC305B /* SoundPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C1E8701168635500AC305B /* SoundPlayer.m */; };
 		78C1E8801168652000AC305B /* KeyEventHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C1E87F1168652000AC305B /* KeyEventHandler.m */; };
@@ -180,26 +151,7 @@
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
-		51C39168103A18A9009DEFBF /* cocoa_gist.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; name = cocoa_gist.rb; path = vendor/cocoa_gist/lib/cocoa_gist.rb; sourceTree = SOURCE_ROOT; };
 		780253C20C09525900C170D4 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
-		78208C190C9D97CD004472E9 /* cocoasheet.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = cocoasheet.rb; sourceTree = "<group>"; };
-		7821DBE30C2C875700B3EF42 /* pastesheet.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = pastesheet.rb; sourceTree = "<group>"; };
-		78229B950C288188001DD4C3 /* tcpclient.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = tcpclient.rb; sourceTree = "<group>"; };
-		78229B960C288188001DD4C3 /* tcpserver.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = tcpserver.rb; sourceTree = "<group>"; };
-		78229B9D0C288188001DD4C3 /* dccmanager.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = dccmanager.rb; sourceTree = "<group>"; };
-		78229B9E0C288188001DD4C3 /* dccreceiver.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = dccreceiver.rb; sourceTree = "<group>"; };
-		78229B9F0C288188001DD4C3 /* dccsender.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = dccsender.rb; sourceTree = "<group>"; };
-		78229BA10C288188001DD4C3 /* channeldialog.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = channeldialog.rb; sourceTree = "<group>"; };
-		78229BA20C288188001DD4C3 /* commentsheet.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = commentsheet.rb; sourceTree = "<group>"; };
-		78229BA30C288188001DD4C3 /* modesheet.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = modesheet.rb; sourceTree = "<group>"; };
-		78229BA40C288188001DD4C3 /* nicksheet.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = nicksheet.rb; sourceTree = "<group>"; };
-		78229BA50C288188001DD4C3 /* serverdialog.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = serverdialog.rb; sourceTree = "<group>"; };
-		78229BA60C288188001DD4C3 /* whoisdialog.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = whoisdialog.rb; sourceTree = "<group>"; };
-		78229BA80C288188001DD4C3 /* dialoghelper.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = dialoghelper.rb; sourceTree = "<group>"; };
-		78229BA90C288188001DD4C3 /* numberformat.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = numberformat.rb; sourceTree = "<group>"; };
-		78229BAA0C288188001DD4C3 /* persistencehelper.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = persistencehelper.rb; sourceTree = "<group>"; };
-		78229BAD0C288188001DD4C3 /* userdefaultsaccess.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = userdefaultsaccess.rb; sourceTree = "<group>"; };
-		78229BAE0C288188001DD4C3 /* utility.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = utility.rb; sourceTree = "<group>"; };
 		78287EA90D742DAA008D5656 /* Themes */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Themes; path = resource/Themes; sourceTree = "<group>"; };
 		782B99C7116C91AB00304B3C /* ViewTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewTheme.h; sourceTree = "<group>"; };
 		782B99C8116C91AB00304B3C /* ViewTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewTheme.m; sourceTree = "<group>"; };
@@ -226,7 +178,6 @@
 		78347ECE1158D4B00073E2F0 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/ServerDialog.xib; sourceTree = "<group>"; };
 		78347ED01158D4B00073E2F0 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/WelcomeDialog.xib; sourceTree = "<group>"; };
 		78347ED21158D4B00073E2F0 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/WhoisDialog.xib; sourceTree = "<group>"; };
-		7834E1920C69B5AD003C5D65 /* wildcard.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = wildcard.rb; sourceTree = "<group>"; };
 		78364B17116597D00096F3A9 /* AsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncSocket.h; sourceTree = "<group>"; };
 		78364B18116597D00096F3A9 /* AsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncSocket.m; sourceTree = "<group>"; };
 		78364B19116597D00096F3A9 /* HostResolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HostResolver.h; sourceTree = "<group>"; };
@@ -253,7 +204,6 @@
 		78364E421165BE640096F3A9 /* TextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextField.m; sourceTree = "<group>"; };
 		78364E581165BFA10096F3A9 /* TreeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TreeView.h; sourceTree = "<group>"; };
 		78364E591165BFA10096F3A9 /* TreeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TreeView.m; sourceTree = "<group>"; };
-		783D0B2A0CF45C38002CC2FB /* listdialog.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = listdialog.rb; sourceTree = "<group>"; };
 		783E6C79116995A500DF6820 /* LogController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogController.h; sourceTree = "<group>"; };
 		783E6C7A116995A500DF6820 /* LogController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogController.m; sourceTree = "<group>"; };
 		783E6C7B116995A500DF6820 /* LogLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogLine.h; sourceTree = "<group>"; };
@@ -309,7 +259,6 @@
 		787FD46C0BFE960100F2F22D /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		78835405109FEA7F00CD2FFF /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = /System/Library/Frameworks/SystemConfiguration.framework; sourceTree = "<absolute>"; };
 		7884E5450CDA91F500AF3678 /* SACrashReporter */ = {isa = PBXFileReference; lastKnownFileType = folder; name = SACrashReporter; path = vendor/SACrashReporter; sourceTree = "<group>"; };
-		7889CABE0D647494003D808E /* welcomedialog.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = welcomedialog.rb; sourceTree = "<group>"; };
 		788AC8691165C59500523E80 /* ServerTreeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerTreeView.h; sourceTree = "<group>"; };
 		788AC86A1165C59500523E80 /* ServerTreeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerTreeView.m; sourceTree = "<group>"; };
 		788AC8B41165CB5000523E80 /* SingleLineFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SingleLineFormatter.h; sourceTree = "<group>"; };
@@ -324,13 +273,10 @@
 		788AC9301165D27400523E80 /* DialogWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DialogWindow.m; sourceTree = "<group>"; };
 		788AC96C1165D49A00523E80 /* ListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListView.h; sourceTree = "<group>"; };
 		788AC96D1165D49A00523E80 /* ListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListView.m; sourceTree = "<group>"; };
-		788C5E650C5F4F5A0034C46E /* growlcontroller.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = growlcontroller.rb; sourceTree = "<group>"; };
 		788D56F00BB6872B00DDBF69 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
-		7890B4E80C659E4700DF983F /* autoopdialog.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = autoopdialog.rb; sourceTree = "<group>"; };
 		78914ACB116CF556008B772D /* IRCTreeItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCTreeItem.h; sourceTree = "<group>"; };
 		78914ACC116CF556008B772D /* IRCTreeItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCTreeItem.m; sourceTree = "<group>"; };
 		78AD78E30C61B8F8001E77F4 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
-		78AFBCF40C33E314008A8FCD /* kanasupport.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = kanasupport.rb; sourceTree = "<group>"; };
 		78AFC92611687C5400C64197 /* NSDataHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDataHelper.h; sourceTree = "<group>"; };
 		78AFC92711687C5400C64197 /* NSDataHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDataHelper.m; sourceTree = "<group>"; };
 		78AFC9C41168895200C64197 /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
@@ -369,10 +315,6 @@
 		78BC0D1C1168EBA600A984AA /* TinyGrowlClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TinyGrowlClient.m; sourceTree = "<group>"; };
 		78BC0D591168F06E00A984AA /* FileLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileLogger.h; sourceTree = "<group>"; };
 		78BC0D5A1168F06E00A984AA /* FileLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileLogger.m; sourceTree = "<group>"; };
-		78BF64A40C2885E2004451B2 /* channelmode.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = channelmode.rb; sourceTree = "<group>"; };
-		78BF64A50C2885E2004451B2 /* config.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = config.rb; sourceTree = "<group>"; };
-		78BF64A60C2885E2004451B2 /* ircmessage.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = ircmessage.rb; sourceTree = "<group>"; };
-		78BF64A90C2885E2004451B2 /* usermode.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = usermode.rb; sourceTree = "<group>"; };
 		78C1E7751168559400AC305B /* NSArrayHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSArrayHelper.h; sourceTree = "<group>"; };
 		78C1E7761168559400AC305B /* NSArrayHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSArrayHelper.m; sourceTree = "<group>"; };
 		78C1E86F1168635500AC305B /* SoundPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundPlayer.h; sourceTree = "<group>"; };
@@ -431,7 +373,6 @@
 			isa = PBXGroup;
 			children = (
 				786927470BB6EE130081019B /* objc */,
-				78A47CF40BF6DE6B001C5B15 /* ruby */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -503,66 +444,6 @@
 				7851AEF61168A91A00AC449F /* libicucore.dylib */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		78229B8F0C288188001DD4C3 /* component */ = {
-			isa = PBXGroup;
-			children = (
-				78229B950C288188001DD4C3 /* tcpclient.rb */,
-				78229B960C288188001DD4C3 /* tcpserver.rb */,
-			);
-			path = component;
-			sourceTree = "<group>";
-		};
-		78229B980C288188001DD4C3 /* controller */ = {
-			isa = PBXGroup;
-			children = (
-				788C5E650C5F4F5A0034C46E /* growlcontroller.rb */,
-			);
-			path = controller;
-			sourceTree = "<group>";
-		};
-		78229B9C0C288188001DD4C3 /* dcc */ = {
-			isa = PBXGroup;
-			children = (
-				78229B9D0C288188001DD4C3 /* dccmanager.rb */,
-				78229B9E0C288188001DD4C3 /* dccreceiver.rb */,
-				78229B9F0C288188001DD4C3 /* dccsender.rb */,
-			);
-			path = dcc;
-			sourceTree = "<group>";
-		};
-		78229BA00C288188001DD4C3 /* dialog */ = {
-			isa = PBXGroup;
-			children = (
-				7889CABE0D647494003D808E /* welcomedialog.rb */,
-				7890B4E80C659E4700DF983F /* autoopdialog.rb */,
-				51C39168103A18A9009DEFBF /* cocoa_gist.rb */,
-				7821DBE30C2C875700B3EF42 /* pastesheet.rb */,
-				78229BA10C288188001DD4C3 /* channeldialog.rb */,
-				78229BA20C288188001DD4C3 /* commentsheet.rb */,
-				78229BA30C288188001DD4C3 /* modesheet.rb */,
-				78229BA40C288188001DD4C3 /* nicksheet.rb */,
-				78229BA50C288188001DD4C3 /* serverdialog.rb */,
-				78229BA60C288188001DD4C3 /* whoisdialog.rb */,
-				783D0B2A0CF45C38002CC2FB /* listdialog.rb */,
-			);
-			path = dialog;
-			sourceTree = "<group>";
-		};
-		78229BA70C288188001DD4C3 /* lib */ = {
-			isa = PBXGroup;
-			children = (
-				78208C190C9D97CD004472E9 /* cocoasheet.rb */,
-				7834E1920C69B5AD003C5D65 /* wildcard.rb */,
-				78AFBCF40C33E314008A8FCD /* kanasupport.rb */,
-				78229BA80C288188001DD4C3 /* dialoghelper.rb */,
-				78229BA90C288188001DD4C3 /* numberformat.rb */,
-				78229BAA0C288188001DD4C3 /* persistencehelper.rb */,
-				78229BAD0C288188001DD4C3 /* userdefaultsaccess.rb */,
-				78229BAE0C288188001DD4C3 /* utility.rb */,
-			);
-			path = lib;
 			sourceTree = "<group>";
 		};
 		78364B14116597D00096F3A9 /* Controllers */ = {
@@ -811,19 +692,6 @@
 			path = objc/Dialogs;
 			sourceTree = "<group>";
 		};
-		78A47CF40BF6DE6B001C5B15 /* ruby */ = {
-			isa = PBXGroup;
-			children = (
-				78BF64A20C2885E2004451B2 /* irc */,
-				78229B8F0C288188001DD4C3 /* component */,
-				78229B980C288188001DD4C3 /* controller */,
-				78229B9C0C288188001DD4C3 /* dcc */,
-				78229BA00C288188001DD4C3 /* dialog */,
-				78229BA70C288188001DD4C3 /* lib */,
-			);
-			path = ruby;
-			sourceTree = "<group>";
-		};
 		78BC0C521168E5D800A984AA /* IRC */ = {
 			isa = PBXGroup;
 			children = (
@@ -857,17 +725,6 @@
 			);
 			name = IRC;
 			path = objc/IRC;
-			sourceTree = "<group>";
-		};
-		78BF64A20C2885E2004451B2 /* irc */ = {
-			isa = PBXGroup;
-			children = (
-				78BF64A40C2885E2004451B2 /* channelmode.rb */,
-				78BF64A50C2885E2004451B2 /* config.rb */,
-				78BF64A60C2885E2004451B2 /* ircmessage.rb */,
-				78BF64A90C2885E2004451B2 /* usermode.rb */,
-			);
-			path = irc;
 			sourceTree = "<group>";
 		};
 		78E345BF116C6A9A00990CCB /* Preferences */ = {
@@ -941,38 +798,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				78229BC70C288188001DD4C3 /* tcpclient.rb in Resources */,
-				78229BC80C288188001DD4C3 /* tcpserver.rb in Resources */,
-				78229BCD0C288188001DD4C3 /* dccmanager.rb in Resources */,
-				78229BCE0C288188001DD4C3 /* dccreceiver.rb in Resources */,
-				78229BCF0C288188001DD4C3 /* dccsender.rb in Resources */,
-				78229BD00C288188001DD4C3 /* channeldialog.rb in Resources */,
-				78229BD10C288188001DD4C3 /* commentsheet.rb in Resources */,
-				78229BD20C288188001DD4C3 /* modesheet.rb in Resources */,
-				78229BD30C288188001DD4C3 /* nicksheet.rb in Resources */,
-				78229BD40C288188001DD4C3 /* serverdialog.rb in Resources */,
-				78229BD50C288188001DD4C3 /* whoisdialog.rb in Resources */,
-				78229BD60C288188001DD4C3 /* dialoghelper.rb in Resources */,
-				78229BD70C288188001DD4C3 /* numberformat.rb in Resources */,
-				78229BD80C288188001DD4C3 /* persistencehelper.rb in Resources */,
-				78229BDB0C288188001DD4C3 /* userdefaultsaccess.rb in Resources */,
-				78229BDC0C288188001DD4C3 /* utility.rb in Resources */,
-				78BF64AC0C2885E2004451B2 /* channelmode.rb in Resources */,
-				78BF64AD0C2885E2004451B2 /* config.rb in Resources */,
-				78BF64AE0C2885E2004451B2 /* ircmessage.rb in Resources */,
-				78BF64B10C2885E2004451B2 /* usermode.rb in Resources */,
-				7821DBE40C2C875700B3EF42 /* pastesheet.rb in Resources */,
-				78AFBCF50C33E314008A8FCD /* kanasupport.rb in Resources */,
-				788C5E660C5F4F5A0034C46E /* growlcontroller.rb in Resources */,
 				78AD78E40C61B8F8001E77F4 /* Localizable.strings in Resources */,
-				7890B4E90C659E4700DF983F /* autoopdialog.rb in Resources */,
-				7834E1930C69B5AD003C5D65 /* wildcard.rb in Resources */,
-				78208C1A0C9D97CD004472E9 /* cocoasheet.rb in Resources */,
 				7884E54E0CDA91F500AF3678 /* SACrashReporter in Resources */,
-				783D0B2B0CF45C38002CC2FB /* listdialog.rb in Resources */,
 				78B2DF210D0417160092EBDA /* application.icns in Resources */,
-				7889CABF0D647494003D808E /* welcomedialog.rb in Resources */,
-				51C39169103A18A9009DEFBF /* cocoa_gist.rb in Resources */,
 				784BBE941085BC950080898B /* bluestar.tiff in Resources */,
 				784BBE951085BC950080898B /* keyrecorder_erase.png in Resources */,
 				784BBE961085BC950080898B /* keyrecorder_erase_pushed.png in Resources */,
