@@ -556,6 +556,7 @@ typedef enum {
 
 - (void)selectPreviousSelection:(NSEvent*)e
 {
+	[world selectPreviousItem];
 }
 
 - (void)selectChannelAtNumber:(NSEvent*)e

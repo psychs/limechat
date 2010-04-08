@@ -54,6 +54,9 @@
 	int itemId;
 	BOOL reloadingTree;
 	IRCTreeItem* selected;
+	
+	int previousSelectedClientId;
+	int previousSelectedChannelId;
 }
 
 @property (nonatomic, assign) AppController* app;
@@ -91,9 +94,14 @@
 - (void)onTimer;
 - (void)autoConnect;
 
+- (IRCClient*)findClient:(NSString*)name;
+- (IRCClient*)findClientById:(int)uid;
+- (IRCChannel*)findChannelByClientId:(int)uid channelId:(int)cid;
+
 - (void)select:(id)item;
 - (void)selectChannelAt:(int)n;
 - (void)selectClientAt:(int)n;
+- (void)selectPreviousItem;
 
 - (void)selectText;
 - (BOOL)sendText:(NSString*)s command:(NSString*)command;

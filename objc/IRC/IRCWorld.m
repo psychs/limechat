@@ -62,6 +62,7 @@
 	[dummyLog release];
 	[config release];
 	[clients release];
+	[selected release];
 	[super dealloc];
 }
 
@@ -158,6 +159,41 @@
 
 - (void)terminate
 {
+}
+
+- (IRCClient*)findClient:(NSString*)name
+{
+	for (IRCClient* u in clients) {
+		if ([u.name isEqualToString:name]) {
+			return u;
+		}
+	}
+	return nil;
+}
+
+- (IRCClient*)findClientById:(int)uid
+{
+	for (IRCClient* u in clients) {
+		if (u.uid == uid) {
+			return u;
+		}
+	}
+	return nil;
+}
+
+- (IRCChannel*)findChannelByClientId:(int)uid channelId:(int)cid
+{
+	for (IRCClient* u in clients) {
+		if (u.uid == uid) {
+			for (IRCChannel* c in u.channels) {
+				if (c.uid == cid) {
+					return c;
+				}
+			}
+			break;
+		}
+	}
+	return nil;
 }
 
 - (void)select:(id)item
@@ -341,10 +377,48 @@
 
 - (void)adjustSelection
 {
+	int row = [tree selectedRow];
+	if (0 <= row && selected && selected != [tree itemAtRow:row]) {
+		[tree select:[tree rowForItem:selected]];
+		[self reloadTree];
+	}
 }
 
 - (void)storePreviousSelection
 {
+	if (!selected) {
+		previousSelectedClientId = 0;
+		previousSelectedChannelId = 0;
+	}
+	else if (selected.isClient) {
+		previousSelectedClientId = selected.uid;
+		previousSelectedChannelId = 0;
+	}
+	else {
+		previousSelectedClientId = selected.client.uid;
+		previousSelectedChannelId = selected.uid;
+	}
+}
+
+- (void)selectPreviousItem
+{
+	if (!previousSelectedClientId && !previousSelectedClientId) return;
+	
+	int uid = previousSelectedClientId;
+	int cid = previousSelectedChannelId;
+	
+	IRCTreeItem* item;
+	
+	if (cid) {
+		item = [self findChannelByClientId:uid channelId:cid];
+	}
+	else {
+		item = [self findClientById:uid];
+	}
+	
+	if (item) {
+		[self select:item];
+	}
 }
 
 - (IRCClient*)createClient:(IRCClientConfig*)seed reload:(BOOL)reload
