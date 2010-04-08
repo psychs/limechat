@@ -5,6 +5,7 @@
 #import "IRCClient.h"
 #import "IRCWorld.h"
 #import "MemberListViewCell.h"
+#import "NSStringHelper.h"
 
 
 @implementation IRCChannel
@@ -256,11 +257,11 @@
 
 - (int)indexOfMember:(NSString*)nick
 {
-	NSString* lowerNick = [nick lowercaseString];
+	NSString* canonicalNick = [nick canonicalName];
 	
 	int i = 0;
 	for (IRCUser* m in members) {
-		if ([m.lowerNick isEqualToString:lowerNick]) {
+		if ([m.canonicalNick isEqualToString:canonicalNick]) {
 			return i;
 		}
 		++i;

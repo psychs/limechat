@@ -7,7 +7,7 @@
 @interface IRCUser : NSObject
 {
 	NSString* nick;
-	NSString* lowerNick;
+	NSString* canonicalNick;
 	NSString* username;
 	NSString* address;
 	BOOL q;
@@ -16,11 +16,12 @@
 	BOOL h;
 	BOOL v;
 	
+	BOOL isMyself;
 	int colorNumber;
 }
 
 @property (nonatomic, retain) NSString* nick;
-@property (nonatomic, readonly) NSString* lowerNick;
+@property (nonatomic, readonly) NSString* canonicalNick;
 @property (nonatomic, retain) NSString* username;
 @property (nonatomic, retain) NSString* address;
 @property (nonatomic, assign) BOOL q;
@@ -28,6 +29,7 @@
 @property (nonatomic, assign) BOOL o;
 @property (nonatomic, assign) BOOL h;
 @property (nonatomic, assign) BOOL v;
+@property (nonatomic, assign) BOOL isMyself;
 @property (nonatomic, readonly) char mark;
 @property (nonatomic, readonly) BOOL isOp;
 @property (nonatomic, readonly) int colorNumber;

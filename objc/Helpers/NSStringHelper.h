@@ -41,6 +41,7 @@
 
 - (BOOL)isChannelName;
 - (BOOL)isModeChannelName;
+- (NSString*)canonicalName;
 
 + (NSString*)bundleString:(NSString*)key;
 

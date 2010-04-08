@@ -2,12 +2,13 @@
 // You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
 #import "IRCUser.h"
+#import "NSStringHelper.h"
 
 
 @implementation IRCUser
 
 @synthesize nick;
-@synthesize lowerNick;
+@synthesize canonicalNick;
 @synthesize username;
 @synthesize address;
 @synthesize q;
@@ -15,6 +16,7 @@
 @synthesize o;
 @synthesize h;
 @synthesize v;
+@synthesize isMyself;
 
 - (id)init
 {
@@ -27,6 +29,7 @@
 - (void)dealloc
 {
 	[nick release];
+	[canonicalNick release];
 	[username release];
 	[address release];
 	[super dealloc];
@@ -38,8 +41,8 @@
 		[nick release];
 		nick = [value retain];
 		
-		[lowerNick release];
-		lowerNick = [[nick lowercaseString] retain];
+		[canonicalNick release];
+		canonicalNick = [[nick canonicalName] retain];
 	}
 }
 
@@ -102,7 +105,10 @@
 
 - (NSComparisonResult)compare:(IRCUser*)other
 {
-	if (q != other.q) {
+	if (isMyself != other.isMyself) {
+		return isMyself ? NSOrderedAscending : NSOrderedDescending;
+	}
+	else if (q != other.q) {
 		return q ? NSOrderedAscending : NSOrderedDescending;
 	}
 	else if (q) {

@@ -240,6 +240,11 @@ BOOL isUnicharDigit(unichar c)
 	return c == '#' || c == '&' || c == '!';
 }
 
+- (NSString*)canonicalName
+{
+	return [self lowercaseString];
+}
+
 - (NSRange)rangeOfUrl
 {
 	return [self rangeOfUrlStart:0];
