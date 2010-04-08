@@ -23,5 +23,5 @@
 
 
 @interface NSObject (FieldEditorTextViewDelegate)
-- (void)fieldEditorTextViewPaste:(id)sender;
+- (BOOL)fieldEditorTextViewPaste:(id)sender;
 @end

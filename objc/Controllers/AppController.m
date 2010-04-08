@@ -7,6 +7,7 @@
 #import "IRCClient.h"
 #import "ViewTheme.h"
 #import "MemberListViewCell.h"
+#import "Regex.h"
 
 
 #define KInternetEventClass	1196773964
@@ -217,6 +218,36 @@
 	else {
 		return nil;
 	}
+}
+
+#pragma mark -
+#pragma mark FieldEditorTextView Delegate
+
+- (BOOL)fieldEditorTextViewPaste:(id)sender;
+{
+	NSPasteboard* pb = [NSPasteboard generalPasteboard];
+	NSString* s = [pb stringForType:NSStringPboardType];
+	if (!s.length) return NO;
+	
+	IRCTreeItem* sel = world.selected;
+	if (sel && !sel.isClient) {
+		static Regex* regex = nil;
+		if (!regex) {
+			regex = [[Regex alloc] initWithString:@"(\r\n|\r|\n)[^\r\n]"];
+		}
+		
+		NSRange r = [regex match:s];
+		if (r.location != NSNotFound) {
+			// multi line
+			LOG(@"@@@ show paste dialog");
+			return YES;
+		}
+	}
+	
+	if (![[window firstResponder] isKindOfClass:[NSTextView class]]) {
+		[world selectText];
+	}
+	return NO;
 }
 
 #pragma mark -

@@ -3,6 +3,7 @@
 #import "IRCWorld.h"
 #import "IRCClient.h"
 #import "IRCChannel.h"
+#import "Regex.h"
 
 
 #define CONNECTED				(u && u.connected)
@@ -292,6 +293,31 @@
 
 - (void)onPaste:(id)sender
 {
+	NSPasteboard* pb = [NSPasteboard generalPasteboard];
+	
+	if (![pb availableTypeFromArray:[NSArray arrayWithObject:NSStringPboardType]]) return;
+	NSWindow* win = [NSApp keyWindow];
+	if (!win) return;
+	id t = [win firstResponder];
+	if (!t) return;
+	if (win == window) {
+		NSString* s = [pb stringForType:NSStringPboardType];
+		if (!s.length) return;
+		
+		NSText* e = [win fieldEditor:NO forObject:text];
+		[e paste:nil];
+	}
+	else {
+		if ([t respondsToSelector:@selector(paste:)]) {
+			BOOL validated = YES;
+			if ([t respondsToSelector:@selector(validateMenuItem:)]) {
+				validated = [t validateMenuItem:sender];
+			}
+			if (validated) {
+				[t paste:sender];
+			}
+		}
+	}
 }
 
 - (void)onPasteDialog:(id)sender

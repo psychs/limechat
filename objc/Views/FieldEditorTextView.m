@@ -25,7 +25,10 @@
 - (void)paste:(id)sender
 {
 	if (pasteDelegate) {
-		[pasteDelegate fieldEditorTextViewPaste:self];
+		BOOL result = [pasteDelegate fieldEditorTextViewPaste:self];
+		if (result) {
+			return;
+		}
 	}
 	
 	[super paste:sender];
