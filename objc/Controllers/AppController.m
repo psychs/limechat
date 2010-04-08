@@ -245,7 +245,7 @@
 	}
 	
 	if (![[window firstResponder] isKindOfClass:[NSTextView class]]) {
-		[world selectText];
+		[world focusInputText];
 	}
 	return NO;
 }
@@ -610,7 +610,7 @@ typedef enum {
 	NSString* s = [inputHistory up:[text stringValue]];
 	if (s) {
 		[text setStringValue:s];
-		[world selectText];
+		[world focusInputText];
 	}
 }
 
@@ -619,7 +619,7 @@ typedef enum {
 	NSString* s = [inputHistory down:[text stringValue]];
 	if (s) {
 		[text setStringValue:s];
-		[world selectText];
+		[world focusInputText];
 	}
 }
 

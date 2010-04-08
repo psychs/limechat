@@ -103,7 +103,7 @@
 - (void)selectClientAt:(int)n;
 - (void)selectPreviousItem;
 
-- (void)selectText;
+- (void)focusInputText;
 - (BOOL)sendText:(NSString*)s command:(NSString*)command;
 
 - (void)markAllAsRead;
