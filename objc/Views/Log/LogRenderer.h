@@ -7,6 +7,6 @@
 @interface LogRenderer : NSObject
 
 + (void)setUp;
-+ (NSArray*)renderBody:(NSString*)body keywords:(NSArray*)keywords excludeWords:(NSArray*)excludeWords highlightWholeLine:(BOOL)highlightWholeLine exactWordMatch:(BOOL)exactWordMatch;
++ (NSString*)renderBody:(NSString*)body keywords:(NSArray*)keywords excludeWords:(NSArray*)excludeWords highlightWholeLine:(BOOL)highlightWholeLine exactWordMatch:(BOOL)exactWordMatch highlighted:(BOOL*)highlighted;
 
 @end

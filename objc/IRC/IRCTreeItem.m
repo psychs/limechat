@@ -52,4 +52,9 @@
 	return @"";
 }
 
+- (NSString*)name
+{
+	return @"";
+}
+
 @end

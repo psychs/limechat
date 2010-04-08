@@ -65,7 +65,6 @@
 @property (nonatomic, retain) NSColor* initialBackgroundColor;
 @property (nonatomic, assign) int maxLines;
 @property (nonatomic, readonly) BOOL viewingBottom;
-@property (nonatomic, readonly) NSString* contentString;
 
 - (void)setUp;
 
@@ -79,7 +78,7 @@
 - (void)clear;
 - (void)changeTextSize:(BOOL)bigger;
 
-- (BOOL)print:(LogLine*)line useKeyword:(BOOL)useKeyword;
+- (BOOL)print:(LogLine*)line;
 
 - (void)logViewOnDoubleClick:(NSString*)e;
 

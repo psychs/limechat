@@ -26,6 +26,7 @@
 @property (nonatomic, readonly) BOOL isClient;
 @property (nonatomic, readonly) IRCClient* client;
 @property (nonatomic, readonly) NSString* label;
+@property (nonatomic, readonly) NSString* name;
 
 - (void)resetState;
 - (int)numberOfChildren;

@@ -123,7 +123,7 @@
 
 - (BOOL)print:(LogLine*)line
 {
-	BOOL result = [log print:line useKeyword:YES];
+	BOOL result = [log print:line];
 	
 	// write to log file
 	

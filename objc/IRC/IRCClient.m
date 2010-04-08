@@ -497,22 +497,19 @@
 	LogLineType memberType = MEMBER_TYPE_NORMAL;
 	int colorNumber = 0;
 	id clickContext = nil;
-	
+	NSArray* keywords = nil;
+	NSArray* excludeWords = nil;
+
 	if (time.length) {
 		time = [time stringByAppendingString:@" "];
 	}
 	
-	if (chan && [chan isKindOfClass:[NSString class]]) {
-		channel = (IRCChannel*)self;
-		channelName = chan;
-	}
-	else if (!chan || channel.isClient) {
-		channel = chan;
-		channelName = nil;
-	}
-	else {
+	if ([chan isKindOfClass:[IRCChannel class]]) {
 		channel = chan;
 		channelName = channel.name;
+	}
+	else if ([chan isKindOfClass:[NSString class]]) {
+		channelName = chan;
 	}
 	
 	if (channelName && [channelName isChannelName]) {
@@ -535,18 +532,31 @@
 		memberType = MEMBER_TYPE_MYSELF;
 	}
 	
-	if (nick && channel && !channel.isClient) {
+	if (nick && channel) {
 		IRCUser* user = [channel findMember:nick];
 		if (user) {
 			colorNumber = user.colorNumber;
 		}
 	}
 	
-	if (channel && !channel.isClient) {
+	if (channel) {
 		clickContext = [NSString stringWithFormat:@"channel %d %d", uid, channel.uid];
 	}
 	else {
 		clickContext = [NSString stringWithFormat:@"client %d", uid];
+	}
+	
+	if (type == LINE_TYPE_PRIVMSG || type == LINE_TYPE_ACTION) {
+		if (memberType != MEMBER_TYPE_MYSELF) {
+			keywords = [Preferences keywords];
+			excludeWords = [Preferences excludeWords];
+			
+			if ([Preferences keywordCurrentNick]) {
+				NSMutableArray* ary = [[keywords mutableCopy] autorelease];
+				[ary insertObject:myNick atIndex:0];
+				keywords = ary;
+			}
+		}
 	}
 	
 	LogLine* c = [[LogLine new] autorelease];
@@ -560,8 +570,10 @@
 	c.clickInfo = clickContext;
 	c.identified = identified;
 	c.nickColorNumber = colorNumber;
-	
-	[world.consoleLog print:c useKeyword:YES];
+	c.keywords = keywords;
+	c.excludeWords = excludeWords;
+
+	[world.consoleLog print:c];
 }
 
 - (BOOL)printChannel:(id)chan type:(LogLineType)type text:(NSString*)text
@@ -578,18 +590,20 @@
 	NSString* nickStr = nil;
 	LogLineType memberType = MEMBER_TYPE_NORMAL;
 	int colorNumber = 0;
-	
+	NSArray* keywords = nil;
+	NSArray* excludeWords = nil;
+
 	if (time.length) {
 		time = [time stringByAppendingString:@" "];
 	}
 	
-	if (chan && [chan isKindOfClass:[NSString class]]) {
+	if ([chan isKindOfClass:[IRCChannel class]]) {
+		channel = chan;
+		channelName = channel.name;
+	}
+	else if ([chan isKindOfClass:[NSString class]]) {
 		channelName = chan;
 		place = [NSString stringWithFormat:@"<%@> ", channelName];
-	}
-	else {
-		channel = chan;
-		channelName = nil;
 	}
 	
 	if (nick.length > 0) {
@@ -605,10 +619,23 @@
 		memberType = MEMBER_TYPE_MYSELF;
 	}
 	
-	if (nick && channel && !channel.isClient) {
+	if (nick && channel) {
 		IRCUser* user = [channel findMember:nick];
 		if (user) {
 			colorNumber = user.colorNumber;
+		}
+	}
+	
+	if (type == LINE_TYPE_PRIVMSG || type == LINE_TYPE_ACTION) {
+		if (memberType != MEMBER_TYPE_MYSELF) {
+			keywords = [Preferences keywords];
+			excludeWords = [Preferences excludeWords];
+			
+			if ([Preferences keywordCurrentNick]) {
+				NSMutableArray* ary = [[keywords mutableCopy] autorelease];
+				[ary insertObject:myNick atIndex:0];
+				keywords = ary;
+			}
 		}
 	}
 	
@@ -623,17 +650,15 @@
 	c.clickInfo = nil;
 	c.identified = identified;
 	c.nickColorNumber = colorNumber;
+	c.keywords = keywords;
+	c.excludeWords = excludeWords;
 	
-	BOOL keyword = NO;
-	
-	if (channel && !channel.isClient) {
-		keyword = [channel print:c];
+	if (channel) {
+		return [channel print:c];
 	}
 	else {
-		keyword = [log print:c useKeyword:YES];
+		return [log print:c];
 	}
-	
-	return keyword;
 }
 
 - (void)printSystem:(id)channel text:(NSString*)text
@@ -764,10 +789,7 @@
 	}
 	
 	if (target.isChannelName) {
-		//
 		// channel
-		//
-		
 		IRCChannel* c = [self findChannel:target];
 		BOOL keyword = [self printBoth:(c ?: (id)target) type:type nick:nick text:text identified:identified];
 

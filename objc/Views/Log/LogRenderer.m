@@ -122,11 +122,12 @@ static NSString* renderRange(NSString* body, attr_t attr, int start, int len)
 {
 }
 
-+ (NSArray*)renderBody:(NSString*)body
-			  keywords:(NSArray*)keywords
-		  excludeWords:(NSArray*)excludeWords
-	highlightWholeLine:(BOOL)highlightWholeLine
-		exactWordMatch:(BOOL)exactWordMatch
++ (NSString*)renderBody:(NSString*)body
+			   keywords:(NSArray*)keywords
+		   excludeWords:(NSArray*)excludeWords
+	 highlightWholeLine:(BOOL)highlightWholeLine
+		 exactWordMatch:(BOOL)exactWordMatch
+			highlighted:(BOOL*)highlighted
 {
 	int len = body.length;
 	attr_t attrBuf[len];
@@ -400,7 +401,8 @@ static NSString* renderRange(NSString* body, attr_t attr, int start, int len)
 		start += n;
 	}
 	
-	return [NSArray arrayWithObjects:result, [NSNumber numberWithBool:foundKeyword], nil];
+	*highlighted = foundKeyword;
+	return result;
 }
 
 @end

@@ -24,7 +24,7 @@
 - (void)savePosition;
 - (void)restorePosition;
 - (void)removeLinesFromTop:(int)n;
-- (NSArray*)buildBody:(LogLine*)line useKeyword:(BOOL)useKeyword;
+- (NSArray*)buildBody:(LogLine*)line;
 - (void)writeLine:(NSString*)str attributes:(NSDictionary*)attrs;
 - (NSString*)initialDocument;
 - (NSString*)defaultCSS;
@@ -331,18 +331,21 @@
 	}
 }
 
-- (BOOL)print:(LogLine*)line useKeyword:(BOOL)useKeyword
+- (BOOL)print:(LogLine*)line
 {
-	NSArray* result = [self buildBody:line useKeyword:useKeyword];
-	NSString* body = [result objectAtIndex:0];
-	BOOL key = [[result objectAtIndex:1] intValue];
+	BOOL key = NO;
+	NSString* body = [LogRenderer renderBody:line.body
+									keywords:line.keywords
+								excludeWords:line.excludeWords
+						  highlightWholeLine:[Preferences keywordWholeLine]
+							  exactWordMatch:[Preferences keywordMatchingMethod] == KEYWORD_MATCH_EXACT
+								 highlighted:&key];
 	
 	if (!loaded) {
-		NSArray* ary = [NSArray arrayWithObjects:line, [NSNumber numberWithBool:useKeyword], nil];
-		[lines addObject:ary];
+		[lines addObject:line];
 		return key;
 	}
-	
+
 	NSMutableString* s = [NSMutableString string];
 	if (line.time) [s appendFormat:@"<span class=\"time\">%@</span>", [line.time gtm_stringByEscapingForHTML]];
 	if (line.place) [s appendFormat:@"<span class=\"place\">%@</span>", [line.place gtm_stringByEscapingForHTML]];
@@ -359,7 +362,7 @@
 	NSString* lineTypeString = [LogLine lineTypeString:type];
 	BOOL isText = type == LINE_TYPE_PRIVMSG || type == LINE_TYPE_NOTICE || type == LINE_TYPE_ACTION;
 	BOOL showInlineImage = NO;
-	
+
 	if (isText && !console && [Preferences showInlineImages]) {
 		//
 		// expand image URLs
@@ -382,7 +385,7 @@
 	if (!showInlineImage) {
 		[s appendFormat:@"<span class=\"message\" type=\"%@\">%@</span>", lineTypeString, body];
 	}
-	
+
 	NSString* klass = isText ? @"line text" : @"line event";
 	
 	NSMutableDictionary* attrs = [NSMutableDictionary dictionary];
@@ -404,46 +407,6 @@
 	prevNickInfo = [line.nickInfo retain];
 	
 	return key;
-}
-
-- (NSArray*)buildBody:(LogLine*)line useKeyword:(BOOL)useKeyword
-{
-	if (useKeyword) {
-		LogLineType type = line.lineType;
-		if (type == LINE_TYPE_PRIVMSG || type == LINE_TYPE_ACTION) {
-			if (line.memberType == MEMBER_TYPE_MYSELF) {
-				useKeyword = NO;
-			}
-		}
-		else {
-			useKeyword = NO;
-		}
-	}
-	
-	NSArray* keywords = nil;
-	NSArray* excludeWords = nil;
-	BOOL wholeLine = NO;
-	BOOL exactWordMatch = NO;
-	
-	if (useKeyword) {
-		keywords = [Preferences keywords];
-		excludeWords = [Preferences excludeWords];
-		
-		if ([Preferences keywordCurrentNick]) {
-			NSMutableArray* ary = [[keywords mutableCopy] autorelease];
-			[ary insertObject:client.myNick atIndex:0];
-			keywords = ary;
-		}
-		
-		wholeLine = [Preferences keywordWholeLine];
-		exactWordMatch = [Preferences keywordMatchingMethod] == KEYWORD_MATCH_EXACT;
-	}
-	
-	return [LogRenderer renderBody:line.body
-						  keywords:keywords
-					  excludeWords:excludeWords
-				highlightWholeLine:wholeLine
-					exactWordMatch:exactWordMatch];
 }
 
 - (void)writeLine:(NSString*)aHtml attributes:(NSDictionary*)attrs
@@ -699,10 +662,8 @@
 		bottom = YES;
 	}
 	
-	for (NSArray* ary in lines) {
-		LogLine* line = [ary objectAtIndex:0];
-		BOOL useKeyword = [[ary objectAtIndex:1] boolValue];
-		[self print:line useKeyword:useKeyword];
+	for (LogLine* line in lines) {
+		[self print:line];
 	}
 	[lines removeAllObjects];
 	

@@ -16,6 +16,8 @@
 @synthesize clickInfo;
 @synthesize identified;
 @synthesize nickColorNumber;
+@synthesize keywords;
+@synthesize excludeWords;
 
 - (id)init
 {
@@ -32,6 +34,8 @@
 	[body release];
 	[nickInfo release];
 	[clickInfo release];
+	[keywords release];
+	[excludeWords release];
 	[super dealloc];
 }
 

@@ -46,6 +46,8 @@ typedef enum {
 	NSString* clickInfo;
 	BOOL identified;
 	int nickColorNumber;
+	NSArray* keywords;
+	NSArray* excludeWords;
 }
 
 @property (nonatomic, retain) NSString* time;
@@ -58,6 +60,8 @@ typedef enum {
 @property (nonatomic, retain) NSString* clickInfo;
 @property (nonatomic, assign) BOOL identified;
 @property (nonatomic, assign) int nickColorNumber;
+@property (nonatomic, retain) NSArray* keywords;
+@property (nonatomic, retain) NSArray* excludeWords;
 
 + (NSString*)lineTypeString:(LogLineType)type;
 + (NSString*)memberTypeString:(LogMemberType)type;
