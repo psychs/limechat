@@ -382,30 +382,44 @@
 
 - (void)onMarkScrollback:(id)sender
 {
+	IRCTreeItem* sel = world.selected;
+	if (!sel) return;
+	[sel.log mark];
 }
 
 - (void)onClearMark:(id)sender
 {
+	IRCTreeItem* sel = world.selected;
+	if (!sel) return;
+	[sel.log unmark];
 }
 
 - (void)onGoToMark:(id)sender
 {
+	IRCTreeItem* sel = world.selected;
+	if (!sel) return;
+	[sel.log goToMark];
 }
 
 - (void)onMarkAllAsRead:(id)sender
 {
+	[world markAllAsRead];
 }
 
 - (void)onMarkAllAsReadAndMarkAllScrollbacks:(id)sender
 {
+	[world markAllAsRead];
+	[world markAllScrollbacks];
 }
 
 - (void)onMakeTextBigger:(id)sender
 {
+	[world changeTextSize:YES];
 }
 
 - (void)onMakeTextSmaller:(id)sender
 {
+	[world changeTextSize:NO];
 }
 
 - (void)onReloadTheme:(id)sender

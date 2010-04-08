@@ -98,11 +98,15 @@
 - (void)selectText;
 - (BOOL)sendText:(NSString*)s command:(NSString*)command;
 
+- (void)markAllAsRead;
+- (void)markAllScrollbacks;
+
 - (void)updateIcon;
 - (void)reloadTree;
 - (void)expandClient:(IRCClient*)client;
 
 - (void)reloadTheme;
+- (void)changeTextSize:(BOOL)bigger;
 
 - (IRCClient*)createClient:(IRCClientConfig*)seed reload:(BOOL)reload;
 - (IRCChannel*)createChannel:(IRCChannelConfig*)seed client:(IRCClient*)client reload:(BOOL)reload adjust:(BOOL)adjust;

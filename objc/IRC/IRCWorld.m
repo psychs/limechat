@@ -230,6 +230,27 @@
 	return [(IRCClient*)[selected client] sendText:s command:command];
 }
 
+- (void)markAllAsRead
+{
+	for (IRCClient* u in clients) {
+		u.isUnread = NO;
+		for (IRCChannel* c in u.channels) {
+			c.isUnread = NO;
+		}
+	}
+	[self reloadTree];
+}
+
+- (void)markAllScrollbacks
+{
+	for (IRCClient* u in clients) {
+		[u.log mark];
+		for (IRCChannel* c in u.channels) {
+			[c.log mark];
+		}
+	}
+}
+
 - (void)updateTitle
 {
 }
@@ -291,6 +312,18 @@
 	[[[[memberList tableColumns] objectAtIndex:0] dataCell] themeChanged];
 	[memberList themeChanged];
 	[memberList setNeedsDisplay];
+}
+
+- (void)changeTextSize:(BOOL)bigger
+{
+	[consoleLog changeTextSize:bigger];
+	
+	for (IRCClient* u in clients) {
+		[u.log changeTextSize:bigger];
+		for (IRCChannel* c in u.channels) {
+			[c.log changeTextSize:bigger];
+		}
+	}
 }
 
 - (void)adjustSelection
