@@ -7,6 +7,7 @@
 #import "IRCChannel.h"
 #import "LogController.h"
 #import "IRCConnection.h"
+#import "IRCISupportInfo.h"
 
 
 @class IRCWorld;
@@ -18,6 +19,7 @@
 	
 	IRCClientConfig* config;
 	NSMutableArray* channels;
+	IRCISupportInfo* isupport;
 	
 	IRCConnection* conn;
 	int connectDelay;

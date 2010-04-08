@@ -84,6 +84,7 @@
 	if (self = [super init]) {
 		tryingNick = -1;
 		channels = [NSMutableArray new];
+		isupport = [IRCISupportInfo new];
 	}
 	return self;
 }
@@ -1235,6 +1236,10 @@
 			[self receiveInit:m];
 			[self printReply:m];
 			break;
+		case 5:		// RPL_ISUPPORT
+			[isupport update:[m sequence:1]];
+			[self printReply:m];
+			break;
 		case 353:	// RPL_NAMREPLY
 		{
 			NSString* chname = [m paramAt:2];
@@ -1332,6 +1337,8 @@
 	inputNick = [config.nick retain];
 	sentNick = [config.nick retain];
 	myNick = [config.nick retain];
+	
+	[isupport reset];
 	
 	int myMode = config.invisibleMode ? 8 : 0;
 	NSString* realName = config.realName ?: config.nick;
