@@ -771,7 +771,41 @@
 
 - (void)outlineViewDoubleClicked:(id)sender
 {
-	LOG_METHOD
+	if (!selected) return;
+	
+	IRCClient* u = self.selectedClient;
+	IRCChannel* c = self.selectedChannel;
+	
+	if (!c) {
+		if (u.connecting || u.connected || u.loggedIn) {
+			if ([Preferences disconnectOnDoubleclick]) {
+				[u quit];
+			}
+		}
+		else {
+			if ([Preferences connectOnDoubleclick]) {
+				[u connect];
+			}
+		}
+	}
+	else {
+		if (u.loggedIn) {
+			LOG_METHOD
+			
+			if (c.isActive) {
+				if ([Preferences leaveOnDoubleclick]) {
+					LOG(@"###part");
+					[u partChannel:c];
+				}
+			}
+			else {
+				if ([Preferences joinOnDoubleclick]) {
+					LOG(@"###join");
+					[u joinChannel:c password:nil];
+				}
+			}
+		}
+	}
 }
 
 - (NSInteger)outlineView:(NSOutlineView *)sender numberOfChildrenOfItem:(id)item

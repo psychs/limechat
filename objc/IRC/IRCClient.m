@@ -245,6 +245,7 @@
 - (void)joinChannel:(IRCChannel*)channel password:(NSString*)password
 {
 	if (!loggedIn) return;
+	if (channel.isActive) return;
 	
 	if (!password) password = channel.config.password;
 	if (!password.length) password = nil;
@@ -255,7 +256,7 @@
 - (void)partChannel:(IRCChannel*)channel
 {
 	if (!loggedIn) return;
-	if (channel.isActive) return;
+	if (!channel.isActive) return;
 	
 	NSString* comment = config.leavingComment;
 	if (!comment.length) comment = nil;
