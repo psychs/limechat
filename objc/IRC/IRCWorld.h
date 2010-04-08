@@ -113,6 +113,10 @@
 - (void)reloadTree;
 - (void)expandClient:(IRCClient*)client;
 
+- (void)updateTitle;
+- (void)updateClientTitle:(IRCClient*)client;
+- (void)updateChannelTitle:(IRCChannel*)channel;
+
 - (void)reloadTheme;
 - (void)changeTextSize:(BOOL)bigger;
 

@@ -439,10 +439,12 @@
 
 - (void)updateClientTitle
 {
+	[world updateClientTitle:self];
 }
 
 - (void)updateChannelTitle:(IRCChannel*)c
 {
+	[world updateChannelTitle:c];
 }
 
 #pragma mark -

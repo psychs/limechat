@@ -193,10 +193,6 @@
 	}
 }
 
-- (void)updateTitle
-{
-}
-
 - (void)updateIcon
 {
 }
@@ -261,6 +257,88 @@
 	
 	if (item) {
 		[self select:item];
+	}
+}
+
+- (void)updateTitle
+{
+	if (!selected) {
+		[window setTitle:@"LimeChat"];
+		return;
+	}
+	
+	IRCTreeItem* sel = selected;
+	if (sel.isClient) {
+		IRCClient* u = (IRCClient*)sel;
+		NSString* myNick = u.myNick;
+		NSString* name = u.config.name;
+		
+		NSMutableString* title = [NSMutableString string];
+		if (myNick.length) {
+			[title appendFormat:@"(%@)", myNick];
+		}
+		if (name.length) {
+			if (title.length > 0) [title appendString:@" "];
+			[title appendString:name];
+		}
+		[window setTitle:title];
+	}
+	else {
+		IRCClient* u = sel.client;
+		IRCChannel* c = (IRCChannel*)sel;
+		NSString* myNick = u.myNick;
+		NSString* chname = c.name;
+		int count = [c numberOfMembers];
+		NSString* topic = c.topic ?: @"";
+		if (topic.length > 25) {
+			topic = [topic substringToIndex:25];
+			topic = [topic stringByAppendingString:@"…"];
+		}
+		
+		NSMutableString* title = [NSMutableString string];
+		if (myNick.length) {
+			[title appendFormat:@"(%@)", myNick];
+		}
+		
+		if (c.isChannel) {
+			if (title.length > 0) [title appendString:@" "];
+			
+			IRCUser* m = [c findMember:myNick];
+			if (m && m.isOp) {
+				[title appendFormat:@"%c", m.mark];
+			}
+			
+			if (chname.length) {
+				[title appendString:chname];
+			}
+			
+			if (count > 1) {
+				if (title.length > 0) [title appendString:@" "];
+				[title appendFormat:@"(%d)", count];
+			}
+				
+			if (topic.length) {
+				if (title.length > 0) [title appendString:@" "];
+				[title appendString:topic];
+			}
+		}
+		[window setTitle:title];
+	}
+}
+
+- (void)updateClientTitle:(IRCClient*)client
+{
+	if (!client || !selected) return;
+	if (selected == client) {
+		[self updateTitle];
+	}
+}
+
+- (void)updateChannelTitle:(IRCChannel*)channel
+{
+	if (!channel || !selected) return;
+	if (selected == channel) {
+		[self updateTitle];
 	}
 }
 
