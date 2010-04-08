@@ -110,16 +110,21 @@
 - (void)activate
 {
 	isActive = YES;
+	[members removeAllObjects];
+	[mode clear];
 	hasOp = NO;
 	self.topic = nil;
 	namesInit = NO;
 	whoInit = NO;
+	[self reloadMemberList];
 }
 
 - (void)deactivate
 {
 	isActive = NO;
+	[members removeAllObjects];
 	hasOp = NO;
+	[self reloadMemberList];
 }
 
 - (void)closeDialogs

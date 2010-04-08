@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		780AD24C116E2440005AF8EF /* IRCChannelMode.m in Sources */ = {isa = PBXBuildFile; fileRef = 780AD24B116E2440005AF8EF /* IRCChannelMode.m */; };
+		780AD2FC116E4BF8005AF8EF /* IRCUserMode.m in Sources */ = {isa = PBXBuildFile; fileRef = 780AD2FB116E4BF8005AF8EF /* IRCUserMode.m */; };
 		78287EB70D742DBD008D5656 /* Themes in CopyFiles */ = {isa = PBXBuildFile; fileRef = 78287EA90D742DAA008D5656 /* Themes */; };
 		782B99C9116C91AB00304B3C /* ViewTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 782B99C8116C91AB00304B3C /* ViewTheme.m */; };
 		782B9C3B116CAD1300304B3C /* LogTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 782B9C3A116CAD1300304B3C /* LogTheme.m */; };
@@ -155,6 +156,8 @@
 		780253C20C09525900C170D4 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
 		780AD24A116E2440005AF8EF /* IRCChannelMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCChannelMode.h; sourceTree = "<group>"; };
 		780AD24B116E2440005AF8EF /* IRCChannelMode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCChannelMode.m; sourceTree = "<group>"; };
+		780AD2FA116E4BF8005AF8EF /* IRCUserMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCUserMode.h; sourceTree = "<group>"; };
+		780AD2FB116E4BF8005AF8EF /* IRCUserMode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCUserMode.m; sourceTree = "<group>"; };
 		78287EA90D742DAA008D5656 /* Themes */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Themes; path = resource/Themes; sourceTree = "<group>"; };
 		782B99C7116C91AB00304B3C /* ViewTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewTheme.h; sourceTree = "<group>"; };
 		782B99C8116C91AB00304B3C /* ViewTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewTheme.m; sourceTree = "<group>"; };
@@ -712,6 +715,8 @@
 				780AD24B116E2440005AF8EF /* IRCChannelMode.m */,
 				783E6C9B1169976A00DF6820 /* IRCISupportInfo.h */,
 				783E6C9C1169976A00DF6820 /* IRCISupportInfo.m */,
+				780AD2FA116E4BF8005AF8EF /* IRCUserMode.h */,
+				780AD2FB116E4BF8005AF8EF /* IRCUserMode.m */,
 				78CFA71B116A1BDD00B7AC6B /* IRCWorldConfig.h */,
 				78CFA71C116A1BDD00B7AC6B /* IRCWorldConfig.m */,
 				78CFA719116A1BDD00B7AC6B /* IRCClientConfig.h */,
@@ -920,6 +925,7 @@
 				7840A0A0116DE5070033AE3E /* NickSheet.m in Sources */,
 				7840A0E7116DEA7F0033AE3E /* SheetBase.m in Sources */,
 				780AD24C116E2440005AF8EF /* IRCChannelMode.m in Sources */,
+				780AD2FC116E4BF8005AF8EF /* IRCUserMode.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

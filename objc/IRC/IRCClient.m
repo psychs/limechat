@@ -86,6 +86,7 @@
 		tryingNick = -1;
 		channels = [NSMutableArray new];
 		isupport = [IRCISupportInfo new];
+		myMode = [IRCUserMode new];
 	}
 	return self;
 }
@@ -95,6 +96,7 @@
 	[config release];
 	[channels release];
 	[isupport release];
+	[myMode release];
 	[conn close];
 	[conn autorelease];
 	[inputNick release];
@@ -1283,6 +1285,20 @@
 			[isupport update:[m sequence:1]];
 			[self printReply:m];
 			break;
+		case 221:	// RPL_UMODEIS
+		{
+			NSString* modeStr = [m paramAt:1];
+			
+			if ([modeStr isEqualToString:@"+"]) return;
+			
+			[myMode clear];
+			[myMode update:modeStr];
+			[self updateClientTitle];
+			
+			NSString* text = [NSString stringWithFormat:@"Mode: %@", modeStr];
+			[self printBoth:nil type:LINE_TYPE_REPLY text:text];
+			break;
+		}
 		case 324:	// RPL_CHANNELMODEIS
 		{
 			NSString* chname = [m paramAt:1];
@@ -1457,13 +1473,14 @@
 	myNick = [config.nick retain];
 	
 	[isupport reset];
+	[myMode clear];
 	
-	int myMode = config.invisibleMode ? 8 : 0;
+	int modeParam = config.invisibleMode ? 8 : 0;
 	NSString* realName = config.realName ?: config.nick;
 	
 	if (config.password.length) [self send:PASS, config.password, nil];
 	[self send:NICK, sentNick, nil];
-	[self send:USER, config.username, [NSString stringWithFormat:@"%d", myMode], @"*", realName, nil];
+	[self send:USER, config.username, [NSString stringWithFormat:@"%d", modeParam], @"*", realName, nil];
 	
 	[self updateClientTitle];
 }
