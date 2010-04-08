@@ -1073,7 +1073,7 @@
 		if ([c findMember:nick]) {
 			// rename channel member
 			NSString* text = [NSString stringWithFormat:@"%@ is now known as %@", nick, toNick];
-			[self printChannel:nil type:LINE_TYPE_NICK text:text];
+			[self printChannel:c type:LINE_TYPE_NICK text:text];
 			[c renameMember:nick to:toNick];
 		}
 	}
@@ -1103,7 +1103,29 @@
 
 - (void)receiveMode:(IRCMessage*)m
 {
-	LOG(@"MODE %@", m.sequence);
+	NSString* nick = m.sender.nick;
+	NSString* target = [m paramAt:0];
+	NSString* modeStr = [m paramAt:1];
+	
+	if ([target isChannelName]) {
+		// channel
+		IRCChannel* c = [self findChannel:target];
+		if (c) {
+			//@@@
+			
+			[self updateChannelTitle:c];
+		}
+		
+		NSString* text = [NSString stringWithFormat:@"%@ has changed mode: %@", nick, modeStr];
+		[self printBoth:(c ?: (id)target) type:LINE_TYPE_MODE text:text];
+	}
+	else {
+		// user mode
+		// @@@ update my mode
+		NSString* text = [NSString stringWithFormat:@"%@ has changed mode: %@", nick, modeStr];
+		[self printBoth:nil type:LINE_TYPE_MODE text:text];
+		[self updateClientTitle];
+	}
 }
 
 - (void)receiveTopic:(IRCMessage*)m
