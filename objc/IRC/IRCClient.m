@@ -219,10 +219,14 @@
 		// channel
 		if ([s hasPrefix:@"/"]) {
 			// command
+			s = [s substringFromIndex:1];
+			[self sendLine:s];
 		}
-		
-		[self send:command, [sel name], s, nil];
-		[self printBoth:sel type:LINE_TYPE_PRIVMSG nick:myNick text:s identified:YES];
+		else {
+			// normal text
+			[self send:command, [sel name], s, nil];
+			[self printBoth:sel type:LINE_TYPE_PRIVMSG nick:myNick text:s identified:YES];
+		}
 	}
 	
 	return YES;
