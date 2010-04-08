@@ -52,7 +52,6 @@
 		78364B2F116597D00096F3A9 /* HotKeyManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 78364B1C116597D00096F3A9 /* HotKeyManager.m */; };
 		78364B31116597D00096F3A9 /* LimeChatApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 78364B22116597D00096F3A9 /* LimeChatApplication.m */; };
 		78364B32116597D00096F3A9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 78364B23116597D00096F3A9 /* main.m */; };
-		78364B33116597D00096F3A9 /* rb_main.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78364B24116597D00096F3A9 /* rb_main.rb */; };
 		78364B34116597D00096F3A9 /* KeyCodeTranslator.m in Sources */ = {isa = PBXBuildFile; fileRef = 78364B28116597D00096F3A9 /* KeyCodeTranslator.m */; };
 		78364B35116597D00096F3A9 /* KeyRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 78364B2A116597D00096F3A9 /* KeyRecorder.m */; };
 		78364B36116597D00096F3A9 /* KeyRecorderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 78364B2C116597D00096F3A9 /* KeyRecorderCell.m */; };
@@ -104,8 +103,6 @@
 		788C5E660C5F4F5A0034C46E /* growlcontroller.rb in Resources */ = {isa = PBXBuildFile; fileRef = 788C5E650C5F4F5A0034C46E /* growlcontroller.rb */; };
 		7890B4E90C659E4700DF983F /* autoopdialog.rb in Resources */ = {isa = PBXBuildFile; fileRef = 7890B4E80C659E4700DF983F /* autoopdialog.rb */; };
 		78914ACD116CF556008B772D /* IRCTreeItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 78914ACC116CF556008B772D /* IRCTreeItem.m */; };
-		789AF78A10859FEE006848B3 /* RubyCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 789AF78910859FEE006848B3 /* RubyCocoa.framework */; };
-		789AF7A51085A043006848B3 /* RubyCocoa.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 789AF78910859FEE006848B3 /* RubyCocoa.framework */; };
 		78AD78E40C61B8F8001E77F4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 78AD78E20C61B8F8001E77F4 /* Localizable.strings */; };
 		78AFBCF50C33E314008A8FCD /* kanasupport.rb in Resources */ = {isa = PBXBuildFile; fileRef = 78AFBCF40C33E314008A8FCD /* kanasupport.rb */; };
 		78AFC92811687C5400C64197 /* NSDataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AFC92711687C5400C64197 /* NSDataHelper.m */; };
@@ -171,7 +168,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				789AF7A51085A043006848B3 /* RubyCocoa.framework in CopyFiles */,
 				78FA9F6E1085AA1A00001F13 /* Sparkle.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -238,7 +234,6 @@
 		78364B21116597D00096F3A9 /* LimeChatApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LimeChatApplication.h; sourceTree = "<group>"; };
 		78364B22116597D00096F3A9 /* LimeChatApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LimeChatApplication.m; sourceTree = "<group>"; };
 		78364B23116597D00096F3A9 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		78364B24116597D00096F3A9 /* rb_main.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = rb_main.rb; sourceTree = "<group>"; };
 		78364B27116597D00096F3A9 /* KeyCodeTranslator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyCodeTranslator.h; sourceTree = "<group>"; };
 		78364B28116597D00096F3A9 /* KeyCodeTranslator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyCodeTranslator.m; sourceTree = "<group>"; };
 		78364B29116597D00096F3A9 /* KeyRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyRecorder.h; sourceTree = "<group>"; };
@@ -328,7 +323,6 @@
 		7890B4E80C659E4700DF983F /* autoopdialog.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = autoopdialog.rb; sourceTree = "<group>"; };
 		78914ACB116CF556008B772D /* IRCTreeItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCTreeItem.h; sourceTree = "<group>"; };
 		78914ACC116CF556008B772D /* IRCTreeItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCTreeItem.m; sourceTree = "<group>"; };
-		789AF78910859FEE006848B3 /* RubyCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RubyCocoa.framework; path = Frameworks/RubyCocoa.framework; sourceTree = "<group>"; };
 		78AD78E30C61B8F8001E77F4 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
 		78AFBCF40C33E314008A8FCD /* kanasupport.rb */ = {isa = PBXFileReference; fileEncoding = 0; lastKnownFileType = text.script.ruby; path = kanasupport.rb; sourceTree = "<group>"; };
 		78AFC92611687C5400C64197 /* NSDataHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDataHelper.h; sourceTree = "<group>"; };
@@ -418,7 +412,6 @@
 				78E5723B0C1C30BA00BDF7EC /* WebKit.framework in Frameworks */,
 				78E5723C0C1C30BA00BDF7EC /* Carbon.framework in Frameworks */,
 				78E5723D0C1C30BA00BDF7EC /* CoreServices.framework in Frameworks */,
-				789AF78A10859FEE006848B3 /* RubyCocoa.framework in Frameworks */,
 				78FA9F651085AA1400001F13 /* Sparkle.framework in Frameworks */,
 				78835406109FEA7F00CD2FFF /* SystemConfiguration.framework in Frameworks */,
 				7851AEF71168A91A00AC449F /* libicucore.dylib in Frameworks */,
@@ -500,7 +493,6 @@
 				780253C20C09525900C170D4 /* CoreServices.framework */,
 				788D56F00BB6872B00DDBF69 /* WebKit.framework */,
 				78835405109FEA7F00CD2FFF /* SystemConfiguration.framework */,
-				789AF78910859FEE006848B3 /* RubyCocoa.framework */,
 				78FA9F641085AA1400001F13 /* Sparkle.framework */,
 				7851AEF61168A91A00AC449F /* libicucore.dylib */,
 			);
@@ -651,7 +643,6 @@
 				78364B22116597D00096F3A9 /* LimeChatApplication.m */,
 				78364B391165982C0096F3A9 /* LimeChat_Prefix.pch */,
 				78364B23116597D00096F3A9 /* main.m */,
-				78364B24116597D00096F3A9 /* rb_main.rb */,
 			);
 			name = Others;
 			path = objc/Others;
@@ -990,7 +981,6 @@
 				78347EDE1158D4B00073E2F0 /* WelcomeDialog.xib in Resources */,
 				78347EDF1158D4B00073E2F0 /* WhoisDialog.xib in Resources */,
 				78C2D609115A428C00705817 /* dsa_pub.pem in Resources */,
-				78364B33116597D00096F3A9 /* rb_main.rb in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
