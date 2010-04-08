@@ -11,9 +11,21 @@
 
 - (void)keyDown:(NSEvent *)e
 {
-	if ([keyDelegate respondsToSelector:@selector(logViewKeyDown:)]) {
-		[keyDelegate logViewKeyDown:e];
+	if (keyDelegate) {
+		NSUInteger m = [e modifierFlags];
+		BOOL ctrl = m & NSControlKeyMask != 0;
+		BOOL alt = m & NSAlternateKeyMask != 0;
+		BOOL cmd = m & NSCommandKeyMask != 0;
+		
+		if (!ctrl && !alt && !cmd) {
+			if ([keyDelegate respondsToSelector:@selector(logViewKeyDown:)]) {
+				[keyDelegate logViewKeyDown:e];
+			}
+			return;
+		}
 	}
+	
+	[super keyDown:e];
 }
 
 - (void)setFrame:(NSRect)rect

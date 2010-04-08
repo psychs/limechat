@@ -294,12 +294,12 @@
 - (void)onPaste:(id)sender
 {
 	NSPasteboard* pb = [NSPasteboard generalPasteboard];
-	
 	if (![pb availableTypeFromArray:[NSArray arrayWithObject:NSStringPboardType]]) return;
 	NSWindow* win = [NSApp keyWindow];
 	if (!win) return;
 	id t = [win firstResponder];
 	if (!t) return;
+	
 	if (win == window) {
 		NSString* s = [pb stringForType:NSStringPboardType];
 		if (!s.length) return;
@@ -326,6 +326,12 @@
 
 - (void)onUseSelectionForFind:(id)sender
 {
+	NSWindow* win = [NSApp keyWindow];
+	if (!win) return;
+	id t = [win firstResponder];
+	if (!t) return;
+	
+	LOG(@"### %@", t);
 }
 
 - (void)onPasteMyAddress:(id)sender

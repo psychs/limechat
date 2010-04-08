@@ -2,6 +2,7 @@
 // You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
 #import "MemberListView.h"
+#import "KeyEventHandler.h"
 
 
 @implementation MemberListView
@@ -48,16 +49,24 @@
 - (void)keyDown:(NSEvent *)e
 {
 	if (keyDelegate) {
-		switch ([e keyCode]) {
-			case 116:	// page up
-			case 121:	// page down
-			case 123 ... 126:	// cursor keys
-				break;
-			default:
-				if ([keyDelegate respondsToSelector:@selector(memberListViewKeyDown:)]) {
-					[keyDelegate memberListViewKeyDown:e];
-				}
-				return;
+		int k = [e keyCode];
+		NSUInteger m = [e modifierFlags];
+		BOOL ctrl = m & NSControlKeyMask != 0;
+		BOOL alt = m & NSAlternateKeyMask != 0;
+		BOOL cmd = m & NSCommandKeyMask != 0;
+		
+		if (!ctrl && !alt && !cmd) {
+			switch (k) {
+				case KEY_PAGE_UP:			// page up
+				case KEY_PAGE_DOWN:			// page down
+				case KEY_LEFT ... KEY_UP:	// cursor keys
+					break;
+				default:
+					if ([keyDelegate respondsToSelector:@selector(memberListViewKeyDown:)]) {
+						[keyDelegate memberListViewKeyDown:e];
+					}
+					return;
+			}
 		}
 	}
 	
