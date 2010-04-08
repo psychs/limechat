@@ -66,6 +66,7 @@
 
 @synthesize config;
 @synthesize channels;
+@synthesize isupport;
 @synthesize connecting;
 @synthesize connected;
 @synthesize reconnecting;
@@ -93,6 +94,7 @@
 {
 	[config release];
 	[channels release];
+	[isupport release];
 	[conn close];
 	[conn autorelease];
 	[inputNick release];
@@ -1247,8 +1249,30 @@
 			
 			if ([modeStr isEqualToString:@"+"]) return;
 			
-			LOG(@"mode %@: %@", chname, modeStr);
+			IRCChannel* c = [self findChannel:chname];
+			if (c && c.isActive) {
+				BOOL prevA = c.mode.a;
+				[c.mode clear];
+				[c.mode update:modeStr];
+				
+				if (c.mode.a != prevA) {
+					if (c.mode.a) {
+						IRCUser* me = [c findMember:myNick];
+						[[me retain] autorelease];
+						[c clearMembers];
+						[c addMember:me];
+					}
+					else {
+						c.whoInit = NO;
+						[self send:WHO, c.name, nil];
+					}
+				}
+				
+				[self updateChannelTitle:c];
+			}
 			
+			NSString* text = [NSString stringWithFormat:@"Mode: %@", modeStr];
+			[self printBoth:(c ?: (id)chname) type:LINE_TYPE_REPLY text:text];
 			break;
 		}
 		case 353:	// RPL_NAMREPLY

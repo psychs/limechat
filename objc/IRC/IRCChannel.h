@@ -6,6 +6,7 @@
 #import "IRCChannelConfig.h"
 #import "LogController.h"
 #import "IRCUser.h"
+#import "IRCChannelMode.h"
 
 
 @class IRCClient;
@@ -16,6 +17,7 @@
 	IRCClient* client;
 	IRCChannelConfig* config;
 	
+	IRCChannelMode* mode;
 	NSMutableArray* members;
 	NSString* topic;
 	NSString* storedTopic;
@@ -31,6 +33,7 @@
 
 @property (nonatomic, assign) NSString* name;
 @property (nonatomic, readonly) NSString* password;
+@property (nonatomic, readonly) IRCChannelMode* mode;
 @property (nonatomic, readonly) BOOL isChannel;
 @property (nonatomic, readonly) BOOL isTalk;
 @property (nonatomic, readonly) NSString* channelTypeString;

@@ -54,6 +54,7 @@
 
 @property (nonatomic, readonly) NSString* name;
 @property (nonatomic, readonly) IRCClientConfig* config;
+@property (nonatomic, readonly) IRCISupportInfo* isupport;
 @property (nonatomic, readonly) NSMutableArray* channels;
 
 @property (nonatomic, readonly) BOOL connecting;

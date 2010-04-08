@@ -260,6 +260,9 @@
 	}
 }
 
+#pragma mark -
+#pragma mark Window Title
+
 - (void)updateTitle
 {
 	if (!selected) {
@@ -278,7 +281,7 @@
 			[title appendFormat:@"(%@)", myNick];
 		}
 		if (name.length) {
-			if (title.length > 0) [title appendString:@" "];
+			if (title.length) [title appendString:@" "];
 			[title appendString:name];
 		}
 		[window setTitle:title];
@@ -287,13 +290,6 @@
 		IRCClient* u = sel.client;
 		IRCChannel* c = (IRCChannel*)sel;
 		NSString* myNick = u.myNick;
-		NSString* chname = c.name;
-		int count = [c numberOfMembers];
-		NSString* topic = c.topic ?: @"";
-		if (topic.length > 25) {
-			topic = [topic substringToIndex:25];
-			topic = [topic stringByAppendingString:@"…"];
-		}
 		
 		NSMutableString* title = [NSMutableString string];
 		if (myNick.length) {
@@ -301,7 +297,16 @@
 		}
 		
 		if (c.isChannel) {
-			if (title.length > 0) [title appendString:@" "];
+			NSString* chname = c.name;
+			NSString* mode = [c.mode titleString];
+			int count = [c numberOfMembers];
+			NSString* topic = c.topic ?: @"";
+			if (topic.length > 25) {
+				topic = [topic substringToIndex:25];
+				topic = [topic stringByAppendingString:@"…"];
+			}
+			
+			if (title.length) [title appendString:@" "];
 			
 			IRCUser* m = [c findMember:myNick];
 			if (m && m.isOp) {
@@ -312,13 +317,25 @@
 				[title appendString:chname];
 			}
 			
-			if (count > 1) {
-				if (title.length > 0) [title appendString:@" "];
-				[title appendFormat:@"(%d)", count];
+			if (mode.length) {
+				if (count > 1) {
+					if (title.length) [title appendString:@" "];
+					[title appendFormat:@"(%d,%@)", count, mode];
+				}
+				else {
+					if (title.length) [title appendString:@" "];
+					[title appendFormat:@"(%@)", mode];
+				}
+			}
+			else {
+				if (count > 1) {
+					if (title.length) [title appendString:@" "];
+					[title appendFormat:@"(%d)", count];
+				}
 			}
 				
 			if (topic.length) {
-				if (title.length > 0) [title appendString:@" "];
+				if (title.length) [title appendString:@" "];
 				[title appendString:topic];
 			}
 		}
@@ -535,6 +552,7 @@
 	c = [[IRCChannel new] autorelease];
 	c.uid = ++itemId;
 	c.client = client;
+	c.mode.isupport = client.isupport;
 	[c setup:seed];
 	c.log = [self createLogWithClient:client channel:c console:NO];
 	

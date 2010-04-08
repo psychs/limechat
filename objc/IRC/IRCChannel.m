@@ -13,6 +13,7 @@
 @synthesize client;
 @synthesize config;
 
+@synthesize mode;
 @synthesize topic;
 @synthesize storedTopic;
 @synthesize isKeyword;
@@ -26,6 +27,7 @@
 - (id)init
 {
 	if (self = [super init]) {
+		mode = [IRCChannelMode new];
 		members = [NSMutableArray new];
 	}
 	return self;
@@ -34,6 +36,7 @@
 - (void)dealloc
 {
 	[config release];
+	[mode release];
 	[members release];
 	[topic release];
 	[storedTopic release];
@@ -231,14 +234,14 @@
 	[self sortedInsert:user];
 }
 
-- (void)changeMember:(NSString*)nick mode:(char)mode value:(BOOL)value
+- (void)changeMember:(NSString*)nick mode:(char)modeChar value:(BOOL)value
 {
 	int n = [self indexOfMember:nick];
 	if (n < 0) return;
 	
 	IRCUser* m = [members objectAtIndex:n];
 	
-	switch (mode) {
+	switch (modeChar) {
 		case 'q': m.q = value; break;
 		case 'a': m.a = value; break;
 		case 'o': m.o = value; break;
