@@ -1240,6 +1240,17 @@
 			[isupport update:[m sequence:1]];
 			[self printReply:m];
 			break;
+		case 324:	// RPL_CHANNELMODEIS
+		{
+			NSString* chname = [m paramAt:1];
+			NSString* modeStr = [m sequence:2];
+			
+			if ([modeStr isEqualToString:@"+"]) return;
+			
+			LOG(@"mode %@: %@", chname, modeStr);
+			
+			break;
+		}
 		case 353:	// RPL_NAMREPLY
 		{
 			NSString* chname = [m paramAt:2];
@@ -1265,13 +1276,52 @@
 					m.h = op == '%';
 					m.v = op == '+';
 					m.isMyself = [nick isEqualNoCase:myNick];
-					[c addMember:m];
-					[self updateChannelTitle:c];
+					[c addMember:m reload:NO];
 				}
-				c.namesInit = YES;
+				[c reloadMemberList];
+				[self updateChannelTitle:c];
 			}
 			else {
 				[self printBoth:c ?: (id)chname type:LINE_TYPE_REPLY text:[NSString stringWithFormat:@"Names: %@", trail]];
+			}
+			break;
+		}
+		case 366:	// RPL_ENDOFNAMES
+		{
+			NSString* chname = [m paramAt:1];
+			
+			IRCChannel* c = [self findChannel:chname];
+			if (c && c.isActive && !c.namesInit) {
+				c.namesInit = YES;
+				
+				if ([c numberOfMembers] <= 1 && c.hasOp) {
+					NSString* m = c.config.mode;
+					if (m.length) {
+						[self send:MODE, chname, m, nil];
+					}
+				}
+				else {
+					[self send:MODE, chname, nil];
+				}
+				
+				if ([c numberOfMembers] <= 1 && [chname isModeChannelName]) {
+					NSString* topic = c.storedTopic;
+					if (!topic.length) {
+						topic = c.config.topic;
+					}
+					if (topic.length) {
+						[self send:TOPIC, chname, topic, nil];
+					}
+				}
+				
+				if ([c numberOfMembers] > 1) {
+					// add to who queue
+				}
+				else {
+					c.whoInit = YES;
+				}
+				
+				[self updateChannelTitle:c];
 			}
 			break;
 		}

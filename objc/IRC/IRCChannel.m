@@ -14,6 +14,7 @@
 @synthesize config;
 
 @synthesize topic;
+@synthesize storedTopic;
 @synthesize isKeyword;
 @synthesize isUnread;
 @synthesize isNewTalk;
@@ -35,6 +36,7 @@
 	[config release];
 	[members release];
 	[topic release];
+	[storedTopic release];
 	[super dealloc];
 }
 

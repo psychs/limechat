@@ -18,6 +18,7 @@
 	
 	NSMutableArray* members;
 	NSString* topic;
+	NSString* storedTopic;
 	
 	BOOL isActive;
 	BOOL hasOp;
@@ -34,6 +35,7 @@
 @property (nonatomic, readonly) BOOL isTalk;
 @property (nonatomic, readonly) NSString* channelTypeString;
 @property (nonatomic, retain) NSString* topic;
+@property (nonatomic, retain) NSString* storedTopic;
 @property (nonatomic, assign) BOOL isActive;
 @property (nonatomic, assign) BOOL hasOp;
 @property (nonatomic, assign) BOOL namesInit;
