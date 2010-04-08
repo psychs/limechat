@@ -4,7 +4,7 @@
 #import "Preferences.h"
 
 
-@implementation NewPreferences
+@implementation Preferences
 
 + (int)dccAction
 {

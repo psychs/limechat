@@ -368,7 +368,7 @@
 	BOOL isText = type == LINE_TYPE_PRIVMSG || type == LINE_TYPE_NOTICE || type == LINE_TYPE_ACTION;
 	BOOL showInlineImage = NO;
 	
-	if (isText && !console && [NewPreferences showInlineImages]) {
+	if (isText && !console && [Preferences showInlineImages]) {
 		//
 		// expand image URLs
 		//
@@ -434,17 +434,17 @@
 	BOOL exactWordMatch = NO;
 	
 	if (useKeyword) {
-		keywords = [NewPreferences keywords];
-		excludeWords = [NewPreferences excludeWords];
+		keywords = [Preferences keywords];
+		excludeWords = [Preferences excludeWords];
 		
-		if ([NewPreferences keywordCurrentNick]) {
+		if ([Preferences keywordCurrentNick]) {
 			NSMutableArray* ary = [[keywords mutableCopy] autorelease];
 			[ary insertObject:client.myNick atIndex:0];
 			keywords = ary;
 		}
 		
-		wholeLine = [NewPreferences keywordWholeLine];
-		exactWordMatch = [NewPreferences keywordMatchingMethod] == KEYWORD_MATCH_EXACT;
+		wholeLine = [Preferences keywordWholeLine];
+		exactWordMatch = [Preferences keywordMatchingMethod] == KEYWORD_MATCH_EXACT;
 	}
 	
 	return [LogRenderer renderBody:line.body

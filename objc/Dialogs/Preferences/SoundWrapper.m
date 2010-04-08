@@ -49,7 +49,7 @@
 		[sound release];
 		sound = [value retain];
 		
-		[NewPreferences performSelector:saveSelector withObject:value];
+		[Preferences performSelector:saveSelector withObject:value];
 		[SoundPlayer play:sound];
 	}
 }

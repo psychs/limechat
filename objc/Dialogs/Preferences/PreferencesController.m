@@ -50,7 +50,7 @@
 	[self updateTheme];
 	
 	[logFont release];
-	logFont = [[NSFont fontWithName:[NewPreferences themeLogFontName] size:[NewPreferences themeLogFontSize]] retain];
+	logFont = [[NSFont fontWithName:[Preferences themeLogFontName] size:[Preferences themeLogFontSize]] retain];
 	
 	if (![self.window isVisible]) {
 		[self.window center];
@@ -64,52 +64,52 @@
 
 - (void)setFontDisplayName:(NSString*)value
 {
-	[NewPreferences setThemeLogFontName:value];
+	[Preferences setThemeLogFontName:value];
 }
 
 - (NSString*)fontDisplayName
 {
-	return [NewPreferences themeLogFontName];
+	return [Preferences themeLogFontName];
 }
 
 - (void)setFontPointSize:(CGFloat)value
 {
-	[NewPreferences setThemeLogFontSize:value];
+	[Preferences setThemeLogFontSize:value];
 }
 
 - (CGFloat)fontPointSize
 {
-	return [NewPreferences themeLogFontSize];
+	return [Preferences themeLogFontSize];
 }
 
 - (int)dccFirstPort
 {
-	return [NewPreferences dccFirstPort];
+	return [Preferences dccFirstPort];
 }
 
 - (void)setDccFirstPort:(int)value
 {
-	[NewPreferences setDccFirstPort:value];
+	[Preferences setDccFirstPort:value];
 }
 
 - (int)dccLastPort
 {
-	return [NewPreferences dccLastPort];
+	return [Preferences dccLastPort];
 }
 
 - (void)setDccLastPort:(int)value
 {
-	[NewPreferences setDccLastPort:value];
+	[Preferences setDccLastPort:value];
 }
 
 - (int)maxLogLines
 {
-	return [NewPreferences maxLogLines];
+	return [Preferences maxLogLines];
 }
 
 - (void)setMaxLogLines:(int)value
 {
-	[NewPreferences setMaxLogLines:value];
+	[Preferences setMaxLogLines:value];
 }
 
 - (BOOL)validateValue:(id *)value forKey:(NSString *)key error:(NSError **)error
@@ -146,8 +146,8 @@
 
 - (void)loadHotKey
 {
-	hotKey.keyCode = [NewPreferences hotKeyKeyCode];
-	hotKey.modifierFlags = [NewPreferences hotKeyModifierFlags];
+	hotKey.keyCode = [Preferences hotKeyKeyCode];
+	hotKey.modifierFlags = [Preferences hotKeyModifierFlags];
 }
 
 - (void)keyRecorderDidChangeKey:(KeyRecorder*)sender
@@ -155,8 +155,8 @@
 	int code = hotKey.keyCode;
 	NSUInteger mods = hotKey.modifierFlags;
 	
-	[NewPreferences setHotKeyKeyCode:code];
-	[NewPreferences setHotKeyModifierFlags:mods];
+	[Preferences setHotKeyKeyCode:code];
+	[Preferences setHotKeyModifierFlags:mods];
 	
 	if (hotKey.keyCode) {
 		[(LimeChatApplication*)NSApp registerHotKey:code modifierFlags:mods];
@@ -185,55 +185,55 @@
 		SoundWrapper* e;
 		NSString* s;
 		
-		s = [NewPreferences soundLogin];
+		s = [Preferences soundLogin];
 		e = [[[SoundWrapper alloc] initWithDisplayName:@"Login" sound:s saveSelector:@selector(setSoundLogin:)] autorelease];
 		[ary addObject:e];
 		
-		s = [NewPreferences soundDisconnect];
+		s = [Preferences soundDisconnect];
 		e = [[[SoundWrapper alloc] initWithDisplayName:@"Disconnected" sound:s saveSelector:@selector(setSoundDisconnect:)] autorelease];
 		[ary addObject:e];
 		
-		s = [NewPreferences soundHighlight];
+		s = [Preferences soundHighlight];
 		e = [[[SoundWrapper alloc] initWithDisplayName:@"Highlight" sound:s saveSelector:@selector(setSoundHighlight:)] autorelease];
 		[ary addObject:e];
 		
-		s = [NewPreferences soundNewtalk];
+		s = [Preferences soundNewtalk];
 		e = [[[SoundWrapper alloc] initWithDisplayName:@"New talk" sound:s saveSelector:@selector(setSoundNewtalk:)] autorelease];
 		[ary addObject:e];
 		
-		s = [NewPreferences soundKicked];
+		s = [Preferences soundKicked];
 		e = [[[SoundWrapper alloc] initWithDisplayName:@"Kicked" sound:s saveSelector:@selector(setSoundKicked:)] autorelease];
 		[ary addObject:e];
 		
-		s = [NewPreferences soundInvited];
+		s = [Preferences soundInvited];
 		e = [[[SoundWrapper alloc] initWithDisplayName:@"Invited" sound:s saveSelector:@selector(setSoundInvited:)] autorelease];
 		[ary addObject:e];
 		
-		s = [NewPreferences soundChanneltext];
+		s = [Preferences soundChanneltext];
 		e = [[[SoundWrapper alloc] initWithDisplayName:@"Channel text" sound:s saveSelector:@selector(setSoundChanneltext:)] autorelease];
 		[ary addObject:e];
 		
-		s = [NewPreferences soundTalktext];
+		s = [Preferences soundTalktext];
 		e = [[[SoundWrapper alloc] initWithDisplayName:@"Talk text" sound:s saveSelector:@selector(setSoundTalktext:)] autorelease];
 		[ary addObject:e];
 		
-		s = [NewPreferences soundFileReceiveRequest];
+		s = [Preferences soundFileReceiveRequest];
 		e = [[[SoundWrapper alloc] initWithDisplayName:@"DCC file receive request" sound:s saveSelector:@selector(setSoundFileReceiveRequest:)] autorelease];
 		[ary addObject:e];
 		
-		s = [NewPreferences soundFileReceiveSuccess];
+		s = [Preferences soundFileReceiveSuccess];
 		e = [[[SoundWrapper alloc] initWithDisplayName:@"DCC file receive success" sound:s saveSelector:@selector(setSoundFileReceiveSuccess:)] autorelease];
 		[ary addObject:e];
 		
-		s = [NewPreferences soundFileReceiveFailure];
+		s = [Preferences soundFileReceiveFailure];
 		e = [[[SoundWrapper alloc] initWithDisplayName:@"DCC file receive failure" sound:s saveSelector:@selector(setSoundFileReceiveFailure:)] autorelease];
 		[ary addObject:e];
 		
-		s = [NewPreferences soundFileSendSuccess];
+		s = [Preferences soundFileSendSuccess];
 		e = [[[SoundWrapper alloc] initWithDisplayName:@"DCC file send success" sound:s saveSelector:@selector(setSoundFileSendSuccess:)] autorelease];
 		[ary addObject:e];
 		
-		s = [NewPreferences soundFileSendFailure];
+		s = [Preferences soundFileSendFailure];
 		e = [[[SoundWrapper alloc] initWithDisplayName:@"DCC file send failure" sound:s saveSelector:@selector(setSoundFileSendFailure:)] autorelease];
 		[ary addObject:e];
 		
@@ -247,7 +247,7 @@
 
 - (void)updateTranscriptFolder
 {
-	NSString* path = [NewPreferences transcriptFolder];
+	NSString* path = [Preferences transcriptFolder];
 	path = [path stringByExpandingTildeInPath];
 	NSString* dirName = [path lastPathComponent];
 	
@@ -273,7 +273,7 @@
 			[fm createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:NULL];
 		}
 		
-		[NewPreferences setTranscriptFolder:[path stringByAbbreviatingWithTildeInPath]];
+		[Preferences setTranscriptFolder:[path stringByAbbreviatingWithTildeInPath]];
 		[self updateTranscriptFolder];
 	}
 		
@@ -285,7 +285,7 @@
 {
 	if ([[transcriptFolderButton selectedItem] tag] != 2) return;
 	
-	NSString* path = [NewPreferences transcriptFolder];
+	NSString* path = [Preferences transcriptFolder];
 	path = [path stringByExpandingTildeInPath];
 	NSString* parentPath = [path stringByDeletingLastPathComponent];
 	
@@ -351,7 +351,7 @@
 	// select current one
 	//
 	
-	NSArray* kindAndName = [ViewTheme extractFileName:[NewPreferences themeName]];
+	NSArray* kindAndName = [ViewTheme extractFileName:[Preferences themeName]];
 	if (!kindAndName) {
 		[themeButton selectItemAtIndex:0];
 		return;
@@ -380,10 +380,10 @@
 	NSMenuItem* item = [themeButton selectedItem];
 	NSString* name = [item title];
 	if (item.tag == 0) {
-		[NewPreferences setThemeName:[ViewTheme buildResourceFileName:name]];
+		[Preferences setThemeName:[ViewTheme buildResourceFileName:name]];
 	}
 	else {
-		[NewPreferences setThemeName:[ViewTheme buildUserFileName:name]];
+		[Preferences setThemeName:[ViewTheme buildUserFileName:name]];
 	}
 	[self onLayoutChanged:nil];
 }

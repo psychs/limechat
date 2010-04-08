@@ -10,7 +10,7 @@ typedef enum {
 } KeywordMatchType;
 
 
-@interface NewPreferences : NSObject
+@interface Preferences : NSObject
 
 + (int)dccAction;
 + (int)dccAddressDetectionMethod;

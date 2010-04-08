@@ -257,7 +257,7 @@
 
 - (void)reloadTheme
 {
-	viewTheme.name = [NewPreferences themeName];
+	viewTheme.name = [Preferences themeName];
 	
 	[self changeInputTextTheme];
 	[self changeTreeTheme];

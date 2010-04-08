@@ -442,8 +442,8 @@
 - (NSString*)now
 {
 	NSString* format = @"%H:%M";
-	if ([NewPreferences themeOverrideTimestampFormat]) {
-		format = [NewPreferences themeTimestampFormat];
+	if ([Preferences themeOverrideTimestampFormat]) {
+		format = [Preferences themeTimestampFormat];
 	}
 	
 	time_t global = time(NULL);

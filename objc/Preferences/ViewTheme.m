@@ -50,7 +50,7 @@ static NSString* userBasePath;
 - (void)load
 {
 	if (name) {
-		NSArray* kindAndName = [ViewTheme extractFileName:[NewPreferences themeName]];
+		NSArray* kindAndName = [ViewTheme extractFileName:[Preferences themeName]];
 		if (kindAndName) {
 			NSString* kind = [kindAndName objectAtIndex:0];
 			NSString* fname = [kindAndName objectAtIndex:1];

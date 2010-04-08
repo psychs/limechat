@@ -40,15 +40,15 @@
 {
 	[self prelude];
 
-	[NewPreferences initPreferences];
+	[Preferences initPreferences];
 	
 	// register URL handler
 	NSAppleEventManager* em = [NSAppleEventManager sharedAppleEventManager];
 	[em setEventHandler:self andSelector:@selector(handleURLEvent:withReplyEvent:) forEventClass:KInternetEventClass andEventID:KAEGetURL];
 
 	// hot key
-	int keyCode = [NewPreferences hotKeyKeyCode];
-	NSUInteger modifierFlags = [NewPreferences hotKeyModifierFlags];
+	int keyCode = [Preferences hotKeyKeyCode];
+	NSUInteger modifierFlags = [Preferences hotKeyModifierFlags];
 	if (keyCode) {
 		[(LimeChatApplication*)NSApp registerHotKey:keyCode modifierFlags:modifierFlags];
 	}
@@ -66,7 +66,7 @@
 	[text setFocusRingType:NSFocusRingTypeNone];
 	
 	viewTheme = [ViewTheme new];
-	viewTheme.name = [NewPreferences themeName];
+	viewTheme.name = [Preferences themeName];
 	tree.theme = viewTheme.other;
 	memberList.theme = viewTheme.other;
 	MemberListViewCell* cell = [[MemberListViewCell new] autorelease];
@@ -74,10 +74,10 @@
 	[[[memberList tableColumns] objectAtIndex:0] setDataCell:cell];
 	
 	[self loadWindowState];
-	[window setAlphaValue:[NewPreferences themeTransparency]];
-	[self set3columnLayout:[NewPreferences mainWindowLayout] == 1];
+	[window setAlphaValue:[Preferences themeTransparency]];
+	[self set3columnLayout:[Preferences mainWindowLayout] == 1];
 	
-	IRCWorldConfig* seed = [[[IRCWorldConfig alloc] initWithDictionary:[NewPreferences loadWorld]] autorelease];
+	IRCWorldConfig* seed = [[[IRCWorldConfig alloc] initWithDictionary:[Preferences loadWorld]] autorelease];
 
 	world = [IRCWorld new];
 	world.app = self;
@@ -652,7 +652,7 @@ typedef enum {
 
 - (void)prelude
 {
-	[NewPreferences migrate];
+	[Preferences migrate];
 }
 
 @end
