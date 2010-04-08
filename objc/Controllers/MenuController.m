@@ -124,9 +124,10 @@
 			if (!win) return NO;
 			id t = [win firstResponder];
 			if (!t) return NO;
-			//if ([t isKindOfClass:[WebHTMLView class]]) {
-			//	return YES;
-			//}
+			NSString* klass = [t className];
+			if ([klass isEqualToString:@"WebHTMLView"]) {
+				return YES;
+			}
 			if ([t respondsToSelector:@selector(writeSelectionToPasteboard:type:)]) {
 				return YES;
 			}
@@ -331,7 +332,22 @@
 	id t = [win firstResponder];
 	if (!t) return;
 	
-	LOG(@"### %@", t);
+	NSString* klass = [t className];
+	if ([klass isEqualToString:@"WebHTMLView"]) {
+		while ([t isKindOfClass:[NSView class]]) {
+			if ([t isKindOfClass:[LogView class]]) {
+				NSPasteboard* pb = [NSPasteboard pasteboardWithName:NSFindPboard];
+				[pb declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:nil];
+				[pb setString:[t selection] forType:NSStringPboardType];
+			}
+			t = [t superview];
+		}
+	}
+	else if ([t respondsToSelector:@selector(writeSelectionToPasteboard:type:)]) {
+		NSPasteboard* pb = [NSPasteboard pasteboardWithName:NSFindPboard];
+		[pb declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:nil];
+		[t writeSelectionToPasteboard:pb type:NSStringPboardType];
+	}
 }
 
 - (void)onPasteMyAddress:(id)sender
