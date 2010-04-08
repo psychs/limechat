@@ -870,8 +870,10 @@
 {
 	NSString* nick = m.sender.nick;
 	NSString* chname = [m paramAt:0];
+	
 	BOOL myself = [nick isEqualNoCase:myNick];
 
+	// work around for ircd 2.9.5
 	BOOL njoin = NO;
 	if ([chname hasSuffix:@"\x07o"]) {
 		njoin = YES;
@@ -893,16 +895,66 @@
 		
 		if (!joinMyAddress) {
 			joinMyAddress = [m.sender.address retain];
+			// @@@ resolve my address
 		}
 	}
 	
-	NSString* text = [NSString stringWithFormat:@"%@ has joined (%@@%@)", nick, m.sender.user, m.sender.address];
-	[self printBoth:(c ?: (id)chname) type:LINE_TYPE_JOIN text:text];
+	if (c) {
+		IRCUser* u = [[IRCUser new] autorelease];
+		u.nick = nick;
+		u.username = m.sender.user;
+		u.address = m.sender.address;
+		u.o = njoin;
+		[c addMember:u];
+		[self updateChannelTitle:c];
+	}
+	
+	if ([Preferences showJoinLeave]) {
+		NSString* text = [NSString stringWithFormat:@"%@ has joined (%@@%@)", nick, m.sender.user, m.sender.address];
+		[self printBoth:(c ?: (id)chname) type:LINE_TYPE_JOIN text:text];
+	}
+	
+	//@@@ check auto op
+	
+	// add user to talk
+	c = [self findChannel:nick];
+	if (c) {
+		IRCUser* u = [[IRCUser new] autorelease];
+		u.nick = nick;
+		u.username = m.sender.user;
+		u.address = m.sender.address;
+		[c addMember:u];
+	}
 }
 
 - (void)receivePart:(IRCMessage*)m
 {
-	LOG(@"PART %@", m.sequence);
+	NSString* nick = m.sender.nick;
+	NSString* chname = [m paramAt:0];
+	NSString* comment = [m paramAt:1];
+	
+	BOOL myself = NO;
+	
+	IRCChannel* c = [self findChannel:chname];
+	if (c) {
+		if ([nick isEqualNoCase:myNick]) {
+			myself = YES;
+			[c deactivate];
+			[self reloadTree];
+		}
+		[c removeMember:nick];
+		[self updateChannelTitle:c];
+		// @@@ check rejoin
+	}
+	
+	if ([Preferences showJoinLeave]) {
+		NSString* text = [NSString stringWithFormat:@"%@ has left (%@)", nick, comment];
+		[self printBoth:(c ?: (id)chname) type:LINE_TYPE_PART text:text];
+	}
+	
+	if (myself) {
+		[self printSystem:c text:@"You have left the channel"];
+	}
 }
 
 - (void)receiveKick:(IRCMessage*)m
