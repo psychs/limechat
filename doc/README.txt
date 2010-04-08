@@ -25,6 +25,8 @@ Kevin Ballard       # Patches around theme support
 Peter Haza          # A patch for context menu on channel name in logs
 Stefan Rusterholz   # Many suggestions and patches
 Takashi Tsugo       # Deep Ocean theme
+why the lucky stiff	# Syck
+William Thimbleby	# Syck coaoa
 
 * License (Ruby's)
 
