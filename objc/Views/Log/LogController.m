@@ -126,7 +126,9 @@
 	}
 	
 	view = [[LogView alloc] initWithFrame:NSZeroRect];
-	if ([view respondsToSelector:@selector(setBackgroundColor:)]) [(id)view setBackgroundColor:initialBackgroundColor];
+	if ([view respondsToSelector:@selector(setBackgroundColor:)]) {
+		[(id)view setBackgroundColor:initialBackgroundColor];
+	}
 	view.frameLoadDelegate = self;
 	view.UIDelegate = policy;
 	view.policyDelegate = policy;

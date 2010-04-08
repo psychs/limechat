@@ -505,7 +505,7 @@
 	c.theme = viewTheme;
 	c.overrideFont = nil;	//@@@
 	c.console = console;
-	c.initialBackgroundColor = [NSColor whiteColor];
+	c.initialBackgroundColor = [viewTheme.other inputTextBgColor];
 	[c setUp];
 	
 	[c.view setHostWindow:window];
