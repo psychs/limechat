@@ -1240,7 +1240,14 @@
 		if (c.isTalk) {
 			[c activate];
 			
-			// @@@ add members
+			IRCUser* m;
+			m = [[IRCUser new] autorelease];
+			m.nick = myNick;
+			[c addMember:m];
+			
+			m = [[IRCUser new] autorelease];
+			m.nick = c.name;
+			[c addMember:m];
 		}
 	}
 	
