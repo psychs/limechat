@@ -12,6 +12,7 @@
 
 #define MAX_JOIN_CHANNELS	10
 #define MAX_BODY_LEN		480
+#define TIME_BUFFER_SIZE	256
 
 
 @interface IRCClient (Private)
@@ -137,6 +138,14 @@
 {
 }
 
+- (void)reloadTree
+{
+	[world reloadTree];
+}
+
+#pragma mark -
+#pragma mark Commands
+
 - (void)connect
 {
 	if (conn) {
@@ -228,102 +237,6 @@
 {
 }
 
-- (BOOL)sendText:(NSString*)s command:(NSString*)command
-{
-	if (!connected) return NO;
-	
-	id sel = world.selected;
-	if (!sel) return NO;
-	if ([sel isClient]) {
-		// server
-		if ([s hasPrefix:@"/"]) {
-			s = [s substringFromIndex:1];
-		}
-		[self sendLine:s];
-	}
-	else {
-		// channel
-		if ([s hasPrefix:@"/"]) {
-			// command
-			s = [s substringFromIndex:1];
-			[self sendLine:s];
-		}
-		else {
-			// normal text
-			[self send:command, [sel name], s, nil];
-			[self printBoth:sel type:LINE_TYPE_PRIVMSG nick:myNick text:s identified:YES];
-		}
-	}
-	
-	return YES;
-}
-
-- (void)sendLine:(NSString*)str
-{
-	[conn sendLine:str];
-	
-	LOG(@">>> %@", str);
-}
-
-- (void)send:(NSString*)str, ...
-{
-	NSMutableArray* ary = [NSMutableArray array];
-	
-	id obj;
-	va_list args;
-	va_start(args, str);
-	while (obj = va_arg(args, id)) {
-		[ary addObject:obj];
-	}
-	va_end(args);
-	
-	NSMutableString* s = [NSMutableString stringWithString:str];
-	
-	int count = ary.count;
-	for (int i=0; i<count; i++) {
-		NSString* e = [ary objectAtIndex:i];
-		[s appendString:@" "];
-		if (i == count-1 && (e.length == 0 || [e hasPrefix:@":"] || [e contains:@" "])) {
-			[s appendString:@":"];
-		}
-		[s appendString:e];
-	}
-	
-	[self sendLine:s];
-}
-
-- (IRCChannel*)findChannel:(NSString*)name
-{
-	for (IRCChannel* c in channels) {
-		if ([c.name isEqualNoCase:name]) {
-			return c;
-		}
-	}
-	return nil;
-}
-
-- (int)indexOfTalkChannel
-{
-	int i = 0;
-	for (IRCChannel* e in channels) {
-		if (e.isTalk) return i;
-		++i;
-	}
-	return -1;
-}
-
-- (void)updateClientTitle
-{
-}
-
-- (void)updateChannelTitle:(IRCChannel*)c
-{
-}
-
-- (void)reloadTree
-{
-	[world reloadTree];
-}
 
 - (void)quickJoin:(NSArray*)chans
 {
@@ -411,6 +324,110 @@
 	}
 }
 
+#pragma mark -
+#pragma mark Sending Text
+
+- (BOOL)sendText:(NSString*)s command:(NSString*)command
+{
+	if (!connected) return NO;
+	
+	id sel = world.selected;
+	if (!sel) return NO;
+	if ([sel isClient]) {
+		// server
+		if ([s hasPrefix:@"/"]) {
+			s = [s substringFromIndex:1];
+		}
+		[self sendLine:s];
+	}
+	else {
+		// channel
+		if ([s hasPrefix:@"/"]) {
+			// command
+			s = [s substringFromIndex:1];
+			[self sendLine:s];
+		}
+		else {
+			// normal text
+			[self send:command, [sel name], s, nil];
+			[self printBoth:sel type:LINE_TYPE_PRIVMSG nick:myNick text:s identified:YES];
+		}
+	}
+	
+	return YES;
+}
+
+- (void)sendLine:(NSString*)str
+{
+	[conn sendLine:str];
+	
+	LOG(@">>> %@", str);
+}
+
+- (void)send:(NSString*)str, ...
+{
+	NSMutableArray* ary = [NSMutableArray array];
+	
+	id obj;
+	va_list args;
+	va_start(args, str);
+	while (obj = va_arg(args, id)) {
+		[ary addObject:obj];
+	}
+	va_end(args);
+	
+	NSMutableString* s = [NSMutableString stringWithString:str];
+	
+	int count = ary.count;
+	for (int i=0; i<count; i++) {
+		NSString* e = [ary objectAtIndex:i];
+		[s appendString:@" "];
+		if (i == count-1 && (e.length == 0 || [e hasPrefix:@":"] || [e contains:@" "])) {
+			[s appendString:@":"];
+		}
+		[s appendString:e];
+	}
+	
+	[self sendLine:s];
+}
+
+#pragma mark -
+#pragma mark Find Channel
+
+- (IRCChannel*)findChannel:(NSString*)name
+{
+	for (IRCChannel* c in channels) {
+		if ([c.name isEqualNoCase:name]) {
+			return c;
+		}
+	}
+	return nil;
+}
+
+- (int)indexOfTalkChannel
+{
+	int i = 0;
+	for (IRCChannel* e in channels) {
+		if (e.isTalk) return i;
+		++i;
+	}
+	return -1;
+}
+
+#pragma mark -
+#pragma mark Window Title
+
+- (void)updateClientTitle
+{
+}
+
+- (void)updateChannelTitle:(IRCChannel*)c
+{
+}
+
+#pragma mark -
+#pragma mark Channel States
+
 - (void)setKeywordState:(id)t
 {
 	if ([NSApp isActive] && world.selected == t) return;
@@ -442,8 +459,6 @@
 
 #pragma mark -
 #pragma mark Print
-
-#define TIME_BUFFER_SIZE	256
 
 - (NSString*)now
 {
@@ -738,7 +753,7 @@
 }
 
 #pragma mark -
-#pragma mark Protocol Handler
+#pragma mark Protocol Handlers
 
 - (void)receivePrivmsgAndNotice:(IRCMessage*)m
 {
