@@ -790,17 +790,13 @@
 	}
 	else {
 		if (u.loggedIn) {
-			LOG_METHOD
-			
 			if (c.isActive) {
 				if ([Preferences leaveOnDoubleclick]) {
-					LOG(@"###part");
 					[u partChannel:c];
 				}
 			}
 			else {
 				if ([Preferences joinOnDoubleclick]) {
-					LOG(@"###join");
 					[u joinChannel:c password:nil];
 				}
 			}
