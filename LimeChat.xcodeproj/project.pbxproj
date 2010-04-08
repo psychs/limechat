@@ -82,6 +82,8 @@
 		783FE85F116CB69F0015C18A /* token.c in Sources */ = {isa = PBXBuildFile; fileRef = 783FE849116CB69F0015C18A /* token.c */; };
 		783FE860116CB69F0015C18A /* yaml2byte.c in Sources */ = {isa = PBXBuildFile; fileRef = 783FE84A116CB69F0015C18A /* yaml2byte.c */; };
 		783FE8E8116CBBD70015C18A /* GTMBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 783FE8E7116CBBD70015C18A /* GTMBase64.m */; };
+		7840A0A0116DE5070033AE3E /* NickSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 7840A09F116DE5070033AE3E /* NickSheet.m */; };
+		7840A0E7116DEA7F0033AE3E /* SheetBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 7840A0E6116DEA7F0033AE3E /* SheetBase.m */; };
 		784BBE941085BC950080898B /* bluestar.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 784BBE901085BC950080898B /* bluestar.tiff */; };
 		784BBE951085BC950080898B /* keyrecorder_erase.png in Resources */ = {isa = PBXBuildFile; fileRef = 784BBE911085BC950080898B /* keyrecorder_erase.png */; };
 		784BBE961085BC950080898B /* keyrecorder_erase_pushed.png in Resources */ = {isa = PBXBuildFile; fileRef = 784BBE921085BC950080898B /* keyrecorder_erase_pushed.png */; };
@@ -289,6 +291,10 @@
 		783FE84B116CB69F0015C18A /* yamlbyte.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yamlbyte.h; sourceTree = "<group>"; };
 		783FE8E6116CBBD70015C18A /* GTMBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMBase64.h; sourceTree = "<group>"; };
 		783FE8E7116CBBD70015C18A /* GTMBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMBase64.m; sourceTree = "<group>"; };
+		7840A09E116DE5070033AE3E /* NickSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NickSheet.h; sourceTree = "<group>"; };
+		7840A09F116DE5070033AE3E /* NickSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NickSheet.m; sourceTree = "<group>"; };
+		7840A0E5116DEA7F0033AE3E /* SheetBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SheetBase.h; sourceTree = "<group>"; };
+		7840A0E6116DEA7F0033AE3E /* SheetBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SheetBase.m; sourceTree = "<group>"; };
 		784BBE901085BC950080898B /* bluestar.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = bluestar.tiff; sourceTree = "<group>"; };
 		784BBE911085BC950080898B /* keyrecorder_erase.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = keyrecorder_erase.png; sourceTree = "<group>"; };
 		784BBE921085BC950080898B /* keyrecorder_erase_pushed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = keyrecorder_erase_pushed.png; sourceTree = "<group>"; };
@@ -465,6 +471,7 @@
 				78AD78E20C61B8F8001E77F4 /* Localizable.strings */,
 				78347EC31158D4B00073E2F0 /* MainMenu.xib */,
 				78347ECB1158D4B00073E2F0 /* Preferences.xib */,
+				78347EC71158D4B00073E2F0 /* NickSheet.xib */,
 				78347ED11158D4B00073E2F0 /* WhoisDialog.xib */,
 				78347ECD1158D4B00073E2F0 /* ServerDialog.xib */,
 				78347EB91158D4B00073E2F0 /* AutoOpDialog.xib */,
@@ -473,7 +480,6 @@
 				78347EBF1158D4B00073E2F0 /* DccDialog.xib */,
 				78347EC11158D4B00073E2F0 /* ListDialog.xib */,
 				78347EC51158D4B00073E2F0 /* ModeSheet.xib */,
-				78347EC71158D4B00073E2F0 /* NickSheet.xib */,
 				78347EC91158D4B00073E2F0 /* PasteSheet.xib */,
 				78347ECF1158D4B00073E2F0 /* WelcomeDialog.xib */,
 				78287EA90D742DAA008D5656 /* Themes */,
@@ -796,6 +802,10 @@
 			isa = PBXGroup;
 			children = (
 				78E345CD116C6ACD00990CCB /* Preferences */,
+				7840A09E116DE5070033AE3E /* NickSheet.h */,
+				7840A09F116DE5070033AE3E /* NickSheet.m */,
+				7840A0E5116DEA7F0033AE3E /* SheetBase.h */,
+				7840A0E6116DEA7F0033AE3E /* SheetBase.m */,
 			);
 			name = Dialogs;
 			path = objc/Dialogs;
@@ -1074,6 +1084,8 @@
 				78914ACD116CF556008B772D /* IRCTreeItem.m in Sources */,
 				787008CB116D6F6500077F91 /* URLOpener.m in Sources */,
 				7870096F116D74DC00077F91 /* NSPasteboardHelper.m in Sources */,
+				7840A0A0116DE5070033AE3E /* NickSheet.m in Sources */,
+				7840A0E7116DEA7F0033AE3E /* SheetBase.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -72,6 +72,7 @@
 - (void)disconnect;
 - (void)cancelReconnect;
 
+- (void)changeNick:(NSString*)newNick;
 - (void)joinChannel:(IRCChannel*)channel;
 
 - (BOOL)sendText:(NSString*)s command:(NSString*)command;

@@ -198,6 +198,18 @@
 	LOG_METHOD
 }
 
+- (void)changeNick:(NSString*)newNick
+{
+	if (!connected) return;
+	
+	[inputNick autorelease];
+	[sentNick autorelease];
+	inputNick = [newNick retain];
+	sentNick = [sentNick retain];
+	
+	[self send:NICK, newNick, nil];
+}
+
 - (void)joinChannel:(IRCChannel*)channel
 {
 }
@@ -812,10 +824,12 @@
 
 - (void)receiveCTCPQuery:(IRCMessage*)m text:(NSString*)text
 {
+	LOG(@"CTCP Query %@", text);
 }
 
 - (void)receiveCTCPReply:(IRCMessage*)m text:(NSString*)text
 {
+	LOG(@"CTCP Reply %@", text);
 }
 
 - (void)receiveJoin:(IRCMessage*)m
@@ -854,43 +868,51 @@
 
 - (void)receivePart:(IRCMessage*)m
 {
+	LOG(@"PART %@", m.sequence);
 }
 
 - (void)receiveKick:(IRCMessage*)m
 {
+	LOG(@"KICK %@", m.sequence);
 }
 
 - (void)receiveQuit:(IRCMessage*)m
 {
+	LOG(@"QUIT %@", m.sequence);
 }
 
 - (void)receiveKill:(IRCMessage*)m
 {
+	LOG(@"KILL %@", m.sequence);
 }
 
 - (void)receiveNick:(IRCMessage*)m
 {
+	LOG(@"NICK %@", m.sequence);
 }
 
 - (void)receiveMode:(IRCMessage*)m
 {
+	LOG(@"MODE %@", m.sequence);
 }
 
 - (void)receiveTopic:(IRCMessage*)m
 {
+	LOG(@"TOPIC %@", m.sequence);
 }
 
 - (void)receiveInvite:(IRCMessage*)m
 {
+	LOG(@"INVITE %@", m.sequence);
 }
 
 - (void)receiveError:(IRCMessage*)m
 {
+	LOG(@"ERROR %@", m.sequence);
 }
 
 - (void)receivePing:(IRCMessage*)m
 {
-	LOG_METHOD
 	[self send:PONG, [m sequence:0], nil];
 }
 

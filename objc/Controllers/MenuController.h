@@ -4,6 +4,7 @@
 #import "ServerTreeView.h"
 #import "MemberListView.h"
 #import "PreferencesController.h"
+#import "NickSheet.h"
 
 
 @class AppController;
@@ -31,6 +32,8 @@
 	NSMutableArray* serverDialogs;
 	NSMutableArray* channelDialogs;
 	NSMutableArray* pasteClients;
+	
+	NickSheet* nickSheet;
 }
 
 @property (nonatomic, assign) AppController* app;

@@ -450,6 +450,30 @@
 
 - (void)onNick:(id)sender
 {
+	if (nickSheet) return;
+	
+	IRCClient* u = world.selectedClient;
+	if (!u) return;
+	
+	nickSheet = [NickSheet new];
+	nickSheet.delegate = self;
+	nickSheet.window = window;
+	nickSheet.uid = u.uid;
+	[nickSheet start:u.myNick];
+}
+
+- (void)nickSheet:(NickSheet*)sender didInputNick:(NSString*)newNick
+{
+	int uid = sender.uid;
+	IRCClient* u = [world findClientById:uid];
+	if (!u) return;
+	[u changeNick:newNick];
+}
+
+- (void)nickSheetDidClose:(NickSheet*)sender
+{
+	[nickSheet release];
+	nickSheet = nil;
 }
 
 - (void)onChannelList:(id)sender
