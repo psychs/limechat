@@ -498,6 +498,8 @@
 
 - (BOOL)needPrintConsole:(id)chan
 {
+	if (!chan) chan = self;
+	
 	IRCChannel* channel = nil;
 	if (![chan isKindOfClass:[NSString class]]) {
 		channel = chan;
@@ -1106,12 +1108,27 @@
 
 - (void)receiveTopic:(IRCMessage*)m
 {
-	LOG(@"TOPIC %@", m.sequence);
+	NSString* nick = m.sender.nick;
+	NSString* chname = [m paramAt:0];
+	NSString* topic = [m paramAt:1];
+	
+	IRCChannel* c = [self findChannel:chname];
+	if (c) {
+		c.topic = topic;
+		[self updateChannelTitle:c];
+	}
+	
+	NSString* text = [NSString stringWithFormat:@"%@ has set topic: %@", nick, topic];
+	[self printBoth:(c ?: (id)chname) type:LINE_TYPE_TOPIC text:text];
 }
 
 - (void)receiveInvite:(IRCMessage*)m
 {
-	LOG(@"INVITE %@", m.sequence);
+	NSString* nick = m.sender.nick;
+	NSString* chname = [m paramAt:1];
+	
+	NSString* text = [NSString stringWithFormat:@"%@ has invited you to %@", nick, chname];
+	[self printBoth:self type:LINE_TYPE_INVITE text:text];
 }
 
 - (void)receiveError:(IRCMessage*)m
