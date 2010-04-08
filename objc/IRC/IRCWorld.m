@@ -877,12 +877,42 @@
 - (void)outlineView:(NSOutlineView *)outlineView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn item:(id)item
 {
 	OtherTheme* theme = viewTheme.other;
+	IRCTreeItem* i = item;
 	
-	[cell setTextColor:theme.treeActiveColor];
+	NSColor* color = nil;
+	
+	if (i.isKeyword) {
+		color = theme.treeHighlightColor;
+	}
+	else if (i.isNewTalk) {
+		color = theme.treeNewTalkColor;
+	}
+	else if (i.isUnread) {
+		color = theme.treeUnreadColor;
+	}
+	else if (i.isActive) {
+		if (i == [tree itemAtRow:[tree selectedRow]]) {
+			color = theme.treeSelActiveColor;
+		}
+		else {
+			color = theme.treeActiveColor;
+		}
+	}
+	else {
+		if (i == [tree itemAtRow:[tree selectedRow]]) {
+			color = theme.treeSelInactiveColor;
+		}
+		else {
+			color = theme.treeInactiveColor;
+		}
+	}
+	
+	[cell setTextColor:color];
 }
 
 - (void)serverTreeViewAcceptsFirstResponder
 {
+	[self focusInputText];
 }
 
 #pragma mark -
