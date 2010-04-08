@@ -499,6 +499,100 @@
 	return c;
 }
 
+- (void)selectOtherAndDestroy:(IRCTreeItem*)target
+{
+	IRCTreeItem* sel = nil;
+	int i;
+	
+	if (target.isClient) {
+		i = [clients indexOfObjectIdenticalTo:target];
+		int n = i + 1;
+		if (0 <= n && n < clients.count) {
+			sel = [clients objectAtIndex:n];
+		}
+		i = [tree rowForItem:target];
+	}
+	else {
+		i = [tree rowForItem:target];
+		int n = i + 1;
+		if (0 <= n && n < [tree numberOfRows]) {
+			sel = [tree itemAtRow:n];
+		}
+		if (sel && sel.isClient) {
+			// we don't want to change clients when closing a channel
+			n = i - 1;
+			if (0 <= n && n < [tree numberOfRows]) {
+				sel = [tree itemAtRow:n];
+			}
+		}
+	}
+	
+	if (sel) {
+		[self select:sel];
+	}
+	else {
+		int n = i - 1;
+		if (0 <= n && n < [tree numberOfRows]) {
+			sel = [tree itemAtRow:n];
+		}
+		[self select:sel];
+	}
+	
+	if (target.isClient) {
+		IRCClient* u = (IRCClient*)target;
+		for (IRCChannel* c in u.channels) {
+			[c closeDialogs];
+		}
+		[clients removeObjectIdenticalTo:target];
+	}
+	
+	[self reloadTree];
+	
+	if (selected) {
+		[tree select:[tree rowForItem:sel]];
+	}
+}
+
+- (void)destroyClient:(IRCClient*)u
+{
+	[u terminate];
+	[u disconnect];
+	
+	if (selected && selected.client == u) {
+		[self selectOtherAndDestroy:u];
+	}
+	else {
+		[clients removeObjectIdenticalTo:u];
+		[self reloadTree];
+		[self adjustSelection];
+	}
+}
+
+- (void)destroyChannel:(IRCChannel*)c
+{
+	[c terminate];
+	
+	IRCClient* u = c.client;
+	if (c.isChannel) {
+		if (u.loggedIn && c.isActive) {
+			[u partChannel:c];
+		}
+	}
+	
+	if (u.lastSelectedChannel == c) {
+		u.lastSelectedChannel = nil;
+	}
+	
+	if (selected == c) {
+		[self selectOtherAndDestroy:c];
+	}
+	else {
+		[u.channels removeObjectIdenticalTo:c];
+		[self reloadTree];
+		[self adjustSelection];
+	}
+}
+
 - (LogController*)createLogWithClient:(IRCClient*)client channel:(IRCChannel*)channel console:(BOOL)console
 {
 	LogController* c = [[LogController new] autorelease];

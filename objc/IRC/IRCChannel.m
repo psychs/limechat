@@ -211,6 +211,8 @@
 	
 	[self sortedInsert:m];
 	
+	[self reloadMemberList];
+	
 	//
 	// @@@ update op queue
 	//

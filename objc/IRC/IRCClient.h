@@ -66,6 +66,7 @@
 - (void)setup:(IRCClientConfig*)seed;
 
 - (void)autoConnect:(int)delay;
+- (void)terminate;
 - (void)onTimer;
 
 - (void)connect;
@@ -74,7 +75,8 @@
 - (void)cancelReconnect;
 
 - (void)changeNick:(NSString*)newNick;
-- (void)joinChannel:(IRCChannel*)channel;
+- (void)joinChannel:(IRCChannel*)channel password:(NSString*)password;
+- (void)partChannel:(IRCChannel*)channel;
 
 - (BOOL)sendText:(NSString*)s command:(NSString*)command;
 

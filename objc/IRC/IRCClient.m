@@ -134,6 +134,10 @@
 	[self connect];
 }
 
+- (void)terminate
+{
+}
+
 - (void)onTimer
 {
 }
@@ -233,10 +237,26 @@
 	[self send:NICK, newNick, nil];
 }
 
-- (void)joinChannel:(IRCChannel*)channel
+- (void)joinChannel:(IRCChannel*)channel password:(NSString*)password
 {
+	if (!loggedIn) return;
+	
+	if (!password) password = channel.config.password;
+	if (!password.length) password = nil;
+	
+	[self send:JOIN, channel.name, password, nil];
 }
 
+- (void)partChannel:(IRCChannel*)channel
+{
+	if (!loggedIn) return;
+	if (channel.isActive) return;
+	
+	NSString* comment = config.leavingComment;
+	if (!comment.length) comment = nil;
+	
+	[self send:PART, channel.name, comment, nil];
+}
 
 - (void)quickJoin:(NSArray*)chans
 {
@@ -959,22 +979,124 @@
 
 - (void)receiveKick:(IRCMessage*)m
 {
-	LOG(@"KICK %@", m.sequence);
+	NSString* nick = m.sender.nick;
+	NSString* chname = [m paramAt:0];
+	NSString* target = [m paramAt:1];
+	NSString* comment = [m paramAt:1];
+	
+	IRCChannel* c = [self findChannel:chname];
+	if (c) {
+		BOOL myself = [target isEqualNoCase:myNick];
+		if (myself) {
+			[c deactivate];
+			[self reloadTree];
+			[self printSystemBoth:c text:@"You have been kicked out from the channel"];
+			
+			// notify event and sound
+		}
+		
+		[c removeMember:target];
+		[self updateChannelTitle:c];
+		// @@@ check rejoin
+	}
+	
+	NSString* text = [NSString stringWithFormat:@"%@ has kicked %@ (%@)", nick, target, comment];
+	[self printBoth:(c ?: (id)chname) type:LINE_TYPE_KICK text:text];
 }
 
 - (void)receiveQuit:(IRCMessage*)m
 {
-	LOG(@"QUIT %@", m.sequence);
+	NSString* nick = m.sender.nick;
+	NSString* comment = [m paramAt:0];
+	
+	NSString* text = [NSString stringWithFormat:@"%@ has left IRC (%@)", nick, comment];
+	
+	for (IRCChannel* c in channels) {
+		if ([c findMember:nick]) {
+			if ([Preferences showJoinLeave]) {
+				[self printChannel:c type:LINE_TYPE_QUIT text:text];
+			}
+			[c removeMember:nick];
+			[self updateChannelTitle:c];
+			// @@@ check rejoin
+		}
+	}
+	
+	if ([Preferences showJoinLeave]) {
+		[self printConsole:nil type:LINE_TYPE_QUIT text:text];
+	}
 }
 
 - (void)receiveKill:(IRCMessage*)m
 {
-	LOG(@"KILL %@", m.sequence);
+	NSString* sender = m.sender.nick;
+	if (!sender || !sender.length) {
+		sender = m.sender.raw;
+	}
+	NSString* target = [m paramAt:0];
+	NSString* comment = [m paramAt:1];
+	
+	NSString* text = [NSString stringWithFormat:@"%@ has forced %@ to leave IRC (%@)", sender, target, comment];
+	
+	for (IRCChannel* c in channels) {
+		if ([c findMember:target]) {
+			[self printChannel:c type:LINE_TYPE_KILL text:text];
+			[c removeMember:target];
+			[self updateChannelTitle:c];
+			// @@@ check rejoin
+		}
+	}
+	
+	if ([Preferences showJoinLeave]) {
+		[self printConsole:nil type:LINE_TYPE_KILL text:text];
+	}
 }
 
 - (void)receiveNick:(IRCMessage*)m
 {
-	LOG(@"NICK %@", m.sequence);
+	NSString* nick = m.sender.nick;
+	NSString* toNick = [m paramAt:0];
+	
+	if ([nick isEqualNoCase:myNick]) {
+		// changed my nick
+		[myNick release];
+		myNick = [toNick retain];
+		[self updateClientTitle];
+		
+		NSString* text = [NSString stringWithFormat:@"You are now known as %@", toNick];
+		[self printChannel:nil type:LINE_TYPE_NICK text:text];
+	}
+	
+	for (IRCChannel* c in channels) {
+		if ([c findMember:nick]) {
+			// rename channel member
+			NSString* text = [NSString stringWithFormat:@"%@ is now known as %@", nick, toNick];
+			[self printChannel:nil type:LINE_TYPE_NICK text:text];
+			[c renameMember:nick to:toNick];
+		}
+	}
+	
+	IRCChannel* c = [self findChannel:nick];
+	if (c) {
+		IRCChannel* t = [self findChannel:toNick];
+		if (t) {
+			// there is a channel already for a nick
+			// just remove it
+			[world destroyChannel:t];
+		}
+		
+		// rename talk
+		c.name = toNick;
+		[self reloadTree];
+		[self updateChannelTitle:c];
+	}
+	
+	// @@@ rename nick on whois dialogs
+	
+	// @@@ rename nick in dcc
+	
+	NSString* text = [NSString stringWithFormat:@"%@ is now known as %@", nick, toNick];
+	[self printConsole:nil type:LINE_TYPE_NICK text:text];
 }
 
 - (void)receiveMode:(IRCMessage*)m

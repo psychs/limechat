@@ -119,6 +119,7 @@
 - (IRCClient*)createClient:(IRCClientConfig*)seed reload:(BOOL)reload;
 - (IRCChannel*)createChannel:(IRCChannelConfig*)seed client:(IRCClient*)client reload:(BOOL)reload adjust:(BOOL)adjust;
 - (IRCChannel*)createTalk:(NSString*)nick client:(IRCClient*)client;
+- (void)destroyChannel:(IRCChannel*)channel;
 
 - (void)logKeyDown:(NSEvent*)e;
 - (void)logDoubleClick:(NSString*)s;
