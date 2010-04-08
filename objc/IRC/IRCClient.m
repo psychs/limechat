@@ -1110,7 +1110,7 @@
 {
 	NSString* nick = m.sender.nick;
 	NSString* target = [m paramAt:0];
-	NSString* modeStr = [m paramAt:1];
+	NSString* modeStr = [m sequence:1];
 	
 	if ([target isChannelName]) {
 		// channel
