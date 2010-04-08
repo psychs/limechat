@@ -8,6 +8,7 @@
 #import "ViewTheme.h"
 #import "MemberListViewCell.h"
 #import "Regex.h"
+#import "NSPasteboardHelper.h"
 
 
 #define KInternetEventClass	1196773964
@@ -225,8 +226,7 @@
 
 - (BOOL)fieldEditorTextViewPaste:(id)sender;
 {
-	NSPasteboard* pb = [NSPasteboard generalPasteboard];
-	NSString* s = [pb stringForType:NSStringPboardType];
+	NSString* s = [[NSPasteboard generalPasteboard] stringContent];
 	if (!s.length) return NO;
 	
 	IRCTreeItem* sel = world.selected;

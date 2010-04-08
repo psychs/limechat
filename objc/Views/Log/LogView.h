@@ -14,7 +14,10 @@
 @property (nonatomic, assign) id keyDelegate;
 @property (nonatomic, assign) id resizeDelegate;
 
-- (void)clearSel;
+- (NSString*)contentString;
+
+- (void)clearSelection;
+- (BOOL)hasSelection;
 - (NSString*)selection;
 
 @end

@@ -3,6 +3,7 @@
 
 #import "LogPolicy.h"
 #import <WebKit/WebKit.h>
+#import "URLOpener.h"
 
 
 @interface LogPolicy (Private)
@@ -133,8 +134,7 @@
 	switch (action) {
 		case WebNavigationTypeLinkClicked:
 			[listener ignore];
-			//@@@
-			[[NSWorkspace sharedWorkspace] openURL:[actionInformation objectForKey:WebActionOriginalURLKey]];
+			[URLOpener open:[actionInformation objectForKey:WebActionOriginalURLKey]];
 			break;
 		case WebNavigationTypeOther:
 			[listener use];

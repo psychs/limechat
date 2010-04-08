@@ -88,6 +88,8 @@
 		784BBE961085BC950080898B /* keyrecorder_erase_pushed.png in Resources */ = {isa = PBXBuildFile; fileRef = 784BBE921085BC950080898B /* keyrecorder_erase_pushed.png */; };
 		784BBE971085BC950080898B /* redstar.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 784BBE931085BC950080898B /* redstar.tiff */; };
 		7851AEF71168A91A00AC449F /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7851AEF61168A91A00AC449F /* libicucore.dylib */; };
+		787008CB116D6F6500077F91 /* URLOpener.m in Sources */ = {isa = PBXBuildFile; fileRef = 787008CA116D6F6500077F91 /* URLOpener.m */; };
+		7870096F116D74DC00077F91 /* NSPasteboardHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7870096E116D74DC00077F91 /* NSPasteboardHelper.m */; };
 		787BE9DD116B45E9003AE47D /* MenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 787BE9DC116B45E9003AE47D /* MenuController.m */; };
 		78835406109FEA7F00CD2FFF /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78835405109FEA7F00CD2FFF /* SystemConfiguration.framework */; };
 		7884E54E0CDA91F500AF3678 /* SACrashReporter in Resources */ = {isa = PBXBuildFile; fileRef = 7884E5450CDA91F500AF3678 /* SACrashReporter */; };
@@ -297,6 +299,10 @@
 		784BBE921085BC950080898B /* keyrecorder_erase_pushed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = keyrecorder_erase_pushed.png; sourceTree = "<group>"; };
 		784BBE931085BC950080898B /* redstar.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = redstar.tiff; sourceTree = "<group>"; };
 		7851AEF61168A91A00AC449F /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = /usr/lib/libicucore.dylib; sourceTree = "<absolute>"; };
+		787008C9116D6F6500077F91 /* URLOpener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = URLOpener.h; sourceTree = "<group>"; };
+		787008CA116D6F6500077F91 /* URLOpener.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = URLOpener.m; sourceTree = "<group>"; };
+		7870096D116D74DC00077F91 /* NSPasteboardHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSPasteboardHelper.h; sourceTree = "<group>"; };
+		7870096E116D74DC00077F91 /* NSPasteboardHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSPasteboardHelper.m; sourceTree = "<group>"; };
 		787BE9DB116B45E9003AE47D /* MenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuController.h; sourceTree = "<group>"; };
 		787BE9DC116B45E9003AE47D /* MenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuController.m; sourceTree = "<group>"; };
 		787FD46C0BFE960100F2F22D /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
@@ -576,6 +582,14 @@
 		78364B15116597D00096F3A9 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				78AFC9C41168895200C64197 /* GTMDefines.h */,
+				78AFC9C51168895200C64197 /* GTMGarbageCollection.h */,
+				783FE8E6116CBBD70015C18A /* GTMBase64.h */,
+				783FE8E7116CBBD70015C18A /* GTMBase64.m */,
+				78AFC9C61168895200C64197 /* GTMNSString+HTML.h */,
+				78AFC9C71168895200C64197 /* GTMNSString+HTML.m */,
+				78AFC9C81168895200C64197 /* GTMNSString+URLArguments.h */,
+				78AFC9C91168895200C64197 /* GTMNSString+URLArguments.m */,
 				78B964E61166489000831780 /* NSStringHelper.h */,
 				78B964E71166489000831780 /* NSStringHelper.m */,
 				78B964E41166489000831780 /* NSDictionaryHelper.h */,
@@ -586,18 +600,14 @@
 				78AFC92711687C5400C64197 /* NSDataHelper.m */,
 				782C57C0116CCE0200F30316 /* NSColorHelper.h */,
 				782C57C1116CCE0200F30316 /* NSColorHelper.m */,
+				7870096D116D74DC00077F91 /* NSPasteboardHelper.h */,
+				7870096E116D74DC00077F91 /* NSPasteboardHelper.m */,
 				78B964E81166489000831780 /* UnicodeHelper.h */,
 				78B964E91166489000831780 /* UnicodeHelper.m */,
 				78C1E86F1168635500AC305B /* SoundPlayer.h */,
 				78C1E8701168635500AC305B /* SoundPlayer.m */,
-				78AFC9C41168895200C64197 /* GTMDefines.h */,
-				78AFC9C51168895200C64197 /* GTMGarbageCollection.h */,
-				783FE8E6116CBBD70015C18A /* GTMBase64.h */,
-				783FE8E7116CBBD70015C18A /* GTMBase64.m */,
-				78AFC9C61168895200C64197 /* GTMNSString+HTML.h */,
-				78AFC9C71168895200C64197 /* GTMNSString+HTML.m */,
-				78AFC9C81168895200C64197 /* GTMNSString+URLArguments.h */,
-				78AFC9C91168895200C64197 /* GTMNSString+URLArguments.m */,
+				787008C9116D6F6500077F91 /* URLOpener.h */,
+				787008CA116D6F6500077F91 /* URLOpener.m */,
 			);
 			name = Helpers;
 			path = objc/Helpers;
@@ -1072,6 +1082,8 @@
 				782C5673116CBF1200F30316 /* YAMLCategories.m in Sources */,
 				782C57C2116CCE0200F30316 /* NSColorHelper.m in Sources */,
 				78914ACD116CF556008B772D /* IRCTreeItem.m in Sources */,
+				787008CB116D6F6500077F91 /* URLOpener.m in Sources */,
+				7870096F116D74DC00077F91 /* NSPasteboardHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

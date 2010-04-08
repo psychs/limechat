@@ -4,6 +4,9 @@
 #import "IRCClient.h"
 #import "IRCChannel.h"
 #import "Regex.h"
+#import "URLOpener.h"
+#import "GTMNSString+URLArguments.h"
+#import "NSPasteboardHelper.h"
 
 
 #define CONNECTED				(u && u.connected)
@@ -22,7 +25,7 @@
 
 
 @interface MenuController (Private)
-- (WebView*)currentWebView;
+- (LogView*)currentWebView;
 - (BOOL)checkSelectedMembers:(NSMenuItem*)item;
 @end
 
@@ -101,7 +104,7 @@
 			return YES;
 		case 313:	// paste
 		{
-			if (![[NSPasteboard generalPasteboard] availableTypeFromArray:[NSArray arrayWithObject:NSStringPboardType]]) {
+			if (![[NSPasteboard generalPasteboard] hasStringContent]) {
 				return NO;
 			}
 			NSWindow* win = [NSApp keyWindow];
@@ -135,12 +138,9 @@
 		}
 		case 331:	// search in google
 		{
-			WebView* web = [self currentWebView];
+			LogView* web = [self currentWebView];
 			if (!web) return NO;
-			id t = [web selectedDOMRange];
-			if (!t) return NO;
-			NSString* sel = [t toString];
-			return sel.length > 0;
+			return [web hasSelection];
 		}
 		case 332:	// paste my address
 		{
@@ -237,11 +237,11 @@
 #pragma mark -
 #pragma mark Utilities
 
-- (WebView*)currentWebView
+- (LogView*)currentWebView
 {
 	id t = [window firstResponder];
 	while ([t isKindOfClass:[NSView class]]) {
-		if ([t isKindOfClass:[WebView class]]) {
+		if ([t isKindOfClass:[LogView class]]) {
 			return t;
 		}
 		t = [t superview];
@@ -295,14 +295,15 @@
 - (void)onPaste:(id)sender
 {
 	NSPasteboard* pb = [NSPasteboard generalPasteboard];
-	if (![pb availableTypeFromArray:[NSArray arrayWithObject:NSStringPboardType]]) return;
+	if (![pb hasStringContent]) return;
+	
 	NSWindow* win = [NSApp keyWindow];
 	if (!win) return;
 	id t = [win firstResponder];
 	if (!t) return;
 	
 	if (win == window) {
-		NSString* s = [pb stringForType:NSStringPboardType];
+		NSString* s = [pb stringContent];
 		if (!s.length) return;
 		
 		NSText* e = [win fieldEditor:NO forObject:text];
@@ -337,8 +338,7 @@
 		while ([t isKindOfClass:[NSView class]]) {
 			if ([t isKindOfClass:[LogView class]]) {
 				NSPasteboard* pb = [NSPasteboard pasteboardWithName:NSFindPboard];
-				[pb declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:nil];
-				[pb setString:[t selection] forType:NSStringPboardType];
+				[pb setStringContent:[t selection]];
 			}
 			t = [t superview];
 		}
@@ -356,14 +356,28 @@
 
 - (void)onSearchWeb:(id)sender
 {
+	LogView* web = [self currentWebView];
+	if (!web) return;
+	NSString* s = [web selection];
+	if (s.length) {
+		s = [s gtm_stringByEscapingForURLArgument];
+		NSString* urlStr = [NSString stringWithFormat:@"http://www.google.com/search?ie=UTF-8&q=%@", s];
+		[URLOpener open:[NSURL URLWithString:urlStr]];
+	}
 }
 
 - (void)onCopyLogAsHtml:(id)sender
 {
+	IRCTreeItem* sel = world.selected;
+	if (!sel) return;
+	NSString* s = [sel.log.view contentString];
+	[[NSPasteboard generalPasteboard] setStringContent:s];
 }
 
 - (void)onCopyConsoleLogAsHtml:(id)sender
 {
+	NSString* s = [world.consoleLog.view contentString];
+	[[NSPasteboard generalPasteboard] setStringContent:s];
 }
 
 - (void)onMarkScrollback:(id)sender

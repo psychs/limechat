@@ -489,7 +489,7 @@
 	
 	[memberList deselectAll:nil];
 	[memberList scrollRowToVisible:0];
-	[[[selected log] view] clearSel];
+	[selected.log.view clearSelection];
 	
 	[self updateTitle];
 	[self reloadTree];

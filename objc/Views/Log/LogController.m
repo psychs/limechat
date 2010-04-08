@@ -181,14 +181,6 @@
 	}
 }
 
-- (NSString*)contentString
-{
-	if (!loaded) return @"";
-	DOMHTMLDocument* doc = (DOMHTMLDocument*)[[view mainFrame] DOMDocument];
-	if (!doc) return @"";
-	return [(DOMHTMLElement*)[[doc body] parentNode] outerHTML];
-}
-
 - (void)mark
 {
 	if (!loaded) return;

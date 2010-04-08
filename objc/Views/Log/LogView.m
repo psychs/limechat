@@ -46,25 +46,50 @@
 	return YES;
 }
 
-- (void)clearSel
+- (NSString*)contentString
+{
+	WebFrame* frame = [self mainFrame];
+	if (!frame) return @"";
+	DOMHTMLDocument* doc = (DOMHTMLDocument*)[frame DOMDocument];
+	if (!doc) return @"";
+	DOMElement* body = [doc body];
+	if (!body) return @"";
+	DOMHTMLElement* root = (DOMHTMLElement*)[body parentNode];
+	if (!root) return @"";
+	return [root outerHTML];
+}
+
+- (void)clearSelection
 {
 	[self setSelectedDOMRange:nil affinity:NSSelectionAffinityDownstream];
 }
 
+- (BOOL)hasSelection
+{
+	return [self selection].length > 0;
+}
+
 - (NSString*)selection
 {
+	DOMRange* range = [self selectedDOMRange];
+	if (!range) return nil;
+	return [range toString];
+	
+	/*
 	DOMNode* sel = [[self selectedDOMRange] cloneContents];
 	if (!sel) return nil;
 
-	DOMNodeIterator* iter = [[[self selectedFrame] DOMDocument] createNodeIterator:sel whatToShow:DOM_SHOW_TEXT filter:nil expandEntityReferences:YES];
 	NSMutableString* s = [NSMutableString string];
+	DOMNodeIterator* iter = [[[self selectedFrame] DOMDocument] createNodeIterator:sel whatToShow:DOM_SHOW_TEXT filter:nil expandEntityReferences:YES];
 	DOMNode* node;
+	
 	while (node = [iter nextNode]) {
 		[s appendString:[node nodeValue]];
 	}
 	
 	if (s.length == 0) return nil;
 	return s;
+	 */
 }
 
 @end
