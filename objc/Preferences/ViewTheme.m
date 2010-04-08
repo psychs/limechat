@@ -42,9 +42,9 @@ static NSString* userBasePath;
 	if (name != value) {
 		[name release];
 		name = [value retain];
-		
-		[self load];
 	}
+	
+	[self load];
 }
 
 - (void)load

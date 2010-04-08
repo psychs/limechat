@@ -37,9 +37,9 @@
 		if (fileName) {
 			baseUrl = [[NSURL fileURLWithPath:[fileName stringByDeletingLastPathComponent]] retain];
 		}
-		
-		[self reload];
 	}
+	
+	[self reload];
 }
 
 - (void)reload

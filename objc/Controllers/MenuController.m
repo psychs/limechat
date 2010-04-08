@@ -424,6 +424,7 @@
 
 - (void)onReloadTheme:(id)sender
 {
+	[world reloadTheme];
 }
 
 - (void)onConnect:(id)sender

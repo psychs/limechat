@@ -107,9 +107,9 @@
 	if (fileName != value) {
 		[fileName release];
 		fileName = [value retain];
-		
-		[self reload];
 	}
+	
+	[self reload];
 }
 
 - (void)reload
