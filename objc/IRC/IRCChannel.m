@@ -134,26 +134,29 @@
 
 - (void)sortedInsert:(IRCUser*)item
 {
+	const int LINEAR_SEARCH_THRESHOLD = 5;
 	int left = 0;
 	int right = members.count;
 	
-	while (right - left > 5) {
-		int center = (left + right) / 2;
-		IRCUser* t = [members objectAtIndex:center];
+	while (right - left > LINEAR_SEARCH_THRESHOLD) {
+		int i = (left + right) / 2;
+		IRCUser* t = [members objectAtIndex:i];
 		if ([t compare:item] == NSOrderedAscending) {
-			left = center + 1;
+			left = i + 1;
 		}
 		else {
-			right = center;
+			right = i + 1;
 		}
 	}
 	
 	for (int i=left; i<right; ++i) {
 		IRCUser* t = [members objectAtIndex:i];
-		if ([t compare:item] == NSOrderedAscending) {
+		if ([t compare:item] == NSOrderedDescending) {
 			[members insertObject:item atIndex:i];
+			return;
 		}
 	}
+	
 	[members addObject:item];
 }
 
