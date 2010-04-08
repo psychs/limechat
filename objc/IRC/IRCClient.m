@@ -1116,7 +1116,48 @@
 		// channel
 		IRCChannel* c = [self findChannel:target];
 		if (c) {
-			//@@@
+			BOOL prevA = c.mode.a;
+			NSArray* info = [c.mode update:modeStr];
+			
+			if (c.mode.a != prevA) {
+				if (c.mode.a) {
+					IRCUser* me = [c findMember:myNick];
+					[[me retain] autorelease];
+					[c addMember:me];
+				}
+				else {
+					c.whoInit = NO;
+					[self send:WHO, c.name, nil];
+				}
+			}
+			
+			for (IRCModeInfo* h in info) {
+				if (!h.op) continue;
+				
+				unsigned char mode = h.mode;
+				BOOL plus = h.plus;
+				NSString* t = h.param;
+				
+				BOOL myself = NO;
+				
+				if ((mode == 'q' || mode == 'a' || mode == 'o') && [myNick isEqualNoCase:t]) {
+					// mode change for myself
+					IRCUser* m = [c findMember:myNick];
+					if (m) {
+						myself = YES;
+						BOOL prev = m.isOp;
+						[c changeMember:myNick mode:mode value:plus];
+						c.hasOp = m.isOp;
+						if (!prev && c.hasOp && c.whoInit) {
+							// @@@ check all auto op
+						}
+					}
+				}
+				
+				if (!myself) {
+					[c changeMember:t mode:mode value:plus];
+				}
+			}
 			
 			[self updateChannelTitle:c];
 		}
@@ -1301,6 +1342,9 @@
 					m.v = op == '+';
 					m.isMyself = [nick isEqualNoCase:myNick];
 					[c addMember:m reload:NO];
+					if ([myNick isEqualNoCase:nick]) {
+						c.hasOp = (m.q || m.a | m.o);
+					}
 				}
 				[c reloadMemberList];
 				[self updateChannelTitle:c];
