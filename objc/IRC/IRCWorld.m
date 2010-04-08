@@ -741,7 +741,29 @@
 
 - (void)logDoubleClick:(NSString*)s
 {
-	LOG(@"logDoubleClick: %@", s);
+	NSArray* ary = [s componentsSeparatedByString:@" "];
+	if (ary.count) {
+		NSString* kind = [ary objectAtIndex:0];
+		if ([kind isEqualToString:@"client"]) {
+			if (ary.count >= 2) {
+				int uid = [[ary objectAtIndex:1] intValue];
+				IRCClient* u = [self findClientById:uid];
+				if (u) {
+					[self select:u];
+				}
+			}
+		}
+		else if ([kind isEqualToString:@"channel"]) {
+			if (ary.count >= 3) {
+				int uid = [[ary objectAtIndex:1] intValue];
+				int cid = [[ary objectAtIndex:2] intValue];
+				IRCChannel* c = [self findChannelByClientId:uid channelId:cid];
+				if (c) {
+					[self select:c];
+				}
+			}
+		}
+	}
 }
 
 #pragma mark -
