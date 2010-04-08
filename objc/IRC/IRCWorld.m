@@ -263,7 +263,7 @@
 - (BOOL)sendText:(NSString*)s command:(NSString*)command
 {
 	if (!selected) return NO;
-	return [(IRCClient*)[selected client] sendText:s command:command];
+	return [[selected client] sendText:s command:command];
 }
 
 - (void)markAllAsRead

@@ -50,6 +50,11 @@
 - (void)printConsole:(id)chan type:(LogLineType)type nick:(NSString*)nick text:(NSString*)text identified:(BOOL)identified;
 - (BOOL)printChannel:(IRCChannel*)channel type:(LogLineType)type text:(NSString*)text;
 - (BOOL)printChannel:(IRCChannel*)channel type:(LogLineType)type nick:(NSString*)nick text:(NSString*)text identified:(BOOL)identified;
+- (void)printSystem:(id)channel text:(NSString*)text;
+- (void)printSystemBoth:(id)channel text:(NSString*)text;
+- (void)printReply:(IRCMessage*)m;
+- (void)printUnknownReply:(IRCMessage*)m;
+- (void)printErrorReply:(IRCMessage*)m;
 @end
 
 
@@ -204,9 +209,18 @@
 	id sel = world.selected;
 	if (!sel) return NO;
 	if ([sel isClient]) {
+		// server
+		if ([s hasPrefix:@"/"]) {
+			s = [s substringFromIndex:1];
+		}
 		[self sendLine:s];
 	}
 	else {
+		// channel
+		if ([s hasPrefix:@"/"]) {
+			// command
+		}
+		
 		[self send:command, [sel name], s, nil];
 		[self printBoth:sel type:LINE_TYPE_PRIVMSG nick:myNick text:s identified:YES];
 	}
@@ -279,44 +293,6 @@
 - (void)reloadTree
 {
 	[world reloadTree];
-}
-
-- (void)changeStateOff
-{
-	BOOL prevConnected = connected;
-	
-	[conn autorelease];
-	conn = nil;
-	
-	connecting = connected = loggedIn = quitting = NO;
-	[myNick release];
-	myNick = @"";
-	[sentNick release];
-	sentNick = @"";
-	
-	tryingNick = -1;
-	[joinMyAddress release];
-	joinMyAddress = nil;
-	
-	inWhois = NO;
-	identifyMsg = NO;
-	identifyCTCP = NO;
-	
-	for (IRCChannel* c in channels) {
-		if (c.isActive) {
-			[c deactivate];
-			// print_system
-		}
-	}
-	
-	[self updateClientTitle];
-	[self reloadTree];
-	// print_ssytem_both
-	
-	if (prevConnected) {
-		// notifyEvent
-		//[SoundPlayer play:<#(NSString *)name#>]
-	}
 }
 
 - (void)quickJoin:(NSArray*)chans
@@ -800,7 +776,7 @@
 	else if ([target isEqualNoCase:myNick]) {
 		if (!nick.length || [nick contains:@"."]) {
 			// system
-			[self printBoth:self type:type text:text];
+			[self printBoth:nil type:type text:text];
 		}
 		else {
 			// talk
@@ -826,7 +802,7 @@
 	}
 	else {
 		// system
-		[self printBoth:self type:type nick:nick text:text identified:identified];
+		[self printBoth:nil type:type nick:nick text:text identified:identified];
 	}
 }
 
@@ -940,11 +916,7 @@
 	}
 	
 	for (IRCChannel* c in channels) {
-		if (c.isChannel) {
-			// channel
-		}
-		else {
-			// talk
+		if (c.isTalk) {
 			[c activate];
 			
 			// @@@ add members
@@ -1029,9 +1001,49 @@
 #pragma mark -
 #pragma mark IRCConnection Delegate
 
+- (void)changeStateOff
+{
+	BOOL prevConnected = connected;
+	
+	[conn autorelease];
+	conn = nil;
+	
+	connecting = connected = loggedIn = quitting = NO;
+	[myNick release];
+	myNick = @"";
+	[sentNick release];
+	sentNick = @"";
+	
+	tryingNick = -1;
+	[joinMyAddress release];
+	joinMyAddress = nil;
+	
+	inWhois = NO;
+	identifyMsg = NO;
+	identifyCTCP = NO;
+	
+	for (IRCChannel* c in channels) {
+		if (c.isActive) {
+			[c deactivate];
+			[self printSystem:c text:@"Disconnected"];
+		}
+	}
+	
+	[self printSystemBoth:nil text:@"Disconnected"];
+	
+	[self updateClientTitle];
+	[self reloadTree];
+	
+	if (prevConnected) {
+		// notifyEvent
+		//[SoundPlayer play:]
+	}
+}
+
 - (void)ircConnectionDidConnect:(IRCConnection*)sender
 {
-	[self printSystemBoth:self text:@"Connected"];
+	[self printSystemBoth:nil text:@"Connected"];
+	
 	connecting = loggedIn = NO;
 	connected = reconnectEnabled = YES;
 	encoding = config.encoding;
