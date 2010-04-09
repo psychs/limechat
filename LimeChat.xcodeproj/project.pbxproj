@@ -10,6 +10,7 @@
 		780AD24C116E2440005AF8EF /* IRCChannelMode.m in Sources */ = {isa = PBXBuildFile; fileRef = 780AD24B116E2440005AF8EF /* IRCChannelMode.m */; };
 		780AD2FC116E4BF8005AF8EF /* IRCUserMode.m in Sources */ = {isa = PBXBuildFile; fileRef = 780AD2FB116E4BF8005AF8EF /* IRCUserMode.m */; };
 		780ADB14116F7949004FF298 /* NSRectHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 780ADB13116F7949004FF298 /* NSRectHelper.m */; };
+		780ADB4F116F7BB2004FF298 /* NSWindowHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 780ADB4E116F7BB2004FF298 /* NSWindowHelper.m */; };
 		78287EB70D742DBD008D5656 /* Themes in CopyFiles */ = {isa = PBXBuildFile; fileRef = 78287EA90D742DAA008D5656 /* Themes */; };
 		782B99C9116C91AB00304B3C /* ViewTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 782B99C8116C91AB00304B3C /* ViewTheme.m */; };
 		782B9C3B116CAD1300304B3C /* LogTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 782B9C3A116CAD1300304B3C /* LogTheme.m */; };
@@ -164,6 +165,8 @@
 		780AD2FB116E4BF8005AF8EF /* IRCUserMode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCUserMode.m; sourceTree = "<group>"; };
 		780ADB12116F7949004FF298 /* NSRectHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSRectHelper.h; sourceTree = "<group>"; };
 		780ADB13116F7949004FF298 /* NSRectHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSRectHelper.m; sourceTree = "<group>"; };
+		780ADB4D116F7BB2004FF298 /* NSWindowHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSWindowHelper.h; sourceTree = "<group>"; };
+		780ADB4E116F7BB2004FF298 /* NSWindowHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSWindowHelper.m; sourceTree = "<group>"; };
 		78287EA90D742DAA008D5656 /* Themes */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Themes; path = resource/Themes; sourceTree = "<group>"; };
 		782B99C7116C91AB00304B3C /* ViewTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewTheme.h; sourceTree = "<group>"; };
 		782B99C8116C91AB00304B3C /* ViewTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewTheme.m; sourceTree = "<group>"; };
@@ -507,6 +510,8 @@
 				78C1E8701168635500AC305B /* SoundPlayer.m */,
 				787008C9116D6F6500077F91 /* URLOpener.h */,
 				787008CA116D6F6500077F91 /* URLOpener.m */,
+				780ADB4D116F7BB2004FF298 /* NSWindowHelper.h */,
+				780ADB4E116F7BB2004FF298 /* NSWindowHelper.m */,
 			);
 			name = Helpers;
 			path = objc/Helpers;
@@ -950,6 +955,7 @@
 				78D98123116EFE02007FAD15 /* ModeSheet.m in Sources */,
 				78806C26116F4172006ED1B0 /* ServerDialog.m in Sources */,
 				780ADB14116F7949004FF298 /* NSRectHelper.m in Sources */,
+				780ADB4F116F7BB2004FF298 /* NSWindowHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

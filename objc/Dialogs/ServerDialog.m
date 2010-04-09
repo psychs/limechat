@@ -2,6 +2,7 @@
 // You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
 #import "ServerDialog.h"
+#import "NSWindowHelper.h"
 
 
 @interface ServerDialog (Private)
@@ -37,7 +38,7 @@
 - (void)show
 {
 	if (![self.window isVisible]) {
-		[self.window center];
+		[self.window centerOfWindow:parentWindow];
 	}
 	[self.window makeKeyAndOrderFront:nil];
 }
