@@ -173,6 +173,15 @@
 
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender
 {
+	if (terminating) return NSTerminateNow;
+	
+	// @@@ check dcc file transfers
+	
+	if ([Preferences confirmQuit]) {
+		NSInteger result = NSRunAlertPanel(@"Quit?", @"", @"Delete", @"Cancel", nil);
+		if (result != NSAlertDefaultReturn) return NSTerminateCancel;
+	}
+	
 	return NSTerminateNow;
 }
 
