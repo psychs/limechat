@@ -5,7 +5,7 @@
 #import "IRCISupportInfo.h"
 
 
-@interface IRCChannelMode : NSObject
+@interface IRCChannelMode : NSObject <NSMutableCopying>
 {
 	IRCISupportInfo* isupport;
 	BOOL a;
@@ -36,6 +36,8 @@
 
 - (void)clear;
 - (NSArray*)update:(NSString*)str;
+
+- (NSString*)getChangeCommand:(IRCChannelMode*)mode;
 
 - (NSString*)string;
 - (NSString*)titleString;

@@ -26,11 +26,36 @@
 	return self;
 }
 
+- (id)initWithChannelMode:(IRCChannelMode*)other
+{
+	[self init];
+	
+	isupport = [other.isupport retain];
+	a = other.a;
+	i = other.i;
+	m = other.m;
+	n = other.n;
+	p = other.p;
+	q = other.q;
+	r = other.r;
+	s = other.s;
+	t = other.t;
+	l = other.l;
+	k = [other.k retain];
+	
+	return self;
+}
+
 - (void)dealloc
 {
 	[isupport release];
 	[k release];
 	[super dealloc];
+}
+
+- (id)mutableCopyWithZone:(NSZone *)zone
+{
+	return [[IRCChannelMode allocWithZone:zone] initWithChannelMode:self];
 }
 
 - (NSString*)k
@@ -70,7 +95,9 @@
 				case 'k':
 				{
 					NSString* param = h.param ?: @"";
+					[k autorelease];
 					k = plus ? param : @"";
+					[k retain];
 					break;
 				}
 				case 'l':
@@ -86,6 +113,60 @@
 		}
 	}
 	return ary;
+}
+
+- (NSString*)getChangeCommand:(IRCChannelMode*)mode
+{
+	NSMutableString* str = [NSMutableString string];
+	NSMutableString* trail = [NSMutableString string];
+	
+	if (p != mode.p) {
+		[str appendString:p ? @"-p" : @"+p"];
+	}
+	if (s != mode.s) {
+		[str appendString:s ? @"-s" : @"+s"];
+	}
+	if (m != mode.m) {
+		[str appendString:m ? @"-m" : @"+m"];
+	}
+	if (n != mode.n) {
+		[str appendString:s ? @"-n" : @"+n"];
+	}
+	if (i != mode.i) {
+		[str appendString:i ? @"-i" : @"+i"];
+	}
+	if (a != mode.a) {
+		[str appendString:s ? @"-a" : @"+a"];
+	}
+	if (q != mode.q) {
+		[str appendString:q ? @"-q" : @"+q"];
+	}
+	if (r != mode.r) {
+		[str appendString:s ? @"-r" : @"+r"];
+	}
+	
+	if (l != mode.l) {
+		if (mode.l > 0) {
+			[str appendString:@"+l"];
+			[trail appendFormat:@" %d", mode.l];
+		}
+		else {
+			[str appendString:@"-l"];
+		}
+	}
+	
+	if (k != mode.k) {
+		if (mode.k.length) {
+			[str appendString:@"+k"];
+			[trail appendFormat:@" %@", mode.k];
+		}
+		else {
+			[str appendString:@"-k"];
+			[trail appendFormat:@" %@", k];
+		}
+	}
+	
+	return [str stringByAppendingString:trail];
 }
 
 - (NSString*)format:(BOOL)maskK

@@ -129,7 +129,7 @@
 							m.op = YES;
 							[ary addObject:m];
 						}
-						else if ([self hasParamForMode:v plus:plus]) {
+						else if ([self hasParamForMode:c plus:plus]) {
 							// 1 param
 							IRCModeInfo* m = [IRCModeInfo modeInfo];
 							m.mode = c;
