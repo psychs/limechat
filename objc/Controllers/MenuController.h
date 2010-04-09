@@ -24,10 +24,10 @@
 	ServerTreeView* tree;
 	MemberListView* memberList;
 	
-	NSString* url;
-	NSString* addr;
-	NSString* nick;
-	NSString* chan;
+	NSString* pointedUrl;
+	NSString* pointedAddress;
+	NSString* pointedNick;
+	NSString* pointedChannelName;
 	
 	PreferencesController* preferencesController;
 	NSMutableArray* serverDialogs;
@@ -45,10 +45,10 @@
 @property (nonatomic, assign) ServerTreeView* tree;
 @property (nonatomic, assign) MemberListView* memberList;
 
-@property (nonatomic, retain) NSString* url;
-@property (nonatomic, retain) NSString* addr;
-@property (nonatomic, retain) NSString* nick;
-@property (nonatomic, retain) NSString* chan;
+@property (nonatomic, retain) NSString* pointedUrl;
+@property (nonatomic, retain) NSString* pointedAddress;
+@property (nonatomic, retain) NSString* pointedNick;
+@property (nonatomic, retain) NSString* pointedChannelName;
 
 - (void)terminate;
 

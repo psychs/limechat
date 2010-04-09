@@ -4,6 +4,7 @@
 #import "LogPolicy.h"
 #import <WebKit/WebKit.h>
 #import "URLOpener.h"
+#import "MenuController.h"
 
 
 @interface LogPolicy (Private)
@@ -54,7 +55,7 @@
 - (NSArray *)webView:(WebView *)sender contextMenuItemsForElement:(NSDictionary *)element defaultMenuItems:(NSArray *)defaultMenuItems
 {
 	if (url) {
-		[menuController setUrl:url];
+		menuController.pointedUrl = url;
 		[url autorelease];
 		url = nil;
 		
@@ -65,7 +66,7 @@
 		return ary;
 	}
 	else if (addr) {
-		[menuController setAddr:addr];
+		menuController.pointedAddress = addr;
 		[addr autorelease];
 		addr = nil;
 		
@@ -81,7 +82,7 @@
 		[ary addObject:nickItem];
 		[ary addObject:[NSMenuItem separatorItem]];
 		
-		[menuController setNick:nick];
+		menuController.pointedNick = nick;
 		[nick autorelease];
 		nick = nil;
 		
@@ -93,7 +94,7 @@
 		return ary;
 	}
 	else if (chan) {
-		[menuController setChan:chan];
+		menuController.pointedChannelName = chan;
 		[chan autorelease];
 		chan = nil;
 		

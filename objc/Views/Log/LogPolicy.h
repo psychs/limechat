@@ -4,9 +4,12 @@
 #import <Cocoa/Cocoa.h>
 
 
+@class MenuController;
+
+
 @interface LogPolicy : NSObject
 {
-	id menuController;
+	MenuController* menuController;
 	NSMenu* menu;
 	NSMenu* urlMenu;
 	NSMenu* addrMenu;

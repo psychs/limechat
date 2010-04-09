@@ -40,10 +40,10 @@
 @synthesize tree;
 @synthesize memberList;
 
-@synthesize url;
-@synthesize addr;
-@synthesize nick;
-@synthesize chan;
+@synthesize pointedUrl;
+@synthesize pointedAddress;
+@synthesize pointedNick;
+@synthesize pointedChannelName;
 
 - (id)init
 {
@@ -57,10 +57,10 @@
 
 - (void)dealloc
 {
-	[url release];
-	[addr release];
-	[nick release];
-	[chan release];
+	[pointedUrl release];
+	[pointedAddress release];
+	[pointedNick release];
+	[pointedChannelName release];
 	
 	[preferencesController release];
 	[serverDialogs release];
@@ -257,7 +257,7 @@
 - (BOOL)checkSelectedMembers:(NSMenuItem*)item
 {
 	if ([self isNickMenu:item]) {
-		return nick != nil;
+		return pointedNick != nil;
 	}
 	else {
 		return [memberList countSelectedRows] > 0;
@@ -270,7 +270,7 @@
 	if (!c) {
 		if ([self isNickMenu:sender]) {
 			IRCUser* m = [[IRCUser new] autorelease];
-			m.nick = nick;
+			m.nick = pointedNick;
 			return [NSArray arrayWithObject:m];
 		}
 		else {
@@ -279,7 +279,7 @@
 	}
 	else {
 		if ([self isNickMenu:sender]) {
-			IRCUser* m = [c findMember:nick];
+			IRCUser* m = [c findMember:pointedNick];
 			if (m) {
 				return [NSArray arrayWithObject:m];
 			}
@@ -772,24 +772,24 @@
 
 - (void)onCopyUrl:(id)sender
 {
-	if (!url) return;
-	[[NSPasteboard generalPasteboard] setStringContent:url];
-	self.url = nil;
+	if (!pointedUrl) return;
+	[[NSPasteboard generalPasteboard] setStringContent:pointedUrl];
+	self.pointedUrl = nil;
 }
 
 - (void)onJoinChannel:(id)sender
 {
-	if (!chan) return;
+	if (!pointedChannelName) return;
 	IRCClient* u = world.selectedClient;
 	if (!u || !u.loggedIn) return;
-	[u send:JOIN, chan, nil];
+	[u send:JOIN, pointedChannelName, nil];
 }
 
 - (void)onCopyAddress:(id)sender
 {
-	if (!addr) return;
-	[[NSPasteboard generalPasteboard] setStringContent:addr];
-	self.addr = nil;
+	if (!pointedAddress) return;
+	[[NSPasteboard generalPasteboard] setStringContent:pointedAddress];
+	self.pointedAddress = nil;
 }
 
 @end
