@@ -87,6 +87,7 @@
 - (void)partChannel:(IRCChannel*)channel;
 - (void)sendWhois:(NSString*)nick;
 - (void)changeOp:(IRCChannel*)channel users:(NSArray*)users mode:(char)mode value:(BOOL)value;
+- (void)kick:(IRCChannel*)channel target:(NSString*)nick;
 
 - (BOOL)sendText:(NSString*)s command:(NSString*)command;
 - (void)sendLine:(NSString*)str;

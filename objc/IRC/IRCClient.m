@@ -324,6 +324,11 @@
 	}
 }
 
+- (void)kick:(IRCChannel*)channel target:(NSString*)nick
+{
+	[self send:KICK, channel.name, nick, nil];
+}
+
 - (void)quickJoin:(NSArray*)chans
 {
 	NSMutableString* target = [NSMutableString string];

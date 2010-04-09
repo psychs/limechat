@@ -713,6 +713,15 @@
 
 - (void)onMemberKick:(id)sender
 {
+	IRCClient* u = world.selectedClient;
+	IRCChannel* c = world.selectedChannel;
+	if (!u || !u.loggedIn || !c || !c.isActive || !c.isChannel || !c.hasOp) return;
+	
+	for (IRCUser* m in [self selectedMembers:sender]) {
+		[u kick:c target:m.nick];
+	}
+	
+	[self deselectMembers:sender];
 }
 
 - (void)onMemberBan:(id)sender
