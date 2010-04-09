@@ -159,6 +159,9 @@
 
 - (void)terminate
 {
+	for (IRCClient* c in clients) {
+		[c terminate];
+	}
 }
 
 - (void)focusInputText

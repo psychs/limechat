@@ -50,6 +50,8 @@
 	BOOL identifyCTCP;
 	
 	IRCChannel* lastSelectedChannel;
+	
+	NSMutableArray* whoisDialogs;
 }
 
 @property (nonatomic, assign) IRCWorld* world;
@@ -71,8 +73,9 @@
 - (void)setup:(IRCClientConfig*)seed;
 
 - (void)autoConnect:(int)delay;
-- (void)terminate;
 - (void)onTimer;
+- (void)terminate;
+- (void)closeDialogs;
 
 - (void)connect;
 - (void)disconnect;
@@ -82,6 +85,7 @@
 - (void)changeNick:(NSString*)newNick;
 - (void)joinChannel:(IRCChannel*)channel password:(NSString*)password;
 - (void)partChannel:(IRCChannel*)channel;
+- (void)sendWhois:(NSString*)nick;
 
 - (BOOL)sendText:(NSString*)s command:(NSString*)command;
 

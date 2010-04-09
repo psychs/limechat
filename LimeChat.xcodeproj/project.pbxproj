@@ -83,6 +83,7 @@
 		788AC9311165D27400523E80 /* DialogWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 788AC9301165D27400523E80 /* DialogWindow.m */; };
 		788AC96E1165D49A00523E80 /* ListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 788AC96D1165D49A00523E80 /* ListView.m */; };
 		78914ACD116CF556008B772D /* IRCTreeItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 78914ACC116CF556008B772D /* IRCTreeItem.m */; };
+		78AA99BD116ED223005707A6 /* WhoisDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AA99BC116ED223005707A6 /* WhoisDialog.m */; };
 		78AD78E40C61B8F8001E77F4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 78AD78E20C61B8F8001E77F4 /* Localizable.strings */; };
 		78AFC92811687C5400C64197 /* NSDataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AFC92711687C5400C64197 /* NSDataHelper.m */; };
 		78AFC9CA1168895200C64197 /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AFC9C71168895200C64197 /* GTMNSString+HTML.m */; };
@@ -282,6 +283,8 @@
 		788D56F00BB6872B00DDBF69 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
 		78914ACB116CF556008B772D /* IRCTreeItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCTreeItem.h; sourceTree = "<group>"; };
 		78914ACC116CF556008B772D /* IRCTreeItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCTreeItem.m; sourceTree = "<group>"; };
+		78AA99BB116ED223005707A6 /* WhoisDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WhoisDialog.h; sourceTree = "<group>"; };
+		78AA99BC116ED223005707A6 /* WhoisDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WhoisDialog.m; sourceTree = "<group>"; };
 		78AD78E30C61B8F8001E77F4 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
 		78AFC92611687C5400C64197 /* NSDataHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDataHelper.h; sourceTree = "<group>"; };
 		78AFC92711687C5400C64197 /* NSDataHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDataHelper.m; sourceTree = "<group>"; };
@@ -689,6 +692,8 @@
 			isa = PBXGroup;
 			children = (
 				78E345CD116C6ACD00990CCB /* Preferences */,
+				78AA99BB116ED223005707A6 /* WhoisDialog.h */,
+				78AA99BC116ED223005707A6 /* WhoisDialog.m */,
 				7840A09E116DE5070033AE3E /* NickSheet.h */,
 				7840A09F116DE5070033AE3E /* NickSheet.m */,
 				7840A0E5116DEA7F0033AE3E /* SheetBase.h */,
@@ -926,6 +931,7 @@
 				7840A0E7116DEA7F0033AE3E /* SheetBase.m in Sources */,
 				780AD24C116E2440005AF8EF /* IRCChannelMode.m in Sources */,
 				780AD2FC116E4BF8005AF8EF /* IRCUserMode.m in Sources */,
+				78AA99BD116ED223005707A6 /* WhoisDialog.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

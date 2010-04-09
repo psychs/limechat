@@ -180,6 +180,7 @@
 	NSAppleEventManager* em = [NSAppleEventManager sharedAppleEventManager];
 	[em removeEventHandlerForEventClass:KInternetEventClass andEventID:KAEGetURL];
 	
+	[world terminate];
 	[menu terminate];
 	[NSApp unregisterHotKey];
 	[self saveWindowState];

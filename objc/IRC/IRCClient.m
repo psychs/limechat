@@ -8,6 +8,7 @@
 #import "Preferences.h"
 #import "NSStringHelper.h"
 #import "NSDataHelper.h"
+#import "WhoisDialog.h"
 
 
 #define MAX_JOIN_CHANNELS	10
@@ -57,6 +58,9 @@
 - (void)printUnknownReply:(IRCMessage*)m;
 - (void)printErrorReply:(IRCMessage*)m;
 - (void)printError:(NSString*)error;
+
+- (WhoisDialog*)createWhoisDialogWithNick:(NSString*)nick username:(NSString*)username address:(NSString*)address realname:(NSString*)realname;
+- (WhoisDialog*)findWhoisDialog:(NSString*)nick;
 @end
 
 
@@ -87,6 +91,7 @@
 		channels = [NSMutableArray new];
 		isupport = [IRCISupportInfo new];
 		myMode = [IRCUserMode new];
+		whoisDialogs = [NSMutableArray new];
 	}
 	return self;
 }
@@ -106,6 +111,7 @@
 	[joinMyAddress release];
 	[myAddress release];
 	[lastSelectedChannel release];
+	[whoisDialogs release];
 	[super dealloc];
 }
 
@@ -139,12 +145,26 @@
 	[self connect];
 }
 
-- (void)terminate
+- (void)onTimer
 {
 }
 
-- (void)onTimer
+- (void)terminate
 {
+	[self quit];
+	[self closeDialogs];
+	for (IRCChannel* c in channels) {
+		[c terminate];
+	}
+	[self disconnect];
+}
+
+- (void)closeDialogs
+{
+	for (WhoisDialog* d in whoisDialogs) {
+		[d close];
+	}
+	[whoisDialogs removeAllObjects];
 }
 
 - (void)reloadTree
@@ -227,7 +247,6 @@
 
 - (void)cancelReconnect
 {
-	LOG_METHOD
 }
 
 - (void)changeNick:(NSString*)newNick
@@ -262,6 +281,13 @@
 	if (!comment.length) comment = nil;
 	
 	[self send:PART, channel.name, comment, nil];
+}
+
+- (void)sendWhois:(NSString*)nick
+{
+	if (!loggedIn) return;
+	
+	[self send:WHOIS, nick, nick, nil];
 }
 
 - (void)quickJoin:(NSArray*)chans
@@ -783,6 +809,58 @@
 }
 
 #pragma mark -
+#pragma mark WhoisDialog
+
+- (WhoisDialog*)createWhoisDialogWithNick:(NSString*)nick username:(NSString*)username address:(NSString*)address realname:(NSString*)realname
+{
+	WhoisDialog* d = [self findWhoisDialog:nick];
+	if (d) {
+		[d show];
+		return d;
+	}
+	
+	d = [[WhoisDialog new] autorelease];
+	d.delegate = self;
+	[whoisDialogs addObject:d];
+	[d startWithNick:nick username:username address:address realname:realname];
+	return d;
+}
+
+- (WhoisDialog*)findWhoisDialog:(NSString*)nick
+{
+	for (WhoisDialog* d in whoisDialogs) {
+		if ([nick isEqualNoCase:d.nick]) {
+			return d;
+		}
+	}
+	return nil;
+}
+
+- (void)whoisDialogOnTalk:(WhoisDialog*)sender
+{
+	IRCChannel* c = [world createTalk:sender.nick client:self];
+	if (c) {
+		[world select:c];
+	}
+}
+
+- (void)whoisDialogOnUpdate:(WhoisDialog*)sender
+{
+	[self sendWhois:sender.nick];
+}
+
+- (void)whoisDialogOnJoin:(WhoisDialog*)sender channel:(NSString*)channel
+{
+	[self send:JOIN, channel, nil];
+}
+
+- (void)whoisDialogWillClose:(WhoisDialog*)sender
+{
+	[[sender retain] autorelease];
+	[whoisDialogs removeObjectIdenticalTo:sender];
+}
+
+#pragma mark -
 #pragma mark Protocol Handlers
 
 - (void)receivePrivmsgAndNotice:(IRCMessage*)m
@@ -1297,6 +1375,7 @@
 		{
 			NSString* modeStr = [m paramAt:1];
 			
+			modeStr = [modeStr stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 			if ([modeStr isEqualToString:@"+"]) return;
 			
 			[myMode clear];
@@ -1323,17 +1402,129 @@
 			break;
 		}
 		//case 301:	// RPL_AWAY
-		//case 310:	// RPL_WHOISUSER
-		//case 312:	// RPL_WHOISUSER
-		//case 313:	// RPL_WHOISOPERATOR
-		//case 317:	// RPL_WHOISIDLE
-		//case 319:	// RPL_WHOISCHANNELS
+		case 311:	// RPL_WHOISUSER
+		{
+			NSString* nick = [m paramAt:1];
+			NSString* username = [m paramAt:2];
+			NSString* address = [m paramAt:3];
+			NSString* realname = [m paramAt:5];
+			
+			inWhois = YES;
+			
+			WhoisDialog* d = [self createWhoisDialogWithNick:nick username:username address:address realname:realname];
+			if (!d) {
+				NSString* text = [NSString stringWithFormat:@"%@ is %@ (%@@%@)", nick, realname, username, address];
+				[self printBoth:nil type:LINE_TYPE_REPLY text:text];
+			}
+			break;
+		}
+		case 312:	// RPL_WHOISSERVER
+		{
+			NSString* nick = [m paramAt:1];
+			NSString* server = [m paramAt:2];
+			NSString* serverInfo = [m paramAt:3];
+			
+			if (inWhois) {
+				WhoisDialog* d = [self findWhoisDialog:nick];
+				if (d) {
+					[d setServer:server serverInfo:serverInfo];
+					return;
+				}
+			}
+			
+			NSString* text = [NSString stringWithFormat:@"%@ is on %@ (%@)", nick, server, serverInfo];
+			[self printBoth:nil type:LINE_TYPE_REPLY text:text];
+			break;
+		}
+		case 313:	// RPL_WHOISOPERATOR
+		{
+			NSString* nick = [m paramAt:1];
+			
+			if (inWhois) {
+				WhoisDialog* d = [self findWhoisDialog:nick];
+				if (d) {
+					[d setIsOperator:YES];
+					return;
+				}
+			}
+			
+			NSString* text = [NSString stringWithFormat:@"%@ is an IRC operator", nick];
+			[self printBoth:nil type:LINE_TYPE_REPLY text:text];
+			break;
+		}
+		case 317:	// RPL_WHOISIDLE
+		{
+			NSString* nick = [m paramAt:1];
+			NSString* idleStr = [m paramAt:2];
+			NSString* signOnStr = [m paramAt:3];
+			
+			NSString* idle = @"";
+			NSString* signOn = @"";
+			
+			long long sec = [idleStr longLongValue];
+			if (sec > 0) {
+				long long min = sec / 60;
+				sec %= 60;
+				long long hour = min / 60;
+				min %= 60;
+				idle = [NSString stringWithFormat:@"%qi:%02qi:%02qi", hour, min, sec];
+			}
+			
+			long long signOnTime = [signOnStr longLongValue];
+			if (signOnTime > 0) {
+				static NSDateFormatter* format = nil;
+				if (!format) {
+					format = [NSDateFormatter new];
+					[format setDateStyle:NSDateFormatterMediumStyle];
+					[format setTimeStyle:NSDateFormatterShortStyle];
+					//[format setDateFormat:@"yyyy/MM/dd HH:mm"];
+				}
+				NSDate* date = [NSDate dateWithTimeIntervalSince1970:signOnTime];
+				signOn = [format stringFromDate:date];
+			}
+			
+			if (inWhois) {
+				WhoisDialog* d = [self findWhoisDialog:nick];
+				if (d) {
+					[d setIdle:idle signOn:signOn];
+					return;
+				}
+			}
+			
+			NSString* text;
+			text = [NSString stringWithFormat:@"%@ is %@ idle", nick, idle];
+			[self printBoth:nil type:LINE_TYPE_REPLY text:text];
+			text = [NSString stringWithFormat:@"%@ logged in at %@", nick, signOn];
+			[self printBoth:nil type:LINE_TYPE_REPLY text:text];
+			break;
+		}
+		case 319:	// RPL_WHOISCHANNELS
+		{
+			NSString* nick = [m paramAt:1];
+			NSString* trail = [m paramAt:2];
+			
+			trail = [trail stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+			NSArray* channelNames = [trail componentsSeparatedByString:@" "];
+			
+			if (inWhois) {
+				WhoisDialog* d = [self findWhoisDialog:nick];
+				if (d) {
+					[d setChannels:channelNames];
+					return;
+				}
+			}
+			
+			NSString* text = [NSString stringWithFormat:@"%@ is in %@", nick, trail];
+			[self printBoth:nil type:LINE_TYPE_REPLY text:text];
+			break;
+		}
 		//case 318:	// RPL_ENDOFWHOIS
 		case 324:	// RPL_CHANNELMODEIS
 		{
 			NSString* chname = [m paramAt:1];
 			NSString* modeStr = [m sequence:2];
 			
+			modeStr = [modeStr stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 			if ([modeStr isEqualToString:@"+"]) return;
 			
 			IRCChannel* c = [self findChannel:chname];

@@ -8,6 +8,11 @@
 #import "NSStringHelper.h"
 
 
+@interface IRCChannel (Private)
+- (void)closeLogFile;
+@end
+
+
 @implementation IRCChannel
 
 @synthesize client;
@@ -105,6 +110,13 @@
 
 - (void)terminate
 {
+	terminating = YES;
+	[self closeDialogs];
+	[self closeLogFile];
+}
+
+- (void)closeDialogs
+{
 }
 
 - (void)activate
@@ -125,10 +137,6 @@
 	[members removeAllObjects];
 	hasOp = NO;
 	[self reloadMemberList];
-}
-
-- (void)closeDialogs
-{
 }
 
 - (BOOL)print:(LogLine*)line
@@ -282,6 +290,11 @@
 	return -1;
 }
 
+- (IRCUser*)memberAtIndex:(int)index
+{
+	return [members objectAtIndex:index];
+}
+
 - (IRCUser*)findMember:(NSString*)nick
 {
 	int n = [self indexOfMember:nick];
@@ -299,6 +312,10 @@
 	if (client.world.selected == self) {
 		[client.world.memberList reloadData];
 	}
+}
+
+- (void)closeLogFile
+{
 }
 
 #pragma mark -

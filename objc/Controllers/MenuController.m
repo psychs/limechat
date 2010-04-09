@@ -259,6 +259,50 @@
 	}
 }
 
+- (NSArray*)selectedMembers:(NSMenuItem*)sender
+{
+	IRCChannel* c = world.selectedChannel;
+	if (!c) {
+		if ([self isNickMenu:sender]) {
+			IRCUser* m = [[IRCUser new] autorelease];
+			m.nick = nick;
+			return [NSArray arrayWithObject:m];
+		}
+		else {
+			return [NSArray array];
+		}
+	}
+	else {
+		if ([self isNickMenu:sender]) {
+			IRCUser* m = [c findMember:nick];
+			if (m) {
+				return [NSArray arrayWithObject:m];
+			}
+			else {
+				return [NSArray array];
+			}
+		}
+		else {
+			NSMutableArray* ary = [NSMutableArray array];
+			NSIndexSet* indexes = [memberList selectedRowIndexes];
+			NSUInteger n = [indexes firstIndex];
+			while (n != NSNotFound) {
+				IRCUser* m = [c memberAtIndex:n];
+				[ary addObject:m];
+				n = [indexes indexGreaterThanIndex:n];
+			}
+			return ary;
+		}
+	}
+}
+
+- (void)deselectMembers:(NSMenuItem*)sender
+{
+	if (![self isNickMenu:sender]) {
+		[memberList deselectAll:nil];
+	}
+}
+
 #pragma mark -
 #pragma mark Menu Items
 
@@ -470,7 +514,7 @@
 	[u changeNick:newNick];
 }
 
-- (void)nickSheetDidClose:(NickSheet*)sender
+- (void)nickSheetWillClose:(NickSheet*)sender
 {
 	[nickSheet release];
 	nickSheet = nil;
@@ -536,12 +580,36 @@
 {
 }
 
+- (void)whoisSelectedMembers:(id)sender deselect:(BOOL)deselect
+{
+	IRCClient* u = world.selectedClient;
+	if (!u) return;
+	
+	for (IRCUser* m in [self selectedMembers:sender]) {
+		[u sendWhois:m.nick];
+	}
+	
+	if (deselect) {
+		[self deselectMembers:sender];
+	}
+}
+
 - (void)memberListDoubleClicked:(id)sender
 {
+	NSPoint pt = [window mouseLocationOutsideOfEventStream];
+	pt = [sender convertPoint:pt fromView:nil];
+	int n = [sender rowAtPoint:pt];
+	if (n >= 0) {
+		if ([[sender selectedRowIndexes] count] > 0) {
+			[sender select:n];
+		}
+		[self whoisSelectedMembers:nil deselect:NO];
+	}
 }
 
 - (void)onMemberWhois:(id)sender
 {
+	[self whoisSelectedMembers:sender deselect:YES];
 }
 
 - (void)onMemberTalk:(id)sender

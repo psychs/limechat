@@ -26,6 +26,8 @@
 	BOOL hasOp;
 	BOOL namesInit;
 	BOOL whoInit;
+	
+	BOOL terminating;
 }
 
 @property (nonatomic, assign) IRCClient* client;
@@ -49,9 +51,10 @@
 - (void)updateAutoOp:(IRCChannelConfig*)seed;
 
 - (void)terminate;
+- (void)closeDialogs;
+
 - (void)activate;
 - (void)deactivate;
-- (void)closeDialogs;
 
 - (BOOL)print:(LogLine*)line;
 
@@ -64,6 +67,7 @@
 - (void)changeMember:(NSString*)nick mode:(char)mode value:(BOOL)value;
 - (void)clearMembers;
 - (int)indexOfMember:(NSString*)nick;
+- (IRCUser*)memberAtIndex:(int)index;
 - (IRCUser*)findMember:(NSString*)nick;
 - (int)numberOfMembers;
 - (void)reloadMemberList;

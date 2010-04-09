@@ -93,6 +93,7 @@
 
 - (void)onTimer;
 - (void)autoConnect;
+- (void)terminate;
 
 - (IRCClient*)findClient:(NSString*)name;
 - (IRCClient*)findClientById:(int)uid;

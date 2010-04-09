@@ -22,5 +22,5 @@
 
 @interface NSObject (NickSheetDelegate)
 - (void)nickSheet:(NickSheet*)sender didInputNick:(NSString*)nick;
-- (void)nickSheetDidClose:(NickSheet*)sender;
+- (void)nickSheetWillClose:(NickSheet*)sender;
 @end

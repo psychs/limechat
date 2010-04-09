@@ -44,8 +44,8 @@
 
 - (void)windowWillClose:(NSNotification*)note
 {
-	if ([delegate respondsToSelector:@selector(nickSheetDidClose:)]) {
-		[delegate nickSheetDidClose:self];
+	if ([delegate respondsToSelector:@selector(nickSheetWillClose:)]) {
+		[delegate nickSheetWillClose:self];
 	}
 }
 
