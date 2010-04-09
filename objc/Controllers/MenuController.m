@@ -76,6 +76,15 @@
 
 - (void)terminate
 {
+	for (ServerDialog* d in serverDialogs) {
+		[d close];
+	}
+	for (ChannelDialog* d in channelDialogs) {
+		[d close];
+	}
+	if (preferencesController) {
+		[preferencesController close];
+	}
 }
 
 - (BOOL)isNickMenu:(NSMenuItem*)item

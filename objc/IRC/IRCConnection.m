@@ -4,10 +4,12 @@
 #import "IRCConnection.h"
 
 
+#define TIMER_INTERVAL		2
 #define PENALTY_THREASHOLD	5
 
 
 @interface IRCConnection (Private)
+- (void)updateTimer;
 - (void)tryToSend;
 @end
 
@@ -107,12 +109,14 @@
 - (void)clearSendQueue
 {
 	[sendQueue removeAllObjects];
+	[self updateTimer];
 }
 
 - (void)sendLine:(NSString*)line
 {
 	[sendQueue addObject:line];
 	[self tryToSend];
+	[self updateTimer];
 }
 
 - (void)tryToSend
@@ -145,16 +149,30 @@
 	}
 }
 
+- (void)updateTimer
+{
+	if (!sendQueue.count && penalty <= 0) {
+		if (timer.active) {
+			[timer stop];
+		}
+	}
+	else {
+		if (!timer.active) {
+			[timer start:TIMER_INTERVAL];
+		}
+	}
+}
+
 - (void)timerOnTimer:(id)sender
 {
-	if (penalty > 0) penalty -= 2;
-	if (penalty < 0) penalty - 0;
+	if (penalty > 0) penalty -= TIMER_INTERVAL;
+	if (penalty < 0) penalty = 0;
 	[self tryToSend];
+	[self updateTimer];
 }
 
 - (void)tcpClientDidConnect:(TCPClient*)sender
 {
-	[timer start:2];
 	[sendQueue removeAllObjects];
 	
 	if ([delegate respondsToSelector:@selector(ircConnectionDidConnect:)]) {
