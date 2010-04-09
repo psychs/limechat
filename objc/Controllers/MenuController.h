@@ -5,6 +5,7 @@
 #import "MemberListView.h"
 #import "PreferencesController.h"
 #import "NickSheet.h"
+#import "ModeSheet.h"
 
 
 @class AppController;
@@ -34,6 +35,7 @@
 	NSMutableArray* pasteClients;
 	
 	NickSheet* nickSheet;
+	ModeSheet* modeSheet;
 }
 
 @property (nonatomic, assign) AppController* app;

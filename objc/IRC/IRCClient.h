@@ -88,6 +88,8 @@
 - (void)sendWhois:(NSString*)nick;
 
 - (BOOL)sendText:(NSString*)s command:(NSString*)command;
+- (void)sendLine:(NSString*)str;
+- (void)send:(NSString*)str, ...;
 
 - (IRCChannel*)findChannel:(NSString*)name;
 - (int)indexOfTalkChannel;

@@ -26,6 +26,7 @@
 @synthesize isNewTalk;
 @synthesize isActive;
 @synthesize hasOp;
+@synthesize modeInit;
 @synthesize namesInit;
 @synthesize whoInit;
 
@@ -126,6 +127,7 @@
 	[mode clear];
 	hasOp = NO;
 	self.topic = nil;
+	modeInit = NO;
 	namesInit = NO;
 	whoInit = NO;
 	[self reloadMemberList];

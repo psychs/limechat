@@ -1546,6 +1546,7 @@
 					}
 				}
 				
+				c.modeInit = YES;
 				[self updateChannelTitle:c];
 			}
 			
@@ -1604,12 +1605,15 @@
 				c.namesInit = YES;
 				
 				if ([c numberOfMembers] <= 1 && c.hasOp) {
+					// set mode if creator
 					NSString* m = c.config.mode;
 					if (m.length) {
 						[self send:MODE, chname, m, nil];
 					}
+					c.modeInit = YES;
 				}
 				else {
+					// query mode
 					[self send:MODE, chname, nil];
 				}
 				

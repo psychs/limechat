@@ -24,6 +24,7 @@
 	
 	BOOL isActive;
 	BOOL hasOp;
+	BOOL modeInit;
 	BOOL namesInit;
 	BOOL whoInit;
 	
@@ -43,6 +44,7 @@
 @property (nonatomic, retain) NSString* storedTopic;
 @property (nonatomic, assign) BOOL isActive;
 @property (nonatomic, assign) BOOL hasOp;
+@property (nonatomic, assign) BOOL modeInit;
 @property (nonatomic, assign) BOOL namesInit;
 @property (nonatomic, assign) BOOL whoInit;
 

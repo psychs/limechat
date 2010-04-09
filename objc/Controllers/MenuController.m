@@ -3,6 +3,7 @@
 #import "IRCWorld.h"
 #import "IRCClient.h"
 #import "IRCChannel.h"
+#import "IRC.h"
 #import "Regex.h"
 #import "URLOpener.h"
 #import "GTMNSString+URLArguments.h"
@@ -65,6 +66,9 @@
 	[serverDialogs release];
 	[channelDialogs release];
 	[pasteClients release];
+	
+	[nickSheet release];
+	[modeSheet release];
 	[super dealloc];
 }
 
@@ -190,6 +194,7 @@
 		case 602:	// leave
 			return ACTIVE;
 		case 611:	// mode
+			return ACTIVE_CHANNEL;
 		case 612:	// topic
 			return ACTIVE_CHANNEL;
 		case 651:	// add channel
@@ -558,6 +563,41 @@
 
 - (void)onMode:(id)sender
 {
+	IRCClient* u = world.selectedClient;
+	IRCChannel* c = world.selectedChannel;
+	if (!u || !c) return;
+	if (modeSheet) return;
+	
+	modeSheet = [ModeSheet new];
+	modeSheet.delegate = self;
+	modeSheet.window = window;
+	modeSheet.uid = u.uid;
+	modeSheet.cid = c.uid;
+	modeSheet.mode = [[c.mode mutableCopy] autorelease];
+	modeSheet.channelName = c.name;
+	[modeSheet start];
+}
+
+- (void)modeSheetOnOK:(ModeSheet*)sender
+{
+	IRCClient* u = [world findClientById:sender.uid];
+	IRCChannel* c = [world findChannelByClientId:sender.uid channelId:sender.cid];
+	if (!u || !c) return;
+	
+	NSString* changeStr = [c.mode getChangeCommand:sender.mode];
+	if (changeStr.length) {
+		NSString* line = [NSString stringWithFormat:@"%@ %@ %@", MODE, c.name, changeStr];
+		[u sendLine:line];
+	}
+	
+	[modeSheet autorelease];
+	modeSheet = nil;
+}
+
+- (void)modeSheetWillClose:(ModeSheet*)sender
+{
+	[modeSheet autorelease];
+	modeSheet = nil;
 }
 
 - (void)onAddChannel:(id)sender

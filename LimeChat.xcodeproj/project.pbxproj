@@ -115,6 +115,7 @@
 		78CFA71D116A1BDD00B7AC6B /* IRCChannelConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CFA718116A1BDD00B7AC6B /* IRCChannelConfig.m */; };
 		78CFA71E116A1BDD00B7AC6B /* IRCClientConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CFA71A116A1BDD00B7AC6B /* IRCClientConfig.m */; };
 		78CFA71F116A1BDD00B7AC6B /* IRCWorldConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CFA71C116A1BDD00B7AC6B /* IRCWorldConfig.m */; };
+		78D98123116EFE02007FAD15 /* ModeSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 78D98122116EFE02007FAD15 /* ModeSheet.m */; };
 		78E345C6116C6A9A00990CCB /* Preferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 78E345C1116C6A9A00990CCB /* Preferences.m */; };
 		78E345D2116C6ACD00990CCB /* PreferencesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78E345CF116C6ACD00990CCB /* PreferencesController.m */; };
 		78E345D3116C6ACD00990CCB /* SoundWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78E345D1116C6ACD00990CCB /* SoundWrapper.m */; };
@@ -347,6 +348,8 @@
 		78CFA71A116A1BDD00B7AC6B /* IRCClientConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCClientConfig.m; sourceTree = "<group>"; };
 		78CFA71B116A1BDD00B7AC6B /* IRCWorldConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCWorldConfig.h; sourceTree = "<group>"; };
 		78CFA71C116A1BDD00B7AC6B /* IRCWorldConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCWorldConfig.m; sourceTree = "<group>"; };
+		78D98121116EFE02007FAD15 /* ModeSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModeSheet.h; sourceTree = "<group>"; };
+		78D98122116EFE02007FAD15 /* ModeSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModeSheet.m; sourceTree = "<group>"; };
 		78E345C0116C6A9A00990CCB /* Preferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Preferences.h; sourceTree = "<group>"; };
 		78E345C1116C6A9A00990CCB /* Preferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Preferences.m; sourceTree = "<group>"; };
 		78E345CE116C6ACD00990CCB /* PreferencesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreferencesController.h; sourceTree = "<group>"; };
@@ -423,13 +426,13 @@
 				78347ECB1158D4B00073E2F0 /* Preferences.xib */,
 				78347EC71158D4B00073E2F0 /* NickSheet.xib */,
 				78347ED11158D4B00073E2F0 /* WhoisDialog.xib */,
+				78347EC51158D4B00073E2F0 /* ModeSheet.xib */,
 				78347ECD1158D4B00073E2F0 /* ServerDialog.xib */,
 				78347EB91158D4B00073E2F0 /* AutoOpDialog.xib */,
 				78347EBB1158D4B00073E2F0 /* ChannelDialog.xib */,
 				78347EBD1158D4B00073E2F0 /* CommentSheet.xib */,
 				78347EBF1158D4B00073E2F0 /* DccDialog.xib */,
 				78347EC11158D4B00073E2F0 /* ListDialog.xib */,
-				78347EC51158D4B00073E2F0 /* ModeSheet.xib */,
 				78347EC91158D4B00073E2F0 /* PasteSheet.xib */,
 				78347ECF1158D4B00073E2F0 /* WelcomeDialog.xib */,
 				78287EA90D742DAA008D5656 /* Themes */,
@@ -696,6 +699,8 @@
 				78AA99BC116ED223005707A6 /* WhoisDialog.m */,
 				7840A09E116DE5070033AE3E /* NickSheet.h */,
 				7840A09F116DE5070033AE3E /* NickSheet.m */,
+				78D98121116EFE02007FAD15 /* ModeSheet.h */,
+				78D98122116EFE02007FAD15 /* ModeSheet.m */,
 				7840A0E5116DEA7F0033AE3E /* SheetBase.h */,
 				7840A0E6116DEA7F0033AE3E /* SheetBase.m */,
 			);
@@ -932,6 +937,7 @@
 				780AD24C116E2440005AF8EF /* IRCChannelMode.m in Sources */,
 				780AD2FC116E4BF8005AF8EF /* IRCUserMode.m in Sources */,
 				78AA99BD116ED223005707A6 /* WhoisDialog.m in Sources */,
+				78D98123116EFE02007FAD15 /* ModeSheet.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
