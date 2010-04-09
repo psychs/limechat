@@ -42,6 +42,6 @@ typedef enum {
 @property (nonatomic, readonly) NSMutableArray* autoOp;
 
 - (id)initWithDictionary:(NSDictionary*)dic;
-- (NSDictionary*)dictionaryValue;
+- (NSMutableDictionary*)dictionaryValue;
 
 @end

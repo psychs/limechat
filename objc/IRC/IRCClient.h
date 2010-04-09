@@ -76,6 +76,7 @@
 - (void)setup:(IRCClientConfig*)seed;
 - (void)updateConfig:(IRCClientConfig*)seed;
 - (IRCClientConfig*)storedConfig;
+- (NSMutableDictionary*)dictionaryValue;
 
 - (void)autoConnect:(int)delay;
 - (void)onTimer;

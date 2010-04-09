@@ -83,6 +83,6 @@ typedef enum {
 @property (nonatomic, assign) int uid;
 
 - (id)initWithDictionary:(NSDictionary*)dic;
-- (NSDictionary*)dictionaryValue;
+- (NSMutableDictionary*)dictionaryValue;
 
 @end

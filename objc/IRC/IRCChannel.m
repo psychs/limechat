@@ -73,6 +73,11 @@
 	[config.autoOp addObjectsFromArray:seed.autoOp];
 }
 
+- (NSMutableDictionary*)dictionaryValue
+{
+	return [config dictionaryValue];
+}
+
 #pragma mark -
 #pragma mark Properties
 

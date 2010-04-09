@@ -56,6 +56,7 @@
 - (void)setup:(IRCChannelConfig*)seed;
 - (void)updateConfig:(IRCChannelConfig*)seed;
 - (void)updateAutoOp:(IRCChannelConfig*)seed;
+- (NSMutableDictionary*)dictionaryValue;
 
 - (void)terminate;
 - (void)closeDialogs;

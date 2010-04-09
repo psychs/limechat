@@ -2,6 +2,7 @@
 // You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
 #import "IRCConnection.h"
+#import "IRC.h"
 
 
 #define TIMER_INTERVAL		2
@@ -139,7 +140,7 @@
 	
 	if (data) {
 		sending = YES;
-		penalty += 2;
+		penalty += IRC_PENALTY_NORMAL;
 		
 		[conn write:data];
 		

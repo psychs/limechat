@@ -90,6 +90,7 @@
 - (void)setup:(IRCWorldConfig*)seed;
 - (void)setupTree;
 - (void)save;
+- (NSMutableDictionary*)dictionaryValue;
 
 - (void)onTimer;
 - (void)autoConnect;

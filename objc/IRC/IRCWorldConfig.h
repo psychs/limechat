@@ -14,5 +14,6 @@
 @property (nonatomic, readonly) NSMutableArray* autoOp;
 
 - (id)initWithDictionary:(NSDictionary*)dic;
+- (NSMutableDictionary*)dictionaryValue;
 
 @end

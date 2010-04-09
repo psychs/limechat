@@ -41,7 +41,7 @@
 	[super dealloc];
 }
 
-- (NSDictionary*)dictionaryValue
+- (NSMutableDictionary*)dictionaryValue
 {
 	NSMutableDictionary* dic = [NSMutableDictionary dictionary];
 	

@@ -534,6 +534,12 @@
 	return [ud objectForKey:@"world"];
 }
 
++ (void)saveWorld:(NSDictionary*)value
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	[ud setObject:value forKey:@"world"];
+}
+
 #pragma mark -
 #pragma mark World
 
@@ -724,6 +730,11 @@ static NSMutableArray* ignoreWords;
 		[ud setInteger:1 forKey:@"version"];
 		[ud synchronize];
 	}
+}
+
++ (void)sync
+{
+	[[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 @end

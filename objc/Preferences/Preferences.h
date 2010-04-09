@@ -88,6 +88,7 @@ typedef enum {
 + (void)setSoundTalktext:(NSString*)value;
 
 + (NSDictionary*)loadWorld;
++ (void)saveWorld:(NSDictionary*)value;
 
 + (int)hotKeyKeyCode;
 + (void)setHotKeyKeyCode:(int)value;
@@ -100,5 +101,7 @@ typedef enum {
 
 + (void)initPreferences;
 + (void)migrate;
+
++ (void)sync;
 
 @end

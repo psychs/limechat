@@ -182,6 +182,21 @@
 	return u;
 }
 
+- (NSMutableDictionary*)dictionaryValue
+{
+	NSMutableDictionary* dic = [config dictionaryValue];
+	
+	NSMutableArray* ary = [NSMutableArray array];
+	for (IRCChannel* c in channels) {
+		if (c.isChannel) {
+			[ary addObject:[c dictionaryValue]];
+		}
+	}
+	
+	[dic setObject:ary forKey:@"channels"];
+	return dic;
+}
+
 #pragma mark -
 #pragma mark Properties
 

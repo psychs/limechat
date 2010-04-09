@@ -117,6 +117,21 @@
 
 - (void)save
 {
+	[Preferences saveWorld:[self dictionaryValue]];
+	[Preferences sync];
+}
+
+- (NSMutableDictionary*)dictionaryValue
+{
+	NSMutableDictionary* dic = [config dictionaryValue];
+	
+	NSMutableArray* ary = [NSMutableArray array];
+	for (IRCClient* u in clients) {
+		[ary addObject:[u dictionaryValue]];
+	}
+	
+	[dic setObject:ary forKey:@"clients"];
+	return dic;
 }
 
 #pragma mark -
