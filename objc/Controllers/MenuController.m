@@ -772,14 +772,24 @@
 
 - (void)onCopyUrl:(id)sender
 {
+	if (!url) return;
+	[[NSPasteboard generalPasteboard] setStringContent:url];
+	self.url = nil;
 }
 
 - (void)onJoinChannel:(id)sender
 {
+	if (!chan) return;
+	IRCClient* u = world.selectedClient;
+	if (!u || !u.loggedIn) return;
+	[u send:JOIN, chan, nil];
 }
 
 - (void)onCopyAddress:(id)sender
 {
+	if (!addr) return;
+	[[NSPasteboard generalPasteboard] setStringContent:addr];
+	self.addr = nil;
 }
 
 @end

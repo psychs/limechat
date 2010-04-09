@@ -96,10 +96,12 @@
 	world.treeMenu = treeMenu;
 	world.logMenu = logMenu;
 	world.consoleMenu = consoleMenu;
+	world.urlMenu = urlMenu;
 	world.addrMenu = addrMenu;
 	world.chanMenu = chanMenu;
 	world.memberMenu = memberMenu;
 	world.viewTheme = viewTheme;
+	world.menuController = menu;
 	[world setup:seed];
 
 	tree.dataSource = world;
