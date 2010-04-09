@@ -83,7 +83,7 @@
 - (void)cancelReconnect;
 
 - (void)changeNick:(NSString*)newNick;
-- (void)joinChannel:(IRCChannel*)channel password:(NSString*)password;
+- (void)joinChannel:(IRCChannel*)channel;
 - (void)partChannel:(IRCChannel*)channel;
 - (void)sendWhois:(NSString*)nick;
 

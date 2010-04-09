@@ -551,10 +551,23 @@
 
 - (void)onJoin:(id)sender
 {
+	IRCClient* u = world.selectedClient;
+	IRCChannel* c = world.selectedChannel;
+	if (!u || !c || !u.loggedIn || c.isActive || !c.isChannel) return;
+	[u joinChannel:c];
 }
 
 - (void)onLeave:(id)sender
 {
+	IRCClient* u = world.selectedClient;
+	IRCChannel* c = world.selectedChannel;
+	if (!u || !c || !u.loggedIn || !c.isActive) return;
+	if (c.isChannel) {
+		[u partChannel:c];
+	}
+	else {
+		[world destroyChannel:c];
+	}
 }
 
 - (void)onTopic:(id)sender

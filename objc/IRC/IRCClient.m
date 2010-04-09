@@ -261,12 +261,12 @@
 	[self send:NICK, newNick, nil];
 }
 
-- (void)joinChannel:(IRCChannel*)channel password:(NSString*)password
+- (void)joinChannel:(IRCChannel*)channel
 {
 	if (!loggedIn) return;
 	if (channel.isActive) return;
 	
-	if (!password) password = channel.config.password;
+	NSString* password = channel.config.password;
 	if (!password.length) password = nil;
 	
 	[self send:JOIN, channel.name, password, nil];

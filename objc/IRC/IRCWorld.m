@@ -800,7 +800,7 @@
 			}
 			else {
 				if ([Preferences joinOnDoubleclick]) {
-					[u joinChannel:c password:nil];
+					[u joinChannel:c];
 				}
 			}
 		}
