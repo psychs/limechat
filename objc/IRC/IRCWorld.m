@@ -651,6 +651,9 @@
 		}
 		[clients removeObjectIdenticalTo:target];
 	}
+	else {
+		[target.client.channels removeObjectIdenticalTo:target];
+	}
 	
 	[self reloadTree];
 	

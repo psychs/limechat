@@ -619,6 +619,10 @@
 
 - (void)onDeleteChannel:(id)sender
 {
+	IRCChannel* c = world.selectedChannel;
+	if (!c) return;
+	[world destroyChannel:c];
+	[world save];
 }
 
 - (void)onChannelProperties:(id)sender
