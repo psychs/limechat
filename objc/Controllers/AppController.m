@@ -159,6 +159,12 @@
 	[tree setNeedsDisplay];
 }
 
+- (BOOL)applicationShouldHandleReopen:(NSApplication*)sender hasVisibleWindows:(BOOL)flag
+{
+	[window makeKeyAndOrderFront:nil];
+	return YES;
+}
+
 - (void)applicationDidReceiveHotKey:(id)sender
 {
 	if (![window isVisible] || ![NSApp isActive]) {
