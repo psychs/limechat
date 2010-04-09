@@ -7,6 +7,15 @@
 @implementation Timer
 
 @synthesize delegate;
+@synthesize selector;
+
+- (id)init
+{
+	if (self = [super init]) {
+		selector = @selector(timerOnTimer:);
+	}
+	return self;
+}
 
 - (void)dealloc
 {
@@ -36,10 +45,10 @@
 
 - (void)onTimer:(id)sender
 {
-	if ([self active]) {
-		if ([delegate respondsToSelector:@selector(timerOnTimer:)]) {
-			[delegate timerOnTimer:self];
-		}
+	if (![self active]) return;
+	
+	if ([delegate respondsToSelector:selector]) {
+		[delegate performSelector:selector withObject:self];
 	}
 }
 
