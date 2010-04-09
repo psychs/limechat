@@ -7,6 +7,7 @@
 #import "LogController.h"
 #import "IRCUser.h"
 #import "IRCChannelMode.h"
+#import "ChannelDialog.h"
 
 
 @class IRCClient;
@@ -29,6 +30,8 @@
 	BOOL whoInit;
 	
 	BOOL terminating;
+	
+	ChannelDialog* propertyDialog;
 }
 
 @property (nonatomic, assign) IRCClient* client;
@@ -47,6 +50,8 @@
 @property (nonatomic, assign) BOOL modeInit;
 @property (nonatomic, assign) BOOL namesInit;
 @property (nonatomic, assign) BOOL whoInit;
+
+@property (nonatomic, retain) ChannelDialog* propertyDialog;
 
 - (void)setup:(IRCChannelConfig*)seed;
 - (void)updateConfig:(IRCChannelConfig*)seed;

@@ -94,6 +94,12 @@
 	[self.window makeKeyAndOrderFront:nil];
 }
 
+- (void)close
+{
+	delegate = nil;
+	[self.window close];
+}
+
 - (void)load
 {
 	nameText.stringValue = config.name;

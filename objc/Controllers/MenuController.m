@@ -1,14 +1,15 @@
 #import "MenuController.h"
 #import <WebKit/WebKit.h>
+#import "IRC.h"
 #import "IRCWorld.h"
 #import "IRCClient.h"
 #import "IRCChannel.h"
-#import "IRC.h"
+#import "ServerDialog.h"
+#import "ChannelDialog.h"
 #import "Regex.h"
 #import "URLOpener.h"
 #import "GTMNSString+URLArguments.h"
 #import "NSPasteboardHelper.h"
-#import "ServerDialog.h"
 
 
 #define CONNECTED				(u && u.connected)
@@ -691,6 +692,27 @@
 
 - (void)onAddChannel:(id)sender
 {
+	IRCClient* u = world.selectedClient;
+	IRCChannel* c = world.selectedChannel;
+	if (!u) return;
+	
+	IRCChannelConfig* config;
+	if (c && c.isChannel) {
+		config = [[c.config mutableCopy] autorelease];
+	}
+	else {
+		config = [[IRCChannelConfig new] autorelease];
+	}
+	config.name = @"";
+	
+	ChannelDialog* d = [[ChannelDialog new] autorelease];
+	d.delegate = self;
+	d.parentWindow = window;
+	d.config = config;
+	d.uid = u.uid;
+	d.cid = -1;
+	[channelDialogs addObject:d];
+	[d start];
 }
 
 - (void)onDeleteChannel:(id)sender
@@ -703,6 +725,55 @@
 
 - (void)onChannelProperties:(id)sender
 {
+	IRCClient* u = world.selectedClient;
+	IRCChannel* c = world.selectedChannel;
+	if (!u || !c) return;
+	
+	if (c.propertyDialog) {
+		[c.propertyDialog show];
+		return;
+	}
+	
+	ChannelDialog* d = [[ChannelDialog new] autorelease];
+	d.delegate = self;
+	d.parentWindow = window;
+	d.config = [[c.config mutableCopy] autorelease];
+	d.uid = u.uid;
+	d.cid = c.uid;
+	[channelDialogs addObject:d];
+	[d start];
+}
+
+- (void)channelDialogOnOK:(ChannelDialog*)sender
+{
+	if (sender.cid < 0) {
+		// create
+		IRCClient* u = [world findClientById:sender.uid];
+		if (!u) return;
+		[world createChannel:sender.config client:u reload:YES adjust:YES];
+		[world expandClient:u];
+		[world save];
+	}
+	else {
+		// update
+		IRCChannel* c = [world findChannelByClientId:sender.uid channelId:sender.cid];
+		if (!c) return;
+		[c updateConfig:sender.config];
+	}
+	
+	[world save];
+}
+
+- (void)channelDialogWillClose:(ChannelDialog*)sender
+{
+	[[sender retain] autorelease];
+	
+	if (sender.cid >= 0) {
+		IRCChannel* c = [world findChannelByClientId:sender.uid channelId:sender.cid];
+		c.propertyDialog = nil;
+	}
+	
+	[channelDialogs removeObjectIdenticalTo:sender];
 }
 
 - (void)onChannelAutoOp:(id)sender

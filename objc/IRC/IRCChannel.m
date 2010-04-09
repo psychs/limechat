@@ -30,6 +30,8 @@
 @synthesize namesInit;
 @synthesize whoInit;
 
+@synthesize propertyDialog;
+
 - (id)init
 {
 	if (self = [super init]) {
@@ -46,6 +48,7 @@
 	[members release];
 	[topic release];
 	[storedTopic release];
+	[propertyDialog release];
 	[super dealloc];
 }
 

@@ -9,7 +9,8 @@ class ChannelDialog < NSObject
   attr_accessor :delegate, :prefix, :parent
   attr_reader :uid, :cid, :modal
   ib_outlet :window
-  ib_mapped_outlet :nameText, :passwordText, :modeText, :topicText, :auto_joinCheck, :keywordCheck, :unreadCheck, :consoleCheck, :growlCheck
+  ib_mapped_outlet :nameText, :passwordText, :modeText, :topicText,
+  :auto_joinCheck, :keywordCheck, :unreadCheck, :consoleCheck, :growlCheck
   ib_outlet :okButton
   
   def initialize
