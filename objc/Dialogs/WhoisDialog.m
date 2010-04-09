@@ -2,6 +2,10 @@
 // You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
 #import "WhoisDialog.h"
+#import "NSRectHelper.h"
+
+
+static int windowPlace;
 
 
 @interface WhoisDialog (Private)
@@ -105,8 +109,29 @@
 	[joinButton setEnabled:NO];
 }
 
+#define ROTATE_COUNT	10
+#define OFFSET			20
+
 - (void)show
 {
+	if (![self.window isVisible]) {
+		NSScreen* screen = [[NSApp mainWindow] screen] ?: [NSScreen mainScreen];
+		if (screen) {
+			NSSize size = self.window.frame.size;
+			NSPoint p = NSRectCenter([screen visibleFrame]);
+			p.x -= size.width/2;
+			p.y -= size.width/2;
+			p.x += OFFSET * (windowPlace - ROTATE_COUNT/2);
+			p.y -= OFFSET * (windowPlace - ROTATE_COUNT/2);
+			[self.window setFrameOrigin:p];
+			
+			++windowPlace;
+			if (windowPlace >= ROTATE_COUNT) {
+				windowPlace = 0;
+			}
+		}
+	}
+	
 	[self.window makeKeyAndOrderFront:nil];
 }
 
