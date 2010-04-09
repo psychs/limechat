@@ -994,7 +994,7 @@
 		if (!c) {
 			IRCChannelConfig* seed = [[IRCChannelConfig new] autorelease];
 			seed.name = chname;
-			[world createChannel:seed client:self reload:YES adjust:YES];
+			c = [world createChannel:seed client:self reload:YES adjust:YES];
 			[world save];
 		}
 		[c activate];
