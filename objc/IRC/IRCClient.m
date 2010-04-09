@@ -257,6 +257,8 @@
 		conn = nil;
 	}
 	
+	[self printSystemBoth:nil text:@"Connecting…"];
+	
 	connecting = YES;
 	reconnectEnabled = YES;
 	reconnectTime = 30;
