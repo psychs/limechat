@@ -296,9 +296,12 @@
 	
 	NSMutableArray* users = [NSMutableArray array];
 	
-	for (IRCUser* m in inputUsers) {
-		if (value != [m hasMode:mode]) {
-			[users addObject:m];
+	for (IRCUser* user in inputUsers) {
+		IRCUser* m = [channel findMember:user.nick];
+		if (m) {
+			if (value != [m hasMode:mode]) {
+				[users addObject:m];
+			}
 		}
 	}
 	
