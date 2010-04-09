@@ -58,14 +58,15 @@
 	
 	host = [[dic stringForKey:@"host"] retain];
 	port = [dic intForKey:@"port"];
+	password = [[dic stringForKey:@"password"] retain];
 	useSSL = [dic boolForKey:@"ssl"];
 	
 	nick = [[dic stringForKey:@"nick"] retain];
-	password = [[dic stringForKey:@"password"] retain];
 	username = [[dic stringForKey:@"username"] retain];
+	realName = [[dic stringForKey:@"realname"] retain];
 	nickPassword = [[dic stringForKey:@"nickPassword"] retain];
 	[altNicks addObjectsFromArray:[dic arrayForKey:@"alt_nicks"]];
-
+	
 	proxyType = [dic intForKey:@"proxy"];
 	proxyHost = [[dic stringForKey:@"proxy_host"] retain];
 	proxyPort = [dic intForKey:@"proxy_port"];
@@ -130,6 +131,7 @@
 	if (nick) [dic setObject:nick forKey:@"nick"];
 	if (password) [dic setObject:password forKey:@"password"];
 	if (username) [dic setObject:username forKey:@"username"];
+	if (realName) [dic setObject:realName forKey:@"realname"];
 	if (nickPassword) [dic setObject:nickPassword forKey:@"nickPassword"];
 	if (altNicks) [dic setObject:altNicks forKey:@"alt_nicks"];
 	

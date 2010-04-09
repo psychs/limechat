@@ -969,9 +969,14 @@
 		IRCChannel* c = [self findChannel:target];
 		BOOL keyword = [self printBoth:(c ?: (id)target) type:type nick:nick text:text identified:identified];
 
-		id t = c ?: (id)self;
-		[self setUnreadState:t];
-		if (keyword) [self setKeywordState:t];
+		if (type == LINE_TYPE_NOTICE) {
+			;
+		}
+		else {
+			id t = c ?: (id)self;
+			[self setUnreadState:t];
+			if (keyword) [self setKeywordState:t];
+		}
 	}
 	else if ([target isEqualNoCase:myNick]) {
 		if (!nick.length || [nick contains:@"."]) {
