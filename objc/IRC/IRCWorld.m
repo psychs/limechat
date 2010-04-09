@@ -664,6 +664,8 @@
 
 - (void)destroyClient:(IRCClient*)u
 {
+	[[u retain] autorelease];
+	
 	[u terminate];
 	[u disconnect];
 	
@@ -679,6 +681,8 @@
 
 - (void)destroyChannel:(IRCChannel*)c
 {
+	[[c retain] autorelease];
+	
 	[c terminate];
 	
 	IRCClient* u = c.client;

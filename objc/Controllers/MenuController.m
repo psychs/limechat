@@ -539,6 +539,16 @@
 
 - (void)onDeleteServer:(id)sender
 {
+	IRCClient* u = world.selectedClient;
+	if (!u || u.connected) return;
+	
+	NSString* message = [NSString stringWithFormat:@"Delete %@ ?", u.name];
+	
+	NSInteger result = NSRunAlertPanel(message, @"", @"Delete", @"Cancel", nil);
+	if (result != NSAlertDefaultReturn) return;
+	
+	[world destroyClient:u];
+	[world save];
 }
 
 - (void)onServerProperties:(id)sender
