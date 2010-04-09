@@ -96,45 +96,85 @@
 
 - (void)load
 {
-	[nameText setStringValue:config.name];
-	[autoConnectCheck setState:config.autoConnect];
+	nameText.stringValue = config.name;
+	autoConnectCheck.state = config.autoConnect;
 	
-	[hostCombo setStringValue:config.host];
-	[sslCheck setState:config.useSSL];
-	[portText setIntValue:config.port];
-	
-	[nickText setStringValue:config.nick];
-	[passwordText setStringValue:config.password];
-	[usernameText setStringValue:config.username];
-	[realNameText setStringValue:config.realName];
-	[nickPasswordText setStringValue:config.nickPassword];
+	hostCombo.stringValue = config.host;
+	sslCheck.state = config.useSSL;
+	portText.intValue = config.port;
+
+	nickText.stringValue = config.nick;
+	passwordText.stringValue = config.password;
+	usernameText.stringValue = config.username;
+	realNameText.stringValue = config.realName;
+	nickPasswordText.stringValue = config.nickPassword;
 	if (config.altNicks.count) {
-		[altNicksText setStringValue:[config.altNicks componentsJoinedByString:@" "]];
+		altNicksText.stringValue = [config.altNicks componentsJoinedByString:@" "];
 	}
 	else {
-		[altNicksText setStringValue:@""];
+		altNicksText.stringValue = @"";
 	}
 
-	[leavingCommentText setStringValue:config.leavingComment];
-	[userInfoText setStringValue:config.userInfo];
+	leavingCommentText.stringValue = config.leavingComment;
+	userInfoText.stringValue = config.userInfo;
 
 	[encodingCombo selectItemWithTag:config.encoding];
 	[fallbackEncodingCombo selectItemWithTag:config.fallbackEncoding];
 	
 	[proxyCombo selectItemWithTag:config.proxyType];
-	[proxyHostText setStringValue:config.proxyHost];
-	[proxyPortText setIntValue:config.proxyPort];
-	[proxyUserText setStringValue:config.proxyUser];
-	[proxyPasswordText setStringValue:config.proxyPassword];
-	
-	//IBOutlet ListView* channelsTable;
+	proxyHostText.stringValue = config.proxyHost;
+	proxyPortText.intValue = config.proxyPort;
+	proxyUserText.stringValue = config.proxyUser;
+	proxyPasswordText.stringValue = config.proxyPassword;
 
-	[loginCommandsText setString:[config.loginCommands componentsJoinedByString:@"\n"]];
-	[invisibleCheck setState:config.invisibleMode];
+	loginCommandsText.string = [config.loginCommands componentsJoinedByString:@"\n"];
+	invisibleCheck.state = config.invisibleMode;
 }
 
 - (void)save
 {
+	config.name = nameText.stringValue;
+	config.autoConnect = autoConnectCheck.state;
+	
+	config.host = hostCombo.stringValue;
+	config.useSSL = sslCheck.state;
+	config.port = portText.intValue;
+	
+	config.nick = nickText.stringValue;
+	config.password = passwordText.stringValue;
+	config.username = usernameText.stringValue;
+	config.realName = realNameText.stringValue;
+	config.nickPassword = nickPasswordText.stringValue;
+	
+	NSArray* nicks = [altNicksText.stringValue componentsSeparatedByString:@" "];
+	[config.altNicks removeAllObjects];
+	for (NSString* s in nicks) {
+		if (s.length) {
+			[config.altNicks addObject:s];
+		}
+	}
+	
+	config.leavingComment = leavingCommentText.stringValue;
+	config.userInfo = userInfoText.stringValue;
+	
+	config.encoding = encodingCombo.selectedTag;
+	config.fallbackEncoding = encodingCombo.selectedTag;
+	
+	config.proxyType = proxyCombo.selectedTag;
+	config.proxyHost = proxyHostText.stringValue;
+	config.proxyPort = proxyPortText.intValue;
+	config.proxyUser = proxyUserText.stringValue;
+	config.proxyPassword = proxyPasswordText.stringValue;
+	
+	NSArray* commands = [loginCommandsText.string componentsSeparatedByString:@"\n"];
+	[config.loginCommands removeAllObjects];
+	for (NSString* s in commands) {
+		if (s.length) {
+			[config.loginCommands addObject:s];
+		}
+	}
+	
+	config.invisibleMode = invisibleCheck.state;
 }
 
 - (void)updateConnectionPage
@@ -192,13 +232,13 @@
 
 - (void)encodingChanged:(id)sender
 {
-	int tag = [[encodingCombo selectedItem] tag];
+	int tag = [encodingCombo selectedTag];
 	[fallbackEncodingCombo setEnabled:(tag == NSUTF8StringEncoding)];
 }
 
 - (void)proxyChanged:(id)sender
 {
-	int tag = [[proxyCombo selectedItem] tag];
+	int tag = [proxyCombo selectedTag];
 	BOOL enabled = (tag == PROXY_SOCKS4 || tag == PROXY_SOCKS5);
 	[proxyHostText setEnabled:enabled];
 	[proxyPortText setEnabled:enabled];

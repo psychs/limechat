@@ -283,7 +283,7 @@
 
 - (void)onTranscriptFolderChanged:(id)sender
 {
-	if ([[transcriptFolderButton selectedItem] tag] != 2) return;
+	if ([transcriptFolderButton selectedTag] != 2) return;
 	
 	NSString* path = [Preferences transcriptFolder];
 	path = [path stringByExpandingTildeInPath];
