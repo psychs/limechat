@@ -34,6 +34,7 @@
 @property (nonatomic, readonly) BOOL isOp;
 @property (nonatomic, readonly) int colorNumber;
 
+- (BOOL)hasMode:(char)mode;
 - (NSComparisonResult)compare:(IRCUser*)other;
 
 @end

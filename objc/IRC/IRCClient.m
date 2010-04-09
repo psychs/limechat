@@ -290,6 +290,40 @@
 	[self send:WHOIS, nick, nick, nil];
 }
 
+- (void)changeOp:(IRCChannel*)channel users:(NSArray*)inputUsers mode:(char)mode value:(BOOL)value
+{
+	if (!loggedIn || !channel || !channel.isActive || !channel.isChannel || !channel.hasOp) return;
+	
+	NSMutableArray* users = [NSMutableArray array];
+	
+	for (IRCUser* m in inputUsers) {
+		if (value != [m hasMode:mode]) {
+			[users addObject:m];
+		}
+	}
+	
+	int max = isupport.modesCount;
+	while (users.count) {
+		NSArray* ary = [users subarrayWithRange:NSMakeRange(0, MIN(max, users.count))];
+		
+		NSMutableString* s = [NSMutableString string];
+		[s appendFormat:@"%@ %@ %c", MODE, channel.name, value ? '+' : '-'];
+		
+		for (int i=ary.count-1; i>=0; --i) {
+			[s appendFormat:@"%c", mode];
+		}
+		
+		for (IRCUser* m in ary) {
+			[s appendString:@" "];
+			[s appendString:m.nick];
+		}
+		
+		[self sendLine:s];
+		
+		[users removeObjectsInRange:NSMakeRange(0, ary.count)];
+	}
+}
+
 - (void)quickJoin:(NSArray*)chans
 {
 	NSMutableString* target = [NSMutableString string];

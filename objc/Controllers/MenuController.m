@@ -677,14 +677,38 @@
 
 - (void)onMemberTalk:(id)sender
 {
+	IRCClient* u = world.selectedClient;
+	if (!u) return;
+	
+	for (IRCUser* m in [self selectedMembers:sender]) {
+		IRCChannel* c = [u findChannel:m.nick];
+		if (!c) {
+			c = [world createTalk:m.nick client:u];
+		}
+		[world select:c];
+	}
+	
+	[self deselectMembers:sender];
+}
+
+- (void)changeOp:(id)sender mode:(char)mode value:(BOOL)value
+{
+	IRCClient* u = world.selectedClient;
+	IRCChannel* c = world.selectedChannel;
+	if (!u || !u.loggedIn || !c || !c.isActive || !c.isChannel || !c.hasOp) return;
+	
+	[u changeOp:c users:[self selectedMembers:sender] mode:mode value:value];
+	[self deselectMembers:sender];
 }
 
 - (void)onMemberGiveOp:(id)sender
 {
+	[self changeOp:sender mode:'o' value:YES];
 }
 
 - (void)onMemberDeop:(id)sender
 {
+	[self changeOp:sender mode:'o' value:NO];
 }
 
 - (void)onMemberKick:(id)sender
@@ -701,10 +725,12 @@
 
 - (void)onMemberGiveVoice:(id)sender
 {
+	[self changeOp:sender mode:'v' value:YES];
 }
 
 - (void)onMemberDevoice:(id)sender
 {
+	[self changeOp:sender mode:'v' value:NO];
 }
 
 - (void)onMemberSendFile:(id)sender

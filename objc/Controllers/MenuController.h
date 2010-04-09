@@ -96,8 +96,6 @@
 - (void)onChannelProperties:(id)sender;
 - (void)onChannelAutoOp:(id)sender;
 
-- (void)onReloadPlugins:(id)sender;
-
 - (void)memberListDoubleClicked:(id)sender;
 - (void)onMemberWhois:(id)sender;
 - (void)onMemberTalk:(id)sender;

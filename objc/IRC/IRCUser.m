@@ -64,18 +64,24 @@
 	return o || a || q;
 }
 
-//@@@ for ruby code
-- (BOOL)op
-{
-	return [self isOp];
-}
-
 - (int)colorNumber
 {
 	if (colorNumber < 0) {
 		colorNumber = CFHash(canonicalNick) % COLOR_NUMBER_MAX;
 	}
 	return colorNumber;
+}
+
+- (BOOL)hasMode:(char)mode
+{
+	switch (mode) {
+		case 'q': return q;
+		case 'a': return a;
+		case 'o': return o;
+		case 'h': return h;
+		case 'v': return v;
+	}
+	return NO;
 }
 
 - (CGFloat)weight
