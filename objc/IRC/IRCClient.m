@@ -727,7 +727,7 @@
 	
 	if (nick.length > 0) {
 		if (type == LINE_TYPE_ACTION) {
-			nickStr = [NSString stringWithFormat:@"%@ "];
+			nickStr = [NSString stringWithFormat:@"%@ ", nick];
 		}
 		else {
 			nickStr = [NSString stringWithFormat:@"%@: ", nick];
