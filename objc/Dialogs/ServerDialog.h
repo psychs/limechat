@@ -4,6 +4,7 @@
 #import <Foundation/Foundation.h>
 #import "IRCClientConfig.h"
 #import "ListView.h"
+#import "ChannelDialog.h"
 
 
 @interface ServerDialog : NSWindowController
@@ -48,6 +49,8 @@
 	IBOutlet NSButton* invisibleCheck;
 	
 	IBOutlet NSButton* okButton;
+	
+	ChannelDialog* channelSheet;
 }
 
 @property (nonatomic, assign) id delegate;
@@ -68,8 +71,8 @@
 - (void)proxyChanged:(id)sender;
 
 - (void)addChannel:(id)sender;
-- (void)deleteChannel:(id)sender;
 - (void)editChannel:(id)sender;
+- (void)deleteChannel:(id)sender;
 
 @end
 

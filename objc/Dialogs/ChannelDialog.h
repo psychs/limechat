@@ -23,6 +23,8 @@
 	IBOutlet NSButton* consoleCheck;
 	IBOutlet NSButton* growlCheck;
 	IBOutlet NSButton* okButton;
+	
+	BOOL isSheet;
 }
 
 @property (nonatomic, assign) id delegate;
@@ -33,6 +35,7 @@
 @property (nonatomic, retain) IRCChannelConfig* config;
 
 - (void)start;
+- (void)startSheet;
 - (void)show;
 - (void)close;
 

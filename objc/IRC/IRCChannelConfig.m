@@ -30,6 +30,11 @@
 		autoJoin = YES;
 		logToConsole = YES;
 		growl = YES;
+		
+		name = @"";
+		password = @"";
+		mode = @"";
+		topic = @"";
 	}
 	return self;
 }

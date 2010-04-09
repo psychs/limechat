@@ -46,6 +46,18 @@
 		loginCommands = [NSMutableArray new];
 		autoOp = [NSMutableArray new];
 		channels = [NSMutableArray new];
+		
+		name = @"";
+		host = @"";
+		password = @"";
+		nick = @"";
+		username = @"";
+		realName = @"";
+		nickPassword = @"";
+		proxyHost = @"";
+		proxyUser = @"";
+		proxyPassword = @"";
+		leavingComment = @"";
 	}
 	return self;
 }

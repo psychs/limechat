@@ -39,19 +39,18 @@
 
 - (void)start
 {
-	if (cid < 0) {
-		[self.window setTitle:@"New Channel"];
-	}
-	else {
-		[nameText setEditable:NO];
-		[nameText setSelectable:NO];
-		[nameText setBezeled:NO];
-		[nameText setDrawsBackground:NO];
-	}
-	
+	isSheet = NO;
 	[self load];
 	[self update];
 	[self show];
+}
+
+- (void)startSheet
+{
+	isSheet = YES;
+	[self load];
+	[self update];
+	[NSApp beginSheet:window modalForWindow:parentWindow modalDelegate:self didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:) contextInfo:nil];
 }
 
 - (void)show
@@ -66,6 +65,11 @@
 {
 	delegate = nil;
 	[self.window close];
+}
+
+- (void)sheetDidEnd:(NSWindow*)sender returnCode:(NSInteger)returnCode contextInfo:(void*)contextInfo
+{
+	[window close];
 }
 
 - (void)load
@@ -94,6 +98,16 @@
 
 - (void)update
 {
+	if (cid < 0) {
+		[self.window setTitle:@"New Channel"];
+	}
+	else {
+		[nameText setEditable:NO];
+		[nameText setSelectable:NO];
+		[nameText setBezeled:NO];
+		[nameText setDrawsBackground:NO];
+	}
+	
 	NSString* s = nameText.stringValue;
 	[okButton setEnabled:[s isChannelName]];
 }
@@ -114,12 +128,17 @@
 		[delegate channelDialogOnOK:self];
 	}
 	
-	[self.window close];
+	[self cancel:nil];
 }
 
 - (void)cancel:(id)sender
 {
-	[self.window close];
+	if (isSheet) {
+		[NSApp endSheet:window];
+	}
+	else {
+		[self.window close];
+	}
 }
 
 #pragma mark -

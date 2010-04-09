@@ -63,6 +63,7 @@
 - (void)dealloc
 {
 	[config release];
+	[channelSheet release];
 	[super dealloc];
 }
 
@@ -255,17 +256,92 @@
 
 - (void)addChannel:(id)sender
 {
-	LOG_METHOD
-}
-
-- (void)deleteChannel:(id)sender
-{
-	LOG_METHOD
+	int sel = [channelTable selectedRow];
+	IRCChannelConfig* conf;
+	if (sel < 0) {
+		conf = [[IRCChannelConfig new] autorelease];
+	}
+	else {
+		IRCChannelConfig* c = [config.channels objectAtIndex:sel];
+		conf = [[c mutableCopy] autorelease];
+		conf.name = @"";
+	}
+	
+	[channelSheet release];
+	channelSheet = [ChannelDialog new];
+	channelSheet.delegate = self;
+	channelSheet.parentWindow = self.window;
+	channelSheet.config = conf;
+	channelSheet.uid = 1;
+	channelSheet.cid = -1;
+	[channelSheet startSheet];
 }
 
 - (void)editChannel:(id)sender
 {
-	LOG_METHOD
+	int sel = [channelTable selectedRow];
+	if (sel < 0) return;
+	IRCChannelConfig* c = [[[config.channels objectAtIndex:sel] mutableCopy] autorelease];
+	
+	[channelSheet release];
+	channelSheet = [ChannelDialog new];
+	channelSheet.delegate = self;
+	channelSheet.parentWindow = self.window;
+	channelSheet.config = c;
+	channelSheet.uid = 1;
+	channelSheet.cid = 1;
+	[channelSheet startSheet];
+}
+
+- (void)channelDialogOnOK:(ChannelDialog*)sender
+{
+	IRCChannelConfig* conf = sender.config;
+	NSString* name = conf.name;
+	
+	int n = -1;
+	int i = 0;
+	for (IRCChannelConfig* c in config.channels) {
+		if ([c.name isEqualToString:name]) {
+			n = i;
+			break;
+		}
+		++i;
+	}
+	
+	if (n < 0) {
+		[config.channels addObject:conf];
+	}
+	else {
+		[config.channels replaceObjectAtIndex:n withObject:conf];
+	}
+	
+	[self reloadChannelTable];
+}
+
+- (void)channelDialogWillClose:(ChannelDialog*)sender
+{
+	[channelSheet autorelease];
+	channelSheet = nil;
+}
+
+- (void)deleteChannel:(id)sender
+{
+	int sel = [channelTable selectedRow];
+	if (sel < 0) return;
+	
+	[config.channels removeObjectAtIndex:sel];
+	
+	int count = config.channels.count;
+	if (count) {
+		if (count <= sel) {
+			[channelTable select:count - 1];
+		}
+		else {
+			[channelTable select:sel];
+		}
+	}
+	
+	[self reloadChannelTable];
 }
 
 #pragma mark -
