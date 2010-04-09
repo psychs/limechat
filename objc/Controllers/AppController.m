@@ -43,6 +43,14 @@
 	[self prelude];
 
 	[Preferences initPreferences];
+
+	NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
+	[nc addObserver:self selector:@selector(themeDidChange:) name:ThemeDidChangeNotification object:nil];
+	
+	NSNotificationCenter* wsnc = [[NSWorkspace sharedWorkspace] notificationCenter];
+	[wsnc addObserver:self selector:@selector(computerWillSleep:) name:NSWorkspaceWillSleepNotification object:nil];
+	[wsnc addObserver:self selector:@selector(computerDidWakeUp:) name:NSWorkspaceDidWakeNotification object:nil];
+	[wsnc addObserver:self selector:@selector(computerWillPowerOff:) name:NSWorkspaceWillPowerOffNotification object:nil];
 	
 	// register URL handler
 	NSAppleEventManager* em = [NSAppleEventManager sharedAppleEventManager];
@@ -125,11 +133,6 @@
 	//@@@ dcc manager
 	
 	inputHistory = [InputHistory new];
-	
-	NSNotificationCenter* nc = [[NSWorkspace sharedWorkspace] notificationCenter];
-	[nc addObserver:self selector:@selector(computerWillSleep:) name:NSWorkspaceWillSleepNotification object:nil];
-	[nc addObserver:self selector:@selector(computerDidWakeUp:) name:NSWorkspaceDidWakeNotification object:nil];
-	[nc addObserver:self selector:@selector(computerWillPowerOff:) name:NSWorkspaceWillPowerOffNotification object:nil];
 	
 	[self registerKeyHandlers];
 }
@@ -292,9 +295,10 @@
 
 - (void)set3columnLayout:(BOOL)value
 {
-	if (value == [infoSplitter isHidden]) return;
+	if (value == threeColumns) return;
+	threeColumns = value;
 	
-	if (value) {
+	if (threeColumns) {
 		infoSplitter.hidden = YES;
 		infoSplitter.inverted = YES;
 		[leftTreeBase addSubview:treeScrollView];
@@ -372,6 +376,13 @@
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
 	[ud setObject:dic forKey:@"main_window"];
 	[ud synchronize];
+}
+
+- (void)themeDidChange:(NSNotification*)note
+{
+	[world reloadTheme];
+	[self set3columnLayout:[Preferences mainWindowLayout] == 1];
+	[window setAlphaValue:[Preferences themeTransparency]];
 }
 
 #pragma mark -

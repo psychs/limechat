@@ -452,7 +452,8 @@
 
 - (void)onLayoutChanged:(id)sender
 {
-	LOG_METHOD
+	NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
+	[nc postNotificationName:ThemeDidChangeNotification object:nil userInfo:nil];
 }
 
 #pragma mark -

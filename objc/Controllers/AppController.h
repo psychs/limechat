@@ -44,6 +44,7 @@
 	ViewTheme* viewTheme;
 	InputHistory* inputHistory;
 	
+	BOOL threeColumns;
 	BOOL terminating;
 }
 

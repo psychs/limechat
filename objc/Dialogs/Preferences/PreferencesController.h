@@ -5,6 +5,9 @@
 #import "KeyRecorder.h"
 
 
+#define ThemeDidChangeNotification	@"ThemeDidChangeNotification"
+
+
 @interface PreferencesController : NSWindowController
 {
 	id delegate;
