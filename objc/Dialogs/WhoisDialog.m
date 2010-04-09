@@ -41,6 +41,7 @@
 		[nick release];
 		nick = [value retain];
 		[self updateNick];
+		[self.window setTitle:nick];
 	}
 }
 
