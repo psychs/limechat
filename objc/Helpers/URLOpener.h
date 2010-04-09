@@ -4,7 +4,7 @@
 #import <Cocoa/Cocoa.h>
 
 
-@interface URLOpener
+@interface URLOpener : NSObject
 
 + (void)open:(NSURL*)url;
 
