@@ -643,10 +643,6 @@
 {
 }
 
-- (void)onReloadPlugins:(id)sender
-{
-}
-
 - (void)whoisSelectedMembers:(id)sender deselect:(BOOL)deselect
 {
 	IRCClient* u = world.selectedClient;
