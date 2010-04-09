@@ -6,9 +6,13 @@
 #import "IRCChannel.h"
 #import "IRCClientConfig.h"
 #import "Preferences.h"
+#import "NSStringHelper.h"
 
 
-#define AUTO_CONNECT_DELAY	1
+#define AUTO_CONNECT_DELAY		1
+
+#define TREE_DRAG_ITEM_TYPE		@"tree"
+#define TREE_DRAG_ITEM_TYPES	[NSArray arrayWithObject:TREE_DRAG_ITEM_TYPE]
 
 
 @interface IRCWorld (Private)
@@ -92,7 +96,7 @@
 {
 	[tree setTarget:self];
 	[tree setDoubleAction:@selector(outlineViewDoubleClicked:)];
-	// @@@drag
+	[tree registerForDraggedTypes:TREE_DRAG_ITEM_TYPES];
 	
 	IRCClient* client = nil;;
 	for (IRCClient* e in clients) {
@@ -940,7 +944,135 @@
 	[self focusInputText];
 }
 
-//@@@ tree drag & drop
+- (BOOL)outlineView:(NSOutlineView *)sender writeItems:(NSArray *)items toPasteboard:(NSPasteboard *)pboard
+{
+	if (!items.count) return NO;
+	
+	NSString* s;
+	IRCTreeItem* i = [items objectAtIndex:0];
+	if (i.isClient) {
+		IRCClient* u = (IRCClient*)i;
+		s = [NSString stringWithFormat:@"%d", u.uid];
+	}
+	else {
+		IRCChannel* c = (IRCChannel*)i;
+		s = [NSString stringWithFormat:@"%d-%d", c.client.uid, c.uid];
+	}
+	
+	[pboard declareTypes:TREE_DRAG_ITEM_TYPES owner:self];
+	[pboard setPropertyList:s forType:TREE_DRAG_ITEM_TYPE];
+	return YES;
+}
+
+- (IRCTreeItem*)findItemFromInfo:(NSString*)s
+{
+	if ([s contains:@"-"]) {
+		NSArray* ary = [s componentsSeparatedByString:@"-"];
+		int uid = [[ary objectAtIndex:0] intValue];
+		int cid = [[ary objectAtIndex:1] intValue];
+		return [self findChannelByClientId:uid channelId:cid];
+	}
+	else {
+		return [self findClientById:[s intValue]];
+	}
+}
+
+- (NSDragOperation)outlineView:(NSOutlineView *)sender validateDrop:(id < NSDraggingInfo >)info proposedItem:(id)item proposedChildIndex:(NSInteger)index
+{
+	if (index < 0) return NSDragOperationNone;
+	NSPasteboard* pboard = [info draggingPasteboard];
+	if (![pboard availableTypeFromArray:TREE_DRAG_ITEM_TYPES]) return NSDragOperationNone;
+	NSString* infoStr = [pboard propertyListForType:TREE_DRAG_ITEM_TYPE];
+	if (!infoStr) return NSDragOperationNone;
+	IRCTreeItem* i = [self findItemFromInfo:infoStr];
+	if (!i) return NSDragOperationNone;
+	
+	if (i.isClient) {
+		if (item) {
+			return NSDragOperationNone;
+		}
+	}
+	else {
+		if (!item) return NSDragOperationNone;
+		IRCChannel* c = (IRCChannel*)i;
+		if (c.client != item) return NSDragOperationNone;
+		
+		IRCClient* toClient = (IRCClient*)item;
+		NSArray* ary = toClient.channels;
+		NSMutableArray* low = [[[ary subarrayWithRange:NSMakeRange(0, index)] mutableCopy] autorelease];
+		NSMutableArray* high = [[[ary subarrayWithRange:NSMakeRange(index, ary.count - index)] mutableCopy] autorelease];
+		[low removeObjectIdenticalTo:c];
+		[high removeObjectIdenticalTo:c];
+		
+		if (c.isChannel) {
+			// do not allow drop channel between talks
+			if (low.count) {
+				IRCChannel* prev = [low lastObject];
+				if (!prev.isChannel) return NSDragOperationNone;
+			}
+		}
+		else {
+			// do not allow drop talk between channels
+			if (high.count) {
+				IRCChannel* next = [high objectAtIndex:0];
+				if (next.isChannel) return NSDragOperationNone;
+			}
+		}
+	}
+	
+	return NSDragOperationGeneric;
+}
+
+- (BOOL)outlineView:(NSOutlineView *)sender acceptDrop:(id < NSDraggingInfo >)info item:(id)item childIndex:(NSInteger)index
+{
+	if (index < 0) return NO;
+	NSPasteboard* pboard = [info draggingPasteboard];
+	if (![pboard availableTypeFromArray:TREE_DRAG_ITEM_TYPES]) return NO;
+	NSString* infoStr = [pboard propertyListForType:TREE_DRAG_ITEM_TYPE];
+	if (!infoStr) return NO;
+	IRCTreeItem* i = [self findItemFromInfo:infoStr];
+	if (!i) return NO;
+	
+	if (i.isClient) {
+		if (item) return NO;
+		
+		NSMutableArray* ary = clients;
+		NSMutableArray* low = [[[ary subarrayWithRange:NSMakeRange(0, index)] mutableCopy] autorelease];
+		NSMutableArray* high = [[[ary subarrayWithRange:NSMakeRange(index, ary.count - index)] mutableCopy] autorelease];
+		[low removeObjectIdenticalTo:i];
+		[high removeObjectIdenticalTo:i];
+		
+		[[i retain] autorelease];
+		
+		[ary removeAllObjects];
+		[ary addObjectsFromArray:low];
+		[ary addObject:i];
+		[ary addObjectsFromArray:high];
+		[self reloadTree];
+		[self save];
+	}
+	else {
+		if (!item || item != i.client) return NO;
+		
+		IRCClient* u = (IRCClient*)item;
+		NSMutableArray* ary = u.channels;
+		NSMutableArray* low = [[[ary subarrayWithRange:NSMakeRange(0, index)] mutableCopy] autorelease];
+		NSMutableArray* high = [[[ary subarrayWithRange:NSMakeRange(index, ary.count - index)] mutableCopy] autorelease];
+		[low removeObjectIdenticalTo:i];
+		[high removeObjectIdenticalTo:i];
+		
+		[[i retain] autorelease];
+		
+		[ary removeAllObjects];
+		[ary addObjectsFromArray:low];
+		[ary addObject:i];
+		[ary addObjectsFromArray:high];
+		[self reloadTree];
+		[self save];
+	}
+	
+	return YES;
+}
 
 #pragma mark -
 #pragma mark memberListView Delegate
