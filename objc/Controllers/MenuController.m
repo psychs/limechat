@@ -552,6 +552,15 @@
 
 - (void)onCopyServer:(id)sender
 {
+	IRCClient* u = world.selectedClient;
+	if (!u) return;
+	
+	IRCClientConfig* config = u.storedConfig;
+	config.name = [config.name stringByAppendingString:@"_"];
+	
+	IRCClient* n = [world createClient:config reload:YES];
+	[world expandClient:n];
+	[world save];
 }
 
 - (void)onDeleteServer:(id)sender
