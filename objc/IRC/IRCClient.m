@@ -84,6 +84,8 @@
 
 @synthesize lastSelectedChannel;
 
+@synthesize propertyDialog;
+
 - (id)init
 {
 	if (self = [super init]) {
@@ -112,6 +114,7 @@
 	[myAddress release];
 	[lastSelectedChannel release];
 	[whoisDialogs release];
+	[propertyDialog release];
 	[super dealloc];
 }
 

@@ -73,6 +73,7 @@
 		787008CB116D6F6500077F91 /* URLOpener.m in Sources */ = {isa = PBXBuildFile; fileRef = 787008CA116D6F6500077F91 /* URLOpener.m */; };
 		7870096F116D74DC00077F91 /* NSPasteboardHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7870096E116D74DC00077F91 /* NSPasteboardHelper.m */; };
 		787BE9DD116B45E9003AE47D /* MenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 787BE9DC116B45E9003AE47D /* MenuController.m */; };
+		78806C26116F4172006ED1B0 /* ServerDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 78806C25116F4172006ED1B0 /* ServerDialog.m */; };
 		78835406109FEA7F00CD2FFF /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78835405109FEA7F00CD2FFF /* SystemConfiguration.framework */; };
 		7884E54E0CDA91F500AF3678 /* SACrashReporter in Resources */ = {isa = PBXBuildFile; fileRef = 7884E5450CDA91F500AF3678 /* SACrashReporter */; };
 		788AC86B1165C59500523E80 /* ServerTreeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 788AC86A1165C59500523E80 /* ServerTreeView.m */; };
@@ -265,6 +266,8 @@
 		787BE9DB116B45E9003AE47D /* MenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuController.h; sourceTree = "<group>"; };
 		787BE9DC116B45E9003AE47D /* MenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuController.m; sourceTree = "<group>"; };
 		787FD46C0BFE960100F2F22D /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
+		78806C24116F4172006ED1B0 /* ServerDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerDialog.h; sourceTree = "<group>"; };
+		78806C25116F4172006ED1B0 /* ServerDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerDialog.m; sourceTree = "<group>"; };
 		78835405109FEA7F00CD2FFF /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = /System/Library/Frameworks/SystemConfiguration.framework; sourceTree = "<absolute>"; };
 		7884E5450CDA91F500AF3678 /* SACrashReporter */ = {isa = PBXFileReference; lastKnownFileType = folder; name = SACrashReporter; path = vendor/SACrashReporter; sourceTree = "<group>"; };
 		788AC8691165C59500523E80 /* ServerTreeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerTreeView.h; sourceTree = "<group>"; };
@@ -428,13 +431,13 @@
 				78347ED11158D4B00073E2F0 /* WhoisDialog.xib */,
 				78347EC51158D4B00073E2F0 /* ModeSheet.xib */,
 				78347ECD1158D4B00073E2F0 /* ServerDialog.xib */,
-				78347EB91158D4B00073E2F0 /* AutoOpDialog.xib */,
 				78347EBB1158D4B00073E2F0 /* ChannelDialog.xib */,
 				78347EBD1158D4B00073E2F0 /* CommentSheet.xib */,
 				78347EBF1158D4B00073E2F0 /* DccDialog.xib */,
 				78347EC11158D4B00073E2F0 /* ListDialog.xib */,
 				78347EC91158D4B00073E2F0 /* PasteSheet.xib */,
 				78347ECF1158D4B00073E2F0 /* WelcomeDialog.xib */,
+				78347EB91158D4B00073E2F0 /* AutoOpDialog.xib */,
 				78287EA90D742DAA008D5656 /* Themes */,
 				7884E5450CDA91F500AF3678 /* SACrashReporter */,
 				78C2D608115A428C00705817 /* dsa_pub.pem */,
@@ -695,6 +698,8 @@
 			isa = PBXGroup;
 			children = (
 				78E345CD116C6ACD00990CCB /* Preferences */,
+				78806C24116F4172006ED1B0 /* ServerDialog.h */,
+				78806C25116F4172006ED1B0 /* ServerDialog.m */,
 				78AA99BB116ED223005707A6 /* WhoisDialog.h */,
 				78AA99BC116ED223005707A6 /* WhoisDialog.m */,
 				7840A09E116DE5070033AE3E /* NickSheet.h */,
@@ -938,6 +943,7 @@
 				780AD2FC116E4BF8005AF8EF /* IRCUserMode.m in Sources */,
 				78AA99BD116ED223005707A6 /* WhoisDialog.m in Sources */,
 				78D98123116EFE02007FAD15 /* ModeSheet.m in Sources */,
+				78806C26116F4172006ED1B0 /* ServerDialog.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

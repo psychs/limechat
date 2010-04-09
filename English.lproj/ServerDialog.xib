@@ -2,17 +2,17 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">10C540</string>
-		<string key="IBDocument.InterfaceBuilderVersion">740</string>
-		<string key="IBDocument.AppKitVersion">1038.25</string>
-		<string key="IBDocument.HIToolboxVersion">458.00</string>
+		<string key="IBDocument.SystemVersion">10D573</string>
+		<string key="IBDocument.InterfaceBuilderVersion">762</string>
+		<string key="IBDocument.AppKitVersion">1038.29</string>
+		<string key="IBDocument.HIToolboxVersion">460.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">740</string>
+			<string key="NS.object.0">762</string>
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="7"/>
+			<integer value="9"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -2064,36 +2064,12 @@
 					<int key="connectionID">59</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onCancel:</string>
-						<reference key="source" ref="108852464"/>
-						<reference key="destination" ref="814462445"/>
-					</object>
-					<int key="connectionID">60</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onOk:</string>
-						<reference key="source" ref="108852464"/>
-						<reference key="destination" ref="941270739"/>
-					</object>
-					<int key="connectionID">61</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">initialFirstResponder</string>
 						<reference key="source" ref="621732341"/>
 						<reference key="destination" ref="312433823"/>
 					</object>
 					<int key="connectionID">78</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">delegate</string>
-						<reference key="source" ref="621732341"/>
-						<reference key="destination" ref="108852464"/>
-					</object>
-					<int key="connectionID">79</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -2145,27 +2121,11 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">realnameText</string>
-						<reference key="source" ref="108852464"/>
-						<reference key="destination" ref="935090418"/>
-					</object>
-					<int key="connectionID">87</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
 						<string key="label">autoConnectCheck</string>
 						<reference key="source" ref="108852464"/>
 						<reference key="destination" ref="250491753"/>
 					</object>
 					<int key="connectionID">89</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">userinfoText</string>
-						<reference key="source" ref="108852464"/>
-						<reference key="destination" ref="771969857"/>
-					</object>
-					<int key="connectionID">92</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -2186,34 +2146,10 @@
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">delegate</string>
-						<reference key="source" ref="1052681709"/>
-						<reference key="destination" ref="108852464"/>
-					</object>
-					<int key="connectionID">105</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">delegate</string>
-						<reference key="source" ref="935090418"/>
-						<reference key="destination" ref="108852464"/>
-					</object>
-					<int key="connectionID">106</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">delegate</string>
 						<reference key="source" ref="6623587"/>
 						<reference key="destination" ref="108852464"/>
 					</object>
 					<int key="connectionID">107</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">delegate</string>
-						<reference key="source" ref="312433823"/>
-						<reference key="destination" ref="108852464"/>
-					</object>
-					<int key="connectionID">108</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -2241,14 +2177,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">leaving_commentText</string>
-						<reference key="source" ref="108852464"/>
-						<reference key="destination" ref="364433203"/>
-					</object>
-					<int key="connectionID">148</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
 						<string key="label">encodingCombo</string>
 						<reference key="source" ref="108852464"/>
 						<reference key="destination" ref="601219626"/>
@@ -2257,27 +2185,11 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">login_commandsText</string>
-						<reference key="source" ref="108852464"/>
-						<reference key="destination" ref="465790849"/>
-					</object>
-					<int key="connectionID">206</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
 						<string key="label">invisibleCheck</string>
 						<reference key="source" ref="108852464"/>
 						<reference key="destination" ref="1028661766"/>
 					</object>
 					<int key="connectionID">207</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onHostComboChanged:</string>
-						<reference key="source" ref="108852464"/>
-						<reference key="destination" ref="713549341"/>
-					</object>
-					<int key="connectionID">441</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -2289,35 +2201,11 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">alt_nicksText</string>
-						<reference key="source" ref="108852464"/>
-						<reference key="destination" ref="146182402"/>
-					</object>
-					<int key="connectionID">606</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
 						<string key="label">sslCheck</string>
 						<reference key="source" ref="108852464"/>
 						<reference key="destination" ref="458615225"/>
 					</object>
 					<int key="connectionID">691</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">fallback_encodingCombo</string>
-						<reference key="source" ref="108852464"/>
-						<reference key="destination" ref="570428117"/>
-					</object>
-					<int key="connectionID">759</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onEncodingComboChanged:</string>
-						<reference key="source" ref="108852464"/>
-						<reference key="destination" ref="601219626"/>
-					</object>
-					<int key="connectionID">760</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -2329,51 +2217,27 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">addButton</string>
+						<string key="label">realNameText</string>
 						<reference key="source" ref="108852464"/>
-						<reference key="destination" ref="65350016"/>
+						<reference key="destination" ref="935090418"/>
 					</object>
-					<int key="connectionID">909</int>
+					<int key="connectionID">1003</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">deleteButton</string>
+						<string key="label">leavingCommentText</string>
 						<reference key="source" ref="108852464"/>
-						<reference key="destination" ref="114289846"/>
+						<reference key="destination" ref="364433203"/>
 					</object>
-					<int key="connectionID">910</int>
+					<int key="connectionID">1004</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">editButton</string>
+						<string key="label">userInfoText</string>
 						<reference key="source" ref="108852464"/>
-						<reference key="destination" ref="370843621"/>
+						<reference key="destination" ref="771969857"/>
 					</object>
-					<int key="connectionID">911</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onEdit:</string>
-						<reference key="source" ref="108852464"/>
-						<reference key="destination" ref="370843621"/>
-					</object>
-					<int key="connectionID">912</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onDelete:</string>
-						<reference key="source" ref="108852464"/>
-						<reference key="destination" ref="114289846"/>
-					</object>
-					<int key="connectionID">913</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">onAdd:</string>
-						<reference key="source" ref="108852464"/>
-						<reference key="destination" ref="65350016"/>
-					</object>
-					<int key="connectionID">914</int>
+					<int key="connectionID">1005</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -2381,47 +2245,135 @@
 						<reference key="source" ref="108852464"/>
 						<reference key="destination" ref="834484940"/>
 					</object>
-					<int key="connectionID">996</int>
+					<int key="connectionID">1006</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">proxy_hostText</string>
+						<string key="label">proxyHostText</string>
 						<reference key="source" ref="108852464"/>
 						<reference key="destination" ref="567428159"/>
 					</object>
-					<int key="connectionID">997</int>
+					<int key="connectionID">1007</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">proxy_portText</string>
+						<string key="label">proxyPortText</string>
 						<reference key="source" ref="108852464"/>
 						<reference key="destination" ref="392959784"/>
 					</object>
-					<int key="connectionID">998</int>
+					<int key="connectionID">1008</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">proxy_userText</string>
+						<string key="label">proxyUserText</string>
 						<reference key="source" ref="108852464"/>
 						<reference key="destination" ref="840860360"/>
 					</object>
-					<int key="connectionID">999</int>
+					<int key="connectionID">1009</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">proxy_passwordText</string>
+						<string key="label">proxyPasswordText</string>
 						<reference key="source" ref="108852464"/>
 						<reference key="destination" ref="734656402"/>
 					</object>
-					<int key="connectionID">1000</int>
+					<int key="connectionID">1010</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">deleteChannelButton</string>
+						<reference key="source" ref="108852464"/>
+						<reference key="destination" ref="114289846"/>
+					</object>
+					<int key="connectionID">1011</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">addChannelButton</string>
+						<reference key="source" ref="108852464"/>
+						<reference key="destination" ref="65350016"/>
+					</object>
+					<int key="connectionID">1012</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">editChannelButton</string>
+						<reference key="source" ref="108852464"/>
+						<reference key="destination" ref="370843621"/>
+					</object>
+					<int key="connectionID">1013</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">onProxyComboChanged:</string>
+						<string key="label">addChannel:</string>
+						<reference key="source" ref="108852464"/>
+						<reference key="destination" ref="65350016"/>
+					</object>
+					<int key="connectionID">1014</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">deleteChannel:</string>
+						<reference key="source" ref="108852464"/>
+						<reference key="destination" ref="114289846"/>
+					</object>
+					<int key="connectionID">1015</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">editChannel:</string>
+						<reference key="source" ref="108852464"/>
+						<reference key="destination" ref="370843621"/>
+					</object>
+					<int key="connectionID">1016</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">encodingChanged:</string>
+						<reference key="source" ref="108852464"/>
+						<reference key="destination" ref="601219626"/>
+					</object>
+					<int key="connectionID">1017</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">proxyChanged:</string>
 						<reference key="source" ref="108852464"/>
 						<reference key="destination" ref="834484940"/>
 					</object>
-					<int key="connectionID">1001</int>
+					<int key="connectionID">1018</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">delegate</string>
+						<reference key="source" ref="621732341"/>
+						<reference key="destination" ref="108852464"/>
+					</object>
+					<int key="connectionID">1019</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">cancel:</string>
+						<reference key="source" ref="108852464"/>
+						<reference key="destination" ref="814462445"/>
+					</object>
+					<int key="connectionID">1020</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">ok:</string>
+						<reference key="source" ref="108852464"/>
+						<reference key="destination" ref="941270739"/>
+					</object>
+					<int key="connectionID">1021</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">hostComboChanged:</string>
+						<reference key="source" ref="108852464"/>
+						<reference key="destination" ref="713549341"/>
+					</object>
+					<int key="connectionID">1022</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -4102,9 +4054,9 @@
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>{{735, 313}, {409, 512}}</string>
+					<string>{{733, 479}, {409, 512}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{735, 313}, {409, 512}}</string>
+					<string>{{733, 479}, {409, 512}}</string>
 					<boolean value="YES"/>
 					<boolean value="YES"/>
 					<string>{213, 107}</string>
@@ -4284,7 +4236,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">1002</int>
+			<int key="maxID">1022</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -4298,15 +4250,27 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
+					<string key="className">IRCConnection</string>
+					<string key="superclassName">NSObject</string>
+					<object class="NSMutableDictionary" key="outlets">
+						<string key="NS.key.0">delegate</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="322036436">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">objc/IRC/IRCConnection.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
 					<string key="className">KeyRecorder</string>
 					<string key="superclassName">NSControl</string>
 					<object class="NSMutableDictionary" key="outlets">
 						<string key="NS.key.0">delegate</string>
 						<string key="NS.object.0">id</string>
 					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="720606876">
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="1015843115">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">objc/KeyRecorder.h</string>
+						<string key="minorKey">objc/Views/KeyRecorder/KeyRecorder.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -4325,23 +4289,244 @@
 							<string>id</string>
 						</object>
 					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="686518290">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">objc/Views/ListView.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">ListView</string>
+					<string key="superclassName">NSTableView</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBUserSource</string>
 						<string key="minorKey"/>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
+					<string key="className">ModeSheet</string>
+					<string key="superclassName">SheetBase</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">onChangeCheck:</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="outlets">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>aCheck</string>
+							<string>iCheck</string>
+							<string>kCheck</string>
+							<string>kText</string>
+							<string>lCheck</string>
+							<string>lText</string>
+							<string>mCheck</string>
+							<string>nCheck</string>
+							<string>pCheck</string>
+							<string>rCheck</string>
+							<string>sCheck</string>
+							<string>tCheck</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>NSButton</string>
+							<string>NSButton</string>
+							<string>NSButton</string>
+							<string>NSTextField</string>
+							<string>NSButton</string>
+							<string>NSTextField</string>
+							<string>NSButton</string>
+							<string>NSButton</string>
+							<string>NSButton</string>
+							<string>NSButton</string>
+							<string>NSButton</string>
+							<string>NSButton</string>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="369283730">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">objc/Dialogs/ModeSheet.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
+					<object class="NSMutableDictionary" key="actions">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>modeSheetOnOK:</string>
+							<string>modeSheetWillClose:</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>ModeSheet</string>
+							<string>ModeSheet</string>
+						</object>
+					</object>
+					<reference key="sourceIdentifier" ref="369283730"/>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">nickSheetWillClose:</string>
+						<string key="NS.object.0">NickSheet</string>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="530892535">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">objc/Dialogs/NickSheet.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
+					<object class="NSMutableDictionary" key="actions">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>serverDialogOnOK:</string>
+							<string>serverDialogWillClose:</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>ServerDialog</string>
+							<string>ServerDialog</string>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="796842318">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">objc/Dialogs/ServerDialog.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
+					<object class="NSMutableDictionary" key="actions">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>whoisDialogOnTalk:</string>
+							<string>whoisDialogOnUpdate:</string>
+							<string>whoisDialogWillClose:</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>WhoisDialog</string>
+							<string>WhoisDialog</string>
+							<string>WhoisDialog</string>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="425280434">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">objc/Dialogs/WhoisDialog.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
+					<object class="NSMutableDictionary" key="actions">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>ircConnectionDidConnect:</string>
+							<string>ircConnectionDidDisconnect:</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>IRCConnection</string>
+							<string>IRCConnection</string>
+						</object>
+					</object>
+					<reference key="sourceIdentifier" ref="322036436"/>
+				</object>
+				<object class="IBPartialClassDescription">
 					<string key="className">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">objc/AsyncSocket.h</string>
+						<string key="minorKey">objc/Library/AsyncSocket.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">objc/HostResolver.h</string>
+						<string key="minorKey">objc/Library/HostResolver.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
+					<object class="NSMutableDictionary" key="actions">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>tcpClientDidConnect:</string>
+							<string>tcpClientDidDisconnect:</string>
+							<string>tcpClientDidReceiveData:</string>
+							<string>tcpClientDidSendData:</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>TCPClient</string>
+							<string>TCPClient</string>
+							<string>TCPClient</string>
+							<string>TCPClient</string>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="446265581">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">objc/Library/TCPClient.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">timerOnTimer:</string>
+						<string key="NS.object.0">Timer</string>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="395884675">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">objc/Library/Timer.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">objc/Library/TinyGrowlClient.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">objc/Library/YAML/YAML.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">objc/Library/YAML/YAMLCategories.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">applicationDidReceiveHotKey:</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">objc/Others/LimeChatApplication.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">objc/Views/DialogWindow.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">objc/Views/FieldEditorTextView.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -4350,7 +4535,46 @@
 						<string key="NS.key.0">keyRecorderDidChangeKey:</string>
 						<string key="NS.object.0">KeyRecorder</string>
 					</object>
-					<reference key="sourceIdentifier" ref="720606876"/>
+					<reference key="sourceIdentifier" ref="1015843115"/>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
+					<reference key="sourceIdentifier" ref="686518290"/>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">objc/Views/Log/LogView.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">objc/Views/MarkedScroller.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">objc/Views/MemberList/MemberListView.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">objc/Views/ServerTreeView.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">objc/Views/TreeView.h</string>
+					</object>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSObject</string>
@@ -4360,35 +4584,41 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
+					<string key="className">NickSheet</string>
+					<string key="superclassName">SheetBase</string>
+					<object class="NSMutableDictionary" key="outlets">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>currentText</string>
+							<string>newText</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>NSTextField</string>
+							<string>NSTextField</string>
+						</object>
+					</object>
+					<reference key="sourceIdentifier" ref="530892535"/>
+				</object>
+				<object class="IBPartialClassDescription">
 					<string key="className">ServerDialog</string>
-					<string key="superclassName">NSObject</string>
+					<string key="superclassName">NSWindowController</string>
 					<object class="NSMutableDictionary" key="actions">
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>channelDialog_onCancel:</string>
-							<string>numberOfRowsInTableView:</string>
-							<string>onAdd:</string>
-							<string>onCancel:</string>
-							<string>onDelete:</string>
-							<string>onDown:</string>
-							<string>onEdit:</string>
-							<string>onEncodingComboChanged:</string>
-							<string>onHostComboChanged:</string>
-							<string>onOk:</string>
-							<string>onProxyComboChanged:</string>
-							<string>onUp:</string>
-							<string>tableView_doubleClicked:</string>
-							<string>windowWillClose:</string>
+							<string>addChannel:</string>
+							<string>cancel:</string>
+							<string>deleteChannel:</string>
+							<string>editChannel:</string>
+							<string>encodingChanged:</string>
+							<string>hostComboChanged:</string>
+							<string>ok:</string>
+							<string>proxyChanged:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -4403,39 +4633,144 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>addButton</string>
-							<string>alt_nicksText</string>
+							<string>addChannelButton</string>
+							<string>altNicksText</string>
 							<string>autoConnectCheck</string>
 							<string>channelsTable</string>
 							<string>delegate</string>
-							<string>deleteButton</string>
-							<string>downButton</string>
-							<string>editButton</string>
+							<string>deleteChannelButton</string>
+							<string>editChannelButton</string>
 							<string>encodingCombo</string>
-							<string>fallback_encodingCombo</string>
+							<string>fallbackEncodingCombo</string>
 							<string>hostCombo</string>
 							<string>invisibleCheck</string>
-							<string>leaving_commentText</string>
-							<string>login_commandsText</string>
+							<string>leavingCommentText</string>
+							<string>loginCommandsText</string>
 							<string>nameText</string>
 							<string>nickPasswordText</string>
 							<string>nickText</string>
 							<string>okButton</string>
-							<string>parent</string>
 							<string>passwordText</string>
 							<string>portText</string>
-							<string>prefix</string>
 							<string>proxyCombo</string>
-							<string>proxy_hostText</string>
-							<string>proxy_passwordText</string>
-							<string>proxy_portText</string>
-							<string>proxy_userText</string>
-							<string>realnameText</string>
+							<string>proxyHostText</string>
+							<string>proxyPasswordText</string>
+							<string>proxyPortText</string>
+							<string>proxyUserText</string>
+							<string>realNameText</string>
 							<string>sslCheck</string>
-							<string>upButton</string>
-							<string>userinfoText</string>
+							<string>userInfoText</string>
 							<string>usernameText</string>
-							<string>window</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>NSButton</string>
+							<string>NSTextField</string>
+							<string>NSButton</string>
+							<string>ListView</string>
+							<string>id</string>
+							<string>NSButton</string>
+							<string>NSButton</string>
+							<string>NSPopUpButton</string>
+							<string>NSPopUpButton</string>
+							<string>NSComboBox</string>
+							<string>NSButton</string>
+							<string>NSTextField</string>
+							<string>NSTextView</string>
+							<string>NSTextField</string>
+							<string>NSTextField</string>
+							<string>NSTextField</string>
+							<string>NSButton</string>
+							<string>NSTextField</string>
+							<string>NSTextField</string>
+							<string>NSPopUpButton</string>
+							<string>NSTextField</string>
+							<string>NSTextField</string>
+							<string>NSTextField</string>
+							<string>NSTextField</string>
+							<string>NSTextField</string>
+							<string>NSButton</string>
+							<string>NSTextField</string>
+							<string>NSTextField</string>
+						</object>
+					</object>
+					<reference key="sourceIdentifier" ref="796842318"/>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">ServerDialog</string>
+					<string key="superclassName">NSWindowController</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBUserSource</string>
+						<string key="minorKey"/>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">SheetBase</string>
+					<string key="superclassName">NSObject</string>
+					<object class="NSMutableDictionary" key="actions">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>cancel:</string>
+							<string>ok:</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
+							<string>id</string>
+						</object>
+					</object>
+					<object class="NSMutableDictionary" key="outlets">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>cancelButton</string>
+							<string>delegate</string>
+							<string>okButton</string>
+							<string>sheet</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>NSButton</string>
+							<string>id</string>
+							<string>NSButton</string>
+							<string>NSWindow</string>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">objc/Dialogs/SheetBase.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">TCPClient</string>
+					<string key="superclassName">NSObject</string>
+					<object class="NSMutableDictionary" key="outlets">
+						<string key="NS.key.0">delegate</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<reference key="sourceIdentifier" ref="446265581"/>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">Timer</string>
+					<string key="superclassName">NSObject</string>
+					<object class="NSMutableDictionary" key="outlets">
+						<string key="NS.key.0">delegate</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<reference key="sourceIdentifier" ref="395884675"/>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">WhoisDialog</string>
+					<string key="superclassName">NSWindowController</string>
+					<object class="NSMutableDictionary" key="actions">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>onClose:</string>
+							<string>onJoin:</string>
+							<string>onTalk:</string>
+							<string>onUpdate:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -4443,41 +4778,44 @@
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
 						</object>
 					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBUserSource</string>
-						<string key="minorKey"/>
+					<object class="NSMutableDictionary" key="outlets">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>addressText</string>
+							<string>awayText</string>
+							<string>channelsCombo</string>
+							<string>closeButton</string>
+							<string>delegate</string>
+							<string>idleText</string>
+							<string>joinButton</string>
+							<string>logInText</string>
+							<string>nickText</string>
+							<string>realnameText</string>
+							<string>serverInfoText</string>
+							<string>serverText</string>
+							<string>signOnText</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>NSTextField</string>
+							<string>NSTextField</string>
+							<string>NSPopUpButton</string>
+							<string>NSButton</string>
+							<string>id</string>
+							<string>NSTextField</string>
+							<string>NSButton</string>
+							<string>NSTextField</string>
+							<string>NSTextField</string>
+							<string>NSTextField</string>
+							<string>NSTextField</string>
+							<string>NSTextField</string>
+							<string>NSTextField</string>
+						</object>
 					</object>
+					<reference key="sourceIdentifier" ref="425280434"/>
 				</object>
 			</object>
 			<object class="NSMutableArray" key="referencedPartialClassDescriptionsV3.2+">
@@ -5123,9 +5461,22 @@
 						<string key="minorKey">AppKit.framework/Headers/NSWindowScripting.h</string>
 					</object>
 				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSWindowController</string>
+					<string key="superclassName">NSResponder</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">showWindow:</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">AppKit.framework/Headers/NSWindowController.h</string>
+					</object>
+				</object>
 			</object>
 		</object>
 		<int key="IBDocument.localizationMode">0</int>
+		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaFramework</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencies">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>
 			<integer value="1050" key="NS.object.0"/>
@@ -5137,5 +5488,24 @@
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<string key="IBDocument.LastKnownRelativeProjectPath">../LimeChat.xcodeproj</string>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
+		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
+			<bool key="EncodedWithXMLCoder">YES</bool>
+			<object class="NSArray" key="dict.sortedKeys">
+				<bool key="EncodedWithXMLCoder">YES</bool>
+				<string>NSAddTemplate</string>
+				<string>NSMenuCheckmark</string>
+				<string>NSMenuMixedState</string>
+				<string>NSRemoveTemplate</string>
+				<string>NSSwitch</string>
+			</object>
+			<object class="NSMutableArray" key="dict.values">
+				<bool key="EncodedWithXMLCoder">YES</bool>
+				<string>{8, 8}</string>
+				<string>{9, 8}</string>
+				<string>{7, 2}</string>
+				<string>{8, 8}</string>
+				<string>{15, 15}</string>
+			</object>
+		</object>
 	</data>
 </archive>

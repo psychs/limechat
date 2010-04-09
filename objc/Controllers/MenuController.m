@@ -8,6 +8,7 @@
 #import "URLOpener.h"
 #import "GTMNSString+URLArguments.h"
 #import "NSPasteboardHelper.h"
+#import "ServerDialog.h"
 
 
 #define CONNECTED				(u && u.connected)
@@ -531,6 +532,22 @@
 
 - (void)onAddServer:(id)sender
 {
+	IRCClient* u = world.selectedClient;
+	IRCClientConfig* config = nil;
+	if (u) {
+		config = [[u.config mutableCopy] autorelease];
+	}
+	else {
+		config = [[IRCClientConfig new] autorelease];
+	}
+	
+	ServerDialog* d = [[ServerDialog new] autorelease];
+	d.delegate = self;
+	d.parentWindow = window;
+	d.config = config;
+	d.uid = -1;
+	[serverDialogs addObject:d];
+	[d start];
 }
 
 - (void)onCopyServer:(id)sender
@@ -553,6 +570,43 @@
 
 - (void)onServerProperties:(id)sender
 {
+	IRCClient* u = world.selectedClient;
+	if (!u) return;
+	
+	if (u.propertyDialog) {
+		[u.propertyDialog show];
+		return;
+	}
+	
+	ServerDialog* d = [[ServerDialog new] autorelease];
+	d.delegate = self;
+	d.parentWindow = window;
+	d.config = [[u.config mutableCopy] autorelease];
+	d.uid = u.uid;
+	[serverDialogs addObject:d];
+	[d start];
+}
+
+- (void)serverDialogOnOK:(ServerDialog*)sender
+{
+	LOG_METHOD
+	
+	if (sender.uid < 0) {
+		// create
+	}
+	else {
+		// update
+	}
+}
+
+- (void)serverDialogWillClose:(ServerDialog*)sender
+{
+	[[sender retain] autorelease];
+	[serverDialogs removeObjectIdenticalTo:sender];
+	
+	IRCClient* u = world.selectedClient;
+	if (!u) return;
+	u.propertyDialog = nil;
 }
 
 - (void)onServerAutoOp:(id)sender

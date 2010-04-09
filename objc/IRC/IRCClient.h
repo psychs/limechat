@@ -9,6 +9,7 @@
 #import "IRCConnection.h"
 #import "IRCISupportInfo.h"
 #import "IRCUserMode.h"
+#import "ServerDialog.h"
 
 
 @class IRCWorld;
@@ -52,6 +53,7 @@
 	IRCChannel* lastSelectedChannel;
 	
 	NSMutableArray* whoisDialogs;
+	ServerDialog* propertyDialog;
 }
 
 @property (nonatomic, assign) IRCWorld* world;
@@ -69,6 +71,7 @@
 @property (nonatomic, readonly) NSString* myAddress;
 
 @property (nonatomic, retain) IRCChannel* lastSelectedChannel;
+@property (nonatomic, retain) ServerDialog* propertyDialog;
 
 - (void)setup:(IRCClientConfig*)seed;
 

@@ -33,7 +33,6 @@
 	NSMutableArray* serverDialogs;
 	NSMutableArray* channelDialogs;
 	NSMutableArray* pasteClients;
-	
 	NickSheet* nickSheet;
 	ModeSheet* modeSheet;
 }
