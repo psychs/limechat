@@ -353,7 +353,7 @@
 	if (line.place) [s appendFormat:@"<span class=\"place\">%@</span>", [line.place gtm_stringByEscapingForHTML]];
 	if (line.nick) {
 		[s appendFormat:@"<span class=\"sender\" type=\"%@\"", [LogLine memberTypeString:line.memberType]];
-		if (!console) [s appendString:@" oncontextmenu=\"on_nick_contextmenu()\""];
+		if (!console) [s appendString:@" oncontextmenu=\"on_nick()\""];
 		[s appendFormat:@" identified=\"%@\"", line.identified ? @"true" : @"false"];
 		if (line.memberType == MEMBER_TYPE_NORMAL) [s appendFormat:@" colornumber=\"%d\"", line.nickColorNumber];
 		if (line.nickInfo) [s appendFormat:@" first=\"%@\"", [line.nickInfo isEqualToString:prevNickInfo] ? @"false" : @"true"];
@@ -395,6 +395,9 @@
 	[attrs setObject:klass forKey:@"class"];
 	[attrs setObject:[LogLine lineTypeString:type] forKey:@"type"];
 	[attrs setObject:(key ? @"true" : @"false") forKey:@"highlight"];
+	if (line.nickInfo) {
+		[attrs setObject:line.nickInfo forKey:@"nick"];
+	}
 	if (console && line.clickInfo) {
 		[attrs setObject:line.clickInfo forKey:@"clickinfo"];
 		[attrs setObject:@"on_dblclick()" forKey:@"ondblclick"];
@@ -700,29 +703,29 @@
 		[s appendString:@"  }"];
 		[s appendString:@"  event.stopPropagation();"];
 		[s appendString:@"}"];
-		[s appendString:@"function on_url_contextmenu() {"];
+		[s appendString:@"function on_url() {"];
 		[s appendString:@"  var t = event.target;"];
 		[s appendString:@"  app.setUrl(t.innerHTML);"];
 		[s appendString:@"}"];
-		[s appendString:@"function on_address_contextmenu() {"];
+		[s appendString:@"function on_addr() {"];
 		[s appendString:@"  var t = event.target;"];
 		[s appendString:@"  app.setAddr(t.innerHTML);"];
 		[s appendString:@"}"];
 		[s appendString:@"document.addEventListener('mousedown', on_mousedown, false);"];	}
 	else {
-		[s appendString:@"function on_url_contextmenu() {"];
+		[s appendString:@"function on_url() {"];
 		[s appendString:@"  var t = event.target;"];
 		[s appendString:@"  app.setUrl(t.innerHTML);"];
 		[s appendString:@"}"];
-		[s appendString:@"function on_address_contextmenu() {"];
+		[s appendString:@"function on_addr() {"];
 		[s appendString:@"  var t = event.target;"];
 		[s appendString:@"  app.setAddr(t.innerHTML);"];
 		[s appendString:@"}"];
-		[s appendString:@"function on_nick_contextmenu() {"];
+		[s appendString:@"function on_nick() {"];
 		[s appendString:@"  var t = event.target;"];
 		[s appendString:@"  app.setNick(t.parentNode.getAttribute('nick'));"];
 		[s appendString:@"}"];
-		[s appendString:@"function on_channel_contextmenu() {"];
+		[s appendString:@"function on_chname() {"];
 		[s appendString:@"  var t = event.target;"];
 		[s appendString:@"  app.setChan(t.innerHTML);"];
 		[s appendString:@"}"];

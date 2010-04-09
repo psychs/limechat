@@ -72,16 +72,16 @@ static NSString* renderRange(NSString* body, attr_t attr, int start, int len)
 		// URL
 		NSString* link = content;
 		content = [content gtm_stringByEscapingForHTML];
-		return [NSString stringWithFormat:@"<a href=\"%@\" class=\"url\" oncontextmenu=\"on_url_contextmenu()\">%@</a>", link, content];
+		return [NSString stringWithFormat:@"<a href=\"%@\" class=\"url\" oncontextmenu=\"on_url()\">%@</a>", link, content];
 	}
 	else if (attr & KEYWORD_ATTR) {
 		// keyword
 		content = [content gtm_stringByEscapingForHTML];
 		if (attr & ADDRESS_ATTR) {
-			return [NSString stringWithFormat:@"<strong class=\"highlight\"><span class=\"address\" oncontextmenu=\"on_address_contextmenu()\">%@</span></strong>", content];
+			return [NSString stringWithFormat:@"<strong class=\"highlight\"><span class=\"address\" oncontextmenu=\"on_addr()\">%@</span></strong>", content];
 		}
 		else if (attr & CHANNEL_NAME_ATTR) {
-			return [NSString stringWithFormat:@"<strong class=\"highlight\"><span class=\"channel\" oncontextmenu=\"on_channel_contextmenu()\">%@</span></strong>", content];
+			return [NSString stringWithFormat:@"<strong class=\"highlight\"><span class=\"channel\" oncontextmenu=\"on_chname()\">%@</span></strong>", content];
 		}
 		else {
 			return [NSString stringWithFormat:@"<strong class=\"highlight\">%@</strong>", content];
@@ -90,12 +90,12 @@ static NSString* renderRange(NSString* body, attr_t attr, int start, int len)
 	else if (attr & ADDRESS_ATTR) {
 		// address
 		content = [content gtm_stringByEscapingForHTML];
-		return [NSString stringWithFormat:@"<span class=\"address\" oncontextmenu=\"on_address_contextmenu()\">%@</span>", content];
+		return [NSString stringWithFormat:@"<span class=\"address\" oncontextmenu=\"on_addr()\">%@</span>", content];
 	}
 	else if (attr & CHANNEL_NAME_ATTR) {
 		// channel name
 		content = [content gtm_stringByEscapingForHTML];
-		return [NSString stringWithFormat:@"<span class=\"channel\" oncontextmenu=\"on_channel_contextmenu()\">%@</span>", content];
+		return [NSString stringWithFormat:@"<span class=\"channel\" oncontextmenu=\"on_chname()\">%@</span>", content];
 	}
 	else if (attr & EFFECT_MASK) {
 		// effect
