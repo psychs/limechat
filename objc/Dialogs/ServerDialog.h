@@ -39,7 +39,7 @@
 	IBOutlet NSTextField* proxyUserText;
 	IBOutlet NSTextField* proxyPasswordText;
 	
-	IBOutlet ListView* channelsTable;
+	IBOutlet ListView* channelTable;
 	IBOutlet NSButton* addChannelButton;
 	IBOutlet NSButton* editChannelButton;
 	IBOutlet NSButton* deleteChannelButton;

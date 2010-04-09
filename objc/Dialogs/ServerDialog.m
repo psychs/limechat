@@ -4,6 +4,11 @@
 #import "ServerDialog.h"
 #import "NSWindowHelper.h"
 #import "NSLocaleHelper.h"
+#import "IRCChannelConfig.h"
+
+
+#define TABLE_ROW_TYPE		@"row"
+#define TABLE_ROW_TYPES		[NSArray arrayWithObject:TABLE_ROW_TYPE]
 
 
 @interface ServerDialog (Private)
@@ -11,6 +16,7 @@
 - (void)save;
 - (void)updateConnectionPage;
 - (void)updateChannelsPage;
+- (void)reloadChannelTable;
 @end
 
 
@@ -66,11 +72,16 @@
 		[self.window setTitle:@"New Server"];
 	}
 	
+	[channelTable setTarget:self];
+	[channelTable setDoubleAction:@selector(tableViewDoubleClicked:)];
+	[channelTable registerForDraggedTypes:TABLE_ROW_TYPES];
+
 	[self load];
 	[self updateConnectionPage];
 	[self updateChannelsPage];
 	[self encodingChanged:nil];
 	[self proxyChanged:nil];
+	[self reloadChannelTable];
 	
 	[self show];
 }
@@ -139,10 +150,15 @@
 
 - (void)updateChannelsPage
 {
-	int i = [channelsTable selectedRow];
+	int i = [channelTable selectedRow];
 	BOOL enabled = (i >= 0);
 	[editChannelButton setEnabled:enabled];
 	[deleteChannelButton setEnabled:enabled];
+}
+
+- (void)reloadChannelTable
+{
+	[channelTable reloadData];
 }
 
 #pragma mark -
@@ -207,10 +223,113 @@
 }
 
 #pragma mark -
+#pragma mark NSTableViwe Delegate
+
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)sender
+{
+	return config.channels.count;
+}
+
+- (id)tableView:(NSTableView *)sender objectValueForTableColumn:(NSTableColumn *)column row:(NSInteger)row
+{
+	IRCChannelConfig* c = [config.channels objectAtIndex:row];
+	NSString* columnId = [column identifier];
+	
+	if ([columnId isEqualToString:@"name"]) {
+		return c.name;
+	}
+	else if ([columnId isEqualToString:@"pass"]) {
+		return c.password;
+	}
+	else if ([columnId isEqualToString:@"join"]) {
+		return [NSNumber numberWithBool:c.autoJoin];
+	}
+	
+	return nil;
+}
+
+- (void)tableView:(NSTableView *)sender setObjectValue:(id)obj forTableColumn:(NSTableColumn *)column row:(NSInteger)row
+{
+	IRCChannelConfig* c = [config.channels objectAtIndex:row];
+	NSString* columnId = [column identifier];
+	
+	if ([columnId isEqualToString:@"join"]) {
+		c.autoJoin = [obj intValue] != 0;
+	}
+}
+
+- (void)tableViewSelectionDidChange:(NSNotification *)note
+{
+	[self updateChannelsPage];
+}
+
+- (void)tableViewDoubleClicked:(id)sender
+{
+	[self editChannel:nil];
+}
+
+- (BOOL)tableView:(NSTableView *)sender writeRowsWithIndexes:(NSIndexSet *)rows toPasteboard:(NSPasteboard *)pboard
+{
+	NSArray* ary = [NSArray arrayWithObject:[NSNumber numberWithInt:[rows firstIndex]]];
+	
+	[pboard declareTypes:TABLE_ROW_TYPES owner:self];
+	[pboard setPropertyList:ary forType:TABLE_ROW_TYPE];
+	return YES;
+}
+
+- (NSDragOperation)tableView:(NSTableView *)sender validateDrop:(id < NSDraggingInfo >)info proposedRow:(NSInteger)row proposedDropOperation:(NSTableViewDropOperation)op
+{
+	NSPasteboard* pboard = [info draggingPasteboard];
+	if (op == NSTableViewDropAbove && [pboard availableTypeFromArray:TABLE_ROW_TYPES]) {
+		return NSDragOperationGeneric;
+	}
+	else {
+		return NSDragOperationNone;
+	}
+}
+
+- (BOOL)tableView:(NSTableView *)sender acceptDrop:(id < NSDraggingInfo >)info row:(NSInteger)row dropOperation:(NSTableViewDropOperation)op
+{
+	NSPasteboard* pboard = [info draggingPasteboard];
+	if (op == NSTableViewDropAbove && [pboard availableTypeFromArray:TABLE_ROW_TYPES]) {
+		NSArray* selectedRows = [pboard propertyListForType:TABLE_ROW_TYPE];
+		int sel = [[selectedRows objectAtIndex:0] intValue];
+		
+		NSMutableArray* ary = config.channels;
+		IRCChannelConfig* target = [ary objectAtIndex:sel];
+		[[target retain] autorelease];
+
+		NSMutableArray* low = [[[ary subarrayWithRange:NSMakeRange(0, row)] mutableCopy] autorelease];
+		NSMutableArray* high = [[[ary subarrayWithRange:NSMakeRange(row, ary.count - row)] mutableCopy] autorelease];
+		
+		[low removeObjectIdenticalTo:target];
+		[high removeObjectIdenticalTo:target];
+		
+		[ary removeAllObjects];
+		
+		[ary addObjectsFromArray:low];
+		[ary addObject:target];
+		[ary addObjectsFromArray:high];
+		
+		[self reloadChannelTable];
+		
+		sel = [ary indexOfObjectIdenticalTo:target];
+		if (0 <= sel) {
+			[channelTable select:sel];
+		}
+		
+		return YES;
+	}
+	return NO;
+}
+
+#pragma mark -
 #pragma mark NSWindow Delegate
 
 - (void)windowWillClose:(NSNotification*)note
 {
+	[channelTable unregisterDraggedTypes];
+	
 	if ([delegate respondsToSelector:@selector(serverDialogWillClose:)]) {
 		[delegate serverDialogWillClose:self];
 	}
