@@ -54,12 +54,13 @@
 
 - (void)setup:(IRCChannelConfig*)seed
 {
+	[config autorelease];
 	config = [seed mutableCopy];
 }
 
 - (void)updateConfig:(IRCChannelConfig*)seed
 {
-	[config release];
+	[config autorelease];
 	config = [seed mutableCopy];
 }
 

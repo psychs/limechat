@@ -74,6 +74,8 @@
 @property (nonatomic, retain) ServerDialog* propertyDialog;
 
 - (void)setup:(IRCClientConfig*)seed;
+- (void)updateConfig:(IRCClientConfig*)seed;
+- (IRCClientConfig*)storedConfig;
 
 - (void)autoConnect:(int)delay;
 - (void)onTimer;

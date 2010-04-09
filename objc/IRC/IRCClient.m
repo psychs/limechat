@@ -123,7 +123,63 @@
 
 - (void)setup:(IRCClientConfig*)seed
 {
+	[config autorelease];
 	config = [seed mutableCopy];
+}
+
+- (void)updateConfig:(IRCClientConfig*)seed
+{
+	[config autorelease];
+	config = [seed mutableCopy];
+	
+	NSArray* chans = config.channels;
+	
+	NSMutableArray* ary = [NSMutableArray array];
+	
+	for (IRCChannelConfig* i in chans) {
+		IRCChannel* c = [self findChannel:i.name];
+		if (c) {
+			[c updateConfig:i];
+			[ary addObject:c];
+			[channels removeObjectIdenticalTo:c];
+		}
+		else {
+			c = [world createChannel:i client:self reload:NO adjust:NO];
+			[ary addObject:c];
+		}
+	}
+	
+	for (IRCChannel* c in channels) {
+		if (c.isChannel) {
+			[self partChannel:c];
+		}
+		else {
+			[ary addObject:c];
+		}
+	}
+	
+	[channels removeAllObjects];
+	[channels addObjectsFromArray:ary];
+	
+	[config.channels removeAllObjects];
+
+	[world reloadTree];
+	[world adjustSelection];
+}
+
+- (IRCClientConfig*)storedConfig
+{
+	IRCClientConfig* u = [[config mutableCopy] autorelease];
+	u.uid = uid;
+	[u.channels removeAllObjects];
+	
+	for (IRCChannel* c in channels) {
+		if (c.isChannel) {
+			[u.channels addObject:[[c.config mutableCopy] autorelease]];
+		}
+	}
+	
+	return u;
 }
 
 #pragma mark -

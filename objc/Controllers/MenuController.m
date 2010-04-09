@@ -581,7 +581,7 @@
 	ServerDialog* d = [[ServerDialog new] autorelease];
 	d.delegate = self;
 	d.parentWindow = window;
-	d.config = [[u.config mutableCopy] autorelease];
+	d.config = u.storedConfig;
 	d.uid = u.uid;
 	[serverDialogs addObject:d];
 	[d start];
@@ -589,14 +589,17 @@
 
 - (void)serverDialogOnOK:(ServerDialog*)sender
 {
-	LOG_METHOD
-	
 	if (sender.uid < 0) {
 		// create
+		[world createClient:sender.config reload:YES];
 	}
 	else {
 		// update
+		IRCClient* u = [world findClientById:sender.uid];
+		if (!u) return;
+		[u updateConfig:sender.config];
 	}
+	[world save];
 }
 
 - (void)serverDialogWillClose:(ServerDialog*)sender

@@ -112,6 +112,7 @@
 
 - (void)updateIcon;
 - (void)reloadTree;
+- (void)adjustSelection;
 - (void)expandClient:(IRCClient*)client;
 
 - (void)updateTitle;
