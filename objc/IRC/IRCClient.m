@@ -9,6 +9,7 @@
 #import "NSStringHelper.h"
 #import "NSDataHelper.h"
 #import "WhoisDialog.h"
+#import "Regex.h"
 
 
 #define MAX_JOIN_CHANNELS	10
@@ -677,6 +678,77 @@
 	return result;
 }
 
+- (NSString*)formatNick:(NSString*)nick channel:(IRCChannel*)channel
+{
+	NSString* format;
+	if ([Preferences themeOverrideNickFormat]) {
+		format = [Preferences themeNickFormat];
+	}
+	else {
+		format = world.viewTheme.other.logNickFormat;
+	}
+	
+	NSString* s = format;
+	
+	if ([s contains:@"%@"]) {
+		char mark = ' ';
+		if (channel && !channel.isClient && channel.isChannel) {
+			IRCUser* m = [channel findMember:nick];
+			if (m) {
+				mark = m.mark;
+			}
+		}
+		s = [s stringByReplacingOccurrencesOfString:@"%@" withString:[NSString stringWithFormat:@"%c", mark]];
+	}
+	
+	static Regex* nickPattern = nil;
+	if (!nickPattern) {
+		nickPattern = [[Regex alloc] initWithString:@"%(-?\\d+)n"];
+	}
+	
+	NSRange r;
+	
+	while (1) {
+		r = [nickPattern match:s];
+		if (r.location == NSNotFound) break;
+		
+		NSRange numRange = [nickPattern groupAt:1];
+		if (numRange.location != NSNotFound && numRange.length > 0) {
+			NSString* numStr = [s substringWithRange:numRange];
+			int n = [numStr intValue];
+			
+			NSString* formattedNick = nick;
+			if (n >= 0) {
+				int pad = n - nick.length;
+				if (pad > 0) {
+					NSMutableString* ms = [NSMutableString stringWithString:nick];
+					for (int i=0; i<pad; ++i) {
+						[ms appendString:@" "];
+					}
+					formattedNick = ms;
+				}
+			}
+			else {
+				int pad = -n - nick.length;
+				if (pad > 0) {
+					NSMutableString* ms = [NSMutableString string];
+					for (int i=0; i<pad; ++i) {
+						[ms appendString:@" "];
+					}
+					[ms appendString:nick];
+					formattedNick = ms;
+				}
+			}
+			s = [s stringByReplacingCharactersInRange:r withString:formattedNick];
+		}
+		else {
+			s = [s stringByReplacingCharactersInRange:r withString:nick];
+		}
+	}
+	
+	return s;
+}
+
 - (void)printConsole:(id)chan type:(LogLineType)type text:(NSString*)text
 {
 	[self printConsole:chan type:type nick:nil text:text identified:NO];
@@ -719,7 +791,7 @@
 			nickStr = [NSString stringWithFormat:@"%@ "];
 		}
 		else {
-			nickStr = [NSString stringWithFormat:@"%@: ", nick];
+			nickStr = [self formatNick:nick channel:channel];
 		}
 	}
 	
@@ -806,7 +878,7 @@
 			nickStr = [NSString stringWithFormat:@"%@ ", nick];
 		}
 		else {
-			nickStr = [NSString stringWithFormat:@"%@: ", nick];
+			nickStr = [self formatNick:nick channel:channel];
 		}
 	}
 	
