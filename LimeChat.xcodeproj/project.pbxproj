@@ -399,7 +399,14 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				786927470BB6EE130081019B /* objc */,
+				78364B14116597D00096F3A9 /* Controllers */,
+				78BC0C521168E5D800A984AA /* IRC */,
+				78E345BF116C6A9A00990CCB /* Preferences */,
+				787BEB4A116B5E9B003AE47D /* Dialogs */,
+				78364B25116597D00096F3A9 /* Views */,
+				78364B16116597D00096F3A9 /* Library */,
+				78364B15116597D00096F3A9 /* Helpers */,
+				78364B20116597D00096F3A9 /* Others */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -695,21 +702,6 @@
 			);
 			name = images;
 			path = resource/images;
-			sourceTree = "<group>";
-		};
-		786927470BB6EE130081019B /* objc */ = {
-			isa = PBXGroup;
-			children = (
-				78364B14116597D00096F3A9 /* Controllers */,
-				78BC0C521168E5D800A984AA /* IRC */,
-				78E345BF116C6A9A00990CCB /* Preferences */,
-				787BEB4A116B5E9B003AE47D /* Dialogs */,
-				78364B25116597D00096F3A9 /* Views */,
-				78364B16116597D00096F3A9 /* Library */,
-				78364B15116597D00096F3A9 /* Helpers */,
-				78364B20116597D00096F3A9 /* Others */,
-			);
-			name = objc;
 			sourceTree = "<group>";
 		};
 		787BEB4A116B5E9B003AE47D /* Dialogs */ = {
