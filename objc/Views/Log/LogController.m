@@ -43,7 +43,6 @@
 @synthesize chanMenu;
 @synthesize memberMenu;
 @synthesize theme;
-@synthesize overrideFont;
 @synthesize maxLines;
 @synthesize console;
 @synthesize initialBackgroundColor;
@@ -73,7 +72,6 @@
 	[chanMenu release];
 	[memberMenu release];
 	[theme release];
-	[overrideFont release];
 	[initialBackgroundColor release];
 	
 	[lines release];
@@ -468,6 +466,21 @@
 	
 	NSString* style = [[theme log] content];
 	
+	NSString* overrideStyle = nil;
+	
+	if ([Preferences themeOverrideLogFont]) {
+		NSString* name = [Preferences themeLogFontName];
+		double size = [Preferences themeLogFontSize];
+
+		NSMutableString* s = [NSMutableString string];
+		[s appendString:@"html, body, body[type], body.normal, body.console {"];
+		[s appendFormat:@"font-family:'%@';", name];
+		[s appendFormat:@"font-size:%f;", size];
+		[s appendString:@"}"];
+		
+		overrideStyle = s;
+	}
+	
 	NSMutableString* s = [NSMutableString string];
 	
 	[s appendString:@"<html>"];
@@ -477,6 +490,7 @@
 	[s appendString:@"<meta http-equiv=\"Content-Style-Type\" content=\"text/css\">"];
 	[s appendFormat:@"<style>%@</style>", [self defaultCSS]];
 	if (style) [s appendFormat:@"<style><!-- %@ --></style>", style];
+	if (overrideStyle) [s appendFormat:@"<style><!-- %@ --></style>", overrideStyle];
 	[s appendString:@"</head>"];
 	[s appendFormat:@"<body class=\"%@\" %@></body>", bodyClass, bodyAttrs];
 	[s appendString:@"</html>"];

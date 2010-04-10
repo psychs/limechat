@@ -738,7 +738,6 @@
 	c.channel = channel;
 	c.maxLines = 300;
 	c.theme = viewTheme;
-	c.overrideFont = nil;	//@@@
 	c.console = console;
 	c.initialBackgroundColor = [viewTheme.other inputTextBgColor];
 	[c setUp];

@@ -32,7 +32,6 @@
 	NSMenu* chanMenu;
 	NSMenu* memberMenu;
 	ViewTheme* theme;
-	id overrideFont;
 	int maxLines;
 	BOOL console;
 	NSColor* initialBackgroundColor;
@@ -60,7 +59,6 @@
 @property (nonatomic, retain) NSMenu* chanMenu;
 @property (nonatomic, retain) NSMenu* memberMenu;
 @property (nonatomic, retain) ViewTheme* theme;
-@property (nonatomic, retain) id overrideFont;
 @property (nonatomic, assign) BOOL console;
 @property (nonatomic, retain) NSColor* initialBackgroundColor;
 @property (nonatomic, assign) int maxLines;
