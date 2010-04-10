@@ -703,7 +703,7 @@
 	
 	static Regex* nickPattern = nil;
 	if (!nickPattern) {
-		nickPattern = [[Regex alloc] initWithString:@"%(-?\\d+)n"];
+		nickPattern = [[Regex alloc] initWithString:@"%(-?\\d+)?n"];
 	}
 	
 	NSRange r;

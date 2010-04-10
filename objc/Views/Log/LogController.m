@@ -8,7 +8,6 @@
 #import "IRCClient.h"
 #import "IRCChannel.h"
 #import "Regex.h"
-#import "GTMNSString+HTML.h"
 
 
 #define BOTTOM_EPSILON	20
@@ -347,15 +346,15 @@
 	}
 
 	NSMutableString* s = [NSMutableString string];
-	if (line.time) [s appendFormat:@"<span class=\"time\">%@</span>", [line.time gtm_stringByEscapingForHTML]];
-	if (line.place) [s appendFormat:@"<span class=\"place\">%@</span>", [line.place gtm_stringByEscapingForHTML]];
+	if (line.time) [s appendFormat:@"<span class=\"time\">%@</span>", logEscape(line.time)];
+	if (line.place) [s appendFormat:@"<span class=\"place\">%@</span>", logEscape(line.place)];
 	if (line.nick) {
 		[s appendFormat:@"<span class=\"sender\" type=\"%@\"", [LogLine memberTypeString:line.memberType]];
 		if (!console) [s appendString:@" oncontextmenu=\"on_nick()\""];
 		[s appendFormat:@" identified=\"%@\"", line.identified ? @"true" : @"false"];
 		if (line.memberType == MEMBER_TYPE_NORMAL) [s appendFormat:@" colornumber=\"%d\"", line.nickColorNumber];
 		if (line.nickInfo) [s appendFormat:@" first=\"%@\"", [line.nickInfo isEqualToString:prevNickInfo] ? @"false" : @"true"];
-		[s appendFormat:@">%@</span>", [line.nick gtm_stringByEscapingForHTML]];
+		[s appendFormat:@">%@</span>", logEscape(line.nick)];
 	}
 	
 	LogLineType type = line.lineType;
@@ -454,7 +453,7 @@
 	if (channel) {
 		[bodyAttrs appendFormat:@"type=\"%@\"", [channel channelTypeString]];
 		if ([channel isChannel]) {
-			[bodyAttrs appendFormat:@"channelname=\"%@\"", [[channel name] gtm_stringByEscapingForHTML]];
+			[bodyAttrs appendFormat:@"channelname=\"%@\"", logEscape([channel name])];
 		}
 	}
 	else if (console) {

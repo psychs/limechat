@@ -4,6 +4,9 @@
 #import <Cocoa/Cocoa.h>
 
 
+NSString* logEscape(NSString* s);
+
+
 @interface LogRenderer : NSObject
 
 + (void)setUp;
