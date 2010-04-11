@@ -141,44 +141,44 @@ static NSMutableParagraphStyle* statusStyle;
 								 statusColor, NSForegroundColorAttributeName,
 								 nil];
 	
-	NSMutableString* str = [NSMutableString string];
+	NSMutableString* statusStr = [NSMutableString string];
 	
 	if (sendingItem) {
-		[str appendFormat:@"To %@    ", peerNick];
+		[statusStr appendFormat:@"To %@    ", peerNick];
 	}
 	else {
-		[str appendFormat:@"From %@    ", peerNick];
+		[statusStr appendFormat:@"From %@    ", peerNick];
 	}
 	
 	switch (status) {
 		case DCC_INIT:
-			[str appendString:[self formatSize:size]];
+			[statusStr appendString:[self formatSize:size]];
 			break;
 		case DCC_LISTENING:
-			[str appendFormat:@"%@  — Requesting", [self formatSize:size]];
+			[statusStr appendFormat:@"%@  — Requesting", [self formatSize:size]];
 			break;
 		case DCC_CONNECTING:
-			[str appendFormat:@"%@  — Connecting", [self formatSize:size]];
+			[statusStr appendFormat:@"%@  — Connecting", [self formatSize:size]];
 			break;
 		case DCC_SENDING:
 		case DCC_RECEIVING:
-			[str appendFormat:@"%@ / %@ (%@/s)", [self formatSize:processedSize], [self formatSize:size], [self formatSize:speed]];
+			[statusStr appendFormat:@"%@ / %@ (%@/s)", [self formatSize:processedSize], [self formatSize:size], [self formatSize:speed]];
 			if (timeRemaining) {
-				[str appendFormat:@"  — %@ remaining", [self formatTime:timeRemaining]];
+				[statusStr appendFormat:@"  — %@ remaining", [self formatTime:timeRemaining]];
 			}
 			break;
 		case DCC_STOP:
-			[str appendFormat:@"%@ / %@  — Stopped", [self formatSize:processedSize], [self formatSize:size]];
+			[statusStr appendFormat:@"%@ / %@  — Stopped", [self formatSize:processedSize], [self formatSize:size]];
 			break;
 		case DCC_ERROR:
-			[str appendFormat:@"%@ / %@  — Error: %@", [self formatSize:processedSize], [self formatSize:size], error];
+			[statusStr appendFormat:@"%@ / %@  — Error: %@", [self formatSize:processedSize], [self formatSize:size], error];
 			break;
 		case DCC_COMPLETE:
-			[str appendFormat:@"%@  — Complete", [self formatSize:size]];
+			[statusStr appendFormat:@"%@  — Complete", [self formatSize:size]];
 			break;
 	}
 	
-	[str drawInRect:statusRect withAttributes:statusAttrs];
+	[statusStr drawInRect:statusRect withAttributes:statusAttrs];
 }
 
 static char* UNITS[] = { "bytes", "KB", "MB", "GB", "TB" };
