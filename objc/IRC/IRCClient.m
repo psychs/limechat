@@ -16,6 +16,10 @@
 #define MAX_BODY_LEN		480
 #define TIME_BUFFER_SIZE	256
 
+#define QUIT_INTERVAL		4
+#define RECONNECT_INTERVAL	30
+#define RETRY_INTERVAL		30
+
 
 @interface IRCClient (Private)
 - (void)sendLine:(NSString*)str;
@@ -95,6 +99,21 @@
 		isupport = [IRCISupportInfo new];
 		myMode = [IRCUserMode new];
 		whoisDialogs = [NSMutableArray new];
+		
+		quitTimer = [Timer new];
+		quitTimer.delegate = self;
+		quitTimer.reqeat = NO;
+		quitTimer.selector = @selector(onQuitTimer:);
+		
+		reconnectTimer = [Timer new];
+		reconnectTimer.delegate = self;
+		reconnectTimer.reqeat = NO;
+		reconnectTimer.selector = @selector(onReconnectTimer:);
+		
+		retryTimer = [Timer new];
+		retryTimer.delegate = self;
+		retryTimer.reqeat = NO;
+		retryTimer.selector = @selector(onRetryTimer:);
 	}
 	return self;
 }
@@ -117,6 +136,8 @@
 	[myAddress release];
 	
 	[quitTimer release];
+	[reconnectTimer release];
+	[retryTimer release];
 	
 	[lastSelectedChannel release];
 	[whoisDialogs release];
@@ -253,17 +274,71 @@
 }
 
 #pragma mark -
+#pragma mark Timers
+
+- (void)startQuitTimer
+{
+	if (quitTimer.isActive) return;
+	
+	[quitTimer start:QUIT_INTERVAL];
+}
+
+- (void)stopQuitTimer
+{
+	[quitTimer stop];
+}
+
+- (void)onQuitTimer:(id)sender
+{
+	[self disconnect];
+}
+
+- (void)startReconnectTimer
+{
+	if (reconnectTimer.isActive) return;
+	
+	[reconnectTimer start:RECONNECT_INTERVAL];
+}
+
+- (void)stopReconnectTimer
+{
+	[reconnectTimer stop];
+}
+
+- (void)onReconnectTimer:(id)sender
+{
+	[self connect:CONNECT_RECONNECT];
+}
+
+#pragma mark -
 #pragma mark Commands
 
 - (void)connect
 {
+	[self connect:CONNECT_NORMAL];
+}
+
+- (void)connect:(ConnectMode)mode
+{
+	[self stopReconnectTimer];
+	
 	if (conn) {
 		[conn close];
 		[conn autorelease];
 		conn = nil;
 	}
 	
-	[self printSystemBoth:nil text:@"Connecting…"];
+	switch (mode) {
+		case CONNECT_NORMAL:
+			[self printSystemBoth:nil text:@"Connecting…"];
+			break;
+		case CONNECT_RECONNECT:
+			[self printSystemBoth:nil text:@"Reconnecting…"];
+			break;
+		case CONNECT_RETRY:
+			[self printSystemBoth:nil text:@"Retrying…"];
+			break;
+	}
 	
 	isConnecting = YES;
 	reconnectEnabled = YES;
@@ -323,6 +398,8 @@
 	reconnectEnabled = NO;
 	[conn clearSendQueue];
 	[self send:QUIT, config.leavingComment, nil];
+	
+	[self startQuitTimer];
 }
 
 - (void)cancelReconnect
@@ -1855,6 +1932,11 @@
 	
 	[conn autorelease];
 	conn = nil;
+	
+	[self stopQuitTimer];
+	if (reconnectEnabled) {
+		[self startReconnectTimer];
+	}
 	
 	isConnecting = isConnected = isLoggedIn = isQuitting = NO;
 	[myNick release];

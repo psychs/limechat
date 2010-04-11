@@ -7,11 +7,13 @@
 @interface Timer : NSObject
 {
 	id delegate;
+	BOOL reqeat;
 	SEL selector;
 	NSTimer* timer;
 }
 
 @property (nonatomic, assign) id delegate;
+@property (nonatomic, assign) BOOL reqeat;
 @property (nonatomic, assign) SEL selector;
 @property (nonatomic, readonly) BOOL isActive;
 

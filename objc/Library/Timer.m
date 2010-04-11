@@ -7,11 +7,13 @@
 @implementation Timer
 
 @synthesize delegate;
+@synthesize reqeat;
 @synthesize selector;
 
 - (id)init
 {
 	if (self = [super init]) {
+		reqeat = YES;
 		selector = @selector(timerOnTimer:);
 	}
 	return self;
@@ -32,7 +34,7 @@
 {
 	[self stop];
 	
-	timer = [[NSTimer scheduledTimerWithTimeInterval:interval target:self selector:@selector(onTimer:) userInfo:nil repeats:YES] retain];
+	timer = [[NSTimer scheduledTimerWithTimeInterval:interval target:self selector:@selector(onTimer:) userInfo:nil repeats:reqeat] retain];
 	[[NSRunLoop currentRunLoop] addTimer:timer forMode:NSEventTrackingRunLoopMode];
 }
 
@@ -46,6 +48,10 @@
 - (void)onTimer:(id)sender
 {
 	if (!self.isActive) return;
+	
+	if (!reqeat) {
+		[self stop];
+	}
 	
 	if ([delegate respondsToSelector:selector]) {
 		[delegate performSelector:selector withObject:self];

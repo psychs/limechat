@@ -16,6 +16,13 @@
 @class IRCWorld;
 
 
+typedef enum {
+	CONNECT_NORMAL,
+	CONNECT_RECONNECT,
+	CONNECT_RETRY,
+} ConnectMode;
+
+
 @interface IRCClient : IRCTreeItem
 {
 	IRCWorld* world;
@@ -50,6 +57,8 @@
 	BOOL identifyCTCP;
 	
 	Timer* quitTimer;
+	Timer* reconnectTimer;
+	Timer* retryTimer;
 	
 	IRCChannel* lastSelectedChannel;
 	
@@ -82,6 +91,7 @@
 - (void)closeDialogs;
 
 - (void)connect;
+- (void)connect:(ConnectMode)mode;
 - (void)disconnect;
 - (void)quit;
 - (void)cancelReconnect;
