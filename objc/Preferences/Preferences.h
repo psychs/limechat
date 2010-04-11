@@ -10,6 +10,12 @@ typedef enum {
 } AddressDetectionType;
 
 typedef enum {
+	DCC_AUTO_ACCEPT = 0,
+	DCC_SHOW_DIALOG,
+	DCC_IGNORE,
+} DCCActionType;
+
+typedef enum {
 	MAIN_WINDOW_LAYOUT_2_COLUMN = 0,
 	MAIN_WINDOW_LAYOUT_3_COLUMN,
 } MainWindowLayoutType;
@@ -28,7 +34,7 @@ typedef enum {
 
 @interface Preferences : NSObject
 
-+ (int)dccAction;
++ (DCCActionType)dccAction;
 + (AddressDetectionType)dccAddressDetectionMethod;
 + (NSString*)dccMyaddress;
 + (BOOL)autoRejoin;

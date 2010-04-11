@@ -6,11 +6,11 @@
 
 @implementation Preferences
 
-+ (int)dccAction
++ (DCCActionType)dccAction
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
 	id obj = [ud objectForKey:@"Preferences.Dcc.action"];
-	if (!obj) return 1;
+	if (!obj) return DCC_SHOW_DIALOG;
 	return [obj intValue];
 }
 
