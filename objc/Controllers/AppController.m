@@ -506,8 +506,10 @@
 		NSMutableArray* lowerNicks = [NSMutableArray array];
 		
 		for (IRCUser* m in users) {
-			[nicks addObject:m.nick];
-			[lowerNicks addObject:m.canonicalNick];
+			if (!m.isMyself) {
+				[nicks addObject:m.nick];
+				[lowerNicks addObject:m.canonicalNick];
+			}
 		}
 		
 		choices = nicks;
