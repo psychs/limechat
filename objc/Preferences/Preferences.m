@@ -191,7 +191,7 @@
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
 	id obj = [ud objectForKey:@"Preferences.Keyword.matching_method"];
-	if (!obj) return KEYWORD_MATCH_PARTIAL;
+	if (!obj) return [NSLocale prefersJapaneseLanguage] ? KEYWORD_MATCH_PARTIAL : KEYWORD_MATCH_EXACT;
 	return [obj intValue];
 }
 
