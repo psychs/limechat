@@ -11,6 +11,8 @@
 
 
 @interface DCCController (Private)
+- (void)reloadReceiverTable;
+- (void)reloadSenderTable;
 - (void)loadWindowState;
 - (void)saveWindowState;
 @end
@@ -38,7 +40,7 @@
 	[super dealloc];
 }
 
-- (void)show
+- (void)show:(BOOL)key
 {
 	if (!loaded) {
 		loaded = YES;
@@ -61,6 +63,16 @@
 	if (![self.window isVisible]) {
 		[self loadWindowState];
 	}
+	
+	if (key) {
+		[self.window makeKeyAndOrderFront:nil];
+	}
+	else {
+		[self.window orderFront:nil];
+	}
+	
+	[self reloadReceiverTable];
+	[self reloadSenderTable];
 }
 
 - (void)close
@@ -75,6 +87,32 @@
 	[self close];
 }
 
+- (void)addReceiverWithUID:(int)uid nick:(NSString*)nick host:(NSString*)host port:(int)port path:(NSString*)path fileName:(NSString*)fileName size:(long long)size
+{
+	DCCReceiver* c = [[DCCReceiver new] autorelease];
+	c.delegate = self;
+	c.uid = uid;
+	c.peerNick = nick;
+	c.host = host;
+	c.port = port;
+	c.path = path;
+	c.fileName = fileName;
+	c.size = size;
+	[receivers insertObject:c atIndex:0];
+	
+	[self show:NO];
+}
+
+- (void)reloadReceiverTable
+{
+	[receiverTable reloadData];
+}
+
+- (void)reloadSenderTable
+{
+	[senderTable reloadData];
+}
+
 - (void)loadWindowState
 {
 	NSDictionary* dic = [Preferences loadWindowStateWithName:@"dcc_window"];
@@ -86,13 +124,11 @@
 		NSRect r = NSMakeRect(x, y, w, h);
 		[self.window setFrame:r display:NO];
 		[splitter setPosition:[dic intForKey:@"split"]];
-		[self.window makeKeyAndOrderFront:nil];
 	}
 	else {
 		[self.window setFrame:NSMakeRect(0, 0, 350, 300) display:NO];
 		[self.window center];
 		[splitter setPosition:100];
-		[self.window makeKeyAndOrderFront:nil];
 	}
 }
 
@@ -196,17 +232,27 @@
 	return @"";
 }
 
-- (void)tableView:(NSTableView *)sender willDisplayCell:(DCCFileTransferCell*)cell forTableColumn:(NSTableColumn *)column row:(NSInteger)row
+- (void)tableView:(NSTableView *)sender willDisplayCell:(DCCFileTransferCell*)c forTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
 	if (sender == senderTable) {
 		if (row < 0 || senders.count <= row) return;
-		
-		;;
 	}
 	else {
 		if (row < 0 || receivers.count <= row) return;
 		
-		;;
+		DCCReceiver* e = [receivers objectAtIndex:row];
+		double speed = e.speed;
+		
+		c.stringValue = (e.status == DCC_COMPLETE) ? e.downloadFileName : e.fileName;
+		c.peerNick = e.peerNick;
+		c.size = e.size;
+		c.processedSize = e.processedSize;
+		c.speed = speed;
+		c.timeRemaining = speed > 0 ? (e.size - e.processedSize) / speed : 0;
+		c.status = e.status;
+		c.error = e.error;
+		c.icon = e.icon;
+		c.progressBar = e.progressBar;
 	}
 }
 
@@ -220,6 +266,18 @@
 
 #pragma mark -
 #pragma mark NSWindow Delegate
+
+- (void)windowDidBecomeMain:(NSNotification *)note
+{
+	[self reloadReceiverTable];
+	[self reloadSenderTable];
+}
+
+- (void)windowDidResignMain:(NSNotification *)note
+{
+	[self reloadReceiverTable];
+	[self reloadSenderTable];
+}
 
 - (void)windowWillClose:(NSNotification*)note
 {

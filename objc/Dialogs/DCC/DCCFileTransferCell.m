@@ -185,17 +185,13 @@ static char* UNITS[] = { "bytes", "KB", "MB", "GB", "TB" };
 
 - (NSString*)formatSize:(long long)bytes
 {
-	int unit;
-	double data;
+	int unit = 0;
+	double data = 0;
 	
 	if (bytes > 0) {
 		unit = floor(log2(bytes) / log2(1024));
 		if (unit > 4) unit = 4;
 		data = bytes / pow(1024, unit);
-	}
-	else {
-		unit = 0;
-		data = 0;
 	}
 	
 	if (unit == 0 || data >= 10) {

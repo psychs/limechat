@@ -40,4 +40,7 @@
 #define HOP			@"HOP"
 #define CYCLE		@"CYCLE"
 
+#define DCC			@"DCC"
+#define SEND		@"SEND"
+
 #define IRC_PENALTY_NORMAL	2

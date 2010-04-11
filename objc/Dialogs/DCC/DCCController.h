@@ -29,9 +29,11 @@
 @property (nonatomic, assign) IRCWorld* world;
 @property (nonatomic, assign) NSWindow* mainWindow;
 
-- (void)show;
+- (void)show:(BOOL)key;
 - (void)close;
 - (void)terminate;
+
+- (void)addReceiverWithUID:(int)uid nick:(NSString*)nick host:(NSString*)host port:(int)port path:(NSString*)path fileName:(NSString*)fileName size:(long long)size;
 
 - (void)onClear:(id)sender;
 

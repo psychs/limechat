@@ -50,6 +50,7 @@ static NSDateFormatter* dateTimeFormater = nil;
 - (void)receiveText:(IRCMessage*)m command:(NSString*)cmd text:(NSString*)text identified:(BOOL)identified;
 - (void)receiveCTCPQuery:(IRCMessage*)message text:(NSString*)text;
 - (void)receiveCTCPReply:(IRCMessage*)message text:(NSString*)text;
+- (void)receiveDCCSend:(IRCMessage*)m fileName:(NSString*)fileName address:(NSString*)address port:(int)port fileSize:(long long)size;
 - (void)receiveErrorNumericReply:(IRCMessage*)message;
 - (void)receiveNickCollisionError:(IRCMessage*)message;
 - (void)tryAnotherNick;
@@ -1390,12 +1391,101 @@ static NSDateFormatter* dateTimeFormater = nil;
 
 - (void)receiveCTCPQuery:(IRCMessage*)m text:(NSString*)text
 {
-	LOG(@"CTCP Query %@", text);
+	//LOG(@"CTCP Query: %@", text);
+	
+	NSString* nick = m.sender.nick;
+	
+	NSMutableString* s = [[text mutableCopy] autorelease];
+	
+	NSString* command = [[s getToken] uppercaseString];
+	if ([command isEqualToString:DCC]) {
+		NSString* subCommand = [[s getToken] uppercaseString];
+		if ([subCommand isEqualToString:SEND]) {
+			NSString* fname;
+			if ([s hasPrefix:@"\""]) {
+				NSRange r = [s rangeOfString:@"\"" options:0 range:NSMakeRange(1, s.length - 1)];
+				if (r.location) {
+					fname = [s substringWithRange:NSMakeRange(1, r.location - 1)];
+					[s deleteCharactersInRange:NSMakeRange(0, r.location)];
+					[s getToken];
+				}
+				else {
+					fname = [s getToken];
+				}
+			}
+			else {
+				fname = [s getToken];
+			}
+			
+			NSString* addressStr = [s getToken];
+			int port = [[s getToken] intValue];
+			long long size = [[s getToken] longLongValue];
+			
+			[self receiveDCCSend:m fileName:fname address:addressStr port:port fileSize:size];
+			return;
+		}
+		
+		NSString* text = [NSString stringWithFormat:@"CTCP-query unknown (DCC %@) from %@ : %@", subCommand, nick, s];
+		[self printBoth:nil type:LINE_TYPE_REPLY text:text];
+	}
+	else {
+		NSString* text = [NSString stringWithFormat:@"CTCP-query %@ from %@", command, nick];
+		[self printBoth:nil type:LINE_TYPE_REPLY text:text];
+	}
 }
 
 - (void)receiveCTCPReply:(IRCMessage*)m text:(NSString*)text
 {
-	LOG(@"CTCP Reply %@", text);
+	LOG(@"CTCP Reply: %@", text);
+}
+
+- (void)receiveDCCSend:(IRCMessage*)m fileName:(NSString*)fileName address:(NSString*)address port:(int)port fileSize:(long long)size
+{
+	NSString* nick = m.sender.nick;
+	NSString* target = [m paramAt:0];
+	
+	if (![target isEqualToString:myNick]) return;
+	
+	LOG(@"receive dcc send");
+	
+	NSString* host;
+	if ([address isNumericOnly]) {
+		long long a = [address longLongValue];
+		int w = a & 0xff; a >>= 8;
+		int x = a & 0xff; a >>= 8;
+		int y = a & 0xff; a >>= 8;
+		int z = a & 0xff;
+		host = [NSString stringWithFormat:@"%d.%d.%d.%d", z, y, x, w];
+	}
+	else {
+		host = address;
+	}
+	
+	NSString* text = [NSString stringWithFormat:@"Received file transfer request from %@, %@ (%qi bytes) %@:%d", nick, fileName, size, host, port];
+	[self printBoth:nil type:LINE_TYPE_DCC_SEND_RECEIVE text:text];
+	
+	if ([Preferences dccAction] != DCC_IGNORE) {
+		if (port > 0 && size > 0) {
+			NSString* path = [@"~/Downloads" stringByExpandingTildeInPath];
+			NSFileManager* fm = [NSFileManager defaultManager];
+			BOOL isDir = NO;
+			if ([fm fileExistsAtPath:path isDirectory:&isDir]) {
+				path = @"~/Downloads";
+			}
+			else {
+				path = @"~/Desktop";
+			}
+			
+			[world.dcc addReceiverWithUID:uid nick:nick host:host port:port path:path fileName:fileName size:size];
+			
+			// @@@ sound
+			// growl
+			
+			if (![NSApp isActive]) {
+				[NSApp requestUserAttention:NSInformationalRequest];
+			}
+		}
+	}
 }
 
 - (void)receiveJoin:(IRCMessage*)m

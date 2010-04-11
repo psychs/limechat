@@ -12,6 +12,20 @@
 
 @implementation NSString (NSStringHelper)
 
+- (const UniChar*)getCharactersBuffer
+{
+	NSUInteger len = self.length;
+	const UniChar* buffer = CFStringGetCharactersPtr((CFStringRef)self);
+	if (!buffer) {
+		NSMutableData* data = [NSMutableData dataWithLength:len * sizeof(UniChar)];
+		if (!data) return NULL;
+		[self getCharacters:[data mutableBytes]];
+		buffer = [data bytes];
+		if (!buffer) return NULL;
+	}
+	return buffer;
+}
+
 - (BOOL)isEqualNoCase:(NSString*)other
 {
 	return [self caseInsensitiveCompare:other] == NSOrderedSame;
@@ -116,6 +130,23 @@
 - (NSString*)trim
 {
 	return [self stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+}
+
+- (BOOL)isNumericOnly
+{
+	NSUInteger len = self.length;
+	if (!len) return NO;
+	
+	const UniChar* buffer = [self getCharactersBuffer];
+	if (!buffer) return NO;
+	
+	for (NSInteger i=0; i<len; ++i) {
+		UniChar c = buffer[i];
+		if (!(IsNumeric(c))) {
+			return NO;
+		}
+	}
+	return YES;
 }
 
 BOOL isSurrogate(UniChar c)

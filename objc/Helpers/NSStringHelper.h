@@ -24,6 +24,8 @@
 - (NSArray*)splitIntoLines;
 - (NSString*)trim;
 
+- (BOOL)isNumericOnly;
+
 - (int)firstCharCodePoint;
 - (int)lastCharCodePoint;
 

@@ -19,7 +19,6 @@
 @synthesize port;
 @synthesize size;
 @synthesize processedSize;
-@synthesize version;
 @synthesize status;
 @synthesize error;
 @synthesize path;
@@ -63,8 +62,13 @@
 		fileName = [value retain];
 		
 		[icon release];
-		icon = [[[NSWorkspace sharedWorkspace] iconForFile:[fileName pathExtension]] retain];
+		icon = [[[NSWorkspace sharedWorkspace] iconForFileType:[fileName pathExtension]] retain];
 	}
+}
+
+- (double)speed
+{
+	return 1;
 }
 
 - (void)open

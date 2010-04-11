@@ -14,7 +14,6 @@
 	int port;
 	long long size;
 	long long processedSize;
-	int version;
 	DCCFileTransferStatus status;
 	NSString* error;
 	NSString* path;
@@ -31,7 +30,6 @@
 @property (nonatomic, assign) int port;
 @property (nonatomic, assign) long long size;
 @property (nonatomic, assign) long long processedSize;
-@property (nonatomic, assign) int version;
 @property (nonatomic, assign) DCCFileTransferStatus status;
 @property (nonatomic, retain) NSString* error;
 @property (nonatomic, retain) NSString* path;
@@ -39,6 +37,7 @@
 @property (nonatomic, retain) NSString* downloadFileName;
 @property (nonatomic, retain) NSImage* icon;
 @property (nonatomic, retain) NSProgressIndicator* progressBar;
+@property (nonatomic, readonly) double speed;
 
 - (void)open;
 - (void)close;
