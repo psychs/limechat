@@ -1772,7 +1772,24 @@ static NSDateFormatter* dateTimeFormater = nil;
 			[self printReply:m];
 			break;
 		}
-		//case 301:	// RPL_AWAY
+		case 301:	// RPL_AWAY
+		{
+			NSString* nick = [m paramAt:1];
+			NSString* comment = [m paramAt:2];
+			
+			if (inWhois) {
+				WhoisDialog* d = [self findWhoisDialog:nick];
+				if (d) {
+					[d setAwayMessage:comment];
+					return;
+				}
+			}
+			
+			IRCChannel* c = [self findChannel:nick];
+			NSString* text = [NSString stringWithFormat:@"%@ is away: %@", nick, comment];
+			[self printBoth:(c ?: (id)nick) type:LINE_TYPE_REPLY text:text];
+			break;
+		}
 		case 311:	// RPL_WHOISUSER
 		{
 			NSString* nick = [m paramAt:1];
