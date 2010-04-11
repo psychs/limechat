@@ -153,12 +153,12 @@
 - (void)updateTimer
 {
 	if (!sendQueue.count && penalty <= 0) {
-		if (timer.active) {
+		if (timer.isActive) {
 			[timer stop];
 		}
 	}
 	else {
-		if (!timer.active) {
+		if (!timer.isActive) {
 			[timer start:TIMER_INTERVAL];
 		}
 	}

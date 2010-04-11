@@ -107,12 +107,17 @@
 	[myMode release];
 	[conn close];
 	[conn autorelease];
+	
 	[inputNick release];
 	[sentNick release];
 	[myNick release];
+	
 	[serverHostname release];
 	[joinMyAddress release];
 	[myAddress release];
+	
+	[quitTimer release];
+	
 	[lastSelectedChannel release];
 	[whoisDialogs release];
 	[propertyDialog release];
@@ -262,9 +267,7 @@
 	
 	isConnecting = YES;
 	reconnectEnabled = YES;
-	reconnectTime = 30;
 	retryEnabled = YES;
-	retryTime = 30;
 	
 	NSString* host = config.host;
 	if (host) {

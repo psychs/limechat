@@ -10,6 +10,7 @@
 #import "IRCISupportInfo.h"
 #import "IRCUserMode.h"
 #import "ServerDialog.h"
+#import "Timer.h"
 
 
 @class IRCWorld;
@@ -18,8 +19,8 @@
 @interface IRCClient : IRCTreeItem
 {
 	IRCWorld* world;
-	
 	IRCClientConfig* config;
+	
 	NSMutableArray* channels;
 	IRCISupportInfo* isupport;
 	IRCUserMode* myMode;
@@ -27,9 +28,7 @@
 	IRCConnection* conn;
 	int connectDelay;
 	BOOL reconnectEnabled;
-	int reconnectTime;
 	BOOL retryEnabled;
-	int retryTime;
 	
 	BOOL isConnecting;
 	BOOL isConnected;
@@ -49,6 +48,8 @@
 	BOOL inWhois;
 	BOOL identifyMsg;
 	BOOL identifyCTCP;
+	
+	Timer* quitTimer;
 	
 	IRCChannel* lastSelectedChannel;
 	

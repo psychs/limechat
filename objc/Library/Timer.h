@@ -13,8 +13,8 @@
 
 @property (nonatomic, assign) id delegate;
 @property (nonatomic, assign) SEL selector;
+@property (nonatomic, readonly) BOOL isActive;
 
-- (BOOL)active;
 - (void)start:(int)interval;
 - (void)stop;
 

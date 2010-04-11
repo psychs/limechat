@@ -23,7 +23,7 @@
 	[super dealloc];
 }
 
-- (BOOL)active
+- (BOOL)isActive
 {
 	return timer != nil;
 }
@@ -45,7 +45,7 @@
 
 - (void)onTimer:(id)sender
 {
-	if (![self active]) return;
+	if (!self.isActive) return;
 	
 	if ([delegate respondsToSelector:selector]) {
 		[delegate performSelector:selector withObject:self];
