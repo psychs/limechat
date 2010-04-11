@@ -44,6 +44,9 @@
 	[downloadFileName release];
 	[icon release];
 	[progressBar release];
+	
+	[sock close];
+	[sock autorelease];
 	[super dealloc];
 }
 
@@ -73,10 +76,30 @@
 
 - (void)open
 {
+	if (sock) {
+		[self close];
+	}
+
+	sock = [TCPClient new];
+	sock.delegate = self;
+	sock.host = host;
+	sock.port = port;
+	[sock open];
 }
 
 - (void)close
 {
+	[sock close];
+	[sock autorelease];
+	sock = nil;
+	
+	[self closeFile];
+	
+	if (status != DCC_ERROR && status != DCC_COMPLETE) {
+		status = DCC_STOP;
+	}
+	
+	[delegate dccReceiveOnClose:self];
 }
 
 - (void)openFile
@@ -84,6 +107,63 @@
 }
 
 - (void)closeFile
+{
+}
+
+#pragma mark -
+#pragma mark TCPClient Delegate
+
+- (void)tcpClientDidConnect:(TCPClient*)sender
+{
+	LOG_METHOD
+	
+	processedSize = 0;
+	status = DCC_RECEIVING;
+	
+	[self openFile];
+	
+	[delegate dccReceiveOnOpen:self];
+}
+
+- (void)tcpClientDidDisconnect:(TCPClient*)sender
+{
+	LOG_METHOD
+	
+	if (status == DCC_COMPLETE || status == DCC_ERROR) return;
+	
+	status = DCC_ERROR;
+	self.error = @"Disconnected";
+	[self close];
+	
+	[delegate dccReceiveOnError:self];
+}
+
+- (void)tcpClient:(TCPClient*)sender error:(NSString*)err
+{
+	LOG_METHOD
+	
+	if (status == DCC_COMPLETE || status == DCC_ERROR) return;
+	
+	status = DCC_ERROR;
+	self.error = err;
+	[self close];
+	
+	[delegate dccReceiveOnError:self];
+}
+
+- (void)tcpClientDidReceiveData:(TCPClient*)sender
+{
+	LOG_METHOD
+	
+	NSData* s = [sock read];
+	processedSize += s.length;
+
+	if (s.length) {
+		;
+	}
+}
+
+- (void)tcpClientDidSendData:(TCPClient*)sender
 {
 }
 

@@ -3,6 +3,7 @@
 
 #import <Foundation/Foundation.h>
 #import "DCCFileTransferCell.h"
+#import "TCPClient.h"
 
 
 @interface DCCReceiver : NSObject
@@ -21,6 +22,8 @@
 	NSString* downloadFileName;
 	NSImage* icon;
 	NSProgressIndicator* progressBar;
+	
+	TCPClient* sock;
 }
 
 @property (nonatomic, assign) id delegate;

@@ -7,6 +7,7 @@
 #import "DCCReceiver.h"
 #import "DCCSender.h"
 #import "DCCFileTransferCell.h"
+#import "TableProgressIndicator.h"
 #import "NSDictionaryHelper.h"
 
 
@@ -100,6 +101,7 @@
 	c.size = size;
 	[receivers insertObject:c atIndex:0];
 	
+	[c open];
 	[self show:NO];
 }
 
@@ -176,12 +178,30 @@
 
 - (void)startReceiver:(id)sender
 {
-	LOG_METHOD
+	NSIndexSet* sel = [receiverTable selectedRowIndexes];
+	NSUInteger i = [sel firstIndex];
+	while (i != NSNotFound) {
+		DCCReceiver* e = [receivers objectAtIndex:i];
+		[e open];
+		
+		i = [sel indexGreaterThanIndex:i];
+	}
+	
+	[self reloadReceiverTable];
 }
 
 - (void)stopReceiver:(id)sender
 {
-	LOG_METHOD
+	NSIndexSet* sel = [receiverTable selectedRowIndexes];
+	NSUInteger i = [sel firstIndex];
+	while (i != NSNotFound) {
+		DCCReceiver* e = [receivers objectAtIndex:i];
+		[e close];
+		
+		i = [sel indexGreaterThanIndex:i];
+	}
+	
+	[self reloadReceiverTable];
 }
 
 - (void)deleteReceiver:(id)sender
@@ -212,6 +232,52 @@
 - (void)deleteSender:(id)sender
 {
 	LOG_METHOD
+}
+
+#pragma mark -
+#pragma mark DCCReceiver Delegate
+
+- (void)dccReceiveOnOpen:(DCCReceiver*)sender
+{
+	if (!loaded) return;
+	
+	if (!sender.progressBar) {
+		TableProgressIndicator* bar = [[TableProgressIndicator new] autorelease];
+		[bar setIndeterminate:NO];
+		[bar setMinValue:0];
+		[bar setMaxValue:sender.size];
+		[bar setDoubleValue:sender.processedSize];
+		[receiverTable addSubview:bar];
+		sender.progressBar = bar;
+	}
+	
+	[self reloadReceiverTable];
+}
+
+- (void)dccReceiveOnClose:(DCCReceiver*)sender
+{
+	if (!loaded) return;
+	
+	if (sender.progressBar) {
+		[sender.progressBar removeFromSuperview];
+		sender.progressBar = nil;
+	}
+	
+	[self reloadReceiverTable];
+}
+
+- (void)dccReceiveOnError:(DCCReceiver*)sender
+{
+	if (!loaded) return;
+	
+	[self reloadReceiverTable];
+}
+
+- (void)dccReceiveOnComplete:(DCCReceiver*)sender
+{
+	if (!loaded) return;
+
+	[self reloadReceiverTable];
 }
 
 #pragma mark -
