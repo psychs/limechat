@@ -505,7 +505,7 @@
 						<object class="NSTextField" id="522677793">
 							<reference key="NSNextResponder" ref="880750673"/>
 							<int key="NSvFlags">290</int>
-							<string key="NSFrame">{{41, 21}, {264, 17}}</string>
+							<string key="NSFrame">{{41, 20}, {264, 17}}</string>
 							<reference key="NSSuperview" ref="880750673"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="61248323">
@@ -1469,8 +1469,17 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">NSObject</string>
 					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">pasteSheetWillClose:</string>
-						<string key="NS.object.0">PasteSheet</string>
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>pasteSheetOnCancel:</string>
+							<string>pasteSheetWillClose:</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>PasteSheet</string>
+							<string>PasteSheet</string>
+						</object>
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="780586617">
 						<string key="majorKey">IBProjectSource</string>
@@ -1552,6 +1561,13 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">objc/Library/AsyncSocket.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">objc/Library/GistClient.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">

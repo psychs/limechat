@@ -6,6 +6,7 @@
 
 
 static NSArray* SYNTAXES;
+static NSDictionary* SYNTAX_EXT_MAP;
 
 
 @interface PasteSheet (Private)
@@ -40,6 +41,27 @@ static NSArray* SYNTAXES;
 						 @"scheme", @"objective-c",
 						 nil] retain];
 		}
+		
+		if (!SYNTAX_EXT_MAP) {
+			SYNTAX_EXT_MAP = [[NSDictionary dictionaryWithObjectsAndKeys:
+							   @".h", @"c",
+							   @".css", @"css",
+							   @".diff", @"diff",
+							   @".lhs", @"haskell",
+							   @".html", @"html",
+							   @".groovy", @"java",
+							   @".js", @"javascript",
+							   @".mm", @"objective-c",
+							   @".ph", @"perl",
+							   @".php[345]", @"php",
+							   @".txt", @"plain_text",
+							   @".pyw", @"python",
+							   @".ru", @"ruby",
+							   @".sls", @"scheme",
+							   @".sh", @"shell script",
+							   @".sql", @"sql",
+							   nil, nil] retain];
+		}
 	}
 	return self;
 }
@@ -50,6 +72,8 @@ static NSArray* SYNTAXES;
 	[originalText release];
 	[syntax release];
 	[command release];
+	[gist cancel];
+	[gist autorelease];
 	[super dealloc];
 }
 
@@ -75,11 +99,20 @@ static NSArray* SYNTAXES;
 {
 	[self setRequesting:YES];
 	
-	if ([delegate respondsToSelector:@selector(pasteSheet:onPasteURL:)]) {
-		[delegate pasteSheet:self onPasteURL:@"http://test.com/"];
+	if (gist) {
+		[gist cancel];
+		[gist autorelease];
 	}
-
-	[self endSheet];
+	
+	NSString* s = bodyText.string;
+	NSString* fileType = [SYNTAX_EXT_MAP objectForKey:[self syntaxFromTag:syntaxPopup.selectedTag]];
+	if (!fileType) {
+		fileType = @".txt";
+	}
+	
+	gist = [GistClient new];
+	gist.delegate = self;
+	[gist send:s fileType:fileType private:YES];
 }
 
 - (void)sendInChannel:(id)sender
@@ -147,10 +180,48 @@ static NSArray* SYNTAXES;
 }
 
 #pragma mark -
+#pragma mark GistClient Delegate
+
+- (void)gistClient:(GistClient*)sender didReceiveResponse:(NSString*)url
+{
+	[gist autorelease];
+	gist = nil;
+
+	[self setRequesting:NO];
+	
+	if (url.length) {
+		[errorLabel setStringValue:@""];
+		
+		if ([delegate respondsToSelector:@selector(pasteSheet:onPasteURL:)]) {
+			[delegate pasteSheet:self onPasteURL:url];
+		}
+		
+		[self endSheet];
+	}
+	else {
+		[errorLabel setStringValue:@"Could not get an URL from Gist"];
+	}
+}
+
+- (void)gistClient:(GistClient*)sender didFailWithError:(NSString*)error statusCode:(int)statusCode
+{
+	[gist autorelease];
+	gist = nil;
+	
+	[self setRequesting:NO];
+	[errorLabel setStringValue:[NSString stringWithFormat:@"Gist error: %@", error]];
+}
+
+#pragma mark -
 #pragma mark NSWindow Delegate
 
 - (void)windowWillClose:(NSNotification*)note
 {
+	[syntax release];
+	[command release];
+	syntax = [[self syntaxFromTag:syntaxPopup.selectedTag] retain];
+	command = [[self syntaxFromTag:commandPopup.selectedTag] retain];
+	
 	if ([delegate respondsToSelector:@selector(pasteSheetWillClose:)]) {
 		[delegate pasteSheetWillClose:self];
 	}

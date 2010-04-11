@@ -3,6 +3,7 @@
 
 #import <Foundation/Foundation.h>
 #import "SheetBase.h"
+#import "GistClient.h"
 
 
 @interface PasteSheet : SheetBase
@@ -16,6 +17,8 @@
 	NSSize size;
 	BOOL editMode;
 	BOOL isShortText;
+	
+	GistClient* gist;
 	
 	IBOutlet NSTextView* bodyText;
 	IBOutlet NSButton* pasteOnlineButton;
