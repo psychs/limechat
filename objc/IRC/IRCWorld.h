@@ -16,6 +16,7 @@
 #import "MenuController.h"
 #import "ViewTheme.h"
 #import "IRCTreeItem.h"
+#import "DCCController.h"
 
 
 @class AppController;
@@ -33,7 +34,7 @@
 	FieldEditorTextView* fieldEditor;
 	MemberListView* memberList;
 	MenuController* menuController;
-	id dcc;
+	DCCController* dcc;
 	ViewTheme* viewTheme;
 	NSMenuItem* serverMenu;
 	NSMenuItem* channelMenu;
@@ -69,7 +70,7 @@
 @property (nonatomic, assign) FieldEditorTextView* fieldEditor;
 @property (nonatomic, assign) MemberListView* memberList;
 @property (nonatomic, assign) MenuController* menuController;
-@property (nonatomic, assign) id dcc;
+@property (nonatomic, assign) DCCController* dcc;
 @property (nonatomic, assign) ViewTheme* viewTheme;
 @property (nonatomic, assign) NSMenuItem* serverMenu;
 @property (nonatomic, assign) NSMenuItem* channelMenu;

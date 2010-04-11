@@ -11,6 +11,7 @@
 #import "MenuController.h"
 #import "ViewTheme.h"
 #import "NickCompletinStatus.h"
+#import "DCCController.h"
 
 
 @interface AppController : NSObject
@@ -40,6 +41,7 @@
 	IBOutlet NSMenu* addrMenu;
 	IBOutlet NSMenu* chanMenu;
 	
+	DCCController* dcc;
 	FieldEditorTextView* fieldEditor;
 	IRCWorld* world;
 	ViewTheme* viewTheme;

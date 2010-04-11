@@ -345,6 +345,7 @@
 
 - (void)onDcc:(id)sender
 {
+	[world.dcc show];
 }
 
 - (void)onCloseWindow:(id)sender

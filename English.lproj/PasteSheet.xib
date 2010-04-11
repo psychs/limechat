@@ -615,9 +615,6 @@
 				<string key="NSMinSize">{400, 222}</string>
 				<string key="NSMaxSize">{1.79769e+308, 1.79769e+308}</string>
 			</object>
-			<object class="NSUserDefaultsController" id="299430934">
-				<bool key="NSSharedInstance">YES</bool>
-			</object>
 		</object>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
 			<object class="NSMutableArray" key="connectionRecords">
@@ -880,12 +877,6 @@
 						<reference key="parent" ref="880750673"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">162</int>
-						<reference key="object" ref="299430934"/>
-						<reference key="parent" ref="0"/>
-						<string key="objectName">Shared User Defaults Controller</string>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">166</int>
 						<reference key="object" ref="632192706"/>
 						<reference key="parent" ref="786227530"/>
@@ -1080,8 +1071,6 @@
 					<string>125.ImportedFromIB2</string>
 					<string>143.IBPluginDependency</string>
 					<string>143.ImportedFromIB2</string>
-					<string>162.IBPluginDependency</string>
-					<string>162.ImportedFromIB2</string>
 					<string>166.IBPluginDependency</string>
 					<string>167.IBPluginDependency</string>
 					<string>168.IBPluginDependency</string>
@@ -1157,8 +1146,6 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>{{818, 858}, {142, 43}}</string>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1515,6 +1502,17 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="725599111">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">objc/Dialogs/ServerDialog.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">topicSheetWillClose:</string>
+						<string key="NS.object.0">TopicSheet</string>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="279128127">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">objc/Dialogs/TopicSheet.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -1996,6 +1994,15 @@
 						<string key="NS.object.0">id</string>
 					</object>
 					<reference key="sourceIdentifier" ref="979435801"/>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">TopicSheet</string>
+					<string key="superclassName">SheetBase</string>
+					<object class="NSMutableDictionary" key="outlets">
+						<string key="NS.key.0">text</string>
+						<string key="NS.object.0">NSTextField</string>
+					</object>
+					<reference key="sourceIdentifier" ref="279128127"/>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">WhoisDialog</string>
@@ -2622,14 +2629,6 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBFrameworkSource</string>
 						<string key="minorKey">AppKit.framework/Headers/NSTextView.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSUserDefaultsController</string>
-					<string key="superclassName">NSController</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBFrameworkSource</string>
-						<string key="minorKey">AppKit.framework/Headers/NSUserDefaultsController.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">

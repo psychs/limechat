@@ -29,6 +29,7 @@
 
 - (void)dealloc
 {
+	[dcc release];
 	[fieldEditor release];
 	[world release];
 	[viewTheme release];
@@ -132,7 +133,9 @@
 	memberList.keyDelegate = world;
 	memberList.dropDelegate = world;
 	
-	//@@@ dcc manager
+	dcc = [DCCController new];
+	dcc.world = world;
+	world.dcc = dcc;
 	
 	inputHistory = [InputHistory new];
 	

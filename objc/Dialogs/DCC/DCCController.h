@@ -1,0 +1,42 @@
+// Created by Satoshi Nakagawa.
+// You can redistribute it and/or modify it under the Ruby's license or the GPL2.
+
+#import <Foundation/Foundation.h>
+#import "ThinSplitView.h"
+#import "ListView.h"
+
+
+@class IRCWorld;
+
+
+@interface DCCController : NSWindowController
+{
+	id delegate;
+	IRCWorld* world;
+	
+	BOOL loaded;
+	
+	IBOutlet ListView* receiverTable;
+	IBOutlet ListView* senderTable;
+	IBOutlet ThinSplitView* splitter;
+	IBOutlet NSBundle* clearButton;
+}
+
+@property (nonatomic, assign) id delegate;
+@property (nonatomic, assign) IRCWorld* world;
+
+- (void)show;
+
+- (void)onClear:(id)sender;
+
+- (void)startReceiver:(id)sender;
+- (void)stopReceiver:(id)sender;
+- (void)deleteReceiver:(id)sender;
+- (void)openReceiver:(id)sender;
+- (void)revealReceivedFileInFinder:(id)sender;
+
+- (void)startSender:(id)sender;
+- (void)stopSender:(id)sender;
+- (void)deleteSender:(id)sender;
+
+@end
