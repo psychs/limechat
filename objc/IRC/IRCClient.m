@@ -1937,8 +1937,35 @@ static NSDateFormatter* dateTimeFormater = nil;
 			[self printBoth:(c ?: (id)chname) type:LINE_TYPE_REPLY text:text];
 			break;
 		}
-		//case 331:	// RPL_NOTOPIC
-		//case 332:	// RPL_TOPIC
+		case 331:	// RPL_NOTOPIC
+		{
+			NSString* chname = [m paramAt:1];
+			
+			IRCChannel* c = [self findChannel:chname];
+			if (c && c.isActive) {
+				c.topic = @"";
+				[self updateChannelTitle:c];
+			}
+			
+			NSString* text = @"Topic:";
+			[self printBoth:(c ?: (id)chname) type:LINE_TYPE_REPLY text:text];
+			break;
+		}
+		case 332:	// RPL_TOPIC
+		{
+			NSString* chname = [m paramAt:1];
+			NSString* topic = [m paramAt:2];
+			
+			IRCChannel* c = [self findChannel:chname];
+			if (c && c.isActive) {
+				c.topic = topic;
+				[self updateChannelTitle:c];
+			}
+			
+			NSString* text = [NSString stringWithFormat:@"Topic: %@", topic];
+			[self printBoth:(c ?: (id)chname) type:LINE_TYPE_REPLY text:text];
+			break;
+		}
 		case 333:	// RPL_TOPIC_WHO_TIME
 		{
 			NSString* chname = [m paramAt:1];
