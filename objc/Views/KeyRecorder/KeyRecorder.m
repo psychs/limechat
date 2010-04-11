@@ -407,6 +407,8 @@ static NSImage* eraseButtonPushedImage;
 
 + (void)load
 {
+	if (self != [KeyRecorder class]) return;
+	
 	NSAutoreleasePool* pool = [NSAutoreleasePool new];
 	
 	specialKeyMap = [NSDictionary dictionaryWithObjectsAndKeys:

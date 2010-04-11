@@ -22,12 +22,16 @@
 - (id)init
 {
 	if (self = [super init]) {
+		receivers = [NSMutableArray new];
+		senders = [NSMutableArray new];
 	}
 	return self;
 }
 
 - (void)dealloc
 {
+	[receivers release];
+	[senders release];
 	[super dealloc];
 }
 
@@ -164,7 +168,12 @@
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)sender
 {
-	return 0;
+	if (sender == senderTable) {
+		return senders.count;
+	}
+	else {
+		return receivers.count;
+	}
 }
 
 - (id)tableView:(NSTableView *)sender objectValueForTableColumn:(NSTableColumn *)column row:(NSInteger)row
@@ -174,7 +183,17 @@
 
 - (void)tableView:(NSTableView *)sender willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
-	;
+	NSArray* list;
+	if (sender == senderTable) {
+		list = senders;
+	}
+	else {
+		list = receivers;
+	}
+	
+	if (row < 0 || list.count <= row) return;
+	
+	
 }
 
 #pragma mark -

@@ -16,6 +16,8 @@
 	NSWindow* mainWindow;
 	
 	BOOL loaded;
+	NSMutableArray* receivers;
+	NSMutableArray* senders;
 	
 	IBOutlet ListView* receiverTable;
 	IBOutlet ListView* senderTable;
