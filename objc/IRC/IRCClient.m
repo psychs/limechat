@@ -46,7 +46,7 @@
 - (void)receiveInit:(IRCMessage*)message;
 - (void)receiveText:(IRCMessage*)m command:(NSString*)cmd text:(NSString*)text identified:(BOOL)identified;
 - (void)receiveErrorNumericReply:(IRCMessage*)message;
-- (void)receiveNickCollision:(IRCMessage*)message;
+- (void)receiveNickCollisionError:(IRCMessage*)message;
 - (void)receiveCTCPQuery:(IRCMessage*)message text:(NSString*)text;
 - (void)receiveCTCPReply:(IRCMessage*)message text:(NSString*)text;
 
@@ -62,6 +62,7 @@
 - (void)printReply:(IRCMessage*)m;
 - (void)printUnknownReply:(IRCMessage*)m;
 - (void)printErrorReply:(IRCMessage*)m;
+- (void)printErrorReply:(IRCMessage*)m channel:(IRCChannel*)channel;
 - (void)printError:(NSString*)error;
 
 - (WhoisDialog*)createWhoisDialogWithNick:(NSString*)nick username:(NSString*)username address:(NSString*)address realname:(NSString*)realname;
@@ -1050,8 +1051,13 @@
 
 - (void)printErrorReply:(IRCMessage*)m
 {
+	[self printErrorReply:m channel:nil];
+}
+
+- (void)printErrorReply:(IRCMessage*)m channel:(IRCChannel*)channel
+{
 	NSString* text = [NSString stringWithFormat:@"Error(%d): %@", m.numericReply, [m sequence:1]];
-	[self printBoth:nil type:LINE_TYPE_ERROR_REPLY text:text];
+	[self printBoth:channel type:LINE_TYPE_ERROR_REPLY text:text];
 }
 
 - (void)printError:(NSString*)error
@@ -1638,15 +1644,6 @@
 	[self joinChannels:ary];
 }
 
-- (void)receiveErrorNumericReply:(IRCMessage*)m
-{
-	[self printErrorReply:m];
-}
-
-- (void)receiveNickCollision:(IRCMessage*)m
-{
-}
-
 - (void)receiveNumericReply:(IRCMessage*)m
 {
 	int n = m.numericReply;
@@ -1941,6 +1938,33 @@
 			[self printUnknownReply:m];
 			break;
 	}
+}
+
+- (void)receiveErrorNumericReply:(IRCMessage*)m
+{
+	int n = m.numericReply;
+	
+	switch (n) {
+		case 401:	// ERR_NOSUCHNICK
+		{
+			NSString* chname = [m paramAt:1];
+			IRCChannel* c = [self findChannel:chname];
+			if (c && c.isActive) {
+				[self printErrorReply:m channel:c];
+				return;
+			}
+			break;
+		}
+		case 433:	// ERR_NICKNAMEINUSE
+			[self receiveNickCollisionError:m];
+			break;
+	}
+	
+	[self printErrorReply:m];
+}
+
+- (void)receiveNickCollisionError:(IRCMessage*)m
+{
 }
 
 #pragma mark -
