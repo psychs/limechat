@@ -121,6 +121,7 @@
 - (void)updateClientTitle:(IRCClient*)client;
 - (void)updateChannelTitle:(IRCChannel*)channel;
 
+- (void)preferencesChanged;
 - (void)reloadTheme;
 - (void)changeTextSize:(BOOL)bigger;
 

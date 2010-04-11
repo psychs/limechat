@@ -331,6 +331,11 @@
 	[preferencesController show];
 }
 
+- (void)preferencesDialogWillClose:(PreferencesController*)sender
+{
+	[world preferencesChanged];
+}
+
 - (void)onAutoOp:(id)sender
 {
 }

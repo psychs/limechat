@@ -132,6 +132,20 @@
 {
 }
 
+- (void)preferencesChanged
+{
+	log.maxLines = [Preferences maxLogLines];
+	
+	if (logFile) {
+		if ([Preferences logTranscript]) {
+			[logFile reopenIfNeeded];
+		}
+		else {
+			[self closeLogFile];
+		}
+	}
+}
+
 - (void)activate
 {
 	isActive = YES;

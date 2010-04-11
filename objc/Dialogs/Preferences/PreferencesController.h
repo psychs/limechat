@@ -49,3 +49,8 @@
 - (void)onChangedTransparency:(id)sender;
 
 @end
+
+
+@interface NSObject (PreferencesControllerDelegate)
+- (void)preferencesDialogWillClose:(PreferencesController*)sender;
+@end

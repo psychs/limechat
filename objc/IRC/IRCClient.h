@@ -89,6 +89,7 @@ typedef enum {
 - (void)onTimer;
 - (void)terminate;
 - (void)closeDialogs;
+- (void)preferencesChanged;
 
 - (void)connect;
 - (void)connect:(ConnectMode)mode;

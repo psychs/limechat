@@ -291,6 +291,15 @@
 	}
 }
 
+- (void)preferencesChanged
+{
+	consoleLog.maxLines = [Preferences maxLogLines];
+
+	for (IRCClient* c in clients) {
+		[c preferencesChanged];
+	}
+}
+
 #pragma mark -
 #pragma mark Window Title
 

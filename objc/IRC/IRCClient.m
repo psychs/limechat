@@ -270,6 +270,15 @@
 	[whoisDialogs removeAllObjects];
 }
 
+- (void)preferencesChanged
+{
+	log.maxLines = [Preferences maxLogLines];
+	
+	for (IRCChannel* c in channels) {
+		[c preferencesChanged];
+	}
+}
+
 - (void)reloadTree
 {
 	[world reloadTree];

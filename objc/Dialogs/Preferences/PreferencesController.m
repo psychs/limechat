@@ -462,6 +462,10 @@
 - (void)windowWillClose:(NSNotification *)note
 {
 	[[NSUserDefaults standardUserDefaults] synchronize];
+	
+	if ([delegate respondsToSelector:@selector(preferencesDialogWillClose:)]) {
+		[delegate preferencesDialogWillClose:self];
+	}
 }
 
 @end

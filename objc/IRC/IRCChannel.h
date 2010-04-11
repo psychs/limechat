@@ -62,6 +62,7 @@
 
 - (void)terminate;
 - (void)closeDialogs;
+- (void)preferencesChanged;
 
 - (void)activate;
 - (void)deactivate;
