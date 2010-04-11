@@ -32,6 +32,7 @@
 	BOOL terminating;
 	
 	FileLogger* logFile;
+	NSDateComponents* logDate;
 	
 	ChannelDialog* propertyDialog;
 }

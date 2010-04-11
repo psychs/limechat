@@ -50,7 +50,10 @@
 	[members release];
 	[topic release];
 	[storedTopic release];
+	
 	[logFile release];
+	[logDate release];
+	
 	[propertyDialog release];
 	[super dealloc];
 }
@@ -171,7 +174,7 @@
 {
 	BOOL result = [log print:line];
 	
-	// write to log file
+	// log
 	if (!terminating) {
 		if ([Preferences logTranscript]) {
 			if (!logFile) {
@@ -180,11 +183,26 @@
 				logFile.channel = self;
 			}
 			
+			// check date
+			NSCalendar* cal = [NSCalendar currentCalendar];
+			NSDate* now = [NSDate date];
+			NSDateComponents* comp = [cal components:NSDayCalendarUnit|NSMonthCalendarUnit|NSYearCalendarUnit fromDate:now];
+			if (logDate) {
+				if (![logDate isEqual:comp]) {
+					[logDate release];
+					logDate = [comp retain];
+					[logFile reopenIfNeeded];
+				}
+			}
+			else {
+				logDate = [comp retain];
+			}
+			
+			// write line to file
 			NSString* nickStr = @"";
 			if (line.nick) {
 				nickStr = [NSString stringWithFormat:@"%@: ", line.nickInfo];
 			}
-			
 			NSString* s = [NSString stringWithFormat:@"%@%@%@", line.time, nickStr, line.body];
 			[logFile writeLine:s];
 		}
