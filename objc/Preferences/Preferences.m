@@ -2,6 +2,7 @@
 // You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
 #import "Preferences.h"
+#import "NSLocaleHelper.h"
 
 
 @implementation Preferences
@@ -114,7 +115,7 @@
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
 	id obj = [ud objectForKey:@"Preferences.General.paste_syntax"];
-	if (!obj) return [[[ud objectForKey:@"AppleLanguages"] objectAtIndex:0] isEqualToString:@"ja"] ? @"notice" : @"privmsg";
+	if (!obj) return [NSLocale prefersJapaneseLanguage] ? @"notice" : @"privmsg";
 	return obj;
 }
 
