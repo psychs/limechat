@@ -5,6 +5,11 @@
 
 
 typedef enum {
+	ADDRESS_DETECT_SPECIFY = 0,
+	ADDRESS_DETECT_JOIN = 2,
+} AddressDetectionType;
+
+typedef enum {
 	MAIN_WINDOW_LAYOUT_2_COLUMN = 0,
 	MAIN_WINDOW_LAYOUT_3_COLUMN,
 } MainWindowLayoutType;
@@ -24,7 +29,7 @@ typedef enum {
 @interface Preferences : NSObject
 
 + (int)dccAction;
-+ (int)dccAddressDetectionMethod;
++ (AddressDetectionType)dccAddressDetectionMethod;
 + (NSString*)dccMyaddress;
 + (BOOL)autoRejoin;
 + (BOOL)confirmQuit;

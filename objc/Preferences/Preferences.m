@@ -14,11 +14,11 @@
 	return [obj intValue];
 }
 
-+ (int)dccAddressDetectionMethod
++ (AddressDetectionType)dccAddressDetectionMethod
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
 	id obj = [ud objectForKey:@"Preferences.Dcc.address_detection_method"];
-	if (!obj) return 2;
+	if (!obj) return ADDRESS_DETECT_JOIN;
 	return [obj intValue];
 }
 
@@ -90,7 +90,7 @@
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
 	id obj = [ud objectForKey:@"Preferences.General.main_window_layout"];
-	if (!obj) return 0;
+	if (!obj) return MAIN_WINDOW_LAYOUT_2_COLUMN;
 	return [obj intValue];
 }
 
@@ -146,7 +146,7 @@
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
 	id obj = [ud objectForKey:@"Preferences.General.tab_action"];
-	if (!obj) return 0;
+	if (!obj) return TAB_COMPLETE_NICK;
 	return [obj intValue];
 }
 
@@ -190,7 +190,7 @@
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
 	id obj = [ud objectForKey:@"Preferences.Keyword.matching_method"];
-	if (!obj) return 0;
+	if (!obj) return KEYWORD_MATCH_PARTIAL;
 	return [obj intValue];
 }
 
