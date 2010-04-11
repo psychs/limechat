@@ -22,12 +22,11 @@
 	NSMutableArray* members;
 	NSString* topic;
 	NSString* storedTopic;
-	
 	BOOL isActive;
-	BOOL hasOp;
-	BOOL modeInit;
-	BOOL namesInit;
-	BOOL whoInit;
+	BOOL isOp;
+	BOOL isModeInit;
+	BOOL isNamesInit;
+	BOOL isWhoInit;
 	
 	BOOL terminating;
 	
@@ -36,20 +35,19 @@
 
 @property (nonatomic, assign) IRCClient* client;
 @property (nonatomic, readonly) IRCChannelConfig* config;
-
 @property (nonatomic, assign) NSString* name;
 @property (nonatomic, readonly) NSString* password;
 @property (nonatomic, readonly) IRCChannelMode* mode;
-@property (nonatomic, readonly) BOOL isChannel;
-@property (nonatomic, readonly) BOOL isTalk;
 @property (nonatomic, readonly) NSString* channelTypeString;
 @property (nonatomic, retain) NSString* topic;
 @property (nonatomic, retain) NSString* storedTopic;
 @property (nonatomic, assign) BOOL isActive;
-@property (nonatomic, assign) BOOL hasOp;
-@property (nonatomic, assign) BOOL modeInit;
-@property (nonatomic, assign) BOOL namesInit;
-@property (nonatomic, assign) BOOL whoInit;
+@property (nonatomic, assign) BOOL isOp;
+@property (nonatomic, assign) BOOL isModeInit;
+@property (nonatomic, assign) BOOL isNamesInit;
+@property (nonatomic, assign) BOOL isWhoInit;
+@property (nonatomic, readonly) BOOL isChannel;
+@property (nonatomic, readonly) BOOL isTalk;
 
 @property (nonatomic, retain) ChannelDialog* propertyDialog;
 

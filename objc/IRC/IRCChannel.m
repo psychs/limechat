@@ -25,10 +25,10 @@
 @synthesize isUnread;
 @synthesize isNewTalk;
 @synthesize isActive;
-@synthesize hasOp;
-@synthesize modeInit;
-@synthesize namesInit;
-@synthesize whoInit;
+@synthesize isOp;
+@synthesize isModeInit;
+@synthesize isNamesInit;
+@synthesize isWhoInit;
 
 @synthesize propertyDialog;
 
@@ -134,11 +134,11 @@
 	isActive = YES;
 	[members removeAllObjects];
 	[mode clear];
-	hasOp = NO;
+	isOp = NO;
 	self.topic = nil;
-	modeInit = NO;
-	namesInit = NO;
-	whoInit = NO;
+	isModeInit = NO;
+	isNamesInit = NO;
+	isWhoInit = NO;
 	[self reloadMemberList];
 }
 
@@ -146,7 +146,7 @@
 {
 	isActive = NO;
 	[members removeAllObjects];
-	hasOp = NO;
+	isOp = NO;
 	[self reloadMemberList];
 }
 

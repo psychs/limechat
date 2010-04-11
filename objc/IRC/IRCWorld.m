@@ -608,7 +608,7 @@
 	seed.type = CHANNEL_TYPE_TALK;
 	IRCChannel* c = [self createChannel:seed client:client reload:YES adjust:YES];
 	
-	if (client.loggedIn) {
+	if (client.isLoggedIn) {
 		[c activate];
 		
 		IRCUser* m;
@@ -706,7 +706,7 @@
 	
 	IRCClient* u = c.client;
 	if (c.isChannel) {
-		if (u.loggedIn && c.isActive) {
+		if (u.isLoggedIn && c.isActive) {
 			[u partChannel:c];
 		}
 	}
@@ -805,7 +805,7 @@
 	IRCChannel* c = self.selectedChannel;
 	
 	if (!c) {
-		if (u.connecting || u.connected || u.loggedIn) {
+		if (u.isConnecting || u.isConnected || u.isLoggedIn) {
 			if ([Preferences disconnectOnDoubleclick]) {
 				[u quit];
 			}
@@ -817,7 +817,7 @@
 		}
 	}
 	else {
-		if (u.loggedIn) {
+		if (u.isLoggedIn) {
 			if (c.isActive) {
 				if ([Preferences leaveOnDoubleclick]) {
 					[u partChannel:c];

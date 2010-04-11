@@ -517,7 +517,7 @@ typedef enum {
 			client = [world.clients objectAtIndex:n];
 			if (client) {
 				if (target == MOVE_ACTIVE) {
-					if (client.loggedIn) {
+					if (client.isLoggedIn) {
 						id t = client.lastSelectedChannel ?: (id)client;
 						[world select:t];
 						break;

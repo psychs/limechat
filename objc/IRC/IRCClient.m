@@ -72,10 +72,10 @@
 @synthesize config;
 @synthesize channels;
 @synthesize isupport;
-@synthesize connecting;
-@synthesize connected;
-@synthesize reconnecting;
-@synthesize loggedIn;
+@synthesize isConnecting;
+@synthesize isConnected;
+@synthesize isReconnecting;
+@synthesize isLoggedIn;
 
 @synthesize isKeyword;
 @synthesize isUnread;
@@ -260,7 +260,7 @@
 	
 	[self printSystemBoth:nil text:@"Connecting…"];
 	
-	connecting = YES;
+	isConnecting = YES;
 	reconnectEnabled = YES;
 	reconnectTime = 30;
 	retryEnabled = YES;
@@ -311,12 +311,12 @@
 
 - (void)quit
 {
-	if (!loggedIn) {
+	if (!isLoggedIn) {
 		[self disconnect];
 		return;
 	}
 	
-	quitting = YES;
+	isQuitting = YES;
 	reconnectEnabled = NO;
 	[conn clearSendQueue];
 	[self send:QUIT, config.leavingComment, nil];
@@ -328,7 +328,7 @@
 
 - (void)changeNick:(NSString*)newNick
 {
-	if (!connected) return;
+	if (!isConnected) return;
 	
 	[inputNick autorelease];
 	[sentNick autorelease];
@@ -340,7 +340,7 @@
 
 - (void)joinChannel:(IRCChannel*)channel
 {
-	if (!loggedIn) return;
+	if (!isLoggedIn) return;
 	if (channel.isActive) return;
 	
 	NSString* password = channel.config.password;
@@ -351,7 +351,7 @@
 
 - (void)partChannel:(IRCChannel*)channel
 {
-	if (!loggedIn) return;
+	if (!isLoggedIn) return;
 	if (!channel.isActive) return;
 	
 	NSString* comment = config.leavingComment;
@@ -362,14 +362,14 @@
 
 - (void)sendWhois:(NSString*)nick
 {
-	if (!loggedIn) return;
+	if (!isLoggedIn) return;
 	
 	[self send:WHOIS, nick, nick, nil];
 }
 
 - (void)changeOp:(IRCChannel*)channel users:(NSArray*)inputUsers mode:(char)mode value:(BOOL)value
 {
-	if (!loggedIn || !channel || !channel.isActive || !channel.isChannel || !channel.hasOp) return;
+	if (!isLoggedIn || !channel || !channel.isActive || !channel.isChannel || !channel.isOp) return;
 	
 	NSMutableArray* users = [NSMutableArray array];
 	
@@ -500,7 +500,7 @@
 
 - (BOOL)sendText:(NSString*)s command:(NSString*)command
 {
-	if (!connected) return NO;
+	if (!isConnected) return NO;
 	
 	id sel = world.selected;
 	if (!sel) return NO;
@@ -971,7 +971,7 @@
 
 - (BOOL)isActive
 {
-	return loggedIn;
+	return isLoggedIn;
 }
 
 - (IRCClient*)client
@@ -1402,7 +1402,7 @@
 					[c addMember:me];
 				}
 				else {
-					c.whoInit = NO;
+					c.isWhoInit = NO;
 					[self send:WHO, c.name, nil];
 				}
 			}
@@ -1423,8 +1423,8 @@
 						myself = YES;
 						BOOL prev = m.isOp;
 						[c changeMember:myNick mode:mode value:plus];
-						c.hasOp = m.isOp;
-						if (!prev && c.hasOp && c.whoInit) {
+						c.isOp = m.isOp;
+						if (!prev && c.isOp && c.isWhoInit) {
 							// @@@ check all auto op
 						}
 					}
@@ -1487,11 +1487,11 @@
 
 - (void)receiveInit:(IRCMessage*)m
 {
-	if (loggedIn) return;
+	if (isLoggedIn) return;
 	
 	[world expandClient:self];
 	
-	loggedIn = YES;
+	isLoggedIn = YES;
 	tryingNick = -1;
 	
 	[serverHostname release];
@@ -1736,12 +1736,12 @@
 						[c addMember:me];
 					}
 					else {
-						c.whoInit = NO;
+						c.isWhoInit = NO;
 						[self send:WHO, c.name, nil];
 					}
 				}
 				
-				c.modeInit = YES;
+				c.isModeInit = YES;
 				[self updateChannelTitle:c];
 			}
 			
@@ -1759,7 +1759,7 @@
 			NSString* trail = [m paramAt:3];
 			
 			IRCChannel* c = [self findChannel:chname];
-			if (c && c.isActive && !c.namesInit) {
+			if (c && c.isActive && !c.isNamesInit) {
 				NSArray* ary = [trail componentsSeparatedByString:@" "];
 				for (NSString* nick in ary) {
 					if (!nick.length) continue;
@@ -1780,7 +1780,7 @@
 					m.isMyself = [nick isEqualNoCase:myNick];
 					[c addMember:m reload:NO];
 					if ([myNick isEqualNoCase:nick]) {
-						c.hasOp = (m.q || m.a | m.o);
+						c.isOp = (m.q || m.a | m.o);
 					}
 				}
 				[c reloadMemberList];
@@ -1796,16 +1796,16 @@
 			NSString* chname = [m paramAt:1];
 			
 			IRCChannel* c = [self findChannel:chname];
-			if (c && c.isActive && !c.namesInit) {
-				c.namesInit = YES;
+			if (c && c.isActive && !c.isNamesInit) {
+				c.isNamesInit = YES;
 				
-				if ([c numberOfMembers] <= 1 && c.hasOp) {
+				if ([c numberOfMembers] <= 1 && c.isOp) {
 					// set mode if creator
 					NSString* m = c.config.mode;
 					if (m.length) {
 						[self send:MODE, chname, m, nil];
 					}
-					c.modeInit = YES;
+					c.isModeInit = YES;
 				}
 				else {
 					// query mode
@@ -1826,7 +1826,7 @@
 					// @@@add to who queue
 				}
 				else {
-					c.whoInit = YES;
+					c.isWhoInit = YES;
 				}
 				
 				[self updateChannelTitle:c];
@@ -1848,12 +1848,12 @@
 
 - (void)changeStateOff
 {
-	BOOL prevConnected = connected;
+	BOOL prevConnected = isConnected;
 	
 	[conn autorelease];
 	conn = nil;
 	
-	connecting = connected = loggedIn = quitting = NO;
+	isConnecting = isConnected = isLoggedIn = isQuitting = NO;
 	[myNick release];
 	myNick = @"";
 	[sentNick release];
@@ -1889,8 +1889,8 @@
 {
 	[self printSystemBoth:nil text:@"Connected"];
 	
-	connecting = loggedIn = NO;
-	connected = reconnectEnabled = YES;
+	isConnecting = isLoggedIn = NO;
+	isConnected = reconnectEnabled = YES;
 	encoding = config.encoding;
 	
 	[inputNick autorelease];

@@ -12,15 +12,15 @@
 #import "NSPasteboardHelper.h"
 
 
-#define CONNECTED				(u && u.connected)
-#define NOT_CONNECTED			(u && !u.connected)
-#define LOGIN					(u && u.loggedIn)
+#define CONNECTED				(u && u.isConnected)
+#define NOT_CONNECTED			(u && !u.isConnected)
+#define LOGIN					(u && u.isLoggedIn)
 #define ACTIVE					(LOGIN && c && c.isActive)
 #define NOT_ACTIVE				(LOGIN && c && !c.isActive)
 #define ACTIVE_CHANNEL			(ACTIVE && c.isChannel)
 #define ACTIVE_CHANTALK			(ACTIVE && (c.isChannel || c.isTalk))
 #define LOGIN_CHANTALK			(LOGIN && (!c || c.isChannel || c.isTalk))
-#define OP						(ACTIVE_CHANNEL && c.hasOp)
+#define OP						(ACTIVE_CHANNEL && c.isOp)
 #define KEY_WINDOW				([window isKeyWindow])
 
 
@@ -184,9 +184,9 @@
 		case 501:	// connect
 			return NOT_CONNECTED;
 		case 502:	// disconnect
-			return u && (u.connected || u.connecting);
-		case 503:	// cancel reconnecting
-			return u && u.reconnecting;
+			return u && (u.isConnected || u.isConnecting);
+		case 503:	// cancel isReconnecting
+			return u && u.isReconnecting;
 		case 511:	// nick
 		case 519:	// channel list
 			return LOGIN;
@@ -238,7 +238,7 @@
 			return LOGIN_CHANTALK && [self checkSelectedMembers:item];
 		case 2032:	// ban
 		case 2033:	// kick & ban
-			return OP && [self checkSelectedMembers:item] && c.whoInit;
+			return OP && [self checkSelectedMembers:item] && c.isWhoInit;
 			
 		case 3001:	// copy url
 		case 3002:	// copy address
@@ -576,7 +576,7 @@
 - (void)onDeleteServer:(id)sender
 {
 	IRCClient* u = world.selectedClient;
-	if (!u || u.connected) return;
+	if (!u || u.isConnected) return;
 	
 	NSString* message = [NSString stringWithFormat:@"Delete %@ ?", u.name];
 	
@@ -639,7 +639,7 @@
 {
 	IRCClient* u = world.selectedClient;
 	IRCChannel* c = world.selectedChannel;
-	if (!u || !c || !u.loggedIn || c.isActive || !c.isChannel) return;
+	if (!u || !c || !u.isLoggedIn || c.isActive || !c.isChannel) return;
 	[u joinChannel:c];
 }
 
@@ -647,7 +647,7 @@
 {
 	IRCClient* u = world.selectedClient;
 	IRCChannel* c = world.selectedChannel;
-	if (!u || !c || !u.loggedIn || !c.isActive) return;
+	if (!u || !c || !u.isLoggedIn || !c.isActive) return;
 	if (c.isChannel) {
 		[u partChannel:c];
 	}
@@ -841,7 +841,7 @@
 {
 	IRCClient* u = world.selectedClient;
 	IRCChannel* c = world.selectedChannel;
-	if (!u || !u.loggedIn || !c || !c.isActive || !c.isChannel || !c.hasOp) return;
+	if (!u || !u.isLoggedIn || !c || !c.isActive || !c.isChannel || !c.isOp) return;
 	
 	[u changeOp:c users:[self selectedMembers:sender] mode:mode value:value];
 	[self deselectMembers:sender];
@@ -861,7 +861,7 @@
 {
 	IRCClient* u = world.selectedClient;
 	IRCChannel* c = world.selectedChannel;
-	if (!u || !u.loggedIn || !c || !c.isActive || !c.isChannel || !c.hasOp) return;
+	if (!u || !u.isLoggedIn || !c || !c.isActive || !c.isChannel || !c.isOp) return;
 	
 	for (IRCUser* m in [self selectedMembers:sender]) {
 		[u kick:c target:m.nick];
@@ -927,7 +927,7 @@
 {
 	if (!pointedChannelName) return;
 	IRCClient* u = world.selectedClient;
-	if (!u || !u.loggedIn) return;
+	if (!u || !u.isLoggedIn) return;
 	[u send:JOIN, pointedChannelName, nil];
 }
 

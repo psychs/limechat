@@ -31,11 +31,11 @@
 	BOOL retryEnabled;
 	int retryTime;
 	
-	BOOL connecting;
-	BOOL connected;
-	BOOL reconnecting;
-	BOOL loggedIn;
-	BOOL quitting;
+	BOOL isConnecting;
+	BOOL isConnected;
+	BOOL isReconnecting;
+	BOOL isLoggedIn;
+	BOOL isQuitting;
 	NSStringEncoding encoding;
 	
 	NSString* inputNick;
@@ -57,19 +57,16 @@
 }
 
 @property (nonatomic, assign) IRCWorld* world;
-
 @property (nonatomic, readonly) NSString* name;
 @property (nonatomic, readonly) IRCClientConfig* config;
 @property (nonatomic, readonly) IRCISupportInfo* isupport;
 @property (nonatomic, readonly) NSMutableArray* channels;
-
-@property (nonatomic, readonly) BOOL connecting;
-@property (nonatomic, readonly) BOOL connected;
-@property (nonatomic, readonly) BOOL reconnecting;
-@property (nonatomic, readonly) BOOL loggedIn;
+@property (nonatomic, readonly) BOOL isConnecting;
+@property (nonatomic, readonly) BOOL isConnected;
+@property (nonatomic, readonly) BOOL isReconnecting;
+@property (nonatomic, readonly) BOOL isLoggedIn;
 @property (nonatomic, readonly) NSString* myNick;
 @property (nonatomic, readonly) NSString* myAddress;
-
 @property (nonatomic, retain) IRCChannel* lastSelectedChannel;
 @property (nonatomic, retain) ServerDialog* propertyDialog;
 
