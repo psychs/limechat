@@ -189,7 +189,7 @@
 	// @@@ check dcc file transfers
 	
 	if ([Preferences confirmQuit]) {
-		NSInteger result = NSRunAlertPanel(@"Quit?", @"", @"Delete", @"Cancel", nil);
+		NSInteger result = NSRunAlertPanel(@"Quit LimeChat?", @"", @"Quit", @"Cancel", nil);
 		if (result != NSAlertDefaultReturn) return NSTerminateCancel;
 	}
 	
