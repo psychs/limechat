@@ -8,6 +8,7 @@
 #import "IRCUser.h"
 #import "IRCChannelMode.h"
 #import "ChannelDialog.h"
+#import "FileLogger.h"
 
 
 @class IRCClient;
@@ -29,6 +30,8 @@
 	BOOL isWhoInit;
 	
 	BOOL terminating;
+	
+	FileLogger* logFile;
 	
 	ChannelDialog* propertyDialog;
 }

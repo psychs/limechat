@@ -9,7 +9,6 @@
 
 
 @interface FileLogger (Private)
-- (void)open;
 - (NSString*)buildFileName;
 @end
 
@@ -28,8 +27,8 @@
 
 - (void)dealloc
 {
+	[self close];
 	[fileName release];
-	[file release];
 	[super dealloc];
 }
 

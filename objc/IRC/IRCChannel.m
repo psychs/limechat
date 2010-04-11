@@ -4,6 +4,7 @@
 #import "IRCChannel.h"
 #import "IRCClient.h"
 #import "IRCWorld.h"
+#import "Preferences.h"
 #import "MemberListViewCell.h"
 #import "NSStringHelper.h"
 
@@ -49,6 +50,7 @@
 	[members release];
 	[topic release];
 	[storedTopic release];
+	[logFile release];
 	[propertyDialog release];
 	[super dealloc];
 }
@@ -156,6 +158,23 @@
 	BOOL result = [log print:line];
 	
 	// write to log file
+	if (!terminating) {
+		if ([Preferences logTranscript]) {
+			if (!logFile) {
+				logFile = [FileLogger new];
+				logFile.client = client;
+				logFile.channel = self;
+			}
+			
+			NSString* nickStr = @"";
+			if (line.nick) {
+				nickStr = [NSString stringWithFormat:@"%@: ", line.nickInfo];
+			}
+			
+			NSString* s = [NSString stringWithFormat:@"%@%@%@", line.time, nickStr, line.body];
+			[logFile writeLine:s];
+		}
+	}
 	
 	return result;
 }
@@ -328,6 +347,9 @@
 
 - (void)closeLogFile
 {
+	if (logFile) {
+		[logFile close];
+	}
 }
 
 #pragma mark -

@@ -20,5 +20,10 @@
 @property (nonatomic, assign) IRCClient* client;
 @property (nonatomic, assign) IRCChannel* channel;
 
+- (void)open;
+- (void)close;
+- (void)reopenIfNeeded;
+
+- (void)writeLine:(NSString*)s;
 
 @end
