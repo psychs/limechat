@@ -80,6 +80,7 @@
 		78806C26116F4172006ED1B0 /* ServerDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 78806C25116F4172006ED1B0 /* ServerDialog.m */; };
 		78835406109FEA7F00CD2FFF /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78835405109FEA7F00CD2FFF /* SystemConfiguration.framework */; };
 		7883F3AA11717D5100CE7F7A /* NickCompletinStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 7883F3A911717D5100CE7F7A /* NickCompletinStatus.m */; };
+		7883F8551171EBD400CE7F7A /* PasteSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 7883F8541171EBD400CE7F7A /* PasteSheet.m */; };
 		7884E54E0CDA91F500AF3678 /* SACrashReporter in Resources */ = {isa = PBXBuildFile; fileRef = 7884E5450CDA91F500AF3678 /* SACrashReporter */; };
 		788AC86B1165C59500523E80 /* ServerTreeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 788AC86A1165C59500523E80 /* ServerTreeView.m */; };
 		788AC8B61165CB5000523E80 /* SingleLineFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 788AC8B51165CB5000523E80 /* SingleLineFormatter.m */; };
@@ -284,6 +285,8 @@
 		78835405109FEA7F00CD2FFF /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = /System/Library/Frameworks/SystemConfiguration.framework; sourceTree = "<absolute>"; };
 		7883F3A811717D5100CE7F7A /* NickCompletinStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NickCompletinStatus.h; sourceTree = "<group>"; };
 		7883F3A911717D5100CE7F7A /* NickCompletinStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NickCompletinStatus.m; sourceTree = "<group>"; };
+		7883F8531171EBD400CE7F7A /* PasteSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PasteSheet.h; sourceTree = "<group>"; };
+		7883F8541171EBD400CE7F7A /* PasteSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PasteSheet.m; sourceTree = "<group>"; };
 		7884E5450CDA91F500AF3678 /* SACrashReporter */ = {isa = PBXFileReference; lastKnownFileType = folder; name = SACrashReporter; path = vendor/SACrashReporter; sourceTree = "<group>"; };
 		788AC8691165C59500523E80 /* ServerTreeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerTreeView.h; sourceTree = "<group>"; };
 		788AC86A1165C59500523E80 /* ServerTreeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerTreeView.m; sourceTree = "<group>"; };
@@ -454,10 +457,10 @@
 				78347EC51158D4B00073E2F0 /* ModeSheet.xib */,
 				78347ECD1158D4B00073E2F0 /* ServerDialog.xib */,
 				78347EBB1158D4B00073E2F0 /* ChannelDialog.xib */,
+				78347EC91158D4B00073E2F0 /* PasteSheet.xib */,
 				78347EBD1158D4B00073E2F0 /* CommentSheet.xib */,
 				78347EBF1158D4B00073E2F0 /* DccDialog.xib */,
 				78347EC11158D4B00073E2F0 /* ListDialog.xib */,
-				78347EC91158D4B00073E2F0 /* PasteSheet.xib */,
 				78347ECF1158D4B00073E2F0 /* WelcomeDialog.xib */,
 				78347EB91158D4B00073E2F0 /* AutoOpDialog.xib */,
 				78287EA90D742DAA008D5656 /* Themes */,
@@ -723,6 +726,8 @@
 				7840A09F116DE5070033AE3E /* NickSheet.m */,
 				78D98121116EFE02007FAD15 /* ModeSheet.h */,
 				78D98122116EFE02007FAD15 /* ModeSheet.m */,
+				7883F8531171EBD400CE7F7A /* PasteSheet.h */,
+				7883F8541171EBD400CE7F7A /* PasteSheet.m */,
 				7840A0E5116DEA7F0033AE3E /* SheetBase.h */,
 				7840A0E6116DEA7F0033AE3E /* SheetBase.m */,
 			);
@@ -966,6 +971,7 @@
 				780ADB9D116F800F004FF298 /* NSLocaleHelper.m in Sources */,
 				780ADD42116F9B41004FF298 /* ChannelDialog.m in Sources */,
 				7883F3AA11717D5100CE7F7A /* NickCompletinStatus.m in Sources */,
+				7883F8551171EBD400CE7F7A /* PasteSheet.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

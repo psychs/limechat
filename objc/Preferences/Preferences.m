@@ -103,22 +103,6 @@
 	return [obj boolValue];
 }
 
-+ (NSString*)pasteCommand
-{
-	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	id obj = [ud objectForKey:@"Preferences.General.paste_command"];
-	if (!obj) return @"privmsg";
-	return obj;
-}
-
-+ (NSString*)pasteSyntax
-{
-	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	id obj = [ud objectForKey:@"Preferences.General.paste_syntax"];
-	if (!obj) return [NSLocale prefersJapaneseLanguage] ? @"notice" : @"privmsg";
-	return obj;
-}
-
 + (BOOL)showInlineImages
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
@@ -207,6 +191,37 @@
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
 	return [ud objectForKey:@"Preferences.Keyword.words"];
+}
+
+#pragma mark -
+#pragma mark Paste
+
++ (NSString*)pasteCommand
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	id obj = [ud objectForKey:@"Preferences.General.paste_command"];
+	if (!obj) return @"privmsg";
+	return obj;
+}
+
++ (void)setPasteCommand:(NSString*)value
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	[ud setObject:value forKey:@"Preferences.General.paste_command"];
+}
+
++ (NSString*)pasteSyntax
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	id obj = [ud objectForKey:@"Preferences.General.paste_syntax"];
+	if (!obj) return [NSLocale prefersJapaneseLanguage] ? @"notice" : @"privmsg";
+	return obj;
+}
+
++ (void)setPasteSyntax:(NSString*)value
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	[ud setObject:value forKey:@"Preferences.General.paste_syntax"];
 }
 
 #pragma mark -

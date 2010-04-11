@@ -6,6 +6,10 @@
 #import "Regex.h"
 
 
+#define LF	0xa
+#define CR	0xd
+
+
 @implementation NSString (NSStringHelper)
 
 - (BOOL)isEqualNoCase:(NSString*)other
@@ -72,6 +76,41 @@
 	}
 	
 	return ary;
+}
+
+- (NSArray*)splitIntoLines
+{
+	int len = self.length;
+	UniChar buf[len];
+	[self getCharacters:buf range:NSMakeRange(0, len)];
+	
+	NSMutableArray* lines = [NSMutableArray array];
+	int start = 0;
+	
+	for (int i=0; i<len; ++i) {
+		UniChar c = buf[i];
+		if (c == LF || c == CR) {
+			int pos = i;
+			if (c == CR && i+1 < len) {
+				UniChar next = buf[i+1];
+				if (next == LF) {
+					++i;
+				}
+			}
+			
+			NSString* s = [[NSString alloc] initWithCharacters:buf+start length:pos - start];
+			[lines addObject:s];
+			[s release];
+			
+			start = i + 1;
+		}
+	}
+	
+	NSString* s = [[NSString alloc] initWithCharacters:buf+start length:len - start];
+	[lines addObject:s];
+	[s release];
+	
+	return lines;
 }
 
 - (NSString*)trim

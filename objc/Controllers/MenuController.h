@@ -6,6 +6,7 @@
 #import "PreferencesController.h"
 #import "NickSheet.h"
 #import "ModeSheet.h"
+#import "PasteSheet.h"
 
 
 @class AppController;
@@ -32,9 +33,9 @@
 	PreferencesController* preferencesController;
 	NSMutableArray* serverDialogs;
 	NSMutableArray* channelDialogs;
-	NSMutableArray* pasteClients;
 	NickSheet* nickSheet;
 	ModeSheet* modeSheet;
+	PasteSheet* pasteSheet;
 }
 
 @property (nonatomic, assign) AppController* app;

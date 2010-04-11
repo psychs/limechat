@@ -1,5 +1,6 @@
 #import "MenuController.h"
 #import <WebKit/WebKit.h>
+#import "Preferences.h"
 #import "IRC.h"
 #import "IRCWorld.h"
 #import "IRCClient.h"
@@ -52,7 +53,6 @@
 	if (self = [super init]) {
 		serverDialogs = [NSMutableArray new];
 		channelDialogs = [NSMutableArray new];
-		pasteClients = [NSMutableArray new];
 	}
 	return self;
 }
@@ -67,10 +67,10 @@
 	[preferencesController release];
 	[serverDialogs release];
 	[channelDialogs release];
-	[pasteClients release];
 	
 	[nickSheet release];
 	[modeSheet release];
+	[pasteSheet release];
 	[super dealloc];
 }
 
@@ -357,6 +357,50 @@
 {
 }
 
+- (void)startPasteSheetWithContent:(NSString*)content nick:(NSString*)nick uid:(int)uid cid:(int)cid editMode:(BOOL)editMode
+{
+	if (pasteSheet) return;
+	
+	pasteSheet = [PasteSheet new];
+	pasteSheet.delegate = self;
+	pasteSheet.window = window;
+	pasteSheet.uid = uid;
+	pasteSheet.cid = cid;
+	pasteSheet.nick = nick;
+	pasteSheet.editMode = editMode;
+	pasteSheet.originalText = content;
+	pasteSheet.syntax = [Preferences pasteSyntax];
+	pasteSheet.command = [Preferences pasteCommand];
+	// @@@ pasteSheet.size = ...
+	[pasteSheet start];
+}
+
+- (void)pasteSheet:(PasteSheet*)sender onPasteText:(NSString*)s
+{
+	LOG(@"send in channel: %@", s);
+}
+
+- (void)pasteSheetOnCancel:(PasteSheet*)sender
+{
+	if (pasteSheet.editMode) {
+		[text setStringValue:pasteSheet.originalText];
+		[world focusInputText];
+	}
+}
+
+- (void)pasteSheetWillClose:(PasteSheet*)sender
+{
+	// @@@ save sheet size
+	
+	if (!pasteSheet.isShortText) {
+		[Preferences setPasteSyntax:pasteSheet.syntax];
+		[Preferences setPasteCommand:pasteSheet.command];
+	}
+	
+	[pasteSheet autorelease];
+	pasteSheet = nil;
+}
+
 - (void)onPaste:(id)sender
 {
 	NSPasteboard* pb = [NSPasteboard generalPasteboard];
@@ -389,6 +433,13 @@
 
 - (void)onPasteDialog:(id)sender
 {
+	IRCClient* u = world.selectedClient;
+	IRCChannel* c = world.selectedChannel;
+	if (!u || !c) return;
+	
+	NSString* s = text.stringValue;
+	[text setStringValue:@""];
+	[self startPasteSheetWithContent:s nick:u.myNick uid:u.uid cid:c.uid editMode:YES];
 }
 
 - (void)onUseSelectionForFind:(id)sender

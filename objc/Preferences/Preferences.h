@@ -46,8 +46,6 @@ typedef enum {
 + (BOOL)logTranscript;
 + (MainWindowLayoutType)mainWindowLayout;
 + (BOOL)openBrowserInBackground;
-+ (NSString*)pasteCommand;
-+ (NSString*)pasteSyntax;
 + (BOOL)showInlineImages;
 + (BOOL)showJoinLeave;
 + (BOOL)stopGrowlOnActive;
@@ -57,6 +55,11 @@ typedef enum {
 + (BOOL)keywordCurrentNick;
 + (KeywordMatchType)keywordMatchingMethod;
 + (BOOL)keywordWholeLine;
+
++ (NSString*)pasteCommand;
++ (void)setPasteCommand:(NSString*)value;
++ (NSString*)pasteSyntax;
++ (void)setPasteSyntax:(NSString*)value;
 
 + (NSString*)themeName;
 + (void)setThemeName:(NSString*)value;

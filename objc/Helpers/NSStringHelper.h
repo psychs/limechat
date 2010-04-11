@@ -21,6 +21,7 @@
 - (int)findCharacter:(UniChar)c start:(int)start;
 - (int)findString:(NSString*)str;
 - (NSArray*)split:(NSString*)delimiter;
+- (NSArray*)splitIntoLines;
 - (NSString*)trim;
 
 - (int)firstCharCodePoint;
