@@ -85,7 +85,7 @@
 	
 	[self loadWindowState];
 	[window setAlphaValue:[Preferences themeTransparency]];
-	[self set3columnLayout:[Preferences mainWindowLayout] == 1];
+	[self set3columnLayout:[Preferences mainWindowLayout] == MAIN_WINDOW_LAYOUT_3_COLUMN];
 	
 	IRCWorldConfig* seed = [[[IRCWorldConfig alloc] initWithDictionary:[Preferences loadWorld]] autorelease];
 
@@ -383,7 +383,7 @@
 - (void)themeDidChange:(NSNotification*)note
 {
 	[world reloadTheme];
-	[self set3columnLayout:[Preferences mainWindowLayout] == 1];
+	[self set3columnLayout:[Preferences mainWindowLayout] == MAIN_WINDOW_LAYOUT_3_COLUMN];
 	[window setAlphaValue:[Preferences themeTransparency]];
 }
 

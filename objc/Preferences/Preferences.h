@@ -5,9 +5,20 @@
 
 
 typedef enum {
-	KEYWORD_MATCH_PARTIAL,
+	MAIN_WINDOW_LAYOUT_2_COLUMN = 0,
+	MAIN_WINDOW_LAYOUT_3_COLUMN,
+} MainWindowLayoutType;
+
+typedef enum {
+	KEYWORD_MATCH_PARTIAL = 0,
 	KEYWORD_MATCH_EXACT,
 } KeywordMatchType;
+
+typedef enum {
+	TAB_COMPLETE_NICK = 0,
+	TAB_UNREAD,
+	TAB_NONE = 100,
+} TabActionType;
 
 
 @interface Preferences : NSObject
@@ -22,18 +33,18 @@ typedef enum {
 + (BOOL)joinOnDoubleclick;
 + (BOOL)leaveOnDoubleclick;
 + (BOOL)logTranscript;
-+ (int)mainWindowLayout;
++ (MainWindowLayoutType)mainWindowLayout;
 + (BOOL)openBrowserInBackground;
 + (NSString*)pasteCommand;
 + (NSString*)pasteSyntax;
 + (BOOL)showInlineImages;
 + (BOOL)showJoinLeave;
 + (BOOL)stopGrowlOnActive;
-+ (int)tabAction;
++ (TabActionType)tabAction;
 + (BOOL)useGrowl;
 + (BOOL)useHotkey;
 + (BOOL)keywordCurrentNick;
-+ (int)keywordMatchingMethod;
++ (KeywordMatchType)keywordMatchingMethod;
 + (BOOL)keywordWholeLine;
 
 + (NSString*)themeName;

@@ -86,7 +86,7 @@
 	return [obj boolValue];
 }
 
-+ (int)mainWindowLayout
++ (MainWindowLayoutType)mainWindowLayout
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
 	id obj = [ud objectForKey:@"Preferences.General.main_window_layout"];
@@ -142,7 +142,7 @@
 	return [obj boolValue];
 }
 
-+ (int)tabAction
++ (TabActionType)tabAction
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
 	id obj = [ud objectForKey:@"Preferences.General.tab_action"];
@@ -186,7 +186,7 @@
 	return [ud objectForKey:@"Preferences.Keyword.ignore_words"];
 }
 
-+ (int)keywordMatchingMethod
++ (KeywordMatchType)keywordMatchingMethod
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
 	id obj = [ud objectForKey:@"Preferences.Keyword.matching_method"];
