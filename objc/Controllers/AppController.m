@@ -325,8 +325,8 @@
 
 - (void)loadWindowState
 {
-	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	NSDictionary* dic = [ud dictionaryForKey:@"main_window"];
+	NSDictionary* dic = [Preferences loadWindowStateWithName:@"main_window"];
+	
 	if (dic) {
 		int x = [dic intForKey:@"x"];
 		int y = [dic intForKey:@"y"];
@@ -377,9 +377,8 @@
 	[dic setInt:treeSplitter.position forKey:@"tree"];
 	[dic setBool:[fieldEditor isContinuousSpellCheckingEnabled] forKey:@"spell_checking"];
 	
-	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	[ud setObject:dic forKey:@"main_window"];
-	[ud synchronize];
+	[Preferences saveWindowState:dic name:@"main_window"];
+	[Preferences sync];
 }
 
 - (void)themeDidChange:(NSNotification*)note

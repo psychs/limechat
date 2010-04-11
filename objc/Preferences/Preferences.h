@@ -115,6 +115,9 @@ typedef enum {
 + (NSDictionary*)loadWorld;
 + (void)saveWorld:(NSDictionary*)value;
 
++ (NSDictionary*)loadWindowStateWithName:(NSString*)name;
++ (void)saveWindowState:(NSDictionary*)value name:(NSString*)name;
+
 + (int)hotKeyKeyCode;
 + (void)setHotKeyKeyCode:(int)value;
 + (NSUInteger)hotKeyModifierFlags;

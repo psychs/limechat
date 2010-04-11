@@ -12,6 +12,7 @@
 #import "GTMNSString+URLArguments.h"
 #import "NSPasteboardHelper.h"
 #import "NSStringHelper.h"
+#import "NSDictionaryHelper.h"
 
 
 #define CONNECTED				(u && u.isConnected)
@@ -372,7 +373,16 @@
 	pasteSheet.originalText = content;
 	pasteSheet.syntax = [Preferences pasteSyntax];
 	pasteSheet.command = [Preferences pasteCommand];
-	// @@@ pasteSheet.size = ...
+	
+	NSDictionary* dic = [Preferences loadWindowStateWithName:@"paste_sheet"];
+	if (dic) {
+		int w = [dic intForKey:@"w"];
+		int h = [dic intForKey:@"h"];
+		if (w > 0 && h > 0) {
+			pasteSheet.size = NSMakeSize(w, h);
+		}
+	}
+	
 	[pasteSheet start];
 }
 
@@ -408,7 +418,12 @@
 
 - (void)pasteSheetWillClose:(PasteSheet*)sender
 {
-	// @@@ save sheet size
+	NSSize size = pasteSheet.size;
+	NSDictionary* dic = [NSDictionary dictionaryWithObjectsAndKeys:
+						 [NSNumber numberWithInt:size.width], @"w",
+						 [NSNumber numberWithInt:size.height], @"h",
+						 nil];
+	[Preferences saveWindowState:dic name:@"paste_sheet"];
 	
 	if (!pasteSheet.isShortText) {
 		[Preferences setPasteSyntax:pasteSheet.syntax];

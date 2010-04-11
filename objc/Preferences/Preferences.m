@@ -559,6 +559,21 @@
 #pragma mark -
 #pragma mark World
 
++ (NSDictionary*)loadWindowStateWithName:(NSString*)name
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	return [ud objectForKey:name];
+}
+
++ (void)saveWindowState:(NSDictionary*)value name:(NSString*)name
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	[ud setObject:value forKey:name];
+}
+
+#pragma mark -
+#pragma mark World
+
 
 + (int)hotKeyKeyCode
 {

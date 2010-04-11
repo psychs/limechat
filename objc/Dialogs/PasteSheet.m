@@ -92,6 +92,10 @@ static NSDictionary* SYNTAX_EXT_MAP;
 	[commandPopup selectItemWithTag:[self tagFromSyntax:command]];
 	[bodyText setString:originalText];
 	
+	if (!NSEqualSizes(size, NSZeroSize)) {
+		[sheet setContentSize:size];
+	}
+	
 	[self startSheet];
 }
 
@@ -221,6 +225,9 @@ static NSDictionary* SYNTAX_EXT_MAP;
 	[command release];
 	syntax = [[self syntaxFromTag:syntaxPopup.selectedTag] retain];
 	command = [[self syntaxFromTag:commandPopup.selectedTag] retain];
+	
+	NSView* contentView = [sheet contentView];
+	size = contentView.frame.size;
 	
 	if ([delegate respondsToSelector:@selector(pasteSheetWillClose:)]) {
 		[delegate pasteSheetWillClose:self];
