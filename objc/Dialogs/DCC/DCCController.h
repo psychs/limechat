@@ -13,6 +13,7 @@
 {
 	id delegate;
 	IRCWorld* world;
+	NSWindow* mainWindow;
 	
 	BOOL loaded;
 	
@@ -24,8 +25,11 @@
 
 @property (nonatomic, assign) id delegate;
 @property (nonatomic, assign) IRCWorld* world;
+@property (nonatomic, assign) NSWindow* mainWindow;
 
 - (void)show;
+- (void)close;
+- (void)terminate;
 
 - (void)onClear:(id)sender;
 

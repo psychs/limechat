@@ -135,6 +135,7 @@
 	
 	dcc = [DCCController new];
 	dcc.world = world;
+	dcc.mainWindow = window;
 	world.dcc = dcc;
 	
 	inputHistory = [InputHistory new];
@@ -205,6 +206,7 @@
 	NSAppleEventManager* em = [NSAppleEventManager sharedAppleEventManager];
 	[em removeEventHandlerForEventClass:KInternetEventClass andEventID:KAEGetURL];
 	
+	[dcc terminate];
 	[world terminate];
 	[menu terminate];
 	[NSApp unregisterHotKey];
