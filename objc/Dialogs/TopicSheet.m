@@ -28,7 +28,7 @@
 
 - (void)start:(NSString*)topic
 {
-	[text setStringValue:topic];
+	[text setStringValue:topic ?: @""];
 	[self startSheet];
 }
 
