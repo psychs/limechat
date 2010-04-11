@@ -8,6 +8,11 @@
 #define COLOR_NUMBER_MAX	16
 
 
+@interface IRCUser (Private)
+- (void)decayConversation;
+@end
+
+
 @implementation IRCUser
 
 @synthesize nick;
