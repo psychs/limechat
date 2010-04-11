@@ -19,6 +19,7 @@
 @synthesize config;
 
 @synthesize mode;
+@synthesize members;
 @synthesize topic;
 @synthesize storedTopic;
 @synthesize isKeyword;

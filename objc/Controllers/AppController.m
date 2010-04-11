@@ -9,6 +9,7 @@
 #import "MemberListViewCell.h"
 #import "Regex.h"
 #import "NSPasteboardHelper.h"
+#import "NSStringHelper.h"
 
 
 #define KInternetEventClass	1196773964
@@ -32,6 +33,7 @@
 	[world release];
 	[viewTheme release];
 	[inputHistory release];
+	[completionStatus release];
 	[super dealloc];
 }
 
@@ -388,6 +390,205 @@
 }
 
 #pragma mark -
+#pragma mark Nick Completion
+
+- (void)completeNick:(BOOL)forward
+{
+	IRCClient* client = world.selectedClient;
+	IRCChannel* channel = world.selectedChannel;
+	if (!client || !channel) return;
+	
+	if ([window firstResponder] != [window fieldEditor:NO forObject:text]) {
+		[world focusInputText];
+	}
+	
+	NSText* fe = [window fieldEditor:YES forObject:text];
+	if (!fe) return;
+	
+	NSRange selectedRange = [fe selectedRange];
+	if (selectedRange.location == NSNotFound) return;
+	
+	if (!completionStatus) {
+		completionStatus = [NickCompletinStatus new];
+	}
+	
+	NickCompletinStatus* status = completionStatus;
+	NSString* s = text.stringValue;
+	
+	if ([status.text isEqualToString:s]
+		&& status.range.location != NSNotFound
+		&& NSMaxRange(status.range) == selectedRange.location
+		&& selectedRange.length == 0) {
+		selectedRange = status.range;
+	}
+	
+	// pre is the left part of the cursor
+	// sel is the left part of the cursor
+	
+	BOOL head = YES;
+	NSString* pre = [s substringToIndex:selectedRange.location];
+	NSString* sel = [s substringWithRange:selectedRange];
+
+	for (int i=pre.length-1; i>=0; --i) {
+		UniChar c = [pre characterAtIndex:i];
+		if (c != ' ') {
+			;
+		}
+		else {
+			++i;
+			if (i == pre.length) return;
+			head = NO;
+			pre = [pre substringFromIndex:i];
+			break;
+		}
+	}
+	
+	if (!pre.length) return;
+	
+	BOOL commandMode = NO;
+	BOOL twitterMode = NO;
+	
+	UniChar c = [pre characterAtIndex:0];
+	if (head && c == '/') {
+		// command mode
+		commandMode = YES;
+		pre = [pre substringFromIndex:1];
+		if (!pre.length) return;
+	}
+	else if (c == '@') {
+		// workaround for @nick form
+		twitterMode = YES;
+		pre = [pre substringFromIndex:1];
+		if (!pre.length) return;
+	}
+	
+	// prepare for matching
+	
+	NSString* current = [pre stringByAppendingString:sel];
+	
+	int len = current.length;
+	for (int i=0; i<len; ++i) {
+		UniChar c = [current characterAtIndex:i];
+		if (c != ' ' && c != ':') {
+			;
+		}
+		else {
+			current = [current substringToIndex:i];
+			break;
+		}
+	}
+
+	if (!current.length) return;
+
+	// sort the choices
+	
+	NSString* lowerPre = [pre lowercaseString];
+	NSString* lowerCurrent = [current lowercaseString];
+	
+	NSArray* lowerChoices;
+	NSArray* choices;
+	
+	if (commandMode) {
+		choices = [NSArray arrayWithObjects:
+				   @"action", @"away", @"ban", @"clear", @"ctcp", @"ctcpquery", @"cycle",
+				   @"hop", @"invite", @"j", @"join", @"kick", @"kill", @"leave", @"list",
+				   @"me", @"mode", @"msg", @"nick", @"notice", @"op", @"part", @"ping",
+				   @"privmsg", @"query", @"quit", @"quote", @"raw", @"rejoin", @"t",
+				   @"timer", @"topic", @"unban", @"voice", @"weights",
+				   nil];
+		lowerChoices = choices;
+	}
+	else {
+		NSMutableArray* users = [[channel.members mutableCopy] autorelease];
+		[users sortUsingSelector:@selector(compareUsingWeights:)];
+		
+		NSMutableArray* nicks = [NSMutableArray array];
+		NSMutableArray* lowerNicks = [NSMutableArray array];
+		
+		for (IRCUser* m in users) {
+			[nicks addObject:m.nick];
+			[lowerNicks addObject:m.canonicalNick];
+		}
+		
+		choices = nicks;
+		lowerChoices = lowerNicks;
+	}
+	
+	NSMutableArray* currentChoices = [NSMutableArray array];
+	NSMutableArray* currentLowerChoices = [NSMutableArray array];
+	
+	int i = 0;
+	for (NSString* s in lowerChoices) {
+		if ([s hasPrefix:lowerPre]) {
+			[currentChoices addObject:[choices objectAtIndex:i]];
+			[currentLowerChoices addObject:s];
+		}
+		++i;
+	}
+
+	if (!currentChoices.count) return;
+	
+	// find the next choice
+	
+	NSString* t;
+	NSUInteger index = [currentLowerChoices indexOfObject:lowerCurrent];
+	if (index != NSNotFound) {
+		if (forward) {
+			++index;
+			if (currentChoices.count <= index) {
+				index = 0;
+			}
+		}
+		else {
+			if (index == 0) {
+				index = currentChoices.count - 1;
+			}
+			else {
+				--index;
+			}
+		}
+		t = [currentChoices objectAtIndex:index];
+	}
+	else {
+		t = [currentChoices objectAtIndex:0];
+	}
+	
+	// add suffix
+	
+	if (commandMode) {
+		t = [t stringByAppendingString:@" "];
+	}
+	else if (head) {
+		if (twitterMode) {
+			t = [t stringByAppendingString:@" "];
+		}
+		else {
+			t = [t stringByAppendingString:@": "];
+		}
+	}
+	
+	// set completed item to the input text field
+	
+	NSRange r = selectedRange;
+	r.location -= pre.length;
+	r.length += pre.length;
+	[fe replaceCharactersInRange:r withString:t];
+	[fe scrollRangeToVisible:fe.selectedRange];
+	r.location += t.length;
+	r.length = 0;
+	fe.selectedRange = r;
+	
+	if (currentChoices.count == 1) {
+		[status clear];
+	}
+	else {
+		selectedRange.length = t.length - pre.length;
+		status.text = text.stringValue;
+		status.range = selectedRange;
+	}
+}
+
+#pragma mark -
 #pragma mark Keyboard Navigation
 
 typedef enum {
@@ -613,22 +814,30 @@ typedef enum {
 
 - (void)tab:(NSEvent*)e
 {
-	LOG_METHOD
+	switch ([Preferences tabAction]) {
+		case TAB_COMPLETE_NICK:
+			[self completeNick:YES];
+			break;
+		case TAB_UNREAD:
+			[self move:MOVE_DOWN target:MOVE_UNREAD];
+			break;
+	}
 }
 
 - (void)shiftTab:(NSEvent*)e
 {
-	LOG_METHOD
-}
-
-- (void)sendPrivmsg:(NSEvent*)e
-{
-	LOG_METHOD
+	switch ([Preferences tabAction]) {
+		case TAB_COMPLETE_NICK:
+			[self completeNick:NO];
+			break;
+		case TAB_UNREAD:
+			[self move:MOVE_UP target:MOVE_UNREAD];
+			break;
+	}
 }
 
 - (void)sendNotice:(NSEvent*)e
 {
-	LOG_METHOD
 }
 
 - (void)showPasteDialog:(NSEvent*)e

@@ -38,6 +38,7 @@
 @property (nonatomic, assign) NSString* name;
 @property (nonatomic, readonly) NSString* password;
 @property (nonatomic, readonly) IRCChannelMode* mode;
+@property (nonatomic, readonly) NSMutableArray* members;
 @property (nonatomic, readonly) NSString* channelTypeString;
 @property (nonatomic, retain) NSString* topic;
 @property (nonatomic, retain) NSString* storedTopic;

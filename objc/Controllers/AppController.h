@@ -10,6 +10,7 @@
 #import "InputHistory.h"
 #import "MenuController.h"
 #import "ViewTheme.h"
+#import "NickCompletinStatus.h"
 
 
 @interface AppController : NSObject
@@ -43,6 +44,7 @@
 	IRCWorld* world;
 	ViewTheme* viewTheme;
 	InputHistory* inputHistory;
+	NickCompletinStatus* completionStatus;
 	
 	BOOL threeColumns;
 	BOOL terminating;

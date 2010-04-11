@@ -25,6 +25,7 @@
 {
 	if (self = [super init]) {
 		colorNumber = -1;
+		lastFadedWeights = CFAbsoluteTimeGetCurrent();
 	}
 	return self;
 }
@@ -84,25 +85,56 @@
 	return NO;
 }
 
+// the weighting system keeps track of who you are talking to
+// and who is talking to you... incoming messages are not weighted
+// as highly as the messages you send to someone
+//
+// outgoingConversation is called when someone sends you a message
+// incomingConversation is called when you talk to someone
+//
+// the conventions are probably backwards if you think of them from
+// the wrong able, I'm open to suggestions - Josh Goebel
+
 - (CGFloat)weight
 {
-	return 0;
+	[self decayConversation];	// fade the conversation since the last time we spoke
+	return incomingWeight + outgoingWeight;
 }
 
 - (void)outgoingConversation
 {
+	CGFloat change = (outgoingWeight == 0) ? 20 : 5;
+	outgoingWeight += change;
 }
 
 - (void)incomingConversation
 {
+	CGFloat change = (incomingWeight == 0) ? 100 : 20;
+	incomingWeight += change;
 }
 
 - (void)conversation
 {
+	CGFloat change = (outgoingWeight == 0) ? 4 : 1;
+	outgoingWeight += change;
 }
 
+// make our conversations decay overtime based on a half-life of one minute
 - (void)decayConversation
 {
+	// we half-life the conversation every minute
+	CFAbsoluteTime now = CFAbsoluteTimeGetCurrent();
+	CGFloat minutes = (now - lastFadedWeights) / 60;
+	
+	if (minutes > 1) {
+		lastFadedWeights = now;
+		if (incomingWeight > 0) {
+			incomingWeight /= (pow(2, minutes));
+		}
+		if (outgoingWeight > 0) {
+			outgoingWeight /= (pow(2, minutes));
+		}
+	}
 }
 
 - (BOOL)isEqual:(id)other
@@ -147,6 +179,16 @@
 	else {
 		return [nick caseInsensitiveCompare:other.nick];
 	}
+}
+
+- (NSComparisonResult)compareUsingWeights:(IRCUser*)other
+{
+	CGFloat mine = self.weight;
+	CGFloat others = other.weight;
+	
+	if (mine > others) return NSOrderedAscending;
+	if (others < mine) return NSOrderedDescending;
+	return [canonicalNick caseInsensitiveCompare:other.canonicalNick];
 }
 
 - (NSString*)description

@@ -18,6 +18,10 @@
 	
 	BOOL isMyself;
 	int colorNumber;
+	
+	CGFloat incomingWeight;
+	CGFloat outgoingWeight;
+	CFAbsoluteTime lastFadedWeights;
 }
 
 @property (nonatomic, retain) NSString* nick;
@@ -33,8 +37,14 @@
 @property (nonatomic, readonly) char mark;
 @property (nonatomic, readonly) BOOL isOp;
 @property (nonatomic, readonly) int colorNumber;
+@property (nonatomic, readonly) CGFloat weight;
 
 - (BOOL)hasMode:(char)mode;
+
+- (void)outgoingConversation;
+- (void)incomingConversation;
+- (void)conversation;
+
 - (NSComparisonResult)compare:(IRCUser*)other;
 
 @end

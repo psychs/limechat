@@ -79,6 +79,7 @@
 		787BE9DD116B45E9003AE47D /* MenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 787BE9DC116B45E9003AE47D /* MenuController.m */; };
 		78806C26116F4172006ED1B0 /* ServerDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 78806C25116F4172006ED1B0 /* ServerDialog.m */; };
 		78835406109FEA7F00CD2FFF /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78835405109FEA7F00CD2FFF /* SystemConfiguration.framework */; };
+		7883F3AA11717D5100CE7F7A /* NickCompletinStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 7883F3A911717D5100CE7F7A /* NickCompletinStatus.m */; };
 		7884E54E0CDA91F500AF3678 /* SACrashReporter in Resources */ = {isa = PBXBuildFile; fileRef = 7884E5450CDA91F500AF3678 /* SACrashReporter */; };
 		788AC86B1165C59500523E80 /* ServerTreeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 788AC86A1165C59500523E80 /* ServerTreeView.m */; };
 		788AC8B61165CB5000523E80 /* SingleLineFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 788AC8B51165CB5000523E80 /* SingleLineFormatter.m */; };
@@ -281,6 +282,8 @@
 		78806C24116F4172006ED1B0 /* ServerDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerDialog.h; sourceTree = "<group>"; };
 		78806C25116F4172006ED1B0 /* ServerDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerDialog.m; sourceTree = "<group>"; };
 		78835405109FEA7F00CD2FFF /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = /System/Library/Frameworks/SystemConfiguration.framework; sourceTree = "<absolute>"; };
+		7883F3A811717D5100CE7F7A /* NickCompletinStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NickCompletinStatus.h; sourceTree = "<group>"; };
+		7883F3A911717D5100CE7F7A /* NickCompletinStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NickCompletinStatus.m; sourceTree = "<group>"; };
 		7884E5450CDA91F500AF3678 /* SACrashReporter */ = {isa = PBXFileReference; lastKnownFileType = folder; name = SACrashReporter; path = vendor/SACrashReporter; sourceTree = "<group>"; };
 		788AC8691165C59500523E80 /* ServerTreeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerTreeView.h; sourceTree = "<group>"; };
 		788AC86A1165C59500523E80 /* ServerTreeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerTreeView.m; sourceTree = "<group>"; };
@@ -487,6 +490,8 @@
 				78EF6EDE116ADA5400731FDF /* AppController.m */,
 				787BE9DB116B45E9003AE47D /* MenuController.h */,
 				787BE9DC116B45E9003AE47D /* MenuController.m */,
+				7883F3A811717D5100CE7F7A /* NickCompletinStatus.h */,
+				7883F3A911717D5100CE7F7A /* NickCompletinStatus.m */,
 			);
 			name = Controllers;
 			path = objc/Controllers;
@@ -960,6 +965,7 @@
 				780ADB4F116F7BB2004FF298 /* NSWindowHelper.m in Sources */,
 				780ADB9D116F800F004FF298 /* NSLocaleHelper.m in Sources */,
 				780ADD42116F9B41004FF298 /* ChannelDialog.m in Sources */,
+				7883F3AA11717D5100CE7F7A /* NickCompletinStatus.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

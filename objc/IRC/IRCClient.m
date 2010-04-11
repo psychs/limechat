@@ -613,6 +613,8 @@
 	}
 	else {
 		// channel
+		IRCChannel* channel = (IRCChannel*)sel;
+		
 		if ([s hasPrefix:@"/"]) {
 			// command
 			s = [s substringFromIndex:1];
@@ -620,8 +622,43 @@
 		}
 		else {
 			// normal text
-			[self send:command, [sel name], s, nil];
-			[self printBoth:sel type:LINE_TYPE_PRIVMSG nick:myNick text:s identified:YES];
+			[self send:command, channel.name, s, nil];
+			[self printBoth:channel type:LINE_TYPE_PRIVMSG nick:myNick text:s identified:YES];
+			
+			if ([command isEqualToString:PRIVMSG]) {
+				NSString* recipientNick = nil;
+				
+				static Regex* headPattern = nil;
+				static Regex* tailPattern = nil;
+				static Regex* twitterPattern = nil;
+				
+				if (!headPattern) {
+					headPattern = [[Regex alloc] initWithString:@"^([^\\s:]+):\\s"];
+				}
+				if (!tailPattern) {
+					tailPattern = [[Regex alloc] initWithString:@"[>＞]\\s?([^\\s]+)$"];
+				}
+				if (!twitterPattern) {
+					twitterPattern = [[Regex alloc] initWithString:@"^@([0-9a-zA-Z_]+)\\s"];
+				}
+				
+				if ([headPattern match:s].location != NSNotFound) {
+					recipientNick = [s substringWithRange:[headPattern groupAt:1]];
+				}
+				else if ([tailPattern match:s].location != NSNotFound) {
+					recipientNick = [s substringWithRange:[tailPattern groupAt:1]];
+				}
+				else if ([twitterPattern match:s].location != NSNotFound) {
+					recipientNick = [s substringWithRange:[twitterPattern groupAt:1]];
+				}
+				
+				if (recipientNick) {
+					IRCUser* recipient = [channel findMember:recipientNick];
+					if (recipient) {
+						[recipient incomingConversation];
+					}
+				}
+			}
 		}
 	}
 	
@@ -1229,6 +1266,24 @@
 			id t = c ?: (id)self;
 			[self setUnreadState:t];
 			if (keyword) [self setKeywordState:t];
+			
+			if (c) {
+				// track the conversation to nick complete
+				IRCUser* sender = [c findMember:nick];
+				if (sender) {
+					static NSCharacterSet* underlineSet = nil;
+					if (!underlineSet) {
+						underlineSet = [[NSCharacterSet characterSetWithCharactersInString:@"_"] retain];
+					}
+					NSString* trimmedMyNick = [myNick stringByTrimmingCharactersInSet:underlineSet];
+					if ([text rangeOfString:trimmedMyNick options:NSCaseInsensitiveSearch].location != NSNotFound) {
+						[sender outgoingConversation];
+					}
+					else {
+						[sender conversation];
+					}
+				}
+			}
 		}
 	}
 	else if ([target isEqualNoCase:myNick]) {
