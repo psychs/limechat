@@ -5,12 +5,14 @@
 #import "IRCTreeItem.h"
 #import "IRCClientConfig.h"
 #import "IRCChannel.h"
-#import "LogController.h"
 #import "IRCConnection.h"
 #import "IRCISupportInfo.h"
 #import "IRCUserMode.h"
+#import "Preferences.h"
+#import "LogController.h"
 #import "ServerDialog.h"
 #import "Timer.h"
+#import "HostResolver.h"
 
 
 @class IRCWorld;
@@ -50,11 +52,14 @@ typedef enum {
 	int tryingNickNumber;
 	
 	NSString* serverHostname;
-	NSString* joinMyAddress;
-	NSString* myAddress;
 	BOOL inWhois;
 	BOOL identifyMsg;
 	BOOL identifyCTCP;
+	
+	AddressDetectionType addressDetectionMethod;
+	HostResolver* nameResolver;
+	NSString* joinMyAddress;
+	NSString* myAddress;
 	
 	Timer* quitTimer;
 	Timer* reconnectTimer;

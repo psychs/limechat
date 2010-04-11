@@ -105,6 +105,9 @@ static NSDateFormatter* dateTimeFormater = nil;
 		myMode = [IRCUserMode new];
 		whoisDialogs = [NSMutableArray new];
 		
+		nameResolver = [HostResolver new];
+		nameResolver.delegate = self;
+		
 		quitTimer = [Timer new];
 		quitTimer.delegate = self;
 		quitTimer.reqeat = NO;
@@ -137,6 +140,8 @@ static NSDateFormatter* dateTimeFormater = nil;
 	[myNick release];
 	
 	[serverHostname release];
+	
+	[nameResolver autorelease];
 	[joinMyAddress release];
 	[myAddress release];
 	
@@ -157,6 +162,14 @@ static NSDateFormatter* dateTimeFormater = nil;
 {
 	[config autorelease];
 	config = [seed mutableCopy];
+
+	addressDetectionMethod = [Preferences dccAddressDetectionMethod];
+	if (addressDetectionMethod == ADDRESS_DETECT_SPECIFY) {
+		NSString* host = [Preferences dccMyaddress];
+		if (host.length) {
+			[nameResolver resolve:host];
+		}
+	}
 }
 
 - (void)updateConfig:(IRCClientConfig*)seed
@@ -276,6 +289,25 @@ static NSDateFormatter* dateTimeFormater = nil;
 - (void)preferencesChanged
 {
 	log.maxLines = [Preferences maxLogLines];
+	
+	if (addressDetectionMethod != [Preferences dccAddressDetectionMethod]) {
+		addressDetectionMethod = [Preferences dccAddressDetectionMethod];
+		
+		[myAddress release];
+		myAddress = nil;
+		
+		if (addressDetectionMethod == ADDRESS_DETECT_SPECIFY) {
+			NSString* host = [Preferences dccMyaddress];
+			if (host.length) {
+				[nameResolver resolve:host];
+			}
+		}
+		else {
+			if (joinMyAddress.length) {
+				[nameResolver resolve:joinMyAddress];
+			}
+		}
+	}
 	
 	for (IRCChannel* c in channels) {
 		[c preferencesChanged];
@@ -1212,6 +1244,23 @@ static NSDateFormatter* dateTimeFormater = nil;
 }
 
 #pragma mark -
+#pragma mark HostResolver Delegate
+
+- (void)hostResolver:(HostResolver*)sender didResolve:(NSHost*)host
+{
+	NSArray* addresses = [host addresses];
+	if (addresses.count) {
+		NSString* address = [addresses objectAtIndex:0];
+		[myAddress release];
+		myAddress = [address retain];
+	}
+}
+
+- (void)hostResolver:(HostResolver*)sender didNotResolve:(NSString*)hostname
+{
+}
+
+#pragma mark -
 #pragma mark Protocol Handlers
 
 - (void)receivePrivmsgAndNotice:(IRCMessage*)m
@@ -1377,7 +1426,11 @@ static NSDateFormatter* dateTimeFormater = nil;
 		
 		if (!joinMyAddress) {
 			joinMyAddress = [m.sender.address retain];
-			// @@@ resolve my address
+			if (addressDetectionMethod == ADDRESS_DETECT_JOIN) {
+				if (joinMyAddress.length) {
+					[nameResolver resolve:joinMyAddress];
+				}
+			}
 		}
 	}
 	

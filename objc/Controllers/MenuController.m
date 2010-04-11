@@ -525,6 +525,20 @@
 
 - (void)onPasteMyAddress:(id)sender
 {
+	if (![window isKeyWindow]) return;
+	
+	id t = [window firstResponder];
+	if (!t) return;
+	
+	IRCClient* u = world.selectedClient;
+	if (!u || !u.myAddress) return;
+	
+	if (![t isKindOfClass:[NSTextView class]]) {
+		[world focusInputText];
+	}
+	NSText* fe = [window fieldEditor:NO forObject:text];
+	[fe replaceCharactersInRange:[fe selectedRange] withString:u.myAddress];
+	[fe scrollRangeToVisible:[fe selectedRange]];
 }
 
 - (void)onSearchWeb:(id)sender
