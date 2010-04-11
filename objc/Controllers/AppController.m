@@ -143,7 +143,7 @@
 	
 	[window makeFirstResponder:text];
 	[window makeKeyAndOrderFront:nil];
-	[world autoConnect];
+	[world autoConnect:NO];
 }
 
 - (void)applicationDidBecomeActive:(NSNotification *)note
@@ -211,10 +211,12 @@
 
 - (void)computerWillSleep:(NSNotification*)note
 {
+	[world prepareForSleep];
 }
 
 - (void)computerDidWakeUp:(NSNotification*)note
 {
+	[world autoConnect:YES];
 }
 
 - (void)computerWillPowerOff:(NSNotification*)note

@@ -9,7 +9,8 @@
 #import "NSStringHelper.h"
 
 
-#define AUTO_CONNECT_DELAY		1
+#define AUTO_CONNECT_DELAY				1
+#define RECONNECT_AFTER_WAKE_UP_DELAY	8
 
 #define TREE_DRAG_ITEM_TYPE		@"tree"
 #define TREE_DRAG_ITEM_TYPES	[NSArray arrayWithObject:TREE_DRAG_ITEM_TYPE]
@@ -164,9 +165,10 @@
 	}
 }
 
-- (void)autoConnect
+- (void)autoConnect:(BOOL)afterWakeUp
 {
 	int delay = 0;
+	if (afterWakeUp) delay += RECONNECT_AFTER_WAKE_UP_DELAY;
 	
 	for (IRCClient* c in clients) {
 		if (c.config.autoConnect) {
@@ -180,6 +182,13 @@
 {
 	for (IRCClient* c in clients) {
 		[c terminate];
+	}
+}
+
+- (void)prepareForSleep
+{
+	for (IRCClient* c in clients) {
+		[c disconnect];
 	}
 }
 

@@ -93,8 +93,9 @@
 - (NSMutableDictionary*)dictionaryValue;
 
 - (void)onTimer;
-- (void)autoConnect;
+- (void)autoConnect:(BOOL)afterWakeUp;
 - (void)terminate;
+- (void)prepareForSleep;
 
 - (IRCClient*)findClient:(NSString*)name;
 - (IRCClient*)findClientById:(int)uid;
