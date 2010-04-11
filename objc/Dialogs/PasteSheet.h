@@ -46,6 +46,7 @@
 
 @interface NSObject (PasteSheetDelegate)
 - (void)pasteSheet:(PasteSheet*)sender onPasteText:(NSString*)text;
+- (void)pasteSheet:(PasteSheet*)sender onPasteURL:(NSString*)url;
 - (void)pasteSheetOnCancel:(PasteSheet*)sender;
 - (void)pasteSheetWillClose:(PasteSheet*)sender;
 @end

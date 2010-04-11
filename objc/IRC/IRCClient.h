@@ -105,6 +105,7 @@ typedef enum {
 - (void)kick:(IRCChannel*)channel target:(NSString*)nick;
 
 - (BOOL)sendText:(NSString*)s command:(NSString*)command;
+- (void)sendText:(NSString*)s command:(NSString*)command channel:(IRCChannel*)channel;
 - (void)sendLine:(NSString*)str;
 - (void)send:(NSString*)str, ...;
 

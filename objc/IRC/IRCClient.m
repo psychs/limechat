@@ -633,48 +633,55 @@ static NSDateFormatter* dateTimeFormater = nil;
 			[self sendLine:s];
 		}
 		else {
-			// normal text
-			[self send:command, channel.name, s, nil];
-			[self printBoth:channel type:LINE_TYPE_PRIVMSG nick:myNick text:s identified:YES];
-			
-			if ([command isEqualToString:PRIVMSG]) {
-				NSString* recipientNick = nil;
-				
-				static Regex* headPattern = nil;
-				static Regex* tailPattern = nil;
-				static Regex* twitterPattern = nil;
-				
-				if (!headPattern) {
-					headPattern = [[Regex alloc] initWithString:@"^([^\\s:]+):\\s"];
-				}
-				if (!tailPattern) {
-					tailPattern = [[Regex alloc] initWithString:@"[>＞]\\s?([^\\s]+)$"];
-				}
-				if (!twitterPattern) {
-					twitterPattern = [[Regex alloc] initWithString:@"^@([0-9a-zA-Z_]+)\\s"];
-				}
-				
-				if ([headPattern match:s].location != NSNotFound) {
-					recipientNick = [s substringWithRange:[headPattern groupAt:1]];
-				}
-				else if ([tailPattern match:s].location != NSNotFound) {
-					recipientNick = [s substringWithRange:[tailPattern groupAt:1]];
-				}
-				else if ([twitterPattern match:s].location != NSNotFound) {
-					recipientNick = [s substringWithRange:[twitterPattern groupAt:1]];
-				}
-				
-				if (recipientNick) {
-					IRCUser* recipient = [channel findMember:recipientNick];
-					if (recipient) {
-						[recipient incomingConversation];
-					}
-				}
-			}
+			[self sendText:s command:command channel:channel];
 		}
 	}
 	
 	return YES;
+}
+
+- (void)sendText:(NSString*)s command:(NSString*)command channel:(IRCChannel*)channel
+{
+	if (!s.length) return;
+	
+	// normal text
+	[self send:command, channel.name, s, nil];
+	[self printBoth:channel type:LINE_TYPE_PRIVMSG nick:myNick text:s identified:YES];
+	
+	if ([command isEqualToString:PRIVMSG]) {
+		NSString* recipientNick = nil;
+		
+		static Regex* headPattern = nil;
+		static Regex* tailPattern = nil;
+		static Regex* twitterPattern = nil;
+		
+		if (!headPattern) {
+			headPattern = [[Regex alloc] initWithString:@"^([^\\s:]+):\\s"];
+		}
+		if (!tailPattern) {
+			tailPattern = [[Regex alloc] initWithString:@"[>＞]\\s?([^\\s]+)$"];
+		}
+		if (!twitterPattern) {
+			twitterPattern = [[Regex alloc] initWithString:@"^@([0-9a-zA-Z_]+)\\s"];
+		}
+		
+		if ([headPattern match:s].location != NSNotFound) {
+			recipientNick = [s substringWithRange:[headPattern groupAt:1]];
+		}
+		else if ([tailPattern match:s].location != NSNotFound) {
+			recipientNick = [s substringWithRange:[tailPattern groupAt:1]];
+		}
+		else if ([twitterPattern match:s].location != NSNotFound) {
+			recipientNick = [s substringWithRange:[twitterPattern groupAt:1]];
+		}
+		
+		if (recipientNick) {
+			IRCUser* recipient = [channel findMember:recipientNick];
+			if (recipient) {
+				[recipient incomingConversation];
+			}
+		}
+	}
 }
 
 - (void)sendLine:(NSString*)str

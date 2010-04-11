@@ -73,15 +73,17 @@ static NSArray* SYNTAXES;
 
 - (void)pasteOnline:(id)sender
 {
-	LOG_METHOD
-	
 	[self setRequesting:YES];
+	
+	if ([delegate respondsToSelector:@selector(pasteSheet:onPasteURL:)]) {
+		[delegate pasteSheet:self onPasteURL:@"http://test.com/"];
+	}
+
+	[self endSheet];
 }
 
 - (void)sendInChannel:(id)sender
 {
-	LOG_METHOD
-	
 	NSString* s = bodyText.string;
 
 	if ([delegate respondsToSelector:@selector(pasteSheet:onPasteText:)]) {

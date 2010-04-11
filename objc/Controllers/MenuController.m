@@ -11,6 +11,7 @@
 #import "URLOpener.h"
 #import "GTMNSString+URLArguments.h"
 #import "NSPasteboardHelper.h"
+#import "NSStringHelper.h"
 
 
 #define CONNECTED				(u && u.isConnected)
@@ -377,7 +378,24 @@
 
 - (void)pasteSheet:(PasteSheet*)sender onPasteText:(NSString*)s
 {
-	LOG(@"send in channel: %@", s);
+	IRCClient* u = [world findClientById:pasteSheet.uid];
+	IRCChannel* c = [world findChannelByClientId:pasteSheet.uid channelId:pasteSheet.cid];
+	if (!u || !c) return;
+	
+	NSArray* lines = [s splitIntoLines];
+	for (NSString* line in lines) {
+		if (line.length) {
+			[u sendText:line command:pasteSheet.command channel:c];
+		}
+	}
+}
+
+- (void)pasteSheet:(PasteSheet*)sender onPasteURL:(NSString*)url
+{
+	[world focusInputText];
+	NSText* fe = [window fieldEditor:NO forObject:text];
+	[fe replaceCharactersInRange:[fe selectedRange] withString:url];
+	[fe scrollRangeToVisible:[fe selectedRange]];
 }
 
 - (void)pasteSheetOnCancel:(PasteSheet*)sender
@@ -415,8 +433,31 @@
 		NSString* s = [pb stringContent];
 		if (!s.length) return;
 		
-		NSText* e = [win fieldEditor:NO forObject:text];
-		[e paste:nil];
+		BOOL multiLine = NO;
+		NSArray* lines = [s splitIntoLines];
+		if (lines.count > 2) {
+			multiLine = YES;
+		}
+		else if (lines.count == 2) {
+			NSString* lastLine = [lines objectAtIndex:1];
+			multiLine = lastLine.length > 0;
+		}
+		
+		IRCChannel* c = world.selectedChannel;
+		
+		if (c && multiLine) {
+			// multi line
+			IRCClient* u = c.client;
+			[self startPasteSheetWithContent:s nick:u.myNick uid:u.uid cid:c.uid editMode:NO];
+		}
+		else {
+			// single line
+			if (![t isKindOfClass:[NSTextView class]]) {
+				[world focusInputText];
+			}
+			NSText* e = [win fieldEditor:NO forObject:text];
+			[e paste:nil];
+		}
 	}
 	else {
 		if ([t respondsToSelector:@selector(paste:)]) {
