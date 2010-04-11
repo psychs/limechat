@@ -74,6 +74,8 @@
 	[modeSheet release];
 	[topicSheet release];
 	[pasteSheet release];
+	[fileSendPanel release];
+	[fileSendTargets release];
 	[super dealloc];
 }
 
@@ -1044,6 +1046,49 @@
 
 - (void)onMemberSendFile:(id)sender
 {
+	if (fileSendPanel) {
+		[fileSendPanel cancel:nil];
+	}
+	
+	IRCClient* u = world.selectedClient;
+	if (!u) return;
+	
+	[fileSendTargets release];
+	fileSendTargets = [[self selectedMembers:sender] retain];
+	
+	if (!fileSendTargets.count) return;
+	
+	fileSendUID = u.uid;
+	
+	NSOpenPanel* d = [NSOpenPanel openPanel];
+	[d setCanChooseFiles:YES];
+	[d setCanChooseDirectories:NO];
+	[d setResolvesAliases:YES];
+	[d setAllowsMultipleSelection:YES];
+	[d setCanCreateDirectories:NO];
+	[d beginForDirectory:@"~/Desktop" file:nil types:nil modelessDelegate:self didEndSelector:@selector(fileSendPanelDidEnd:returnCode:contextInfo:) contextInfo:nil];
+	
+	[fileSendPanel release];
+	fileSendPanel = [d retain];
+}
+
+- (void)fileSendPanelDidEnd:(NSOpenPanel *)panel returnCode:(int)returnCode contextInfo:(void  *)contextInfo
+{
+	if (returnCode == NSOKButton) {
+		NSArray* files = [panel filenames];
+		
+		for (IRCUser* m in fileSendTargets) {
+			for (NSString* fname in files) {
+				[world.dcc addSenderWithUID:fileSendUID nick:m.nick fileName:fname autoOpen:YES];
+			}
+		}
+	}
+	
+	[fileSendPanel release];
+	fileSendPanel = nil;
+	
+	[fileSendTargets release];
+	fileSendTargets = nil;
 }
 
 - (void)onMemberPing:(id)sender

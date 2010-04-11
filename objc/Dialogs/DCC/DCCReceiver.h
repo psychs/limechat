@@ -35,13 +35,13 @@
 @property (nonatomic, retain) NSString* host;
 @property (nonatomic, assign) int port;
 @property (nonatomic, assign) long long size;
-@property (nonatomic, assign) long long processedSize;
-@property (nonatomic, assign) DCCFileTransferStatus status;
-@property (nonatomic, retain) NSString* error;
+@property (nonatomic, readonly) long long processedSize;
+@property (nonatomic, readonly) DCCFileTransferStatus status;
+@property (nonatomic, readonly) NSString* error;
 @property (nonatomic, retain) NSString* path;
 @property (nonatomic, retain) NSString* fileName;
-@property (nonatomic, retain) NSString* downloadFileName;
-@property (nonatomic, retain) NSImage* icon;
+@property (nonatomic, readonly) NSString* downloadFileName;
+@property (nonatomic, readonly) NSImage* icon;
 @property (nonatomic, retain) NSProgressIndicator* progressBar;
 @property (nonatomic, readonly) double speed;
 

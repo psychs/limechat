@@ -555,6 +555,48 @@ static NSDateFormatter* dateTimeFormater = nil;
 	[self send:KICK, channel.name, nick, nil];
 }
 
+- (void)sendFile:(NSString*)nick port:(int)port fileName:(NSString*)fileName size:(long long)size
+{
+	NSString* escapedFileName = [fileName stringByReplacingOccurrencesOfString:@" " withString:@"_"];
+	
+	static Regex* addressPattern = nil;
+	if (!addressPattern) {
+		addressPattern = [[Regex alloc] initWithString:@"^([0-9]{1,3})\\.([0-9]{1,3})\\.([0-9]{1,3})\\.([0-9]{1,3})$"];
+	}
+	NSRange r = [addressPattern match:myAddress];
+	
+	NSString* address;
+	if (r.location == NSNotFound) {
+		address = myAddress;
+	}
+	else {
+		int w = [[myAddress substringWithRange:[addressPattern groupAt:1]] intValue];
+		int x = [[myAddress substringWithRange:[addressPattern groupAt:2]] intValue];
+		int y = [[myAddress substringWithRange:[addressPattern groupAt:3]] intValue];
+		int z = [[myAddress substringWithRange:[addressPattern groupAt:4]] intValue];
+		
+		unsigned long long a = 0;
+		a |= w; a <<= 8;
+		a |= x; a <<= 8;
+		a |= y; a <<= 8;
+		a |= z;
+		
+		address = [NSString stringWithFormat:@"%qu", a];
+	}
+	
+	NSString* trail = [NSString stringWithFormat:@"%@ %@ %d %qi", escapedFileName, address, port, size];
+	[self sendCTCPQuery:nick command:@"DCC SEND" text:trail];
+	
+	NSString* text = [NSString stringWithFormat:@"Trying file transfer to %@, %@ (%qi bytes) %@:%d", nick, fileName, size, myAddress, port];
+	[self printBoth:nil type:LINE_TYPE_DCC_SEND_SEND text:text];
+}
+
+- (void)sendCTCPQuery:(NSString*)nick command:(NSString*)command text:(NSString*)text
+{
+	NSString* line = [NSString stringWithFormat:@"%@ %@ :\x01%@ %@\x01", PRIVMSG, nick, command, text];
+	[self sendLine:line];
+}
+
 - (void)quickJoin:(NSArray*)chans
 {
 	NSMutableString* target = [NSMutableString string];

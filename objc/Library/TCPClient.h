@@ -62,8 +62,8 @@
 
 @interface NSObject (TCPClientDelegate)
 - (void)tcpClientDidConnect:(TCPClient*)sender;
-- (void)tcpClient:(TCPClient*)sender error:(NSString*)error;
 - (void)tcpClientDidDisconnect:(TCPClient*)sender;
+- (void)tcpClient:(TCPClient*)sender error:(NSString*)error;
 - (void)tcpClientDidReceiveData:(TCPClient*)sender;
 - (void)tcpClientDidSendData:(TCPClient*)sender;
 @end

@@ -122,6 +122,7 @@
 		78C1E96E116876AC00AC305B /* MainWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C1E96D116876AC00AC305B /* MainWindow.m */; };
 		78C1E98F1168787000AC305B /* FieldEditorTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C1E98E1168787000AC305B /* FieldEditorTextView.m */; };
 		78C2D609115A428C00705817 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 78C2D608115A428C00705817 /* dsa_pub.pem */; };
+		78CDBCCB11727BC700DDEF1C /* TCPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CDBCCA11727BC700DDEF1C /* TCPServer.m */; };
 		78CFA5631169C84100B7AC6B /* IRCChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CFA5621169C84100B7AC6B /* IRCChannel.m */; };
 		78CFA57F116A078D00B7AC6B /* IRCWorld.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CFA57E116A078D00B7AC6B /* IRCWorld.m */; };
 		78CFA582116A079500B7AC6B /* IRCClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CFA581116A079500B7AC6B /* IRCClient.m */; };
@@ -375,6 +376,8 @@
 		78C1E98D1168787000AC305B /* FieldEditorTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FieldEditorTextView.h; sourceTree = "<group>"; };
 		78C1E98E1168787000AC305B /* FieldEditorTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FieldEditorTextView.m; sourceTree = "<group>"; };
 		78C2D608115A428C00705817 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = dsa_pub.pem; path = etc/dsa_pub.pem; sourceTree = "<group>"; };
+		78CDBCC911727BC700DDEF1C /* TCPServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPServer.h; sourceTree = "<group>"; };
+		78CDBCCA11727BC700DDEF1C /* TCPServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPServer.m; sourceTree = "<group>"; };
 		78CFA5611169C84100B7AC6B /* IRCChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCChannel.h; sourceTree = "<group>"; };
 		78CFA5621169C84100B7AC6B /* IRCChannel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCChannel.m; sourceTree = "<group>"; };
 		78CFA57D116A078D00B7AC6B /* IRCWorld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCWorld.h; sourceTree = "<group>"; };
@@ -569,6 +572,8 @@
 				78364B18116597D00096F3A9 /* AsyncSocket.m */,
 				78B960F811660A8800831780 /* TCPClient.h */,
 				78B960F911660A8800831780 /* TCPClient.m */,
+				78CDBCC911727BC700DDEF1C /* TCPServer.h */,
+				78CDBCCA11727BC700DDEF1C /* TCPServer.m */,
 				78364B19116597D00096F3A9 /* HostResolver.h */,
 				78364B1A116597D00096F3A9 /* HostResolver.m */,
 				78364B1B116597D00096F3A9 /* HotKeyManager.h */,
@@ -1017,6 +1022,7 @@
 				7883FEA311723A9500CE7F7A /* DCCFileTransferCell.m in Sources */,
 				7883FF8A1172486100CE7F7A /* DCCSender.m in Sources */,
 				7883FF8D1172486B00CE7F7A /* DCCReceiver.m in Sources */,
+				78CDBCCB11727BC700DDEF1C /* TCPServer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

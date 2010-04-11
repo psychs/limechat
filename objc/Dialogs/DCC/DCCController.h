@@ -8,6 +8,7 @@
 
 
 @class IRCWorld;
+@class IRCClient;
 
 
 @interface DCCController : NSWindowController
@@ -35,8 +36,10 @@
 - (void)show:(BOOL)key;
 - (void)close;
 - (void)terminate;
+- (void)nickChanged:(NSString*)nick toNick:(NSString*)toNick client:(IRCClient*)client;
 
 - (void)addReceiverWithUID:(int)uid nick:(NSString*)nick host:(NSString*)host port:(int)port path:(NSString*)path fileName:(NSString*)fileName size:(long long)size;
+- (void)addSenderWithUID:(int)uid nick:(NSString*)nick fileName:(NSString*)fileName autoOpen:(BOOL)autoOpen;
 
 - (void)onClear:(id)sender;
 

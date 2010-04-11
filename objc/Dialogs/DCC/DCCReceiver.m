@@ -92,6 +92,9 @@
 	if (sock) {
 		[self close];
 	}
+	
+	currentRecord = 0;
+	[speedRecords removeAllObjects];
 
 	sock = [TCPClient new];
 	sock.delegate = self;
@@ -173,7 +176,8 @@
 		}
 		
 		[fm movePath:downloadFileName toPath:fullName handler:nil];
-		self.downloadFileName = fullName;
+		[downloadFileName release];
+		downloadFileName = [fullName retain];
 	}
 }
 
@@ -195,7 +199,8 @@
 	if (status == DCC_COMPLETE || status == DCC_ERROR) return;
 	
 	status = DCC_ERROR;
-	self.error = @"Disconnected";
+	[error release];
+	error = @"Disconnected";
 	[self close];
 	
 	[delegate dccReceiveOnError:self];
@@ -206,7 +211,8 @@
 	if (status == DCC_COMPLETE || status == DCC_ERROR) return;
 	
 	status = DCC_ERROR;
-	self.error = err;
+	[error release];
+	error = [err retain];
 	[self close];
 	
 	[delegate dccReceiveOnError:self];

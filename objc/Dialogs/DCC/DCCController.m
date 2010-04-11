@@ -3,6 +3,7 @@
 
 #import "DCCController.h"
 #import "IRCWorld.h"
+#import "IRCClient.h"
 #import "Preferences.h"
 #import "DCCReceiver.h"
 #import "DCCSender.h"
@@ -62,9 +63,15 @@
 		[[[receiverTable tableColumns] objectAtIndex:0] setDataCell:receiverCell];
 		
 		for (DCCReceiver* e in receivers) {
+			if (e.status == DCC_RECEIVING) {
+				[self dccReceiveOnOpen:e];
+			}
 		}
 		
 		for (DCCSender* e in senders) {
+			if (e.status == DCC_SENDING) {
+				[self dccSenderOnConnect:e];
+			}
 		}
 	}
 	
@@ -95,6 +102,31 @@
 	[self close];
 }
 
+- (void)nickChanged:(NSString*)nick toNick:(NSString*)toNick client:(IRCClient*)client
+{
+	int uid = client.uid;
+	BOOL found = NO;
+	
+	for (DCCReceiver* e in receivers) {
+		if (e.uid == uid && [e.peerNick isEqualToString:nick]) {
+			e.peerNick = toNick;
+			found = YES;
+		}
+	}
+	
+	for (DCCSender* e in senders) {
+		if (e.uid == uid && [e.peerNick isEqualToString:nick]) {
+			e.peerNick = toNick;
+			found = YES;
+		}
+	}
+	
+	if (found) {
+		[self reloadReceiverTable];
+		[self reloadSenderTable];
+	}
+}
+
 - (void)addReceiverWithUID:(int)uid nick:(NSString*)nick host:(NSString*)host port:(int)port path:(NSString*)path fileName:(NSString*)fileName size:(long long)size
 {
 	DCCReceiver* c = [[DCCReceiver new] autorelease];
@@ -112,6 +144,37 @@
 		[c open];
 	}
 	[self show:NO];
+}
+
+- (void)addSenderWithUID:(int)uid nick:(NSString*)nick fileName:(NSString*)fileName autoOpen:(BOOL)autoOpen
+{
+	NSFileManager* fm = [NSFileManager defaultManager];
+	NSDictionary* attr = [fm attributesOfItemAtPath:fileName error:NULL];
+	if (!attr) return;
+	NSNumber* sizeNum = [attr objectForKey:NSFileSize];
+	long long size = [sizeNum longLongValue];
+	
+	if (!size) return;
+	
+	DCCSender* c = [[DCCSender new] autorelease];
+	c.delegate = self;
+	c.uid = uid;
+	c.peerNick = nick;
+	c.fullFileName = fileName;
+	[senders insertObject:c atIndex:0];
+	
+	IRCClient* u = [world findClientById:uid];
+	if (!u || !u.myAddress) {
+		[c setAddressError];
+		return;
+	}
+	
+	if (autoOpen) {
+		[c open];
+	}
+	
+	[self reloadSenderTable];
+	[self show:YES];
 }
 
 - (void)reloadReceiverTable
@@ -296,6 +359,79 @@
 }
 
 #pragma mark -
+#pragma mark DCCSender Delegate
+
+- (void)dccSenderOnListen:(DCCSender*)sender
+{
+	LOG_METHOD
+	
+	IRCClient* u = [world findClientById:sender.uid];
+	if (!u) return;
+	
+	[u sendFile:sender.peerNick port:sender.port fileName:sender.fileName size:sender.size];
+
+	if (!loaded) return;
+
+	[self reloadSenderTable];
+	[self updateTimer];
+}
+
+- (void)dccSenderOnConnect:(DCCSender*)sender
+{
+	LOG_METHOD
+	
+	if (!loaded) return;
+	
+	if (!sender.progressBar) {
+		TableProgressIndicator* bar = [[TableProgressIndicator new] autorelease];
+		[bar setIndeterminate:NO];
+		[bar setMinValue:0];
+		[bar setMaxValue:sender.size];
+		[bar setDoubleValue:sender.processedSize];
+		[senderTable addSubview:bar];
+		sender.progressBar = bar;
+	}
+	
+	[self reloadSenderTable];
+	[self updateTimer];
+}
+
+- (void)dccSenderOnClose:(DCCSender*)sender
+{
+	LOG_METHOD
+	
+	if (!loaded) return;
+	
+	[self reloadSenderTable];
+	[self updateTimer];
+}
+
+- (void)dccSenderOnError:(DCCSender*)sender
+{
+	LOG_METHOD
+
+	if (!loaded) return;
+	
+	[self reloadSenderTable];
+	[self updateTimer];
+}
+
+- (void)dccSenderOnComplete:(DCCSender*)sender
+{
+	LOG_METHOD
+	
+	if (!loaded) return;
+
+	if (sender.progressBar) {
+		[sender.progressBar removeFromSuperview];
+		sender.progressBar = nil;
+	}
+	
+	[self reloadSenderTable];
+	[self updateTimer];
+}
+
+#pragma mark -
 #pragma mark NSTableViwe Delegate
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)sender
@@ -317,6 +453,20 @@
 {
 	if (sender == senderTable) {
 		if (row < 0 || senders.count <= row) return;
+		
+		DCCSender* e = [senders objectAtIndex:row];
+		double speed = e.speed;
+		
+		c.stringValue = e.fileName;
+		c.peerNick = e.peerNick;
+		c.size = e.size;
+		c.processedSize = e.processedSize;
+		c.speed = speed;
+		c.timeRemaining = speed > 0 ? ((e.size - e.processedSize)) / speed : 0;
+		c.status = e.status;
+		c.error = e.error;
+		c.icon = e.icon;
+		c.progressBar = e.progressBar;
 	}
 	else {
 		if (row < 0 || receivers.count <= row) return;

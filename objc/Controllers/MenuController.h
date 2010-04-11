@@ -38,6 +38,9 @@
 	ModeSheet* modeSheet;
 	TopicSheet* topicSheet;
 	PasteSheet* pasteSheet;
+	NSOpenPanel* fileSendPanel;
+	NSArray* fileSendTargets;
+	int fileSendUID;
 }
 
 @property (nonatomic, assign) AppController* app;
