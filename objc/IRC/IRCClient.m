@@ -141,6 +141,7 @@ static NSDateFormatter* dateTimeFormater = nil;
 	
 	[serverHostname release];
 	
+	nameResolver.delegate = nil;
 	[nameResolver autorelease];
 	[joinMyAddress release];
 	[myAddress release];
