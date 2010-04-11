@@ -32,6 +32,10 @@
 @property (nonatomic, retain) NSImage* icon;
 @property (nonatomic, retain) NSProgressIndicator* progressBar;
 
+- (void)open;
+- (void)close;
+- (void)onTimer;
+
 @end
 
 

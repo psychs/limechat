@@ -209,10 +209,10 @@ static char* UNITS[] = { "bytes", "KB", "MB", "GB", "TB" };
 	long long hour = min / 60;
 	min %= 60;
 	if (hour > 0) {
-		return [NSString stringWithFormat:@"%d:%02d:%02d", hour, min, sec];
+		return [NSString stringWithFormat:@"%d:%02d:%02d", (int)hour, (int)min, (int)sec];
 	}
 	else {
-		return [NSString stringWithFormat:@"%02d:%02d", min, sec];
+		return [NSString stringWithFormat:@"%02d:%02d", (int)min, (int)sec];
 	}
 }
 

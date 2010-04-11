@@ -11,11 +11,15 @@
 #import "NSDictionaryHelper.h"
 
 
+#define TIMER_INTERVAL	1
+
+
 @interface DCCController (Private)
 - (void)reloadReceiverTable;
 - (void)reloadSenderTable;
 - (void)loadWindowState;
 - (void)saveWindowState;
+- (void)updateTimer;
 @end
 
 
@@ -30,6 +34,9 @@
 	if (self = [super init]) {
 		receivers = [NSMutableArray new];
 		senders = [NSMutableArray new];
+		
+		timer = [Timer new];
+		timer.delegate = self;
 	}
 	return self;
 }
@@ -101,7 +108,9 @@
 	c.size = size;
 	[receivers insertObject:c atIndex:0];
 	
-	[c open];
+	if ([Preferences dccAction] == DCC_AUTO_ACCEPT) {
+		[c open];
+	}
 	[self show:NO];
 }
 
@@ -188,6 +197,7 @@
 	}
 	
 	[self reloadReceiverTable];
+	[self updateTimer];
 }
 
 - (void)stopReceiver:(id)sender
@@ -202,6 +212,7 @@
 	}
 	
 	[self reloadReceiverTable];
+	[self updateTimer];
 }
 
 - (void)deleteReceiver:(id)sender
@@ -252,6 +263,7 @@
 	}
 	
 	[self reloadReceiverTable];
+	[self updateTimer];
 }
 
 - (void)dccReceiveOnClose:(DCCReceiver*)sender
@@ -264,6 +276,7 @@
 	}
 	
 	[self reloadReceiverTable];
+	[self updateTimer];
 }
 
 - (void)dccReceiveOnError:(DCCReceiver*)sender
@@ -271,6 +284,7 @@
 	if (!loaded) return;
 	
 	[self reloadReceiverTable];
+	[self updateTimer];
 }
 
 - (void)dccReceiveOnComplete:(DCCReceiver*)sender
@@ -278,6 +292,7 @@
 	if (!loaded) return;
 
 	[self reloadReceiverTable];
+	[self updateTimer];
 }
 
 #pragma mark -
@@ -309,16 +324,84 @@
 		DCCReceiver* e = [receivers objectAtIndex:row];
 		double speed = e.speed;
 		
-		c.stringValue = (e.status == DCC_COMPLETE) ? e.downloadFileName : e.fileName;
+		c.stringValue = (e.status == DCC_COMPLETE) ? [e.downloadFileName lastPathComponent] : e.fileName;
 		c.peerNick = e.peerNick;
 		c.size = e.size;
 		c.processedSize = e.processedSize;
 		c.speed = speed;
-		c.timeRemaining = speed > 0 ? (e.size - e.processedSize) / speed : 0;
+		c.timeRemaining = speed > 0 ? ((e.size - e.processedSize)) / speed : 0;
 		c.status = e.status;
 		c.error = e.error;
 		c.icon = e.icon;
 		c.progressBar = e.progressBar;
+	}
+}
+
+#pragma mark -
+#pragma mark Timer Delegate
+
+- (void)updateTimer
+{
+	if (timer.isActive) {
+		BOOL foundActive = NO;
+		
+		for (DCCReceiver* e in receivers) {
+			if (e.status == DCC_RECEIVING) {
+				foundActive = YES;
+				break;
+			}
+		}
+		
+		if (!foundActive) {
+			for (DCCSender* e in senders) {
+				if (e.status == DCC_SENDING) {
+					foundActive = YES;
+					break;
+				}
+			}
+		}
+		
+		if (!foundActive) {
+			[timer stop];
+		}
+	}
+	else {
+		BOOL foundActive = NO;
+		
+		for (DCCReceiver* e in receivers) {
+			if (e.status == DCC_RECEIVING) {
+				foundActive = YES;
+				break;
+			}
+		}
+		
+		if (!foundActive) {
+			for (DCCSender* e in senders) {
+				if (e.status == DCC_SENDING) {
+					foundActive = YES;
+					break;
+				}
+			}
+		}
+		
+		if (foundActive) {
+			[timer start:TIMER_INTERVAL];
+		}
+	}
+}
+
+- (void)timerOnTimer:(Timer*)sender
+{
+	[self reloadReceiverTable];
+	[self reloadSenderTable];
+	[self updateTimer];
+	
+	for (DCCReceiver* e in receivers) {
+		[e onTimer];
+	}
+	
+	for (DCCSender* e in senders) {
+		[e onTimer];
 	}
 }
 

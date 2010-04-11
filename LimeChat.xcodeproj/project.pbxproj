@@ -763,12 +763,12 @@
 			children = (
 				7883FD7E11722A1300CE7F7A /* DCCController.h */,
 				7883FD7F11722A1300CE7F7A /* DCCController.m */,
-				7883FEA111723A9500CE7F7A /* DCCFileTransferCell.h */,
-				7883FEA211723A9500CE7F7A /* DCCFileTransferCell.m */,
 				7883FF8B1172486B00CE7F7A /* DCCReceiver.h */,
 				7883FF8C1172486B00CE7F7A /* DCCReceiver.m */,
 				7883FF881172486100CE7F7A /* DCCSender.h */,
 				7883FF891172486100CE7F7A /* DCCSender.m */,
+				7883FEA111723A9500CE7F7A /* DCCFileTransferCell.h */,
+				7883FEA211723A9500CE7F7A /* DCCFileTransferCell.m */,
 			);
 			name = DCC;
 			path = objc/Dialogs/DCC;

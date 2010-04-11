@@ -39,4 +39,16 @@
 	[super dealloc];
 }
 
+- (void)open
+{
+}
+
+- (void)close
+{
+}
+
+- (void)onTimer
+{
+}
+
 @end

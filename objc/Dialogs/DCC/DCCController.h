@@ -4,6 +4,7 @@
 #import <Foundation/Foundation.h>
 #import "ThinSplitView.h"
 #import "ListView.h"
+#import "Timer.h"
 
 
 @class IRCWorld;
@@ -18,6 +19,8 @@
 	BOOL loaded;
 	NSMutableArray* receivers;
 	NSMutableArray* senders;
+	
+	Timer* timer;
 	
 	IBOutlet ListView* receiverTable;
 	IBOutlet ListView* senderTable;

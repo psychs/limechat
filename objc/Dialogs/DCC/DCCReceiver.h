@@ -24,6 +24,9 @@
 	NSProgressIndicator* progressBar;
 	
 	TCPClient* sock;
+	NSFileHandle* file;
+	NSMutableArray* speedRecords;
+	double currentRecord;
 }
 
 @property (nonatomic, assign) id delegate;
@@ -44,6 +47,7 @@
 
 - (void)open;
 - (void)close;
+- (void)onTimer;
 
 @end
 
