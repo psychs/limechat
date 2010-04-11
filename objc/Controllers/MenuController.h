@@ -6,6 +6,7 @@
 #import "PreferencesController.h"
 #import "NickSheet.h"
 #import "ModeSheet.h"
+#import "TopicSheet.h"
 #import "PasteSheet.h"
 
 
@@ -35,6 +36,7 @@
 	NSMutableArray* channelDialogs;
 	NickSheet* nickSheet;
 	ModeSheet* modeSheet;
+	TopicSheet* topicSheet;
 	PasteSheet* pasteSheet;
 }
 

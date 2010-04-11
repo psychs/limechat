@@ -72,6 +72,7 @@
 	
 	[nickSheet release];
 	[modeSheet release];
+	[topicSheet release];
 	[pasteSheet release];
 	[super dealloc];
 }
@@ -770,6 +771,32 @@
 
 - (void)onTopic:(id)sender
 {
+	IRCClient* u = world.selectedClient;
+	IRCChannel* c = world.selectedChannel;
+	if (!u || !c) return;
+	if (topicSheet) return;
+	
+	topicSheet = [TopicSheet new];
+	topicSheet.delegate = self;
+	topicSheet.window = window;
+	topicSheet.uid = u.uid;
+	topicSheet.cid = c.uid;
+	[topicSheet start:c.topic];
+}
+
+- (void)topicSheet:(TopicSheet*)sender onOK:(NSString*)topic
+{
+	IRCClient* u = [world findClientById:sender.uid];
+	IRCChannel* c = [world findChannelByClientId:sender.uid channelId:sender.cid];
+	if (!u || !c) return;
+	
+	[u send:TOPIC, c.name, topic, nil];
+}
+
+- (void)topicSheetWillClose:(TopicSheet*)sender
+{
+	[topicSheet autorelease];
+	topicSheet = nil;
 }
 
 - (void)onMode:(id)sender
