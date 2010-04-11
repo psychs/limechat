@@ -28,6 +28,7 @@
 	Timer* timer;
 	BOOL sending;
 	int penalty;
+	BOOL loggedIn;
 }
 
 @property (nonatomic, assign) id delegate;
@@ -48,6 +49,7 @@
 @property (nonatomic, readonly) BOOL connecting;
 @property (nonatomic, readonly) BOOL connected;
 @property (nonatomic, readonly) BOOL readyToSend;
+@property (nonatomic, assign) BOOL loggedIn;
 
 - (void)open;
 - (void)close;

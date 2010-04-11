@@ -47,7 +47,7 @@ typedef enum {
 	NSString* inputNick;
 	NSString* sentNick;
 	NSString* myNick;
-	int tryingNick;
+	int tryingNickNumber;
 	
 	NSString* serverHostname;
 	NSString* joinMyAddress;

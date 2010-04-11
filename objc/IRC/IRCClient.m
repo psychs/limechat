@@ -45,10 +45,11 @@
 
 - (void)receiveInit:(IRCMessage*)message;
 - (void)receiveText:(IRCMessage*)m command:(NSString*)cmd text:(NSString*)text identified:(BOOL)identified;
-- (void)receiveErrorNumericReply:(IRCMessage*)message;
-- (void)receiveNickCollisionError:(IRCMessage*)message;
 - (void)receiveCTCPQuery:(IRCMessage*)message text:(NSString*)text;
 - (void)receiveCTCPReply:(IRCMessage*)message text:(NSString*)text;
+- (void)receiveErrorNumericReply:(IRCMessage*)message;
+- (void)receiveNickCollisionError:(IRCMessage*)message;
+- (void)tryAnotherNick;
 
 - (void)changeStateOff;
 - (BOOL)printBoth:(id)chan type:(LogLineType)type text:(NSString*)text;
@@ -95,7 +96,7 @@
 - (id)init
 {
 	if (self = [super init]) {
-		tryingNick = -1;
+		tryingNickNumber = -1;
 		channels = [NSMutableArray new];
 		isupport = [IRCISupportInfo new];
 		myMode = [IRCUserMode new];
@@ -432,7 +433,7 @@
 	[inputNick autorelease];
 	[sentNick autorelease];
 	inputNick = [newNick retain];
-	sentNick = [sentNick retain];
+	sentNick = [newNick retain];
 	
 	[self send:NICK, newNick, nil];
 }
@@ -1598,7 +1599,8 @@
 	[world expandClient:self];
 	
 	isLoggedIn = YES;
-	tryingNick = -1;
+	conn.loggedIn = YES;
+	tryingNickNumber = -1;
 	
 	[serverHostname release];
 	serverHostname = [m.sender.raw retain];
@@ -1965,6 +1967,56 @@
 
 - (void)receiveNickCollisionError:(IRCMessage*)m
 {
+	if (config.altNicks.count && !isLoggedIn) {
+		// only works when not logged in
+		++tryingNickNumber;
+		NSArray* altNicks = config.altNicks;
+		
+		if (tryingNickNumber < altNicks.count) {
+			NSString* nick = [altNicks objectAtIndex:tryingNickNumber];
+			[self send:NICK, nick, nil];
+		}
+		else {
+			[self tryAnotherNick];
+		}
+	}
+	else {
+		[self tryAnotherNick];
+	}
+}
+
+- (void)tryAnotherNick
+{
+	if (sentNick.length >= isupport.nickLen) {
+		NSString* nick = [sentNick substringToIndex:isupport.nickLen];
+		BOOL found = NO;
+		
+		for (int i=nick.length-1; i>=0; --i) {
+			UniChar c = [nick characterAtIndex:i];
+			if (c != '_') {
+				found = YES;
+				NSString* head = [nick substringToIndex:i];
+				NSMutableString* s = [[head mutableCopy] autorelease];
+				for (int i=isupport.nickLen - s.length; i>0; --i) {
+					[s appendString:@"_"];
+				}
+				[sentNick release];
+				sentNick = [s retain];
+				break;
+			}
+		}
+		
+		if (!found) {
+			[sentNick release];
+			sentNick = @"0";
+		}
+	}
+	else {
+		[sentNick autorelease];
+		sentNick = [[sentNick stringByAppendingString:@"_"] retain];
+	}
+	
+	[self send:NICK, sentNick, nil];
 }
 
 #pragma mark -
@@ -1990,7 +2042,7 @@
 	[sentNick release];
 	sentNick = @"";
 	
-	tryingNick = -1;
+	tryingNickNumber = -1;
 	[joinMyAddress release];
 	joinMyAddress = nil;
 	

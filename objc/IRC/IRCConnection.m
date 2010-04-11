@@ -32,6 +32,8 @@
 @synthesize proxyUser;
 @synthesize proxyPassword;
 
+@synthesize loggedIn;
+
 - (id)init
 {
 	if (self = [super init]) {
@@ -80,6 +82,7 @@
 
 - (void)close
 {
+	loggedIn = NO;
 	[timer stop];
 	[sendQueue removeAllObjects];
 	[conn close];
@@ -140,7 +143,9 @@
 	
 	if (data) {
 		sending = YES;
-		penalty += IRC_PENALTY_NORMAL;
+		if (loggedIn) {
+			penalty += IRC_PENALTY_NORMAL;
+		}
 		
 		[conn write:data];
 		
