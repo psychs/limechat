@@ -4,6 +4,9 @@
 #import "DCCController.h"
 #import "IRCWorld.h"
 #import "Preferences.h"
+#import "DCCReceiver.h"
+#import "DCCSender.h"
+#import "DCCFileTransferCell.h"
 #import "NSDictionaryHelper.h"
 
 
@@ -41,6 +44,18 @@
 		loaded = YES;
 		[NSBundle loadNibNamed:@"DCCDialog" owner:self];
 		[splitter setFixedViewIndex:1];
+		
+		DCCFileTransferCell* senderCell = [[DCCFileTransferCell new] autorelease];
+		[[[senderTable tableColumns] objectAtIndex:0] setDataCell:senderCell];
+		
+		DCCFileTransferCell* receiverCell = [[DCCFileTransferCell new] autorelease];
+		[[[receiverTable tableColumns] objectAtIndex:0] setDataCell:receiverCell];
+		
+		for (DCCReceiver* e in receivers) {
+		}
+		
+		for (DCCSender* e in senders) {
+		}
 	}
 	
 	if (![self.window isVisible]) {
@@ -181,19 +196,18 @@
 	return @"";
 }
 
-- (void)tableView:(NSTableView *)sender willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)column row:(NSInteger)row
+- (void)tableView:(NSTableView *)sender willDisplayCell:(DCCFileTransferCell*)cell forTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
-	NSArray* list;
 	if (sender == senderTable) {
-		list = senders;
+		if (row < 0 || senders.count <= row) return;
+		
+		;;
 	}
 	else {
-		list = receivers;
+		if (row < 0 || receivers.count <= row) return;
+		
+		;;
 	}
-	
-	if (row < 0 || list.count <= row) return;
-	
-	
 }
 
 #pragma mark -

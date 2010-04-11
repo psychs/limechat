@@ -85,6 +85,8 @@
 		7883FCAD11721AA100CE7F7A /* TopicSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 7883FCAC11721AA100CE7F7A /* TopicSheet.m */; };
 		7883FD8011722A1300CE7F7A /* DCCController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7883FD7F11722A1300CE7F7A /* DCCController.m */; };
 		7883FEA311723A9500CE7F7A /* DCCFileTransferCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7883FEA211723A9500CE7F7A /* DCCFileTransferCell.m */; };
+		7883FF8A1172486100CE7F7A /* DCCSender.m in Sources */ = {isa = PBXBuildFile; fileRef = 7883FF891172486100CE7F7A /* DCCSender.m */; };
+		7883FF8D1172486B00CE7F7A /* DCCReceiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 7883FF8C1172486B00CE7F7A /* DCCReceiver.m */; };
 		7884E54E0CDA91F500AF3678 /* SACrashReporter in Resources */ = {isa = PBXBuildFile; fileRef = 7884E5450CDA91F500AF3678 /* SACrashReporter */; };
 		788AC86B1165C59500523E80 /* ServerTreeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 788AC86A1165C59500523E80 /* ServerTreeView.m */; };
 		788AC8B61165CB5000523E80 /* SingleLineFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 788AC8B51165CB5000523E80 /* SingleLineFormatter.m */; };
@@ -299,6 +301,10 @@
 		7883FD7F11722A1300CE7F7A /* DCCController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCCController.m; sourceTree = "<group>"; };
 		7883FEA111723A9500CE7F7A /* DCCFileTransferCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCCFileTransferCell.h; sourceTree = "<group>"; };
 		7883FEA211723A9500CE7F7A /* DCCFileTransferCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCCFileTransferCell.m; sourceTree = "<group>"; };
+		7883FF881172486100CE7F7A /* DCCSender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCCSender.h; sourceTree = "<group>"; };
+		7883FF891172486100CE7F7A /* DCCSender.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCCSender.m; sourceTree = "<group>"; };
+		7883FF8B1172486B00CE7F7A /* DCCReceiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCCReceiver.h; sourceTree = "<group>"; };
+		7883FF8C1172486B00CE7F7A /* DCCReceiver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCCReceiver.m; sourceTree = "<group>"; };
 		7884E5450CDA91F500AF3678 /* SACrashReporter */ = {isa = PBXFileReference; lastKnownFileType = folder; name = SACrashReporter; path = vendor/SACrashReporter; sourceTree = "<group>"; };
 		788AC8691165C59500523E80 /* ServerTreeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerTreeView.h; sourceTree = "<group>"; };
 		788AC86A1165C59500523E80 /* ServerTreeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerTreeView.m; sourceTree = "<group>"; };
@@ -759,6 +765,10 @@
 				7883FD7F11722A1300CE7F7A /* DCCController.m */,
 				7883FEA111723A9500CE7F7A /* DCCFileTransferCell.h */,
 				7883FEA211723A9500CE7F7A /* DCCFileTransferCell.m */,
+				7883FF8B1172486B00CE7F7A /* DCCReceiver.h */,
+				7883FF8C1172486B00CE7F7A /* DCCReceiver.m */,
+				7883FF881172486100CE7F7A /* DCCSender.h */,
+				7883FF891172486100CE7F7A /* DCCSender.m */,
 			);
 			name = DCC;
 			path = objc/Dialogs/DCC;
@@ -1005,6 +1015,8 @@
 				7883FCAD11721AA100CE7F7A /* TopicSheet.m in Sources */,
 				7883FD8011722A1300CE7F7A /* DCCController.m in Sources */,
 				7883FEA311723A9500CE7F7A /* DCCFileTransferCell.m in Sources */,
+				7883FF8A1172486100CE7F7A /* DCCSender.m in Sources */,
+				7883FF8D1172486B00CE7F7A /* DCCReceiver.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
