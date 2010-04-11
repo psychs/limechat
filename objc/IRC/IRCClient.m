@@ -16,9 +16,9 @@
 #define MAX_BODY_LEN		480
 #define TIME_BUFFER_SIZE	256
 
-#define QUIT_INTERVAL		4
-#define RECONNECT_INTERVAL	30
-#define RETRY_INTERVAL		30
+#define QUIT_INTERVAL		5
+#define RECONNECT_INTERVAL	20
+#define RETRY_INTERVAL		240
 
 
 @interface IRCClient (Private)
@@ -308,6 +308,24 @@
 - (void)onReconnectTimer:(id)sender
 {
 	[self connect:CONNECT_RECONNECT];
+}
+
+- (void)startRetryTimer
+{
+	if (retryTimer.isActive) return;
+	
+	[retryTimer start:RETRY_INTERVAL];
+}
+
+- (void)stopRetryTimer
+{
+	[retryTimer stop];
+}
+
+- (void)onRetryTimer:(id)sender
+{
+	[self disconnect];
+	[self connect:CONNECT_RETRY];
 }
 
 #pragma mark -
@@ -1569,6 +1587,8 @@
 {
 	if (isLoggedIn) return;
 	
+	[self stopRetryTimer];
+	
 	[world expandClient:self];
 	
 	isLoggedIn = YES;
@@ -1934,6 +1954,8 @@
 	conn = nil;
 	
 	[self stopQuitTimer];
+	[self stopRetryTimer];
+	
 	if (reconnectEnabled) {
 		[self startReconnectTimer];
 	}
@@ -1972,6 +1994,8 @@
 
 - (void)ircConnectionDidConnect:(IRCConnection*)sender
 {
+	[self startRetryTimer];
+	
 	[self printSystemBoth:nil text:@"Connected"];
 	
 	isConnecting = isLoggedIn = NO;
