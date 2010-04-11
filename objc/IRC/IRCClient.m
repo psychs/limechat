@@ -21,6 +21,9 @@
 #define RETRY_INTERVAL		240
 
 
+static NSDateFormatter* dateTimeFormater = nil;
+
+
 @interface IRCClient (Private)
 - (void)sendLine:(NSString*)str;
 - (void)send:(NSString*)str, ...;
@@ -1719,9 +1722,19 @@
 	}
 	
 	switch (n) {
-		case 1:
-		case 376:
-		case 422:
+		case 2 ... 4:
+		case 10:
+		case 20:
+		case 42:
+		case 250 ... 255:
+		case 265 ... 266:
+		case 372:
+		case 375:
+			[self printReply:m];
+			break;
+		case 1:		// RPL_WELCOME
+		case 376:	// RPL_ENDOFMOTD
+		case 422:	// ERR_NOMOTD
 			[self receiveInit:m];
 			[self printReply:m];
 			break;
@@ -1835,7 +1848,6 @@
 					format = [NSDateFormatter new];
 					[format setDateStyle:NSDateFormatterMediumStyle];
 					[format setTimeStyle:NSDateFormatterShortStyle];
-					//[format setDateFormat:@"yyyy/MM/dd HH:mm"];
 				}
 				NSDate* date = [NSDate dateWithTimeIntervalSince1970:signOnTime];
 				signOn = [format stringFromDate:date];
@@ -1876,7 +1888,9 @@
 			[self printBoth:nil type:LINE_TYPE_REPLY text:text];
 			break;
 		}
-		//case 318:	// RPL_ENDOFWHOIS
+		case 318:	// RPL_ENDOFWHOIS
+			inWhois = NO;
+			break;
 		case 324:	// RPL_CHANNELMODEIS
 		{
 			NSString* chname = [m paramAt:1];
@@ -1912,10 +1926,40 @@
 			[self printBoth:(c ?: (id)chname) type:LINE_TYPE_REPLY text:text];
 			break;
 		}
-		//case 329:	// hemp ? channel creation time
+		case 329:	// hemp ? channel creation time
+		{
+			NSString* chname = [m paramAt:1];
+			NSString* timeStr = [m paramAt:2];
+			long long timeNum = [timeStr longLongValue];
+			
+			IRCChannel* c = [self findChannel:chname];
+			NSString* text = [NSString stringWithFormat:@"Created at: %@", [dateTimeFormater stringFromDate:[NSDate dateWithTimeIntervalSince1970:timeNum]]];
+			[self printBoth:(c ?: (id)chname) type:LINE_TYPE_REPLY text:text];
+			break;
+		}
 		//case 331:	// RPL_NOTOPIC
 		//case 332:	// RPL_TOPIC
-		//case 333:	// RPL_TOPIC_WHO_TIME
+		case 333:	// RPL_TOPIC_WHO_TIME
+		{
+			NSString* chname = [m paramAt:1];
+			NSString* setter = [m paramAt:2];
+			NSString* timeStr = [m paramAt:3];
+			long long timeNum = [timeStr longLongValue];
+			
+			static NSCharacterSet* set = nil;
+			if (!set) {
+				set = [[NSCharacterSet characterSetWithCharactersInString:@"!@"] retain];
+			}
+			NSRange r = [setter rangeOfCharacterFromSet:set];
+			if (r.location != NSNotFound) {
+				setter = [setter substringToIndex:r.location];
+			}
+			
+			IRCChannel* c = [self findChannel:chname];
+			NSString* text = [NSString stringWithFormat:@"%@ set the topic at: %@", setter, [dateTimeFormater stringFromDate:[NSDate dateWithTimeIntervalSince1970:timeNum]]];
+			[self printBoth:(c ?: (id)chname) type:LINE_TYPE_REPLY text:text];
+			break;
+		}
 		case 353:	// RPL_NAMREPLY
 		{
 			NSString* chname = [m paramAt:2];
@@ -2206,6 +2250,22 @@
 
 - (void)ircConnectionWillSend:(NSString*)line
 {
+}
+
+#pragma mark -
+#pragma mark Init
+
++ (void)load
+{
+	if (self != [IRCClient class]) return;
+	
+	NSAutoreleasePool* pool = [NSAutoreleasePool new];
+	
+	dateTimeFormater = [NSDateFormatter new];
+	[dateTimeFormater setDateStyle:NSDateFormatterMediumStyle];
+	[dateTimeFormater setTimeStyle:NSDateFormatterShortStyle];
+	
+	[pool drain];
 }
 
 @end
