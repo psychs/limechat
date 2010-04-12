@@ -153,6 +153,7 @@
 		[channels replaceObjectAtIndex:n withObject:s];
 		[channelTable reloadData];
 		[channelTable select:n];
+		[self tableViewSelectionIsChanging:nil];
 	}
 }
 
