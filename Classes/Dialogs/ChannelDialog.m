@@ -94,6 +94,10 @@
 	config.autoJoin = autoJoinCheck.state;
 	config.logToConsole = consoleCheck.state;
 	config.growl = growlCheck.state;
+	
+	if (![config.name isChannelName]) {
+		config.name = [@"#" stringByAppendingString:config.name];
+	}
 }
 
 - (void)update
@@ -109,7 +113,7 @@
 	}
 	
 	NSString* s = nameText.stringValue;
-	[okButton setEnabled:[s isChannelName]];
+	[okButton setEnabled:s.length > 0];
 }
 
 - (void)controlTextDidChange:(NSNotification*)note
