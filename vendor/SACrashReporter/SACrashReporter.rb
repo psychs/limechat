@@ -1,1 +1,0 @@
-require File.expand_path('../lib/SACrashReporter', __FILE__)
