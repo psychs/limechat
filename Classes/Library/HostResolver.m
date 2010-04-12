@@ -6,17 +6,14 @@
 
 @implementation HostResolver
 
+@synthesize delegate;
+
 - (id)initWithDelegate:(id)aDelegate
 {
 	if (self = [super init]) {
 		delegate = aDelegate;
 	}
 	return self;
-}
-
-- (void)setDelegate:(id)value
-{
-	delegate = value;
 }
 
 - (void)resolve:(NSString*)hostname

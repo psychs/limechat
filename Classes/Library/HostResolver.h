@@ -9,8 +9,9 @@
 	id delegate;
 }
 
+@property (nonatomic, assign) id delegate;
+
 - (id)initWithDelegate:(id)aDelegate;
-- (void)setDelegate:(id)value;
 - (void)resolve:(NSString*)hostname;
 
 @end
