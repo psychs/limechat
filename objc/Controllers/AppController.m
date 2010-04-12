@@ -337,14 +337,17 @@
 {
 	NSString* s = [text stringValue];
 	if (s.length) {
-		if ([world sendText:s command:command]) {
+		if ([world inputText:s command:command]) {
 			[inputHistory add:s];
 			[text setStringValue:@""];
 		}
 	}
+	
 	[text focus];
 	
-	// @@@ clear completion status
+	if (completionStatus) {
+		[completionStatus clear];
+	}
 }
 
 - (void)textEntered:(id)sender
@@ -894,11 +897,12 @@ typedef enum {
 
 - (void)sendNotice:(NSEvent*)e
 {
+	[self sendText:NOTICE];
 }
 
 - (void)showPasteDialog:(NSEvent*)e
 {
-	LOG_METHOD
+	[menu onPasteDialog:nil];
 }
 
 - (void)inputHistoryUp:(NSEvent*)e

@@ -111,7 +111,7 @@
 - (void)selectPreviousItem;
 
 - (void)focusInputText;
-- (BOOL)sendText:(NSString*)s command:(NSString*)command;
+- (BOOL)inputText:(NSString*)s command:(NSString*)command;
 
 - (void)markAllAsRead;
 - (void)markAllScrollbacks;

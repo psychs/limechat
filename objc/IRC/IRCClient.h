@@ -111,7 +111,7 @@ typedef enum {
 - (void)sendFile:(NSString*)nick port:(int)port fileName:(NSString*)fileName size:(long long)size;
 - (void)sendCTCPQuery:(NSString*)nick command:(NSString*)command text:(NSString*)text;
 
-- (BOOL)sendText:(NSString*)s command:(NSString*)command;
+- (BOOL)inputText:(NSString*)s command:(NSString*)command;
 - (void)sendText:(NSString*)s command:(NSString*)command channel:(IRCChannel*)channel;
 - (void)sendLine:(NSString*)str;
 - (void)send:(NSString*)str, ...;

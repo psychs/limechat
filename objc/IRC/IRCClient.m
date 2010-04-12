@@ -691,30 +691,40 @@ static NSDateFormatter* dateTimeFormater = nil;
 #pragma mark -
 #pragma mark Sending Text
 
-- (BOOL)sendText:(NSString*)s command:(NSString*)command
+- (BOOL)inputText:(NSString*)str command:(NSString*)command
 {
 	if (!isConnected) return NO;
 	
 	id sel = world.selected;
 	if (!sel) return NO;
-	if ([sel isClient]) {
-		// server
-		if ([s hasPrefix:@"/"]) {
-			s = [s substringFromIndex:1];
-		}
-		[self sendLine:s];
-	}
-	else {
-		// channel
-		IRCChannel* channel = (IRCChannel*)sel;
+	
+	NSArray* lines = [str splitIntoLines];
+	for (NSString* s in lines) {
+		if (s.length == 0) continue;
 		
-		if ([s hasPrefix:@"/"]) {
-			// command
-			s = [s substringFromIndex:1];
+		if ([sel isClient]) {
+			// server
+			if ([s hasPrefix:@"/"]) {
+				s = [s substringFromIndex:1];
+			}
 			[self sendLine:s];
 		}
 		else {
-			[self sendText:s command:command channel:channel];
+			// channel
+			IRCChannel* channel = (IRCChannel*)sel;
+			
+			if ([s hasPrefix:@"/"] && ![s hasPrefix:@"//"]) {
+				// command
+				s = [s substringFromIndex:1];
+				[self sendLine:s];
+			}
+			else {
+				// text
+				if ([s hasPrefix:@"/"]) {
+					s = [s substringFromIndex:1];
+				}
+				[self sendText:s command:command channel:channel];
+			}
 		}
 	}
 	
@@ -725,9 +735,22 @@ static NSDateFormatter* dateTimeFormater = nil;
 {
 	if (!s.length) return;
 	
-	// normal text
+	LogLineType type;
+	if ([command isEqualToString:NOTICE]) {
+		type = LINE_TYPE_NOTICE;
+	}
+	else if ([command isEqualToString:ACTION]) {
+		type = LINE_TYPE_ACTION;
+	}
+	else {
+		type = LINE_TYPE_PRIVMSG;
+	}
+	[self printBoth:channel type:type nick:myNick text:s identified:YES];
+	
+	if (type == LINE_TYPE_ACTION) {
+		s = [NSString stringWithFormat:@"\x01%@ %@\x01", ACTION, s];
+	}
 	[self send:command, channel.name, s, nil];
-	[self printBoth:channel type:LINE_TYPE_PRIVMSG nick:myNick text:s identified:YES];
 	
 	if ([command isEqualToString:PRIVMSG]) {
 		NSString* recipientNick = nil;

@@ -198,10 +198,10 @@
 	[text focus];
 }
 
-- (BOOL)sendText:(NSString*)s command:(NSString*)command
+- (BOOL)inputText:(NSString*)s command:(NSString*)command
 {
 	if (!selected) return NO;
-	return [[selected client] sendText:s command:command];
+	return [[selected client] inputText:s command:command];
 }
 
 - (void)markAllAsRead
