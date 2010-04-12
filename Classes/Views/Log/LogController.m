@@ -133,7 +133,7 @@
 	view.keyDelegate = self;
 	view.resizeDelegate = self;
 	view.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
-	[[view mainFrame] loadHTMLString:[self initialDocument] baseURL:[[theme log] baseUrl]];
+	[[view mainFrame] loadHTMLString:[self initialDocument] baseURL:theme.log.baseUrl];
 }
 
 - (void)moveToTop
@@ -243,7 +243,7 @@
 	scrollBottom = [self viewingBottom];
 	scrollTop = [[body valueForKey:@"scrollTop"] intValue];
 	
-	[[view mainFrame] loadHTMLString:[self initialDocument] baseURL:[[theme log] baseUrl]];
+	[[view mainFrame] loadHTMLString:[self initialDocument] baseURL:theme.log.baseUrl];
 	[scroller setNeedsDisplay];
 }
 
@@ -255,7 +255,7 @@
 	html = nil;
 	loaded = NO;
 	
-	[[view mainFrame] loadHTMLString:[self initialDocument] baseURL:[[theme log] baseUrl]];
+	[[view mainFrame] loadHTMLString:[self initialDocument] baseURL:theme.log.baseUrl];
 	[scroller setNeedsDisplay];
 }
 
@@ -453,7 +453,7 @@
 	if (channel) {
 		[bodyAttrs appendFormat:@"type=\"%@\"", [channel channelTypeString]];
 		if ([channel isChannel]) {
-			[bodyAttrs appendFormat:@"channelname=\"%@\"", logEscape([channel name])];
+			[bodyAttrs appendFormat:@" channelname=\"%@\"", logEscape([channel name])];
 		}
 	}
 	else if (console) {
@@ -482,8 +482,8 @@
 	
 	NSMutableString* s = [NSMutableString string];
 	
-	[s appendString:@"<html>"];
-	[s appendFormat:@"<head class=\"%@\" %@>", bodyClass, bodyAttrs];
+	[s appendFormat:@"<html class=\"%@\" %@>", bodyClass, bodyAttrs];
+	[s appendString:@"<head>"];
 	[s appendString:@"<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">"];
 	[s appendString:@"<meta http-equiv=\"Content-Script-Type\" content=\"text/javascript\">"];
 	[s appendString:@"<meta http-equiv=\"Content-Style-Type\" content=\"text/css\">"];
