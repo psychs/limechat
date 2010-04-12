@@ -223,6 +223,27 @@ BOOL isUnicharDigit(unichar c)
 	return '0' <= c && c <= '9';
 }
 
+- (NSString*)safeUsername
+{
+	int len = self.length;
+	const UniChar* buf = [self getCharactersBuffer];
+	
+	UniChar dest[len];
+	int n = 0;
+	
+	for (int i=0; i<len; i++) {
+		UniChar c = buf[i];
+		if (IsWordLetter(c)) {
+			dest[n++] = c;
+		}
+		else {
+			dest[n++] = '_';
+		}
+	}
+	
+	return [[[NSString alloc] initWithCharacters:dest length:n] autorelease];
+}
+
 - (NSString*)safeFileName
 {
 	NSString* s = [self stringByReplacingOccurrencesOfString:@"/" withString:@"_"];

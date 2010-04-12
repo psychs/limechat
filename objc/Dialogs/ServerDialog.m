@@ -32,29 +32,9 @@
 	if (self = [super init]) {
 		[NSBundle loadNibNamed:@"ServerDialog" owner:self];
 		
-		if ([NSLocale prefersJapaneseLanguage]) {
-			[hostCombo addItemWithObjectValue:@"irc.ircnet.ne.jp (IRCnet)"];
-			[hostCombo addItemWithObjectValue:@"-"];
-			[hostCombo addItemWithObjectValue:@"irc.friend-chat.jp (Friend)"];
-			[hostCombo addItemWithObjectValue:@"irc.2ch.net (2ch)"];
-			[hostCombo addItemWithObjectValue:@"irc.cre.ne.jp (cre)"];
-			[hostCombo addItemWithObjectValue:@"-"];
-			[hostCombo addItemWithObjectValue:@"chat.freenode.net (freenode)"];
-			[hostCombo addItemWithObjectValue:@"eu.undernet.org (Undernet)"];
-			[hostCombo addItemWithObjectValue:@"irc.quakenet.org (QuakeNet)"];
-			[hostCombo addItemWithObjectValue:@"chat1.ustream.tv (Ustream)"];
-		}
-		else {
-			[hostCombo addItemWithObjectValue:@"chat.freenode.net (freenode)"];
-			[hostCombo addItemWithObjectValue:@"irc.efnet.net (EFnet)"];
-			[hostCombo addItemWithObjectValue:@"irc.us.ircnet.net (IRCnet)"];
-			[hostCombo addItemWithObjectValue:@"irc.fr.ircnet.net (IRCnet)"];
-			[hostCombo addItemWithObjectValue:@"us.undernet.org (Undernet)"];
-			[hostCombo addItemWithObjectValue:@"eu.undernet.org (Undernet)"];
-			[hostCombo addItemWithObjectValue:@"irc.quakenet.org (QuakeNet)"];
-			[hostCombo addItemWithObjectValue:@"uk.quakenet.org (QuakeNet)"];
-			[hostCombo addItemWithObjectValue:@"irc.mozilla.org (Mozilla)"];
-			[hostCombo addItemWithObjectValue:@"chat1.ustream.tv (Ustream)"];
+		NSArray* servers = [[self class] availableServers];
+		for (NSString* s in servers) {
+			[hostCombo addItemWithObjectValue:s];
 		}
 	}
 	return self;
@@ -455,6 +435,43 @@
 	if ([delegate respondsToSelector:@selector(serverDialogWillClose:)]) {
 		[delegate serverDialogWillClose:self];
 	}
+}
+
+#pragma mark -
+#pragma mark Servers
+
++ (NSArray*)availableServers
+{
+	static NSMutableArray* servers = nil;
+	if (!servers) {
+		servers = [NSMutableArray new];
+		
+		if ([NSLocale prefersJapaneseLanguage]) {
+			[servers addObject:@"irc.ircnet.ne.jp (IRCnet)"];
+			[servers addObject:@"-"];
+			[servers addObject:@"irc.friend-chat.jp (Friend)"];
+			[servers addObject:@"irc.2ch.net (2ch)"];
+			[servers addObject:@"irc.cre.ne.jp (cre)"];
+			[servers addObject:@"-"];
+			[servers addObject:@"chat.freenode.net (freenode)"];
+			[servers addObject:@"eu.undernet.org (Undernet)"];
+			[servers addObject:@"irc.quakenet.org (QuakeNet)"];
+			[servers addObject:@"chat1.ustream.tv (Ustream)"];
+		}
+		else {
+			[servers addObject:@"chat.freenode.net (freenode)"];
+			[servers addObject:@"irc.efnet.net (EFnet)"];
+			[servers addObject:@"irc.us.ircnet.net (IRCnet)"];
+			[servers addObject:@"irc.fr.ircnet.net (IRCnet)"];
+			[servers addObject:@"us.undernet.org (Undernet)"];
+			[servers addObject:@"eu.undernet.org (Undernet)"];
+			[servers addObject:@"irc.quakenet.org (QuakeNet)"];
+			[servers addObject:@"uk.quakenet.org (QuakeNet)"];
+			[servers addObject:@"irc.mozilla.org (Mozilla)"];
+			[servers addObject:@"chat1.ustream.tv (Ustream)"];
+		}
+	}
+	return servers;
 }
 
 @end

@@ -13,6 +13,7 @@
 #import "NickCompletinStatus.h"
 #import "DCCController.h"
 #import "GrowlController.h"
+#import "WelcomeDialog.h"
 
 
 @interface AppController : NSObject
@@ -42,6 +43,7 @@
 	IBOutlet NSMenu* addrMenu;
 	IBOutlet NSMenu* chanMenu;
 	
+	WelcomeDialog* welcomeDialog;
 	GrowlController* growl;
 	DCCController* dcc;
 	FieldEditorTextView* fieldEditor;

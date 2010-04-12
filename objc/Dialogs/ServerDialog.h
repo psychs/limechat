@@ -74,6 +74,8 @@
 - (void)editChannel:(id)sender;
 - (void)deleteChannel:(id)sender;
 
++ (NSArray*)availableServers;
+
 @end
 
 

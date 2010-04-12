@@ -15,6 +15,7 @@
 		780ADD42116F9B41004FF298 /* ChannelDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 780ADD41116F9B41004FF298 /* ChannelDialog.m */; };
 		7823C3371172FD7E009D9038 /* GrowlController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7823C3361172FD7E009D9038 /* GrowlController.m */; };
 		7823C7B21173522A009D9038 /* TimerCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 7823C7B11173522A009D9038 /* TimerCommand.m */; };
+		7823C8EE11736981009D9038 /* WelcomeDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 7823C8ED11736981009D9038 /* WelcomeDialog.m */; };
 		78287EB70D742DBD008D5656 /* Themes in CopyFiles */ = {isa = PBXBuildFile; fileRef = 78287EA90D742DAA008D5656 /* Themes */; };
 		782B99C9116C91AB00304B3C /* ViewTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 782B99C8116C91AB00304B3C /* ViewTheme.m */; };
 		782B9C3B116CAD1300304B3C /* LogTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 782B9C3A116CAD1300304B3C /* LogTheme.m */; };
@@ -187,6 +188,8 @@
 		7823C3361172FD7E009D9038 /* GrowlController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GrowlController.m; sourceTree = "<group>"; };
 		7823C7B01173522A009D9038 /* TimerCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimerCommand.h; sourceTree = "<group>"; };
 		7823C7B11173522A009D9038 /* TimerCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimerCommand.m; sourceTree = "<group>"; };
+		7823C8EC11736981009D9038 /* WelcomeDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelcomeDialog.h; sourceTree = "<group>"; };
+		7823C8ED11736981009D9038 /* WelcomeDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WelcomeDialog.m; sourceTree = "<group>"; };
 		78287EA90D742DAA008D5656 /* Themes */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Themes; path = resource/Themes; sourceTree = "<group>"; };
 		782B99C7116C91AB00304B3C /* ViewTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewTheme.h; sourceTree = "<group>"; };
 		782B99C8116C91AB00304B3C /* ViewTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewTheme.m; sourceTree = "<group>"; };
@@ -485,8 +488,8 @@
 				78347EC91158D4B00073E2F0 /* PasteSheet.xib */,
 				78347EBD1158D4B00073E2F0 /* TopicSheet.xib */,
 				78347EBF1158D4B00073E2F0 /* DCCDialog.xib */,
-				78347EC11158D4B00073E2F0 /* ListDialog.xib */,
 				78347ECF1158D4B00073E2F0 /* WelcomeDialog.xib */,
+				78347EC11158D4B00073E2F0 /* ListDialog.xib */,
 				78347EB91158D4B00073E2F0 /* AutoOpDialog.xib */,
 				78287EA90D742DAA008D5656 /* Themes */,
 				78C2D608115A428C00705817 /* dsa_pub.pem */,
@@ -747,6 +750,8 @@
 			children = (
 				7883FD7D11722A0400CE7F7A /* DCC */,
 				78E345CD116C6ACD00990CCB /* Preferences */,
+				7823C8EC11736981009D9038 /* WelcomeDialog.h */,
+				7823C8ED11736981009D9038 /* WelcomeDialog.m */,
 				78806C24116F4172006ED1B0 /* ServerDialog.h */,
 				78806C25116F4172006ED1B0 /* ServerDialog.m */,
 				780ADD40116F9B41004FF298 /* ChannelDialog.h */,
@@ -1030,6 +1035,7 @@
 				78CDBCCB11727BC700DDEF1C /* TCPServer.m in Sources */,
 				7823C3371172FD7E009D9038 /* GrowlController.m in Sources */,
 				7823C7B21173522A009D9038 /* TimerCommand.m in Sources */,
+				7823C8EE11736981009D9038 /* WelcomeDialog.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

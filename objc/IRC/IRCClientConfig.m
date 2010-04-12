@@ -4,6 +4,7 @@
 #import "IRCClientConfig.h"
 #import "IRCChannelConfig.h"
 #import "NSDictionaryHelper.h"
+#import "NSLocaleHelper.h"
 
 
 @implementation IRCClientConfig
@@ -49,15 +50,26 @@
 		
 		name = @"";
 		host = @"";
+		port = 6667;
 		password = @"";
 		nick = @"";
 		username = @"";
 		realName = @"";
 		nickPassword = @"";
+		
 		proxyHost = @"";
+		proxyPort = 1080;
 		proxyUser = @"";
 		proxyPassword = @"";
+		
+		encoding = NSUTF8StringEncoding;
+		fallbackEncoding = NSISOLatin1StringEncoding;
 		leavingComment = @"";
+		userInfo = @"";
+		
+		if ([NSLocale prefersJapaneseLanguage]) {
+			encoding = NSISO2022JPStringEncoding;
+		}
 	}
 	return self;
 }
@@ -66,30 +78,30 @@
 {
 	[self init];
 	
-	name = [[dic stringForKey:@"name"] retain];
+	name = [[dic stringForKey:@"name"] retain] ?: @"";
 	
-	host = [[dic stringForKey:@"host"] retain];
-	port = [dic intForKey:@"port"];
-	password = [[dic stringForKey:@"password"] retain];
+	host = [[dic stringForKey:@"host"] retain] ?: @"";
+	port = [dic intForKey:@"port"] ?: 6667;
+	password = [[dic stringForKey:@"password"] retain] ?: @"";
 	useSSL = [dic boolForKey:@"ssl"];
 	
-	nick = [[dic stringForKey:@"nick"] retain];
-	username = [[dic stringForKey:@"username"] retain];
-	realName = [[dic stringForKey:@"realname"] retain];
-	nickPassword = [[dic stringForKey:@"nickPassword"] retain];
+	nick = [[dic stringForKey:@"nick"] retain] ?: @"";
+	username = [[dic stringForKey:@"username"] retain] ?: @"";
+	realName = [[dic stringForKey:@"realname"] retain] ?: @"";
+	nickPassword = [[dic stringForKey:@"nickPassword"] retain] ?: @"";
 	[altNicks addObjectsFromArray:[dic arrayForKey:@"alt_nicks"]];
 	
 	proxyType = [dic intForKey:@"proxy"];
-	proxyHost = [[dic stringForKey:@"proxy_host"] retain];
+	proxyHost = [[dic stringForKey:@"proxy_host"] retain] ?: @"";
 	proxyPort = [dic intForKey:@"proxy_port"];
-	proxyUser = [[dic stringForKey:@"proxy_user"] retain];
-	proxyPassword = [[dic stringForKey:@"proxy_password"] retain];
+	proxyUser = [[dic stringForKey:@"proxy_user"] retain] ?: @"";
+	proxyPassword = [[dic stringForKey:@"proxy_password"] retain] ?: @"";
 
 	autoConnect = [dic boolForKey:@"auto_connect"];
 	encoding = [dic intForKey:@"encoding"];
 	fallbackEncoding = [dic intForKey:@"fallback_encoding"];
-	leavingComment = [[dic stringForKey:@"leaving_comment"] retain];
-	userInfo = [[dic stringForKey:@"userinfo"] retain];
+	leavingComment = [[dic stringForKey:@"leaving_comment"] retain] ?: @"";
+	userInfo = [[dic stringForKey:@"userinfo"] retain] ?: @"";
 	invisibleMode = [dic boolForKey:@"invisible"];
 	
 	[loginCommands addObjectsFromArray:[dic arrayForKey:@"login_commands"]];

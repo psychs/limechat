@@ -10,6 +10,7 @@
 #import "Regex.h"
 #import "NSPasteboardHelper.h"
 #import "NSStringHelper.h"
+#import "NSLocaleHelper.h"
 
 
 #define KInternetEventClass	1196773964
@@ -29,6 +30,7 @@
 
 - (void)dealloc
 {
+	[welcomeDialog release];
 	[growl release];
 	[dcc release];
 	[fieldEditor release];
@@ -154,9 +156,16 @@
 {
 	[ViewTheme createUserDirectory];
 	
-	[window makeFirstResponder:text];
-	[window makeKeyAndOrderFront:nil];
-	[world autoConnect:NO];
+	if (world.clients.count) {
+		welcomeDialog = [WelcomeDialog new];
+		welcomeDialog.delegate = self;
+		[welcomeDialog show];
+	}
+	else {
+		[window makeFirstResponder:text];
+		[window makeKeyAndOrderFront:nil];
+		[world autoConnect:NO];
+	}
 }
 
 - (void)applicationDidBecomeActive:(NSNotification *)note
@@ -990,6 +999,71 @@ typedef enum {
 - (void)prelude
 {
 	[Preferences migrate];
+}
+
+#pragma mark -
+#pragma mark WelcomeDialog Delegate
+
+//UTF8_NETS = %w|freenode undernet quakenet mozilla ustream|
+
+
+- (void)welcomeDialog:(WelcomeDialog*)sender onOK:(NSDictionary*)config
+{
+	LOG(@"%@", config);
+	
+	NSString* host = [config objectForKey:@"host"];
+	NSString* name = host;
+	
+	Regex* hostRegex = [[[Regex alloc] initWithString:@"^[^\\s]+\\s+\\(([^()]+)\\)"] autorelease];
+	NSRange r = [hostRegex match:host];
+	if (r.location != NSNotFound) {
+		name = [host substringWithRange:[hostRegex groupAt:1]];
+	}
+	
+	NSString* nick = [config objectForKey:@"nick"];
+	NSString* user = [nick safeUsername];
+	NSString* realName = nick;
+	
+	NSMutableArray* channels = [NSMutableArray array];
+	for (NSString* s in [config objectForKey:@"channels"]) {
+		[channels addObject:[NSDictionary dictionaryWithObject:s forKey:@"name"]];
+	}
+	
+	NSMutableDictionary* dic = [NSMutableDictionary dictionary];
+	[dic setObject:host forKey:@"host"];
+	[dic setObject:name forKey:@"name"];
+	[dic setObject:nick forKey:@"nick"];
+	[dic setObject:user forKey:@"username"];
+	[dic setObject:realName forKey:@"realname"];
+	[dic setObject:channels forKey:@"channels"];
+	[dic setObject:[config objectForKey:@"autoConnect"] forKey:@"auto_connect"];
+	
+	if ([NSLocale prefersJapaneseLanguage]) {
+		NSString* net = [host lowercaseString];
+		if ([net contains:@"freenode"]
+			|| [net contains:@"undernet"]
+			|| [net contains:@"quakenet"]
+			|| [net contains:@"mozilla"]
+			|| [net contains:@"ustream"]) {
+			[dic setObject:[NSNumber numberWithLong:NSUTF8StringEncoding] forKey:@"encoding"];
+		}
+	}
+	
+	IRCClientConfig* c = [[[IRCClientConfig alloc] initWithDictionary:dic] autorelease];
+	IRCClient* u = [world createClient:c reload:YES];
+	[world save];
+	
+	if (c.autoConnect) {
+		[u connect];
+	}
+}
+
+- (void)welcomeDialogWillClose:(WelcomeDialog*)sender
+{
+	[welcomeDialog autorelease];
+	welcomeDialog = nil;
+	
+	[window makeKeyAndOrderFront:nil];
 }
 
 @end

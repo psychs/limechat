@@ -29,6 +29,7 @@
 - (int)firstCharCodePoint;
 - (int)lastCharCodePoint;
 
+- (NSString*)safeUsername;
 - (NSString*)safeFileName;
 
 - (NSString*)stripEffects;
