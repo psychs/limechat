@@ -113,6 +113,9 @@ typedef enum {
 
 - (BOOL)inputText:(NSString*)s command:(NSString*)command;
 - (void)sendText:(NSString*)s command:(NSString*)command channel:(IRCChannel*)channel;
+- (BOOL)sendCommand:(NSString*)s;
+- (BOOL)sendCommand:(NSString*)s completeTarget:(BOOL)completeTarget target:(IRCChannel*)target;
+
 - (void)sendLine:(NSString*)str;
 - (void)send:(NSString*)str, ...;
 

@@ -25,6 +25,8 @@
 @synthesize h;
 @synthesize v;
 @synthesize isMyself;
+@synthesize incomingWeight;
+@synthesize outgoingWeight;
 
 - (id)init
 {

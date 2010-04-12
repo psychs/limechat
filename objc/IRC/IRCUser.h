@@ -38,6 +38,8 @@
 @property (nonatomic, readonly) BOOL isOp;
 @property (nonatomic, readonly) int colorNumber;
 @property (nonatomic, readonly) CGFloat weight;
+@property (nonatomic, readonly) CGFloat incomingWeight;
+@property (nonatomic, readonly) CGFloat outgoingWeight;
 
 - (BOOL)hasMode:(char)mode;
 

@@ -707,7 +707,7 @@ static NSDateFormatter* dateTimeFormater = nil;
 			if ([s hasPrefix:@"/"]) {
 				s = [s substringFromIndex:1];
 			}
-			[self sendLine:s];
+			[self sendCommand:s];
 		}
 		else {
 			// channel
@@ -716,7 +716,7 @@ static NSDateFormatter* dateTimeFormater = nil;
 			if ([s hasPrefix:@"/"] && ![s hasPrefix:@"//"]) {
 				// command
 				s = [s substringFromIndex:1];
-				[self sendLine:s];
+				[self sendCommand:s];
 			}
 			else {
 				// text
@@ -865,6 +865,170 @@ static NSDateFormatter* dateTimeFormater = nil;
 			}
 		}
 	}
+}
+
+- (NSString*)expandVariables:(NSString*)s
+{
+	return [s stringByReplacingOccurrencesOfString:@"$nick" withString:myNick];
+}
+
+- (BOOL)sendCommand:(NSString*)s
+{
+	return [self sendCommand:s completeTarget:YES target:nil];
+}
+
+- (BOOL)sendCommand:(NSString*)str completeTarget:(BOOL)completeTarget target:(IRCChannel*)target
+{
+	if (!isConnected || !str.length) return NO;
+	
+	str = [self expandVariables:str];
+	
+	NSMutableString* s = [[str mutableCopy] autorelease];
+	
+	NSString* cmd = [[s getToken] uppercaseString];
+	if (!cmd.length) return NO;
+
+	IRCClient* u = world.selectedClient;
+	IRCChannel* c = world.selectedChannel;
+	
+	IRCChannel* sel = nil;
+	if (completeTarget && target) {
+		sel = target;
+	}
+	else if (completeTarget && u == self && c) {
+		sel = c;
+	}
+	
+	BOOL opMsg = NO;
+	
+	//
+	// parse pseudo commands and aliases
+	//
+	
+	if ([cmd isEqualToString:CLEAR]) {
+		if (c) {
+			[c.log clear];
+		}
+		else if (u) {
+			[u.log clear];
+		}
+		return YES;
+	}
+	else if ([cmd isEqualToString:WEIGHTS]) {
+		if (c) {
+			[self printBoth:nil type:LINE_TYPE_REPLY text:@"WEIGHTS: "];
+			for (IRCUser* m in c.members) {
+				if (m.weight > 0) {
+					NSString* text = [NSString stringWithFormat:@"%@ - sent: %f receive: %f total: %f", m.nick, m.incomingWeight, m.outgoingWeight, m.weight];
+					[self printBoth:nil type:LINE_TYPE_REPLY text:text];
+				}
+			}
+		}
+		return YES;
+	}
+	else if ([cmd isEqualToString:QUERY]) {
+	}
+	else if ([cmd isEqualToString:CLOSE]) {
+	}
+	else if ([cmd isEqualToString:TIMER]) {
+	}
+	else if ([cmd isEqualToString:REJOIN] || [cmd isEqualToString:HOP] || [cmd isEqualToString:CYCLE]) {
+	}
+	else if ([cmd isEqualToString:OMSG]) {
+	}
+	else if ([cmd isEqualToString:ONOTICE]) {
+	}
+	else if ([cmd isEqualToString:MSG] || [cmd isEqualToString:M]) {
+	}
+	else if ([cmd isEqualToString:LEAVE]) {
+	}
+	else if ([cmd isEqualToString:J]) {
+	}
+	else if ([cmd isEqualToString:T]) {
+	}
+	else if ([cmd isEqualToString:RAW] || [cmd isEqualToString:QUOTE]) {
+	}
+	
+	//
+	// get target if needed
+	//
+	
+	if ([cmd isEqualToString:PRIVMSG] || [cmd isEqualToString:NOTICE] || [cmd isEqualToString:ACTION]) {
+	}
+	else if ([cmd isEqualToString:ME]) {
+	}
+	else if ([cmd isEqualToString:PART]) {
+	}
+	else if ([cmd isEqualToString:TOPIC]) {
+	}
+	else if ([cmd isEqualToString:MODE] || [cmd isEqualToString:KICK]) {
+	}
+	else if ([cmd isEqualToString:JOIN]) {
+	}
+	else if ([cmd isEqualToString:INVITE]) {
+	}
+	else if ([cmd isEqualToString:OP]
+			 || [cmd isEqualToString:DEOP]
+			 || [cmd isEqualToString:HALFOP]
+			 || [cmd isEqualToString:DEHALFOP]
+			 || [cmd isEqualToString:VOICE]
+			 || [cmd isEqualToString:DEVOICE]
+			 || [cmd isEqualToString:BAN]
+			 || [cmd isEqualToString:UNBAN]) {
+	}
+	else if ([cmd isEqualToString:UMODE]) {
+	}
+	
+	//
+	// cut colon
+	//
+	
+	BOOL cutColon = NO;
+	if ([s hasPrefix:@"/"]) {
+		cutColon = YES;
+		[s deleteCharactersInRange:NSMakeRange(0, 1)];
+	}
+	
+	//
+	// process text commands
+	//
+	
+	if ([cmd isEqualToString:PRIVMSG] || [cmd isEqualToString:NOTICE]) {
+	}
+	
+	if ([cmd isEqualToString:CTCP]) {
+	}
+	
+	//
+	// finally action
+	//
+	
+	if ([cmd isEqualToString:PRIVMSG] || [cmd isEqualToString:NOTICE] || [cmd isEqualToString:ACTION]) {
+	}
+	else if ([cmd isEqualToString:CTCP]) {
+	}
+	else if ([cmd isEqualToString:CTCPREPLY]) {
+	}
+	else if ([cmd isEqualToString:QUIT]) {
+	}
+	else if ([cmd isEqualToString:NICK]) {
+	}
+	else if ([cmd isEqualToString:TOPIC]) {
+	}
+	else if ([cmd isEqualToString:PART]) {
+	}
+	else if ([cmd isEqualToString:KICK]) {
+	}
+	else if ([cmd isEqualToString:AWAY]) {
+	}
+	else if ([cmd isEqualToString:JOIN] || [cmd isEqualToString:MODE] || [cmd isEqualToString:INVITE]) {
+	}
+	else if ([cmd isEqualToString:WHOIS]) {
+	}
+	else {
+	}
+	
+	return YES;
 }
 
 - (void)sendLine:(NSString*)str

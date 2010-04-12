@@ -23,7 +23,7 @@
 #define ACTIVE_CHANNEL			(ACTIVE && c.isChannel)
 #define ACTIVE_CHANTALK			(ACTIVE && (c.isChannel || c.isTalk))
 #define LOGIN_CHANTALK			(LOGIN && (!c || c.isChannel || c.isTalk))
-#define OP						(ACTIVE_CHANNEL && c.isOp)
+#define IS_OP					(ACTIVE_CHANNEL && c.isOp)
 #define KEY_WINDOW				([window isKeyWindow])
 
 
@@ -235,7 +235,7 @@
 		case 2031:	// kick
 		case 2041:	// give voice
 		case 2042:	// devoice
-			return OP && [self checkSelectedMembers:item];
+			return IS_OP && [self checkSelectedMembers:item];
 		case 2011:	// dcc send file
 			return LOGIN_CHANTALK && [self checkSelectedMembers:item] && u.myAddress;
 		case 2021:	// register to auto op
@@ -244,7 +244,7 @@
 			return LOGIN_CHANTALK && [self checkSelectedMembers:item];
 		case 2032:	// ban
 		case 2033:	// kick & ban
-			return OP && [self checkSelectedMembers:item] && c.isWhoInit;
+			return IS_OP && [self checkSelectedMembers:item] && c.isWhoInit;
 			
 		case 3001:	// copy url
 		case 3002:	// copy address
