@@ -40,6 +40,8 @@
 
 - (void)addReceiverWithUID:(int)uid nick:(NSString*)nick host:(NSString*)host port:(int)port path:(NSString*)path fileName:(NSString*)fileName size:(long long)size;
 - (void)addSenderWithUID:(int)uid nick:(NSString*)nick fileName:(NSString*)fileName autoOpen:(BOOL)autoOpen;
+- (int)countReceivingItems;
+- (int)countSendingItems;
 
 - (void)clear:(id)sender;
 

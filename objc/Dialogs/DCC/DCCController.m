@@ -179,6 +179,28 @@
 	[self show:YES];
 }
 
+- (int)countReceivingItems
+{
+	int i = 0;
+	for (DCCReceiver* e in receivers) {
+		if (e.status == DCC_RECEIVING) {
+			++i;
+		}
+	}
+	return i;
+}
+
+- (int)countSendingItems
+{
+	int i = 0;
+	for (DCCSender* e in senders) {
+		if (e.status == DCC_SENDING) {
+			++i;
+		}
+	}
+	return i;
+}
+
 - (void)reloadReceiverTable
 {
 	[receiverTable reloadData];

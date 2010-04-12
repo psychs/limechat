@@ -199,9 +199,27 @@
 		return YES;
 	}
 	
-	// @@@ check dcc file transfers
+	int receiving = [dcc countReceivingItems];
+	int sending = [dcc countSendingItems];
 	
-	if ([Preferences confirmQuit]) {
+	if (receiving > 0 || sending > 0) {
+		NSMutableString* msg = [NSMutableString stringWithString:@"Now you are "];
+		if (receiving > 0) {
+			[msg appendFormat:@"receiving %d files", receiving];
+		}
+		if (sending > 0) {
+			if (receiving > 0) {
+				[msg appendString:@" and "];
+			}
+			[msg appendFormat:@"sending %d files", sending];
+		}
+		[msg appendString:@"."];
+		NSInteger result = NSRunAlertPanel(@"Quit LimeChat?", msg, @"Quit", @"Cancel", nil);
+		if (result != NSAlertDefaultReturn) {
+			return NO;
+		}
+	}
+	else if ([Preferences confirmQuit]) {
 		NSInteger result = NSRunAlertPanel(@"Quit LimeChat?", @"", @"Quit", @"Cancel", nil);
 		if (result != NSAlertDefaultReturn) {
 			return NO;
