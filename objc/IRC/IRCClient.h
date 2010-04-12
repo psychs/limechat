@@ -41,7 +41,6 @@ typedef enum {
 	
 	BOOL isConnecting;
 	BOOL isConnected;
-	BOOL isReconnecting;
 	BOOL isLoggedIn;
 	BOOL isQuitting;
 	NSStringEncoding encoding;

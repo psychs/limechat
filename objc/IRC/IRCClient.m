@@ -89,7 +89,6 @@ static NSDateFormatter* dateTimeFormater = nil;
 @synthesize isupport;
 @synthesize isConnecting;
 @synthesize isConnected;
-@synthesize isReconnecting;
 @synthesize isLoggedIn;
 
 @synthesize isKeyword;
@@ -260,6 +259,11 @@ static NSDateFormatter* dateTimeFormater = nil;
 - (BOOL)isNewTalk
 {
 	return NO;
+}
+
+- (BOOL)isReconnecting
+{
+	return reconnectTimer && reconnectTimer.isActive;
 }
 
 #pragma mark -
