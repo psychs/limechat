@@ -1305,7 +1305,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 				t = [NSString stringWithFormat:@"\x01%@ %@\x01", ACTION, t];
 			}
 			
-			[self send:cmd, [targets componentsJoinedByString:@","], t, nil];
+			[self send:localCmd, [targets componentsJoinedByString:@","], t, nil];
 		}
 	}
 	else if ([cmd isEqualToString:CTCP]) {
@@ -1798,7 +1798,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	
 	if (nick.length > 0) {
 		if (type == LINE_TYPE_ACTION) {
-			nickStr = [NSString stringWithFormat:@"%@ "];
+			nickStr = [NSString stringWithFormat:@"%@ ", nick];
 		}
 		else {
 			nickStr = [self formatNick:nick channel:channel];
