@@ -193,20 +193,32 @@
 	}
 }
 
-- (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender
+- (BOOL)queryTerminate
 {
-	if (terminating) return NSTerminateNow;
+	if (terminating) {
+		return YES;
+	}
 	
 	// @@@ check dcc file transfers
 	
 	if ([Preferences confirmQuit]) {
 		NSInteger result = NSRunAlertPanel(@"Quit LimeChat?", @"", @"Quit", @"Cancel", nil);
 		if (result != NSAlertDefaultReturn) {
-			return NSTerminateCancel;
+			return NO;
 		}
 	}
 	
-	return NSTerminateNow;
+	return YES;
+}
+
+- (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender
+{
+	if ([self queryTerminate]) {
+		return NSTerminateNow;
+	}
+	else {
+		return NSTerminateCancel;
+	}
 }
 
 - (void)applicationWillTerminate:(NSNotification *)note
@@ -258,6 +270,17 @@
 	else {
 		return nil;
 	}
+}
+
+- (BOOL)windowShouldClose:(id)sender
+{
+	return [self queryTerminate];
+}
+
+- (void)windowWillClose:(NSNotification *)note
+{
+	terminating = YES;
+	[NSApp terminate:nil];
 }
 
 #pragma mark -
