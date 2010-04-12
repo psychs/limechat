@@ -113,15 +113,16 @@
 		case 201:	// dcc
 			return YES;
 		case 202:	// close current panel without confirmation
-			return KEY_WINDOW && u && !c;
+			return KEY_WINDOW && u && c;
 		case 203:	// close window / close current panel
 			if (KEY_WINDOW) {
 				[closeWindowItem setTitle:_(@"CloseCurrentPanelMenuTitle")];
+				return u && c;
 			}
 			else {
 				[closeWindowItem setTitle:_(@"CloseWindowMenuTitle")];
+				return YES;
 			}
-			return YES;
 		case 313:	// paste
 		{
 			if (![[NSPasteboard generalPasteboard] hasStringContent]) {
@@ -353,14 +354,35 @@
 - (void)onCloseWindow:(id)sender
 {
 	if ([window isKeyWindow]) {
+		// for main window
+		IRCClient* u = world.selectedClient;
+		IRCChannel* c = world.selectedChannel;
+		if (u && c) {
+			if (c.isChannel && c.isActive) {
+				NSString* message = [NSString stringWithFormat:@"Close %@ ?", c.name];
+				NSInteger result = NSRunAlertPanel(message, @"", @"Close", @"Cancel", nil);
+				if (result != NSAlertDefaultReturn) {
+					return;
+				}
+			}
+			[world destroyChannel:c];
+			[world save];
+		}
 	}
 	else {
+		// for other windows
 		[[NSApp keyWindow] performClose:nil];
 	}
 }
 
 - (void)onCloseCurrentPanel:(id)sender
 {
+	IRCClient* u = world.selectedClient;
+	IRCChannel* c = world.selectedChannel;
+	if (u && c) {
+		[world destroyChannel:c];
+		[world save];
+	}
 }
 
 - (void)startPasteSheetWithContent:(NSString*)content nick:(NSString*)nick uid:(int)uid cid:(int)cid editMode:(BOOL)editMode
@@ -711,7 +733,9 @@
 	NSString* message = [NSString stringWithFormat:@"Delete %@ ?", u.name];
 	
 	NSInteger result = NSRunAlertPanel(message, @"", @"Delete", @"Cancel", nil);
-	if (result != NSAlertDefaultReturn) return;
+	if (result != NSAlertDefaultReturn) {
+		return;
+	}
 	
 	[world destroyClient:u];
 	[world save];

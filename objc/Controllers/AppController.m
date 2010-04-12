@@ -201,7 +201,9 @@
 	
 	if ([Preferences confirmQuit]) {
 		NSInteger result = NSRunAlertPanel(@"Quit LimeChat?", @"", @"Quit", @"Cancel", nil);
-		if (result != NSAlertDefaultReturn) return NSTerminateCancel;
+		if (result != NSAlertDefaultReturn) {
+			return NSTerminateCancel;
+		}
 	}
 	
 	return NSTerminateNow;
