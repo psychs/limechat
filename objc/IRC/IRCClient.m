@@ -2640,7 +2640,10 @@ static NSDateFormatter* dateTimeFormater = nil;
 	}
 	
 	for (NSString* s in config.loginCommands) {
-		//@@@
+		if ([s hasPrefix:@"/"]) {
+			s = [s substringFromIndex:1];
+		}
+		[self sendCommand:s completeTarget:NO target:nil];
 	}
 	
 	for (IRCChannel* c in channels) {
