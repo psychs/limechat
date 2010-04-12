@@ -3,6 +3,7 @@
 
 #import "Preferences.h"
 #import "NSLocaleHelper.h"
+#import "NSDictionaryHelper.h"
 
 
 @implementation Preferences
@@ -10,153 +11,115 @@
 + (DCCActionType)dccAction
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	id obj = [ud objectForKey:@"Preferences.Dcc.action"];
-	if (!obj) return DCC_SHOW_DIALOG;
-	return [obj intValue];
+	return [ud integerForKey:@"Preferences.Dcc.action"];
 }
 
 + (AddressDetectionType)dccAddressDetectionMethod
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	id obj = [ud objectForKey:@"Preferences.Dcc.address_detection_method"];
-	if (!obj) return ADDRESS_DETECT_JOIN;
-	return [obj intValue];
+	return [ud integerForKey:@"Preferences.Dcc.address_detection_method"];
 }
 
 + (NSString*)dccMyaddress
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	id obj = [ud objectForKey:@"Preferences.Dcc.myaddress"];
-	if (!obj) return @"";
-	return obj;
+	return [ud objectForKey:@"Preferences.Dcc.myaddress"];
 }
 
 + (BOOL)autoRejoin
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	id obj = [ud objectForKey:@"Preferences.General.auto_rejoin"];
-	if (!obj) return NO;
-	return [obj boolValue];
+	return [ud boolForKey:@"Preferences.General.auto_rejoin"];
 }
 
 + (BOOL)confirmQuit
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	id obj = [ud objectForKey:@"Preferences.General.confirm_quit"];
-	if (!obj) return YES;
-	return [obj boolValue];
+	return [ud boolForKey:@"Preferences.General.confirm_quit"];
 }
 
 + (BOOL)connectOnDoubleclick
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	id obj = [ud objectForKey:@"Preferences.General.connect_on_doubleclick"];
-	if (!obj) return NO;
-	return [obj boolValue];
+	return [ud boolForKey:@"Preferences.General.connect_on_doubleclick"];
 }
 
 + (BOOL)disconnectOnDoubleclick
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	id obj = [ud objectForKey:@"Preferences.General.disconnect_on_doubleclick"];
-	if (!obj) return NO;
-	return [obj boolValue];
+	return [ud boolForKey:@"Preferences.General.disconnect_on_doubleclick"];
 }
 
 + (BOOL)joinOnDoubleclick
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	id obj = [ud objectForKey:@"Preferences.General.join_on_doubleclick"];
-	if (!obj) return NO;
-	return [obj boolValue];
+	return [ud boolForKey:@"Preferences.General.join_on_doubleclick"];
 }
 
 + (BOOL)leaveOnDoubleclick
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	id obj = [ud objectForKey:@"Preferences.General.leave_on_doubleclick"];
-	if (!obj) return NO;
-	return [obj boolValue];
+	return [ud boolForKey:@"Preferences.General.leave_on_doubleclick"];
 }
 
 + (BOOL)logTranscript
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	id obj = [ud objectForKey:@"Preferences.General.log_transcript"];
-	if (!obj) return NO;
-	return [obj boolValue];
+	return [ud boolForKey:@"Preferences.General.log_transcript"];
 }
 
 + (MainWindowLayoutType)mainWindowLayout
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	id obj = [ud objectForKey:@"Preferences.General.main_window_layout"];
-	if (!obj) return MAIN_WINDOW_LAYOUT_2_COLUMN;
-	return [obj intValue];
+	return [ud integerForKey:@"Preferences.General.main_window_layout"];
 }
 
 + (BOOL)openBrowserInBackground
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	id obj = [ud objectForKey:@"Preferences.General.open_browser_in_background"];
-	if (!obj) return YES;
-	return [obj boolValue];
+	return [ud boolForKey:@"Preferences.General.open_browser_in_background"];
 }
 
 + (BOOL)showInlineImages
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	id obj = [ud objectForKey:@"Preferences.General.show_inline_images"];
-	if (!obj) return YES;
-	return [obj boolValue];
+	return [ud boolForKey:@"Preferences.General.show_inline_images"];
 }
 
 + (BOOL)showJoinLeave
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	id obj = [ud objectForKey:@"Preferences.General.show_join_leave"];
-	if (!obj) return YES;
-	return [obj boolValue];
+	return [ud boolForKey:@"Preferences.General.show_join_leave"];
 }
 
 + (BOOL)stopGrowlOnActive
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	id obj = [ud objectForKey:@"Preferences.General.stop_growl_on_active"];
-	if (!obj) return NO;
-	return [obj boolValue];
+	return [ud boolForKey:@"Preferences.General.stop_growl_on_active"];
 }
 
 + (TabActionType)tabAction
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	id obj = [ud objectForKey:@"Preferences.General.tab_action"];
-	if (!obj) return TAB_COMPLETE_NICK;
-	return [obj intValue];
+	return [ud integerForKey:@"Preferences.General.tab_action"];
 }
 
 + (BOOL)useGrowl
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	id obj = [ud objectForKey:@"Preferences.General.use_growl"];
-	if (!obj) return YES;
-	return [obj boolValue];
+	return [ud boolForKey:@"Preferences.General.use_growl"];
 }
 
 + (BOOL)useHotkey
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	id obj = [ud objectForKey:@"Preferences.General.use_hotkey"];
-	if (!obj) return NO;
-	return [obj boolValue];
+	return [ud boolForKey:@"Preferences.General.use_hotkey"];
 }
 
 + (BOOL)keywordCurrentNick
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	id obj = [ud objectForKey:@"Preferences.Keyword.current_nick"];
-	if (!obj) return YES;
-	return [obj boolValue];
+	return [ud boolForKey:@"Preferences.Keyword.current_nick"];
 }
 
 + (NSArray*)keywordDislikeWords
@@ -174,17 +137,13 @@
 + (KeywordMatchType)keywordMatchingMethod
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	id obj = [ud objectForKey:@"Preferences.Keyword.matching_method"];
-	if (!obj) return [NSLocale prefersJapaneseLanguage] ? KEYWORD_MATCH_PARTIAL : KEYWORD_MATCH_EXACT;
-	return [obj intValue];
+	return [ud integerForKey:@"Preferences.Keyword.matching_method"];
 }
 
 + (BOOL)keywordWholeLine
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	id obj = [ud objectForKey:@"Preferences.Keyword.whole_line"];
-	if (!obj) return NO;
-	return [obj boolValue];
+	return [ud boolForKey:@"Preferences.Keyword.whole_line"];
 }
 
 + (NSArray*)keywordWords
@@ -199,9 +158,7 @@
 + (NSString*)pasteCommand
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	id obj = [ud objectForKey:@"Preferences.General.paste_command"];
-	if (!obj) return @"privmsg";
-	return obj;
+	return [ud objectForKey:@"Preferences.General.paste_command"];
 }
 
 + (void)setPasteCommand:(NSString*)value
@@ -213,9 +170,7 @@
 + (NSString*)pasteSyntax
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	id obj = [ud objectForKey:@"Preferences.General.paste_syntax"];
-	if (!obj) return [NSLocale prefersJapaneseLanguage] ? @"notice" : @"privmsg";
-	return obj;
+	return [ud objectForKey:@"Preferences.General.paste_syntax"];
 }
 
 + (void)setPasteSyntax:(NSString*)value
@@ -230,9 +185,7 @@
 + (NSString*)themeName
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	id obj = [ud objectForKey:@"Preferences.Theme.name"];
-	if (!obj) return @"resource:Default";
-	return obj;
+	return [ud objectForKey:@"Preferences.Theme.name"];
 }
 
 + (void)setThemeName:(NSString*)value
@@ -244,9 +197,7 @@
 + (NSString*)themeLogFontName
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	id obj = [ud objectForKey:@"Preferences.Theme.log_font_name"];
-	if (!obj) return @"Lucida Grande";
-	return obj;
+	return [ud objectForKey:@"Preferences.Theme.log_font_name"];
 }
 
 + (void)setThemeLogFontName:(NSString*)value
@@ -258,9 +209,7 @@
 + (double)themeLogFontSize
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	id obj = [ud objectForKey:@"Preferences.Theme.log_font_size"];
-	if (!obj) return 12;
-	return [obj doubleValue];
+	return [ud doubleForKey:@"Preferences.Theme.log_font_size"];
 }
 
 + (void)setThemeLogFontSize:(double)value
@@ -272,49 +221,37 @@
 + (NSString*)themeNickFormat
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	id obj = [ud objectForKey:@"Preferences.Theme.nick_format"];
-	if (!obj) return @"%n: ";
-	return obj;
+	return [ud objectForKey:@"Preferences.Theme.nick_format"];
 }
 
 + (BOOL)themeOverrideLogFont
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	id obj = [ud objectForKey:@"Preferences.Theme.override_log_font"];
-	if (!obj) return NO;
-	return [obj boolValue];
+	return [ud boolForKey:@"Preferences.Theme.override_log_font"];
 }
 
 + (BOOL)themeOverrideNickFormat
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	id obj = [ud objectForKey:@"Preferences.Theme.override_nick_format"];
-	if (!obj) return NO;
-	return [obj boolValue];
+	return [ud boolForKey:@"Preferences.Theme.override_nick_format"];
 }
 
 + (BOOL)themeOverrideTimestampFormat
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	id obj = [ud objectForKey:@"Preferences.Theme.override_timestamp_format"];
-	if (!obj) return NO;
-	return [obj boolValue];
+	return [ud boolForKey:@"Preferences.Theme.override_timestamp_format"];
 }
 
 + (NSString*)themeTimestampFormat
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	id obj = [ud objectForKey:@"Preferences.Theme.timestamp_format"];
-	if (!obj) return @"%H:%M";
-	return obj;
+	return [ud objectForKey:@"Preferences.Theme.timestamp_format"];
 }
 
 + (double)themeTransparency
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	id obj = [ud objectForKey:@"Preferences.Theme.transparency"];
-	if (!obj) return 1;
-	return [obj doubleValue];
+	return [ud doubleForKey:@"Preferences.Theme.transparency"];
 }
 
 #pragma mark -
@@ -323,9 +260,7 @@
 + (int)dccFirstPort
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	id obj = [ud objectForKey:@"Preferences.Dcc.first_port"];
-	if (!obj) return 1096;
-	return [obj intValue];
+	return [ud integerForKey:@"Preferences.Dcc.first_port"];
 }
 
 + (void)setDccFirstPort:(int)value
@@ -337,9 +272,7 @@
 + (int)dccLastPort
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	id obj = [ud objectForKey:@"Preferences.Dcc.last_port"];
-	if (!obj) return 1115;
-	return [obj intValue];
+	return [ud integerForKey:@"Preferences.Dcc.last_port"];
 }
 
 + (void)setDccLastPort:(int)value
@@ -354,9 +287,7 @@
 + (int)maxLogLines
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	id obj = [ud objectForKey:@"Preferences.General.max_log_lines"];
-	if (!obj) return 300;
-	return [obj intValue];
+	return [ud integerForKey:@"Preferences.General.max_log_lines"];
 }
 
 + (void)setMaxLogLines:(int)value
@@ -371,9 +302,7 @@
 + (NSString*)transcriptFolder
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	id obj = [ud objectForKey:@"Preferences.General.transcript_folder"];
-	if (!obj) return @"~/Documents/LimeChat Transcripts";
-	return obj;
+	return [ud objectForKey:@"Preferences.General.transcript_folder"];
 }
 
 + (void)setTranscriptFolder:(NSString*)value
@@ -572,15 +501,13 @@
 }
 
 #pragma mark -
-#pragma mark World
+#pragma mark Hot Keys
 
 
 + (int)hotKeyKeyCode
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	id obj = [ud objectForKey:@"Preferences.General.hotkey_key_code"];
-	if (!obj) return 0;
-	return [obj intValue];
+	return [ud integerForKey:@"Preferences.General.hotkey_key_code"];
 }
 
 + (void)setHotKeyKeyCode:(int)value
@@ -592,9 +519,7 @@
 + (NSUInteger)hotKeyModifierFlags
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	id obj = [ud objectForKey:@"Preferences.General.hotkey_modifier_flags"];
-	if (!obj) return 0;
-	return [obj integerValue];
+	return [ud integerForKey:@"Preferences.General.hotkey_modifier_flags"];
 }
 
 + (void)setHotKeyModifierFlags:(NSUInteger)value
@@ -697,7 +622,48 @@ static NSMutableArray* ignoreWords;
 
 + (void)initPreferences
 {
+	NSMutableDictionary* d = [NSMutableDictionary dictionary];
+	[d setInt:DCC_SHOW_DIALOG forKey:@"Preferences.Dcc.action"];
+	[d setInt:ADDRESS_DETECT_JOIN forKey:@"Preferences.Dcc.address_detection_method"];
+	[d setObject:@"" forKey:@"Preferences.Dcc.myaddress"];
+	[d setBool:NO forKey:@"Preferences.General.auto_rejoin"];
+	[d setBool:YES forKey:@"Preferences.General.confirm_quit"];
+	[d setBool:NO forKey:@"Preferences.General.connect_on_doubleclick"];
+	[d setBool:NO forKey:@"Preferences.General.disconnect_on_doubleclick"];
+	[d setBool:NO forKey:@"Preferences.General.join_on_doubleclick"];
+	[d setBool:NO forKey:@"Preferences.General.leave_on_doubleclick"];
+	[d setBool:NO forKey:@"Preferences.General.log_transcript"];
+	[d setInt:MAIN_WINDOW_LAYOUT_2_COLUMN forKey:@"Preferences.General.main_window_layout"];
+	[d setBool:YES forKey:@"Preferences.General.open_browser_in_background"];
+	[d setBool:YES forKey:@"Preferences.General.show_inline_images"];
+	[d setBool:YES forKey:@"Preferences.General.show_join_leave"];
+	[d setBool:YES forKey:@"Preferences.General.stop_growl_on_active"];
+	[d setInt:TAB_COMPLETE_NICK forKey:@"Preferences.General.tab_action"];
+	[d setBool:YES forKey:@"Preferences.General.use_growl"];
+	[d setBool:NO forKey:@"Preferences.General.use_hotkey"];
+	[d setBool:YES forKey:@"Preferences.Keyword.current_nick"];
+	[d setInt:KEYWORD_MATCH_PARTIAL forKey:@"Preferences.Keyword.matching_method"];
+	[d setBool:NO forKey:@"Preferences.Keyword.whole_line"];
+	[d setObject:@"privmsg" forKey:@"Preferences.General.paste_command"];
+	[d setObject:@"plain text" forKey:@"Preferences.General.paste_syntax"];
+	[d setObject:@"resource:Default" forKey:@"Preferences.Theme.name"];
+	[d setObject:@"Lucida Grande" forKey:@"Preferences.Theme.log_font_name"];
+	[d setDouble:12 forKey:@"Preferences.Theme.log_font_size"];
+	[d setObject:@"%n: " forKey:@"Preferences.Theme.nick_format"];
+	[d setBool:NO forKey:@"Preferences.Theme.override_log_font"];
+	[d setBool:NO forKey:@"Preferences.Theme.override_nick_format"];
+	[d setBool:NO forKey:@"Preferences.Theme.override_timestamp_format"];
+	[d setObject:@"%H:%M" forKey:@"Preferences.Theme.timestamp_format"];
+	[d setDouble:1 forKey:@"Preferences.Theme.transparency"];
+	[d setInt:1096 forKey:@"Preferences.Dcc.first_port"];
+	[d setInt:1115 forKey:@"Preferences.Dcc.last_port"];
+	[d setInt:300 forKey:@"Preferences.General.max_log_lines"];
+	[d setObject:@"~/Documents/LimeChat Transcripts" forKey:@"Preferences.General.transcript_folder"];
+	[d setInt:0 forKey:@"Preferences.General.hotkey_key_code"];
+	[d setInt:0 forKey:@"Preferences.General.hotkey_modifier_flags"];
+	
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	[ud registerDefaults:d];
 	[ud addObserver:self forKeyPath:@"keywords" options:NSKeyValueObservingOptionNew context:NULL];
 	[ud addObserver:self forKeyPath:@"excludeWords" options:NSKeyValueObservingOptionNew context:NULL];
 	[ud addObserver:self forKeyPath:@"ignoreWords" options:NSKeyValueObservingOptionNew context:NULL];
