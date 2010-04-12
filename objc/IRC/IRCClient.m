@@ -23,7 +23,8 @@
 #define RETRY_INTERVAL		240
 
 
-static NSDateFormatter* dateTimeFormater = nil;
+static NSDateFormatter* dateTimeFormatter = nil;
+
 
 
 @interface IRCClient (Private)
@@ -2189,10 +2190,9 @@ static NSDateFormatter* dateTimeFormater = nil;
 	//LOG(@"CTCP Query: %@", text);
 	
 	NSString* nick = m.sender.nick;
-	
 	NSMutableString* s = [[text mutableCopy] autorelease];
-	
 	NSString* command = [[s getToken] uppercaseString];
+	
 	if ([command isEqualToString:DCC]) {
 		NSString* subCommand = [[s getToken] uppercaseString];
 		if ([subCommand isEqualToString:SEND]) {
@@ -2226,6 +2226,27 @@ static NSDateFormatter* dateTimeFormater = nil;
 	else {
 		NSString* text = [NSString stringWithFormat:@"CTCP-query %@ from %@", command, nick];
 		[self printBoth:nil type:LINE_TYPE_REPLY text:text];
+		
+		if ([command isEqualToString:PING]) {
+			[self sendCTCPReply:nick command:command text:s];
+		}
+		else if ([command isEqualToString:TIME]) {
+			NSString* text = [[NSDate date] description];
+			[self sendCTCPReply:nick command:command text:text];
+		}
+		else if ([command isEqualToString:VERSION]) {
+			NSDictionary* info = [[NSBundle mainBundle] infoDictionary];
+			NSString* name = [info objectForKey:@"LCApplicationName"];
+			NSString* ver = [info objectForKey:@"CFBundleShortVersionString"];
+			NSString* text = [NSString stringWithFormat:@"%@ %@", name, ver];
+			[self sendCTCPReply:nick command:command text:text];
+		}
+		else if ([command isEqualToString:USERINFO]) {
+			[self sendCTCPReply:nick command:command text:config.userInfo ?: @""];
+		}
+		else if ([command isEqualToString:CLIENTINFO]) {
+			[self sendCTCPReply:nick command:command text:_(@"CTCPClientInfo")];
+		}
 	}
 }
 
@@ -2816,14 +2837,8 @@ static NSDateFormatter* dateTimeFormater = nil;
 			
 			long long signOnTime = [signOnStr longLongValue];
 			if (signOnTime > 0) {
-				static NSDateFormatter* format = nil;
-				if (!format) {
-					format = [NSDateFormatter new];
-					[format setDateStyle:NSDateFormatterMediumStyle];
-					[format setTimeStyle:NSDateFormatterShortStyle];
-				}
 				NSDate* date = [NSDate dateWithTimeIntervalSince1970:signOnTime];
-				signOn = [format stringFromDate:date];
+				signOn = [dateTimeFormatter stringFromDate:date];
 			}
 			
 			if (inWhois) {
@@ -2906,7 +2921,7 @@ static NSDateFormatter* dateTimeFormater = nil;
 			long long timeNum = [timeStr longLongValue];
 			
 			IRCChannel* c = [self findChannel:chname];
-			NSString* text = [NSString stringWithFormat:@"Created at: %@", [dateTimeFormater stringFromDate:[NSDate dateWithTimeIntervalSince1970:timeNum]]];
+			NSString* text = [NSString stringWithFormat:@"Created at: %@", [dateTimeFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:timeNum]]];
 			[self printBoth:(c ?: (id)chname) type:LINE_TYPE_REPLY text:text];
 			break;
 		}
@@ -2956,7 +2971,7 @@ static NSDateFormatter* dateTimeFormater = nil;
 			}
 			
 			IRCChannel* c = [self findChannel:chname];
-			NSString* text = [NSString stringWithFormat:@"%@ set the topic at: %@", setter, [dateTimeFormater stringFromDate:[NSDate dateWithTimeIntervalSince1970:timeNum]]];
+			NSString* text = [NSString stringWithFormat:@"%@ set the topic at: %@", setter, [dateTimeFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:timeNum]]];
 			[self printBoth:(c ?: (id)chname) type:LINE_TYPE_REPLY text:text];
 			break;
 		}
@@ -3262,9 +3277,9 @@ static NSDateFormatter* dateTimeFormater = nil;
 	
 	NSAutoreleasePool* pool = [NSAutoreleasePool new];
 	
-	dateTimeFormater = [NSDateFormatter new];
-	[dateTimeFormater setDateStyle:NSDateFormatterMediumStyle];
-	[dateTimeFormater setTimeStyle:NSDateFormatterShortStyle];
+	dateTimeFormatter = [NSDateFormatter new];
+	[dateTimeFormatter setDateStyle:NSDateFormatterMediumStyle];
+	[dateTimeFormatter setTimeStyle:NSDateFormatterShortStyle];
 	
 	[pool drain];
 }

@@ -29,14 +29,19 @@
 #define DCC			@"DCC"
 #define SEND		@"SEND"
 
+#define CLIENTINFO	@"CLIENTINFO"
+#define CTCP		@"CTCP"
+#define CTCPREPLY	@"CTCPREPLY"
+#define TIME		@"TIME"
+#define USERINFO	@"USERINFO"
+#define VERSION		@"VERSION"
+
 #define OMSG		@"OMSG"
 #define ONOTICE		@"ONOTICE"
 
 #define BAN			@"BAN"
 #define CLEAR		@"CLEAR"
 #define CLOSE		@"CLOSE"
-#define CTCP		@"CTCP"
-#define CTCPREPLY	@"CTCPREPLY"
 #define CYCLE		@"CYCLE"
 #define DEHALFOP	@"DEHALFOP"
 #define DEOP		@"DEOP"
