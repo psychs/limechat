@@ -17,6 +17,7 @@
 #import "ViewTheme.h"
 #import "IRCTreeItem.h"
 #import "DCCController.h"
+#import "GrowlController.h"
 
 
 @class AppController;
@@ -26,6 +27,7 @@
 {
 	AppController* app;
 	MainWindow* window;
+	GrowlController* growl;
 	ServerTreeView* tree;
 	InputTextField* text;
 	NSBox* logBase;
@@ -62,6 +64,7 @@
 
 @property (nonatomic, assign) AppController* app;
 @property (nonatomic, assign) MainWindow* window;
+@property (nonatomic, assign) GrowlController* growl;
 @property (nonatomic, assign) ServerTreeView* tree;
 @property (nonatomic, assign) InputTextField* text;
 @property (nonatomic, assign) NSBox* logBase;
@@ -121,6 +124,8 @@
 - (void)updateTitle;
 - (void)updateClientTitle:(IRCClient*)client;
 - (void)updateChannelTitle:(IRCChannel*)channel;
+
+- (void)notifyOnGrowl:(GrowlNotificationType)type title:(NSString*)title desc:(NSString*)desc context:(id)context;
 
 - (void)preferencesChanged;
 - (void)reloadTheme;

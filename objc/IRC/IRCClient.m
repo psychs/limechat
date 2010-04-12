@@ -10,6 +10,7 @@
 #import "NSDataHelper.h"
 #import "WhoisDialog.h"
 #import "Regex.h"
+#import "SoundPlayer.h"
 
 
 #define MAX_JOIN_CHANNELS	10
@@ -69,6 +70,10 @@ static NSDateFormatter* dateTimeFormater = nil;
 - (void)printErrorReply:(IRCMessage*)m;
 - (void)printErrorReply:(IRCMessage*)m channel:(IRCChannel*)channel;
 - (void)printError:(NSString*)error;
+
+- (void)notifyText:(GrowlNotificationType)type target:(id)target nick:(NSString*)nick text:(NSString*)text;
+- (void)notifyEvent:(GrowlNotificationType)type;
+- (void)notifyEvent:(GrowlNotificationType)type target:(id)target nick:(NSString*)nick text:(NSString*)text;
 
 - (WhoisDialog*)createWhoisDialogWithNick:(NSString*)nick username:(NSString*)username address:(NSString*)address realname:(NSString*)realname;
 - (WhoisDialog*)findWhoisDialog:(NSString*)nick;
@@ -831,6 +836,104 @@ static NSDateFormatter* dateTimeFormater = nil;
 }
 
 #pragma mark -
+#pragma mark Growl
+
+- (void)notifyText:(GrowlNotificationType)type target:(id)target nick:(NSString*)nick text:(NSString*)text
+{
+	if (![Preferences useGrowl]) return;
+	
+	IRCChannel* channel = nil;
+	NSString* chname = nil;
+	if (target) {
+		if ([target isKindOfClass:[IRCChannel class]]) {
+			channel = (IRCChannel*)target;
+			chname = channel.name;
+			if (!channel.config.growl) {
+				return;
+			}
+		}
+		else {
+			chname = (NSString*)target;
+		}
+	}
+	if (!chname) {
+		chname = self.name;
+	}
+	
+	NSString* title = chname;
+	NSString* desc = [NSString stringWithFormat:@"<%@> %@", nick, text];
+	NSString* context;
+	if (channel) {
+		context = [NSString stringWithFormat:@"%d %d", uid, channel.uid];
+	}
+	else {
+		context = [NSString stringWithFormat:@"%d", uid];
+	}
+	
+	[world notifyOnGrowl:type title:title desc:desc context:context];
+}
+
+- (void)notifyEvent:(GrowlNotificationType)type
+{
+	[self notifyEvent:type target:@"" nick:@"" text:@""];
+}
+
+- (void)notifyEvent:(GrowlNotificationType)type target:(id)target nick:(NSString*)nick text:(NSString*)text
+{
+	if (![Preferences useGrowl]) return;
+	
+	IRCChannel* channel = nil;
+	NSString* chname = nil;
+	if (target) {
+		if ([target isKindOfClass:[IRCChannel class]]) {
+			channel = (IRCChannel*)target;
+			chname = channel.name;
+			if (!channel.config.growl) {
+				return;
+			}
+		}
+		else {
+			chname = (NSString*)target;
+		}
+	}
+	if (!chname) {
+		chname = self.name;
+	}
+	
+	NSString* title = @"";
+	NSString* desc = @"";
+	
+	switch (type) {
+		case GROWL_LOGIN:
+			title = self.name;
+			break;
+		case GROWL_DISCONNECT:
+			title = self.name;
+			break;
+		case GROWL_KICKED:
+			title = channel.name;
+			desc = [NSString stringWithFormat:@"%@ has kicked out you : %@", nick, text];
+			break;
+		case GROWL_INVITED:
+			title = self.name;
+			desc = [NSString stringWithFormat:@"%@ has invited you to %@", nick, text];
+			break;
+		default:
+			return;
+	}
+	
+	NSString* context;
+	if (channel) {
+		context = [NSString stringWithFormat:@"%d %d", uid, channel.uid];
+	}
+	else {
+		context = [NSString stringWithFormat:@"%d", uid];
+	}
+	
+	[world notifyOnGrowl:type title:title desc:desc context:context];
+}
+
+#pragma mark -
 #pragma mark Channel States
 
 - (void)setKeywordState:(id)t
@@ -1372,12 +1475,18 @@ static NSDateFormatter* dateTimeFormater = nil;
 		BOOL keyword = [self printBoth:(c ?: (id)target) type:type nick:nick text:text identified:identified];
 
 		if (type == LINE_TYPE_NOTICE) {
-			;
+			[self notifyText:GROWL_CHANNEL_NOTICE target:(c ?: (id)target) nick:nick text:text];
 		}
 		else {
 			id t = c ?: (id)self;
 			[self setUnreadState:t];
 			if (keyword) [self setKeywordState:t];
+			
+			GrowlNotificationType kind = keyword ? GROWL_HIGHLIGHT : GROWL_CHANNEL_MSG;
+			[self notifyText:kind target:(c ?: (id)target) nick:nick text:text];
+			
+			NSString* sound = keyword ? [Preferences soundHighlight] : [Preferences soundChanneltext];
+			[SoundPlayer play:sound];
 			
 			if (c) {
 				// track the conversation to nick complete
@@ -1415,13 +1524,19 @@ static NSDateFormatter* dateTimeFormater = nil;
 			BOOL keyword = [self printBoth:(c ?: (id)target) type:type nick:nick text:text identified:identified];
 			
 			if (type == LINE_TYPE_NOTICE) {
-				;
+				[self notifyText:GROWL_TALK_NOTICE target:(c ?: (id)target) nick:nick text:text];
 			}
 			else {
 				id t = c ?: (id)self;
 				[self setUnreadState:t];
 				if (keyword) [self setKeywordState:t];
 				if (newTalk) [self setNewTalkState:t];
+				
+				GrowlNotificationType kind = keyword ? GROWL_HIGHLIGHT : newTalk ? GROWL_NEW_TALK : GROWL_TALK_MSG;
+				[self notifyText:kind target:(c ?: (id)target) nick:nick text:text];
+				
+				NSString* sound = keyword ? [Preferences soundHighlight] : newTalk ? [Preferences soundNewtalk] : [Preferences soundTalktext];
+				[SoundPlayer play:sound];
 			}
 		}
 	}
@@ -1520,8 +1635,8 @@ static NSDateFormatter* dateTimeFormater = nil;
 			
 			[world.dcc addReceiverWithUID:uid nick:nick host:host port:port path:path fileName:fileName size:size];
 			
-			// @@@ sound
-			// growl
+			[world notifyOnGrowl:GROWL_FILE_RECEIVE_REQUEST title:nick desc:fileName context:nil];
+			[SoundPlayer play:[Preferences soundFileReceiveRequest]];
 			
 			if (![NSApp isActive]) {
 				[NSApp requestUserAttention:NSInformationalRequest];
@@ -1640,7 +1755,8 @@ static NSDateFormatter* dateTimeFormater = nil;
 			[self reloadTree];
 			[self printSystemBoth:c text:@"You have been kicked out from the channel"];
 			
-			// notify event and sound
+			[self notifyEvent:GROWL_KICKED target:c nick:nick text:comment];
+			[SoundPlayer play:[Preferences soundKicked]];
 		}
 		
 		[c removeMember:target];
@@ -1838,6 +1954,9 @@ static NSDateFormatter* dateTimeFormater = nil;
 	
 	NSString* text = [NSString stringWithFormat:@"%@ has invited you to %@", nick, chname];
 	[self printBoth:self type:LINE_TYPE_INVITE text:text];
+
+	[self notifyEvent:GROWL_INVITED target:nil nick:nick text:chname];
+	[SoundPlayer play:[Preferences soundInvited]];
 }
 
 - (void)receiveError:(IRCMessage*)m
@@ -1869,6 +1988,9 @@ static NSDateFormatter* dateTimeFormater = nil;
 	inWhois = NO;
 	
 	[self printSystem:self text:@"Logged in"];
+	
+	[self notifyEvent:GROWL_LOGIN];
+	[SoundPlayer play:[Preferences soundLogin]];
 	
 	if (config.nickPassword.length > 0) {
 		[self send:PRIVMSG, @"NickServ", [NSString stringWithFormat:@"IDENTIFY %@", config.nickPassword], nil];
@@ -2408,8 +2530,8 @@ static NSDateFormatter* dateTimeFormater = nil;
 	[self reloadTree];
 	
 	if (prevConnected) {
-		// notifyEvent
-		//[SoundPlayer play:]
+		[self notifyEvent:GROWL_DISCONNECT];
+		[SoundPlayer play:[Preferences soundDisconnect]];
 	}
 }
 

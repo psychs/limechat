@@ -13,6 +13,7 @@
 		780ADB4F116F7BB2004FF298 /* NSWindowHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 780ADB4E116F7BB2004FF298 /* NSWindowHelper.m */; };
 		780ADB9D116F800F004FF298 /* NSLocaleHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 780ADB9C116F800F004FF298 /* NSLocaleHelper.m */; };
 		780ADD42116F9B41004FF298 /* ChannelDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 780ADD41116F9B41004FF298 /* ChannelDialog.m */; };
+		7823C3371172FD7E009D9038 /* GrowlController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7823C3361172FD7E009D9038 /* GrowlController.m */; };
 		78287EB70D742DBD008D5656 /* Themes in CopyFiles */ = {isa = PBXBuildFile; fileRef = 78287EA90D742DAA008D5656 /* Themes */; };
 		782B99C9116C91AB00304B3C /* ViewTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 782B99C8116C91AB00304B3C /* ViewTheme.m */; };
 		782B9C3B116CAD1300304B3C /* LogTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 782B9C3A116CAD1300304B3C /* LogTheme.m */; };
@@ -182,6 +183,8 @@
 		780ADB9C116F800F004FF298 /* NSLocaleHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSLocaleHelper.m; sourceTree = "<group>"; };
 		780ADD40116F9B41004FF298 /* ChannelDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChannelDialog.h; sourceTree = "<group>"; };
 		780ADD41116F9B41004FF298 /* ChannelDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChannelDialog.m; sourceTree = "<group>"; };
+		7823C3351172FD7E009D9038 /* GrowlController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GrowlController.h; sourceTree = "<group>"; };
+		7823C3361172FD7E009D9038 /* GrowlController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GrowlController.m; sourceTree = "<group>"; };
 		78287EA90D742DAA008D5656 /* Themes */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Themes; path = resource/Themes; sourceTree = "<group>"; };
 		782B99C7116C91AB00304B3C /* ViewTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewTheme.h; sourceTree = "<group>"; };
 		782B99C8116C91AB00304B3C /* ViewTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewTheme.m; sourceTree = "<group>"; };
@@ -426,7 +429,6 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				7883FD7D11722A0400CE7F7A /* DCC */,
 				78364B14116597D00096F3A9 /* Controllers */,
 				78BC0C521168E5D800A984AA /* IRC */,
 				78E345BF116C6A9A00990CCB /* Preferences */,
@@ -517,6 +519,8 @@
 				787BE9DC116B45E9003AE47D /* MenuController.m */,
 				7883F3A811717D5100CE7F7A /* NickCompletinStatus.h */,
 				7883F3A911717D5100CE7F7A /* NickCompletinStatus.m */,
+				7823C3351172FD7E009D9038 /* GrowlController.h */,
+				7823C3361172FD7E009D9038 /* GrowlController.m */,
 			);
 			name = Controllers;
 			path = objc/Controllers;
@@ -741,6 +745,7 @@
 		787BEB4A116B5E9B003AE47D /* Dialogs */ = {
 			isa = PBXGroup;
 			children = (
+				7883FD7D11722A0400CE7F7A /* DCC */,
 				78E345CD116C6ACD00990CCB /* Preferences */,
 				78806C24116F4172006ED1B0 /* ServerDialog.h */,
 				78806C25116F4172006ED1B0 /* ServerDialog.m */,
@@ -775,8 +780,7 @@
 				7883FEA111723A9500CE7F7A /* DCCFileTransferCell.h */,
 				7883FEA211723A9500CE7F7A /* DCCFileTransferCell.m */,
 			);
-			name = DCC;
-			path = objc/Dialogs/DCC;
+			path = DCC;
 			sourceTree = "<group>";
 		};
 		78BC0C521168E5D800A984AA /* IRC */ = {
@@ -1023,6 +1027,7 @@
 				7883FF8A1172486100CE7F7A /* DCCSender.m in Sources */,
 				7883FF8D1172486B00CE7F7A /* DCCReceiver.m in Sources */,
 				78CDBCCB11727BC700DDEF1C /* TCPServer.m in Sources */,
+				7823C3371172FD7E009D9038 /* GrowlController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

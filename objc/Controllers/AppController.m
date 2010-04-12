@@ -29,6 +29,7 @@
 
 - (void)dealloc
 {
+	[growl release];
 	[dcc release];
 	[fieldEditor release];
 	[world release];
@@ -91,10 +92,11 @@
 	[self set3columnLayout:[Preferences mainWindowLayout] == MAIN_WINDOW_LAYOUT_3_COLUMN];
 	
 	IRCWorldConfig* seed = [[[IRCWorldConfig alloc] initWithDictionary:[Preferences loadWorld]] autorelease];
-
+	
 	world = [IRCWorld new];
 	world.app = self;
 	world.window = window;
+	world.growl = growl;
 	world.tree = tree;
 	world.text = text;
 	world.logBase = logBase;
@@ -138,8 +140,13 @@
 	dcc.mainWindow = window;
 	world.dcc = dcc;
 	
-	inputHistory = [InputHistory new];
+	growl = [GrowlController new];
+	growl.owner = world;
+	world.growl = growl;
+	[growl registerToGrowl];
 	
+	inputHistory = [InputHistory new];
+
 	[self registerKeyHandlers];
 }
 

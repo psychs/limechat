@@ -29,6 +29,7 @@
 
 @synthesize app;
 @synthesize window;
+@synthesize growl;
 @synthesize tree;
 @synthesize text;
 @synthesize logBase;
@@ -298,6 +299,14 @@
 	for (IRCClient* c in clients) {
 		[c preferencesChanged];
 	}
+}
+
+- (void)notifyOnGrowl:(GrowlNotificationType)type title:(NSString*)title desc:(NSString*)desc context:(id)context
+{
+	if (![Preferences useGrowl]) return;
+	if ([Preferences stopGrowlOnActive] && [NSApp isActive]) return;
+	
+	[growl notify:type title:title desc:desc context:context];
 }
 
 #pragma mark -

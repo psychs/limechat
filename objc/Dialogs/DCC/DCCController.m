@@ -9,6 +9,7 @@
 #import "DCCSender.h"
 #import "DCCFileTransferCell.h"
 #import "TableProgressIndicator.h"
+#import "SoundPlayer.h"
 #import "NSDictionaryHelper.h"
 
 
@@ -495,6 +496,14 @@
 #pragma mark -
 #pragma mark DCCReceiver Delegate
 
+- (void)removeControlsFromReceiver:(DCCReceiver*)receiver
+{
+	if (receiver.progressBar) {
+		[receiver.progressBar removeFromSuperview];
+		receiver.progressBar = nil;
+	}
+}
+
 - (void)dccReceiveOnOpen:(DCCReceiver*)sender
 {
 	if (!loaded) return;
@@ -517,27 +526,45 @@
 {
 	if (!loaded) return;
 	
-	if (sender.progressBar) {
-		[sender.progressBar removeFromSuperview];
-		sender.progressBar = nil;
-	}
-	
+	[self removeControlsFromReceiver:sender];
 	[self reloadReceiverTable];
 	[self updateTimer];
 }
 
 - (void)dccReceiveOnError:(DCCReceiver*)sender
 {
-	[self dccReceiveOnClose:sender];
+	if (!loaded) return;
+	
+	[self removeControlsFromReceiver:sender];
+	[self reloadReceiverTable];
+	[self updateTimer];
+
+	[world notifyOnGrowl:GROWL_FILE_RECEIVE_ERROR title:sender.peerNick desc:sender.fileName context:nil];
+	[SoundPlayer play:[Preferences soundFileReceiveFailure]];
 }
 
 - (void)dccReceiveOnComplete:(DCCReceiver*)sender
 {
-	[self dccReceiveOnClose:sender];
+	if (!loaded) return;
+	
+	[self removeControlsFromReceiver:sender];
+	[self reloadReceiverTable];
+	[self updateTimer];
+
+	[world notifyOnGrowl:GROWL_FILE_RECEIVE_SUCCESS title:sender.peerNick desc:sender.fileName context:nil];
+	[SoundPlayer play:[Preferences soundFileReceiveSuccess]];
 }
 
 #pragma mark -
 #pragma mark DCCSender Delegate
+
+- (void)removeControlsFromSender:(DCCSender*)sender
+{
+	if (sender.progressBar) {
+		[sender.progressBar removeFromSuperview];
+		sender.progressBar = nil;
+	}
+}
 
 - (void)dccSenderOnListen:(DCCSender*)sender
 {
@@ -572,25 +599,35 @@
 
 - (void)dccSenderOnClose:(DCCSender*)sender
 {
-	[self dccSenderOnComplete:sender];
+	if (!loaded) return;
+	
+	[self removeControlsFromSender:sender];
+	[self reloadSenderTable];
+	[self updateTimer];
 }
 
 - (void)dccSenderOnError:(DCCSender*)sender
 {
-	[self dccSenderOnComplete:sender];
+	if (!loaded) return;
+	
+	[self removeControlsFromSender:sender];
+	[self reloadSenderTable];
+	[self updateTimer];
+	
+	[world notifyOnGrowl:GROWL_FILE_SEND_ERROR title:sender.peerNick desc:sender.fileName context:nil];
+	[SoundPlayer play:[Preferences soundFileSendFailure]];
 }
 
 - (void)dccSenderOnComplete:(DCCSender*)sender
 {
 	if (!loaded) return;
-
-	if (sender.progressBar) {
-		[sender.progressBar removeFromSuperview];
-		sender.progressBar = nil;
-	}
 	
+	[self removeControlsFromSender:sender];
 	[self reloadSenderTable];
 	[self updateTimer];
+
+	[world notifyOnGrowl:GROWL_FILE_SEND_SUCCESS title:sender.peerNick desc:sender.fileName context:nil];
+	[SoundPlayer play:[Preferences soundFileSendSuccess]];
 }
 
 #pragma mark -

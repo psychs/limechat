@@ -12,6 +12,7 @@
 #import "ViewTheme.h"
 #import "NickCompletinStatus.h"
 #import "DCCController.h"
+#import "GrowlController.h"
 
 
 @interface AppController : NSObject
@@ -41,6 +42,7 @@
 	IBOutlet NSMenu* addrMenu;
 	IBOutlet NSMenu* chanMenu;
 	
+	GrowlController* growl;
 	DCCController* dcc;
 	FieldEditorTextView* fieldEditor;
 	IRCWorld* world;
