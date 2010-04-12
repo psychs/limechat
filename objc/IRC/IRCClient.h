@@ -113,7 +113,9 @@ typedef enum {
 - (void)changeOp:(IRCChannel*)channel users:(NSArray*)users mode:(char)mode value:(BOOL)value;
 - (void)kick:(IRCChannel*)channel target:(NSString*)nick;
 - (void)sendFile:(NSString*)nick port:(int)port fileName:(NSString*)fileName size:(long long)size;
-- (void)sendCTCPQuery:(NSString*)nick command:(NSString*)command text:(NSString*)text;
+- (void)sendCTCPQuery:(NSString*)target command:(NSString*)command text:(NSString*)text;
+- (void)sendCTCPReply:(NSString*)target command:(NSString*)command text:(NSString*)text;
+- (void)sendCTCPPing:(NSString*)target;
 
 - (BOOL)inputText:(NSString*)s command:(NSString*)command;
 - (void)sendText:(NSString*)s command:(NSString*)command channel:(IRCChannel*)channel;

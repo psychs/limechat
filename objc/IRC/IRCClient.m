@@ -631,12 +631,6 @@ static NSDateFormatter* dateTimeFormater = nil;
 	[self printBoth:nil type:LINE_TYPE_DCC_SEND_SEND text:text];
 }
 
-- (void)sendCTCPQuery:(NSString*)nick command:(NSString*)command text:(NSString*)text
-{
-	NSString* line = [NSString stringWithFormat:@"%@ %@ :\x01%@ %@\x01", PRIVMSG, nick, command, text];
-	[self sendLine:line];
-}
-
 - (void)quickJoin:(NSArray*)chans
 {
 	NSMutableString* target = [NSMutableString string];
@@ -902,19 +896,19 @@ static NSDateFormatter* dateTimeFormater = nil;
 	}
 }
 
-- (void)sendCTCPQuery:(NSString*)target text:(NSString*)text
+- (void)sendCTCPQuery:(NSString*)target command:(NSString*)command text:(NSString*)text
 {
-	[self send:PRIVMSG, target, [NSString stringWithFormat:@"\x01%@\x01", text], nil];
+	[self send:PRIVMSG, target, [NSString stringWithFormat:@"\x01%@ %@\x01", command, text], nil];
 }
 
-- (void)sendCTCPReply:(NSString*)target text:(NSString*)text
+- (void)sendCTCPReply:(NSString*)target command:(NSString*)command text:(NSString*)text
 {
-	[self send:NOTICE, target, [NSString stringWithFormat:@"\x01%@\x01", text], nil];
+	[self send:NOTICE, target, [NSString stringWithFormat:@"\x01%@ %@\x01", command, text], nil];
 }
 
 - (void)sendCTCPPing:(NSString*)target
 {
-	[self sendCTCPQuery:target text:[NSString stringWithFormat:@"%f", CFAbsoluteTimeGetCurrent()]];
+	[self sendCTCPQuery:target command:PING text:[NSString stringWithFormat:@"%f", CFAbsoluteTimeGetCurrent()]];
 }
 
 - (NSString*)expandVariables:(NSString*)s
@@ -1285,13 +1279,14 @@ static NSDateFormatter* dateTimeFormater = nil;
 				[self sendCTCPPing:targetChannelName];
 			}
 			else {
-				[self sendCTCPQuery:targetChannelName text:[NSString stringWithFormat:@"%@ %@", subCommand, s]];
+				[self sendCTCPQuery:targetChannelName command:subCommand text:s];
 			}
 		}
 	}
 	else if ([cmd isEqualToString:CTCPREPLY]) {
 		targetChannelName = [s getToken];
-		[self sendCTCPReply:targetChannelName text:s];
+		NSString* subCommand = [s getToken];
+		[self sendCTCPReply:targetChannelName command:subCommand text:s];
 	}
 	else if ([cmd isEqualToString:QUIT]) {
 		[self quit:s];
