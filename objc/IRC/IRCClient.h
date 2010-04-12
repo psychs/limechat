@@ -104,6 +104,7 @@ typedef enum {
 
 - (void)changeNick:(NSString*)newNick;
 - (void)joinChannel:(IRCChannel*)channel;
+- (void)joinChannel:(IRCChannel*)channel password:(NSString*)password;
 - (void)partChannel:(IRCChannel*)channel;
 - (void)sendWhois:(NSString*)nick;
 - (void)changeOp:(IRCChannel*)channel users:(NSArray*)users mode:(char)mode value:(BOOL)value;

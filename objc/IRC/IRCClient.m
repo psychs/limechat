@@ -500,6 +500,16 @@ static NSDateFormatter* dateTimeFormater = nil;
 	[self send:JOIN, channel.name, password, nil];
 }
 
+- (void)joinChannel:(IRCChannel*)channel password:(NSString*)password
+{
+	if (!isLoggedIn) return;
+	
+	if (!password.length) password = channel.config.password;
+	if (!password.length) password = nil;
+	
+	[self send:JOIN, channel.name, password, nil];
+}
+
 - (void)partChannel:(IRCChannel*)channel
 {
 	if (!isLoggedIn) return;
@@ -927,26 +937,67 @@ static NSDateFormatter* dateTimeFormater = nil;
 		return YES;
 	}
 	else if ([cmd isEqualToString:QUERY]) {
+		NSString* nick = [s getToken];
+		if (!nick.length) {
+			// close the current talk
+			if (c && c.isTalk) {
+				[world destroyChannel:c];
+			}
+		}
+		else {
+			// open a new talk
+			IRCChannel* c = [self findChannel:nick];
+			if (!c) {
+				c = [world createTalk:nick client:self];
+			}
+			[world select:c];
+		}
+		return YES;
 	}
 	else if ([cmd isEqualToString:CLOSE]) {
+		NSString* nick = [s getToken];
+		if (nick.length) {
+			c = [self findChannel:nick];
+		}
+		if (c && c.isTalk) {
+			[world destroyChannel:c];
+		}
+		return YES;
 	}
 	else if ([cmd isEqualToString:TIMER]) {
 	}
 	else if ([cmd isEqualToString:REJOIN] || [cmd isEqualToString:HOP] || [cmd isEqualToString:CYCLE]) {
+		if (c) {
+			NSString* pass = c.mode.k;
+			if (!pass.length) pass = nil;
+			[self partChannel:c];
+			[self joinChannel:c password:pass];
+		}
+		return YES;
 	}
 	else if ([cmd isEqualToString:OMSG]) {
+		opMsg = YES;
+		cmd = PRIVMSG;
 	}
 	else if ([cmd isEqualToString:ONOTICE]) {
+		opMsg = YES;
+		cmd = NOTICE;
 	}
 	else if ([cmd isEqualToString:MSG] || [cmd isEqualToString:M]) {
+		cmd = PRIVMSG;
 	}
 	else if ([cmd isEqualToString:LEAVE]) {
+		cmd = PART;
 	}
 	else if ([cmd isEqualToString:J]) {
+		cmd = JOIN;
 	}
 	else if ([cmd isEqualToString:T]) {
+		cmd = TOPIC;
 	}
 	else if ([cmd isEqualToString:RAW] || [cmd isEqualToString:QUOTE]) {
+		[self sendLine:s];
+		return YES;
 	}
 	
 	//
