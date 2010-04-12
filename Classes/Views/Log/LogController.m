@@ -477,7 +477,7 @@
 		NSMutableString* s = [NSMutableString string];
 		[s appendString:@"html, body, body[type], body.normal, body.console {"];
 		[s appendFormat:@"font-family:'%@';", name];
-		[s appendFormat:@"font-size:%f;", size];
+		[s appendFormat:@"font-size:%fpt;", size];
 		[s appendString:@"}"];
 		
 		overrideStyle = s;
