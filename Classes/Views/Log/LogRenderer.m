@@ -67,7 +67,7 @@ static int getNextAttributeRange(attr_t* attrBuf, int start, int len)
 NSString* logEscape(NSString* s)
 {
 	s = [s gtm_stringByEscapingForHTML];
-	return [s stringByReplacingOccurrencesOfString:@" " withString:@"&nbsp;"];
+	return [s stringByReplacingOccurrencesOfString:@"  " withString:@" &nbsp;"];
 }
 
 static NSString* renderRange(NSString* body, attr_t attr, int start, int len)
