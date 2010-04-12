@@ -17,7 +17,7 @@
 @property (nonatomic, assign) SEL selector;
 @property (nonatomic, readonly) BOOL isActive;
 
-- (void)start:(int)interval;
+- (void)start:(NSTimeInterval)interval;
 - (void)stop;
 
 @end

@@ -14,6 +14,7 @@
 		780ADB9D116F800F004FF298 /* NSLocaleHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 780ADB9C116F800F004FF298 /* NSLocaleHelper.m */; };
 		780ADD42116F9B41004FF298 /* ChannelDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 780ADD41116F9B41004FF298 /* ChannelDialog.m */; };
 		7823C3371172FD7E009D9038 /* GrowlController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7823C3361172FD7E009D9038 /* GrowlController.m */; };
+		7823C7B21173522A009D9038 /* TimerCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 7823C7B11173522A009D9038 /* TimerCommand.m */; };
 		78287EB70D742DBD008D5656 /* Themes in CopyFiles */ = {isa = PBXBuildFile; fileRef = 78287EA90D742DAA008D5656 /* Themes */; };
 		782B99C9116C91AB00304B3C /* ViewTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 782B99C8116C91AB00304B3C /* ViewTheme.m */; };
 		782B9C3B116CAD1300304B3C /* LogTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 782B9C3A116CAD1300304B3C /* LogTheme.m */; };
@@ -184,6 +185,8 @@
 		780ADD41116F9B41004FF298 /* ChannelDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChannelDialog.m; sourceTree = "<group>"; };
 		7823C3351172FD7E009D9038 /* GrowlController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GrowlController.h; sourceTree = "<group>"; };
 		7823C3361172FD7E009D9038 /* GrowlController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GrowlController.m; sourceTree = "<group>"; };
+		7823C7B01173522A009D9038 /* TimerCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimerCommand.h; sourceTree = "<group>"; };
+		7823C7B11173522A009D9038 /* TimerCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimerCommand.m; sourceTree = "<group>"; };
 		78287EA90D742DAA008D5656 /* Themes */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Themes; path = resource/Themes; sourceTree = "<group>"; };
 		782B99C7116C91AB00304B3C /* ViewTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewTheme.h; sourceTree = "<group>"; };
 		782B99C8116C91AB00304B3C /* ViewTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewTheme.m; sourceTree = "<group>"; };
@@ -814,6 +817,8 @@
 				78BC0C5A1168E5D900A984AA /* IRCSendingMessage.h */,
 				78BC0C5B1168E5D900A984AA /* IRCSendingMessage.m */,
 				78BC0C531168E5D900A984AA /* IRC.h */,
+				7823C7B01173522A009D9038 /* TimerCommand.h */,
+				7823C7B11173522A009D9038 /* TimerCommand.m */,
 			);
 			name = IRC;
 			path = objc/IRC;
@@ -1024,6 +1029,7 @@
 				7883FF8D1172486B00CE7F7A /* DCCReceiver.m in Sources */,
 				78CDBCCB11727BC700DDEF1C /* TCPServer.m in Sources */,
 				7823C3371172FD7E009D9038 /* GrowlController.m in Sources */,
+				7823C7B21173522A009D9038 /* TimerCommand.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

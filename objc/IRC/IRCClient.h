@@ -64,6 +64,9 @@ typedef enum {
 	Timer* reconnectTimer;
 	Timer* retryTimer;
 	
+	Timer* commandQueueTimer;
+	NSMutableArray* commandQueue;
+	
 	IRCChannel* lastSelectedChannel;
 	
 	NSMutableArray* whoisDialogs;

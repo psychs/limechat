@@ -11,6 +11,7 @@
 #import "WhoisDialog.h"
 #import "Regex.h"
 #import "SoundPlayer.h"
+#import "TimerCommand.h"
 
 
 #define MAX_JOIN_CHANNELS	10
@@ -26,6 +27,9 @@ static NSDateFormatter* dateTimeFormater = nil;
 
 
 @interface IRCClient (Private)
+- (void)addCommandToCommandQueue:(TimerCommand*)m;
+- (void)clearCommandQueue;
+
 - (void)sendLine:(NSString*)str;
 - (void)send:(NSString*)str, ...;
 
@@ -127,6 +131,14 @@ static NSDateFormatter* dateTimeFormater = nil;
 		retryTimer.delegate = self;
 		retryTimer.reqeat = NO;
 		retryTimer.selector = @selector(onRetryTimer:);
+		
+		commandQueueTimer = [Timer new];
+		commandQueueTimer.delegate = self;
+		commandQueueTimer.reqeat = NO;
+		commandQueueTimer.selector = @selector(onCommandQueueTimer:);
+		
+		commandQueue = [NSMutableArray new];
+
 	}
 	return self;
 }
@@ -154,6 +166,9 @@ static NSDateFormatter* dateTimeFormater = nil;
 	[quitTimer release];
 	[reconnectTimer release];
 	[retryTimer release];
+	
+	[commandQueueTimer release];
+	[commandQueue release];
 	
 	[lastSelectedChannel release];
 	[whoisDialogs release];
@@ -990,6 +1005,18 @@ static NSDateFormatter* dateTimeFormater = nil;
 		return YES;
 	}
 	else if ([cmd isEqualToString:TIMER]) {
+		int interval = [[s getToken] intValue];
+		if (interval > 0) {
+			TimerCommand* cmd = [[TimerCommand new] autorelease];
+			cmd.input = s;
+			cmd.time = CFAbsoluteTimeGetCurrent() + interval;
+			cmd.cid = c ? c.uid : -1;
+			[self addCommandToCommandQueue:cmd];
+		}
+		else {
+			[self printBoth:nil type:LINE_TYPE_ERROR_REPLY text:@"timer command needs interval as a number"];
+		}
+		return YES;
 	}
 	else if ([cmd isEqualToString:REJOIN] || [cmd isEqualToString:HOP] || [cmd isEqualToString:CYCLE]) {
 		if (c) {
@@ -1305,6 +1332,8 @@ static NSDateFormatter* dateTimeFormater = nil;
 		if (cutColon) {
 			[s insertString:@":" atIndex:0];
 		}
+		[s insertString:@" " atIndex:0];
+		[s insertString:cmd atIndex:0];
 		[self sendLine:s];
 	}
 	
@@ -1366,6 +1395,74 @@ static NSDateFormatter* dateTimeFormater = nil;
 		++i;
 	}
 	return -1;
+}
+
+#pragma mark -
+#pragma mark Command Queue
+
+- (void)processCommandsInCommandQueue
+{
+	CFAbsoluteTime now = CFAbsoluteTimeGetCurrent();
+	
+	while (commandQueue.count) {
+		TimerCommand* m = [commandQueue objectAtIndex:0];
+		if (m.time <= now) {
+			NSString* target = nil;
+			IRCChannel* c = [world findChannelByClientId:uid channelId:m.cid];
+			if (c) {
+				target = c.name;
+			}
+			
+			[self sendCommand:m.input completeTarget:YES target:target];
+			
+			[commandQueue removeObjectAtIndex:0];
+		}
+		else {
+			break;
+		}
+	}
+	
+	if (commandQueue.count) {
+		TimerCommand* m = [commandQueue objectAtIndex:0];
+		CFAbsoluteTime delta = m.time - CFAbsoluteTimeGetCurrent();
+		[commandQueueTimer start:delta];
+	}
+	else {
+		[commandQueueTimer stop];
+	}
+}
+
+- (void)addCommandToCommandQueue:(TimerCommand*)m
+{
+	BOOL added = NO;
+	int i = 0;
+	for (TimerCommand* c in commandQueue) {
+		if (m.time < c.time) {
+			added = YES;
+			[commandQueue insertObject:m atIndex:i];
+			break;
+		}
+		++i;
+	}
+	
+	if (!added) {
+		[commandQueue addObject:m];
+	}
+	
+	if (i == 0) {
+		[self processCommandsInCommandQueue];
+	}
+}
+
+- (void)clearCommandQueue
+{
+	[commandQueueTimer stop];
+	[commandQueue removeAllObjects];
+}
+
+- (void)onCommandQueueTimer:(id)sender
+{
+	[self processCommandsInCommandQueue];
 }
 
 #pragma mark -
@@ -3042,6 +3139,7 @@ static NSDateFormatter* dateTimeFormater = nil;
 	[conn autorelease];
 	conn = nil;
 	
+	[self clearCommandQueue];
 	[self stopQuitTimer];
 	[self stopRetryTimer];
 	

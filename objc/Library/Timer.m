@@ -30,7 +30,7 @@
 	return timer != nil;
 }
 
-- (void)start:(int)interval
+- (void)start:(NSTimeInterval)interval
 {
 	[self stop];
 	
