@@ -171,7 +171,9 @@
 
 - (void)savePosition
 {
-	bottom = [self viewingBottom];
+	if (loadingImages == 0) {
+		bottom = [self viewingBottom];
+	}
 }
 
 - (void)restorePosition
