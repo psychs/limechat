@@ -8,6 +8,7 @@ APP_SHORT_NAME = 'LimeChat'
 APP_NAME = APP_SHORT_NAME + '.app'
 ROOT_PATH = Pathname.new(__FILE__).dirname
 RELEASE_BUILD_PATH = ROOT_PATH + 'build/Release' + APP_NAME
+README_PATH = ROOT_PATH + 'README.txt'
 DOC_PATH = ROOT_PATH + 'doc'
 PACKAGES_PATH = ROOT_PATH + 'Packages'
 WEB_PATH = ROOT_PATH + 'web'
@@ -47,6 +48,8 @@ task :package_app do |t|
   RELEASE_BUILD_PATH.cptree(TMP_PATH)
   
   DOC_PATH.cptree(TMP_PATH)
+  README_PATH.cptree(TMP_PATH + 'doc')
+  
   rmglob(TMP_PATH + '**/.DS_Store')
   
   Dir.chdir(TMP_PATH) do
