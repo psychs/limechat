@@ -899,12 +899,26 @@ static NSDateFormatter* dateTimeFormatter = nil;
 
 - (void)sendCTCPQuery:(NSString*)target command:(NSString*)command text:(NSString*)text
 {
-	[self send:PRIVMSG, target, [NSString stringWithFormat:@"\x01%@ %@\x01", command, text], nil];
+	NSString* trail;
+	if (text.length) {
+		trail = [NSString stringWithFormat:@"\x01%@ %@\x01", command, text];
+	}
+	else {
+		trail = [NSString stringWithFormat:@"\x01%@\x01", command];
+	}
+	[self send:PRIVMSG, target, trail, nil];
 }
 
 - (void)sendCTCPReply:(NSString*)target command:(NSString*)command text:(NSString*)text
 {
-	[self send:NOTICE, target, [NSString stringWithFormat:@"\x01%@ %@\x01", command, text], nil];
+	NSString* trail;
+	if (text.length) {
+		trail = [NSString stringWithFormat:@"\x01%@ %@\x01", command, text];
+	}
+	else {
+		trail = [NSString stringWithFormat:@"\x01%@\x01", command];
+	}
+	[self send:NOTICE, target, trail, nil];
 }
 
 - (void)sendCTCPPing:(NSString*)target
@@ -2252,7 +2266,21 @@ static NSDateFormatter* dateTimeFormatter = nil;
 
 - (void)receiveCTCPReply:(IRCMessage*)m text:(NSString*)text
 {
-	LOG(@"CTCP Reply: %@", text);
+	NSString* nick = m.sender.nick;
+	NSMutableString* s = [[text mutableCopy] autorelease];
+	NSString* command = [[s getToken] uppercaseString];
+	
+	if ([command isEqualToString:PING]) {
+		double time = [s doubleValue];
+		double delta = CFAbsoluteTimeGetCurrent() - time;
+		
+		NSString* text = [NSString stringWithFormat:@"CTCP-reply %@ from %@ : %1.2f sec", command, nick, delta];
+		[self printBoth:nil type:LINE_TYPE_REPLY text:text];
+	}
+	else {
+		NSString* text = [NSString stringWithFormat:@"CTCP-reply %@ from %@ : %@", command, nick, s];
+		[self printBoth:nil type:LINE_TYPE_REPLY text:text];
+	}
 }
 
 - (void)receiveDCCSend:(IRCMessage*)m fileName:(NSString*)fileName address:(NSString*)address port:(int)port fileSize:(long long)size

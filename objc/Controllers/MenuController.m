@@ -1117,22 +1117,62 @@
 
 - (void)onMemberPing:(id)sender
 {
+	IRCClient* u = world.selectedClient;
+	if (!u) return;
+	
+	for (IRCUser* m in [self selectedMembers:sender]) {
+		[u sendCTCPPing:m.nick];
+	}
+	
+	[self deselectMembers:sender];
 }
 
 - (void)onMemberTime:(id)sender
 {
+	IRCClient* u = world.selectedClient;
+	if (!u) return;
+	
+	for (IRCUser* m in [self selectedMembers:sender]) {
+		[u sendCTCPQuery:m.nick command:TIME text:nil];
+	}
+	
+	[self deselectMembers:sender];
 }
 
 - (void)onMemberVersion:(id)sender
 {
+	IRCClient* u = world.selectedClient;
+	if (!u) return;
+	
+	for (IRCUser* m in [self selectedMembers:sender]) {
+		[u sendCTCPQuery:m.nick command:VERSION text:nil];
+	}
+	
+	[self deselectMembers:sender];
 }
 
 - (void)onMemberUserInfo:(id)sender
 {
+	IRCClient* u = world.selectedClient;
+	if (!u) return;
+	
+	for (IRCUser* m in [self selectedMembers:sender]) {
+		[u sendCTCPQuery:m.nick command:USERINFO text:nil];
+	}
+	
+	[self deselectMembers:sender];
 }
 
 - (void)onMemberClientInfo:(id)sender
 {
+	IRCClient* u = world.selectedClient;
+	if (!u) return;
+	
+	for (IRCUser* m in [self selectedMembers:sender]) {
+		[u sendCTCPQuery:m.nick command:CLIENTINFO text:nil];
+	}
+	
+	[self deselectMembers:sender];
 }
 
 - (void)onMemberAutoOp:(id)sender
