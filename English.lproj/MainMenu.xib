@@ -12,8 +12,9 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="57"/>
 			<integer value="233"/>
+			<integer value="287"/>
+			<integer value="327"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1294,6 +1295,7 @@
 								</object>
 								<object class="NSMenuItem" id="893665359">
 									<reference key="NSMenu" ref="100171152"/>
+									<bool key="NSIsHidden">YES</bool>
 									<string key="NSTitle">Channel List…</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSKeyEquivModMask">1048576</int>
@@ -1306,6 +1308,7 @@
 									<reference key="NSMenu" ref="100171152"/>
 									<bool key="NSIsDisabled">YES</bool>
 									<bool key="NSIsSeparator">YES</bool>
+									<bool key="NSIsHidden">YES</bool>
 									<string key="NSTitle"/>
 									<string key="NSKeyEquiv"/>
 									<int key="NSKeyEquivModMask">1048576</int>
@@ -1377,6 +1380,7 @@
 								</object>
 								<object class="NSMenuItem" id="30912625">
 									<reference key="NSMenu" ref="100171152"/>
+									<bool key="NSIsHidden">YES</bool>
 									<string key="NSTitle">Auto Op List…</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSKeyEquivModMask">1048576</int>
@@ -1506,6 +1510,7 @@
 								</object>
 								<object class="NSMenuItem" id="498377688">
 									<reference key="NSMenu" ref="676947198"/>
+									<bool key="NSIsHidden">YES</bool>
 									<string key="NSTitle">Auto Op List…</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSKeyEquivModMask">1048576</int>
@@ -1574,6 +1579,7 @@
 								</object>
 								<object class="NSMenuItem" id="502566836">
 									<reference key="NSMenu" ref="272041888"/>
+									<bool key="NSIsHidden">YES</bool>
 									<string key="NSTitle">Auto Op List…</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -1741,6 +1747,7 @@
 								</object>
 								<object class="NSMenuItem" id="619637991">
 									<reference key="NSMenu" ref="665390957"/>
+									<bool key="NSIsHidden">YES</bool>
 									<string key="NSTitle">Ban</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSKeyEquivModMask">1048576</int>
@@ -1751,6 +1758,7 @@
 								</object>
 								<object class="NSMenuItem" id="838859150">
 									<reference key="NSMenu" ref="665390957"/>
+									<bool key="NSIsHidden">YES</bool>
 									<string key="NSTitle">Kick &amp; Ban</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSKeyEquivModMask">1048576</int>
@@ -1870,6 +1878,7 @@
 						<reference key="NSMenu" ref="765356395"/>
 						<bool key="NSIsDisabled">YES</bool>
 						<bool key="NSIsSeparator">YES</bool>
+						<bool key="NSIsHidden">YES</bool>
 						<string key="NSTitle"/>
 						<string key="NSKeyEquiv"/>
 						<int key="NSKeyEquivModMask">1048576</int>
@@ -1879,6 +1888,7 @@
 					</object>
 					<object class="NSMenuItem" id="48266397">
 						<reference key="NSMenu" ref="765356395"/>
+						<bool key="NSIsHidden">YES</bool>
 						<string key="NSTitle">Register to Auto Op…</string>
 						<string key="NSKeyEquiv"/>
 						<int key="NSKeyEquivModMask">1048576</int>
@@ -4583,6 +4593,7 @@
 					<string>167.ImportedFromIB2</string>
 					<string>168.IBPluginDependency</string>
 					<string>168.ImportedFromIB2</string>
+					<string>169.IBEditorWindowLastContentRect</string>
 					<string>169.IBPluginDependency</string>
 					<string>169.ImportedFromIB2</string>
 					<string>171.IBPluginDependency</string>
@@ -4898,6 +4909,7 @@
 					<string>839.ImportedFromIB2</string>
 					<string>902.IBPluginDependency</string>
 					<string>902.ImportedFromIB2</string>
+					<string>903.IBEditorWindowLastContentRect</string>
 					<string>903.IBPluginDependency</string>
 					<string>903.ImportedFromIB2</string>
 					<string>906.IBPluginDependency</string>
@@ -4992,6 +5004,7 @@
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>{{385, 646}, {213, 303}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -5115,7 +5128,7 @@
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>{{0, 931}, {215, 203}}</string>
+					<string>{{503, 420}, {215, 203}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -5307,6 +5320,7 @@
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>{{718, 400}, {160, 113}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -7348,10 +7362,6 @@
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaFramework</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencies">
-			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>
-			<integer value="1050" key="NS.object.0"/>
-		</object>
-		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencyDefaults">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>
 			<integer value="1050" key="NS.object.0"/>
 		</object>
