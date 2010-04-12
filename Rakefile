@@ -2,10 +2,9 @@ require 'pathname'
 require 'fileutils'
 require 'time'
 require 'erb'
-require 'rake/testtask'
 require 'pp'
 
-APP_SHORT_NAME = defined?(MACRUBY_VERSION) ? 'MRLimeChat' : 'LimeChat'
+APP_SHORT_NAME = 'LimeChat'
 APP_NAME = APP_SHORT_NAME + '.app'
 ROOT_PATH = Pathname.new(__FILE__).dirname
 RELEASE_BUILD_PATH = ROOT_PATH + 'build/Release' + APP_NAME
@@ -13,7 +12,6 @@ DOC_PATH = ROOT_PATH + 'doc'
 PACKAGES_PATH = ROOT_PATH + 'Packages'
 WEB_PATH = ROOT_PATH + 'web'
 TEMPLATES_PATH = WEB_PATH + 'templates'
-CHANGELOGS_PATH = WEB_PATH + 'changelogs'
 APPCAST_TEMPLATE_PATH = TEMPLATES_PATH + 'appcast.rxml'
 APPCAST_PATH = WEB_PATH + 'limechat_appcast.xml'
 TMP_PATH = Pathname.new("/tmp/#{APP_SHORT_NAME}_build_image")
@@ -21,17 +19,14 @@ TMP_PATH = Pathname.new("/tmp/#{APP_SHORT_NAME}_build_image")
 
 task :default => :build
 
-
 task :clean do |t|
   sh "rm -rf build"
 end
-
 
 task :build do |t|
   sdk = "10.5"
   sh "xcodebuild -project #{APP_SHORT_NAME}.xcodeproj -target #{APP_SHORT_NAME} -configuration Release -sdk macosx#{sdk} build"
 end
-
 
 task :install => [:clean, :build] do |t|
   sh "killall #{APP_SHORT_NAME}" rescue nil
@@ -40,10 +35,8 @@ task :install => [:clean, :build] do |t|
   sh "open /Applications/#{APP_NAME}"
 end
 
-
-task :package => [:clean, :build, :package] do |t|
+task :package => [:clean, :build, :package_app] do |t|
 end
-
 
 task :package_app do |t|
   PACKAGES_PATH.mkpath
@@ -62,7 +55,6 @@ task :package_app do |t|
   
   TMP_PATH.rmtree
 end
-
 
 task :appcast do |t|
   package_fname = "#{APP_SHORT_NAME}_#{app_version}.tbz"
@@ -84,7 +76,6 @@ task :appcast do |t|
   
   sh "mate #{WEB_PATH}"
 end
-
 
 task :web do |t|
   rss_templates = ['rss.rxml', 'rss_ja.rxml']
@@ -134,11 +125,6 @@ task :web do |t|
 end
 
 
-Rake::TestTask.new do |t|
-  t.test_files = FileList['test/**/*_test.rb']
-end
-
-
 class CommitLog
   attr_accessor :hash, :merge, :author, :date
   attr_reader :lines
@@ -173,7 +159,6 @@ class CommitLog
     "<CommitLog #{hash[0...6]} #{author} #{date}>"
   end
 end
-
 
 def parse_commit_log
   updates = []
@@ -223,10 +208,9 @@ def parse_commit_log
   updates.map {|e| e.one_line }
 end
 
-
 module Util
   def app_version
-    file = ROOT_PATH + 'Info.plist'
+    file = ROOT_PATH + 'Others/Info.plist'
     file.open do |f|
       next_line = false
       while s = f.gets
