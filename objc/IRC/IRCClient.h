@@ -100,6 +100,7 @@ typedef enum {
 - (void)connect:(ConnectMode)mode;
 - (void)disconnect;
 - (void)quit;
+- (void)quit:(NSString*)comment;
 - (void)cancelReconnect;
 
 - (void)changeNick:(NSString*)newNick;

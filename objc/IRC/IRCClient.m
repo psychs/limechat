@@ -460,6 +460,11 @@ static NSDateFormatter* dateTimeFormater = nil;
 
 - (void)quit
 {
+	[self quit:nil];
+}
+
+- (void)quit:(NSString*)comment
+{
 	if (!isLoggedIn) {
 		[self disconnect];
 		return;
@@ -468,13 +473,14 @@ static NSDateFormatter* dateTimeFormater = nil;
 	isQuitting = YES;
 	reconnectEnabled = NO;
 	[conn clearSendQueue];
-	[self send:QUIT, config.leavingComment, nil];
+	[self send:QUIT, comment ?: config.leavingComment, nil];
 	
 	[self startQuitTimer];
 }
 
 - (void)cancelReconnect
 {
+	[self stopReconnectTimer];
 }
 
 - (void)changeNick:(NSString*)newNick
@@ -877,6 +883,21 @@ static NSDateFormatter* dateTimeFormater = nil;
 	}
 }
 
+- (void)sendCTCPQuery:(NSString*)target text:(NSString*)text
+{
+	[self send:PRIVMSG, target, [NSString stringWithFormat:@"\x01%@\x01", text], nil];
+}
+
+- (void)sendCTCPReply:(NSString*)target text:(NSString*)text
+{
+	[self send:NOTICE, target, [NSString stringWithFormat:@"\x01%@\x01", text], nil];
+}
+
+- (void)sendCTCPPing:(NSString*)target
+{
+	[self sendCTCPQuery:target text:[NSString stringWithFormat:@"%f", CFAbsoluteTimeGetCurrent()]];
+}
+
 - (NSString*)expandVariables:(NSString*)s
 {
 	return [s stringByReplacingOccurrencesOfString:@"$nick" withString:myNick];
@@ -1226,26 +1247,61 @@ static NSDateFormatter* dateTimeFormater = nil;
 		}
 	}
 	else if ([cmd isEqualToString:CTCP]) {
+		NSString* subCommand = [[s getToken] uppercaseString];
+		if (subCommand.length) {
+			targetChannelName = [s getToken];
+			if ([subCommand isEqualToString:PING]) {
+				[self sendCTCPPing:targetChannelName];
+			}
+			else {
+				[self sendCTCPQuery:targetChannelName text:[NSString stringWithFormat:@"%@ %@", subCommand, s]];
+			}
+		}
 	}
 	else if ([cmd isEqualToString:CTCPREPLY]) {
+		targetChannelName = [s getToken];
+		[self sendCTCPReply:targetChannelName text:s];
 	}
 	else if ([cmd isEqualToString:QUIT]) {
+		[self quit:s];
 	}
 	else if ([cmd isEqualToString:NICK]) {
+		[self changeNick:[s getToken]];
 	}
 	else if ([cmd isEqualToString:TOPIC]) {
+		if (!s.length && !cutColon) {
+			[self send:TOPIC, targetChannelName, nil];
+		}
+		else {
+			[self send:TOPIC, targetChannelName, s, nil];
+		}
 	}
 	else if ([cmd isEqualToString:PART]) {
+		[self send:PART, targetChannelName, s, nil];
 	}
 	else if ([cmd isEqualToString:KICK]) {
+		NSString* peer = [s getToken];
+		[self send:KICK, targetChannelName, peer, s, nil];
 	}
 	else if ([cmd isEqualToString:AWAY]) {
+		[self send:AWAY, s, nil];
 	}
 	else if ([cmd isEqualToString:JOIN] || [cmd isEqualToString:MODE] || [cmd isEqualToString:INVITE]) {
+		[self send:cmd, targetChannelName, s, nil];
 	}
 	else if ([cmd isEqualToString:WHOIS]) {
+		if ([s contains:@" "]) {
+			[self send:WHOIS, s, nil];
+		}
+		else {
+			[self send:WHOIS, [NSString stringWithFormat:@"%@ %@", s, s], nil];
+		}
 	}
 	else {
+		if (cutColon) {
+			[s insertString:@":" atIndex:0];
+		}
+		[self sendLine:s];
 	}
 	
 	return YES;
