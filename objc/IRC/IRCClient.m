@@ -165,10 +165,13 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	[joinMyAddress release];
 	[myAddress release];
 	
+	[quitTimer stop];
 	[quitTimer release];
+	[reconnectTimer stop];
 	[reconnectTimer release];
+	[retryTimer stop];
 	[retryTimer release];
-	
+	[commandQueueTimer stop];
 	[commandQueueTimer release];
 	[commandQueue release];
 	

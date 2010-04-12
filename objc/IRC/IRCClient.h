@@ -64,7 +64,6 @@ typedef enum {
 	Timer* quitTimer;
 	Timer* reconnectTimer;
 	Timer* retryTimer;
-	
 	Timer* commandQueueTimer;
 	NSMutableArray* commandQueue;
 	

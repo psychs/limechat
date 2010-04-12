@@ -48,6 +48,9 @@
 {
 	[receivers release];
 	[senders release];
+	
+	[timer stop];
+	[timer release];
 	[super dealloc];
 }
 
