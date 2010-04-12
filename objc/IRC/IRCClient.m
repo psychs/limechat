@@ -30,12 +30,6 @@ static NSDateFormatter* dateTimeFormatter = nil;
 
 
 @interface IRCClient (Private)
-- (void)addCommandToCommandQueue:(TimerCommand*)m;
-- (void)clearCommandQueue;
-
-- (void)sendLine:(NSString*)str;
-- (void)send:(NSString*)str, ...;
-
 - (void)setKeywordState:(id)target;
 - (void)setNewTalkState:(id)target;
 - (void)setUnreadState:(id)target;
@@ -84,6 +78,11 @@ static NSDateFormatter* dateTimeFormatter = nil;
 
 - (WhoisDialog*)createWhoisDialogWithNick:(NSString*)nick username:(NSString*)username address:(NSString*)address realname:(NSString*)realname;
 - (WhoisDialog*)findWhoisDialog:(NSString*)nick;
+
+- (void)checkRejoin:(IRCChannel*)c;
+
+- (void)addCommandToCommandQueue:(TimerCommand*)m;
+- (void)clearCommandQueue;
 @end
 
 
@@ -718,6 +717,24 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	if (ary.count > 0) {
 		[self quickJoin:ary];
 	}
+}
+
+- (void)checkRejoin:(IRCChannel*)c
+{
+	if (![Preferences autoRejoin]) return;
+	if (myMode.r) return;
+	if (!c || !c.isChannel || c.isOp || [c numberOfMembers] > 1 || c.mode.a) return;
+	if (![c.name isModeChannelName]) return;
+	
+	NSString* pass = c.mode.k;
+	if (!pass.length) pass = nil;
+	
+	NSString* topic = c.topic;
+	if (!topic.length) topic = nil;
+	
+	[self partChannel:c];
+	c.storedTopic = topic;
+	[self joinChannel:c password:pass];
 }
 
 #pragma mark -
@@ -2424,7 +2441,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		}
 		[c removeMember:nick];
 		[self updateChannelTitle:c];
-		// @@@ check rejoin
+		[self checkRejoin:c];
 	}
 	
 	if ([Preferences showJoinLeave]) {
@@ -2458,7 +2475,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		
 		[c removeMember:target];
 		[self updateChannelTitle:c];
-		// @@@ check rejoin
+		[self checkRejoin:c];
 	}
 	
 	NSString* text = [NSString stringWithFormat:@"%@ has kicked %@ (%@)", nick, target, comment];
@@ -2479,7 +2496,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			}
 			[c removeMember:nick];
 			[self updateChannelTitle:c];
-			// @@@ check rejoin
+			[self checkRejoin:c];
 		}
 	}
 	
@@ -2504,7 +2521,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			[self printChannel:c type:LINE_TYPE_KILL text:text];
 			[c removeMember:target];
 			[self updateChannelTitle:c];
-			// @@@ check rejoin
+			[self checkRejoin:c];
 		}
 	}
 	
