@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		78287EB70D742DBD008D5656 /* Themes in CopyFiles */ = {isa = PBXBuildFile; fileRef = 78287EA90D742DAA008D5656 /* Themes */; };
+		782FCF891173824C007BE697 /* LimeChatApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 782FCF881173824C007BE697 /* LimeChatApplication.m */; };
 		78347ED31158D4B00073E2F0 /* AutoOpDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78347EB91158D4B00073E2F0 /* AutoOpDialog.xib */; };
 		78347ED41158D4B00073E2F0 /* ChannelDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78347EBB1158D4B00073E2F0 /* ChannelDialog.xib */; };
 		78347ED51158D4B00073E2F0 /* TopicSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78347EBD1158D4B00073E2F0 /* TopicSheet.xib */; };
@@ -21,7 +22,6 @@
 		78347EDD1158D4B00073E2F0 /* ServerDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78347ECD1158D4B00073E2F0 /* ServerDialog.xib */; };
 		78347EDE1158D4B00073E2F0 /* WelcomeDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78347ECF1158D4B00073E2F0 /* WelcomeDialog.xib */; };
 		78347EDF1158D4B00073E2F0 /* WhoisDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78347ED11158D4B00073E2F0 /* WhoisDialog.xib */; };
-		783E6ADA1173802100261552 /* LimeChatApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 783E6AD81173802100261552 /* LimeChatApplication.m */; };
 		783E6ADB1173802100261552 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 783E6AD91173802100261552 /* main.m */; };
 		784BBE941085BC950080898B /* bluestar.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 784BBE901085BC950080898B /* bluestar.tiff */; };
 		784BBE951085BC950080898B /* keyrecorder_erase.png in Resources */ = {isa = PBXBuildFile; fileRef = 784BBE911085BC950080898B /* keyrecorder_erase.png */; };
@@ -175,6 +175,8 @@
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		780253C20C09525900C170D4 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
 		78287EA90D742DAA008D5656 /* Themes */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Themes; path = Resources/Themes; sourceTree = "<group>"; };
+		782FCF871173824C007BE697 /* LimeChatApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LimeChatApplication.h; sourceTree = "<group>"; };
+		782FCF881173824C007BE697 /* LimeChatApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LimeChatApplication.m; sourceTree = "<group>"; };
 		78347EBA1158D4B00073E2F0 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/AutoOpDialog.xib; sourceTree = "<group>"; };
 		78347EBC1158D4B00073E2F0 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/ChannelDialog.xib; sourceTree = "<group>"; };
 		78347EBE1158D4B00073E2F0 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/TopicSheet.xib; sourceTree = "<group>"; };
@@ -189,8 +191,6 @@
 		78347ED01158D4B00073E2F0 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/WelcomeDialog.xib; sourceTree = "<group>"; };
 		78347ED21158D4B00073E2F0 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/WhoisDialog.xib; sourceTree = "<group>"; };
 		783E6AD61173802100261552 /* LimeChat_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LimeChat_Prefix.pch; sourceTree = "<group>"; };
-		783E6AD71173802100261552 /* LimeChatApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LimeChatApplication.h; sourceTree = "<group>"; };
-		783E6AD81173802100261552 /* LimeChatApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LimeChatApplication.m; sourceTree = "<group>"; };
 		783E6AD91173802100261552 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		784BBE901085BC950080898B /* bluestar.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = bluestar.tiff; sourceTree = "<group>"; };
 		784BBE911085BC950080898B /* keyrecorder_erase.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = keyrecorder_erase.png; sourceTree = "<group>"; };
@@ -513,8 +513,6 @@
 			isa = PBXGroup;
 			children = (
 				783E6AD61173802100261552 /* LimeChat_Prefix.pch */,
-				783E6AD71173802100261552 /* LimeChatApplication.h */,
-				783E6AD81173802100261552 /* LimeChatApplication.m */,
 				783E6AD91173802100261552 /* main.m */,
 			);
 			path = Others;
@@ -544,6 +542,8 @@
 				78A8C0C711737F660044E7A1 /* MenuController.m */,
 				78A8C0C811737F660044E7A1 /* NickCompletinStatus.h */,
 				78A8C0C911737F660044E7A1 /* NickCompletinStatus.m */,
+				782FCF871173824C007BE697 /* LimeChatApplication.h */,
+				782FCF881173824C007BE697 /* LimeChatApplication.m */,
 			);
 			name = Controllers;
 			path = Classes/Controllers;
@@ -1041,8 +1041,8 @@
 				78A8C21011737F660044E7A1 /* TextFieldWithDisabledState.m in Sources */,
 				78A8C21111737F660044E7A1 /* ThinSplitView.m in Sources */,
 				78A8C21211737F660044E7A1 /* TreeView.m in Sources */,
-				783E6ADA1173802100261552 /* LimeChatApplication.m in Sources */,
 				783E6ADB1173802100261552 /* main.m in Sources */,
+				782FCF891173824C007BE697 /* LimeChatApplication.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
