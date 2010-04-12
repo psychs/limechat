@@ -731,9 +731,73 @@ static NSDateFormatter* dateTimeFormater = nil;
 	return YES;
 }
 
-- (void)sendText:(NSString*)s command:(NSString*)command channel:(IRCChannel*)channel
+- (NSString*)truncateText:(NSMutableString*)str command:(NSString*)command channelName:(NSString*)chname
 {
-	if (!s.length) return;
+	int max = IRC_BODY_LEN;
+	
+	if (chname) {
+		max -= [conn convertToCommonEncoding:chname].length;
+	}
+	
+	if (myNick.length) {
+		max -= myNick.length;
+	}
+	else {
+		max -= isupport.nickLen;
+	}
+	
+	max -= config.username.length;
+	
+	if (joinMyAddress) {
+		max -= joinMyAddress.length;
+	}
+	else {
+		max -= IRC_ADDRESS_LEN;
+	}
+	
+	if ([command isEqualToString:NOTICE]) {
+		max -= 18;
+	}
+	else if ([command isEqualToString:ACTION]) {
+		max -= 28;
+	}
+	else {
+		max -= 19;
+	}
+	
+	if (max <= 0) {
+		return nil;
+	}
+	
+	NSString* s = str;
+	if (s.length > max) {
+		s = [s substringToIndex:max];
+	}
+	else {
+		s = [[s copy] autorelease];
+	}
+	
+	while (1) {
+		int len = [conn convertToCommonEncoding:s].length;
+		int delta = len - max;
+		if (delta <= 0) break;
+		
+		// for faster convergence
+		if (delta < 5) {
+			s = [s substringToIndex:s.length - 1];
+		}
+		else {
+			s = [s substringToIndex:s.length - (delta / 3)];
+		}
+	}
+	
+	[str deleteCharactersInRange:NSMakeRange(0, s.length)];
+	return s;
+}
+
+- (void)sendText:(NSString*)str command:(NSString*)command channel:(IRCChannel*)channel
+{
+	if (!str.length) return;
 	
 	LogLineType type;
 	if ([command isEqualToString:NOTICE]) {
@@ -745,44 +809,59 @@ static NSDateFormatter* dateTimeFormater = nil;
 	else {
 		type = LINE_TYPE_PRIVMSG;
 	}
-	[self printBoth:channel type:type nick:myNick text:s identified:YES];
 	
-	if (type == LINE_TYPE_ACTION) {
-		s = [NSString stringWithFormat:@"\x01%@ %@\x01", ACTION, s];
-	}
-	[self send:command, channel.name, s, nil];
-	
-	if ([command isEqualToString:PRIVMSG]) {
-		NSString* recipientNick = nil;
+	NSArray* lines = [str splitIntoLines];
+	for (NSString* line in lines) {
+		if (!line.length) continue;
 		
-		static Regex* headPattern = nil;
-		static Regex* tailPattern = nil;
-		static Regex* twitterPattern = nil;
+		NSMutableString* s = [[line mutableCopy] autorelease];
 		
-		if (!headPattern) {
-			headPattern = [[Regex alloc] initWithString:@"^([^\\s:]+):\\s"];
-		}
-		if (!tailPattern) {
-			tailPattern = [[Regex alloc] initWithString:@"[>＞]\\s?([^\\s]+)$"];
-		}
-		if (!twitterPattern) {
-			twitterPattern = [[Regex alloc] initWithString:@"^@([0-9a-zA-Z_]+)\\s"];
+		while (s.length > 0) {
+			NSString* t = [self truncateText:s command:command channelName:channel.name];
+			if (!t.length) break;
+			
+			[self printBoth:channel type:type nick:myNick text:t identified:YES];
+			
+			NSString* cmd = command;
+			if (type == LINE_TYPE_ACTION) {
+				cmd = PRIVMSG;
+				t = [NSString stringWithFormat:@"\x01%@ %@\x01", ACTION, t];
+			}
+			[self send:cmd, channel.name, t, nil];
 		}
 		
-		if ([headPattern match:s].location != NSNotFound) {
-			recipientNick = [s substringWithRange:[headPattern groupAt:1]];
-		}
-		else if ([tailPattern match:s].location != NSNotFound) {
-			recipientNick = [s substringWithRange:[tailPattern groupAt:1]];
-		}
-		else if ([twitterPattern match:s].location != NSNotFound) {
-			recipientNick = [s substringWithRange:[twitterPattern groupAt:1]];
-		}
-		
-		if (recipientNick) {
-			IRCUser* recipient = [channel findMember:recipientNick];
-			if (recipient) {
-				[recipient incomingConversation];
+		if ([command isEqualToString:PRIVMSG]) {
+			NSString* recipientNick = nil;
+			
+			static Regex* headPattern = nil;
+			static Regex* tailPattern = nil;
+			static Regex* twitterPattern = nil;
+			
+			if (!headPattern) {
+				headPattern = [[Regex alloc] initWithString:@"^([^\\s:]+):\\s"];
+			}
+			if (!tailPattern) {
+				tailPattern = [[Regex alloc] initWithString:@"[>＞]\\s?([^\\s]+)$"];
+			}
+			if (!twitterPattern) {
+				twitterPattern = [[Regex alloc] initWithString:@"^@([0-9a-zA-Z_]+)\\s"];
+			}
+			
+			if ([headPattern match:line].location != NSNotFound) {
+				recipientNick = [line substringWithRange:[headPattern groupAt:1]];
+			}
+			else if ([tailPattern match:line].location != NSNotFound) {
+				recipientNick = [line substringWithRange:[tailPattern groupAt:1]];
+			}
+			else if ([twitterPattern match:line].location != NSNotFound) {
+				recipientNick = [line substringWithRange:[twitterPattern groupAt:1]];
+			}
+			
+			if (recipientNick) {
+				IRCUser* recipient = [channel findMember:recipientNick];
+				if (recipient) {
+					[recipient incomingConversation];
+				}
 			}
 		}
 	}

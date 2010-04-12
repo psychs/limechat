@@ -53,10 +53,10 @@
 
 - (void)open;
 - (void)close;
-
 - (void)clearSendQueue;
-
 - (void)sendLine:(NSString*)line;
+
+- (NSData*)convertToCommonEncoding:(NSString*)s;
 
 @end
 

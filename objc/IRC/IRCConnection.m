@@ -123,6 +123,18 @@
 	[self updateTimer];
 }
 
+- (NSData*)convertToCommonEncoding:(NSString*)s
+{
+	NSData* data = [s dataUsingEncoding:encoding];
+	if (!data) {
+		data = [s dataUsingEncoding:encoding allowLossyConversion:YES];
+		if (!data) {
+			data = [s dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+		}
+	}
+	return data;
+}
+
 - (void)tryToSend
 {
 	if ([sendQueue count] == 0) return;
@@ -133,13 +145,7 @@
 	s = [s stringByAppendingString:@"\r\n"];
 	[sendQueue removeObjectAtIndex:0];
 	
-	NSData* data = [s dataUsingEncoding:encoding];
-	if (!data) {
-		data = [s dataUsingEncoding:encoding allowLossyConversion:YES];
-		if (!data) {
-			data = [s dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-		}
-	}
+	NSData* data = [self convertToCommonEncoding:s];
 	
 	if (data) {
 		sending = YES;

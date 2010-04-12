@@ -44,3 +44,5 @@
 #define SEND		@"SEND"
 
 #define IRC_PENALTY_NORMAL	2
+#define IRC_BODY_LEN		500
+#define IRC_ADDRESS_LEN		50
