@@ -24,7 +24,9 @@
 {
 	[self init];
 	
-	for (NSDictionary* e in [dic arrayForKey:@"clients"]) {
+	NSArray* ary = [dic arrayForKey:@"clients"] ?: [dic arrayForKey:@"units"];
+	
+	for (NSDictionary* e in ary) {
 		IRCClientConfig* c = [[[IRCClientConfig alloc] initWithDictionary:e] autorelease];
 		[clients addObject:c];
 	}

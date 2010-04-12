@@ -33,7 +33,7 @@
 		
 		name = @"";
 		password = @"";
-		mode = @"";
+		mode = @"+sn";
 		topic = @"";
 	}
 	return self;
@@ -45,15 +45,15 @@
 	
 	type = [dic intForKey:@"type"];
 	
-	name = [[dic stringForKey:@"name"] retain];
-	password = [[dic stringForKey:@"password"] retain];
+	name = [[dic stringForKey:@"name"] retain] ?: @"";
+	password = [[dic stringForKey:@"password"] retain] ?: @"";
 	
 	autoJoin = [dic boolForKey:@"auto_join"];
 	logToConsole = [dic boolForKey:@"console"];
 	growl = [dic boolForKey:@"growl"];
 
-	mode = [[dic stringForKey:@"mode"] retain];
-	topic = [[dic stringForKey:@"topic"] retain];
+	mode = [[dic stringForKey:@"mode"] retain] ?: @"";
+	topic = [[dic stringForKey:@"topic"] retain] ?: @"";
 
 	[autoOp addObjectsFromArray:[dic arrayForKey:@"autoop"]];
 	

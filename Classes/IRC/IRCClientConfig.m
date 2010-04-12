@@ -93,13 +93,13 @@
 	
 	proxyType = [dic intForKey:@"proxy"];
 	proxyHost = [[dic stringForKey:@"proxy_host"] retain] ?: @"";
-	proxyPort = [dic intForKey:@"proxy_port"];
+	proxyPort = [dic intForKey:@"proxy_port"] ?: 1080;
 	proxyUser = [[dic stringForKey:@"proxy_user"] retain] ?: @"";
 	proxyPassword = [[dic stringForKey:@"proxy_password"] retain] ?: @"";
 
 	autoConnect = [dic boolForKey:@"auto_connect"];
-	encoding = [dic intForKey:@"encoding"];
-	fallbackEncoding = [dic intForKey:@"fallback_encoding"];
+	encoding = [dic intForKey:@"encoding"] ?: NSUTF8StringEncoding;
+	fallbackEncoding = [dic intForKey:@"fallback_encoding"] ?: NSISOLatin1StringEncoding;
 	leavingComment = [[dic stringForKey:@"leaving_comment"] retain] ?: @"";
 	userInfo = [[dic stringForKey:@"userinfo"] retain] ?: @"";
 	invisibleMode = [dic boolForKey:@"invisible"];

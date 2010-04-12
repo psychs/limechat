@@ -1024,7 +1024,13 @@ typedef enum {
 	
 	NSMutableArray* channels = [NSMutableArray array];
 	for (NSString* s in [config objectForKey:@"channels"]) {
-		[channels addObject:[NSDictionary dictionaryWithObject:s forKey:@"name"]];
+		[channels addObject:[NSDictionary dictionaryWithObjectsAndKeys:
+							 s, @"name",
+							 [NSNumber numberWithBool:YES], @"auto_join",
+							 [NSNumber numberWithBool:YES], @"console",
+							 [NSNumber numberWithBool:YES], @"growl",
+							 @"+sn", @"mode",
+							 nil]];
 	}
 	
 	NSMutableDictionary* dic = [NSMutableDictionary dictionary];
@@ -1044,6 +1050,9 @@ typedef enum {
 			|| [net contains:@"mozilla"]
 			|| [net contains:@"ustream"]) {
 			[dic setObject:[NSNumber numberWithLong:NSUTF8StringEncoding] forKey:@"encoding"];
+		}
+		else {
+			[dic setObject:[NSNumber numberWithLong:NSISO2022JPStringEncoding] forKey:@"encoding"];
 		}
 	}
 	
