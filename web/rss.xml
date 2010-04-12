@@ -7,13 +7,16 @@
     <language>en-us</language>
 
     <item>
-      <title>2.0</title>
-      <link>http://limechat.net/mac/#v2.0</link>
-      <pubDate>Tue, 13 Apr 2010 03:46:39 +0900</pubDate>
+      <title>2.1</title>
+      <link>http://limechat.net/mac/#v2.1</link>
+      <pubDate>Tue, 13 Apr 2010 06:51:17 +0900</pubDate>
       <content:encoded><![CDATA[
   			<ul>
-          <li>Rewrote in pure Objective-C to avoid the RubyCocoa's crashing bugs.</li>
-          <li>Auto op is temporarily disabled for a while.</li>
+          <li>Fixed a crashing bug when pushed page down key.</li>
+          <li>Fixed bugs in sending and rendering action messages.</li>
+          <li>Fixed auto scroll problem with inline image.</li>
+          <li>Fixed a bug in word wrap.</li>
+          <li>Fixed minor bugs around theme support.</li>
         </ul>
       ]]></content:encoded>
     </item>

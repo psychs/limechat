@@ -7,7 +7,7 @@
     <language>en</language>
     
     <item>
-      <title>LimeChat 2.0</title>
+      <title>LimeChat 2.1</title>
       <description><![CDATA[
         <html>
         <body>
@@ -22,18 +22,21 @@
             margin: 0.2em 0;
           }
         </style>
-        <h1>LimeChat 2.0</h1>
+        <h1>LimeChat 2.1</h1>
         <ul>
-          <li>Rewrote in pure Objective-C to avoid the RubyCocoa's crashing bugs.</li>
-          <li>Auto op is temporarily disabled for a while.</li>
+          <li>Fixed a crashing bug when pushed page down key.</li>
+          <li>Fixed bugs in sending and rendering action messages.</li>
+          <li>Fixed auto scroll problem with inline image.</li>
+          <li>Fixed a bug in word wrap.</li>
+          <li>Fixed minor bugs around theme support.</li>
         </ul>
         </body>
         </html>
       ]]></description>
-      <pubDate>Tue, 13 Apr 2010 03:46:39 +0900</pubDate>
-      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/LimeChat_2.0.tbz"
-                  sparkle:version="2.0" length="826124" type="application/octet-stream"
-                  sparkle:dsaSignature="MCwCFBc8DbGluUJGq2HzZIalDfTlqsSMAhQKCik2eZLo9ke+zWJcGfwf1YMZPA=="/>
+      <pubDate>Tue, 13 Apr 2010 06:51:17 +0900</pubDate>
+      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/LimeChat_2.1.tbz"
+                  sparkle:version="2.1" length="826064" type="application/octet-stream"
+                  sparkle:dsaSignature="MC0CFB9hsrc5RVa4fCsqqjbjvEu68ldMAhUAirwk3OthGjdPoI+Lt+vcYwoSWZc="/>
     </item>
     
   </channel>
