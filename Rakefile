@@ -82,7 +82,7 @@ end
 
 task :web do |t|
   rss_templates = ['rss.rxml', 'rss_ja.rxml']
-  html_templates = ['index.rhtml', 'ja.rhtml']
+  html_templates = []
   
   change_log = ''
   version = ''
