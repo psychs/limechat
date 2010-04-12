@@ -7,16 +7,13 @@
     <language>ja</language>
 
     <item>
-      <title>2.1</title>
-      <link>http://limechat.net/mac/ja.html#v2.1</link>
-      <pubDate>Tue, 13 Apr 2010 06:51:17 +0900</pubDate>
+      <title>2.2</title>
+      <link>http://limechat.net/mac/ja.html#v2.2</link>
+      <pubDate>Tue, 13 Apr 2010 08:30:19 +0900</pubDate>
       <content:encoded><![CDATA[
   			<ul>
-          <li>Page down キーを押したときにクラッシュするバグをfixした。</li>
-          <li>Action メッセージを送信できなかったバグをfixした。</li>
-          <li>インラインイメージを表示するときに、自動スクロールがうまく働かないバグをfixした。</li>
-          <li>ワードラップがおかしかったのを直した。</li>
-          <li>テーマに関係するバグをfixした。</li>
+          <li>Override font size が反映されなかったバグをfixした。</li>
+          <li>Leopard でのみ URL の認識がおかしくなるバグをfixした。</li>
         </ul>
       ]]></content:encoded>
     </item>
