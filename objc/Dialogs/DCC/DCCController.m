@@ -243,7 +243,7 @@
 	return NO;
 }
 
-- (void)onClear:(id)sender
+- (void)clear:(id)sender
 {
 	LOG_METHOD
 }

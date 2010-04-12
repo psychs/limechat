@@ -13,8 +13,8 @@
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<integer value="34"/>
-			<integer value="9"/>
 			<integer value="43"/>
+			<integer value="6"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -574,14 +574,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">onClear:</string>
-						<reference key="source" ref="538647802"/>
-						<reference key="destination" ref="660828638"/>
-					</object>
-					<int key="connectionID">62</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
 						<string key="label">openReceiver:</string>
 						<reference key="source" ref="538647802"/>
 						<reference key="destination" ref="530443852"/>
@@ -651,6 +643,14 @@
 						<reference key="destination" ref="810353428"/>
 					</object>
 					<int key="connectionID">111</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">clear:</string>
+						<reference key="source" ref="538647802"/>
+						<reference key="destination" ref="660828638"/>
+					</object>
+					<int key="connectionID">112</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -1063,7 +1063,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">111</int>
+			<int key="maxID">112</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1122,8 +1122,31 @@
 					<string key="className">DCCController</string>
 					<string key="superclassName">NSWindowController</string>
 					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">clear:</string>
-						<string key="NS.object.0">id</string>
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>clear:</string>
+							<string>deleteReceiver:</string>
+							<string>deleteSender:</string>
+							<string>openReceiver:</string>
+							<string>revealReceivedFileInFinder:</string>
+							<string>startReceiver:</string>
+							<string>startSender:</string>
+							<string>stopReceiver:</string>
+							<string>stopSender:</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+						</object>
 					</object>
 					<object class="NSMutableDictionary" key="outlets">
 						<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1147,6 +1170,30 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">objc/Dialogs/DCC/DCCController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">DCCReceiver</string>
+					<string key="superclassName">NSObject</string>
+					<object class="NSMutableDictionary" key="outlets">
+						<string key="NS.key.0">delegate</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="571482095">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">objc/Dialogs/DCC/DCCReceiver.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">DCCSender</string>
+					<string key="superclassName">NSObject</string>
+					<object class="NSMutableDictionary" key="outlets">
+						<string key="NS.key.0">delegate</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="237911521">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">objc/Dialogs/DCC/DCCSender.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -1291,6 +1338,50 @@
 						</object>
 					</object>
 					<reference key="sourceIdentifier" ref="196469793"/>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
+					<object class="NSMutableDictionary" key="actions">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>dccReceiveOnClose:</string>
+							<string>dccReceiveOnComplete:</string>
+							<string>dccReceiveOnError:</string>
+							<string>dccReceiveOnOpen:</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>DCCReceiver</string>
+							<string>DCCReceiver</string>
+							<string>DCCReceiver</string>
+							<string>DCCReceiver</string>
+						</object>
+					</object>
+					<reference key="sourceIdentifier" ref="571482095"/>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
+					<object class="NSMutableDictionary" key="actions">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>dccSenderOnClose:</string>
+							<string>dccSenderOnComplete:</string>
+							<string>dccSenderOnConnect:</string>
+							<string>dccSenderOnError:</string>
+							<string>dccSenderOnListen:</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>DCCSender</string>
+							<string>DCCSender</string>
+							<string>DCCSender</string>
+							<string>DCCSender</string>
+							<string>DCCSender</string>
+						</object>
+					</object>
+					<reference key="sourceIdentifier" ref="237911521"/>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSObject</string>
@@ -1464,6 +1555,13 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="68677121">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">objc/Library/TCPClient.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">objc/Library/TCPServer.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -2590,6 +2688,10 @@
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaFramework</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencies">
+			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>
+			<integer value="1050" key="NS.object.0"/>
+		</object>
+		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencyDefaults">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>
 			<integer value="1050" key="NS.object.0"/>
 		</object>
