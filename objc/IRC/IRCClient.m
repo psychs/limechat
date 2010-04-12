@@ -887,7 +887,7 @@ static NSDateFormatter* dateTimeFormater = nil;
 	return [self sendCommand:s completeTarget:YES target:nil];
 }
 
-- (BOOL)sendCommand:(NSString*)str completeTarget:(BOOL)completeTarget target:(IRCChannel*)target
+- (BOOL)sendCommand:(NSString*)str completeTarget:(BOOL)completeTarget target:(NSString*)targetChannelName
 {
 	if (!isConnected || !str.length) return NO;
 	
@@ -901,19 +901,19 @@ static NSDateFormatter* dateTimeFormater = nil;
 	IRCClient* u = world.selectedClient;
 	IRCChannel* c = world.selectedChannel;
 	
-	IRCChannel* sel = nil;
-	if (completeTarget && target) {
-		sel = target;
+	IRCChannel* selChannel = nil;
+	if (completeTarget && targetChannelName) {
+		selChannel = [self findChannel:targetChannelName];
 	}
 	else if (completeTarget && u == self && c) {
-		sel = c;
+		selChannel = c;
 	}
-	
-	BOOL opMsg = NO;
 	
 	//
 	// parse pseudo commands and aliases
 	//
+	
+	BOOL opMsg = NO;
 	
 	if ([cmd isEqualToString:CLEAR]) {
 		if (c) {
@@ -1005,18 +1005,68 @@ static NSDateFormatter* dateTimeFormater = nil;
 	//
 	
 	if ([cmd isEqualToString:PRIVMSG] || [cmd isEqualToString:NOTICE] || [cmd isEqualToString:ACTION]) {
+		if (opMsg) {
+			if (selChannel && selChannel.isChannel && ![s isChannelName]) {
+				targetChannelName = selChannel.name;
+			}
+			else {
+				targetChannelName = [s getToken];
+			}
+		}
+		else {
+			targetChannelName = [s getToken];
+		}
 	}
 	else if ([cmd isEqualToString:ME]) {
+		cmd = ACTION;
+		if (selChannel) {
+			targetChannelName = selChannel.name;
+		}
+		else {
+			targetChannelName = [s getToken];
+		}
 	}
 	else if ([cmd isEqualToString:PART]) {
+		if (selChannel && selChannel.isChannel && ![s isChannelName]) {
+			targetChannelName = selChannel.name;
+		}
+		else if (selChannel && selChannel.isTalk && ![s isChannelName]) {
+			[world destroyChannel:selChannel];
+			return YES;
+		}
+		else {
+			targetChannelName = [s getToken];
+		}
 	}
 	else if ([cmd isEqualToString:TOPIC]) {
+		if (selChannel && selChannel.isChannel && ![s isChannelName]) {
+			targetChannelName = selChannel.name;
+		}
+		else {
+			targetChannelName = [s getToken];
+		}
 	}
 	else if ([cmd isEqualToString:MODE] || [cmd isEqualToString:KICK]) {
+		if (selChannel && selChannel.isChannel && ![s isModeChannelName]) {
+			targetChannelName = selChannel.name;
+		}
+		else {
+			targetChannelName = [s getToken];
+		}
 	}
 	else if ([cmd isEqualToString:JOIN]) {
+		if (selChannel && selChannel.isChannel && !selChannel.isActive && !s.length) {
+			targetChannelName = selChannel.name;
+		}
+		else {
+			targetChannelName = [s getToken];
+			if (![targetChannelName isChannelName]) {
+				targetChannelName = [@"#" stringByAppendingString:targetChannelName];
+			}
+		}
 	}
 	else if ([cmd isEqualToString:INVITE]) {
+		targetChannelName = [s getToken];
 	}
 	else if ([cmd isEqualToString:OP]
 			 || [cmd isEqualToString:DEOP]
@@ -1026,8 +1076,48 @@ static NSDateFormatter* dateTimeFormater = nil;
 			 || [cmd isEqualToString:DEVOICE]
 			 || [cmd isEqualToString:BAN]
 			 || [cmd isEqualToString:UNBAN]) {
+		if (selChannel && selChannel.isChannel && ![s isModeChannelName]) {
+			targetChannelName = selChannel.name;
+		}
+		else {
+			targetChannelName = [s getToken];
+		}
+		
+		NSString* sign;
+		if ([cmd hasPrefix:@"DE"] || [cmd hasPrefix:@"UN"]) {
+			sign = @"-";
+			cmd = [cmd substringFromIndex:2];
+		}
+		else {
+			sign = @"+";
+		}
+		
+		NSArray* params = [s componentsSeparatedByString:@" "];
+		if (!params.count) {
+			if ([cmd isEqualToString:BAN]) {
+				[s setString:@"+b"];
+			}
+			else {
+				return YES;
+			}
+		}
+		else {
+			NSMutableString* ms = [NSMutableString stringWithString:sign];
+			NSString* modeCharStr = [[cmd substringToIndex:1] lowercaseString];
+			for (int i=params.count-1; i>=0; --i) {
+				[ms appendString:modeCharStr];
+			}
+			[ms appendString:@" "];
+			[ms appendString:s];
+			[s setString:ms];
+		}
+		
+		cmd = MODE;
 	}
 	else if ([cmd isEqualToString:UMODE]) {
+		cmd = MODE;
+		[s insertString:@" " atIndex:0];
+		[s insertString:myNick atIndex:0];
 	}
 	
 	//
@@ -1045,9 +1135,28 @@ static NSDateFormatter* dateTimeFormater = nil;
 	//
 	
 	if ([cmd isEqualToString:PRIVMSG] || [cmd isEqualToString:NOTICE]) {
+		if ([s hasPrefix:@"\x01"]) {
+			// CTCP
+			cmd = [cmd isEqualToString:PRIVMSG] ? CTCP : CTCPREPLY;
+			[s deleteCharactersInRange:NSMakeRange(0, 1)];
+			NSRange r = [s rangeOfString:@"\x01"];
+			if (r.location != NSNotFound) {
+				int len = s.length - r.location;
+				if (len > 0) {
+					[s deleteCharactersInRange:NSMakeRange(r.location, len)];
+				}
+			}
+		}
 	}
 	
 	if ([cmd isEqualToString:CTCP]) {
+		NSMutableString* t = [[s mutableCopy] autorelease];
+		NSString* subCommand = [[t getToken] uppercaseString];
+		if ([subCommand isEqualToString:ACTION]) {
+			cmd = ACTION;
+			s = t;
+			targetChannelName = [s getToken];
+		}
 	}
 	
 	//
@@ -1055,6 +1164,66 @@ static NSDateFormatter* dateTimeFormater = nil;
 	//
 	
 	if ([cmd isEqualToString:PRIVMSG] || [cmd isEqualToString:NOTICE] || [cmd isEqualToString:ACTION]) {
+		if (!targetChannelName) return NO;
+		if (!s.length) return NO;
+		
+		LogLineType type;
+		if ([cmd isEqualToString:NOTICE]) {
+			type = LINE_TYPE_NOTICE;
+		}
+		else if ([cmd isEqualToString:ACTION]) {
+			type = LINE_TYPE_ACTION;
+		}
+		else {
+			type = LINE_TYPE_PRIVMSG;
+		}
+		
+		while (s.length) {
+			NSString* t = [self truncateText:s command:cmd channelName:targetChannelName];
+			if (!t.length) break;
+			
+			NSMutableArray* targetsResult = [NSMutableArray array];
+			NSArray* targets = [targetChannelName componentsSeparatedByString:@","];
+			for (NSString* chname in targets) {
+				if (!chname.length) continue;
+				
+				// support @#channel
+				BOOL opPrefix = NO;
+				if ([chname hasPrefix:@"@"]) {
+					opPrefix = YES;
+					chname = [chname substringFromIndex:1];
+				}
+				
+				NSString* lowerChname = [chname lowercaseString];
+				IRCChannel* c = [self findChannel:chname];
+				
+				if (!c
+					&& ![chname isChannelName]
+					&& ![lowerChname isEqualToString:@"nickserv"]
+					&& ![lowerChname isEqualToString:@"chanserv"]) {
+					c = [world createTalk:chname client:self];
+				}
+				
+				[self printBoth:(c ?: (id)chname) type:type nick:myNick text:t identified:YES];
+				
+				// support @#channel and omsg/onotice
+				if ([chname isChannelName]) {
+					if (opMsg || opPrefix) {
+						chname = [@"@" stringByAppendingString:chname];
+					}
+				}
+				
+				[targetsResult addObject:chname];
+			}
+			
+			NSString* localCmd = cmd;
+			if ([localCmd isEqualToString:ACTION]) {
+				localCmd = PRIVMSG;
+				t = [NSString stringWithFormat:@"\x01%@ %@\x01", ACTION, t];
+			}
+			
+			[self send:cmd, [targets componentsJoinedByString:@","], t, nil];
+		}
 	}
 	else if ([cmd isEqualToString:CTCP]) {
 	}
