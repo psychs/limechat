@@ -1101,8 +1101,16 @@
 
 - (void)memberListViewDropFiles:(NSArray*)files row:(NSNumber*)row
 {
-	LOG_METHOD
-	//@@@
+	IRCClient* u = self.selectedClient;
+	IRCChannel* c = self.selectedChannel;
+	if (!u || !c) return;
+	
+	IRCUser* m = [c.members objectAtIndex:[row intValue]];
+	if (m) {
+		for (NSString* s in files) {
+			[dcc addSenderWithUID:u.uid nick:m.nick fileName:s autoOpen:YES];
+		}
+	}
 }
 
 @end
