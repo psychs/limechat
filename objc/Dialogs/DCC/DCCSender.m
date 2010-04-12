@@ -233,8 +233,6 @@
 
 - (void)tcpServer:(TCPServer*)sender didConnect:(TCPClient*)aClient
 {
-	LOG_METHOD
-	
 	if (sock) {
 		[sock close];
 	}

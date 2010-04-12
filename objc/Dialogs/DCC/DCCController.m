@@ -18,6 +18,7 @@
 @interface DCCController (Private)
 - (void)reloadReceiverTable;
 - (void)reloadSenderTable;
+- (void)updateClearButton;
 - (void)loadWindowState;
 - (void)saveWindowState;
 - (void)updateTimer;
@@ -180,11 +181,38 @@
 - (void)reloadReceiverTable
 {
 	[receiverTable reloadData];
+	[self updateClearButton];
 }
 
 - (void)reloadSenderTable
 {
 	[senderTable reloadData];
+	[self updateClearButton];
+}
+
+- (void)updateClearButton
+{
+	BOOL enabled = NO;
+	
+	for (int i=receivers.count-1; i>=0; --i) {
+		DCCReceiver* e = [receivers objectAtIndex:i];
+		if (e.status == DCC_ERROR || e.status == DCC_COMPLETE || e.status == DCC_STOP) {
+			enabled = YES;
+			break;
+		}
+	}
+	
+	if (!enabled) {
+		for (int i=senders.count-1; i>=0; --i) {
+			DCCSender* e = [senders objectAtIndex:i];
+			if (e.status == DCC_ERROR || e.status == DCC_COMPLETE || e.status == DCC_STOP) {
+				enabled = YES;
+				break;
+			}
+		}
+	}
+	
+	[clearButton setEnabled:enabled];
 }
 
 - (void)loadWindowState
@@ -221,23 +249,110 @@
 	[Preferences sync];
 }
 
+- (void)destroyReceiverAtIndex:(int)i
+{
+	DCCReceiver* e = [receivers objectAtIndex:i];
+	NSProgressIndicator* bar = e.progressBar;
+	if (bar) {
+		[bar removeFromSuperview];
+	}
+	[[e retain] autorelease];
+	[receivers removeObjectAtIndex:i];
+}
+
+- (void)destroySenderAtIndex:(int)i
+{
+	DCCSender* e = [senders objectAtIndex:i];
+	NSProgressIndicator* bar = e.progressBar;
+	if (bar) {
+		[bar removeFromSuperview];
+	}
+	[[e retain] autorelease];
+	[senders removeObjectAtIndex:i];
+}
+
 #pragma mark -
 #pragma mark Actions
 
 - (BOOL)validateMenuItem:(NSMenuItem *)item
 {
 	NSInteger tag = item.tag;
-	switch (tag) {
-		case 3001:
-		case 3002:
-		case 3003:
-		case 3004:
-		case 3005:
-		case 3006:
-		case 3101:
-		case 3102:
-		case 3103:
-			return YES;
+	
+	if (tag < 3100) {
+		if (![receiverTable countSelectedRows]) return NO;
+		
+		NSMutableArray* sel = [NSMutableArray array];
+		NSIndexSet* indexes = [receiverTable selectedRowIndexes];
+		NSUInteger i = [indexes firstIndex];
+		while (i != NSNotFound) {
+			[sel addObject:[receivers objectAtIndex:i]];
+			i = [indexes indexGreaterThanIndex:i];
+		}
+		
+		switch (tag) {
+			case 3001:	// start receiver
+				for (DCCReceiver* e in sel) {
+					if (e.status == DCC_INIT || e.status == DCC_ERROR) {
+						return YES;
+					}
+				}
+				return NO;
+			case 3002:	// resume receiver (not implemented)
+				return YES;
+			case 3003:	// stop receiver
+				for (DCCReceiver* e in sel) {
+					if (e.status == DCC_CONNECTING || e.status == DCC_RECEIVING) {
+						return YES;
+					}
+				}
+				return NO;
+			case 3004:	// delete receiver
+				return YES;
+			case 3005:	// open file
+				for (DCCReceiver* e in sel) {
+					if (e.status == DCC_COMPLETE) {
+						return YES;
+					}
+				}
+				return NO;
+			case 3006:	// reveal in finder
+				for (DCCReceiver* e in sel) {
+					if (e.status == DCC_COMPLETE || e.status == DCC_ERROR) {
+						return YES;
+					}
+				}
+				return NO;
+		}
+	}
+	else {
+		if (![senderTable countSelectedRows]) return NO;
+		
+		NSMutableArray* sel = [NSMutableArray array];
+		NSIndexSet* indexes = [senderTable selectedRowIndexes];
+		NSUInteger i = [indexes firstIndex];
+		while (i != NSNotFound) {
+			[sel addObject:[senders objectAtIndex:i]];
+			i = [indexes indexGreaterThanIndex:i];
+		}
+		
+		switch (tag) {
+			case 3101:	// start sender
+				for (DCCSender* e in sel) {
+					if (e.status == DCC_INIT || e.status == DCC_ERROR || e.status == DCC_STOP) {
+						return YES;
+					}
+				}
+				return NO;
+			case 3102:	// stop sender
+				for (DCCSender* e in sel) {
+					if (e.status == DCC_LISTENING || e.status == DCC_SENDING) {
+						return YES;
+					}
+				}
+				return NO;
+			case 3103:	// delete sender
+				return YES;
+		}
 	}
 	
 	return NO;
@@ -245,18 +360,32 @@
 
 - (void)clear:(id)sender
 {
-	LOG_METHOD
+	for (int i=receivers.count-1; i>=0; --i) {
+		DCCReceiver* e = [receivers objectAtIndex:i];
+		if (e.status == DCC_ERROR || e.status == DCC_COMPLETE || e.status == DCC_STOP) {
+			[self destroyReceiverAtIndex:i];
+		}
+	}
+	
+	for (int i=senders.count-1; i>=0; --i) {
+		DCCSender* e = [senders objectAtIndex:i];
+		if (e.status == DCC_ERROR || e.status == DCC_COMPLETE || e.status == DCC_STOP) {
+			[self destroySenderAtIndex:i];
+		}
+	}
+
+	[self reloadReceiverTable];
+	[self reloadSenderTable];
 }
 
 - (void)startReceiver:(id)sender
 {
-	NSIndexSet* sel = [receiverTable selectedRowIndexes];
-	NSUInteger i = [sel firstIndex];
+	NSIndexSet* indexes = [receiverTable selectedRowIndexes];
+	NSUInteger i = [indexes firstIndex];
 	while (i != NSNotFound) {
 		DCCReceiver* e = [receivers objectAtIndex:i];
 		[e open];
-		
-		i = [sel indexGreaterThanIndex:i];
+		i = [indexes indexGreaterThanIndex:i];
 	}
 	
 	[self reloadReceiverTable];
@@ -265,13 +394,12 @@
 
 - (void)stopReceiver:(id)sender
 {
-	NSIndexSet* sel = [receiverTable selectedRowIndexes];
-	NSUInteger i = [sel firstIndex];
+	NSIndexSet* indexes = [receiverTable selectedRowIndexes];
+	NSUInteger i = [indexes firstIndex];
 	while (i != NSNotFound) {
 		DCCReceiver* e = [receivers objectAtIndex:i];
 		[e close];
-		
-		i = [sel indexGreaterThanIndex:i];
+		i = [indexes indexGreaterThanIndex:i];
 	}
 	
 	[self reloadReceiverTable];
@@ -280,32 +408,88 @@
 
 - (void)deleteReceiver:(id)sender
 {
-	LOG_METHOD
+	NSIndexSet* indexes = [receiverTable selectedRowIndexes];
+	NSUInteger i = [indexes lastIndex];
+	while (i != NSNotFound) {
+		[self destroyReceiverAtIndex:i];
+		i = [indexes indexLessThanIndex:i];
+	}
+	
+	[self reloadReceiverTable];
+	[self updateTimer];
 }
 
 - (void)openReceiver:(id)sender
 {
-	LOG_METHOD
+	NSWorkspace* ws = [NSWorkspace sharedWorkspace];
+	
+	NSIndexSet* indexes = [receiverTable selectedRowIndexes];
+	NSUInteger i = [indexes firstIndex];
+	while (i != NSNotFound) {
+		DCCReceiver* e = [receivers objectAtIndex:i];
+		[ws openFile:e.downloadFileName];
+		i = [indexes indexGreaterThanIndex:i];
+	}
+	
+	[self reloadReceiverTable];
+	[self updateTimer];
 }
 
 - (void)revealReceivedFileInFinder:(id)sender
 {
-	LOG_METHOD
+	NSWorkspace* ws = [NSWorkspace sharedWorkspace];
+	
+	NSIndexSet* indexes = [receiverTable selectedRowIndexes];
+	NSUInteger i = [indexes firstIndex];
+	while (i != NSNotFound) {
+		DCCReceiver* e = [receivers objectAtIndex:i];
+		[ws selectFile:e.downloadFileName inFileViewerRootedAtPath:nil];
+		i = [indexes indexGreaterThanIndex:i];
+	}
+	
+	[self reloadReceiverTable];
+	[self updateTimer];
 }
 
 - (void)startSender:(id)sender
 {
-	LOG_METHOD
+	NSIndexSet* indexes = [senderTable selectedRowIndexes];
+	NSUInteger i = [indexes firstIndex];
+	while (i != NSNotFound) {
+		DCCSender* e = [senders objectAtIndex:i];
+		[e open];
+		i = [indexes indexGreaterThanIndex:i];
+	}
+	
+	[self reloadSenderTable];
+	[self updateTimer];
 }
 
 - (void)stopSender:(id)sender
 {
-	LOG_METHOD
+	NSIndexSet* indexes = [senderTable selectedRowIndexes];
+	NSUInteger i = [indexes firstIndex];
+	while (i != NSNotFound) {
+		DCCSender* e = [senders objectAtIndex:i];
+		[e close];
+		i = [indexes indexGreaterThanIndex:i];
+	}
+	
+	[self reloadSenderTable];
+	[self updateTimer];
 }
 
 - (void)deleteSender:(id)sender
 {
-	LOG_METHOD
+	NSIndexSet* indexes = [senderTable selectedRowIndexes];
+	NSUInteger i = [indexes lastIndex];
+	while (i != NSNotFound) {
+		[self destroySenderAtIndex:i];
+		i = [indexes indexLessThanIndex:i];
+	}
+	
+	[self reloadSenderTable];
+	[self updateTimer];
 }
 
 #pragma mark -
@@ -344,18 +528,12 @@
 
 - (void)dccReceiveOnError:(DCCReceiver*)sender
 {
-	if (!loaded) return;
-	
-	[self reloadReceiverTable];
-	[self updateTimer];
+	[self dccReceiveOnClose:sender];
 }
 
 - (void)dccReceiveOnComplete:(DCCReceiver*)sender
 {
-	if (!loaded) return;
-
-	[self reloadReceiverTable];
-	[self updateTimer];
+	[self dccReceiveOnClose:sender];
 }
 
 #pragma mark -
@@ -363,8 +541,6 @@
 
 - (void)dccSenderOnListen:(DCCSender*)sender
 {
-	LOG_METHOD
-	
 	IRCClient* u = [world findClientById:sender.uid];
 	if (!u) return;
 	
@@ -378,8 +554,6 @@
 
 - (void)dccSenderOnConnect:(DCCSender*)sender
 {
-	LOG_METHOD
-	
 	if (!loaded) return;
 	
 	if (!sender.progressBar) {
@@ -398,28 +572,16 @@
 
 - (void)dccSenderOnClose:(DCCSender*)sender
 {
-	LOG_METHOD
-	
-	if (!loaded) return;
-	
-	[self reloadSenderTable];
-	[self updateTimer];
+	[self dccSenderOnComplete:sender];
 }
 
 - (void)dccSenderOnError:(DCCSender*)sender
 {
-	LOG_METHOD
-
-	if (!loaded) return;
-	
-	[self reloadSenderTable];
-	[self updateTimer];
+	[self dccSenderOnComplete:sender];
 }
 
 - (void)dccSenderOnComplete:(DCCSender*)sender
 {
-	LOG_METHOD
-	
 	if (!loaded) return;
 
 	if (sender.progressBar) {

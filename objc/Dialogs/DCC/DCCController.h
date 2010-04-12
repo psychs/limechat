@@ -26,7 +26,7 @@
 	IBOutlet ListView* receiverTable;
 	IBOutlet ListView* senderTable;
 	IBOutlet ThinSplitView* splitter;
-	IBOutlet NSBundle* clearButton;
+	IBOutlet NSButton* clearButton;
 }
 
 @property (nonatomic, assign) id delegate;
