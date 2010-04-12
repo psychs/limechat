@@ -3,6 +3,7 @@
 
 #import "WelcomeDialog.h"
 #import "ServerDialog.h"
+#import "Regex.h"
 #import "NSStringHelper.h"
 
 
@@ -44,7 +45,17 @@
 	
 	if (![self.window isVisible]) {
 		[self.window center];
+		
+		NSString* nick = NSUserName();
+		nick = [nick stringByReplacingOccurrencesOfString:@" " withString:@""];
+		
+		Regex* nickRegex = [[[Regex alloc] initWithString:@"^[a-zA-Z][-_a-zA-Z0-9]*$"] autorelease];
+		NSRange r = [nickRegex match:nick];
+		if (r.location != NSNotFound) {
+			nickText.stringValue = [nick substringWithRange:r];
+		}
 	}
+	
 	[self.window makeKeyAndOrderFront:nil];
 }
 

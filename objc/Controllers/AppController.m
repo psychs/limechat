@@ -156,7 +156,7 @@
 {
 	[ViewTheme createUserDirectory];
 	
-	if (world.clients.count) {
+	if (!world.clients.count) {
 		welcomeDialog = [WelcomeDialog new];
 		welcomeDialog.delegate = self;
 		[welcomeDialog show];
@@ -1009,8 +1009,6 @@ typedef enum {
 
 - (void)welcomeDialog:(WelcomeDialog*)sender onOK:(NSDictionary*)config
 {
-	LOG(@"%@", config);
-	
 	NSString* host = [config objectForKey:@"host"];
 	NSString* name = host;
 	
