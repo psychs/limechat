@@ -8,6 +8,7 @@
 #import "IRCClient.h"
 #import "IRCChannel.h"
 #import "Regex.h"
+#import "NSLocaleHelper.h"
 
 
 #define BOTTOM_EPSILON	20
@@ -482,6 +483,7 @@
 	
 	NSMutableString* s = [NSMutableString string];
 	
+	[s appendString:@"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">"];
 	[s appendFormat:@"<html class=\"%@\" %@>", bodyClass, bodyAttrs];
 	[s appendString:@"<head>"];
 	[s appendString:@"<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">"];
@@ -502,8 +504,7 @@
 	NSString* fontFamily = @"Courier";
 	int fontSize = 9;
 	
-	NSArray* langs = [[NSUserDefaults standardUserDefaults] objectForKey:@"AppleLanguages"];
-	if (langs && langs.count && [[langs objectAtIndex:0] isEqualToString:@"ja"]) {
+	if ([NSLocale prefersJapaneseLanguage]) {
 		fontFamily = @"Osaka-Mono";
 		fontSize = 10;
 	}
