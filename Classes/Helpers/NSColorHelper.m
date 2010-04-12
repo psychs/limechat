@@ -31,7 +31,7 @@
 	else {
 		static Regex* rgba = nil;
 		if (!rgba) {
-			rgba = [[Regex alloc] initWithStringNoCase:@"^rgba\\(\\s*(\\d+)\\s*,\\s*(\\d+)\\s*,\\s*(\\d+)\\s*,\\s*(\\d*(?:\\.\\d+))\\s*\\)$"];
+			rgba = [[Regex alloc] initWithStringNoCase:@"^rgba\\( *(\\d+) *, *(\\d+) *, *(\\d+) *, *(\\d*(?:\\.\\d+)) *\\)$"];
 		}
 		
 		if ([rgba match:s].location != NSNotFound) {
@@ -45,7 +45,7 @@
 		
 		static Regex* rgb = nil;
 		if (!rgb) {
-			rgb = [[Regex alloc] initWithStringNoCase:@"^rgb\\(\\s*(\\d+)\\s*,\\s*(\\d+)\\s*,\\s*(\\d+)\\s*\\)$"];
+			rgb = [[Regex alloc] initWithStringNoCase:@"^rgb\\( *(\\d+) *, *(\\d+) *, *(\\d+) *\\)$"];
 		}
 		
 		if ([rgb match:s].location != NSNotFound) {

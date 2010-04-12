@@ -1002,15 +1002,12 @@ typedef enum {
 #pragma mark -
 #pragma mark WelcomeDialog Delegate
 
-//UTF8_NETS = %w|freenode undernet quakenet mozilla ustream|
-
-
 - (void)welcomeDialog:(WelcomeDialog*)sender onOK:(NSDictionary*)config
 {
 	NSString* host = [config objectForKey:@"host"];
 	NSString* name = host;
 	
-	Regex* hostRegex = [[[Regex alloc] initWithString:@"^[^\\s]+\\s+\\(([^()]+)\\)"] autorelease];
+	Regex* hostRegex = [[[Regex alloc] initWithString:@"^[^ ]+ +\\(([^()]+)\\)"] autorelease];
 	NSRange r = [hostRegex match:host];
 	if (r.location != NSNotFound) {
 		name = [host substringWithRange:[hostRegex groupAt:1]];

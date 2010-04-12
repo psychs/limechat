@@ -890,13 +890,13 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			static Regex* twitterPattern = nil;
 			
 			if (!headPattern) {
-				headPattern = [[Regex alloc] initWithString:@"^([^\\s:]+):\\s"];
+				headPattern = [[Regex alloc] initWithString:@"^([^ :]+): "];
 			}
 			if (!tailPattern) {
-				tailPattern = [[Regex alloc] initWithString:@"[>＞]\\s?([^\\s]+)$"];
+				tailPattern = [[Regex alloc] initWithString:@"[>＞] ?([^ ]+)$"];
 			}
 			if (!twitterPattern) {
-				twitterPattern = [[Regex alloc] initWithString:@"^@([0-9a-zA-Z_]+)\\s"];
+				twitterPattern = [[Regex alloc] initWithString:@"^@([0-9a-zA-Z_]+) "];
 			}
 			
 			if ([headPattern match:line].location != NSNotFound) {

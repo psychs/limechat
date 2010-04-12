@@ -459,7 +459,7 @@ BOOL isUnicharDigit(unichar c)
 	
 	static Regex* regex = nil;
 	if (!regex) {
-		NSString* pattern = @"(?<![a-zA-Z0-9_])[#&][^\\s,　]+";
+		NSString* pattern = @"(?<![a-zA-Z0-9_])[#\\&][^ \\t,　]+";
 		regex = [[Regex alloc] initWithString:pattern];
 	}
 	
