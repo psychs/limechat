@@ -59,6 +59,7 @@ typedef enum {
 	HostResolver* nameResolver;
 	NSString* joinMyAddress;
 	NSString* myAddress;
+	CFAbsoluteTime lastCTCPTime;
 	
 	Timer* quitTimer;
 	Timer* reconnectTimer;

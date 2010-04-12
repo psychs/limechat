@@ -22,6 +22,8 @@
 #define RECONNECT_INTERVAL	20
 #define RETRY_INTERVAL		240
 
+#define CTCP_MIN_INTERVAL	5
+
 
 static NSDateFormatter* dateTimeFormatter = nil;
 
@@ -2238,6 +2240,14 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		[self printBoth:nil type:LINE_TYPE_REPLY text:text];
 	}
 	else {
+		CFAbsoluteTime now = CFAbsoluteTimeGetCurrent();
+		if (now - lastCTCPTime < CTCP_MIN_INTERVAL) {
+			NSString* text = [NSString stringWithFormat:@"CTCP-query %@ from %@ was ignored", command, nick];
+			[self printBoth:nil type:LINE_TYPE_REPLY text:text];
+			return;
+		}
+		lastCTCPTime = now;
+		
 		NSString* text = [NSString stringWithFormat:@"CTCP-query %@ from %@", command, nick];
 		[self printBoth:nil type:LINE_TYPE_REPLY text:text];
 		
