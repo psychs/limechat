@@ -1,11 +1,11 @@
 * What's LimeChat
 
-LimeChat is an IRC client written on RubyCocoa.
+LimeChat is an IRC client for Mac OS X.
 
 * The Author
 
 Satoshi Nakagawa <psychs@limechat.net>
-#limechat on chat.freenode.net
+##limechat on chat.freenode.net
 
 * Thanks To
 
