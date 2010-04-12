@@ -7,16 +7,13 @@
     <language>en-us</language>
 
     <item>
-      <title>1.7</title>
-      <link>http://limechat.net/mac/#v1.7</link>
-      <pubDate>Thu, 25 Mar 2010 00:44:57 +0900</pubDate>
+      <title>2.0</title>
+      <link>http://limechat.net/mac/#v2.0</link>
+      <pubDate>Tue, 13 Apr 2010 03:46:39 +0900</pubDate>
       <content:encoded><![CDATA[
   			<ul>
-          <li>Improved around inline images.</li>
-          <li>Added Go To Mark menu.</li>
-          <li>Fixed a bug, Sparkle didn't work unintentionally.</li>
-          <li>Disabled sent command log.</li>
-          <li>Supported Cmd+[ / Cmd+] on non-English keyboards.</li>
+          <li>Rewrote in pure Objective-C to avoid the RubyCocoa's crashing bugs.</li>
+          <li>Auto op is temporarily disabled for a while.</li>
         </ul>
       ]]></content:encoded>
     </item>

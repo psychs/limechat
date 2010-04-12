@@ -7,16 +7,13 @@
     <language>ja</language>
 
     <item>
-      <title>1.7</title>
-      <link>http://limechat.net/mac/ja.html#v1.7</link>
-      <pubDate>Thu, 25 Mar 2010 00:44:57 +0900</pubDate>
+      <title>2.0</title>
+      <link>http://limechat.net/mac/ja.html#v2.0</link>
+      <pubDate>Tue, 13 Apr 2010 03:46:39 +0900</pubDate>
       <content:encoded><![CDATA[
   			<ul>
-          <li>インラインで画像を貼り付けるオプションを改善した。</li>
-          <li>Go To Mark メニューを追加した。</li>
-          <li>Sparkle が動作していなかったのを修正した。</li>
-          <li>送信したコマンドをログに表示しないようにした。</li>
-          <li>Cmd+[ / Cmd+] のショートカットキーが日本語キーボードでも動作するようにした。</li>
+          <li>Objective-C ですべて書き直した。RubyCocoa の GC のバグを回避するため。</li>
+          <li>自動オペレータ機能はいったん無効化し、今後のリリースで実装予定。</li>
         </ul>
       ]]></content:encoded>
     </item>
