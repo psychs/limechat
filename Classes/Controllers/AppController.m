@@ -668,45 +668,43 @@ typedef enum {
 
 - (void)scroll:(ScrollKind)op
 {
-	if ([window firstResponder] == [text currentEditor]) {
-		IRCTreeItem* sel = world.selected;
-		if (sel) {
-			LogController* log = [sel log];
-			LogView* view = log.view;
-			switch (op) {
-				case SCROLL_TOP:
-					[log moveToTop];
-					break;
-				case SCROLL_BOTTOM:
-					[log moveToBottom];
-					break;
-				case SCROLL_PAGE_UP:
-					[view scrollPageUp:nil];
-					break;
-				case SCROLL_PAGE_DOWN:
-					[view scrollPageDown:nil];
-					break;
-			}
+	IRCTreeItem* sel = world.selected;
+	if (sel) {
+		LogController* log = [sel log];
+		LogView* view = log.view;
+		switch (op) {
+			case SCROLL_TOP:
+				[log moveToTop];
+				break;
+			case SCROLL_BOTTOM:
+				[log moveToBottom];
+				break;
+			case SCROLL_PAGE_UP:
+				[view scrollPageUp:nil];
+				break;
+			case SCROLL_PAGE_DOWN:
+				[view scrollPageDown:nil];
+				break;
 		}
 	}
 }
 
-- (void)scrollToTop:(NSEvent*)e
+- (void)inputScrollToTop:(NSEvent*)e
 {
 	[self scroll:SCROLL_TOP];
 }
 
-- (void)scrollToBottom:(NSEvent*)e
+- (void)inputScrollToBottom:(NSEvent*)e
 {
 	[self scroll:SCROLL_BOTTOM];
 }
 
-- (void)scrollPageUp:(NSEvent*)e
+- (void)inputScrollPageUp:(NSEvent*)e
 {
 	[self scroll:SCROLL_PAGE_UP];
 }
 
-- (void)scrollPageDown:(NSEvent*)e
+- (void)inputScrollPageDown:(NSEvent*)e
 {
 	[self scroll:SCROLL_PAGE_DOWN];
 }
@@ -952,10 +950,6 @@ typedef enum {
 	[window setKeyHandlerTarget:self];
 	[fieldEditor setKeyHandlerTarget:self];
 	
-	[self handler:@selector(scrollToTop:) code:KEY_HOME mods:0];
-	[self handler:@selector(scrollToBottom:) code:KEY_END mods:0];
-	[self handler:@selector(scrollPageUp:) code:KEY_PAGE_UP mods:0];
-	[self handler:@selector(scrollPageDown:) code:KEY_PAGE_DOWN mods:0];
 	[self handler:@selector(tab:) code:KEY_TAB mods:0];
 	[self handler:@selector(shiftTab:) code:KEY_TAB mods:NSShiftKeyMask];
 	[self handler:@selector(sendNotice:) code:KEY_ENTER mods:NSControlKeyMask];
@@ -987,6 +981,10 @@ typedef enum {
 		[self handler:@selector(selectServerAtNumber:) char:'0'+i mods:NSCommandKeyMask|NSControlKeyMask];
 	}
 	
+	[self inputHandler:@selector(inputScrollToTop:) code:KEY_HOME mods:0];
+	[self inputHandler:@selector(inputScrollToBottom:) code:KEY_END mods:0];
+	[self inputHandler:@selector(inputScrollPageUp:) code:KEY_PAGE_UP mods:0];
+	[self inputHandler:@selector(inputScrollPageDown:) code:KEY_PAGE_DOWN mods:0];
 	[self inputHandler:@selector(inputHistoryUp:) code:KEY_UP mods:0];
 	[self inputHandler:@selector(inputHistoryUp:) code:KEY_UP mods:NSAlternateKeyMask];
 	[self inputHandler:@selector(inputHistoryDown:) code:KEY_DOWN mods:0];
