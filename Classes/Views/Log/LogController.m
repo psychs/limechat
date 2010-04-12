@@ -469,7 +469,7 @@
 	
 	if ([Preferences themeOverrideLogFont]) {
 		NSString* name = [Preferences themeLogFontName];
-		double size = [Preferences themeLogFontSize];
+		double size = [Preferences themeLogFontSize] * (72.0 / 96.0);
 
 		NSMutableString* s = [NSMutableString string];
 		[s appendString:@"html, body, body[type], body.normal, body.console {"];
