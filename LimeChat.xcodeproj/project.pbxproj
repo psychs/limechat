@@ -174,7 +174,7 @@
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		780253C20C09525900C170D4 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
-		78287EA90D742DAA008D5656 /* Themes */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Themes; path = resource/Themes; sourceTree = "<group>"; };
+		78287EA90D742DAA008D5656 /* Themes */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Themes; path = Resources/Themes; sourceTree = "<group>"; };
 		78347EBA1158D4B00073E2F0 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/AutoOpDialog.xib; sourceTree = "<group>"; };
 		78347EBC1158D4B00073E2F0 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/ChannelDialog.xib; sourceTree = "<group>"; };
 		78347EBE1158D4B00073E2F0 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/TopicSheet.xib; sourceTree = "<group>"; };
@@ -487,8 +487,8 @@
 				78347EC11158D4B00073E2F0 /* ListDialog.xib */,
 				78347EB91158D4B00073E2F0 /* AutoOpDialog.xib */,
 				78AD78E20C61B8F8001E77F4 /* Localizable.strings */,
-				78287EA90D742DAA008D5656 /* Themes */,
 				78C2D608115A428C00705817 /* dsa_pub.pem */,
+				78287EA90D742DAA008D5656 /* Themes */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -530,7 +530,7 @@
 				784BBE921085BC950080898B /* keyrecorder_erase_pushed.png */,
 			);
 			name = images;
-			path = resource/images;
+			path = Resources/images;
 			sourceTree = "<group>";
 		};
 		78A8C0C111737F660044E7A1 /* Controllers */ = {
