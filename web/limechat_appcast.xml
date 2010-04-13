@@ -7,7 +7,7 @@
     <language>en</language>
     
     <item>
-      <title>LimeChat 2.2</title>
+      <title>LimeChat 2.3</title>
       <description><![CDATA[
         <html>
         <body>
@@ -22,18 +22,20 @@
             margin: 0.2em 0;
           }
         </style>
-        <h1>LimeChat 2.2</h1>
+        <h1>LimeChat 2.3</h1>
         <ul>
-          <li>Fixed an issue of override font size option.</li>
-          <li>Fixed an URL recognition bug reproduced only on Leopard.</li>
+          <li>Added invite UI.</li>
+          <li>Send pong actively to keep alive connections.</li>
+          <li>Half-width kana support in ISO-2022-JP</li>
+          <li>Fixed minor bugs.</li>
         </ul>
         </body>
         </html>
       ]]></description>
-      <pubDate>Tue, 13 Apr 2010 08:30:19 +0900</pubDate>
-      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/LimeChat_2.2.tbz"
-                  sparkle:version="2.2" length="826356" type="application/octet-stream"
-                  sparkle:dsaSignature="MC4CFQDCOKCirDAinSuOOZKQZl4RkbFM+wIVALGbL8B7nmBoYuGUH1+1h6n7ePoI"/>
+      <pubDate>Wed, 14 Apr 2010 03:10:31 +0900</pubDate>
+      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/LimeChat_2.3.tbz"
+                  sparkle:version="2.3" length="827506" type="application/octet-stream"
+                  sparkle:dsaSignature="MC4CFQDBIYMiZlgo5PLMXJ8YiiHxWWgFVAIVAMT2mcJzUkttgwUYWJeIwWizQne4"/>
     </item>
     
   </channel>
