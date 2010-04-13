@@ -3072,8 +3072,8 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		}
 		case 341:	// RPL_INVITING
 		{
-			NSString* chname = [m paramAt:1];
-			NSString* nick = [m paramAt:2];
+			NSString* nick = [m paramAt:1];
+			NSString* chname = [m paramAt:2];
 			
 			NSString* text = [NSString stringWithFormat:@"Inviting %@ to %@", nick, chname];
 			[self printBoth:nil type:LINE_TYPE_REPLY text:text];
