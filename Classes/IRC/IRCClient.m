@@ -3070,6 +3070,15 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			[self printBoth:(c ?: (id)chname) type:LINE_TYPE_REPLY text:text];
 			break;
 		}
+		case 341:	// RPL_INVITING
+		{
+			NSString* chname = [m paramAt:1];
+			NSString* nick = [m paramAt:2];
+			
+			NSString* text = [NSString stringWithFormat:@"Inviting %@ to %@", nick, chname];
+			[self printBoth:nil type:LINE_TYPE_REPLY text:text];
+			break;
+		}
 		case 353:	// RPL_NAMREPLY
 		{
 			NSString* chname = [m paramAt:2];
