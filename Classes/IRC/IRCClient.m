@@ -1072,6 +1072,9 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		int interval = [[s getToken] intValue];
 		if (interval > 0) {
 			TimerCommand* cmd = [[TimerCommand new] autorelease];
+			if ([s hasPrefix:@"/"]) {
+				[s deleteCharactersInRange:NSMakeRange(0, 1)];
+			}
 			cmd.input = s;
 			cmd.time = CFAbsoluteTimeGetCurrent() + interval;
 			cmd.cid = c ? c.uid : -1;
