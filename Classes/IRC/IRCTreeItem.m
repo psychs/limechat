@@ -35,6 +35,7 @@
 
 - (void)resetState
 {
+	isKeyword = isUnread = isNewTalk = NO;
 }
 
 - (int)numberOfChildren

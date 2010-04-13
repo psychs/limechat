@@ -397,11 +397,6 @@
 	return client;
 }
 
-- (void)resetState
-{
-	isKeyword = isUnread = isNewTalk = NO;
-}
-
 - (int)numberOfChildren
 {
 	return 0;

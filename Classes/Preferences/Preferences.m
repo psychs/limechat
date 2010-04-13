@@ -503,7 +503,6 @@
 #pragma mark -
 #pragma mark Hot Keys
 
-
 + (int)hotKeyKeyCode
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];

@@ -2027,10 +2027,6 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	return self;
 }
 
-- (void)resetState
-{
-}
-
 - (int)numberOfChildren
 {
 	return channels.count;
