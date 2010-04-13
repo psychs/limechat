@@ -6,12 +6,13 @@
 #import "IRCWorld.h"
 #import "IRCMessage.h"
 #import "Preferences.h"
-#import "NSStringHelper.h"
-#import "NSDataHelper.h"
 #import "WhoisDialog.h"
 #import "Regex.h"
 #import "SoundPlayer.h"
 #import "TimerCommand.h"
+#import "NSStringHelper.h"
+#import "NSDataHelper.h"
+#import "NSData+Kana.h"
 
 
 #define MAX_JOIN_CHANNELS	10
@@ -3296,6 +3297,10 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	NSStringEncoding enc = encoding;
 	if (encoding == NSUTF8StringEncoding && config.fallbackEncoding != NSUTF8StringEncoding && ![data isValidUTF8]) {
 		enc = config.fallbackEncoding;
+	}
+	
+	if (encoding == NSISO2022JPStringEncoding) {
+		data = [data convertKanaFromNativeToISO2022];
 	}
 	
 	NSString* s = [[[NSString alloc] initWithData:data encoding:enc] autorelease];

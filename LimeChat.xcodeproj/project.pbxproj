@@ -29,6 +29,7 @@
 		784BBE971085BC950080898B /* redstar.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 784BBE931085BC950080898B /* redstar.tiff */; };
 		7851AEF71168A91A00AC449F /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7851AEF61168A91A00AC449F /* libicucore.dylib */; };
 		78835406109FEA7F00CD2FFF /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78835405109FEA7F00CD2FFF /* SystemConfiguration.framework */; };
+		78A7B4F61174427C006B324A /* NSData+Kana.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A7B4F51174427C006B324A /* NSData+Kana.m */; };
 		78A8C1A611737F660044E7A1 /* AppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0C311737F660044E7A1 /* AppController.m */; };
 		78A8C1A711737F660044E7A1 /* GrowlController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0C511737F660044E7A1 /* GrowlController.m */; };
 		78A8C1A811737F660044E7A1 /* MenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0C711737F660044E7A1 /* MenuController.m */; };
@@ -200,6 +201,8 @@
 		787FD46C0BFE960100F2F22D /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		78835405109FEA7F00CD2FFF /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = /System/Library/Frameworks/SystemConfiguration.framework; sourceTree = "<absolute>"; };
 		788D56F00BB6872B00DDBF69 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
+		78A7B4F41174427C006B324A /* NSData+Kana.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Kana.h"; sourceTree = "<group>"; };
+		78A7B4F51174427C006B324A /* NSData+Kana.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Kana.m"; sourceTree = "<group>"; };
 		78A8C0C211737F660044E7A1 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		78A8C0C311737F660044E7A1 /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppController.m; sourceTree = "<group>"; };
 		78A8C0C411737F660044E7A1 /* GrowlController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GrowlController.h; sourceTree = "<group>"; };
@@ -614,6 +617,8 @@
 				78A8C0F511737F660044E7A1 /* NSArrayHelper.m */,
 				78A8C0F811737F660044E7A1 /* NSDataHelper.h */,
 				78A8C0F911737F660044E7A1 /* NSDataHelper.m */,
+				78A7B4F41174427C006B324A /* NSData+Kana.h */,
+				78A7B4F51174427C006B324A /* NSData+Kana.m */,
 				78A8C0F611737F660044E7A1 /* NSColorHelper.h */,
 				78A8C0F711737F660044E7A1 /* NSColorHelper.m */,
 				78A8C0EC11737F660044E7A1 /* GTMBase64.h */,
@@ -1043,6 +1048,7 @@
 				78A8C21211737F660044E7A1 /* TreeView.m in Sources */,
 				783E6ADB1173802100261552 /* main.m in Sources */,
 				782FCF891173824C007BE697 /* LimeChatApplication.m in Sources */,
+				78A7B4F61174427C006B324A /* NSData+Kana.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
