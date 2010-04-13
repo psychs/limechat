@@ -74,6 +74,7 @@
 	[modeSheet release];
 	[topicSheet release];
 	[pasteSheet release];
+	[inviteSheet release];
 	[fileSendPanel release];
 	[fileSendTargets release];
 	[super dealloc];
@@ -230,6 +231,17 @@
 		case 2001:	// whois
 		case 2002:	// talk
 			return LOGIN_CHANTALK && [self checkSelectedMembers:item];
+		case 2005:	// invite
+		{
+			if (!LOGIN) return NO;
+			int count = 0;
+			for (IRCChannel* e in u.channels) {
+				if (e != c && e.isChannel) {
+					++count;
+				}
+			}
+			return count > 0;
+		}
 		case 2003:	// give op
 		case 2004:	// deop
 		case 2031:	// kick
@@ -1035,6 +1047,52 @@
 - (void)onMemberDeop:(id)sender
 {
 	[self changeOp:sender mode:'o' value:NO];
+}
+
+- (void)onMemberInvite:(id)sender
+{
+	if (inviteSheet) return;
+	
+	IRCClient* u = world.selectedClient;
+	IRCChannel* c = world.selectedChannel;
+	if (!u || !u.isLoggedIn || !c) return;
+	
+	NSMutableArray* nicks = [NSMutableArray array];
+	for (IRCUser* m in [self selectedMembers:sender]) {
+		[nicks addObject:m.nick];
+	}
+
+	NSMutableArray* channels = [NSMutableArray array];
+	for (IRCChannel* e in u.channels) {
+		if (c != e && e.isChannel) {
+			[channels addObject:e.name];
+		}
+	}
+	
+	if (!channels.count) return;
+	
+	inviteSheet = [InviteSheet new];
+	inviteSheet.delegate = self;
+	inviteSheet.window = window;
+	inviteSheet.nicks = nicks;
+	inviteSheet.uid = u.uid;
+	[inviteSheet startWithChannels:channels];
+}
+
+- (void)inviteSheet:(InviteSheet*)sender onSelectChannel:(NSString*)channelName
+{
+	IRCClient* u = [world findClientById:sender.uid];
+	if (!u) return;
+	
+	for (NSString* nick in sender.nicks) {
+		[u send:INVITE, nick, channelName, nil];
+	}
+}
+
+- (void)inviteSheetWillClose:(InviteSheet*)sender
+{
+	[inviteSheet autorelease];
+	inviteSheet = nil;
 }
 
 - (void)onMemberKick:(id)sender

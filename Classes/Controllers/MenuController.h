@@ -8,6 +8,7 @@
 #import "ModeSheet.h"
 #import "TopicSheet.h"
 #import "PasteSheet.h"
+#import "InviteSheet.h"
 
 
 @class AppController;
@@ -38,6 +39,7 @@
 	ModeSheet* modeSheet;
 	TopicSheet* topicSheet;
 	PasteSheet* pasteSheet;
+	InviteSheet* inviteSheet;
 	NSOpenPanel* fileSendPanel;
 	NSArray* fileSendTargets;
 	int fileSendUID;
@@ -106,6 +108,7 @@
 - (void)onMemberTalk:(id)sender;
 - (void)onMemberGiveOp:(id)sender;
 - (void)onMemberDeop:(id)sender;
+- (void)onMemberInvite:(id)sender;
 - (void)onMemberKick:(id)sender;
 - (void)onMemberBan:(id)sender;
 - (void)onMemberKickBan:(id)sender;
