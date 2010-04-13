@@ -1174,7 +1174,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		}
 	}
 	else if ([cmd isEqualToString:JOIN]) {
-		if (selChannel && selChannel.isChannel && !selChannel.isActive && !s.length) {
+		if (selChannel && selChannel.isChannel && !s.length) {
 			targetChannelName = selChannel.name;
 		}
 		else {
@@ -1369,23 +1369,30 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	}
 	else if ([cmd isEqualToString:TOPIC]) {
 		if (!s.length && !cutColon) {
-			[self send:TOPIC, targetChannelName, nil];
+			s = nil;
 		}
-		else {
-			[self send:TOPIC, targetChannelName, s, nil];
-		}
+		[self send:cmd, targetChannelName, s, nil];
 	}
 	else if ([cmd isEqualToString:PART]) {
-		[self send:PART, targetChannelName, s, nil];
+		if (!s.length && !cutColon) {
+			s = nil;
+		}
+		[self send:cmd, targetChannelName, s, nil];
 	}
 	else if ([cmd isEqualToString:KICK]) {
 		NSString* peer = [s getToken];
-		[self send:KICK, targetChannelName, peer, s, nil];
+		[self send:cmd, targetChannelName, peer, s, nil];
 	}
 	else if ([cmd isEqualToString:AWAY]) {
-		[self send:AWAY, s, nil];
+		if (!s.length && !cutColon) {
+			s = nil;
+		}
+		[self send:cmd, s, nil];
 	}
 	else if ([cmd isEqualToString:JOIN] || [cmd isEqualToString:MODE] || [cmd isEqualToString:INVITE]) {
+		if (!s.length && !cutColon) {
+			s = nil;
+		}
 		[self send:cmd, targetChannelName, s, nil];
 	}
 	else if ([cmd isEqualToString:WHOIS]) {
