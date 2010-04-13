@@ -1387,10 +1387,10 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	}
 	else if ([cmd isEqualToString:WHOIS]) {
 		if ([s contains:@" "]) {
-			[self send:WHOIS, s, nil];
+			[self sendLine:[NSString stringWithFormat:@"%@ %@", WHOIS, s]];
 		}
 		else {
-			[self send:WHOIS, [NSString stringWithFormat:@"%@ %@", s, s], nil];
+			[self send:WHOIS, s, s, nil];
 		}
 	}
 	else {
