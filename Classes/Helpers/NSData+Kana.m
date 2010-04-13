@@ -167,26 +167,4 @@ typedef enum {
 	return dest;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @end
