@@ -19,6 +19,7 @@
 #define MAX_BODY_LEN		480
 #define TIME_BUFFER_SIZE	256
 
+#define PONG_INTERVAL		130
 #define QUIT_INTERVAL		5
 #define RECONNECT_INTERVAL	20
 #define RETRY_INTERVAL		240
@@ -120,6 +121,11 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		nameResolver = [HostResolver new];
 		nameResolver.delegate = self;
 		
+		pongTimer = [Timer new];
+		pongTimer.delegate = self;
+		pongTimer.reqeat = YES;
+		pongTimer.selector = @selector(onPongTimer:);
+		
 		quitTimer = [Timer new];
 		quitTimer.delegate = self;
 		quitTimer.reqeat = NO;
@@ -166,6 +172,8 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	[joinMyAddress release];
 	[myAddress release];
 	
+	[pongTimer stop];
+	[pongTimer release];
 	[quitTimer stop];
 	[quitTimer release];
 	[reconnectTimer stop];
@@ -353,6 +361,30 @@ static NSDateFormatter* dateTimeFormatter = nil;
 
 #pragma mark -
 #pragma mark Timers
+
+- (void)startPongTimer
+{
+	if (pongTimer.isActive) return;
+	
+	[pongTimer start:PONG_INTERVAL];
+}
+
+- (void)stopPongTimer
+{
+	[pongTimer stop];
+}
+
+- (void)onPongTimer:(id)sender
+{
+	if (isLoggedIn) {
+		if (serverHostname.length) {
+			[self send:PONG, serverHostname, nil];
+		}
+	}
+	else {
+		[self stopPongTimer];
+	}
+}
 
 - (void)startQuitTimer
 {
@@ -2685,12 +2717,16 @@ static NSDateFormatter* dateTimeFormatter = nil;
 - (void)receivePing:(IRCMessage*)m
 {
 	[self send:PONG, [m sequence:0], nil];
+	
+	[self stopPongTimer];
+	[self startPongTimer];
 }
 
 - (void)receiveInit:(IRCMessage*)m
 {
 	if (isLoggedIn) return;
 	
+	[self startPongTimer];
 	[self stopRetryTimer];
 	
 	[world expandClient:self];
@@ -3212,6 +3248,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	conn = nil;
 	
 	[self clearCommandQueue];
+	[self stopPongTimer];
 	[self stopQuitTimer];
 	[self stopRetryTimer];
 	
