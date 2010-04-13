@@ -192,10 +192,10 @@
 {
 	CGFloat mine = self.weight;
 	CGFloat others = other.weight;
-	
+
 	if (mine > others) return NSOrderedAscending;
-	if (others < mine) return NSOrderedDescending;
-	return [canonicalNick caseInsensitiveCompare:other.canonicalNick];
+	if (mine < others) return NSOrderedDescending;
+	return [canonicalNick compare:other.canonicalNick];
 }
 
 - (NSString*)description
