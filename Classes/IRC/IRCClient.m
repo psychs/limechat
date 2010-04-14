@@ -2499,7 +2499,10 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		}
 		[c removeMember:nick];
 		[self updateChannelTitle:c];
-		[self checkRejoin:c];
+		
+		if (!myself) {
+			[self checkRejoin:c];
+		}
 	}
 	
 	if ([Preferences showJoinLeave]) {
