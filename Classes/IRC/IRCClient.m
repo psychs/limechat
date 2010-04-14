@@ -1714,15 +1714,18 @@ static NSDateFormatter* dateTimeFormatter = nil;
 {
 	if (!chan) chan = self;
 	
+	IRCTreeItem* target = self;
 	IRCChannel* channel = nil;
-	if (![chan isKindOfClass:[NSString class]]) {
-		channel = chan;
+	if ([chan isKindOfClass:[IRCChannel class]]) {
+		channel = (IRCChannel*)chan;
+		target = channel;
 	}
 	
-	if (!channel.isClient && !channel.config.logToConsole) {
+	if (channel && !channel.config.logToConsole) {
 		return NO;
 	}
-	return channel != world.selected || !channel.log.viewingBottom;
+	
+	return target != world.selected || !target.log.viewingBottom;
 }
 
 - (BOOL)printBoth:(id)chan type:(LogLineType)type text:(NSString*)text
@@ -2243,7 +2246,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 				newTalk = YES;
 			}
 			
-			BOOL keyword = [self printBoth:(c ?: (id)target) type:type nick:nick text:text identified:identified];
+			BOOL keyword = [self printBoth:c type:type nick:nick text:text identified:identified];
 			
 			if (type == LINE_TYPE_NOTICE) {
 				[self notifyText:GROWL_TALK_NOTICE target:(c ?: (id)target) nick:nick text:text];
@@ -2255,7 +2258,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 				if (newTalk) [self setNewTalkState:t];
 				
 				GrowlNotificationType kind = keyword ? GROWL_HIGHLIGHT : newTalk ? GROWL_NEW_TALK : GROWL_TALK_MSG;
-				[self notifyText:kind target:(c ?: (id)target) nick:nick text:text];
+				[self notifyText:kind target:@"" nick:nick text:text];
 				
 				NSString* sound = keyword ? [Preferences soundHighlight] : newTalk ? [Preferences soundNewtalk] : [Preferences soundTalktext];
 				[SoundPlayer play:sound];
