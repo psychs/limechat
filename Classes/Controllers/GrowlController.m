@@ -78,7 +78,8 @@
 		case GROWL_NEW_TALK:
 			kind = GROWL_MSG_NEW_TALK;
 			priority = 1;
-			title = [NSString stringWithFormat:@"New Talk: %@", title];
+			title = @"New Talk";
+			//title = [NSString stringWithFormat:@"New Talk: %@", title];
 			break;
 		case GROWL_CHANNEL_MSG:
 			kind = GROWL_MSG_CHANNEL_MSG;
@@ -89,11 +90,13 @@
 			break;
 		case GROWL_TALK_MSG:
 			kind = GROWL_MSG_TALK_MSG;
-			title = [NSString stringWithFormat:@"Talk: %@", title];
+			title = @"Talk";
+			//title = [NSString stringWithFormat:@"Talk: %@", title];
 			break;
 		case GROWL_TALK_NOTICE:
 			kind = GROWL_MSG_TALK_NOTICE;
-			title = [NSString stringWithFormat:@"Talk Notice: %@", title];
+			title = @"Talk Notice";
+			//title = [NSString stringWithFormat:@"Talk Notice: %@", title];
 			break;
 		case GROWL_KICKED:
 			kind = GROWL_MSG_KICKED;
