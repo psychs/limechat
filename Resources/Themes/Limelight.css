@@ -1,0 +1,197 @@
+html {
+  font-family: "Dejavu Sans Mono";
+  font-size: 9pt;
+  background-color: #202020;
+  color: #FFFFFF;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+	margin: 0;
+  padding: 0.5ex 1.5ex;
+}
+body.console {}
+body.normal {
+	line-height: 3.2ex;
+}
+
+hr { margin: 0.5em 2em; }
+
+a {
+	color: inherit;
+}
+
+.inlineimage {
+	margin: 10px 0 15px 0;
+  max-width: 200px;
+  max-height: 150px;
+  -webkit-box-shadow: 2px 2px 2px #888;
+}
+
+.line  { padding: 0.2ex 0; }
+.time  { color: #5F5A60; }
+.place { color: #9a703f; }
+
+/* Nicks */
+
+.sender[type=normal] { color: #c4af75; font-weight: bold; margin-right: 1.5ex; }
+.sender[type=myself] { color: #8996A8; font-weight: bold; margin-right: 1.5ex; }
+
+/* Messages */
+
+.message[type=privmsg] { color: #FFFFFF; }
+.message[type=action] { color: inherit;}
+.message[type=notice] { color: #daefa3; }
+.message[type=system] { color: #808080; }
+.message[type=error] { color: #ca773f; font-weight: bold; }
+.message[type=reply] { color: #f9ed97; }
+.message[type=error_reply] { color: #e3c59c; }
+.message[type=dcc_send_send] { color: #5e5960; }
+.message[type=dcc_send_receive] { color: #5e5960; }
+.message[type=join] { color: #5e5960; }
+.message[type=part] { color: #5e5960; }
+.message[type=quit] { color: #5e5960; }
+.message[type=kick] { color: #899a95; }
+.message[type=kill] { color: #899a95; }
+.message[type=nick] { color: #5e5960; }
+.message[type=mode] { color: #8e9c69; }
+.message[type=topic] { color: #8e9c69; }
+.message[type=invite] { color: #daefa3; font-style: italic; }
+.message[type=wallops] { color: #5e5960; }
+.message[type=debug_send] { color: #5e5960; }
+.message[type=debug_receive] { color: #5e5960; }
+
+.highlight {
+	color: #ca773f;
+	font-weight: normal;
+}
+
+/* Special spans */
+
+.url {
+	word-break: break-all;
+}
+.address {
+	text-decoration: underline; word-break: break-all;
+}
+
+/* Messages in main view, but not console */
+body.normal .message[type=privmsg]          { padding-left: 22ex; display: block; }
+
+body.normal .message[type=notice]           { padding-left: 22ex; display: block; }
+body.normal .message[type=join]             { padding-left: 22ex; }
+body.normal .message[type=part]             { padding-left: 22ex; }
+body.normal .message[type=quit]             { padding-left: 22ex; }
+body.normal .message[type=kick]             { padding-left: 22ex; }
+body.normal .message[type=kill]             { padding-left: 22ex; }
+body.normal .message[type=nick]             { padding-left: 22ex; }
+body.normal .message[type=mode]             { padding-left: 22ex; }
+body.normal .message[type=topic]            { padding-left: 22ex; }
+body.normal .message[type=invite]           { padding-left: 22ex; }
+body.normal .message[type=wallops]          { padding-left: 22ex; }
+
+body.normal .message[type=system]           { padding-left: 22ex; }
+body.normal .message[type=error]            { padding-left: 22ex; }
+body.normal .message[type=reply]            { padding-left: 22ex; display: block; }
+body.normal .message[type=error_reply]      { padding-left: 22ex; }
+body.normal .message[type=dcc_send_send]    { padding-left: 22ex; }
+body.normal .message[type=dcc_send_receive] { padding-left: 22ex; }
+
+body.normal .message[type=debug_send]       { padding-left: 22ex; }
+body.normal .message[type=debug_receive]    { padding-left: 22ex; }
+
+/* Spans in line */
+
+body.normal .time {
+	display: block;
+	float: right;
+	padding-left: 1ex;
+	visibility: hidden;
+}
+body.normal .line:hover .time {
+	visibility: visible;
+}
+
+body.normal .sender[type=normal], body.normal .sender[type=myself] {
+	display: block;
+	float: left;
+	padding-right: 0.3ex;
+	text-align: right;
+	width: 20ex;
+}
+
+body.normal div.line[type=action] .sender[type=normal], div.line[type=action] .sender[type=myself] {
+	width: auto;
+	padding-left: 19ex;
+	margin-right: 1ex;
+	color: #8996A8;
+	background-color: transparent;
+}
+
+body.normal div.line[type=action] .sender[type=normal]::before, div.line[type=action] .sender[type=myself]::before {
+	content: "•";
+	padding-right: 1.5ex;
+}
+
+
+body.normal .line[highlight=true] > .sender[type=normal] {
+	margin-left: -1ex;
+	padding-left: 0.2ex;
+	padding-right: 0.8ex;
+	-webkit-border-top-right-radius: 3px;
+	-webkit-border-bottom-right-radius: 3px;
+	line-height:3ex;
+	background-color: #3B434C;
+/*	background-color: #48515C;*/
+	color: #CF6A4C;
+}
+
+body.normal .sender[type=myself]:after {
+	content: " ★";
+	color: #6E7B8D;
+}
+
+.line[highlight=true] {
+  background-color: transparent;
+}
+
+/* disable funky mirc colours */
+
+.effect[color-number] { color: inherit; background-color: inherit; font-style: italic; }
+
+/* Icons/logos for some popular apps/channels */
+
+html[channelname="#limechat"].normal,
+html[channelname="##limechat"].normal {
+	background: #202020 url('Limelight/limechat.png') no-repeat fixed bottom right;
+}
+
+html[channelname="##textmate"].normal {
+	background: #202020 url('Limelight/textmate.png') no-repeat fixed bottom right;
+}
+
+html[channelname="#adium"].normal {
+	background: #202020 url('Limelight/adium.png') no-repeat fixed bottom right;
+}
+
+html[channelname="#colloquy"].normal {
+	background: #202020 url('Limelight/colloquy.png') no-repeat fixed bottom right;
+}
+
+html[channelname="#growl"].normal {
+	background: #202020 url('Limelight/growl.png') no-repeat fixed bottom right;
+}
+html[channelname="#ruby"].normal {
+	background: #202020 url('Limelight/ruby.png') no-repeat fixed bottom right;
+}
+html[channelname="#rubyonrails"].normal {
+	background: #202020 url('Limelight/rubyonrails.png') no-repeat fixed bottom right;
+}
+html[channelname="##apple"].normal {
+	background: #202020 url('Limelight/apple.png') no-repeat fixed bottom right;
+}
+html[channelname="#python"].normal {
+	background: #202020 url('Limelight/python.png') no-repeat fixed bottom right;
+}
+

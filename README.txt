@@ -9,24 +9,30 @@ Satoshi Nakagawa <psychs@limechat.net>
 
 * Thanks To
 
-Yohei Endo          # Application icon
-Atsuhisa Shimazawa  # Badges
-Shingo Morita       # Badges
-Dustin Voss         # AsyncSocket
-Eloy Duran          # RubyCocoa developer, a patch for bundling RubyCocoa.framework,
-                    # SACrashReporter, GrowlNotifier and refactoring around preferences
-Evan Phoenix        # Inline images support
-Fujimoto Hisa       # RubyCocoa creator
-Keiji Yoshimi       # A patch for GrowlNotifier and around hot key
-Laurent Sansonetti  # RubyCocoa developer, many requests and suggestions
-Josh Goebel         # CocoaSheet, many improvements of code and UIs, Pastie creator
-Jun Morimoto        # Bug fixes
-Kevin Ballard       # Patches around theme support
-Peter Haza          # A patch for context menu on channel name in logs
-Stefan Rusterholz   # Many suggestions and patches
-Takashi Tsugo       # Deep Ocean theme
-why the lucky stiff	# Syck
-William Thimbleby	# Syck coaoa
+Allan Odgaard		       # TextMate icon for Limelight theme
+Atsuhisa Shimazawa         # Badges
+Shingo Morita              # Badges
+Dustin Voss                # AsyncSocket
+Eloy Duran                 # RubyCocoa developer, a patch for bundling RubyCocoa.framework,
+                           # SACrashReporter, GrowlNotifier and refactoring around preferences
+Evan Phoenix               # Inline images support
+Fujimoto Hisa              # RubyCocoa creator
+Keiji Yoshimi              # A patch for GrowlNotifier and around hot key
+Laurent Sansonetti         # RubyCocoa developer, many requests and suggestions
+Josh Goebel                # CocoaSheet, many improvements of code and UIs, Pastie creator
+Jun Morimoto               # Bug fixes
+Kevin Ballard              # Patches around theme support
+Peter Haza                 # A patch for context menu on channel name in logs
+Python Software Foundation # Python logo in Limelight theme
+Rails team                 # Ruby on Rails logo in Limelight theme
+Stanley Rost               # Limelight theme
+Stefan Rusterholz          # Many suggestions and patches
+Takashi Tsugo              # Deep Ocean theme
+The Growl Project          # Growl logo in Limelight theme
+why the lucky stiff        # Syck
+William Thimbleby          # Syck coaoa
+Yohei Endo                 # Application icon
+Yukihiro Matsumoto         # Ruby logo in Limelight theme
 
 * License (Ruby's)
 
