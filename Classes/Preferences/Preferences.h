@@ -112,6 +112,25 @@ typedef enum {
 + (NSString*)soundTalktext;
 + (void)setSoundTalktext:(NSString*)value;
 
++ (BOOL)spellCheckEnabled;
++ (void)setSpellCheckEnabled:(BOOL)value;
++ (BOOL)grammarCheckEnabled;
++ (void)setGrammarCheckEnabled:(BOOL)value;
++ (BOOL)spellingCorrectionEnabled;
++ (void)setSpellingCorrectionEnabled:(BOOL)value;
++ (BOOL)smartInsertDeleteEnabled;
++ (void)setSmartInsertDeleteEnabled:(BOOL)value;
++ (BOOL)quoteSubstitutionEnabled;
++ (void)setQuoteSubstitutionEnabled:(BOOL)value;
++ (BOOL)dashSubstitutionEnabled;
++ (void)setDashSubstitutionEnabled:(BOOL)value;
++ (BOOL)linkDetectionEnabled;
++ (void)setLinkDetectionEnabled:(BOOL)value;
++ (BOOL)dataDetectionEnabled;
++ (void)setDataDetectionEnabled:(BOOL)value;
++ (BOOL)textReplacementEnabled;
++ (void)setTextReplacementEnabled:(BOOL)value;
+
 + (NSDictionary*)loadWorld;
 + (void)saveWorld:(NSDictionary*)value;
 

@@ -473,6 +473,128 @@
 #pragma mark -
 #pragma mark World
 
++ (BOOL)spellCheckEnabled
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	if (![ud objectForKey:@"spellCheck2"]) return YES;
+	return [ud boolForKey:@"spellCheck2"];
+}
+
++ (void)setSpellCheckEnabled:(BOOL)value
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	[ud setBool:value forKey:@"spellCheck2"];
+	[ud synchronize];
+}
+
++ (BOOL)grammarCheckEnabled
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	return [ud boolForKey:@"grammarCheck"];
+}
+
++ (void)setGrammarCheckEnabled:(BOOL)value
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	[ud setBool:value forKey:@"grammarCheck"];
+	[ud synchronize];
+}
+
++ (BOOL)spellingCorrectionEnabled
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	return [ud boolForKey:@"spellingCorrection"];
+}
+
++ (void)setSpellingCorrectionEnabled:(BOOL)value
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	[ud setBool:value forKey:@"spellingCorrection"];
+	[ud synchronize];
+}
+
++ (BOOL)smartInsertDeleteEnabled
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	if (![ud objectForKey:@"smartInsertDelete"]) return YES;
+	return [ud boolForKey:@"smartInsertDelete"];
+}
+
++ (void)setSmartInsertDeleteEnabled:(BOOL)value
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	[ud setBool:value forKey:@"smartInsertDelete"];
+	[ud synchronize];
+}
+
++ (BOOL)quoteSubstitutionEnabled
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	return [ud boolForKey:@"quoteSubstitution"];
+}
+
++ (void)setQuoteSubstitutionEnabled:(BOOL)value
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	[ud setBool:value forKey:@"quoteSubstitution"];
+	[ud synchronize];
+}
+
++ (BOOL)dashSubstitutionEnabled
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	return [ud boolForKey:@"dashSubstitution"];
+}
+
++ (void)setDashSubstitutionEnabled:(BOOL)value
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	[ud setBool:value forKey:@"dashSubstitution"];
+	[ud synchronize];
+}
+
++ (BOOL)linkDetectionEnabled
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	return [ud boolForKey:@"linkDetection"];
+}
+
++ (void)setLinkDetectionEnabled:(BOOL)value
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	[ud setBool:value forKey:@"linkDetection"];
+	[ud synchronize];
+}
+
++ (BOOL)dataDetectionEnabled
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	return [ud boolForKey:@"dataDetection"];
+}
+
++ (void)setDataDetectionEnabled:(BOOL)value
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	[ud setBool:value forKey:@"dataDetection"];
+	[ud synchronize];
+}
+
++ (BOOL)textReplacementEnabled
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	return [ud boolForKey:@"textReplacement"];
+}
+
++ (void)setTextReplacementEnabled:(BOOL)value
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	[ud setBool:value forKey:@"textReplacement"];
+	[ud synchronize];
+}
+
+#pragma mark -
+#pragma mark World
+
 + (NSDictionary*)loadWorld
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
@@ -486,7 +608,7 @@
 }
 
 #pragma mark -
-#pragma mark World
+#pragma mark Window
 
 + (NSDictionary*)loadWindowStateWithName:(NSString*)name
 {
