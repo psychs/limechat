@@ -167,7 +167,7 @@ def parse_commit_log
   updates = []
   commit = nil
   
-  log = `git log`
+  log = `git log | head -n 1000`
   
   log.each_line do |s|
     s.chomp!
