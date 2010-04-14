@@ -2267,7 +2267,12 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	}
 	else {
 		// system
-		[self printBoth:nil type:type nick:nick text:text identified:identified];
+		if (!nick.length || [nick contains:@"."]) {
+			[self printBoth:nil type:type text:text];
+		}
+		else {
+			[self printBoth:nil type:type nick:nick text:text identified:identified];
+		}
 	}
 }
 
