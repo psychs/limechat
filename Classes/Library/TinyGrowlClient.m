@@ -77,8 +77,6 @@
 			  priority:(int)priority
 				  icon:(NSImage*)icon
 {
-	[self registerApplication];
-	
 	NSMutableDictionary* dic = [NSMutableDictionary dictionaryWithObjectsAndKeys:
 								appName, @"ApplicationName",
 								[NSNumber numberWithInt:[[NSProcessInfo processInfo] processIdentifier]], @"ApplicationPID",
@@ -101,7 +99,7 @@
 	}
 	
 	NSDistributedNotificationCenter* dnc = [NSDistributedNotificationCenter defaultCenter];
-	[dnc postNotificationName:GROWL_NOTIFICATION object:nil userInfo:dic deliverImmediately:YES];
+	[dnc postNotificationName:GROWL_NOTIFICATION object:nil userInfo:dic deliverImmediately:NO];
 }
 
 - (void)registerApplication
@@ -136,7 +134,7 @@
 						 [icon TIFFRepresentation], @"ApplicationIcon",
 						 nil];
 	
-	[dnc postNotificationName:GROWL_REGISTER object:nil userInfo:dic deliverImmediately:YES];
+	[dnc postNotificationName:GROWL_REGISTER object:nil userInfo:dic deliverImmediately:NO];
 }
 
 #pragma mark -
