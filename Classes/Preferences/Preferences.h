@@ -87,6 +87,12 @@ typedef enum {
 
 + (NSString*)soundChanneltext;
 + (void)setSoundChanneltext:(NSString*)value;
++ (NSString*)soundChannelnotice;
++ (void)setSoundChannelnotice:(NSString*)value;
++ (NSString*)soundTalktext;
++ (void)setSoundTalktext:(NSString*)value;
++ (NSString*)soundTalknotice;
++ (void)setSoundTalknotice:(NSString*)value;
 + (NSString*)soundDisconnect;
 + (void)setSoundDisconnect:(NSString*)value;
 + (NSString*)soundFileReceiveFailure;
@@ -109,8 +115,6 @@ typedef enum {
 + (void)setSoundLogin:(NSString*)value;
 + (NSString*)soundNewtalk;
 + (void)setSoundNewtalk:(NSString*)value;
-+ (NSString*)soundTalktext;
-+ (void)setSoundTalktext:(NSString*)value;
 
 + (BOOL)spellCheckEnabled;
 + (void)setSpellCheckEnabled:(BOOL)value;

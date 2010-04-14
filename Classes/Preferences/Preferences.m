@@ -326,6 +326,42 @@
 	[ud setObject:value forKey:@"Preferences.Sound.channeltext"];
 }
 
++ (NSString*)soundChannelnotice
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	return [ud objectForKey:@"channelNoticeSound"];
+}
+
++ (void)setSoundChannelnotice:(NSString*)value
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	[ud setObject:value forKey:@"channelNoticeSound"];
+}
+
++ (NSString*)soundTalktext
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	return [ud objectForKey:@"Preferences.Sound.talktext"];
+}
+
++ (void)setSoundTalktext:(NSString*)value
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	[ud setObject:value forKey:@"Preferences.Sound.talktext"];
+}
+
++ (NSString*)soundTalknotice
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	return [ud objectForKey:@"talkNoticeSound"];
+}
+
++ (void)setSoundTalknotice:(NSString*)value
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	[ud setObject:value forKey:@"talkNoticeSound"];
+}
+
 + (NSString*)soundDisconnect
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
@@ -456,18 +492,6 @@
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
 	[ud setObject:value forKey:@"Preferences.Sound.newtalk"];
-}
-
-+ (NSString*)soundTalktext
-{
-	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	return [ud objectForKey:@"Preferences.Sound.talktext"];
-}
-
-+ (void)setSoundTalktext:(NSString*)value
-{
-	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	[ud setObject:value forKey:@"Preferences.Sound.talktext"];
 }
 
 #pragma mark -
