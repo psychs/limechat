@@ -1389,11 +1389,19 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		}
 		[self send:cmd, s, nil];
 	}
-	else if ([cmd isEqualToString:JOIN] || [cmd isEqualToString:MODE] || [cmd isEqualToString:INVITE]) {
+	else if ([cmd isEqualToString:JOIN] || [cmd isEqualToString:INVITE]) {
 		if (!s.length && !cutColon) {
 			s = nil;
 		}
 		[self send:cmd, targetChannelName, s, nil];
+	}
+	else if ([cmd isEqualToString:MODE]) {
+		if (!s.length) {
+			[self sendLine:[NSString stringWithFormat:@"%@ %@", MODE, targetChannelName]];
+		}
+		else {
+			[self sendLine:[NSString stringWithFormat:@"%@ %@ %@", MODE, targetChannelName, s]];
+		}
 	}
 	else if ([cmd isEqualToString:WHOIS]) {
 		if ([s contains:@" "]) {
