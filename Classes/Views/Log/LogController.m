@@ -371,7 +371,7 @@
 		//
 		static Regex* imageRegex = nil;
 		if (!imageRegex) {
-			NSString* pattern = @"(?<![a-zA-Z0-9_])https?://[a-z0-9.,_\\-/:;%$~]+\\.(jpg|jpeg|png|gif)";
+			NSString* pattern = @"(?<![a-zA-Z0-9_])https?://[a-z0-9.,_\\-+/:;%$~]+\\.(jpg|jpeg|png|gif)";
 			imageRegex = [[Regex alloc] initWithString:pattern options:UREGEX_CASE_INSENSITIVE];
 		}
 		
