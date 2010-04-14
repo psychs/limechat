@@ -7,15 +7,13 @@
     <language>ja</language>
 
     <item>
-      <title>2.3</title>
-      <link>http://limechat.net/mac/ja.html#v2.3</link>
-      <pubDate>Wed, 14 Apr 2010 03:10:31 +0900</pubDate>
+      <title>2.4</title>
+      <link>http://limechat.net/mac/ja.html#v2.4</link>
+      <pubDate>Wed, 14 Apr 2010 18:32:50 +0900</pubDate>
       <content:encoded><![CDATA[
   			<ul>
-          <li>Invite を GUI でできるようにした。</li>
-          <li>接続を維持するために pong を定期的に送るようにした。</li>
-          <li>ISO-2022-JP の半角カナに対応した。</li>
-          <li>細かいバグ修正。</li>
+          <li>ユーザ入力のコマンドをパーズする部分のバグを直した。</li>
+          <li>テキストエディットのオプションを保存するようにした。</li>
         </ul>
       ]]></content:encoded>
     </item>

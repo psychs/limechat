@@ -7,15 +7,13 @@
     <language>en-us</language>
 
     <item>
-      <title>2.3</title>
-      <link>http://limechat.net/mac/#v2.3</link>
-      <pubDate>Wed, 14 Apr 2010 03:10:31 +0900</pubDate>
+      <title>2.4</title>
+      <link>http://limechat.net/mac/#v2.4</link>
+      <pubDate>Wed, 14 Apr 2010 18:32:50 +0900</pubDate>
       <content:encoded><![CDATA[
   			<ul>
-          <li>Added invite UI.</li>
-          <li>Send pong actively to keep alive connections.</li>
-          <li>Half-width kana support in ISO-2022-JP</li>
-          <li>Fixed minor bugs.</li>
+          <li>Fixed bunch of minor bugs around command parsing from user input.</li>
+          <li>Remember text options.</li>
         </ul>
       ]]></content:encoded>
     </item>
