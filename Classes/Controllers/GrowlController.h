@@ -33,6 +33,7 @@ typedef enum {
 	TinyGrowlClient* growl;
 	id lastClickedContext;
 	CFAbsoluteTime lastClickedTime;
+	BOOL registered;
 }
 
 @property (nonatomic, assign) IRCWorld* owner;

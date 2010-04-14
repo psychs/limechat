@@ -484,7 +484,6 @@
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
 	[ud setBool:value forKey:@"spellCheck2"];
-	[ud synchronize];
 }
 
 + (BOOL)grammarCheckEnabled
@@ -497,7 +496,6 @@
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
 	[ud setBool:value forKey:@"grammarCheck"];
-	[ud synchronize];
 }
 
 + (BOOL)spellingCorrectionEnabled
@@ -510,7 +508,6 @@
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
 	[ud setBool:value forKey:@"spellingCorrection"];
-	[ud synchronize];
 }
 
 + (BOOL)smartInsertDeleteEnabled
@@ -524,7 +521,6 @@
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
 	[ud setBool:value forKey:@"smartInsertDelete"];
-	[ud synchronize];
 }
 
 + (BOOL)quoteSubstitutionEnabled
@@ -537,7 +533,6 @@
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
 	[ud setBool:value forKey:@"quoteSubstitution"];
-	[ud synchronize];
 }
 
 + (BOOL)dashSubstitutionEnabled
@@ -550,7 +545,6 @@
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
 	[ud setBool:value forKey:@"dashSubstitution"];
-	[ud synchronize];
 }
 
 + (BOOL)linkDetectionEnabled
@@ -563,7 +557,6 @@
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
 	[ud setBool:value forKey:@"linkDetection"];
-	[ud synchronize];
 }
 
 + (BOOL)dataDetectionEnabled
@@ -576,7 +569,6 @@
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
 	[ud setBool:value forKey:@"dataDetection"];
-	[ud synchronize];
 }
 
 + (BOOL)textReplacementEnabled
@@ -589,7 +581,21 @@
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
 	[ud setBool:value forKey:@"textReplacement"];
-	[ud synchronize];
+}
+
+#pragma mark -
+#pragma mark Growl
+
++ (BOOL)registeredToGrowl
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	return [ud boolForKey:@"registeredToGrowl"];
+}
+
++ (void)setRegisteredToGrowl:(BOOL)value
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	[ud setBool:value forKey:@"registeredToGrowl"];
 }
 
 #pragma mark -

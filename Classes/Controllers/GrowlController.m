@@ -3,6 +3,7 @@
 
 #import "GrowlController.h"
 #import "IRCWorld.h"
+#import "Preferences.h"
 
 
 #define GROWL_MSG_LOGIN						@"Logged in"
@@ -35,6 +36,7 @@
 - (id)init
 {
 	if (self = [super init]) {
+		registered = [Preferences registeredToGrowl];
 	}
 	return self;
 }
@@ -52,6 +54,14 @@
 	
 	growl = [TinyGrowlClient new];
 	growl.delegate = self;
+	
+	if (!registered) {
+		// reset growl settings
+		growl.allNotifications = [NSArray array];
+		growl.defaultNotifications = growl.allNotifications;
+		[growl registerApplication];
+	}
+	
 	growl.allNotifications = [NSArray arrayWithObjects:
 							  GROWL_MSG_LOGIN, GROWL_MSG_DISCONNECT, GROWL_MSG_HIGHLIGHT,
 							  GROWL_MSG_NEW_TALK, GROWL_MSG_CHANNEL_MSG, GROWL_MSG_CHANNEL_NOTICE,
@@ -59,7 +69,7 @@
 							  GROWL_MSG_INVITED, GROWL_MSG_FILE_RECEIVE_REQUEST, GROWL_MSG_FILE_RECEIVE_SUCCEEDED,
 							  GROWL_MSG_FILE_RECEIVE_FAILED, GROWL_MSG_FILE_SEND_SUCCEEDED, GROWL_NSG_FILE_SEND_FAILED,
 							  nil];
-	growl.defaultNotifications = [NSArray arrayWithObjects:GROWL_MSG_HIGHLIGHT, GROWL_MSG_NEW_TALK, nil];
+	growl.defaultNotifications = growl.allNotifications;
 	[growl registerApplication];
 }
 
@@ -163,6 +173,11 @@
 	[lastClickedContext release];
 	lastClickedContext = [context retain];
 	
+	if (!registered) {
+		registered = YES;
+		[Preferences setRegisteredToGrowl:YES];
+	}
+	
 	[owner.window makeKeyAndOrderFront:nil];
 	[NSApp activateIgnoringOtherApps:YES];
 	
@@ -193,6 +208,14 @@
 				[owner select:u];
 			}
 		}
+	}
+}
+
+- (void)tinyGrowlClient:(TinyGrowlClient*)sender didTimeOut:(id)context
+{
+	if (!registered) {
+		registered = YES;
+		[Preferences setRegisteredToGrowl:YES];
 	}
 }
 
