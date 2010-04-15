@@ -22,6 +22,7 @@
 		78347EDD1158D4B00073E2F0 /* ServerDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78347ECD1158D4B00073E2F0 /* ServerDialog.xib */; };
 		78347EDE1158D4B00073E2F0 /* WelcomeDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78347ECF1158D4B00073E2F0 /* WelcomeDialog.xib */; };
 		78347EDF1158D4B00073E2F0 /* WhoisDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78347ED11158D4B00073E2F0 /* WhoisDialog.xib */; };
+		7835FB921177341D005DC0B4 /* ListDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 7835FB911177341D005DC0B4 /* ListDialog.m */; };
 		783E6ADB1173802100261552 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 783E6AD91173802100261552 /* main.m */; };
 		784BBE941085BC950080898B /* bluestar.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 784BBE901085BC950080898B /* bluestar.tiff */; };
 		784BBE951085BC950080898B /* keyrecorder_erase.png in Resources */ = {isa = PBXBuildFile; fileRef = 784BBE911085BC950080898B /* keyrecorder_erase.png */; };
@@ -193,6 +194,8 @@
 		78347ECE1158D4B00073E2F0 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/ServerDialog.xib; sourceTree = "<group>"; };
 		78347ED01158D4B00073E2F0 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/WelcomeDialog.xib; sourceTree = "<group>"; };
 		78347ED21158D4B00073E2F0 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/WhoisDialog.xib; sourceTree = "<group>"; };
+		7835FB901177341D005DC0B4 /* ListDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListDialog.h; sourceTree = "<group>"; };
+		7835FB911177341D005DC0B4 /* ListDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListDialog.m; sourceTree = "<group>"; };
 		783E6AD61173802100261552 /* LimeChat_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LimeChat_Prefix.pch; sourceTree = "<group>"; };
 		783E6AD91173802100261552 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		784BBE901085BC950080898B /* bluestar.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = bluestar.tiff; sourceTree = "<group>"; };
@@ -577,6 +580,8 @@
 				78A8C0D911737F660044E7A1 /* NickSheet.m */,
 				78A8C0E911737F660044E7A1 /* WhoisDialog.h */,
 				78A8C0EA11737F660044E7A1 /* WhoisDialog.m */,
+				7835FB901177341D005DC0B4 /* ListDialog.h */,
+				7835FB911177341D005DC0B4 /* ListDialog.m */,
 				78A8C0E511737F660044E7A1 /* TopicSheet.h */,
 				78A8C0E611737F660044E7A1 /* TopicSheet.m */,
 				78A8C0E711737F660044E7A1 /* WelcomeDialog.h */,
@@ -1059,6 +1064,7 @@
 				782FCF891173824C007BE697 /* LimeChatApplication.m in Sources */,
 				78A7B4F61174427C006B324A /* NSData+Kana.m in Sources */,
 				78A7B58711744F12006B324A /* InviteSheet.m in Sources */,
+				7835FB921177341D005DC0B4 /* ListDialog.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

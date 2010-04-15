@@ -11,6 +11,7 @@
 #import "Preferences.h"
 #import "LogController.h"
 #import "ServerDialog.h"
+#import "ListDialog.h"
 #import "Timer.h"
 #import "HostResolver.h"
 
@@ -52,6 +53,7 @@ typedef enum {
 	
 	NSString* serverHostname;
 	BOOL inWhois;
+	BOOL inList;
 	BOOL identifyMsg;
 	BOOL identifyCTCP;
 	
@@ -71,6 +73,7 @@ typedef enum {
 	IRCChannel* lastSelectedChannel;
 	
 	NSMutableArray* whoisDialogs;
+	ListDialog* channelListDialog;
 	ServerDialog* propertyDialog;
 }
 
@@ -128,5 +131,7 @@ typedef enum {
 
 - (IRCChannel*)findChannel:(NSString*)name;
 - (int)indexOfTalkChannel;
+
+- (void)createChannelListDialog;
 
 @end

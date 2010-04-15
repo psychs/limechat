@@ -186,6 +186,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	
 	[lastSelectedChannel release];
 	[whoisDialogs release];
+	[channelListDialog release];
 	[propertyDialog release];
 	[super dealloc];
 }
@@ -324,6 +325,9 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		[d close];
 	}
 	[whoisDialogs removeAllObjects];
+	
+	[channelListDialog close];
+	[channelListDialog release];
 }
 
 - (void)preferencesChanged
@@ -357,6 +361,37 @@ static NSDateFormatter* dateTimeFormatter = nil;
 - (void)reloadTree
 {
 	[world reloadTree];
+}
+
+#pragma mark -
+#pragma mark ListDialog
+
+- (void)createChannelListDialog
+{
+	if (!channelListDialog) {
+		channelListDialog = [ListDialog new];
+		channelListDialog.delegate = self;
+		[channelListDialog start];
+	}
+	else {
+		[channelListDialog show];
+	}
+}
+
+- (void)listDialogOnUpdate:(ListDialog*)sender
+{
+	[self sendLine:LIST];
+}
+
+- (void)listDialogOnJoin:(ListDialog*)sender channel:(NSString*)channel
+{
+	[self send:JOIN, channel, nil];
+}
+
+- (void)listDialogWillClose:(ListDialog*)sender
+{
+	[channelListDialog autorelease];
+	channelListDialog = nil;
 }
 
 #pragma mark -
@@ -2765,7 +2800,9 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	serverHostname = [m.sender.raw retain];
 	[myNick release];
 	myNick = [[m paramAt:0] retain];
+	
 	inWhois = NO;
+	inList = NO;
 	
 	[self printSystem:self text:@"Logged in"];
 	
@@ -3187,8 +3224,33 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		}
 		//case 352:	// RPL_WHOREPLY
 		//case 315:	// RPL_ENDOFWHO
-		//case 322:	// RPL_LIST
-		//case 323:	// RPL_LISTEND
+		case 322:	// RPL_LIST
+		{
+			NSString* chname = [m paramAt:1];
+			NSString* countStr = [m paramAt:2];
+			NSString* topic = [m sequence:3];
+			
+			if (!inList) {
+				inList = YES;
+				if (channelListDialog) {
+					[channelListDialog clear];
+				}
+				else {
+					[self createChannelListDialog];
+				}
+			}
+			if (channelListDialog) {
+				[channelListDialog addChannel:chname count:[countStr intValue] topic:topic];
+			}
+			else {
+				NSString* text = [NSString stringWithFormat:@"%@ (%@) %@", chname, countStr, topic];
+				[self printBoth:nil type:LINE_TYPE_REPLY text:text];
+			}
+			break;
+		}
+		case 323:	// RPL_LISTEND
+			inList = NO;
+			break;
 		default:
 			[self printUnknownReply:m];
 			break;
@@ -3302,6 +3364,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	joinMyAddress = nil;
 	
 	inWhois = NO;
+	inList = NO;
 	identifyMsg = NO;
 	identifyCTCP = NO;
 	
