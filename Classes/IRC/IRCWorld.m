@@ -763,7 +763,7 @@
 	c.world = self;
 	c.client = client;
 	c.channel = channel;
-	c.maxLines = 300;
+	c.maxLines = [Preferences maxLogLines];
 	c.theme = viewTheme;
 	c.console = console;
 	c.initialBackgroundColor = [viewTheme.other inputTextBgColor];
