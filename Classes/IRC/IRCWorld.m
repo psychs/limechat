@@ -57,6 +57,7 @@
 - (id)init
 {
 	if (self = [super init]) {
+		icon = [IconController new];
 		clients = [NSMutableArray new];
 	}
 	return self;
@@ -64,6 +65,7 @@
 
 - (void)dealloc
 {
+	[icon release];
 	[consoleLog release];
 	[dummyLog release];
 	[config release];
@@ -227,6 +229,27 @@
 
 - (void)updateIcon
 {
+	BOOL highlight = NO;
+	BOOL newTalk = NO;
+	
+	for (IRCClient* u in clients) {
+		if (u.isKeyword) {
+			highlight = YES;
+			break;
+		}
+		
+		for (IRCChannel* c in u.channels) {
+			if (c.isKeyword) {
+				highlight = YES;
+				break;
+			}
+			else if (c.isNewTalk) {
+				newTalk = YES;
+			}
+		}
+	}
+	
+	[icon setHighlight:highlight newTalk:newTalk];
 }
 
 - (void)reloadTree

@@ -9,4 +9,7 @@
 	BOOL highlight;
 	BOOL newTalk;
 }
+
+- (void)setHighlight:(BOOL)aHighlight newTalk:(BOOL)aNewTalk;
+
 @end

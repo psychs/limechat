@@ -18,6 +18,7 @@
 #import "IRCTreeItem.h"
 #import "DCCController.h"
 #import "GrowlController.h"
+#import "IconController.h"
 
 
 @class AppController;
@@ -28,6 +29,7 @@
 	AppController* app;
 	MainWindow* window;
 	GrowlController* growl;
+	IconController* icon;
 	ServerTreeView* tree;
 	InputTextField* text;
 	NSBox* logBase;
