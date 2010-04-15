@@ -213,8 +213,16 @@
 		e = [[[SoundWrapper alloc] initWithDisplayName:@"Channel text" sound:s saveSelector:@selector(setSoundChanneltext:)] autorelease];
 		[ary addObject:e];
 		
+		s = [Preferences soundChannelnotice];
+		e = [[[SoundWrapper alloc] initWithDisplayName:@"Channel notice" sound:s saveSelector:@selector(setSoundChannelnotice:)] autorelease];
+		[ary addObject:e];
+		
 		s = [Preferences soundTalktext];
 		e = [[[SoundWrapper alloc] initWithDisplayName:@"Talk text" sound:s saveSelector:@selector(setSoundTalktext:)] autorelease];
+		[ary addObject:e];
+		
+		s = [Preferences soundTalknotice];
+		e = [[[SoundWrapper alloc] initWithDisplayName:@"Talk notice" sound:s saveSelector:@selector(setSoundTalknotice:)] autorelease];
 		[ary addObject:e];
 		
 		s = [Preferences soundFileReceiveRequest];

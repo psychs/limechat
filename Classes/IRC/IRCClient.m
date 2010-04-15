@@ -2201,6 +2201,9 @@ static NSDateFormatter* dateTimeFormatter = nil;
 
 		if (type == LINE_TYPE_NOTICE) {
 			[self notifyText:GROWL_CHANNEL_NOTICE target:(c ?: (id)target) nick:nick text:text];
+			
+			NSString* sound = [Preferences soundChannelnotice];
+			[SoundPlayer play:sound];
 		}
 		else {
 			id t = c ?: (id)self;
@@ -2250,6 +2253,9 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			
 			if (type == LINE_TYPE_NOTICE) {
 				[self notifyText:GROWL_TALK_NOTICE target:(c ?: (id)target) nick:nick text:text];
+				
+				NSString* sound = [Preferences soundTalknotice];
+				[SoundPlayer play:sound];
 			}
 			else {
 				id t = c ?: (id)self;
