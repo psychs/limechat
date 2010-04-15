@@ -33,6 +33,15 @@
 	return 0;
 }
 
+- (double)doubleForKey:(NSString*)key
+{
+	id obj = [self objectForKey:key];
+	if ([obj respondsToSelector:@selector(doubleValue)]) {
+		return [obj doubleValue];
+	}
+	return 0;
+}
+
 - (NSString*)stringForKey:(NSString*)key
 {
 	id obj = [self objectForKey:key];

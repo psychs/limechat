@@ -8,6 +8,7 @@
 - (BOOL)boolForKey:(NSString*)key;
 - (int)intForKey:(NSString*)key;
 - (long long)longLongForKey:(NSString*)key;
+- (double)doubleForKey:(NSString*)key;
 - (NSString*)stringForKey:(NSString*)key;
 - (NSDictionary*)dictionaryForKey:(NSString*)key;
 - (NSArray*)arrayForKey:(NSString*)key;
