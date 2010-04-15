@@ -193,7 +193,7 @@
 	logNickFormat = [self loadString:@"log-view", @"nickname-format", nil] ?: @"%n: ";
 	[logNickFormat retain];
 	
-	logScrollerMarkColor = [self loadColor:@"input-text", @"background-color", nil] ?: [NSColor magentaColor];
+	logScrollerMarkColor = [self loadColor:@"log-view", @"scroller-highlight-color", nil] ?: [NSColor magentaColor];
 	[logScrollerMarkColor retain];
 	
 	

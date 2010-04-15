@@ -867,10 +867,7 @@
 
 - (NSColor*)markedScrollerColor:(MarkedScroller*)sender
 {
-	return [NSColor redColor];
-	
-	//@@@
-	//return [[theme other] log_scroller_highlight_color];
+	return [[theme other] logScrollerMarkColor];
 }
 
 @end
