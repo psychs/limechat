@@ -58,21 +58,19 @@
 		t = [t substringFromIndex:1];
 		sender.raw = t;
 		
-		int i = [t findCharacter:'.'];
+		int i = [t findCharacter:'!'];
 		if (i < 0) {
 			sender.nick = t;
 			sender.isServer = YES;
 		}
 		else {
-			sender.address = [t substringFromIndex:i+1];
+			sender.nick = [t substringToIndex:i];
+			t = [t substringFromIndex:i+1];
 			
-			t = [t substringToIndex:i];
-			i = [t findCharacter:'!'];
+			i = [t findCharacter:'@'];
 			if (i < 0) {
-				sender.nick = t;
-			} else {
-				sender.nick = [t substringToIndex:i];
-				sender.user = [t substringFromIndex:i+1];
+				sender.user = [t substringToIndex:i];
+				sender.address = [t substringFromIndex:i+1];
 			}
 		}
 	}
