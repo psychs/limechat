@@ -40,6 +40,7 @@
 	NSMutableArray* lines;
 	int lineNumber;
 	int count;
+	BOOL needsLimitNumberOfLines;
 	BOOL loaded;
 	NSMutableArray* highlightedLineNumbers;
 	int loadingImages;

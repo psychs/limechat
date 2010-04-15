@@ -23,7 +23,7 @@
 @interface LogController (Private)
 - (void)savePosition;
 - (void)restorePosition;
-- (void)removeLinesFromTop:(int)n;
+- (void)setNeedsLimitNumberOfLines;
 - (NSArray*)buildBody:(LogLine*)line;
 - (void)writeLine:(NSString*)str attributes:(NSDictionary*)attrs;
 - (NSString*)initialDocument;
@@ -94,7 +94,7 @@
 	
 	if (maxLines > 0 && count > maxLines) {
 		[self savePosition];
-		[self removeLinesFromTop:count - maxLines];
+		[self setNeedsLimitNumberOfLines];
 		[self restorePosition];
 	}
 }
@@ -276,8 +276,9 @@
 	[self restorePosition];
 }
 
-- (void)removeLinesFromTop:(int)n
+- (void)limitNumberOfLines
 {
+	int n = count - maxLines;
 	if (!loaded || n <= 0 || count <= 0) return;
 	
 	DOMHTMLDocument* doc = (DOMHTMLDocument*)[[view mainFrame] DOMDocument];
@@ -331,6 +332,13 @@
 	if (scroller) {
 		[scroller setNeedsDisplay];
 	}
+}
+
+- (void)setNeedsLimitNumberOfLines
+{
+	if (needsLimitNumberOfLines) return;
+	needsLimitNumberOfLines = YES;
+	[self performSelector:@selector(limitNumberOfLines) withObject:nil afterDelay:0];
 }
 
 - (BOOL)print:(LogLine*)line
@@ -435,7 +443,7 @@
 	[body appendChild:div];
 	
 	if (maxLines > 0 && count > maxLines) {
-		[self removeLinesFromTop:1];
+		[self setNeedsLimitNumberOfLines];
 	}
 	
 	if ([[attrs objectForKey:@"highlight"] isEqualToString:@"true"]) {
