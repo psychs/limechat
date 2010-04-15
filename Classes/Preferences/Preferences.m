@@ -769,7 +769,7 @@ static NSMutableArray* ignoreWords;
 	[d setBool:NO forKey:@"Preferences.Keyword.whole_line"];
 	[d setObject:@"privmsg" forKey:@"Preferences.General.paste_command"];
 	[d setObject:@"plain text" forKey:@"Preferences.General.paste_syntax"];
-	[d setObject:@"resource:Default" forKey:@"Preferences.Theme.name"];
+	[d setObject:@"resource:Limelight" forKey:@"Preferences.Theme.name"];
 	[d setObject:@"Lucida Grande" forKey:@"Preferences.Theme.log_font_name"];
 	[d setDouble:12 forKey:@"Preferences.Theme.log_font_size"];
 	[d setObject:@"%n: " forKey:@"Preferences.Theme.nick_format"];
