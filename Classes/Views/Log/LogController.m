@@ -362,6 +362,9 @@
 	if (line.time) [s appendFormat:@"<span class=\"time\">%@</span>", logEscape(line.time)];
 	if (line.place) [s appendFormat:@"<span class=\"place\">%@</span>", logEscape(line.place)];
 	if (line.nick) {
+		if (line.useAvatar && line.nickInfo) {
+			[s appendFormat:@"<img class=\"avatar\" src=\"http://img.tweetimag.es/i/%@\" />", logEscape(line.nickInfo)];
+		}
 		[s appendFormat:@"<span class=\"sender\" type=\"%@\"", [LogLine memberTypeString:line.memberType]];
 		if (!console) [s appendString:@" oncontextmenu=\"on_nick()\""];
 		[s appendFormat:@" identified=\"%@\"", line.identified ? @"true" : @"false"];

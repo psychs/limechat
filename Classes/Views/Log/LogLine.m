@@ -18,6 +18,7 @@
 @synthesize nickColorNumber;
 @synthesize keywords;
 @synthesize excludeWords;
+@synthesize useAvatar;
 
 - (id)init
 {

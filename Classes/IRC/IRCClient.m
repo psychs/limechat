@@ -1985,6 +1985,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	c.nickColorNumber = colorNumber;
 	c.keywords = keywords;
 	c.excludeWords = excludeWords;
+	c.useAvatar = type == LINE_TYPE_PRIVMSG && [config.userInfo contains:@"showTwitterAvatar"];
 	
 	if (channel) {
 		return [channel print:c];
