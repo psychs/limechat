@@ -1062,7 +1062,7 @@ typedef enum {
 	}
 	
 	NSString* nick = [config objectForKey:@"nick"];
-	NSString* user = [nick safeUsername];
+	NSString* user = [[nick lowercaseString] safeUsername];
 	NSString* realName = nick;
 	
 	NSMutableArray* channels = [NSMutableArray array];
