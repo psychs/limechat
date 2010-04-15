@@ -68,7 +68,7 @@
 			t = [t substringFromIndex:i+1];
 			
 			i = [t findCharacter:'@'];
-			if (i < 0) {
+			if (i >= 0) {
 				sender.user = [t substringToIndex:i];
 				sender.address = [t substringFromIndex:i+1];
 			}
