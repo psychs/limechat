@@ -12,11 +12,15 @@
 	NSString* displayName;
 	NSString* sound;
 	SEL saveSelector;
+	BOOL growl;
+	BOOL growlSticky;
 }
 
-@property (nonatomic, readonly) NSString* displayName;
+@property (nonatomic, retain) NSString* displayName;
 @property (nonatomic, retain) NSString* sound;
-@property (nonatomic, readonly) SEL saveSelector;
+@property (nonatomic, assign) SEL saveSelector;
+@property (nonatomic, assign) BOOL growl;
+@property (nonatomic, assign) BOOL growlSticky;
 
 - (id)initWithDisplayName:(NSString*)aDisplayName sound:(NSString*)aSound saveSelector:(SEL)aSaveSelector;
 

@@ -9,8 +9,9 @@
 @implementation SoundWrapper
 
 @synthesize displayName;
-@synthesize sound;
 @synthesize saveSelector;
+@synthesize growl;
+@synthesize growlSticky;
 
 - (id)initWithDisplayName:(NSString*)aDisplayName sound:(NSString*)aSound saveSelector:(SEL)aSaveSelector
 {
@@ -45,12 +46,30 @@
 		if ([value isEqualToString:EMPTY_SOUND]) {
 			value = @"";
 		}
-
+		
 		[sound release];
 		sound = [value retain];
 		
 		[Preferences performSelector:saveSelector withObject:value];
 		[SoundPlayer play:sound];
+	}
+}
+
+- (void)setGrowl:(BOOL)value
+{
+	LOG_METHOD
+	
+	if (growl != value) {
+		growl = value;
+	}
+}
+
+- (void)setGrowlSticky:(BOOL)value
+{
+	LOG_METHOD
+	
+	if (growlSticky != value) {
+		growlSticky = value;
 	}
 }
 
