@@ -7,13 +7,16 @@
     <language>en-us</language>
 
     <item>
-      <title>2.4</title>
-      <link>http://limechat.net/mac/#v2.4</link>
-      <pubDate>Wed, 14 Apr 2010 18:32:50 +0900</pubDate>
+      <title>2.5</title>
+      <link>http://limechat.net/mac/#v2.5</link>
+      <pubDate>Thu, 15 Apr 2010 16:32:11 +0900</pubDate>
       <content:encoded><![CDATA[
   			<ul>
-          <li>Fixed bunch of minor bugs around command parsing from user input.</li>
-          <li>Remember text options.</li>
+          <li>Bundled Limelight theme.</li>
+          <li>Major performance improvements in rendering log.</li>
+          <li>In app Growl settings.</li>
+          <li>Show badge on dock icon.</li>
+          <li>Minor bug fixes.</li>
         </ul>
       ]]></content:encoded>
     </item>

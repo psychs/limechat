@@ -7,13 +7,16 @@
     <language>ja</language>
 
     <item>
-      <title>2.4</title>
-      <link>http://limechat.net/mac/ja.html#v2.4</link>
-      <pubDate>Wed, 14 Apr 2010 18:32:50 +0900</pubDate>
+      <title>2.5</title>
+      <link>http://limechat.net/mac/ja.html#v2.5</link>
+      <pubDate>Thu, 15 Apr 2010 16:32:11 +0900</pubDate>
       <content:encoded><![CDATA[
   			<ul>
-          <li>ユーザ入力のコマンドをパーズする部分のバグを直した。</li>
-          <li>テキストエディットのオプションを保存するようにした。</li>
+          <li>Limelight テーマをバンドルするようにした。</li>
+          <li>ログ表示のパフォーマンスを大幅に改善した。</li>
+          <li>アプリ内の Preferences で Growl の設定をできるようにした。</li>
+          <li>ドックアイコンにバッジが表示されていなかったバグをfixした。</li>
+          <li>細かいバグをfixした。</li>
         </ul>
       ]]></content:encoded>
     </item>

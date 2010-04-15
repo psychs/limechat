@@ -36,7 +36,8 @@ task :install => [:clean, :build] do |t|
   sh "open /Applications/#{APP_NAME}"
 end
 
-task :package => [:clean, :build, :package_app] do |t|
+#task :package => [:clean, :build, :package_app] do |t|
+task :package => [:package_app] do |t|
 end
 
 task :package_app do |t|
