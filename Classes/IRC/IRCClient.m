@@ -3230,6 +3230,8 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		}
 		//case 352:	// RPL_WHOREPLY
 		//case 315:	// RPL_ENDOFWHO
+		case 321:	// RPL_LISTSTART obsolete
+			break;
 		case 322:	// RPL_LIST
 		{
 			NSString* chname = [m paramAt:1];
