@@ -2855,7 +2855,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		[self receiveErrorNumericReply:m];
 		return;
 	}
-	
+
 	switch (n) {
 		case 2 ... 4:
 		case 10:
@@ -3239,6 +3239,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 					[self createChannelListDialog];
 				}
 			}
+			
 			if (channelListDialog) {
 				[channelListDialog addChannel:chname count:[countStr intValue] topic:topic];
 			}

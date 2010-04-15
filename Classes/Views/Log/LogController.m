@@ -196,6 +196,7 @@
 	DOMHTMLElement* e = (DOMHTMLElement*)[doc createElement:@"hr"];
 	[e setAttribute:@"id" value:@"mark"];
 	[body appendChild:e];
+	++count;
 	
 	[self restorePosition];
 }
@@ -209,6 +210,7 @@
 	DOMHTMLElement* e = (DOMHTMLElement*)[doc getElementById:@"mark"];
 	if (e) {
 		[[doc body] removeChild:e];
+		--count;
 	}
 }
 
@@ -289,26 +291,28 @@
 	
 	// remeber scroll top
 	int top = [[body valueForKey:@"scrollTop"] intValue];
+	
+	// calculate scroll delta
+	DOMNodeList* nodeList = [body childNodes];
 	int delta = 0;
 	
-	NSString* lastLineId = nil;
-	
-	for (int i=0; i<n; ++i) {
-		DOMHTMLElement* node = (DOMHTMLElement*)[body firstChild];
+	if (n < [nodeList length]) {
+		DOMHTMLElement* firstNode = (DOMHTMLElement*)[nodeList item:0];
+		DOMHTMLElement* node = (DOMHTMLElement*)[nodeList item:n];
 		if ([node isKindOfClass:[DOMHTMLHRElement class]]) {
-			// the first node is the mark
 			DOMHTMLElement* nextSibling = (DOMHTMLElement*)[node nextSibling];
 			if (nextSibling) {
-				delta += [[nextSibling valueForKey:@"offsetTop"] intValue] - [[node valueForKey:@"offsetTop"] intValue];
+				node = nextSibling;
 			}
-			[body removeChild:node];
-			node = nextSibling;
 		}
-		DOMHTMLElement* nextSibling = (DOMHTMLElement*)[node nextSibling];
-		if (nextSibling) {
-			delta += [[nextSibling valueForKey:@"offsetTop"] intValue] - [[node valueForKey:@"offsetTop"] intValue];
+		if (node) {
+			delta = [[node valueForKey:@"offsetTop"] intValue] - [[firstNode valueForKey:@"offsetTop"] intValue];
 		}
-		lastLineId = [[[node valueForKey:@"id"] retain] autorelease];
+	}
+	
+	// remove lines
+	for (int i=n-1; i>=0; --i) {
+		DOMHTMLElement* node = (DOMHTMLElement*)[nodeList item:i];
 		[body removeChild:node];
 	}
 	
@@ -318,14 +322,30 @@
 	}
 	
 	// updating highlight line numbers
-	if (highlightedLineNumbers.count > 0 && lastLineId && lastLineId.length > 4) {
-		NSString* lineNumStr = [lastLineId substringFromIndex:4];	// 4 is length of "line"
-		int lineNum = [lineNumStr intValue];
-		while (highlightedLineNumbers.count) {
-			int i = [[highlightedLineNumbers objectAtIndex:0] intValue];
-			if (lineNum < i) break;
-			[highlightedLineNumbers removeObjectAtIndex:0];
+	
+	if (highlightedLineNumbers.count > 0) {
+		nodeList = [body childNodes];
+		if (nodeList.length) {
+			DOMHTMLElement* firstNode = (DOMHTMLElement*)[nodeList item:0];
+			if (firstNode) {
+				NSString* lineId = [firstNode valueForKey:@"id"];
+				if (lineId && lineId.length > 4) {
+					NSString* lineNumStr = [lineId substringFromIndex:4];	// 4 is length of "line"
+					int lineNum = [lineNumStr intValue];
+					while (highlightedLineNumbers.count) {
+						int i = [[highlightedLineNumbers objectAtIndex:0] intValue];
+						if (lineNum <= i) break;
+						[highlightedLineNumbers removeObjectAtIndex:0];
+					}
+				}
+			}
 		}
+		else {
+			[highlightedLineNumbers removeAllObjects];
+		}
+	}
+	else {
+		[highlightedLineNumbers removeAllObjects];
 	}
 	
 	count -= n;
@@ -339,6 +359,7 @@
 - (void)setNeedsLimitNumberOfLines
 {
 	if (needsLimitNumberOfLines) return;
+	
 	needsLimitNumberOfLines = YES;
 	[self performSelector:@selector(limitNumberOfLines) withObject:nil afterDelay:0];
 }
@@ -415,7 +436,7 @@
 		[attrs setObject:line.clickInfo forKey:@"clickinfo"];
 		[attrs setObject:@"on_dblclick()" forKey:@"ondblclick"];
 	}
-	
+
 	[self writeLine:s attributes:attrs];
 	
 	//
@@ -433,13 +454,13 @@
 	
 	++lineNumber;
 	++count;
-	
+
 	DOMHTMLDocument* doc = (DOMHTMLDocument*)[[view mainFrame] DOMDocument];
 	if (!doc) return;
 	DOMHTMLElement* body = [doc body];
 	DOMHTMLElement* div = (DOMHTMLElement*)[doc createElement:@"div"];
 	[div setInnerHTML:aHtml];
-	
+
 	for (NSString* key in attrs) {
 		NSString* value = [attrs objectForKey:key];
 		[div setAttribute:key value:value];
