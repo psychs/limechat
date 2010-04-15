@@ -43,6 +43,10 @@
 
 - (void)parseLine:(NSString*)line
 {
+	[sender release];
+	[command release];
+	[params release];
+	
 	sender = [IRCPrefix new];
 	command = @"";
 	params = [NSMutableArray new];
@@ -54,7 +58,7 @@
 		t = [t substringFromIndex:1];
 		sender.raw = t;
 		
-		int i = [t findCharacter:'@'];
+		int i = [t findCharacter:'.'];
 		if (i < 0) {
 			sender.nick = t;
 			sender.isServer = YES;
