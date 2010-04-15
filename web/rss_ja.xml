@@ -7,15 +7,15 @@
     <language>ja</language>
 
     <item>
-      <title>2.5</title>
-      <link>http://limechat.net/mac/ja.html#v2.5</link>
-      <pubDate>Thu, 15 Apr 2010 16:32:11 +0900</pubDate>
+      <title>2.6</title>
+      <link>http://limechat.net/mac/ja.html#v2.6</link>
+      <pubDate>Fri, 16 Apr 2010 00:10:35 +0900</pubDate>
       <content:encoded><![CDATA[
   			<ul>
-          <li>Limelight テーマをバンドルするようにした。</li>
-          <li>ログ表示のパフォーマンスを大幅に改善した。</li>
-          <li>アプリ内の Preferences で Growl の設定をできるようにした。</li>
-          <li>ドックアイコンにバッジが表示されていなかったバグをfixした。</li>
+          <li>チャンネルリストのダイアログを実装した。</li>
+          <li>パフォーマンスを大幅に改善した。</li>
+          <li>テーマのスクロールバーのハイライト色を使うようにした。</li>
+          <li>CTCP UserInfo に showTwitterAvatar と指定すると Twitter のアバターを表示するようにした。</li>
           <li>細かいバグをfixした。</li>
         </ul>
       ]]></content:encoded>

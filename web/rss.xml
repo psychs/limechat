@@ -7,16 +7,15 @@
     <language>en-us</language>
 
     <item>
-      <title>2.5</title>
-      <link>http://limechat.net/mac/#v2.5</link>
-      <pubDate>Thu, 15 Apr 2010 16:32:11 +0900</pubDate>
+      <title>2.6</title>
+      <link>http://limechat.net/mac/#v2.6</link>
+      <pubDate>Fri, 16 Apr 2010 00:10:35 +0900</pubDate>
       <content:encoded><![CDATA[
   			<ul>
-          <li>Bundled Limelight theme.</li>
-          <li>Major performance improvements in rendering log.</li>
-          <li>In app Growl settings.</li>
-          <li>Show badge on dock icon.</li>
-          <li>Minor bug fixes.</li>
+          <li>Added channel list dialog.</li>
+          <li>Major performance improvements.</li>
+          <li>Use scroll mark color in a theme.</li>
+          <li>Fixed minor bugs.</li>
         </ul>
       ]]></content:encoded>
     </item>

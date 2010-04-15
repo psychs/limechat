@@ -7,7 +7,7 @@
     <language>en</language>
     
     <item>
-      <title>LimeChat 2.5</title>
+      <title>LimeChat 2.6</title>
       <description><![CDATA[
         <html>
         <body>
@@ -22,21 +22,21 @@
             margin: 0.2em 0;
           }
         </style>
-        <h1>LimeChat 2.5</h1>
+        <h1>LimeChat 2.6</h1>
         <ul>
-          <li>Bundled Limelight theme.</li>
-          <li>Major performance improvements in rendering log.</li>
-          <li>In app Growl settings.</li>
-          <li>Show badge on dock icon.</li>
-          <li>Minor bug fixes.</li>
+          <li>Added channel list dialog.</li>
+          <li>Major performance improvements.</li>
+          <li>Use scroll mark color in a theme.</li>
+          <li>showTwitterAvatar option in CTCP user info</li>
+          <li>Fixed minor bugs.</li>
         </ul>
         </body>
         </html>
       ]]></description>
-      <pubDate>Thu, 15 Apr 2010 16:32:11 +0900</pubDate>
-      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/LimeChat_2.5.tbz"
-                  sparkle:version="2.5" length="906917" type="application/octet-stream"
-                  sparkle:dsaSignature="MC0CFQDDCQSzBMKVfvGMtJmPs6Hm5PAuCwIUdkjjQfd61hcIhkEvZ61lWveRt84="/>
+      <pubDate>Fri, 16 Apr 2010 00:10:35 +0900</pubDate>
+      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/LimeChat_2.6.tbz"
+                  sparkle:version="2.6" length="914385" type="application/octet-stream"
+                  sparkle:dsaSignature="MC0CFGKcVhmBLH0y6zZvHRMv+gd5la4XAhUAsh0CQr84BFr9QFggvWcbP42A3cE="/>
     </item>
     
   </channel>
