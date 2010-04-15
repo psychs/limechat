@@ -2666,9 +2666,15 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		[self updateChannelTitle:c];
 	}
 	
-	// @@@ rename nick on whois dialogs
+	// rename nick on whois dialogs
+	for (WhoisDialog* d in whoisDialogs) {
+		if ([d.nick isEqualToString:nick]) {
+			d.nick = toNick;
+		}
+	}
 	
-	// @@@ rename nick in dcc
+	// rename nick in dcc
+	[world.dcc nickChanged:nick toNick:toNick client:self];
 	
 	NSString* text = [NSString stringWithFormat:@"%@ is now known as %@", nick, toNick];
 	[self printConsole:nil type:LINE_TYPE_NICK text:text];
