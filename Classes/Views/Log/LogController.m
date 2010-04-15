@@ -278,6 +278,8 @@
 
 - (void)limitNumberOfLines
 {
+	needsLimitNumberOfLines = NO;
+	
 	int n = count - maxLines;
 	if (!loaded || n <= 0 || count <= 0) return;
 	
@@ -317,11 +319,11 @@
 	
 	// updating highlight line numbers
 	if (highlightedLineNumbers.count > 0 && lastLineId && lastLineId.length > 4) {
-		NSString* s = [lastLineId substringFromIndex:4];
-		int num = [s intValue];
-		while (highlightedLineNumbers.count > 0) {
+		NSString* lineNumStr = [lastLineId substringFromIndex:4];	// 4 is length of "line"
+		int lineNum = [lineNumStr intValue];
+		while (highlightedLineNumbers.count) {
 			int i = [[highlightedLineNumbers objectAtIndex:0] intValue];
-			if (num < i) break;
+			if (lineNum < i) break;
 			[highlightedLineNumbers removeObjectAtIndex:0];
 		}
 	}
