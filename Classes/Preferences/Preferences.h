@@ -2,6 +2,7 @@
 // You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
 #import <Cocoa/Cocoa.h>
+#import "GrowlController.h"
 
 
 typedef enum {
@@ -50,7 +51,6 @@ typedef enum {
 + (BOOL)showJoinLeave;
 + (BOOL)stopGrowlOnActive;
 + (TabActionType)tabAction;
-+ (BOOL)useGrowl;
 + (BOOL)useHotkey;
 + (BOOL)keywordCurrentNick;
 + (KeywordMatchType)keywordMatchingMethod;
@@ -85,36 +85,13 @@ typedef enum {
 + (NSString*)transcriptFolder;
 + (void)setTranscriptFolder:(NSString*)value;
 
-+ (NSString*)soundChanneltext;
-+ (void)setSoundChanneltext:(NSString*)value;
-+ (NSString*)soundChannelnotice;
-+ (void)setSoundChannelnotice:(NSString*)value;
-+ (NSString*)soundTalktext;
-+ (void)setSoundTalktext:(NSString*)value;
-+ (NSString*)soundTalknotice;
-+ (void)setSoundTalknotice:(NSString*)value;
-+ (NSString*)soundDisconnect;
-+ (void)setSoundDisconnect:(NSString*)value;
-+ (NSString*)soundFileReceiveFailure;
-+ (void)setSoundFileReceiveFailure:(NSString*)value;
-+ (NSString*)soundFileReceiveRequest;
-+ (void)setSoundFileReceiveRequest:(NSString*)value;
-+ (NSString*)soundFileReceiveSuccess;
-+ (void)setSoundFileReceiveSuccess:(NSString*)value;
-+ (NSString*)soundFileSendFailure;
-+ (void)setSoundFileSendFailure:(NSString*)value;
-+ (NSString*)soundFileSendSuccess;
-+ (void)setSoundFileSendSuccess:(NSString*)value;
-+ (NSString*)soundHighlight;
-+ (void)setSoundHighlight:(NSString*)value;
-+ (NSString*)soundInvited;
-+ (void)setSoundInvited:(NSString*)value;
-+ (NSString*)soundKicked;
-+ (void)setSoundKicked:(NSString*)value;
-+ (NSString*)soundLogin;
-+ (void)setSoundLogin:(NSString*)value;
-+ (NSString*)soundNewtalk;
-+ (void)setSoundNewtalk:(NSString*)value;
++ (NSString*)titleForEvent:(GrowlNotificationType)event;
++ (NSString*)soundForEvent:(GrowlNotificationType)event;
++ (void)setSound:(NSString*)value forEvent:(GrowlNotificationType)event;
++ (BOOL)growlEnabledForEvent:(GrowlNotificationType)event;
++ (void)setGrowlEnabled:(BOOL)value forEvent:(GrowlNotificationType)event;
++ (BOOL)growlStickyForEvent:(GrowlNotificationType)event;
++ (void)setGrowlSticky:(BOOL)value forEvent:(GrowlNotificationType)event;
 
 + (BOOL)spellCheckEnabled;
 + (void)setSpellCheckEnabled:(BOOL)value;

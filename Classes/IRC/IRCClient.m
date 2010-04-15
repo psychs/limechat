@@ -1566,7 +1566,8 @@ static NSDateFormatter* dateTimeFormatter = nil;
 
 - (void)notifyText:(GrowlNotificationType)type target:(id)target nick:(NSString*)nick text:(NSString*)text
 {
-	if (![Preferences useGrowl]) return;
+	if ([Preferences stopGrowlOnActive] && [NSApp isActive]) return;
+	if (![Preferences growlEnabledForEvent:type]) return;
 	
 	IRCChannel* channel = nil;
 	NSString* chname = nil;
@@ -1601,12 +1602,13 @@ static NSDateFormatter* dateTimeFormatter = nil;
 
 - (void)notifyEvent:(GrowlNotificationType)type
 {
-	[self notifyEvent:type target:@"" nick:@"" text:@""];
+	[self notifyEvent:type target:nil nick:@"" text:@""];
 }
 
 - (void)notifyEvent:(GrowlNotificationType)type target:(id)target nick:(NSString*)nick text:(NSString*)text
 {
-	if (![Preferences useGrowl]) return;
+	if ([Preferences stopGrowlOnActive] && [NSApp isActive]) return;
+	if (![Preferences growlEnabledForEvent:type]) return;
 	
 	IRCChannel* channel = nil;
 	NSString* chname = nil;
@@ -2201,9 +2203,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 
 		if (type == LINE_TYPE_NOTICE) {
 			[self notifyText:GROWL_CHANNEL_NOTICE target:(c ?: (id)target) nick:nick text:text];
-			
-			NSString* sound = [Preferences soundChannelnotice];
-			[SoundPlayer play:sound];
+			[SoundPlayer play:[Preferences soundForEvent:GROWL_CHANNEL_NOTICE]];
 		}
 		else {
 			id t = c ?: (id)self;
@@ -2212,9 +2212,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			
 			GrowlNotificationType kind = keyword ? GROWL_HIGHLIGHT : GROWL_CHANNEL_MSG;
 			[self notifyText:kind target:(c ?: (id)target) nick:nick text:text];
-			
-			NSString* sound = keyword ? [Preferences soundHighlight] : [Preferences soundChanneltext];
-			[SoundPlayer play:sound];
+			[SoundPlayer play:[Preferences soundForEvent:kind]];
 			
 			if (c) {
 				// track the conversation to nick complete
@@ -2253,9 +2251,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			
 			if (type == LINE_TYPE_NOTICE) {
 				[self notifyText:GROWL_TALK_NOTICE target:(c ?: (id)target) nick:nick text:text];
-				
-				NSString* sound = [Preferences soundTalknotice];
-				[SoundPlayer play:sound];
+				[SoundPlayer play:[Preferences soundForEvent:GROWL_TALK_NOTICE]];
 			}
 			else {
 				id t = c ?: (id)self;
@@ -2264,10 +2260,8 @@ static NSDateFormatter* dateTimeFormatter = nil;
 				if (newTalk) [self setNewTalkState:t];
 				
 				GrowlNotificationType kind = keyword ? GROWL_HIGHLIGHT : newTalk ? GROWL_NEW_TALK : GROWL_TALK_MSG;
-				[self notifyText:kind target:@"" nick:nick text:text];
-				
-				NSString* sound = keyword ? [Preferences soundHighlight] : newTalk ? [Preferences soundNewtalk] : [Preferences soundTalktext];
-				[SoundPlayer play:sound];
+				[self notifyText:kind target:(c ?: (id)target) nick:nick text:text];
+				[SoundPlayer play:[Preferences soundForEvent:kind]];
 			}
 		}
 	}
@@ -2413,8 +2407,8 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			
 			[world.dcc addReceiverWithUID:uid nick:nick host:host port:port path:path fileName:fileName size:size];
 			
-			[world notifyOnGrowl:GROWL_FILE_RECEIVE_REQUEST title:nick desc:fileName context:nil];
-			[SoundPlayer play:[Preferences soundFileReceiveRequest]];
+			[self notifyEvent:GROWL_FILE_RECEIVE_REQUEST target:nil nick:nick text:fileName];
+			[SoundPlayer play:[Preferences soundForEvent:GROWL_FILE_RECEIVE_REQUEST]];
 			
 			if (![NSApp isActive]) {
 				[NSApp requestUserAttention:NSInformationalRequest];
@@ -2537,7 +2531,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			[self printSystemBoth:c text:@"You have been kicked out from the channel"];
 			
 			[self notifyEvent:GROWL_KICKED target:c nick:nick text:comment];
-			[SoundPlayer play:[Preferences soundKicked]];
+			[SoundPlayer play:[Preferences soundForEvent:GROWL_KICKED]];
 		}
 		
 		[c removeMember:target];
@@ -2737,7 +2731,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	[self printBoth:self type:LINE_TYPE_INVITE text:text];
 
 	[self notifyEvent:GROWL_INVITED target:nil nick:nick text:chname];
-	[SoundPlayer play:[Preferences soundInvited]];
+	[SoundPlayer play:[Preferences soundForEvent:GROWL_INVITED]];
 }
 
 - (void)receiveError:(IRCMessage*)m
@@ -2775,7 +2769,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	[self printSystem:self text:@"Logged in"];
 	
 	[self notifyEvent:GROWL_LOGIN];
-	[SoundPlayer play:[Preferences soundLogin]];
+	[SoundPlayer play:[Preferences soundForEvent:GROWL_LOGIN]];
 	
 	if (config.nickPassword.length > 0) {
 		[self send:PRIVMSG, @"NickServ", [NSString stringWithFormat:@"IDENTIFY %@", config.nickPassword], nil];
@@ -3324,7 +3318,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	
 	if (prevConnected) {
 		[self notifyEvent:GROWL_DISCONNECT];
-		[SoundPlayer play:[Preferences soundDisconnect]];
+		[SoundPlayer play:[Preferences soundForEvent:GROWL_DISCONNECT]];
 	}
 }
 

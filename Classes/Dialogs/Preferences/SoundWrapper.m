@@ -8,30 +8,33 @@
 
 @implementation SoundWrapper
 
-@synthesize displayName;
-@synthesize saveSelector;
-@synthesize growl;
-@synthesize growlSticky;
-
-- (id)initWithDisplayName:(NSString*)aDisplayName sound:(NSString*)aSound saveSelector:(SEL)aSaveSelector
+- (id)initWithEventType:(GrowlNotificationType)aEventType
 {
 	if (self = [super init]) {
-		displayName = [aDisplayName retain];
-		sound = [aSound retain];
-		saveSelector = aSaveSelector;
+		eventType = aEventType;
 	}
 	return self;
 }
 
++ (SoundWrapper*)soundWrapperWithEventType:(GrowlNotificationType)eventType
+{
+	return [[[SoundWrapper alloc] initWithEventType:eventType] autorelease];
+}
+
 - (void)dealloc
 {
-	[displayName release];
-	[sound release];
 	[super dealloc];
+}
+
+- (NSString*)displayName
+{
+	return [Preferences titleForEvent:eventType];
 }
 
 - (NSString*)sound
 {
+	NSString* sound = [Preferences soundForEvent:eventType];
+	
 	if (sound.length == 0) {
 		return EMPTY_SOUND;
 	}
@@ -42,35 +45,34 @@
 
 - (void)setSound:(NSString *)value
 {
-	if (sound != value) {
-		if ([value isEqualToString:EMPTY_SOUND]) {
-			value = @"";
-		}
-		
-		[sound release];
-		sound = [value retain];
-		
-		[Preferences performSelector:saveSelector withObject:value];
-		[SoundPlayer play:sound];
+	if ([value isEqualToString:EMPTY_SOUND]) {
+		value = @"";
 	}
+	
+	if (value.length) {
+		[SoundPlayer play:value];
+	}
+	[Preferences setSound:value forEvent:eventType];
+}
+
+- (BOOL)growl
+{
+	return [Preferences growlEnabledForEvent:eventType];
 }
 
 - (void)setGrowl:(BOOL)value
 {
-	LOG_METHOD
-	
-	if (growl != value) {
-		growl = value;
-	}
+	[Preferences setGrowlEnabled:value forEvent:eventType];
+}
+
+- (BOOL)growlSticky
+{
+	return [Preferences growlStickyForEvent:eventType];
 }
 
 - (void)setGrowlSticky:(BOOL)value
 {
-	LOG_METHOD
-	
-	if (growlSticky != value) {
-		growlSticky = value;
-	}
+	[Preferences setGrowlSticky:value forEvent:eventType];
 }
 
 @end

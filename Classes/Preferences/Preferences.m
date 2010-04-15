@@ -104,12 +104,6 @@
 	return [ud integerForKey:@"Preferences.General.tab_action"];
 }
 
-+ (BOOL)useGrowl
-{
-	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	return [ud boolForKey:@"Preferences.General.use_growl"];
-}
-
 + (BOOL)useHotkey
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
@@ -312,186 +306,162 @@
 }
 
 #pragma mark -
-#pragma mark Sounds
+#pragma mark Events
 
-+ (NSString*)soundChanneltext
++ (NSString*)titleForEvent:(GrowlNotificationType)event
 {
-	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	return [ud objectForKey:@"Preferences.Sound.channeltext"];
+	switch (event) {
+		case GROWL_HIGHLIGHT:
+			return @"Highlight";
+		case GROWL_NEW_TALK:
+			return @"New talk";
+		case GROWL_CHANNEL_MSG:
+			return @"Channel text";
+		case GROWL_CHANNEL_NOTICE:
+			return @"Channel notice";
+		case GROWL_TALK_MSG:
+			return @"Talk text";
+		case GROWL_TALK_NOTICE:
+			return @"Talk notice";
+		case GROWL_KICKED:
+			return @"Kicked";
+		case GROWL_INVITED:
+			return @"Invited";
+		case GROWL_LOGIN:
+			return @"Logged in";
+		case GROWL_DISCONNECT:
+			return @"Disconnected";
+		case GROWL_FILE_RECEIVE_REQUEST:
+			return @"DCC file receive request";
+		case GROWL_FILE_RECEIVE_SUCCESS:
+			return @"DCC file receive success";
+		case GROWL_FILE_RECEIVE_ERROR:
+			return @"DCC file receive failure";
+		case GROWL_FILE_SEND_SUCCESS:
+			return @"DCC file send success";
+		case GROWL_FILE_SEND_ERROR:
+			return @"DCC file send failure";
+	}
+	
+	return nil;
 }
 
-+ (void)setSoundChanneltext:(NSString*)value
++ (NSString*)oldKeyForEvent:(GrowlNotificationType)event
 {
-	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	[ud setObject:value forKey:@"Preferences.Sound.channeltext"];
+	switch (event) {
+		case GROWL_HIGHLIGHT:
+			return @"Preferences.Sound.highlight";
+		case GROWL_NEW_TALK:
+			return @"Preferences.Sound.newtalk";
+		case GROWL_CHANNEL_MSG:
+			return @"Preferences.Sound.channeltext";
+		case GROWL_CHANNEL_NOTICE:
+			return @"channelNoticeSound";
+		case GROWL_TALK_MSG:
+			return @"Preferences.Sound.talktext";
+		case GROWL_TALK_NOTICE:
+			return @"talkNoticeSound";
+		case GROWL_KICKED:
+			return @"Preferences.Sound.kicked";
+		case GROWL_INVITED:
+			return @"Preferences.Sound.invited";
+		case GROWL_LOGIN:
+			return @"Preferences.Sound.login";
+		case GROWL_DISCONNECT:
+			return @"Preferences.Sound.disconnect";
+		case GROWL_FILE_RECEIVE_REQUEST:
+			return @"Preferences.Sound.file_receive_request";
+		case GROWL_FILE_RECEIVE_SUCCESS:
+			return @"Preferences.Sound.file_receive_success";
+		case GROWL_FILE_RECEIVE_ERROR:
+			return @"Preferences.Sound.file_receive_failure";
+		case GROWL_FILE_SEND_SUCCESS:
+			return @"Preferences.Sound.file_send_success";
+		case GROWL_FILE_SEND_ERROR:
+			return @"Preferences.Sound.file_send_failure";
+	}
+	
+	return nil;
 }
 
-+ (NSString*)soundChannelnotice
++ (NSString*)keyForEvent:(GrowlNotificationType)event
 {
-	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	return [ud objectForKey:@"channelNoticeSound"];
+	switch (event) {
+		case GROWL_HIGHLIGHT:
+			return @"eventHighlight";
+		case GROWL_NEW_TALK:
+			return @"eventNewtalk";
+		case GROWL_CHANNEL_MSG:
+			return @"eventChannelText";
+		case GROWL_CHANNEL_NOTICE:
+			return @"eventChannelNotice";
+		case GROWL_TALK_MSG:
+			return @"eventTalkText";
+		case GROWL_TALK_NOTICE:
+			return @"eventTalkNotice";
+		case GROWL_KICKED:
+			return @"eventKicked";
+		case GROWL_INVITED:
+			return @"eventInvited";
+		case GROWL_LOGIN:
+			return @"eventLogin";
+		case GROWL_DISCONNECT:
+			return @"eventDisconnect";
+		case GROWL_FILE_RECEIVE_REQUEST:
+			return @"eventFileReceiveRequest";
+		case GROWL_FILE_RECEIVE_SUCCESS:
+			return @"eventFileReceiveSuccess";
+		case GROWL_FILE_RECEIVE_ERROR:
+			return @"eventFileReceiveFailure";
+		case GROWL_FILE_SEND_SUCCESS:
+			return @"eventFileSendSuccess";
+		case GROWL_FILE_SEND_ERROR:
+			return @"eventFileSendFailure";
+	}
+	
+	return nil;
 }
 
-+ (void)setSoundChannelnotice:(NSString*)value
++ (NSString*)soundForEvent:(GrowlNotificationType)event
 {
+	NSString* key = [[self keyForEvent:event] stringByAppendingString:@"Sound"];
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	[ud setObject:value forKey:@"channelNoticeSound"];
+	return [ud objectForKey:key];
 }
 
-+ (NSString*)soundTalktext
++ (void)setSound:(NSString*)value forEvent:(GrowlNotificationType)event
 {
+	NSString* key = [[self keyForEvent:event] stringByAppendingString:@"Sound"];
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	return [ud objectForKey:@"Preferences.Sound.talktext"];
+	[ud setObject:value forKey:key];
 }
 
-+ (void)setSoundTalktext:(NSString*)value
++ (BOOL)growlEnabledForEvent:(GrowlNotificationType)event
 {
+	NSString* key = [[self keyForEvent:event] stringByAppendingString:@"Growl"];
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	[ud setObject:value forKey:@"Preferences.Sound.talktext"];
+	return [ud boolForKey:key];
 }
 
-+ (NSString*)soundTalknotice
++ (void)setGrowlEnabled:(BOOL)value forEvent:(GrowlNotificationType)event
 {
+	NSString* key = [[self keyForEvent:event] stringByAppendingString:@"Growl"];
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	return [ud objectForKey:@"talkNoticeSound"];
+	[ud setBool:value forKey:key];
 }
 
-+ (void)setSoundTalknotice:(NSString*)value
++ (BOOL)growlStickyForEvent:(GrowlNotificationType)event
 {
+	NSString* key = [[self keyForEvent:event] stringByAppendingString:@"GrowlSticky"];
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	[ud setObject:value forKey:@"talkNoticeSound"];
+	return [ud boolForKey:key];
 }
 
-+ (NSString*)soundDisconnect
++ (void)setGrowlSticky:(BOOL)value forEvent:(GrowlNotificationType)event
 {
+	NSString* key = [[self keyForEvent:event] stringByAppendingString:@"GrowlSticky"];
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	return [ud objectForKey:@"Preferences.Sound.disconnect"];
-}
-
-+ (void)setSoundDisconnect:(NSString*)value
-{
-	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	[ud setObject:value forKey:@"Preferences.Sound.disconnect"];
-}
-
-+ (NSString*)soundFileReceiveFailure
-{
-	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	return [ud objectForKey:@"Preferences.Sound.file_receive_failure"];
-}
-
-+ (void)setSoundFileReceiveFailure:(NSString*)value
-{
-	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	[ud setObject:value forKey:@"Preferences.Sound.file_receive_failure"];
-}
-
-+ (NSString*)soundFileReceiveRequest
-{
-	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	return [ud objectForKey:@"Preferences.Sound.file_receive_request"];
-}
-
-+ (void)setSoundFileReceiveRequest:(NSString*)value
-{
-	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	[ud setObject:value forKey:@"Preferences.Sound.file_receive_request"];
-}
-
-+ (NSString*)soundFileReceiveSuccess
-{
-	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	return [ud objectForKey:@"Preferences.Sound.file_receive_success"];
-}
-
-+ (void)setSoundFileReceiveSuccess:(NSString*)value
-{
-	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	[ud setObject:value forKey:@"Preferences.Sound.file_receive_success"];
-}
-
-+ (NSString*)soundFileSendFailure
-{
-	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	return [ud objectForKey:@"Preferences.Sound.file_send_failure"];
-}
-
-+ (void)setSoundFileSendFailure:(NSString*)value
-{
-	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	[ud setObject:value forKey:@"Preferences.Sound.file_send_failure"];
-}
-
-+ (NSString*)soundFileSendSuccess
-{
-	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	return [ud objectForKey:@"Preferences.Sound.file_send_success"];
-}
-
-+ (void)setSoundFileSendSuccess:(NSString*)value
-{
-	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	[ud setObject:value forKey:@"Preferences.Sound.file_send_success"];
-}
-
-+ (NSString*)soundHighlight
-{
-	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	return [ud objectForKey:@"Preferences.Sound.highlight"];
-}
-
-+ (void)setSoundHighlight:(NSString*)value
-{
-	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	[ud setObject:value forKey:@"Preferences.Sound.highlight"];
-}
-
-+ (NSString*)soundInvited
-{
-	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	return [ud objectForKey:@"Preferences.Sound.invited"];
-}
-
-+ (void)setSoundInvited:(NSString*)value
-{
-	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	[ud setObject:value forKey:@"Preferences.Sound.invited"];
-}
-
-+ (NSString*)soundKicked
-{
-	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	return [ud objectForKey:@"Preferences.Sound.kicked"];
-}
-
-+ (void)setSoundKicked:(NSString*)value
-{
-	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	[ud setObject:value forKey:@"Preferences.Sound.kicked"];
-}
-
-+ (NSString*)soundLogin
-{
-	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	return [ud objectForKey:@"Preferences.Sound.login"];
-}
-
-+ (void)setSoundLogin:(NSString*)value
-{
-	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	[ud setObject:value forKey:@"Preferences.Sound.login"];
-}
-
-+ (NSString*)soundNewtalk
-{
-	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	return [ud objectForKey:@"Preferences.Sound.newtalk"];
-}
-
-+ (void)setSoundNewtalk:(NSString*)value
-{
-	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	[ud setObject:value forKey:@"Preferences.Sound.newtalk"];
+	[ud setBool:value forKey:key];
 }
 
 #pragma mark -
@@ -788,9 +758,11 @@ static NSMutableArray* ignoreWords;
 	[d setBool:YES forKey:@"Preferences.General.open_browser_in_background"];
 	[d setBool:YES forKey:@"Preferences.General.show_inline_images"];
 	[d setBool:YES forKey:@"Preferences.General.show_join_leave"];
-	[d setBool:YES forKey:@"Preferences.General.stop_growl_on_active"];
-	[d setInt:TAB_COMPLETE_NICK forKey:@"Preferences.General.tab_action"];
 	[d setBool:YES forKey:@"Preferences.General.use_growl"];
+	[d setBool:YES forKey:@"Preferences.General.stop_growl_on_active"];
+	[d setBool:YES forKey:@"eventHighlightGrowl"];
+	[d setBool:YES forKey:@"eventNewtalkGrowl"];
+	[d setInt:TAB_COMPLETE_NICK forKey:@"Preferences.General.tab_action"];
 	[d setBool:NO forKey:@"Preferences.General.use_hotkey"];
 	[d setBool:YES forKey:@"Preferences.Keyword.current_nick"];
 	[d setInt:KEYWORD_MATCH_PARTIAL forKey:@"Preferences.Keyword.matching_method"];
@@ -874,8 +846,22 @@ static NSMutableArray* ignoreWords;
 			[ud setObject:result forKey:newKey];
 			[ud removeObjectForKey:oldKey];
 		}
+	}
+	
+	if (version <= 1) {
+		// migrate sounds
 		
-		[ud setInteger:1 forKey:@"version"];
+		NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+		
+		for (int i=0; i<GROWL_COUNT; ++i) {
+			NSString* oldKey = [Preferences oldKeyForEvent:i];
+			NSString* s = [ud objectForKey:oldKey];
+			if (s.length) {
+				[Preferences setSound:s forEvent:i];
+			}
+		}
+		
+		[ud setInteger:2 forKey:@"version"];
 		[ud synchronize];
 	}
 }

@@ -24,6 +24,7 @@ typedef enum {
 	GROWL_FILE_RECEIVE_ERROR,
 	GROWL_FILE_SEND_SUCCESS,
 	GROWL_FILE_SEND_ERROR,
+	GROWL_COUNT,
 } GrowlNotificationType;
 
 

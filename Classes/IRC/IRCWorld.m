@@ -303,8 +303,8 @@
 
 - (void)notifyOnGrowl:(GrowlNotificationType)type title:(NSString*)title desc:(NSString*)desc context:(id)context
 {
-	if (![Preferences useGrowl]) return;
 	if ([Preferences stopGrowlOnActive] && [NSApp isActive]) return;
+	if (![Preferences growlEnabledForEvent:type]) return;
 	
 	[growl notify:type title:title desc:desc context:context];
 }

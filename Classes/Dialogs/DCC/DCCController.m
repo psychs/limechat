@@ -565,7 +565,7 @@
 	[self updateTimer];
 
 	[world notifyOnGrowl:GROWL_FILE_RECEIVE_ERROR title:sender.peerNick desc:sender.fileName context:nil];
-	[SoundPlayer play:[Preferences soundFileReceiveFailure]];
+	[SoundPlayer play:[Preferences soundForEvent:GROWL_FILE_RECEIVE_ERROR]];
 }
 
 - (void)dccReceiveOnComplete:(DCCReceiver*)sender
@@ -577,7 +577,7 @@
 	[self updateTimer];
 
 	[world notifyOnGrowl:GROWL_FILE_RECEIVE_SUCCESS title:sender.peerNick desc:sender.fileName context:nil];
-	[SoundPlayer play:[Preferences soundFileReceiveSuccess]];
+	[SoundPlayer play:[Preferences soundForEvent:GROWL_FILE_RECEIVE_SUCCESS]];
 }
 
 #pragma mark -
@@ -640,7 +640,7 @@
 	[self updateTimer];
 	
 	[world notifyOnGrowl:GROWL_FILE_SEND_ERROR title:sender.peerNick desc:sender.fileName context:nil];
-	[SoundPlayer play:[Preferences soundFileSendFailure]];
+	[SoundPlayer play:[Preferences soundForEvent:GROWL_FILE_SEND_ERROR]];
 }
 
 - (void)dccSenderOnComplete:(DCCSender*)sender
@@ -652,7 +652,7 @@
 	[self updateTimer];
 
 	[world notifyOnGrowl:GROWL_FILE_SEND_SUCCESS title:sender.peerNick desc:sender.fileName context:nil];
-	[SoundPlayer play:[Preferences soundFileSendSuccess]];
+	[SoundPlayer play:[Preferences soundForEvent:GROWL_FILE_SEND_SUCCESS]];
 }
 
 #pragma mark -

@@ -183,66 +183,50 @@
 	if (!sounds) {
 		NSMutableArray* ary = [NSMutableArray new];
 		SoundWrapper* e;
-		NSString* s;
 		
-		s = [Preferences soundLogin];
-		e = [[[SoundWrapper alloc] initWithDisplayName:@"Login" sound:s saveSelector:@selector(setSoundLogin:)] autorelease];
+		e = [SoundWrapper soundWrapperWithEventType:GROWL_LOGIN];
 		[ary addObject:e];
 		
-		s = [Preferences soundDisconnect];
-		e = [[[SoundWrapper alloc] initWithDisplayName:@"Disconnected" sound:s saveSelector:@selector(setSoundDisconnect:)] autorelease];
+		e = [SoundWrapper soundWrapperWithEventType:GROWL_DISCONNECT];
 		[ary addObject:e];
 		
-		s = [Preferences soundHighlight];
-		e = [[[SoundWrapper alloc] initWithDisplayName:@"Highlight" sound:s saveSelector:@selector(setSoundHighlight:)] autorelease];
+		e = [SoundWrapper soundWrapperWithEventType:GROWL_HIGHLIGHT];
 		[ary addObject:e];
 		
-		s = [Preferences soundNewtalk];
-		e = [[[SoundWrapper alloc] initWithDisplayName:@"New talk" sound:s saveSelector:@selector(setSoundNewtalk:)] autorelease];
+		e = [SoundWrapper soundWrapperWithEventType:GROWL_NEW_TALK];
 		[ary addObject:e];
 		
-		s = [Preferences soundKicked];
-		e = [[[SoundWrapper alloc] initWithDisplayName:@"Kicked" sound:s saveSelector:@selector(setSoundKicked:)] autorelease];
+		e = [SoundWrapper soundWrapperWithEventType:GROWL_KICKED];
 		[ary addObject:e];
 		
-		s = [Preferences soundInvited];
-		e = [[[SoundWrapper alloc] initWithDisplayName:@"Invited" sound:s saveSelector:@selector(setSoundInvited:)] autorelease];
+		e = [SoundWrapper soundWrapperWithEventType:GROWL_INVITED];
 		[ary addObject:e];
 		
-		s = [Preferences soundChanneltext];
-		e = [[[SoundWrapper alloc] initWithDisplayName:@"Channel text" sound:s saveSelector:@selector(setSoundChanneltext:)] autorelease];
+		e = [SoundWrapper soundWrapperWithEventType:GROWL_CHANNEL_MSG];
 		[ary addObject:e];
 		
-		s = [Preferences soundChannelnotice];
-		e = [[[SoundWrapper alloc] initWithDisplayName:@"Channel notice" sound:s saveSelector:@selector(setSoundChannelnotice:)] autorelease];
+		e = [SoundWrapper soundWrapperWithEventType:GROWL_CHANNEL_NOTICE];
 		[ary addObject:e];
 		
-		s = [Preferences soundTalktext];
-		e = [[[SoundWrapper alloc] initWithDisplayName:@"Talk text" sound:s saveSelector:@selector(setSoundTalktext:)] autorelease];
+		e = [SoundWrapper soundWrapperWithEventType:GROWL_TALK_MSG];
 		[ary addObject:e];
 		
-		s = [Preferences soundTalknotice];
-		e = [[[SoundWrapper alloc] initWithDisplayName:@"Talk notice" sound:s saveSelector:@selector(setSoundTalknotice:)] autorelease];
+		e = [SoundWrapper soundWrapperWithEventType:GROWL_TALK_NOTICE];
 		[ary addObject:e];
 		
-		s = [Preferences soundFileReceiveRequest];
-		e = [[[SoundWrapper alloc] initWithDisplayName:@"DCC file receive request" sound:s saveSelector:@selector(setSoundFileReceiveRequest:)] autorelease];
+		e = [SoundWrapper soundWrapperWithEventType:GROWL_FILE_RECEIVE_REQUEST];
 		[ary addObject:e];
 		
-		s = [Preferences soundFileReceiveSuccess];
-		e = [[[SoundWrapper alloc] initWithDisplayName:@"DCC file receive success" sound:s saveSelector:@selector(setSoundFileReceiveSuccess:)] autorelease];
+		e = [SoundWrapper soundWrapperWithEventType:GROWL_FILE_RECEIVE_SUCCESS];
 		[ary addObject:e];
 		
-		s = [Preferences soundFileReceiveFailure];
-		e = [[[SoundWrapper alloc] initWithDisplayName:@"DCC file receive failure" sound:s saveSelector:@selector(setSoundFileReceiveFailure:)] autorelease];
+		e = [SoundWrapper soundWrapperWithEventType:GROWL_FILE_RECEIVE_ERROR];
 		[ary addObject:e];
 		
-		s = [Preferences soundFileSendSuccess];
-		e = [[[SoundWrapper alloc] initWithDisplayName:@"DCC file send success" sound:s saveSelector:@selector(setSoundFileSendSuccess:)] autorelease];
+		e = [SoundWrapper soundWrapperWithEventType:GROWL_FILE_SEND_SUCCESS];
 		[ary addObject:e];
 		
-		s = [Preferences soundFileSendFailure];
-		e = [[[SoundWrapper alloc] initWithDisplayName:@"DCC file send failure" sound:s saveSelector:@selector(setSoundFileSendFailure:)] autorelease];
+		e = [SoundWrapper soundWrapperWithEventType:GROWL_FILE_SEND_ERROR];
 		[ary addObject:e];
 		
 		sounds = ary;

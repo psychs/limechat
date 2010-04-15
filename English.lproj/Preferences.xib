@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="4272"/>
+			<integer value="71"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1071,28 +1071,6 @@
 										<int key="NSvFlags">256</int>
 										<object class="NSMutableArray" key="NSSubviews">
 											<bool key="EncodedWithXMLCoder">YES</bool>
-											<object class="NSButton" id="143846734">
-												<reference key="NSNextResponder" ref="528046259"/>
-												<int key="NSvFlags">256</int>
-												<string key="NSFrame">{{15, 291}, {229, 18}}</string>
-												<reference key="NSSuperview" ref="528046259"/>
-												<bool key="NSEnabled">YES</bool>
-												<object class="NSButtonCell" key="NSCell" id="545871574">
-													<int key="NSCellFlags">67239424</int>
-													<int key="NSCellFlags2">0</int>
-													<string key="NSContents">Use Growl for event notifications</string>
-													<reference key="NSSupport" ref="325354301"/>
-													<reference key="NSControlView" ref="143846734"/>
-													<int key="NSButtonFlags">1211912703</int>
-													<int key="NSButtonFlags2">2</int>
-													<reference key="NSNormalImage" ref="1024925729"/>
-													<reference key="NSAlternateImage" ref="730435101"/>
-													<string key="NSAlternateContents"/>
-													<string key="NSKeyEquivalent"/>
-													<int key="NSPeriodicDelay">200</int>
-													<int key="NSPeriodicInterval">25</int>
-												</object>
-											</object>
 											<object class="NSScrollView" id="945477186">
 												<reference key="NSNextResponder" ref="528046259"/>
 												<int key="NSvFlags">256</int>
@@ -1106,7 +1084,7 @@
 															<object class="NSTableView" id="687623475">
 																<reference key="NSNextResponder" ref="108631011"/>
 																<int key="NSvFlags">256</int>
-																<string key="NSFrameSize">{403, 171}</string>
+																<string key="NSFrameSize">{403, 241}</string>
 																<reference key="NSSuperview" ref="108631011"/>
 																<bool key="NSEnabled">YES</bool>
 																<object class="NSTableHeaderView" key="NSHeaderView" id="822421650">
@@ -1287,7 +1265,7 @@
 																<int key="NSTableViewDraggingDestinationStyle">0</int>
 															</object>
 														</object>
-														<string key="NSFrame">{{1, 17}, {403, 171}}</string>
+														<string key="NSFrame">{{1, 17}, {403, 241}}</string>
 														<reference key="NSSuperview" ref="945477186"/>
 														<reference key="NSNextKeyView" ref="687623475"/>
 														<reference key="NSDocView" ref="687623475"/>
@@ -1329,7 +1307,7 @@
 													</object>
 													<reference ref="704437210"/>
 												</object>
-												<string key="NSFrame">{{17, 17}, {405, 189}}</string>
+												<string key="NSFrame">{{17, 17}, {405, 259}}</string>
 												<reference key="NSSuperview" ref="528046259"/>
 												<reference key="NSNextKeyView" ref="108631011"/>
 												<int key="NSsFlags">562</int>
@@ -1343,13 +1321,13 @@
 											<object class="NSButton" id="693983636">
 												<reference key="NSNextResponder" ref="528046259"/>
 												<int key="NSvFlags">268</int>
-												<string key="NSFrame">{{30, 261}, {366, 18}}</string>
+												<string key="NSFrame">{{15, 291}, {406, 18}}</string>
 												<reference key="NSSuperview" ref="528046259"/>
 												<bool key="NSEnabled">YES</bool>
 												<object class="NSButtonCell" key="NSCell" id="978918802">
 													<int key="NSCellFlags">-2080244224</int>
 													<int key="NSCellFlags2">0</int>
-													<string key="NSContents">Don't show notifications when the application is active</string>
+													<string key="NSContents">Don't show Growl notifications when the application is active</string>
 													<reference key="NSSupport" ref="325354301"/>
 													<reference key="NSControlView" ref="693983636"/>
 													<int key="NSButtonFlags">1211912703</int>
@@ -1382,27 +1360,6 @@
 													<string key="NSKeyEquivalent"/>
 													<int key="NSPeriodicDelay">200</int>
 													<int key="NSPeriodicInterval">25</int>
-												</object>
-											</object>
-											<object class="NSTextField" id="190669590">
-												<reference key="NSNextResponder" ref="528046259"/>
-												<int key="NSvFlags">268</int>
-												<string key="NSFrame">{{48, 227}, {377, 28}}</string>
-												<reference key="NSSuperview" ref="528046259"/>
-												<bool key="NSEnabled">YES</bool>
-												<object class="NSTextFieldCell" key="NSCell" id="659540971">
-													<int key="NSCellFlags">67239424</int>
-													<int key="NSCellFlags2">272629760</int>
-													<string type="base64-UTF8" key="NSContents">Q2hlY2sgcHJlZmVyZW5jZXMgb2YgR3Jvd2wgdG8gY2hhbmdlIHBlciBldmVudCBvcHRpb25zLgooR3Jv
-d2wgUHJlZmVyZW5jZXMgPiBBcHBsaWNhdGlvbnMgPiBMaW1lQ2hhdCA+IE5vdGlmaWNhdGlvbnMpA</string>
-													<object class="NSFont" key="NSSupport">
-														<string key="NSName">LucidaGrande</string>
-														<double key="NSSize">11</double>
-														<int key="NSfFlags">16</int>
-													</object>
-													<reference key="NSControlView" ref="190669590"/>
-													<reference key="NSBackgroundColor" ref="326222776"/>
-													<reference key="NSTextColor" ref="263221525"/>
 												</object>
 											</object>
 										</object>
@@ -2479,22 +2436,6 @@ d2wgUHJlZmVyZW5jZXMgPiBBcHBsaWNhdGlvbnMgPiBMaW1lQ2hhdCA+IE5vdGlmaWNhdGlvbnMpA</s
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: values.Preferences.General.use_growl</string>
-						<reference key="source" ref="143846734"/>
-						<reference key="destination" ref="1032655829"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="143846734"/>
-							<reference key="NSDestination" ref="1032655829"/>
-							<string key="NSLabel">value: values.Preferences.General.use_growl</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">values.Preferences.General.use_growl</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">1410</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
 						<string key="label">value: values.Preferences.General.stop_growl_on_active</string>
 						<reference key="source" ref="693983636"/>
 						<reference key="destination" ref="1032655829"/>
@@ -2556,22 +2497,6 @@ d2wgUHJlZmVyZW5jZXMgPiBBcHBsaWNhdGlvbnMgPiBMaW1lQ2hhdCA+IE5vdGlmaWNhdGlvbnMpA</s
 						</object>
 					</object>
 					<int key="connectionID">1478</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">enabled: values.Preferences.General.use_growl</string>
-						<reference key="source" ref="693983636"/>
-						<reference key="destination" ref="1032655829"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="693983636"/>
-							<reference key="NSDestination" ref="1032655829"/>
-							<string key="NSLabel">enabled: values.Preferences.General.use_growl</string>
-							<string key="NSBinding">enabled</string>
-							<string key="NSKeyPath">values.Preferences.General.use_growl</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">1481</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -4182,21 +4107,10 @@ d2wgUHJlZmVyZW5jZXMgPiBBcHBsaWNhdGlvbnMgPiBMaW1lQ2hhdCA+IE5vdGlmaWNhdGlvbnMpA</s
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="976558301"/>
-							<reference ref="143846734"/>
-							<reference ref="693983636"/>
-							<reference ref="190669590"/>
 							<reference ref="945477186"/>
+							<reference ref="693983636"/>
 						</object>
 						<reference key="parent" ref="937542876"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">72</int>
-						<reference key="object" ref="143846734"/>
-						<object class="NSMutableArray" key="children">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="545871574"/>
-						</object>
-						<reference key="parent" ref="528046259"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">100</int>
@@ -4634,11 +4548,6 @@ d2wgUHJlZmVyZW5jZXMgPiBBcHBsaWNhdGlvbnMgPiBMaW1lQ2hhdCA+IE5vdGlmaWNhdGlvbnMpA</s
 						<reference key="parent" ref="342310367"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">4240</int>
-						<reference key="object" ref="545871574"/>
-						<reference key="parent" ref="143846734"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">4241</int>
 						<reference key="object" ref="978918802"/>
 						<reference key="parent" ref="693983636"/>
@@ -5042,20 +4951,6 @@ d2wgUHJlZmVyZW5jZXMgPiBBcHBsaWNhdGlvbnMgPiBMaW1lQ2hhdCA+IE5vdGlmaWNhdGlvbnMpA</s
 						<reference key="parent" ref="496940892"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">4406</int>
-						<reference key="object" ref="190669590"/>
-						<object class="NSMutableArray" key="children">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="659540971"/>
-						</object>
-						<reference key="parent" ref="528046259"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">4407</int>
-						<reference key="object" ref="659540971"/>
-						<reference key="parent" ref="190669590"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">4410</int>
 						<reference key="object" ref="904109319"/>
 						<object class="NSMutableArray" key="children">
@@ -5278,7 +5173,6 @@ d2wgUHJlZmVyZW5jZXMgPiBBcHBsaWNhdGlvbnMgPiBMaW1lQ2hhdCA+IE5vdGlmaWNhdGlvbnMpA</s
 					<string>4237.IBPluginDependency</string>
 					<string>4238.IBPluginDependency</string>
 					<string>4239.IBPluginDependency</string>
-					<string>4240.IBPluginDependency</string>
 					<string>4241.IBPluginDependency</string>
 					<string>4242.IBPluginDependency</string>
 					<string>4244.IBPluginDependency</string>
@@ -5349,8 +5243,6 @@ d2wgUHJlZmVyZW5jZXMgPiBBcHBsaWNhdGlvbnMgPiBMaW1lQ2hhdCA+IE5vdGlmaWNhdGlvbnMpA</s
 					<string>4392.IBPluginDependency</string>
 					<string>44.IBPluginDependency</string>
 					<string>44.ImportedFromIB2</string>
-					<string>4406.IBPluginDependency</string>
-					<string>4407.IBPluginDependency</string>
 					<string>4408.IBPluginDependency</string>
 					<string>4410.IBPluginDependency</string>
 					<string>4412.IBPluginDependency</string>
@@ -5401,8 +5293,6 @@ d2wgUHJlZmVyZW5jZXMgPiBBcHBsaWNhdGlvbnMgPiBMaW1lQ2hhdCA+IE5vdGlmaWNhdGlvbnMpA</s
 					<string>703.ImportedFromIB2</string>
 					<string>71.IBPluginDependency</string>
 					<string>71.ImportedFromIB2</string>
-					<string>72.IBPluginDependency</string>
-					<string>72.ImportedFromIB2</string>
 					<string>8.IBPluginDependency</string>
 					<string>8.ImportedFromIB2</string>
 					<string>815.IBPluginDependency</string>
@@ -5623,7 +5513,6 @@ d2wgUHJlZmVyZW5jZXMgPiBBcHBsaWNhdGlvbnMgPiBMaW1lQ2hhdCA+IE5vdGlmaWNhdGlvbnMpA</s
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
@@ -5679,8 +5568,6 @@ d2wgUHJlZmVyZW5jZXMgPiBBcHBsaWNhdGlvbnMgPiBMaW1lQ2hhdCA+IE5vdGlmaWNhdGlvbnMpA</s
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
@@ -5698,8 +5585,6 @@ d2wgUHJlZmVyZW5jZXMgPiBBcHBsaWNhdGlvbnMgPiBMaW1lQ2hhdCA+IE5vdGlmaWNhdGlvbnMpA</s
 					<boolean value="YES"/>
 					<boolean value="YES"/>
 					<string>{213, 107}</string>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>

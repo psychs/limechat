@@ -75,8 +75,10 @@
 
 - (void)notify:(GrowlNotificationType)type title:(NSString*)title desc:(NSString*)desc context:(id)context
 {
+	if (![Preferences growlEnabledForEvent:type]) return;
+	
 	int priority = 0;
-	BOOL sticky = NO;
+	BOOL sticky = [Preferences growlStickyForEvent:type];
 	NSString* kind = nil;
 	
 	switch (type) {
