@@ -557,7 +557,15 @@
 	[s appendString:@"max-height: 150px;"];
 	[s appendString:@"-webkit-box-shadow: 2px 2px 2px #888;"];
 	[s appendString:@"}"];
-	
+
+	[s appendString:@".avatar {"];
+	[s appendString:@"display: inline;"];
+	[s appendString:@"max-width: 24px;"];
+	[s appendString:@"max-height: 24px;"];
+	[s appendString:@"margin-right: 3px;"];
+	[s appendString:@"vertical-align: middle;"];
+	[s appendString:@"}"];
+
 	[s appendString:@".url { word-break: break-all; }"];
 	[s appendString:@".address { text-decoration: underline; word-break: break-all; }"];
 	[s appendString:@".highlight { color: #f0f; font-weight: bold; }"];
