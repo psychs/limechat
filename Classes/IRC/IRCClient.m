@@ -99,9 +99,6 @@ static NSDateFormatter* dateTimeFormatter = nil;
 @synthesize isConnected;
 @synthesize isLoggedIn;
 
-@synthesize isKeyword;
-@synthesize isUnread;
-
 @synthesize myNick;
 @synthesize myAddress;
 

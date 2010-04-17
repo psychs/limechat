@@ -23,9 +23,6 @@
 @synthesize members;
 @synthesize topic;
 @synthesize storedTopic;
-@synthesize isKeyword;
-@synthesize isUnread;
-@synthesize isNewTalk;
 @synthesize isActive;
 @synthesize isOp;
 @synthesize isModeInit;
