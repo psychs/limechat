@@ -1038,7 +1038,10 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	IRCChannel* c = world.selectedChannel;
 	
 	IRCChannel* selChannel = nil;
-	if (completeTarget && targetChannelName) {
+	if ([cmd isEqualToString:MODE] && !([s hasPrefix:@"+"] || [s hasPrefix:@"-"])) {
+		// do not complete for /mode #chname ...
+	}
+	else if (completeTarget && targetChannelName) {
 		selChannel = [self findChannel:targetChannelName];
 	}
 	else if (completeTarget && u == self && c) {
@@ -1197,7 +1200,15 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			targetChannelName = [s getToken];
 		}
 	}
-	else if ([cmd isEqualToString:MODE] || [cmd isEqualToString:KICK]) {
+	else if ([cmd isEqualToString:MODE]) {
+		if (selChannel && selChannel.isChannel && ![s isModeChannelName]) {
+			targetChannelName = selChannel.name;
+		}
+		else if (!([s hasPrefix:@"+"] || [s hasPrefix:@"-"])) {
+			targetChannelName = [s getToken];
+		}
+	}
+	else if ([cmd isEqualToString:KICK]) {
 		if (selChannel && selChannel.isChannel && ![s isModeChannelName]) {
 			targetChannelName = selChannel.name;
 		}
@@ -1428,12 +1439,17 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		[self send:cmd, targetChannelName, s, nil];
 	}
 	else if ([cmd isEqualToString:MODE]) {
-		if (!s.length) {
-			[self sendLine:[NSString stringWithFormat:@"%@ %@", MODE, targetChannelName]];
+		NSMutableString* line = [NSMutableString string];
+		[line appendString:MODE];
+		if (targetChannelName.length) {
+			[line appendString:@" "];
+			[line appendString:targetChannelName];
 		}
-		else {
-			[self sendLine:[NSString stringWithFormat:@"%@ %@ %@", MODE, targetChannelName, s]];
+		if (s.length) {
+			[line appendString:@" "];
+			[line appendString:s];
 		}
+		[self sendLine:line];
 	}
 	else if ([cmd isEqualToString:WHOIS]) {
 		if ([s contains:@" "]) {
