@@ -709,19 +709,10 @@
 
 - (void)onAddServer:(id)sender
 {
-	IRCClient* u = world.selectedClient;
-	IRCClientConfig* config = nil;
-	if (u) {
-		config = [[u.config mutableCopy] autorelease];
-	}
-	else {
-		config = [[IRCClientConfig new] autorelease];
-	}
-	
 	ServerDialog* d = [[ServerDialog new] autorelease];
 	d.delegate = self;
 	d.parentWindow = window;
-	d.config = config;
+	d.config = [[IRCClientConfig new] autorelease];
 	d.uid = -1;
 	[serverDialogs addObject:d];
 	[d start];
