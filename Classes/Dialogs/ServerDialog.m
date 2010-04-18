@@ -231,7 +231,7 @@
 	[proxyPortText setEnabled:enabled];
 	[proxyUserText setEnabled:enabled];
 	[proxyPasswordText setEnabled:enabled];
-	[sslCheck setEnabled:tag == PROXY_NONE];
+	//[sslCheck setEnabled:tag == PROXY_NONE];
 }
 
 - (void)addChannel:(id)sender
