@@ -12,15 +12,15 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
+			<integer value="106"/>
+			<integer value="426"/>
+			<integer value="367"/>
 			<integer value="963"/>
 			<integer value="327"/>
-			<integer value="426"/>
-			<integer value="287"/>
-			<integer value="432"/>
 			<integer value="387"/>
+			<integer value="432"/>
 			<integer value="374"/>
 			<integer value="233"/>
-			<integer value="367"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1631,8 +1631,7 @@
 								<object class="NSMenuItem" id="812814964">
 									<reference key="NSMenu" ref="537313136"/>
 									<string key="NSTitle">LimeChat Help</string>
-									<string key="NSKeyEquiv">?</string>
-									<int key="NSKeyEquivModMask">1048576</int>
+									<string key="NSKeyEquiv"/>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="821023625"/>
 									<reference key="NSMixedImage" ref="353314363"/>
@@ -2212,14 +2211,6 @@
 						<reference key="destination" ref="835585270"/>
 					</object>
 					<int key="connectionID">39</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">showHelp:</string>
-						<reference key="source" ref="83013244"/>
-						<reference key="destination" ref="812814964"/>
-					</object>
-					<int key="connectionID">122</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
@@ -3188,6 +3179,14 @@
 						<reference key="destination" ref="787257747"/>
 					</object>
 					<int key="connectionID">1004</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">onHelp:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="812814964"/>
+					</object>
+					<int key="connectionID">1005</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -4989,7 +4988,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>{{460, 1068}, {170, 23}}</string>
+					<string>{{593, 960}, {151, 23}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -5087,7 +5086,7 @@
 					<string>ThinSplitView</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>{{613, 846}, {218, 103}}</string>
+					<string>{{522, 880}, {218, 103}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -5416,7 +5415,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">1004</int>
+			<int key="maxID">1005</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -5805,6 +5804,7 @@
 							<string>onDeleteServer:</string>
 							<string>onDisconnect:</string>
 							<string>onGoToMark:</string>
+							<string>onHelp:</string>
 							<string>onJoin:</string>
 							<string>onJoinChannel:</string>
 							<string>onLeave:</string>
@@ -5845,6 +5845,7 @@
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>

@@ -224,9 +224,6 @@
 		case 654:	// channel auto op
 			return c && c.isChannel;
 			
-		case 802:
-			return YES;
-			
 		// for members
 		case 2001:	// whois
 		case 2002:	// talk
@@ -361,6 +358,11 @@
 - (void)onDcc:(id)sender
 {
 	[world.dcc show:YES];
+}
+
+- (void)onHelp:(id)sender
+{
+	[URLOpener openAndActivate:[NSURL URLWithString:@"http://limechat.net/mac/"]];
 }
 
 - (void)onCloseWindow:(id)sender

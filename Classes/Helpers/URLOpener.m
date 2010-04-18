@@ -19,4 +19,9 @@
 	}
 }
 
++ (void)openAndActivate:(NSURL*)url
+{
+	[[NSWorkspace sharedWorkspace] openURL:url];
+}
+
 @end
