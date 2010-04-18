@@ -65,7 +65,7 @@
 								<object class="NSTabViewItem" id="376318744">
 									<string key="NSIdentifier">1</string>
 									<object class="NSView" key="NSView" id="912828137">
-										<nil key="NSNextResponder"/>
+										<reference key="NSNextResponder" ref="1048651597"/>
 										<int key="NSvFlags">256</int>
 										<object class="NSMutableArray" key="NSSubviews">
 											<bool key="EncodedWithXMLCoder">YES</bool>
@@ -596,6 +596,7 @@
 											</object>
 										</object>
 										<string key="NSFrame">{{10, 33}, {405, 416}}</string>
+										<reference key="NSSuperview" ref="1048651597"/>
 									</object>
 									<string key="NSLabel">General</string>
 									<reference key="NSColor" ref="719856035"/>
@@ -1549,7 +1550,7 @@
 								<object class="NSTabViewItem" id="648511045">
 									<string key="NSIdentifier">3</string>
 									<object class="NSView" key="NSView" id="137335118">
-										<reference key="NSNextResponder" ref="1048651597"/>
+										<nil key="NSNextResponder"/>
 										<int key="NSvFlags">256</int>
 										<object class="NSMutableArray" key="NSSubviews">
 											<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1784,29 +1785,6 @@
 															<object class="NSTextView" id="465790849">
 																<reference key="NSNextResponder" ref="294257520"/>
 																<int key="NSvFlags">2322</int>
-																<object class="NSMutableSet" key="NSDragTypes">
-																	<bool key="EncodedWithXMLCoder">YES</bool>
-																	<object class="NSArray" key="set.sortedObjects">
-																		<bool key="EncodedWithXMLCoder">YES</bool>
-																		<string>Apple HTML pasteboard type</string>
-																		<string>Apple PDF pasteboard type</string>
-																		<string>Apple PICT pasteboard type</string>
-																		<string>Apple PNG pasteboard type</string>
-																		<string>Apple URL pasteboard type</string>
-																		<string>CorePasteboardFlavorType 0x6D6F6F76</string>
-																		<string>NSColor pasteboard type</string>
-																		<string>NSFilenamesPboardType</string>
-																		<string>NSStringPboardType</string>
-																		<string>NeXT Encapsulated PostScript v1.2 pasteboard type</string>
-																		<string>NeXT RTFD pasteboard type</string>
-																		<string>NeXT Rich Text Format v1.0 pasteboard type</string>
-																		<string>NeXT TIFF v4.0 pasteboard type</string>
-																		<string>NeXT font pasteboard type</string>
-																		<string>NeXT ruler pasteboard type</string>
-																		<string>WebURLsWithTitlesPboardType</string>
-																		<string>public.url</string>
-																	</object>
-																</object>
 																<string key="NSFrameSize">{369, 14}</string>
 																<reference key="NSSuperview" ref="294257520"/>
 																<object class="NSTextContainer" key="NSTextContainer" id="339806968">
@@ -2007,21 +1985,20 @@
 											</object>
 										</object>
 										<string key="NSFrame">{{10, 33}, {405, 416}}</string>
-										<reference key="NSSuperview" ref="1048651597"/>
 									</object>
 									<string key="NSLabel">On Login</string>
 									<reference key="NSColor" ref="719856035"/>
 									<reference key="NSTabView" ref="1048651597"/>
 								</object>
 							</object>
-							<reference key="NSSelectedTabViewItem" ref="648511045"/>
+							<reference key="NSSelectedTabViewItem" ref="376318744"/>
 							<reference key="NSFont" ref="788253527"/>
 							<int key="NSTvFlags">0</int>
 							<bool key="NSAllowTruncatedLabels">YES</bool>
 							<bool key="NSDrawsBackground">YES</bool>
 							<object class="NSMutableArray" key="NSSubviews">
 								<bool key="EncodedWithXMLCoder">YES</bool>
-								<reference ref="137335118"/>
+								<reference ref="912828137"/>
 							</object>
 						</object>
 						<object class="NSButton" id="941270739">
