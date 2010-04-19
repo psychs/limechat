@@ -81,6 +81,7 @@ typedef enum {
 @property (nonatomic, readonly) NSString* name;
 @property (nonatomic, readonly) IRCClientConfig* config;
 @property (nonatomic, readonly) IRCISupportInfo* isupport;
+@property (nonatomic, readonly) IRCUserMode* myMode;
 @property (nonatomic, readonly) NSMutableArray* channels;
 @property (nonatomic, readonly) BOOL isConnecting;
 @property (nonatomic, readonly) BOOL isConnected;

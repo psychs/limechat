@@ -95,6 +95,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 @synthesize config;
 @synthesize channels;
 @synthesize isupport;
+@synthesize myMode;
 @synthesize isConnecting;
 @synthesize isConnected;
 @synthesize isLoggedIn;

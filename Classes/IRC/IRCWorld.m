@@ -347,6 +347,7 @@
 		IRCClient* u = (IRCClient*)sel;
 		NSString* myNick = u.myNick;
 		NSString* name = u.config.name;
+		NSString* mode = [u.myMode string];
 		
 		NSMutableString* title = [NSMutableString string];
 		if (myNick.length) {
@@ -355,6 +356,10 @@
 		if (name.length) {
 			if (title.length) [title appendString:@" "];
 			[title appendString:name];
+		}
+		if (mode.length) {
+			if (title.length) [title appendString:@" "];
+			[title appendFormat:@"(%@)", mode];
 		}
 		[window setTitle:title];
 	}
