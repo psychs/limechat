@@ -2569,7 +2569,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	NSString* nick = m.sender.nick;
 	NSString* chname = [m paramAt:0];
 	NSString* target = [m paramAt:1];
-	NSString* comment = [m paramAt:1];
+	NSString* comment = [m paramAt:2];
 	
 	IRCChannel* c = [self findChannel:chname];
 	if (c) {
