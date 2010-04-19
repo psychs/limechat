@@ -121,6 +121,9 @@ static NSDictionary* SYNTAX_EXT_MAP;
 
 - (void)sendInChannel:(id)sender
 {
+	[command release];
+	command = [[self syntaxFromTag:commandPopup.selectedTag] retain];
+	
 	NSString* s = bodyText.string;
 
 	if ([delegate respondsToSelector:@selector(pasteSheet:onPasteText:)]) {

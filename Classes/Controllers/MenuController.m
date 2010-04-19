@@ -435,7 +435,7 @@
 	NSArray* lines = [s splitIntoLines];
 	for (NSString* line in lines) {
 		if (line.length) {
-			[u sendText:line command:pasteSheet.command channel:c];
+			[u sendText:line command:[pasteSheet.command uppercaseString] channel:c];
 		}
 	}
 }
