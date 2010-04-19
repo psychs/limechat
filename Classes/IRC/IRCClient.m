@@ -2754,7 +2754,8 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	}
 	else {
 		// user mode
-		// @@@ update my mode
+		[myMode update:modeStr];
+		
 		NSString* text = [NSString stringWithFormat:@"%@ has changed mode: %@", nick, modeStr];
 		[self printBoth:nil type:LINE_TYPE_MODE text:text];
 		[self updateClientTitle];
