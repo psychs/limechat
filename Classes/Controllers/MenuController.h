@@ -58,6 +58,7 @@
 @property (nonatomic, retain) NSString* pointedChannelName;
 
 - (void)terminate;
+- (void)startPasteSheetWithContent:(NSString*)content nick:(NSString*)nick uid:(int)uid cid:(int)cid editMode:(BOOL)editMode;
 
 - (void)onPreferences:(id)sender;
 - (void)onAutoOp:(id)sender;

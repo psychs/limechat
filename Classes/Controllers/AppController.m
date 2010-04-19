@@ -366,8 +366,9 @@
 	NSString* s = [[NSPasteboard generalPasteboard] stringContent];
 	if (!s.length) return NO;
 	
-	IRCTreeItem* sel = world.selected;
-	if (sel && !sel.isClient) {
+	IRCClient* client = world.selectedClient;
+	IRCChannel* channel = world.selectedChannel;
+	if (channel) {
 		static Regex* regex = nil;
 		if (!regex) {
 			regex = [[Regex alloc] initWithString:@"(\r\n|\r|\n)[^\r\n]"];
@@ -376,7 +377,7 @@
 		NSRange r = [regex match:s];
 		if (r.location != NSNotFound) {
 			// multi line
-			LOG(@"@@@ show paste dialog");
+			[menu startPasteSheetWithContent:s nick:client.myNick uid:client.uid cid:channel.uid editMode:YES];
 			return YES;
 		}
 	}
