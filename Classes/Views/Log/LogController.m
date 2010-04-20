@@ -560,9 +560,7 @@
 		@"margin:0;"
 		@"padding:3px 4px 10px 4px;"
 		@"}"
-	];
-	
-	[s appendString:
+	 
 		@"body {margin:0;padding:0}"
 		@"img {border:1px solid #aaa;vertical-align:top;}"
 		@"object {vertical-align:top;}"
@@ -570,16 +568,11 @@
 		@".line { margin: 0 -4px; padding: 0 4px 1px 4px; }"
 		@".line[alternate=even] {}"
 		@".line[alternate=odd] {}"
-	];
-	
-	[s appendString:
 		@".line[type=action] .sender:before {"
 		@"content: '• ';"
 		@"white-space: nowrap;"
 		@"}"
-	];
-	
-	[s appendString:
+	 
 		@".inlineimage {"
 		@"margin-top: 10px;"
 		@"margin-bottom: 15px;"
@@ -588,9 +581,7 @@
 		@"max-height: 150px;"
 		@"-webkit-box-shadow: 2px 2px 2px #888;"
 		@"}"
-	];
-
-	[s appendString:
+	 
 		@".avatar {"
 		@"display: inline;"
 		@"max-width: 24px;"
@@ -598,19 +589,16 @@
 		@"margin-right: 3px;"
 		@"vertical-align: middle;"
 		@"}"
-	];
-
-	[s appendString:
+	 
 		@".url { word-break: break-all; }"
 		@".address { text-decoration: underline; word-break: break-all; }"
 		@".highlight { color: #f0f; font-weight: bold; }"
 		@".time { color: #048; }"
 		@".place { color: #008; }"
-	];
-	
-	[s appendString:
+	 
 		@".sender[type=myself] { color: #66a; }"
 		@".sender[type=normal] { color: #008; }"
+	 
 		@".message[type=system] { color: #080; }"
 		@".message[type=error] { color: #f00; font-weight: bold; }"
 		@".message[type=reply] { color: #088; }"
@@ -632,9 +620,7 @@
 		@".message[type=wallops] { color: #080; }"
 		@".message[type=debug_send] { color: #aaa; }"
 		@".message[type=debug_receive] { color: #444; }"
-	];
-	
-	[s appendString:
+	 
 		@".effect[color-number='0'] { color: #fff; }"
 		@".effect[color-number='1'] { color: #000; }"
 		@".effect[color-number='2'] { color: #008; }"
