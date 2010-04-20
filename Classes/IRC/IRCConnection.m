@@ -78,8 +78,8 @@
 		// check if system socks proxy is enabled
 		CFDictionaryRef proxyDic = SCDynamicStoreCopyProxies(NULL);
 		NSNumber* num = (NSNumber*)CFDictionaryGetValue(proxyDic, kSCPropNetProxiesSOCKSEnable);
-		CFRelease(proxyDic);
 		BOOL systemSocksEnabled = [num intValue] != 0;
+		CFRelease(proxyDic);
 		
 		conn.useSocks = systemSocksEnabled;
 		conn.useSystemSocks = systemSocksEnabled;
