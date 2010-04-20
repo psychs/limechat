@@ -7,7 +7,7 @@
     <language>en</language>
     
     <item>
-      <title>LimeChat 2.6</title>
+      <title>LimeChat 2.7</title>
       <description><![CDATA[
         <html>
         <body>
@@ -22,21 +22,18 @@
             margin: 0.2em 0;
           }
         </style>
-        <h1>LimeChat 2.6</h1>
+        <h1>LimeChat 2.7</h1>
         <ul>
-          <li>Added channel list dialog.</li>
-          <li>Major performance improvements.</li>
-          <li>Use scroll mark color in a theme.</li>
-          <li>showTwitterAvatar option in CTCP user info</li>
+          <li>Allow SSL for proxy connections.</li>
           <li>Fixed minor bugs.</li>
         </ul>
         </body>
         </html>
       ]]></description>
-      <pubDate>Fri, 16 Apr 2010 00:10:35 +0900</pubDate>
-      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/LimeChat_2.6.tbz"
-                  sparkle:version="2.6" length="914385" type="application/octet-stream"
-                  sparkle:dsaSignature="MC0CFGKcVhmBLH0y6zZvHRMv+gd5la4XAhUAsh0CQr84BFr9QFggvWcbP42A3cE="/>
+      <pubDate>Tue, 20 Apr 2010 11:09:08 +0900</pubDate>
+      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/LimeChat_2.7.tbz"
+                  sparkle:version="2.7" length="912105" type="application/octet-stream"
+                  sparkle:dsaSignature="MC0CFBStwkVO4ZutjbaswxBsRkPhNStWAhUAmLmJoTQyS3C1dkqOdEWLKKFVbw4="/>
     </item>
     
   </channel>
