@@ -64,7 +64,7 @@
 		
 		encoding = NSUTF8StringEncoding;
 		fallbackEncoding = NSISOLatin1StringEncoding;
-		leavingComment = @"";
+		leavingComment = @"Leaving...";
 		userInfo = @"";
 		
 		if ([NSLocale prefersJapaneseLanguage]) {
