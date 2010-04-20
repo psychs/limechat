@@ -523,6 +523,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	switch (config.proxyType) {
 		case PROXY_SOCKS_SYSTEM:
 			conn.useSystemSocks = YES;
+			// fall through
 		case PROXY_SOCKS4:
 		case PROXY_SOCKS5:
 			conn.useSocks = YES;

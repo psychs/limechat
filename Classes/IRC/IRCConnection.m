@@ -2,6 +2,7 @@
 // You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
 #import "IRCConnection.h"
+#include <SystemConfiguration/SystemConfiguration.h>
 #import "IRC.h"
 #import "NSData+Kana.h"
 
@@ -72,12 +73,26 @@
 	conn.host = host;
 	conn.port = port;
 	conn.useSSL = useSSL;
-	conn.useSystemSocks = useSystemSocks;
-	conn.useSocks = useSocks;
-	conn.socksVersion = socksVersion;
+	
+	if (useSystemSocks) {
+		// check if system socks proxy is enabled
+		CFDictionaryRef proxyDic = SCDynamicStoreCopyProxies(NULL);
+		NSNumber* num = (NSNumber*)CFDictionaryGetValue(proxyDic, kSCPropNetProxiesSOCKSEnable);
+		CFRelease(proxyDic);
+		BOOL systemSocksEnabled = [num intValue] != 0;
+		
+		conn.useSocks = systemSocksEnabled;
+		conn.useSystemSocks = systemSocksEnabled;
+	}
+	else {
+		conn.useSocks = useSocks;
+		conn.socksVersion = socksVersion;
+	}
+	
 	conn.proxyHost = proxyHost;
 	conn.proxyPort = proxyPort;
 	conn.proxyUser = proxyUser;
+	
 	[conn open];
 }
 
