@@ -521,10 +521,12 @@
 	
 	[s appendString:@"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">"];
 	[s appendFormat:@"<html class=\"%@\" %@>", bodyClass, bodyAttrs];
-	[s appendString:@"<head>"];
-	[s appendString:@"<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">"];
-	[s appendString:@"<meta http-equiv=\"Content-Script-Type\" content=\"text/javascript\">"];
-	[s appendString:@"<meta http-equiv=\"Content-Style-Type\" content=\"text/css\">"];
+	[s appendString:
+		@"<head>"
+		@"<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">"
+		@"<meta http-equiv=\"Content-Script-Type\" content=\"text/javascript\">"
+		@"<meta http-equiv=\"Content-Style-Type\" content=\"text/css\">"
+	];
 	[s appendFormat:@"<style>%@</style>", [self defaultCSS]];
 	if (style) [s appendFormat:@"<style><!-- %@ --></style>", style];
 	if (overrideStyle) [s appendFormat:@"<style><!-- %@ --></style>", overrideStyle];
@@ -550,106 +552,122 @@
 	[s appendString:@"html {"];
 	[s appendFormat:@"font-family:'%@';", fontFamily];
 	[s appendFormat:@"font-size:%dpt;", fontSize];
-	[s appendString:@"background-color:white;"];
-	[s appendString:@"color:black;"];
-	[s appendString:@"word-wrap:break-word;"];
-	[s appendString:@"margin:0;"];
-	[s appendString:@"padding:3px 4px 10px 4px;"];
-	[s appendString:@"}"];
 	
-	[s appendString:@"body {margin:0;padding:0}"];
-	[s appendString:@"img {border:1px solid #aaa;vertical-align:top;}"];
-	[s appendString:@"object {vertical-align:top;}"];
-	[s appendString:@"hr {margin: 0.5em 2em;}"];
-	[s appendString:@".line { margin: 0 -4px; padding: 0 4px 1px 4px; }"];
-	[s appendString:@".line[alternate=even] {}"];
-	[s appendString:@".line[alternate=odd] {}"];
+	[s appendString:
+		@"background-color:white;"
+		@"color:black;"
+		@"word-wrap:break-word;"
+		@"margin:0;"
+		@"padding:3px 4px 10px 4px;"
+		@"}"
+	];
 	
-	[s appendString:@".line[type=action] .sender:before {"];
-	[s appendString:@"content: '• ';"];
-	[s appendString:@"white-space: nowrap;"];
-	[s appendString:@"}"];
+	[s appendString:
+		@"body {margin:0;padding:0}"
+		@"img {border:1px solid #aaa;vertical-align:top;}"
+		@"object {vertical-align:top;}"
+		@"hr {margin: 0.5em 2em;}"
+		@".line { margin: 0 -4px; padding: 0 4px 1px 4px; }"
+		@".line[alternate=even] {}"
+		@".line[alternate=odd] {}"
+	];
 	
-	[s appendString:@".inlineimage {"];
-	[s appendString:@"margin-top: 10px;"];
-	[s appendString:@"margin-bottom: 15px;"];
-	[s appendString:@"margin-left: 40px;"];
-	[s appendString:@"max-width: 200px;"];
-	[s appendString:@"max-height: 150px;"];
-	[s appendString:@"-webkit-box-shadow: 2px 2px 2px #888;"];
-	[s appendString:@"}"];
+	[s appendString:
+		@".line[type=action] .sender:before {"
+		@"content: '• ';"
+		@"white-space: nowrap;"
+		@"}"
+	];
+	
+	[s appendString:
+		@".inlineimage {"
+		@"margin-top: 10px;"
+		@"margin-bottom: 15px;"
+		@"margin-left: 40px;"
+		@"max-width: 200px;"
+		@"max-height: 150px;"
+		@"-webkit-box-shadow: 2px 2px 2px #888;"
+		@"}"
+	];
 
-	[s appendString:@".avatar {"];
-	[s appendString:@"display: inline;"];
-	[s appendString:@"max-width: 24px;"];
-	[s appendString:@"max-height: 24px;"];
-	[s appendString:@"margin-right: 3px;"];
-	[s appendString:@"vertical-align: middle;"];
-	[s appendString:@"}"];
+	[s appendString:
+		@".avatar {"
+		@"display: inline;"
+		@"max-width: 24px;"
+		@"max-height: 24px;"
+		@"margin-right: 3px;"
+		@"vertical-align: middle;"
+		@"}"
+	];
 
-	[s appendString:@".url { word-break: break-all; }"];
-	[s appendString:@".address { text-decoration: underline; word-break: break-all; }"];
-	[s appendString:@".highlight { color: #f0f; font-weight: bold; }"];
-	[s appendString:@".time { color: #048; }"];
-	[s appendString:@".place { color: #008; }"];
+	[s appendString:
+		@".url { word-break: break-all; }"
+		@".address { text-decoration: underline; word-break: break-all; }"
+		@".highlight { color: #f0f; font-weight: bold; }"
+		@".time { color: #048; }"
+		@".place { color: #008; }"
+	];
 	
-	[s appendString:@".sender[type=myself] { color: #66a; }"];
-	[s appendString:@".sender[type=normal] { color: #008; }"];
+	[s appendString:
+		@".sender[type=myself] { color: #66a; }"
+		@".sender[type=normal] { color: #008; }"
+		@".message[type=system] { color: #080; }"
+		@".message[type=error] { color: #f00; font-weight: bold; }"
+		@".message[type=reply] { color: #088; }"
+		@".message[type=error_reply] { color: #f00; }"
+		@".message[type=dcc_send_send] { color: #088; }"
+		@".message[type=dcc_send_receive] { color: #00c; }"
+		@".message[type=privmsg] {}"
+		@".message[type=notice] { color: #888; }"
+		@".message[type=action] {}"
+		@".message[type=join] { color: #080; }"
+		@".message[type=part] { color: #080; }"
+		@".message[type=kick] { color: #080; }"
+		@".message[type=quit] { color: #080; }"
+		@".message[type=kill] { color: #080; }"
+		@".message[type=nick] { color: #080; }"
+		@".message[type=mode] { color: #080; }"
+		@".message[type=topic] { color: #080; }"
+		@".message[type=invite] { color: #080; }"
+		@".message[type=wallops] { color: #080; }"
+		@".message[type=debug_send] { color: #aaa; }"
+		@".message[type=debug_receive] { color: #444; }"
+	];
 	
-	[s appendString:@".message[type=system] { color: #080; }"];
-	[s appendString:@".message[type=error] { color: #f00; font-weight: bold; }"];
-	[s appendString:@".message[type=reply] { color: #088; }"];
-	[s appendString:@".message[type=error_reply] { color: #f00; }"];
-	[s appendString:@".message[type=dcc_send_send] { color: #088; }"];
-	[s appendString:@".message[type=dcc_send_receive] { color: #00c; }"];
-	[s appendString:@".message[type=privmsg] {}"];
-	[s appendString:@".message[type=notice] { color: #888; }"];
-	[s appendString:@".message[type=action] {}"];
-	[s appendString:@".message[type=join] { color: #080; }"];
-	[s appendString:@".message[type=part] { color: #080; }"];
-	[s appendString:@".message[type=kick] { color: #080; }"];
-	[s appendString:@".message[type=quit] { color: #080; }"];
-	[s appendString:@".message[type=kill] { color: #080; }"];
-	[s appendString:@".message[type=nick] { color: #080; }"];
-	[s appendString:@".message[type=mode] { color: #080; }"];
-	[s appendString:@".message[type=topic] { color: #080; }"];
-	[s appendString:@".message[type=invite] { color: #080; }"];
-	[s appendString:@".message[type=wallops] { color: #080; }"];
-	[s appendString:@".message[type=debug_send] { color: #aaa; }"];
-	[s appendString:@".message[type=debug_receive] { color: #444; }"];
-	
-	[s appendString:@".effect[color-number='0'] { color: #fff; }"];
-	[s appendString:@".effect[color-number='1'] { color: #000; }"];
-	[s appendString:@".effect[color-number='2'] { color: #008; }"];
-	[s appendString:@".effect[color-number='3'] { color: #080; }"];
-	[s appendString:@".effect[color-number='4'] { color: #f00; }"];
-	[s appendString:@".effect[color-number='5'] { color: #800; }"];
-	[s appendString:@".effect[color-number='6'] { color: #808; }"];
-	[s appendString:@".effect[color-number='7'] { color: #f80; }"];
-	[s appendString:@".effect[color-number='8'] { color: #ff0; }"];
-	[s appendString:@".effect[color-number='9'] { color: #0f0; }"];
-	[s appendString:@".effect[color-number='10'] { color: #088; }"];
-	[s appendString:@".effect[color-number='11'] { color: #0ff; }"];
-	[s appendString:@".effect[color-number='12'] { color: #00f; }"];
-	[s appendString:@".effect[color-number='13'] { color: #f0f; }"];
-	[s appendString:@".effect[color-number='14'] { color: #888; }"];
-	[s appendString:@".effect[color-number='15'] { color: #ccc; }"];
-	[s appendString:@".effect[bgcolor-number='0'] { background-color: #fff; }"];
-	[s appendString:@".effect[bgcolor-number='1'] { background-color: #000; }"];
-	[s appendString:@".effect[bgcolor-number='2'] { background-color: #008; }"];
-	[s appendString:@".effect[bgcolor-number='3'] { background-color: #080; }"];
-	[s appendString:@".effect[bgcolor-number='4'] { background-color: #f00; }"];
-	[s appendString:@".effect[bgcolor-number='5'] { background-color: #800; }"];
-	[s appendString:@".effect[bgcolor-number='6'] { background-color: #808; }"];
-	[s appendString:@".effect[bgcolor-number='7'] { background-color: #f80; }"];
-	[s appendString:@".effect[bgcolor-number='8'] { background-color: #ff0; }"];
-	[s appendString:@".effect[bgcolor-number='9'] { background-color: #0f0; }"];
-	[s appendString:@".effect[bgcolor-number='10'] { background-color: #088; }"];
-	[s appendString:@".effect[bgcolor-number='11'] { background-color: #0ff; }"];
-	[s appendString:@".effect[bgcolor-number='12'] { background-color: #00f; }"];
-	[s appendString:@".effect[bgcolor-number='13'] { background-color: #f0f; }"];
-	[s appendString:@".effect[bgcolor-number='14'] { background-color: #888; }"];
-	[s appendString:@".effect[bgcolor-number='15'] { background-color: #ccc; }"];	
+	[s appendString:
+		@".effect[color-number='0'] { color: #fff; }"
+		@".effect[color-number='1'] { color: #000; }"
+		@".effect[color-number='2'] { color: #008; }"
+		@".effect[color-number='3'] { color: #080; }"
+		@".effect[color-number='4'] { color: #f00; }"
+		@".effect[color-number='5'] { color: #800; }"
+		@".effect[color-number='6'] { color: #808; }"
+		@".effect[color-number='7'] { color: #f80; }"
+		@".effect[color-number='8'] { color: #ff0; }"
+		@".effect[color-number='9'] { color: #0f0; }"
+		@".effect[color-number='10'] { color: #088; }"
+		@".effect[color-number='11'] { color: #0ff; }"
+		@".effect[color-number='12'] { color: #00f; }"
+		@".effect[color-number='13'] { color: #f0f; }"
+		@".effect[color-number='14'] { color: #888; }"
+		@".effect[color-number='15'] { color: #ccc; }"
+		@".effect[bgcolor-number='0'] { background-color: #fff; }"
+		@".effect[bgcolor-number='1'] { background-color: #000; }"
+		@".effect[bgcolor-number='2'] { background-color: #008; }"
+		@".effect[bgcolor-number='3'] { background-color: #080; }"
+		@".effect[bgcolor-number='4'] { background-color: #f00; }"
+		@".effect[bgcolor-number='5'] { background-color: #800; }"
+		@".effect[bgcolor-number='6'] { background-color: #808; }"
+		@".effect[bgcolor-number='7'] { background-color: #f80; }"
+		@".effect[bgcolor-number='8'] { background-color: #ff0; }"
+		@".effect[bgcolor-number='9'] { background-color: #0f0; }"
+		@".effect[bgcolor-number='10'] { background-color: #088; }"
+		@".effect[bgcolor-number='11'] { background-color: #0ff; }"
+		@".effect[bgcolor-number='12'] { background-color: #00f; }"
+		@".effect[bgcolor-number='13'] { background-color: #f0f; }"
+		@".effect[bgcolor-number='14'] { background-color: #888; }"
+		@".effect[bgcolor-number='15'] { background-color: #ccc; }"	
+	];	
 	
 	return s;
 }
@@ -745,48 +763,53 @@
 	NSMutableString* s = [NSMutableString string];
 	
 	if (console) {
-		[s appendString:@"function on_dblclick() {"];
-		[s appendString:@"  var t = event.target;"];
-		[s appendString:@"  while (t && !(t.tagName == 'DIV' && t.className.match(/^line /))) {"];
-		[s appendString:@"    t = t.parentNode;"];
-		[s appendString:@"  }"];
-		[s appendString:@"  if (t) {"];
-		[s appendString:@"    app.onDblClick(t.getAttribute('clickinfo'));"];
-		[s appendString:@"  }"];
-		[s appendString:@"  event.stopPropagation();"];
-		[s appendString:@"}"];
-		[s appendString:@"function on_mousedown() {"];
-		[s appendString:@"  if (app.shouldStopDoubleClick(event)) {"];
-		[s appendString:@"    event.preventDefault();"];
-		[s appendString:@"  }"];
-		[s appendString:@"  event.stopPropagation();"];
-		[s appendString:@"}"];
-		[s appendString:@"function on_url() {"];
-		[s appendString:@"  var t = event.target;"];
-		[s appendString:@"  app.setUrl(t.innerHTML);"];
-		[s appendString:@"}"];
-		[s appendString:@"function on_addr() {"];
-		[s appendString:@"  var t = event.target;"];
-		[s appendString:@"  app.setAddr(t.innerHTML);"];
-		[s appendString:@"}"];
-		[s appendString:@"document.addEventListener('mousedown', on_mousedown, false);"];	}
+		[s appendString:
+			@"function on_dblclick() {"
+			@"  var t = event.target;"
+			@"  while (t && !(t.tagName == 'DIV' && t.className.match(/^line /))) {"
+			@"    t = t.parentNode;"
+			@"  }"
+			@"  if (t) {"
+			@"    app.onDblClick(t.getAttribute('clickinfo'));"
+			@"  }"
+			@"  event.stopPropagation();"
+			@"}"
+			@"function on_mousedown() {"
+			@"  if (app.shouldStopDoubleClick(event)) {"
+			@"    event.preventDefault();"
+			@"  }"
+			@"  event.stopPropagation();"
+			@"}"
+			@"function on_url() {"
+			@"  var t = event.target;"
+			@"  app.setUrl(t.innerHTML);"
+			@"}"
+			@"function on_addr() {"
+			@"  var t = event.target;"
+			@"  app.setAddr(t.innerHTML);"
+			@"}"
+			@"document.addEventListener('mousedown', on_mousedown, false);"
+		];
+	}
 	else {
-		[s appendString:@"function on_url() {"];
-		[s appendString:@"  var t = event.target;"];
-		[s appendString:@"  app.setUrl(t.innerHTML);"];
-		[s appendString:@"}"];
-		[s appendString:@"function on_addr() {"];
-		[s appendString:@"  var t = event.target;"];
-		[s appendString:@"  app.setAddr(t.innerHTML);"];
-		[s appendString:@"}"];
-		[s appendString:@"function on_nick() {"];
-		[s appendString:@"  var t = event.target;"];
-		[s appendString:@"  app.setNick(t.parentNode.getAttribute('nick'));"];
-		[s appendString:@"}"];
-		[s appendString:@"function on_chname() {"];
-		[s appendString:@"  var t = event.target;"];
-		[s appendString:@"  app.setChan(t.innerHTML);"];
-		[s appendString:@"}"];
+		[s appendString:
+			@"function on_url() {"
+			@"  var t = event.target;"
+			@"  app.setUrl(t.innerHTML);"
+			@"}"
+			@"function on_addr() {"
+			@"  var t = event.target;"
+			@"  app.setAddr(t.innerHTML);"
+			@"}"
+			@"function on_nick() {"
+			@"  var t = event.target;"
+			@"  app.setNick(t.parentNode.getAttribute('nick'));"
+			@"}"
+			@"function on_chname() {"
+			@"  var t = event.target;"
+			@"  app.setChan(t.innerHTML);"
+			@"}"
+		];
 	}
 	
 	[js evaluateWebScript:s];
