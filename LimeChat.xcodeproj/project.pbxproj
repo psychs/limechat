@@ -39,7 +39,6 @@
 		784773E5117EB07400466C56 /* regtrav.c in Sources */ = {isa = PBXBuildFile; fileRef = 784773D4117EB07400466C56 /* regtrav.c */; };
 		784773E6117EB07400466C56 /* regversion.c in Sources */ = {isa = PBXBuildFile; fileRef = 784773D5117EB07400466C56 /* regversion.c */; };
 		784773E7117EB07400466C56 /* st.c in Sources */ = {isa = PBXBuildFile; fileRef = 784773D6117EB07400466C56 /* st.c */; };
-		784775B9117EBDBE00466C56 /* Regex.m in Sources */ = {isa = PBXBuildFile; fileRef = 784775B8117EBDBE00466C56 /* Regex.m */; };
 		784BBE941085BC950080898B /* bluestar.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 784BBE901085BC950080898B /* bluestar.tiff */; };
 		784BBE951085BC950080898B /* keyrecorder_erase.png in Resources */ = {isa = PBXBuildFile; fileRef = 784BBE911085BC950080898B /* keyrecorder_erase.png */; };
 		784BBE961085BC950080898B /* keyrecorder_erase_pushed.png in Resources */ = {isa = PBXBuildFile; fileRef = 784BBE921085BC950080898B /* keyrecorder_erase_pushed.png */; };
@@ -236,8 +235,6 @@
 		784773D5117EB07400466C56 /* regversion.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = regversion.c; sourceTree = "<group>"; };
 		784773D6117EB07400466C56 /* st.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = st.c; sourceTree = "<group>"; };
 		784773D7117EB07400466C56 /* st.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = st.h; sourceTree = "<group>"; };
-		784775B7117EBDBE00466C56 /* Regex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Regex.h; sourceTree = "<group>"; };
-		784775B8117EBDBE00466C56 /* Regex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Regex.m; sourceTree = "<group>"; };
 		784BBE901085BC950080898B /* bluestar.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = bluestar.tiff; sourceTree = "<group>"; };
 		784BBE911085BC950080898B /* keyrecorder_erase.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = keyrecorder_erase.png; sourceTree = "<group>"; };
 		784BBE921085BC950080898B /* keyrecorder_erase_pushed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = keyrecorder_erase_pushed.png; sourceTree = "<group>"; };
@@ -789,8 +786,6 @@
 		78A8C12E11737F660044E7A1 /* Library */ = {
 			isa = PBXGroup;
 			children = (
-				784775B7117EBDBE00466C56 /* Regex.h */,
-				784775B8117EBDBE00466C56 /* Regex.m */,
 				784773BD117EB07400466C56 /* CocoaOniguruma */,
 				78A8C14911737F660044E7A1 /* YAML */,
 				78A8C12F11737F660044E7A1 /* AsyncSocket.h */,
@@ -1164,7 +1159,6 @@
 				784773E5117EB07400466C56 /* regtrav.c in Sources */,
 				784773E6117EB07400466C56 /* regversion.c in Sources */,
 				784773E7117EB07400466C56 /* st.c in Sources */,
-				784775B9117EBDBE00466C56 /* Regex.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
