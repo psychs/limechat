@@ -7,7 +7,7 @@
 #import "IRCWorld.h"
 #import "IRCClient.h"
 #import "IRCChannel.h"
-#import "Regex.h"
+#import "OnigRegexp.h"
 #import "NSLocaleHelper.h"
 
 
@@ -403,14 +403,15 @@
 		//
 		// expand image URLs
 		//
-		static Regex* imageRegex = nil;
+		static OnigRegexp* imageRegex = nil;
 		if (!imageRegex) {
 			NSString* pattern = @"(?<![a-zA-Z0-9_])https?://[a-z0-9.,_\\-+/:;%$~]+\\.(jpg|jpeg|png|gif)";
-			imageRegex = [[Regex alloc] initWithString:pattern options:UREGEX_CASE_INSENSITIVE];
+			imageRegex = [[OnigRegexp compileIgnorecase:pattern] retain];
 		}
 		
-		NSRange r = [imageRegex match:body];
-		if (r.location != NSNotFound) {
+		OnigResult* result = [imageRegex search:body];
+		if (result) {
+			NSRange r = result.bodyRange;
 			showInlineImage = YES;
 			NSString* url = [body substringWithRange:r];
 			[s appendFormat:@"<span class=\"message\" type=\"%@\">%@<br/>", lineTypeString, body];

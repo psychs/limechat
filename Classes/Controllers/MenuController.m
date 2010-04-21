@@ -7,7 +7,6 @@
 #import "IRCChannel.h"
 #import "ServerDialog.h"
 #import "ChannelDialog.h"
-#import "Regex.h"
 #import "URLOpener.h"
 #import "GTMNSString+URLArguments.h"
 #import "NSPasteboardHelper.h"

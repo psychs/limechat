@@ -3,7 +3,7 @@
 
 #import "WelcomeDialog.h"
 #import "ServerDialog.h"
-#import "Regex.h"
+#import "OnigRegexp.h"
 #import "NSStringHelper.h"
 
 
@@ -49,10 +49,10 @@
 		NSString* nick = NSUserName();
 		nick = [nick stringByReplacingOccurrencesOfString:@" " withString:@""];
 		
-		Regex* nickRegex = [[[Regex alloc] initWithString:@"^[a-zA-Z][-_a-zA-Z0-9]*$"] autorelease];
-		NSRange r = [nickRegex match:nick];
-		if (r.location != NSNotFound) {
-			nickText.stringValue = [nick substringWithRange:r];
+		OnigRegexp* nickRegex = [OnigRegexp compile:@"[a-zA-Z][-_a-zA-Z0-9]*"];
+		OnigResult* result = [nickRegex match:nick];
+		if (result) {
+			nickText.stringValue = [nick substringWithRange:result.bodyRange];
 		}
 	}
 	

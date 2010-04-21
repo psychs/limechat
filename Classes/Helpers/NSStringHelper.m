@@ -3,7 +3,7 @@
 
 #import "NSStringHelper.h"
 #import "UnicodeHelper.h"
-#import "Regex.h"
+#import "OnigRegexp.h"
 
 
 #define LF	0xa
@@ -345,16 +345,16 @@ BOOL isUnicharDigit(unichar c)
 {
 	if (self.length <= start) return NSMakeRange(NSNotFound, 0);
 	
-	static Regex* regex = nil;
+	static OnigRegexp* regex = nil;
 	if (!regex) {
-		NSString* pattern = @"(?<![a-zA-Z0-9_])(https?|ftp|itms)://[^ !\"#$\\&'()*+,/;<=>?\\[\\\\\\]\\^_`{|}　、，。．・…]+(/[^ \"'`<>　、，。．・…]*)?";
-		regex = [[Regex alloc] initWithString:pattern options:UREGEX_CASE_INSENSITIVE];
+		NSString* pattern = @"(?<![a-z0-9_])(https?|ftp|itms)://[^\\s!\"#$\\&'()*+,/;<=>?\\[\\\\\\]\\^_`{|}　、，。．・…]+(/[^\\s\"'`<>　、，。．・…]*)?";
+		regex = [[OnigRegexp compileIgnorecase:pattern] retain];
 	}
 	
-	NSRange r = [regex match:self start:start];
-	[regex reset];
-	if (r.location == NSNotFound) return r;
+	OnigResult* result = [regex search:self start:start];
+	if (!result) return NSMakeRange(NSNotFound, 0);
 	
+	NSRange r = result.bodyRange;
 	NSString* url = [self substringWithRange:r];
 	
 	int len = url.length;
@@ -416,15 +416,16 @@ BOOL isUnicharDigit(unichar c)
 	int len = self.length;
 	if (len <= start) return NSMakeRange(NSNotFound, 0);
 	
-	static Regex* regex = nil;
+	static OnigRegexp* regex = nil;
 	if (!regex) {
 		NSString* pattern = @"([a-zA-Z0-9]([-a-zA-Z0-9]*[a-zA-Z0-9])?\\.)([a-zA-Z0-9]([-a-zA-Z0-9]*[a-zA-Z0-9])?\\.)+[a-zA-Z]{2,6}|([a-f0-9]{0,4}:){7}[a-f0-9]{0,4}|([0-9]{1,3}\\.){3}[0-9]{1,3}";
-		regex = [[Regex alloc] initWithString:pattern];
+		regex = [[OnigRegexp compile:pattern] retain];
 	}
 	
-	NSRange r = [regex match:self start:start];
-	[regex reset];
-	if (r.location == NSNotFound) return r;
+	OnigResult* result = [regex search:self start:start];
+	if (!result) return NSMakeRange(NSNotFound, 0);
+	
+	NSRange r = result.bodyRange;
 	
 	int prev = r.location - 1;
 	if (0 <= prev && prev < len) {
@@ -457,15 +458,16 @@ BOOL isUnicharDigit(unichar c)
 	int len = self.length;
 	if (len <= start) return NSMakeRange(NSNotFound, 0);
 	
-	static Regex* regex = nil;
+	static OnigRegexp* regex = nil;
 	if (!regex) {
 		NSString* pattern = @"(?<![a-zA-Z0-9_])[#\\&][^ \\t,　]+";
-		regex = [[Regex alloc] initWithString:pattern];
+		regex = [[OnigRegexp compile:pattern] retain];
 	}
 	
-	NSRange r = [regex match:self start:start];
-	[regex reset];
-	if (r.location == NSNotFound) return r;
+	OnigResult* result = [regex search:self start:start];
+	if (!result) return NSMakeRange(NSNotFound, 0);
+
+	NSRange r = result.bodyRange;
 	
 	int prev = r.location - 1;
 	if (0 <= prev && prev < len) {

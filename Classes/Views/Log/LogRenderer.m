@@ -2,7 +2,6 @@
 // You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
 #import "LogRenderer.h"
-#import "Regex.h"
 #import "NSStringHelper.h"
 #import "GTMNSString+HTML.h"
 #import "UnicodeHelper.h"

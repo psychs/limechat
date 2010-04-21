@@ -7,7 +7,7 @@
 #import "IRCMessage.h"
 #import "Preferences.h"
 #import "WhoisDialog.h"
-#import "Regex.h"
+#import "OnigRegexp.h"
 #import "SoundPlayer.h"
 #import "TimerCommand.h"
 #import "NSStringHelper.h"
@@ -671,21 +671,23 @@ static NSDateFormatter* dateTimeFormatter = nil;
 {
 	NSString* escapedFileName = [fileName stringByReplacingOccurrencesOfString:@" " withString:@"_"];
 	
-	static Regex* addressPattern = nil;
+	static OnigRegexp* addressPattern = nil;
 	if (!addressPattern) {
-		addressPattern = [[Regex alloc] initWithString:@"^([0-9]{1,3})\\.([0-9]{1,3})\\.([0-9]{1,3})\\.([0-9]{1,3})$"];
+		NSString* pattern = @"([0-9]{1,3})\\.([0-9]{1,3})\\.([0-9]{1,3})\\.([0-9]{1,3})";
+		addressPattern = [[OnigRegexp compile:pattern] retain];
 	}
-	NSRange r = [addressPattern match:myAddress];
+	
+	OnigResult* result = [addressPattern match:myAddress];
 	
 	NSString* address;
-	if (r.location == NSNotFound) {
+	if (!result) {
 		address = myAddress;
 	}
 	else {
-		int w = [[myAddress substringWithRange:[addressPattern groupAt:1]] intValue];
-		int x = [[myAddress substringWithRange:[addressPattern groupAt:2]] intValue];
-		int y = [[myAddress substringWithRange:[addressPattern groupAt:3]] intValue];
-		int z = [[myAddress substringWithRange:[addressPattern groupAt:4]] intValue];
+		int w = [[myAddress substringWithRange:[result rangeAt:1]] intValue];
+		int x = [[myAddress substringWithRange:[result rangeAt:2]] intValue];
+		int y = [[myAddress substringWithRange:[result rangeAt:3]] intValue];
+		int z = [[myAddress substringWithRange:[result rangeAt:4]] intValue];
 		
 		unsigned long long a = 0;
 		a |= w; a <<= 8;
@@ -952,28 +954,37 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		if ([command isEqualToString:PRIVMSG]) {
 			NSString* recipientNick = nil;
 			
-			static Regex* headPattern = nil;
-			static Regex* tailPattern = nil;
-			static Regex* twitterPattern = nil;
+			static OnigRegexp* headPattern = nil;
+			static OnigRegexp* tailPattern = nil;
+			static OnigRegexp* twitterPattern = nil;
 			
 			if (!headPattern) {
-				headPattern = [[Regex alloc] initWithString:@"^([^ :]+): "];
+				headPattern = [[OnigRegexp compile:@"^([^\\s:]+):\\s?"] retain];
 			}
 			if (!tailPattern) {
-				tailPattern = [[Regex alloc] initWithString:@"[>＞] ?([^ ]+)$"];
+				tailPattern = [[OnigRegexp compile:@"[>＞]\\s?([^\\s]+)$"] retain];
 			}
 			if (!twitterPattern) {
-				twitterPattern = [[Regex alloc] initWithString:@"^@([0-9a-zA-Z_]+) "];
+				twitterPattern = [[OnigRegexp compile:@"^@([0-9a-zA-Z_]+)\\s"] retain];
 			}
 			
-			if ([headPattern match:line].location != NSNotFound) {
-				recipientNick = [line substringWithRange:[headPattern groupAt:1]];
+			OnigResult* result;
+			
+			result = [headPattern search:line];
+			if (result) {
+				recipientNick = [line substringWithRange:[result rangeAt:1]];
 			}
-			else if ([tailPattern match:line].location != NSNotFound) {
-				recipientNick = [line substringWithRange:[tailPattern groupAt:1]];
-			}
-			else if ([twitterPattern match:line].location != NSNotFound) {
-				recipientNick = [line substringWithRange:[twitterPattern groupAt:1]];
+			else {
+				result = [tailPattern search:line];
+				if (result) {
+					recipientNick = [line substringWithRange:[result rangeAt:1]];
+				}
+				else {
+					result = [twitterPattern search:line];
+					if (result) {
+						recipientNick = [line substringWithRange:[result rangeAt:1]];
+					}
+				}
 			}
 			
 			if (recipientNick) {
@@ -1817,18 +1828,18 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		s = [s stringByReplacingOccurrencesOfString:@"%@" withString:[NSString stringWithFormat:@"%c", mark]];
 	}
 	
-	static Regex* nickPattern = nil;
+	static OnigRegexp* nickPattern = nil;
 	if (!nickPattern) {
-		nickPattern = [[Regex alloc] initWithString:@"%(-?\\d+)?n"];
+		nickPattern = [[OnigRegexp compile:@"%(-?\\d+)?n"] retain];
 	}
 	
-	NSRange r;
-	
 	while (1) {
-		r = [nickPattern match:s];
-		if (r.location == NSNotFound) break;
+		OnigResult* result = [nickPattern search:s];
+		if (!result) break;
 		
-		NSRange numRange = [nickPattern groupAt:1];
+		NSRange r = result.bodyRange;
+		NSRange numRange = [result rangeAt:1];
+		
 		if (numRange.location != NSNotFound && numRange.length > 0) {
 			NSString* numStr = [s substringWithRange:numRange];
 			int n = [numStr intValue];

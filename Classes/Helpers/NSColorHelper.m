@@ -2,7 +2,7 @@
 // You can redistribute it and/or modify it under the Ruby's license or the GPL2.
 
 #import "NSColorHelper.h"
-#import "Regex.h"
+#import "OnigRegexp.h"
 
 
 @implementation NSColor (NSColorHelper)
@@ -29,30 +29,32 @@
 		}
 	}
 	else {
-		static Regex* rgba = nil;
+		static OnigRegexp* rgba = nil;
 		if (!rgba) {
-			rgba = [[Regex alloc] initWithStringNoCase:@"^rgba\\( *(\\d+) *, *(\\d+) *, *(\\d+) *, *(\\d*(?:\\.\\d+)) *\\)$"];
+			NSString* pattern = @"rgba\\(\\s*(\\d+)\\s*,\\s*(\\d+)\\s*,\\s*(\\d+)\\s*,\\s*(\\d*(?:\\.\\d+))\\s*\\)";
+			rgba = [[OnigRegexp compile:pattern] retain];
 		}
 		
-		if ([rgba match:s].location != NSNotFound) {
-			int r = [[s substringWithRange:[rgba groupAt:1]] intValue];
-			int g = [[s substringWithRange:[rgba groupAt:2]] intValue];
-			int b = [[s substringWithRange:[rgba groupAt:3]] intValue];
-			float a = [[s substringWithRange:[rgba groupAt:4]] floatValue];
-			[rgba reset];
+		OnigResult* result = [rgba match:s];
+		if (result) {
+			int r = [[s substringWithRange:[result rangeAt:1]] intValue];
+			int g = [[s substringWithRange:[result rangeAt:2]] intValue];
+			int b = [[s substringWithRange:[result rangeAt:3]] intValue];
+			float a = [[s substringWithRange:[result rangeAt:4]] floatValue];
 			return DEVICE_RGBA(r, g, b, a);
 		}
 		
-		static Regex* rgb = nil;
+		static OnigRegexp* rgb = nil;
 		if (!rgb) {
-			rgb = [[Regex alloc] initWithStringNoCase:@"^rgb\\( *(\\d+) *, *(\\d+) *, *(\\d+) *\\)$"];
+			NSString* pattern = @"rgb\\(\\s*(\\d+)\\s*,\\s*(\\d+)\\s*,\\s*(\\d+)\\s*\\)";
+			rgb = [[OnigRegexp compile:pattern] retain];
 		}
 		
-		if ([rgb match:s].location != NSNotFound) {
-			int r = [[s substringWithRange:[rgb groupAt:1]] intValue];
-			int g = [[s substringWithRange:[rgb groupAt:2]] intValue];
-			int b = [[s substringWithRange:[rgb groupAt:3]] intValue];
-			[rgb reset];
+		result = [rgb match:s];
+		if (result) {
+			int r = [[s substringWithRange:[result rangeAt:1]] intValue];
+			int g = [[s substringWithRange:[result rangeAt:2]] intValue];
+			int b = [[s substringWithRange:[result rangeAt:3]] intValue];
 			return DEVICE_RGB(r, g, b);
 		}
 	}

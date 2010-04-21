@@ -24,6 +24,22 @@
 		78347EDF1158D4B00073E2F0 /* WhoisDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78347ED11158D4B00073E2F0 /* WhoisDialog.xib */; };
 		7835FB921177341D005DC0B4 /* ListDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 7835FB911177341D005DC0B4 /* ListDialog.m */; };
 		783E6ADB1173802100261552 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 783E6AD91173802100261552 /* main.m */; };
+		784773D8117EB07400466C56 /* OnigRegexp.m in Sources */ = {isa = PBXBuildFile; fileRef = 784773BF117EB07400466C56 /* OnigRegexp.m */; };
+		784773D9117EB07400466C56 /* OnigRegexpUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 784773C1117EB07400466C56 /* OnigRegexpUtility.m */; };
+		784773DB117EB07400466C56 /* ascii.c in Sources */ = {isa = PBXBuildFile; fileRef = 784773C6117EB07400466C56 /* ascii.c */; };
+		784773DC117EB07400466C56 /* unicode.c in Sources */ = {isa = PBXBuildFile; fileRef = 784773C7117EB07400466C56 /* unicode.c */; };
+		784773DD117EB07400466C56 /* utf16_le.c in Sources */ = {isa = PBXBuildFile; fileRef = 784773C8117EB07400466C56 /* utf16_le.c */; };
+		784773DE117EB07400466C56 /* regcomp.c in Sources */ = {isa = PBXBuildFile; fileRef = 784773CA117EB07400466C56 /* regcomp.c */; };
+		784773DF117EB07400466C56 /* regenc.c in Sources */ = {isa = PBXBuildFile; fileRef = 784773CB117EB07400466C56 /* regenc.c */; };
+		784773E0117EB07400466C56 /* regerror.c in Sources */ = {isa = PBXBuildFile; fileRef = 784773CD117EB07400466C56 /* regerror.c */; };
+		784773E1117EB07400466C56 /* regexec.c in Sources */ = {isa = PBXBuildFile; fileRef = 784773CE117EB07400466C56 /* regexec.c */; };
+		784773E2117EB07400466C56 /* regext.c in Sources */ = {isa = PBXBuildFile; fileRef = 784773CF117EB07400466C56 /* regext.c */; };
+		784773E3117EB07400466C56 /* regparse.c in Sources */ = {isa = PBXBuildFile; fileRef = 784773D1117EB07400466C56 /* regparse.c */; };
+		784773E4117EB07400466C56 /* regsyntax.c in Sources */ = {isa = PBXBuildFile; fileRef = 784773D3117EB07400466C56 /* regsyntax.c */; };
+		784773E5117EB07400466C56 /* regtrav.c in Sources */ = {isa = PBXBuildFile; fileRef = 784773D4117EB07400466C56 /* regtrav.c */; };
+		784773E6117EB07400466C56 /* regversion.c in Sources */ = {isa = PBXBuildFile; fileRef = 784773D5117EB07400466C56 /* regversion.c */; };
+		784773E7117EB07400466C56 /* st.c in Sources */ = {isa = PBXBuildFile; fileRef = 784773D6117EB07400466C56 /* st.c */; };
+		784775B9117EBDBE00466C56 /* Regex.m in Sources */ = {isa = PBXBuildFile; fileRef = 784775B8117EBDBE00466C56 /* Regex.m */; };
 		784BBE941085BC950080898B /* bluestar.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 784BBE901085BC950080898B /* bluestar.tiff */; };
 		784BBE951085BC950080898B /* keyrecorder_erase.png in Resources */ = {isa = PBXBuildFile; fileRef = 784BBE911085BC950080898B /* keyrecorder_erase.png */; };
 		784BBE961085BC950080898B /* keyrecorder_erase_pushed.png in Resources */ = {isa = PBXBuildFile; fileRef = 784BBE921085BC950080898B /* keyrecorder_erase_pushed.png */; };
@@ -91,7 +107,6 @@
 		78A8C1DD11737F660044E7A1 /* IconController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C13A11737F660044E7A1 /* IconController.m */; };
 		78A8C1DE11737F660044E7A1 /* InputHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C13C11737F660044E7A1 /* InputHistory.m */; };
 		78A8C1DF11737F660044E7A1 /* KeyEventHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C13E11737F660044E7A1 /* KeyEventHandler.m */; };
-		78A8C1E011737F660044E7A1 /* Regex.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C14011737F660044E7A1 /* Regex.m */; };
 		78A8C1E111737F660044E7A1 /* TCPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C14211737F660044E7A1 /* TCPClient.m */; };
 		78A8C1E211737F660044E7A1 /* TCPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C14411737F660044E7A1 /* TCPServer.m */; };
 		78A8C1E311737F660044E7A1 /* Timer.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C14611737F660044E7A1 /* Timer.m */; };
@@ -198,6 +213,31 @@
 		7835FB911177341D005DC0B4 /* ListDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListDialog.m; sourceTree = "<group>"; };
 		783E6AD61173802100261552 /* LimeChat_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LimeChat_Prefix.pch; sourceTree = "<group>"; };
 		783E6AD91173802100261552 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		784773BE117EB07400466C56 /* OnigRegexp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnigRegexp.h; sourceTree = "<group>"; };
+		784773BF117EB07400466C56 /* OnigRegexp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnigRegexp.m; sourceTree = "<group>"; };
+		784773C0117EB07400466C56 /* OnigRegexpUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnigRegexpUtility.h; sourceTree = "<group>"; };
+		784773C1117EB07400466C56 /* OnigRegexpUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnigRegexpUtility.m; sourceTree = "<group>"; };
+		784773C3117EB07400466C56 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
+		784773C6117EB07400466C56 /* ascii.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ascii.c; sourceTree = "<group>"; };
+		784773C7117EB07400466C56 /* unicode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = unicode.c; sourceTree = "<group>"; };
+		784773C8117EB07400466C56 /* utf16_le.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = utf16_le.c; sourceTree = "<group>"; };
+		784773C9117EB07400466C56 /* oniguruma.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = oniguruma.h; sourceTree = "<group>"; };
+		784773CA117EB07400466C56 /* regcomp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = regcomp.c; sourceTree = "<group>"; };
+		784773CB117EB07400466C56 /* regenc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = regenc.c; sourceTree = "<group>"; };
+		784773CC117EB07400466C56 /* regenc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = regenc.h; sourceTree = "<group>"; };
+		784773CD117EB07400466C56 /* regerror.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = regerror.c; sourceTree = "<group>"; };
+		784773CE117EB07400466C56 /* regexec.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = regexec.c; sourceTree = "<group>"; };
+		784773CF117EB07400466C56 /* regext.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = regext.c; sourceTree = "<group>"; };
+		784773D0117EB07400466C56 /* regint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = regint.h; sourceTree = "<group>"; };
+		784773D1117EB07400466C56 /* regparse.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = regparse.c; sourceTree = "<group>"; };
+		784773D2117EB07400466C56 /* regparse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = regparse.h; sourceTree = "<group>"; };
+		784773D3117EB07400466C56 /* regsyntax.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = regsyntax.c; sourceTree = "<group>"; };
+		784773D4117EB07400466C56 /* regtrav.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = regtrav.c; sourceTree = "<group>"; };
+		784773D5117EB07400466C56 /* regversion.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = regversion.c; sourceTree = "<group>"; };
+		784773D6117EB07400466C56 /* st.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = st.c; sourceTree = "<group>"; };
+		784773D7117EB07400466C56 /* st.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = st.h; sourceTree = "<group>"; };
+		784775B7117EBDBE00466C56 /* Regex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Regex.h; sourceTree = "<group>"; };
+		784775B8117EBDBE00466C56 /* Regex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Regex.m; sourceTree = "<group>"; };
 		784BBE901085BC950080898B /* bluestar.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = bluestar.tiff; sourceTree = "<group>"; };
 		784BBE911085BC950080898B /* keyrecorder_erase.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = keyrecorder_erase.png; sourceTree = "<group>"; };
 		784BBE921085BC950080898B /* keyrecorder_erase_pushed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = keyrecorder_erase_pushed.png; sourceTree = "<group>"; };
@@ -330,8 +370,6 @@
 		78A8C13C11737F660044E7A1 /* InputHistory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InputHistory.m; sourceTree = "<group>"; };
 		78A8C13D11737F660044E7A1 /* KeyEventHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyEventHandler.h; sourceTree = "<group>"; };
 		78A8C13E11737F660044E7A1 /* KeyEventHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyEventHandler.m; sourceTree = "<group>"; };
-		78A8C13F11737F660044E7A1 /* Regex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Regex.h; sourceTree = "<group>"; };
-		78A8C14011737F660044E7A1 /* Regex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Regex.m; sourceTree = "<group>"; };
 		78A8C14111737F660044E7A1 /* TCPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPClient.h; sourceTree = "<group>"; };
 		78A8C14211737F660044E7A1 /* TCPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPClient.m; sourceTree = "<group>"; };
 		78A8C14311737F660044E7A1 /* TCPServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPServer.h; sourceTree = "<group>"; };
@@ -530,6 +568,52 @@
 			path = Others;
 			sourceTree = "<group>";
 		};
+		784773BD117EB07400466C56 /* CocoaOniguruma */ = {
+			isa = PBXGroup;
+			children = (
+				784773C2117EB07400466C56 /* oniguruma */,
+				784773BE117EB07400466C56 /* OnigRegexp.h */,
+				784773BF117EB07400466C56 /* OnigRegexp.m */,
+				784773C0117EB07400466C56 /* OnigRegexpUtility.h */,
+				784773C1117EB07400466C56 /* OnigRegexpUtility.m */,
+			);
+			path = CocoaOniguruma;
+			sourceTree = "<group>";
+		};
+		784773C2117EB07400466C56 /* oniguruma */ = {
+			isa = PBXGroup;
+			children = (
+				784773C5117EB07400466C56 /* enc */,
+				784773C3117EB07400466C56 /* config.h */,
+				784773C9117EB07400466C56 /* oniguruma.h */,
+				784773CA117EB07400466C56 /* regcomp.c */,
+				784773CB117EB07400466C56 /* regenc.c */,
+				784773CC117EB07400466C56 /* regenc.h */,
+				784773CD117EB07400466C56 /* regerror.c */,
+				784773CE117EB07400466C56 /* regexec.c */,
+				784773CF117EB07400466C56 /* regext.c */,
+				784773D0117EB07400466C56 /* regint.h */,
+				784773D1117EB07400466C56 /* regparse.c */,
+				784773D2117EB07400466C56 /* regparse.h */,
+				784773D3117EB07400466C56 /* regsyntax.c */,
+				784773D4117EB07400466C56 /* regtrav.c */,
+				784773D5117EB07400466C56 /* regversion.c */,
+				784773D6117EB07400466C56 /* st.c */,
+				784773D7117EB07400466C56 /* st.h */,
+			);
+			path = oniguruma;
+			sourceTree = "<group>";
+		};
+		784773C5117EB07400466C56 /* enc */ = {
+			isa = PBXGroup;
+			children = (
+				784773C6117EB07400466C56 /* ascii.c */,
+				784773C7117EB07400466C56 /* unicode.c */,
+				784773C8117EB07400466C56 /* utf16_le.c */,
+			);
+			path = enc;
+			sourceTree = "<group>";
+		};
 		784BBE8F1085BC950080898B /* images */ = {
 			isa = PBXGroup;
 			children = (
@@ -705,6 +789,10 @@
 		78A8C12E11737F660044E7A1 /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				784775B7117EBDBE00466C56 /* Regex.h */,
+				784775B8117EBDBE00466C56 /* Regex.m */,
+				784773BD117EB07400466C56 /* CocoaOniguruma */,
+				78A8C14911737F660044E7A1 /* YAML */,
 				78A8C12F11737F660044E7A1 /* AsyncSocket.h */,
 				78A8C13011737F660044E7A1 /* AsyncSocket.m */,
 				78A8C13111737F660044E7A1 /* FileLogger.h */,
@@ -721,8 +809,6 @@
 				78A8C13C11737F660044E7A1 /* InputHistory.m */,
 				78A8C13D11737F660044E7A1 /* KeyEventHandler.h */,
 				78A8C13E11737F660044E7A1 /* KeyEventHandler.m */,
-				78A8C13F11737F660044E7A1 /* Regex.h */,
-				78A8C14011737F660044E7A1 /* Regex.m */,
 				78A8C14111737F660044E7A1 /* TCPClient.h */,
 				78A8C14211737F660044E7A1 /* TCPClient.m */,
 				78A8C14311737F660044E7A1 /* TCPServer.h */,
@@ -731,7 +817,6 @@
 				78A8C14611737F660044E7A1 /* Timer.m */,
 				78A8C14711737F660044E7A1 /* TinyGrowlClient.h */,
 				78A8C14811737F660044E7A1 /* TinyGrowlClient.m */,
-				78A8C14911737F660044E7A1 /* YAML */,
 			);
 			name = Library;
 			path = Classes/Library;
@@ -1014,7 +1099,6 @@
 				78A8C1DD11737F660044E7A1 /* IconController.m in Sources */,
 				78A8C1DE11737F660044E7A1 /* InputHistory.m in Sources */,
 				78A8C1DF11737F660044E7A1 /* KeyEventHandler.m in Sources */,
-				78A8C1E011737F660044E7A1 /* Regex.m in Sources */,
 				78A8C1E111737F660044E7A1 /* TCPClient.m in Sources */,
 				78A8C1E211737F660044E7A1 /* TCPServer.m in Sources */,
 				78A8C1E311737F660044E7A1 /* Timer.m in Sources */,
@@ -1065,6 +1149,22 @@
 				78A7B4F61174427C006B324A /* NSData+Kana.m in Sources */,
 				78A7B58711744F12006B324A /* InviteSheet.m in Sources */,
 				7835FB921177341D005DC0B4 /* ListDialog.m in Sources */,
+				784773D8117EB07400466C56 /* OnigRegexp.m in Sources */,
+				784773D9117EB07400466C56 /* OnigRegexpUtility.m in Sources */,
+				784773DB117EB07400466C56 /* ascii.c in Sources */,
+				784773DC117EB07400466C56 /* unicode.c in Sources */,
+				784773DD117EB07400466C56 /* utf16_le.c in Sources */,
+				784773DE117EB07400466C56 /* regcomp.c in Sources */,
+				784773DF117EB07400466C56 /* regenc.c in Sources */,
+				784773E0117EB07400466C56 /* regerror.c in Sources */,
+				784773E1117EB07400466C56 /* regexec.c in Sources */,
+				784773E2117EB07400466C56 /* regext.c in Sources */,
+				784773E3117EB07400466C56 /* regparse.c in Sources */,
+				784773E4117EB07400466C56 /* regsyntax.c in Sources */,
+				784773E5117EB07400466C56 /* regtrav.c in Sources */,
+				784773E6117EB07400466C56 /* regversion.c in Sources */,
+				784773E7117EB07400466C56 /* st.c in Sources */,
+				784775B9117EBDBE00466C56 /* Regex.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
