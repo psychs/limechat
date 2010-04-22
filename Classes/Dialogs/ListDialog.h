@@ -9,7 +9,7 @@
 {
 	id delegate;
 	NSMutableArray* list;
-	NSArray* filteredList;
+	NSMutableArray* filteredList;
 	int sortKey;
 	NSComparisonResult sortOrder;
 	
