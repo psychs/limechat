@@ -7,12 +7,14 @@
     <language>en-us</language>
 
     <item>
-      <title>2.7</title>
-      <link>http://limechat.net/mac/#v2.7</link>
-      <pubDate>Tue, 20 Apr 2010 11:09:08 +0900</pubDate>
+      <title>2.8</title>
+      <link>http://limechat.net/mac/#v2.8</link>
+      <pubDate>Fri, 23 Apr 2010 08:44:40 +0900</pubDate>
       <content:encoded><![CDATA[
   			<ul>
-          <li>Allow SSL for proxy connections.</li>
+          <li>Use Oniguruma instead of ICU regexp for stability.</li>
+          <li>Fixed an unstable scroller problem with larger fonts.</li>
+          <li>Avoid using the system socks proxy when socks is disabled in the system network preferences.</li>
           <li>Fixed minor bugs.</li>
         </ul>
       ]]></content:encoded>

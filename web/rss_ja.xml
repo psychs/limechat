@@ -7,12 +7,14 @@
     <language>ja</language>
 
     <item>
-      <title>2.7</title>
-      <link>http://limechat.net/mac/ja.html#v2.7</link>
-      <pubDate>Tue, 20 Apr 2010 11:09:08 +0900</pubDate>
+      <title>2.8</title>
+      <link>http://limechat.net/mac/ja.html#v2.8</link>
+      <pubDate>Fri, 23 Apr 2010 08:44:40 +0900</pubDate>
       <content:encoded><![CDATA[
   			<ul>
-          <li>プロキシ接続に SSL を使えるようにした。</li>
+          <li>安定性のため正規表現ライブラリを ICU regexp から Oniguruma に切り替えた。</li>
+          <li>大きなフォントを使っているとスクロールバーが一番下に固定できない問題に対処した。</li>
+          <li>サーバ設定で System SOCKS proxy を選択していても、システム設定でオフにしている場合は、SOCKS を使わずに直接サーバに接続するようにした。</li>
           <li>細かいバグをfixした。</li>
         </ul>
       ]]></content:encoded>

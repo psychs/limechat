@@ -7,7 +7,7 @@
     <language>en</language>
     
     <item>
-      <title>LimeChat 2.7</title>
+      <title>LimeChat 2.8</title>
       <description><![CDATA[
         <html>
         <body>
@@ -22,18 +22,20 @@
             margin: 0.2em 0;
           }
         </style>
-        <h1>LimeChat 2.7</h1>
+        <h1>LimeChat 2.8</h1>
         <ul>
-          <li>Allow SSL for proxy connections.</li>
+          <li>Use Oniguruma instead of ICU regexp for stability.</li>
+          <li>Fixed an unstable scroller problem with larger fonts.</li>
+          <li>Avoid using the system socks proxy when socks is disabled in the system network preferences.</li>
           <li>Fixed minor bugs.</li>
         </ul>
         </body>
         </html>
       ]]></description>
-      <pubDate>Tue, 20 Apr 2010 11:09:08 +0900</pubDate>
-      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/LimeChat_2.7.tbz"
-                  sparkle:version="2.7" length="912105" type="application/octet-stream"
-                  sparkle:dsaSignature="MC0CFBStwkVO4ZutjbaswxBsRkPhNStWAhUAmLmJoTQyS3C1dkqOdEWLKKFVbw4="/>
+      <pubDate>Fri, 23 Apr 2010 08:44:40 +0900</pubDate>
+      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/LimeChat_2.8.tbz"
+                  sparkle:version="2.8" length="1073995" type="application/octet-stream"
+                  sparkle:dsaSignature="MCwCFAcCC/OLP2atRcpBQkolDzqQ4hDHAhQCMQwvA3eIVFV3+nYW3I8aNfiP/Q=="/>
     </item>
     
   </channel>
