@@ -60,6 +60,7 @@
 
 - (void)dealloc
 {
+	[NSObject cancelPreviousPerformRequestsWithTarget:self];
 	[view release];
 	[policy release];
 	[sink release];
@@ -148,6 +149,8 @@
 
 - (void)moveToBottom
 {
+	movingToBottom = NO;
+	
 	if (!loaded) return;
 	DOMHTMLDocument* doc = (DOMHTMLDocument*)[[view mainFrame] DOMDocument];
 	if (!doc) return;
@@ -158,6 +161,8 @@
 - (BOOL)viewingBottom
 {
 	if (!loaded) return YES;
+	if (movingToBottom) return YES;
+	
 	DOMHTMLDocument* doc = (DOMHTMLDocument*)[[view mainFrame] DOMDocument];
 	if (!doc) return YES;
 	DOMHTMLElement* body = [doc body];
@@ -180,6 +185,16 @@
 {
 	if (bottom) {
 		[self moveToBottom];
+	}
+}
+
+- (void)restorePositionWithDelay
+{
+	if (bottom) {
+		if (!movingToBottom) {
+			movingToBottom = YES;
+			[self performSelector:@selector(moveToBottom) withObject:nil afterDelay:0];
+		}
 	}
 }
 
@@ -481,7 +496,7 @@
 		[scroller setNeedsDisplay];
 	}
 	
-	[self restorePosition];
+	[self restorePositionWithDelay];
 }
 
 - (NSString*)initialDocument

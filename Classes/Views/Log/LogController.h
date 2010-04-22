@@ -37,6 +37,7 @@
 	NSColor* initialBackgroundColor;
 	
 	BOOL bottom;
+	BOOL movingToBottom;
 	NSMutableArray* lines;
 	int lineNumber;
 	int count;
