@@ -9,7 +9,6 @@ APP_NAME = APP_SHORT_NAME + '.app'
 ROOT_PATH = Pathname.new(__FILE__).dirname
 RELEASE_BUILD_PATH = ROOT_PATH + 'build/Release' + APP_NAME
 README_PATH = ROOT_PATH + 'README.txt'
-DOC_PATH = ROOT_PATH + 'doc'
 PACKAGES_PATH = ROOT_PATH + 'Packages'
 WEB_PATH = ROOT_PATH + 'web'
 TEMPLATES_PATH = WEB_PATH + 'templates'
@@ -48,8 +47,9 @@ task :package_app do |t|
   TMP_PATH.mkpath
   RELEASE_BUILD_PATH.cptree(TMP_PATH)
   
-  DOC_PATH.cptree(TMP_PATH)
-  README_PATH.cptree(TMP_PATH + 'doc')
+  doc_path = TMP_PATH + 'doc'
+  doc_path.mkpath
+  README_PATH.cptree(doc_path)
   
   rmglob(TMP_PATH + '**/.DS_Store')
   
