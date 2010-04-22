@@ -31,7 +31,7 @@ Stefan Rusterholz          # Many suggestions and patches
 Takashi Tsugo              # Deep Ocean theme
 The Growl Project          # Growl logo in Limelight theme
 why the lucky stiff        # Syck
-William Thimbleby          # Syck coaoa
+William Thimbleby          # Syck cocoa
 Yohei Endo                 # Application icon
 Yukihiro Matsumoto         # Ruby logo in Limelight theme
 
