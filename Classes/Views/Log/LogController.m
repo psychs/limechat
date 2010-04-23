@@ -9,6 +9,7 @@
 #import "IRCChannel.h"
 #import "OnigRegexp.h"
 #import "NSLocaleHelper.h"
+#import "ImageURLParser.h"
 
 
 #define BOTTOM_EPSILON	20
@@ -191,12 +192,10 @@
 - (void)restorePositionWithDelay
 {
 	if (bottom) {
-		/*
 		if (!movingToBottom) {
 			movingToBottom = YES;
 			[self performSelector:@selector(moveToBottom) withObject:nil afterDelay:0];
 		}
-		 */
 	}
 }
 
@@ -384,12 +383,15 @@
 - (BOOL)print:(LogLine*)line
 {
 	BOOL key = NO;
+	NSArray* urlRanges = nil;
+	
 	NSString* body = [LogRenderer renderBody:line.body
 									keywords:line.keywords
 								excludeWords:line.excludeWords
 						  highlightWholeLine:[Preferences keywordWholeLine]
 							  exactWordMatch:[Preferences keywordMatchingMethod] == KEYWORD_MATCH_EXACT
-								 highlighted:&key];
+								 highlighted:&key
+								   URLRanges:&urlRanges];
 	
 	if (!loaded) {
 		[lines addObject:line];
@@ -416,23 +418,26 @@
 	BOOL isText = type == LINE_TYPE_PRIVMSG || type == LINE_TYPE_NOTICE || type == LINE_TYPE_ACTION;
 	BOOL showInlineImage = NO;
 
-	if (isText && !console && [Preferences showInlineImages]) {
+	if (isText && !console && urlRanges.count && [Preferences showInlineImages]) {
 		//
 		// expand image URLs
 		//
-		static OnigRegexp* imageRegex = nil;
-		if (!imageRegex) {
-			NSString* pattern = @"(?<![a-zA-Z0-9_])https?://[a-z0-9.,_\\-+/:;%$~]+\\.(jpg|jpeg|png|gif)";
-			imageRegex = [[OnigRegexp compileIgnorecase:pattern] retain];
+		NSString* imagePageUrl = nil;
+		NSString* imageUrl = nil;
+		
+		for (NSValue* rangeValue in urlRanges) {
+			NSString* url = [line.body substringWithRange:[rangeValue rangeValue]];
+			imageUrl = [ImageURLParser imageURLForURL:url];
+			if (imageUrl) {
+				imagePageUrl = url;
+				break;
+			}
 		}
 		
-		OnigResult* result = [imageRegex search:body];
-		if (result) {
-			NSRange r = result.bodyRange;
+		if (imageUrl) {
 			showInlineImage = YES;
-			NSString* url = [body substringWithRange:r];
 			[s appendFormat:@"<span class=\"message\" type=\"%@\">%@<br/>", lineTypeString, body];
-			[s appendFormat:@"<a href=\"%@\"><img src=\"%@\" class=\"inlineimage\"/></a></span>", url, url];
+			[s appendFormat:@"<a href=\"%@\"><img src=\"%@\" class=\"inlineimage\"/></a></span>", imagePageUrl, imageUrl];
 		}
 	}
 	

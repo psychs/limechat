@@ -24,6 +24,7 @@
 - (NSArray*)splitIntoLines;
 - (NSString*)trim;
 
+- (BOOL)isAlphaNumOnly;
 - (BOOL)isNumericOnly;
 
 - (int)firstCharCodePoint;
@@ -42,6 +43,9 @@
 
 - (NSRange)rangeOfChannelName;
 - (NSRange)rangeOfChannelNameStart:(int)start;
+
+- (NSString*)encodeURIComponent;
+- (NSString*)encodeURIFragment;
 
 - (BOOL)isChannelName;
 - (BOOL)isModeChannelName;

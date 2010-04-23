@@ -149,6 +149,23 @@
 	return YES;
 }
 
+- (BOOL)isAlphaNumOnly
+{
+	NSUInteger len = self.length;
+	if (!len) return NO;
+	
+	const UniChar* buffer = [self getCharactersBuffer];
+	if (!buffer) return NO;
+	
+	for (NSInteger i=0; i<len; ++i) {
+		UniChar c = buffer[i];
+		if (!(IsAlphaNum(c))) {
+			return NO;
+		}
+	}
+	return YES;
+}
+
 BOOL isSurrogate(UniChar c)
 {
 	return 0xd800 <= c && c <= 0xdfff;
@@ -488,6 +505,76 @@ BOOL isUnicharDigit(unichar c)
 	}
 	
 	return r;
+}
+
+- (NSString*)encodeURIComponent
+{
+	if (!self.length) return @"";
+	
+	static const char* characters = "0123456789ABCDEF";
+	
+	const char* src = [self UTF8String];
+	if (!src) return @"";
+	
+	NSUInteger len = [self lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
+	char buf[len*4];
+	char* dest = buf;
+	
+	for (NSInteger i=len-1; i>=0; --i) {
+		unsigned char c = *src++;
+		if (IsWordLetter(c) || c == '-' || c == '.' || c == '~') {
+			*dest++ = c;
+		}
+		else {
+			*dest++ = '%';
+			*dest++ = characters[c / 16];
+			*dest++ = characters[c % 16];
+		}
+	}
+	
+	return [[[NSString alloc] initWithBytes:buf length:dest - buf encoding:NSASCIIStringEncoding] autorelease];
+}
+
+- (NSString*)encodeURIFragment
+{
+	if (!self.length) return @"";
+	
+	static const char* characters = "0123456789ABCDEF";
+	
+	const char* src = [self UTF8String];
+	if (!src) return @"";
+	
+	NSUInteger len = [self lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
+	char buf[len*4];
+	char* dest = buf;
+	
+	for (NSInteger i=len-1; i>=0; --i) {
+		unsigned char c = *src++;
+		if (IsWordLetter(c)
+			|| c == '#'
+			|| c == '%'
+			|| c == '&'
+			|| c == '+'
+			|| c == ','
+			|| c == '-'
+			|| c == '.'
+			|| c == '/'
+			|| c == ':'
+			|| c == ';'
+			|| c == '='
+			|| c == '?'
+			|| c == '@'
+			|| c == '~') {
+			*dest++ = c;
+		}
+		else {
+			*dest++ = '%';
+			*dest++ = characters[c / 16];
+			*dest++ = characters[c % 16];
+		}
+	}
+	
+	return [[[NSString alloc] initWithBytes:buf length:dest - buf encoding:NSASCIIStringEncoding] autorelease];
 }
 
 + (NSString*)bundleString:(NSString*)key
