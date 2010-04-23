@@ -1,5 +1,5 @@
 // Created by Satoshi Nakagawa.
-// You can redistribute it and/or modify it under the Ruby's license or the GPL2.
+// You can redistribute it and/or modify it under the new BSD license.
 
 #import "LogController.h"
 #import "Preferences.h"
@@ -191,10 +191,12 @@
 - (void)restorePositionWithDelay
 {
 	if (bottom) {
+		/*
 		if (!movingToBottom) {
 			movingToBottom = YES;
 			[self performSelector:@selector(moveToBottom) withObject:nil afterDelay:0];
 		}
+		 */
 	}
 }
 
