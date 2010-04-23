@@ -65,9 +65,5 @@
 	<true/>
 	<key>SUPublicDSAKeyFile</key>
 	<string>dsa_pub.pem</string>
-	<key>SACrashReporterDeveloperName</key>
-	<string>Psychs</string>
-	<key>SACrashReporterPostURL</key>
-	<string>http://limechat.net/app/crash_reporter.php</string>
 </dict>
 </plist>
