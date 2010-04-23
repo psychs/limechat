@@ -816,8 +816,10 @@
 	
 	[js evaluateWebScript:s];
 	
-	// @@@
 	// evaluate theme js
+	if (theme.js.content.length) {
+		[js evaluateWebScript:theme.js.content];
+	}
 }
 
 - (id)webView:(WebView *)sender identifierForInitialRequest:(NSURLRequest *)request fromDataSource:(WebDataSource *)dataSource

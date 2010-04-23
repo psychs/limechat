@@ -19,12 +19,14 @@ static NSString* userBasePath;
 @synthesize name;
 @synthesize log;
 @synthesize other;
+@synthesize js;
 
 - (id)init
 {
 	if (self = [super init]) {
 		log = [LogTheme new];
 		other = [OtherTheme new];
+		js = [CustomJSFile new];
 	}
 	return self;
 }
@@ -34,6 +36,7 @@ static NSString* userBasePath;
 	[name release];
 	[log release];
 	[other release];
+	[js release];
 	[super dealloc];
 }
 
@@ -64,18 +67,21 @@ static NSString* userBasePath;
 			
 			log.fileName = [fullName stringByAppendingString:@".css"];
 			other.fileName = [fullName stringByAppendingString:@".yaml"];
+			js.fileName = [fullName stringByAppendingString:@".js"];
 			return;
 		}
 	}
 	
 	log.fileName = nil;
 	other.fileName = nil;
+	js.fileName = nil;
 }
 
 - (void)reload
 {
 	[log reload];
 	[other reload];
+	[js reload];
 }
 
 + (void)createUserDirectory
