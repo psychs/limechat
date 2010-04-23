@@ -13,7 +13,7 @@
       <content:encoded><![CDATA[
   			<ul>
           <li>Use Oniguruma instead of ICU regexp for stability.</li>
-          <li>Fixed an unstable scroller problem with larger fonts.</li>
+          <li>Fixed the unstable scroller problem with larger fonts.</li>
           <li>Avoid using the system socks proxy when socks is disabled in the system network preferences.</li>
           <li>Fixed minor bugs.</li>
         </ul>
