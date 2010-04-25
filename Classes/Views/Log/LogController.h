@@ -8,7 +8,6 @@
 #import "LogLine.h"
 #import "MarkedScroller.h"
 #import "ViewTheme.h"
-#import "WebViewAutoScroll.h"
 
 
 @class IRCWorld;
@@ -23,7 +22,6 @@
 	LogScriptEventSink* sink;
 	MarkedScroller* scroller;
 	WebScriptObject* js;
-	WebViewAutoScroll* autoScroller;
 
 	IRCWorld* world;
 	IRCClient* client;
@@ -38,7 +36,6 @@
 	BOOL console;
 	NSColor* initialBackgroundColor;
 	
-	BOOL becameVisible;
 	BOOL bottom;
 	BOOL movingToBottom;
 	NSMutableArray* lines;
@@ -70,7 +67,6 @@
 @property (nonatomic, readonly) BOOL viewingBottom;
 
 - (void)setUp;
-- (void)notifyDidBecomeVisible;
 
 - (void)moveToTop;
 - (void)moveToBottom;

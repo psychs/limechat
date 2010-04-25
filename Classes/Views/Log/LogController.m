@@ -67,7 +67,6 @@
 	[sink release];
 	[scroller release];
 	[js release];
-	[autoScroller release];
 
 	[menu release];
 	[urlMenu release];
@@ -140,14 +139,6 @@
 	[[view mainFrame] loadHTMLString:[self initialDocument] baseURL:theme.log.baseUrl];
 }
 
-- (void)notifyDidBecomeVisible
-{
-	if (!becameVisible) {
-		becameVisible = YES;
-		[self moveToBottom];
-	}
-}
-
 - (void)moveToTop
 {
 	if (!loaded) return;
@@ -193,23 +184,19 @@
 
 - (void)restorePosition
 {
-	/*
 	if (bottom) {
 		[self moveToBottom];
 	}
-	 */
 }
 
 - (void)restorePositionWithDelay
 {
-	/*
 	if (bottom) {
 		if (!movingToBottom) {
 			movingToBottom = YES;
 			[self performSelector:@selector(moveToBottom) withObject:nil afterDelay:0];
 		}
 	}
-	 */
 }
 
 - (void)mark
@@ -743,11 +730,6 @@
 	loaded = YES;
 	loadingImages = 0;
 	[self setUpScroller];
-	
-	if (!autoScroller) {
-		autoScroller = [WebViewAutoScroll new];
-	}
-	autoScroller.webFrame = view.mainFrame.frameView;
 	
 	if (html) {
 		DOMHTMLDocument* doc = (DOMHTMLDocument*)[[view mainFrame] DOMDocument];

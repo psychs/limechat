@@ -81,11 +81,9 @@
 {
 	consoleLog = [[self createLogWithClient:nil channel:nil console:YES] retain];
 	consoleBase.contentView = consoleLog.view;
-	[consoleLog notifyDidBecomeVisible];
 	
 	dummyLog = [[self createLogWithClient:nil channel:nil console:YES] retain];
 	logBase.contentView = dummyLog.view;
-	[dummyLog notifyDidBecomeVisible];
 	
 	config = [seed mutableCopy];
 	for (IRCClientConfig* e in config.clients) {
@@ -486,9 +484,7 @@
 	if (!item) {
 		self.selected = nil;
 		
-		logBase.contentView = dummyLog.view;
-		[dummyLog notifyDidBecomeVisible];
-		
+		[logBase setContentView:dummyLog.view];
 		memberList.dataSource = nil;
 		[memberList reloadData];
 		tree.menu = treeMenu;
@@ -928,8 +924,6 @@
 	
 	if (!selected) {
 		logBase.contentView = dummyLog.view;
-		[dummyLog notifyDidBecomeVisible];
-		
 		tree.menu = treeMenu;
 		memberList.dataSource = nil;
 		memberList.delegate = nil;
@@ -939,9 +933,7 @@
 	
 	[selected resetState];
 	
-	LogController* log = [selected log];
-	logBase.contentView = [log view];
-	[log notifyDidBecomeVisible];
+	logBase.contentView = [[selected log] view];
 	
 	if ([selected isClient]) {
 		tree.menu = [serverMenu submenu];

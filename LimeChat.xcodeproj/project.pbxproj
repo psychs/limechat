@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		780C67C811822AFF00CB739F /* ImageURLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 780C67C711822AFF00CB739F /* ImageURLParser.m */; };
-		780C685E118230EE00CB739F /* WebViewAutoScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 780C685D118230EE00CB739F /* WebViewAutoScroll.m */; };
 		780FF69F11813BC3003C7648 /* CustomJSFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 780FF69E11813BC3003C7648 /* CustomJSFile.m */; };
 		78287EB70D742DBD008D5656 /* Themes in CopyFiles */ = {isa = PBXBuildFile; fileRef = 78287EA90D742DAA008D5656 /* Themes */; };
 		782FCF891173824C007BE697 /* LimeChatApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 782FCF881173824C007BE697 /* LimeChatApplication.m */; };
@@ -197,8 +196,6 @@
 		780253C20C09525900C170D4 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
 		780C67C611822AFF00CB739F /* ImageURLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageURLParser.h; sourceTree = "<group>"; };
 		780C67C711822AFF00CB739F /* ImageURLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageURLParser.m; sourceTree = "<group>"; };
-		780C685C118230EE00CB739F /* WebViewAutoScroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewAutoScroll.h; sourceTree = "<group>"; };
-		780C685D118230EE00CB739F /* WebViewAutoScroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewAutoScroll.m; sourceTree = "<group>"; };
 		780FF69D11813BC3003C7648 /* CustomJSFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomJSFile.h; sourceTree = "<group>"; };
 		780FF69E11813BC3003C7648 /* CustomJSFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomJSFile.m; sourceTree = "<group>"; };
 		78287EA90D742DAA008D5656 /* Themes */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Themes; path = Resources/Themes; sourceTree = "<group>"; };
@@ -955,8 +952,6 @@
 				78A8C18C11737F660044E7A1 /* LogScriptEventSink.m */,
 				78A8C18D11737F660044E7A1 /* LogView.h */,
 				78A8C18E11737F660044E7A1 /* LogView.m */,
-				780C685C118230EE00CB739F /* WebViewAutoScroll.h */,
-				780C685D118230EE00CB739F /* WebViewAutoScroll.m */,
 				780C67C611822AFF00CB739F /* ImageURLParser.h */,
 				780C67C711822AFF00CB739F /* ImageURLParser.m */,
 			);
@@ -1176,7 +1171,6 @@
 				784773E7117EB07400466C56 /* st.c in Sources */,
 				780FF69F11813BC3003C7648 /* CustomJSFile.m in Sources */,
 				780C67C811822AFF00CB739F /* ImageURLParser.m in Sources */,
-				780C685E118230EE00CB739F /* WebViewAutoScroll.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
