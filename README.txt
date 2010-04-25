@@ -9,7 +9,7 @@ Satoshi Nakagawa <psychs@limechat.net>
 
 * Thanks To
 
-Allan Odgaard              # TextMate icon for Limelight theme
+Allan Odgaard              # WebViewAutoScroll and TextMate icon for Limelight theme
 Atsuhisa Shimazawa         # Badges
 Shingo Morita              # Badges
 Dustin Voss                # AsyncSocket
