@@ -317,25 +317,29 @@
 	DOMHTMLDocument* doc = (DOMHTMLDocument*)[[view mainFrame] DOMDocument];
 	if (!doc) return;
 	DOMHTMLElement* body = [doc body];
-	
-	// remeber scroll top
-	int top = [[body valueForKey:@"scrollTop"] intValue];
-	
-	// calculate scroll delta
 	DOMNodeList* nodeList = [body childNodes];
-	int delta = 0;
 	
-	if (n < [nodeList length]) {
-		DOMHTMLElement* firstNode = (DOMHTMLElement*)[nodeList item:0];
-		DOMHTMLElement* node = (DOMHTMLElement*)[nodeList item:n];
-		if ([node isKindOfClass:[DOMHTMLHRElement class]]) {
-			DOMHTMLElement* nextSibling = (DOMHTMLElement*)[node nextSibling];
-			if (nextSibling) {
-				node = nextSibling;
+	BOOL viewingBottom = [self viewingBottom];
+	
+	 // calculate scroll delta
+	int top = 0;
+	int delta = 0;
+	if (!viewingBottom) {
+		// remeber scroll top
+		top = [[body valueForKey:@"scrollTop"] intValue];
+		
+		if (n < [nodeList length]) {
+			DOMHTMLElement* firstNode = (DOMHTMLElement*)[nodeList item:0];
+			DOMHTMLElement* node = (DOMHTMLElement*)[nodeList item:n];
+			if ([node isKindOfClass:[DOMHTMLHRElement class]]) {
+				DOMHTMLElement* nextSibling = (DOMHTMLElement*)[node nextSibling];
+				if (nextSibling) {
+					node = nextSibling;
+				}
 			}
-		}
-		if (node) {
-			delta = [[node valueForKey:@"offsetTop"] intValue] - [[firstNode valueForKey:@"offsetTop"] intValue];
+			if (node) {
+				delta = [[node valueForKey:@"offsetTop"] intValue] - [[firstNode valueForKey:@"offsetTop"] intValue];
+			}
 		}
 	}
 	
@@ -345,15 +349,17 @@
 		[body removeChild:node];
 	}
 	
-	// scroll back by delta
-	if (delta > 0) {
-		[body setValue:[NSNumber numberWithInt:top - delta] forKey:@"scrollTop"];
+	if (!viewingBottom) {
+		// scroll back by delta
+		if (delta > 0) {
+			[body setValue:[NSNumber numberWithInt:top - delta] forKey:@"scrollTop"];
+		}
 	}
 	
 	// updating highlight line numbers
 	
 	if (highlightedLineNumbers.count > 0) {
-		nodeList = [body childNodes];
+		DOMNodeList* nodeList = [body childNodes];
 		if (nodeList.length) {
 			DOMHTMLElement* firstNode = (DOMHTMLElement*)[nodeList item:0];
 			if (firstNode) {
