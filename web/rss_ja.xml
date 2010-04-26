@@ -12,7 +12,7 @@
       <pubDate>Mon, 26 Apr 2010 18:24:04 +0900</pubDate>
       <content:encoded><![CDATA[
   			<ul>
-          <li>パフォーマンスを改善した</li>
+          <li>パフォーマンスを改善した。</li>
           <li>画像サービスのURLに対応した。 (twitpic, tweetphoto, yfrog, twitgoo, img.ly, movapic, f.hatena.ne.jp)</li>
           <li>スクロール位置を一番下に保つ方法を変更した。コードを提供してくれた Allan に感謝。</li>
           <li>テーマでカスタム Javascript を使えるようにした。</li>
