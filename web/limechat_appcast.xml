@@ -7,7 +7,7 @@
     <language>en</language>
     
     <item>
-      <title>LimeChat 2.8</title>
+      <title>LimeChat 2.9</title>
       <description><![CDATA[
         <html>
         <body>
@@ -22,20 +22,21 @@
             margin: 0.2em 0;
           }
         </style>
-        <h1>LimeChat 2.8</h1>
+        <h1>LimeChat 2.9</h1>
         <ul>
-          <li>Use Oniguruma instead of ICU regexp for stability.</li>
-          <li>Fixed the unstable scroller problem with larger fonts.</li>
-          <li>Avoid using the system socks proxy when socks is disabled in the system network preferences.</li>
-          <li>Fixed minor bugs.</li>
+          <li>Improved performance.</li>
+          <li>Image services support. (twitpic, tweetphoto, yfrog, twitgoo and img.ly)</li>
+          <li>Changed the way to keep scroller at bottom. Thanks to Allan.</li>
+          <li>Enabled custom javascript in theme.</li>
+          <li>Minor bug fixes.</li>
         </ul>
         </body>
         </html>
       ]]></description>
-      <pubDate>Fri, 23 Apr 2010 08:44:40 +0900</pubDate>
-      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/LimeChat_2.8.tbz"
-                  sparkle:version="2.8" length="1073995" type="application/octet-stream"
-                  sparkle:dsaSignature="MCwCFAcCC/OLP2atRcpBQkolDzqQ4hDHAhQCMQwvA3eIVFV3+nYW3I8aNfiP/Q=="/>
+      <pubDate>Mon, 26 Apr 2010 18:24:04 +0900</pubDate>
+      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/LimeChat_2.9.tbz"
+                  sparkle:version="2.9" length="1080283" type="application/octet-stream"
+                  sparkle:dsaSignature="MCwCFBeYDNYS53LXWYeMzElNK40em0fyAhQmZd9BFk5Ljk6h/nLb1qNvtXBQZQ=="/>
     </item>
     
   </channel>

@@ -7,14 +7,15 @@
     <language>ja</language>
 
     <item>
-      <title>2.8</title>
-      <link>http://limechat.net/mac/ja.html#v2.8</link>
-      <pubDate>Fri, 23 Apr 2010 08:44:40 +0900</pubDate>
+      <title>2.9</title>
+      <link>http://limechat.net/mac/ja.html#v2.9</link>
+      <pubDate>Mon, 26 Apr 2010 18:24:04 +0900</pubDate>
       <content:encoded><![CDATA[
   			<ul>
-          <li>安定性のため正規表現ライブラリを ICU regexp から Oniguruma に切り替えた。</li>
-          <li>大きなフォントを使っているとスクロールバーが一番下に固定できない問題に対処した。</li>
-          <li>サーバ設定で System SOCKS proxy を選択していても、システム設定でオフにしている場合は、SOCKS を使わずに直接サーバに接続するようにした。</li>
+          <li>パフォーマンスを改善した</li>
+          <li>画像サービスのURLに対応した。 (twitpic, tweetphoto, yfrog, twitgoo, img.ly, movapic, f.hatena.ne.jp)</li>
+          <li>スクロール位置を一番下に保つ方法を変更した。コードを提供してくれた Allan に感謝。</li>
+          <li>テーマでカスタム Javascript を使えるようにした。</li>
           <li>細かいバグをfixした。</li>
         </ul>
       ]]></content:encoded>

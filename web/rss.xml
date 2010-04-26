@@ -7,15 +7,16 @@
     <language>en-us</language>
 
     <item>
-      <title>2.8</title>
-      <link>http://limechat.net/mac/#v2.8</link>
-      <pubDate>Fri, 23 Apr 2010 08:44:40 +0900</pubDate>
+      <title>2.9</title>
+      <link>http://limechat.net/mac/#v2.9</link>
+      <pubDate>Mon, 26 Apr 2010 18:24:04 +0900</pubDate>
       <content:encoded><![CDATA[
   			<ul>
-          <li>Use Oniguruma instead of ICU regexp for stability.</li>
-          <li>Fixed the unstable scroller problem with larger fonts.</li>
-          <li>Avoid using the system socks proxy when socks is disabled in the system network preferences.</li>
-          <li>Fixed minor bugs.</li>
+          <li>Improved performance.</li>
+          <li>Image services support. (twitpic, tweetphoto, yfrog, twitgoo and img.ly)</li>
+          <li>Changed the way to keep scroller at bottom. Thanks to Allan.</li>
+          <li>Enabled custom javascript in theme.</li>
+          <li>Minor bug fixes.</li>
         </ul>
       ]]></content:encoded>
     </item>
