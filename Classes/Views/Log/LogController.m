@@ -344,6 +344,10 @@
 	}
 	
 	// remove lines
+	//
+	// note:
+	//   removing from the tail is around 6x faster
+	//
 	for (int i=n-1; i>=0; --i) {
 		DOMHTMLElement* node = (DOMHTMLElement*)[nodeList item:i];
 		[body removeChild:node];
