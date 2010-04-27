@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="7"/>
+			<integer value="6"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -684,7 +684,6 @@
 														<reference key="NSMenu" ref="373104291"/>
 														<string key="NSTitle">UTF-8</string>
 														<string key="NSKeyEquiv"/>
-														<int key="NSKeyEquivModMask">1048576</int>
 														<int key="NSMnemonicLoc">2147483647</int>
 														<int key="NSState">1</int>
 														<object class="NSCustomResource" key="NSOnImage" id="471733027">
@@ -713,7 +712,6 @@
 																<bool key="NSIsSeparator">YES</bool>
 																<string key="NSTitle"/>
 																<string key="NSKeyEquiv"/>
-																<int key="NSKeyEquivModMask">1048576</int>
 																<int key="NSMnemonicLoc">2147483647</int>
 																<reference key="NSOnImage" ref="471733027"/>
 																<reference key="NSMixedImage" ref="503666969"/>
@@ -724,7 +722,6 @@
 																<reference key="NSMenu" ref="373104291"/>
 																<string key="NSTitle">ISO-8859-1</string>
 																<string key="NSKeyEquiv"/>
-																<int key="NSKeyEquivModMask">1048576</int>
 																<int key="NSMnemonicLoc">2147483647</int>
 																<reference key="NSOnImage" ref="471733027"/>
 																<reference key="NSMixedImage" ref="503666969"/>
@@ -736,7 +733,6 @@
 																<reference key="NSMenu" ref="373104291"/>
 																<string key="NSTitle">ISO-8859-15</string>
 																<string key="NSKeyEquiv"/>
-																<int key="NSKeyEquivModMask">1048576</int>
 																<int key="NSMnemonicLoc">2147483647</int>
 																<reference key="NSOnImage" ref="471733027"/>
 																<reference key="NSMixedImage" ref="503666969"/>
@@ -748,7 +744,6 @@
 																<reference key="NSMenu" ref="373104291"/>
 																<string key="NSTitle">ISO-8859-2</string>
 																<string key="NSKeyEquiv"/>
-																<int key="NSKeyEquivModMask">1048576</int>
 																<int key="NSMnemonicLoc">2147483647</int>
 																<reference key="NSOnImage" ref="471733027"/>
 																<reference key="NSMixedImage" ref="503666969"/>
@@ -760,7 +755,6 @@
 																<reference key="NSMenu" ref="373104291"/>
 																<string key="NSTitle">ISO-8859-7 (Greek)</string>
 																<string key="NSKeyEquiv"/>
-																<int key="NSKeyEquivModMask">1048576</int>
 																<int key="NSMnemonicLoc">2147483647</int>
 																<reference key="NSOnImage" ref="471733027"/>
 																<reference key="NSMixedImage" ref="503666969"/>
@@ -772,7 +766,6 @@
 																<reference key="NSMenu" ref="373104291"/>
 																<string key="NSTitle">ISO-8859-8 (Hebrew)</string>
 																<string key="NSKeyEquiv"/>
-																<int key="NSKeyEquivModMask">1048576</int>
 																<int key="NSMnemonicLoc">2147483647</int>
 																<reference key="NSOnImage" ref="471733027"/>
 																<reference key="NSMixedImage" ref="503666969"/>
@@ -784,12 +777,22 @@
 																<reference key="NSMenu" ref="373104291"/>
 																<string key="NSTitle">ISO-8859-9 (Turkish)</string>
 																<string key="NSKeyEquiv"/>
-																<int key="NSKeyEquivModMask">1048576</int>
 																<int key="NSMnemonicLoc">2147483647</int>
 																<reference key="NSOnImage" ref="471733027"/>
 																<reference key="NSMixedImage" ref="503666969"/>
 																<string key="NSAction">_popUpItemAction:</string>
 																<int key="NSTag">-2147483127</int>
+																<reference key="NSTarget" ref="601114507"/>
+															</object>
+															<object class="NSMenuItem" id="996843812">
+																<reference key="NSMenu" ref="373104291"/>
+																<string key="NSTitle">ISO-8859-11 (Thai)</string>
+																<string key="NSKeyEquiv"/>
+																<int key="NSMnemonicLoc">2147483647</int>
+																<reference key="NSOnImage" ref="471733027"/>
+																<reference key="NSMixedImage" ref="503666969"/>
+																<string key="NSAction">_popUpItemAction:</string>
+																<int key="NSTag">-2147483125</int>
 																<reference key="NSTarget" ref="601114507"/>
 															</object>
 															<object class="NSMenuItem" id="538790063">
@@ -798,7 +801,6 @@
 																<bool key="NSIsSeparator">YES</bool>
 																<string key="NSTitle"/>
 																<string key="NSKeyEquiv"/>
-																<int key="NSKeyEquivModMask">1048576</int>
 																<int key="NSMnemonicLoc">2147483647</int>
 																<reference key="NSOnImage" ref="471733027"/>
 																<reference key="NSMixedImage" ref="503666969"/>
@@ -809,7 +811,6 @@
 																<reference key="NSMenu" ref="373104291"/>
 																<string key="NSTitle">ISO-2022-JP (Japanese)</string>
 																<string key="NSKeyEquiv"/>
-																<int key="NSKeyEquivModMask">1048576</int>
 																<int key="NSMnemonicLoc">2147483647</int>
 																<reference key="NSOnImage" ref="471733027"/>
 																<reference key="NSMixedImage" ref="503666969"/>
@@ -821,7 +822,6 @@
 																<reference key="NSMenu" ref="373104291"/>
 																<string key="NSTitle">CP949 (Korean)</string>
 																<string key="NSKeyEquiv"/>
-																<int key="NSKeyEquivModMask">1048576</int>
 																<int key="NSMnemonicLoc">2147483647</int>
 																<reference key="NSOnImage" ref="471733027"/>
 																<reference key="NSMixedImage" ref="503666969"/>
@@ -844,7 +844,6 @@
 																<reference key="NSMenu" ref="373104291"/>
 																<string key="NSTitle">GBK (Chinese)</string>
 																<string key="NSKeyEquiv"/>
-																<int key="NSKeyEquivModMask">1048576</int>
 																<int key="NSMnemonicLoc">2147483647</int>
 																<reference key="NSOnImage" ref="471733027"/>
 																<reference key="NSMixedImage" ref="503666969"/>
@@ -856,7 +855,6 @@
 																<reference key="NSMenu" ref="373104291"/>
 																<string key="NSTitle">GB18030 (Chinese)</string>
 																<string key="NSKeyEquiv"/>
-																<int key="NSKeyEquivModMask">1048576</int>
 																<int key="NSMnemonicLoc">2147483647</int>
 																<reference key="NSOnImage" ref="471733027"/>
 																<reference key="NSMixedImage" ref="503666969"/>
@@ -868,7 +866,6 @@
 																<reference key="NSMenu" ref="373104291"/>
 																<string key="NSTitle">BIG5 (Chinese)</string>
 																<string key="NSKeyEquiv"/>
-																<int key="NSKeyEquivModMask">1048576</int>
 																<int key="NSMnemonicLoc">2147483647</int>
 																<reference key="NSOnImage" ref="471733027"/>
 																<reference key="NSMixedImage" ref="503666969"/>
@@ -882,7 +879,6 @@
 																<bool key="NSIsSeparator">YES</bool>
 																<string key="NSTitle"/>
 																<string key="NSKeyEquiv"/>
-																<int key="NSKeyEquivModMask">1048576</int>
 																<int key="NSMnemonicLoc">2147483647</int>
 																<reference key="NSOnImage" ref="471733027"/>
 																<reference key="NSMixedImage" ref="503666969"/>
@@ -893,7 +889,6 @@
 																<reference key="NSMenu" ref="373104291"/>
 																<string key="NSTitle">CP1251 (Cyrillic)</string>
 																<string key="NSKeyEquiv"/>
-																<int key="NSKeyEquivModMask">1048576</int>
 																<int key="NSMnemonicLoc">2147483647</int>
 																<reference key="NSOnImage" ref="471733027"/>
 																<reference key="NSMixedImage" ref="503666969"/>
@@ -905,7 +900,6 @@
 																<reference key="NSMenu" ref="373104291"/>
 																<string key="NSTitle">CP1256 (Arabic)</string>
 																<string key="NSKeyEquiv"/>
-																<int key="NSKeyEquivModMask">1048576</int>
 																<int key="NSMnemonicLoc">2147483647</int>
 																<reference key="NSOnImage" ref="471733027"/>
 																<reference key="NSMixedImage" ref="503666969"/>
@@ -917,7 +911,6 @@
 																<reference key="NSMenu" ref="373104291"/>
 																<string key="NSTitle">CP1257 (Baltic)</string>
 																<string key="NSKeyEquiv"/>
-																<int key="NSKeyEquivModMask">1048576</int>
 																<int key="NSMnemonicLoc">2147483647</int>
 																<reference key="NSOnImage" ref="471733027"/>
 																<reference key="NSMixedImage" ref="503666969"/>
@@ -974,7 +967,6 @@
 														<reference key="NSMenu" ref="700175597"/>
 														<string key="NSTitle">Don't Fallback</string>
 														<string key="NSKeyEquiv"/>
-														<int key="NSKeyEquivModMask">1048576</int>
 														<int key="NSMnemonicLoc">2147483647</int>
 														<int key="NSState">1</int>
 														<reference key="NSOnImage" ref="471733027"/>
@@ -997,7 +989,6 @@
 																<bool key="NSIsSeparator">YES</bool>
 																<string key="NSTitle"/>
 																<string key="NSKeyEquiv"/>
-																<int key="NSKeyEquivModMask">1048576</int>
 																<int key="NSMnemonicLoc">2147483647</int>
 																<reference key="NSOnImage" ref="471733027"/>
 																<reference key="NSMixedImage" ref="503666969"/>
@@ -1008,7 +999,6 @@
 																<reference key="NSMenu" ref="700175597"/>
 																<string key="NSTitle">ISO-8859-1</string>
 																<string key="NSKeyEquiv"/>
-																<int key="NSKeyEquivModMask">1048576</int>
 																<int key="NSMnemonicLoc">2147483647</int>
 																<reference key="NSOnImage" ref="471733027"/>
 																<reference key="NSMixedImage" ref="503666969"/>
@@ -1020,7 +1010,6 @@
 																<reference key="NSMenu" ref="700175597"/>
 																<string key="NSTitle">ISO-8859-15</string>
 																<string key="NSKeyEquiv"/>
-																<int key="NSKeyEquivModMask">1048576</int>
 																<int key="NSMnemonicLoc">2147483647</int>
 																<reference key="NSOnImage" ref="471733027"/>
 																<reference key="NSMixedImage" ref="503666969"/>
@@ -1032,7 +1021,6 @@
 																<reference key="NSMenu" ref="700175597"/>
 																<string key="NSTitle">ISO-8859-2</string>
 																<string key="NSKeyEquiv"/>
-																<int key="NSKeyEquivModMask">1048576</int>
 																<int key="NSMnemonicLoc">2147483647</int>
 																<reference key="NSOnImage" ref="471733027"/>
 																<reference key="NSMixedImage" ref="503666969"/>
@@ -1044,7 +1032,6 @@
 																<reference key="NSMenu" ref="700175597"/>
 																<string key="NSTitle">ISO-8859-7 (Greek)</string>
 																<string key="NSKeyEquiv"/>
-																<int key="NSKeyEquivModMask">1048576</int>
 																<int key="NSMnemonicLoc">2147483647</int>
 																<reference key="NSOnImage" ref="471733027"/>
 																<reference key="NSMixedImage" ref="503666969"/>
@@ -1056,7 +1043,6 @@
 																<reference key="NSMenu" ref="700175597"/>
 																<string key="NSTitle">ISO-8859-8 (Hebrew)</string>
 																<string key="NSKeyEquiv"/>
-																<int key="NSKeyEquivModMask">1048576</int>
 																<int key="NSMnemonicLoc">2147483647</int>
 																<reference key="NSOnImage" ref="471733027"/>
 																<reference key="NSMixedImage" ref="503666969"/>
@@ -1068,12 +1054,22 @@
 																<reference key="NSMenu" ref="700175597"/>
 																<string key="NSTitle">ISO-8859-9 (Turkish)</string>
 																<string key="NSKeyEquiv"/>
-																<int key="NSKeyEquivModMask">1048576</int>
 																<int key="NSMnemonicLoc">2147483647</int>
 																<reference key="NSOnImage" ref="471733027"/>
 																<reference key="NSMixedImage" ref="503666969"/>
 																<string key="NSAction">_popUpItemAction:</string>
 																<int key="NSTag">-2147483127</int>
+																<reference key="NSTarget" ref="158397231"/>
+															</object>
+															<object class="NSMenuItem" id="233809749">
+																<reference key="NSMenu" ref="700175597"/>
+																<string key="NSTitle">ISO-8859-11 (Thai)</string>
+																<string key="NSKeyEquiv"/>
+																<int key="NSMnemonicLoc">2147483647</int>
+																<reference key="NSOnImage" ref="471733027"/>
+																<reference key="NSMixedImage" ref="503666969"/>
+																<string key="NSAction">_popUpItemAction:</string>
+																<int key="NSTag">-2147483125</int>
 																<reference key="NSTarget" ref="158397231"/>
 															</object>
 															<object class="NSMenuItem" id="887844351">
@@ -1082,7 +1078,6 @@
 																<bool key="NSIsSeparator">YES</bool>
 																<string key="NSTitle"/>
 																<string key="NSKeyEquiv"/>
-																<int key="NSKeyEquivModMask">1048576</int>
 																<int key="NSMnemonicLoc">2147483647</int>
 																<reference key="NSOnImage" ref="471733027"/>
 																<reference key="NSMixedImage" ref="503666969"/>
@@ -1093,7 +1088,6 @@
 																<reference key="NSMenu" ref="700175597"/>
 																<string key="NSTitle">CP949 (Korean)</string>
 																<string key="NSKeyEquiv"/>
-																<int key="NSKeyEquivModMask">1048576</int>
 																<int key="NSMnemonicLoc">2147483647</int>
 																<reference key="NSOnImage" ref="471733027"/>
 																<reference key="NSMixedImage" ref="503666969"/>
@@ -1116,7 +1110,6 @@
 																<reference key="NSMenu" ref="700175597"/>
 																<string key="NSTitle">GBK (Chinese)</string>
 																<string key="NSKeyEquiv"/>
-																<int key="NSKeyEquivModMask">1048576</int>
 																<int key="NSMnemonicLoc">2147483647</int>
 																<reference key="NSOnImage" ref="471733027"/>
 																<reference key="NSMixedImage" ref="503666969"/>
@@ -1128,7 +1121,6 @@
 																<reference key="NSMenu" ref="700175597"/>
 																<string key="NSTitle">GB18030 (Chinese)</string>
 																<string key="NSKeyEquiv"/>
-																<int key="NSKeyEquivModMask">1048576</int>
 																<int key="NSMnemonicLoc">2147483647</int>
 																<reference key="NSOnImage" ref="471733027"/>
 																<reference key="NSMixedImage" ref="503666969"/>
@@ -1140,7 +1132,6 @@
 																<reference key="NSMenu" ref="700175597"/>
 																<string key="NSTitle">BIG5 (Chinese)</string>
 																<string key="NSKeyEquiv"/>
-																<int key="NSKeyEquivModMask">1048576</int>
 																<int key="NSMnemonicLoc">2147483647</int>
 																<reference key="NSOnImage" ref="471733027"/>
 																<reference key="NSMixedImage" ref="503666969"/>
@@ -1154,7 +1145,6 @@
 																<bool key="NSIsSeparator">YES</bool>
 																<string key="NSTitle"/>
 																<string key="NSKeyEquiv"/>
-																<int key="NSKeyEquivModMask">1048576</int>
 																<int key="NSMnemonicLoc">2147483647</int>
 																<reference key="NSOnImage" ref="471733027"/>
 																<reference key="NSMixedImage" ref="503666969"/>
@@ -1165,7 +1155,6 @@
 																<reference key="NSMenu" ref="700175597"/>
 																<string key="NSTitle">CP1251 (Cyrillic)</string>
 																<string key="NSKeyEquiv"/>
-																<int key="NSKeyEquivModMask">1048576</int>
 																<int key="NSMnemonicLoc">2147483647</int>
 																<reference key="NSOnImage" ref="471733027"/>
 																<reference key="NSMixedImage" ref="503666969"/>
@@ -1177,7 +1166,6 @@
 																<reference key="NSMenu" ref="700175597"/>
 																<string key="NSTitle">CP1256 (Arabic)</string>
 																<string key="NSKeyEquiv"/>
-																<int key="NSKeyEquivModMask">1048576</int>
 																<int key="NSMnemonicLoc">2147483647</int>
 																<reference key="NSOnImage" ref="471733027"/>
 																<reference key="NSMixedImage" ref="503666969"/>
@@ -1189,7 +1177,6 @@
 																<reference key="NSMenu" ref="700175597"/>
 																<string key="NSTitle">CP1257 (Baltic)</string>
 																<string key="NSKeyEquiv"/>
-																<int key="NSKeyEquivModMask">1048576</int>
 																<int key="NSMnemonicLoc">2147483647</int>
 																<reference key="NSOnImage" ref="471733027"/>
 																<reference key="NSMixedImage" ref="503666969"/>
@@ -3191,6 +3178,7 @@
 							<reference ref="357810616"/>
 							<reference ref="366698336"/>
 							<reference ref="680643880"/>
+							<reference ref="996843812"/>
 						</object>
 						<reference key="parent" ref="601114507"/>
 					</object>
@@ -3307,6 +3295,7 @@
 							<reference ref="525226827"/>
 							<reference ref="467789691"/>
 							<reference ref="990951389"/>
+							<reference ref="233809749"/>
 						</object>
 						<reference key="parent" ref="158397231"/>
 					</object>
@@ -3659,6 +3648,16 @@
 						<reference key="object" ref="485298007"/>
 						<reference key="parent" ref="728843887"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1027</int>
+						<reference key="object" ref="996843812"/>
+						<reference key="parent" ref="373104291"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1028</int>
+						<reference key="object" ref="233809749"/>
+						<reference key="parent" ref="700175597"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -3670,6 +3669,8 @@
 					<string>-3.ImportedFromIB2</string>
 					<string>10.IBPluginDependency</string>
 					<string>10.ImportedFromIB2</string>
+					<string>1027.IBPluginDependency</string>
+					<string>1028.IBPluginDependency</string>
 					<string>11.IBPluginDependency</string>
 					<string>11.ImportedFromIB2</string>
 					<string>110.IBPluginDependency</string>
@@ -3964,6 +3965,8 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
@@ -3982,7 +3985,7 @@
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>{{868, 325}, {285, 353}}</string>
+					<string>{{866, 471}, {212, 373}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -4104,7 +4107,7 @@
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>{{868, 273}, {214, 333}}</string>
+					<string>{{866, 419}, {214, 353}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -4260,7 +4263,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">1026</int>
+			<int key="maxID">1028</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
