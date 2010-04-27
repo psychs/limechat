@@ -321,7 +321,7 @@
 	
 	BOOL viewingBottom = [self viewingBottom];
 	
-	 // calculate scroll delta
+	// calculate scroll delta
 	int top = 0;
 	int delta = 0;
 	if (!viewingBottom) {
@@ -360,8 +360,7 @@
 		}
 	}
 	
-	// updating highlight line numbers
-	
+	// updating highlighted line numbers
 	if (highlightedLineNumbers.count > 0) {
 		DOMNodeList* nodeList = [body childNodes];
 		if (nodeList.length) {
@@ -390,9 +389,7 @@
 	count -= n;
 	if (count < 0) count = 0;
 	
-	if (scroller) {
-		[scroller setNeedsDisplay];
-	}
+	[scroller setNeedsDisplay];
 }
 
 - (void)setNeedsLimitNumberOfLines
