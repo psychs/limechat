@@ -2354,7 +2354,9 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			
 			if (type == LINE_TYPE_NOTICE) {
 				if (registeringToNickServ && [nick isEqualNoCase:@"NickServ"]) {
-					if ([text hasPrefix:@"You are now identified for "] || [text hasSuffix:@" is not a registered nickname."]) {
+					if ([text hasPrefix:@"You are now identified for "]
+						|| [text hasPrefix:@"Invalid password for "]
+						|| [text hasSuffix:@" is not a registered nickname."]) {
 						[self performAutoJoin];
 					}
 				}
