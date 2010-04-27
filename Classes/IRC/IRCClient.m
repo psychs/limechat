@@ -23,6 +23,7 @@
 #define QUIT_INTERVAL		5
 #define RECONNECT_INTERVAL	20
 #define RETRY_INTERVAL		240
+#define NICKSERV_INTERVAL	5
 
 #define CTCP_MIN_INTERVAL	5
 
@@ -81,6 +82,8 @@ static NSDateFormatter* dateTimeFormatter = nil;
 - (WhoisDialog*)createWhoisDialogWithNick:(NSString*)nick username:(NSString*)username address:(NSString*)address realname:(NSString*)realname;
 - (WhoisDialog*)findWhoisDialog:(NSString*)nick;
 
+- (void)performAutoJoin;
+- (void)joinChannels:(NSArray*)chans;
 - (void)checkRejoin:(IRCChannel*)c;
 
 - (void)addCommandToCommandQueue:(TimerCommand*)m;
@@ -139,6 +142,11 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		retryTimer.reqeat = NO;
 		retryTimer.selector = @selector(onRetryTimer:);
 		
+		autoJoinTimer = [Timer new];
+		autoJoinTimer.delegate = self;
+		autoJoinTimer.reqeat = NO;
+		autoJoinTimer.selector = @selector(onAutoJoinTimer:);
+		
 		commandQueueTimer = [Timer new];
 		commandQueueTimer.delegate = self;
 		commandQueueTimer.reqeat = NO;
@@ -178,6 +186,8 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	[reconnectTimer release];
 	[retryTimer stop];
 	[retryTimer release];
+	[autoJoinTimer stop];
+	[autoJoinTimer release];
 	[commandQueueTimer stop];
 	[commandQueueTimer release];
 	[commandQueue release];
@@ -471,6 +481,22 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	[self connect:CONNECT_RETRY];
 }
 
+- (void)startAutoJoinTimer
+{
+	[autoJoinTimer stop];
+	[autoJoinTimer start:NICKSERV_INTERVAL];
+}
+
+- (void)stopAutoJoinTimer
+{
+	[autoJoinTimer stop];
+}
+
+- (void)onAutoJoinTimer:(id)sender
+{
+	[self performAutoJoin];
+}
+
 #pragma mark -
 #pragma mark Commands
 
@@ -756,6 +782,21 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			[self send:JOIN, target, pass, nil];
 		}
 	}
+}
+
+- (void)performAutoJoin
+{
+	registeringToNickServ = NO;
+	[self stopAutoJoinTimer];
+
+	NSMutableArray* ary = [NSMutableArray array];
+	for (IRCChannel* c in channels) {
+		if (c.isChannel && c.config.autoJoin) {
+			[ary addObject:c];
+		}
+	}
+	
+	[self joinChannels:ary];
 }
 
 - (void)joinChannels:(NSArray*)chans
@@ -2312,6 +2353,12 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			BOOL keyword = [self printBoth:c type:type nick:nick text:text identified:identified];
 			
 			if (type == LINE_TYPE_NOTICE) {
+				if (registeringToNickServ && [nick isEqualNoCase:@"NickServ"]) {
+					if ([text hasPrefix:@"You are now identified for "] || [text hasSuffix:@" is not a registered nickname."]) {
+						[self performAutoJoin];
+					}
+				}
+				
 				[self notifyText:GROWL_TALK_NOTICE target:(c ?: (id)target) nick:nick text:text];
 				[SoundPlayer play:[Preferences soundForEvent:GROWL_TALK_NOTICE]];
 			}
@@ -2822,6 +2869,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	
 	[self startPongTimer];
 	[self stopRetryTimer];
+	[self stopAutoJoinTimer];
 	
 	[world expandClient:self];
 	
@@ -2829,20 +2877,23 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	conn.loggedIn = YES;
 	tryingNickNumber = -1;
 	
+	registeringToNickServ = NO;
+	inWhois = NO;
+	inList = NO;
+	
 	[serverHostname release];
 	serverHostname = [m.sender.raw retain];
 	[myNick release];
 	myNick = [[m paramAt:0] retain];
-	
-	inWhois = NO;
-	inList = NO;
 	
 	[self printSystem:self text:@"Logged in"];
 	
 	[self notifyEvent:GROWL_LOGIN];
 	[SoundPlayer play:[Preferences soundForEvent:GROWL_LOGIN]];
 	
-	if (config.nickPassword.length > 0) {
+	if (config.nickPassword.length) {
+		registeringToNickServ = YES;
+		[self startAutoJoinTimer];
 		[self send:PRIVMSG, @"NickServ", [NSString stringWithFormat:@"IDENTIFY %@", config.nickPassword], nil];
 	}
 	
@@ -2871,14 +2922,9 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	[self updateClientTitle];
 	[self reloadTree];
 	
-	NSMutableArray* ary = [NSMutableArray array];
-	for (IRCChannel* c in channels) {
-		if (c.isChannel && c.config.autoJoin) {
-			[ary addObject:c];
-		}
+	if (!registeringToNickServ) {
+		[self performAutoJoin];
 	}
-	
-	[self joinChannels:ary];
 }
 
 - (void)receiveNumericReply:(IRCMessage*)m
@@ -3300,8 +3346,13 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	switch (n) {
 		case 401:	// ERR_NOSUCHNICK
 		{
-			NSString* chname = [m paramAt:1];
-			IRCChannel* c = [self findChannel:chname];
+			NSString* nick = [m paramAt:1];
+			
+			if (registeringToNickServ && [nick isEqualNoCase:@"NickServ"]) {
+				[self performAutoJoin];
+			}
+			
+			IRCChannel* c = [self findChannel:nick];
 			if (c && c.isActive) {
 				[self printErrorReply:m channel:c];
 				return;

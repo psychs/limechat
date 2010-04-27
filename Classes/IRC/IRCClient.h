@@ -52,6 +52,7 @@ typedef enum {
 	int tryingNickNumber;
 	
 	NSString* serverHostname;
+	BOOL registeringToNickServ;
 	BOOL inWhois;
 	BOOL inList;
 	BOOL identifyMsg;
@@ -67,6 +68,7 @@ typedef enum {
 	Timer* quitTimer;
 	Timer* reconnectTimer;
 	Timer* retryTimer;
+	Timer* autoJoinTimer;
 	Timer* commandQueueTimer;
 	NSMutableArray* commandQueue;
 	
