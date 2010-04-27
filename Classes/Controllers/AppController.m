@@ -310,6 +310,14 @@
 }
 
 #pragma mark -
+#pragma mark SUUpdater Delegate
+
+- (void)updaterWillRelaunchApplication:(id)sender
+{
+	terminating = YES;
+}
+
+#pragma mark -
 #pragma mark NSWorkspace Notifications
 
 - (void)computerWillSleep:(NSNotification*)note
