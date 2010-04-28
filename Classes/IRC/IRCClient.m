@@ -2353,11 +2353,18 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			BOOL keyword = [self printBoth:c type:type nick:nick text:text identified:identified];
 			
 			if (type == LINE_TYPE_NOTICE) {
-				if (registeringToNickServ && [nick isEqualNoCase:@"NickServ"]) {
-					if ([text hasPrefix:@"You are now identified for "]
-						|| [text hasPrefix:@"Invalid password for "]
-						|| [text hasSuffix:@" is not a registered nickname."]) {
-						[self performAutoJoin];
+				if ([nick isEqualNoCase:@"NickServ"]) {
+					if (registeringToNickServ) {
+						if ([text hasPrefix:@"You are now identified for "]
+							|| [text hasPrefix:@"Invalid password for "]
+							|| [text hasSuffix:@" is not a registered nickname."]) {
+							[self performAutoJoin];
+						}
+					}
+					else {
+						if ([text hasPrefix:@"This nickname is registered."]) {
+							[self send:PRIVMSG, @"NickServ", [NSString stringWithFormat:@"IDENTIFY %@", config.nickPassword], nil];
+						}
 					}
 				}
 				
