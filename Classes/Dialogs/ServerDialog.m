@@ -145,7 +145,7 @@
 	config.userInfo = userInfoText.stringValue;
 	
 	config.encoding = encodingCombo.selectedTag;
-	config.fallbackEncoding = encodingCombo.selectedTag;
+	config.fallbackEncoding = fallbackEncodingCombo.selectedTag;
 	
 	config.proxyType = proxyCombo.selectedTag;
 	config.proxyHost = proxyHostText.stringValue;
