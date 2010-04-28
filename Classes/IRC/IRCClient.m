@@ -2363,7 +2363,9 @@ static NSDateFormatter* dateTimeFormatter = nil;
 					}
 					else {
 						if ([text hasPrefix:@"This nickname is registered."]) {
-							[self send:PRIVMSG, @"NickServ", [NSString stringWithFormat:@"IDENTIFY %@", config.nickPassword], nil];
+							if (config.nickPassword.length) {
+								[self send:PRIVMSG, @"NickServ", [NSString stringWithFormat:@"IDENTIFY %@", config.nickPassword], nil];
+							}
 						}
 					}
 				}
