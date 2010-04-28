@@ -122,12 +122,6 @@
 	return [ud objectForKey:@"Preferences.Keyword.dislike_words"];
 }
 
-+ (NSArray*)keywordIgnoreWords
-{
-	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	return [ud objectForKey:@"Preferences.Keyword.ignore_words"];
-}
-
 + (KeywordMatchType)keywordMatchingMethod
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
@@ -654,7 +648,6 @@
 
 static NSMutableArray* keywords;
 static NSMutableArray* excludeWords;
-static NSMutableArray* ignoreWords;
 
 + (void)loadKeywords
 {
@@ -690,21 +683,44 @@ static NSMutableArray* ignoreWords;
 	}
 }
 
-+ (void)loadIgnoreWords
++ (void)cleanUpWords:(NSString*)key
 {
-	if (ignoreWords) {
-		[ignoreWords removeAllObjects];
-	}
-	else {
-		ignoreWords = [NSMutableArray new];
+	//
+	// load
+	//
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	NSArray* src = [ud objectForKey:key];
+	
+	NSMutableArray* ary = [NSMutableArray array];
+	for (NSDictionary* e in src) {
+		NSString* s = [e objectForKey:@"string"];
+		if (s.length) {
+			[ary addObject:s];
+		}
 	}
 	
-	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-	NSArray* ary = [ud objectForKey:@"ignoreWords"];
-	for (NSDictionary* e in ary) {
-		NSString* s = [e objectForKey:@"string"];
-		if (s) [ignoreWords addObject:s];
+	//
+	// sort
+	//
+	[ary sortUsingSelector:@selector(caseInsensitiveCompare:)];
+	
+	//
+	// save
+	//
+	NSMutableArray* saveAry = [NSMutableArray array];
+	for (NSString* s in ary) {
+		NSMutableDictionary* dic = [NSMutableDictionary dictionary];
+		[dic setObject:s forKey:@"string"];
+		[saveAry addObject:dic];
 	}
+	[ud setObject:saveAry forKey:key];
+	[ud synchronize];
+}
+
++ (void)cleanUpWords
+{
+	[self cleanUpWords:@"keywords"];
+	[self cleanUpWords:@"excludeWords"];
 }
 
 + (NSArray*)keywords
@@ -715,11 +731,6 @@ static NSMutableArray* ignoreWords;
 + (NSArray*)excludeWords
 {
 	return excludeWords;
-}
-
-+ (NSArray*)ignoreWords
-{
-	return ignoreWords;
 }
 
 #pragma mark -
@@ -735,9 +746,6 @@ static NSMutableArray* ignoreWords;
 	}
 	else if ([key isEqualToString:@"excludeWords"]) {
 		[self loadExcludeWords];
-	}
-	else if ([key isEqualToString:@"ignoreWords"]) {
-		[self loadIgnoreWords];
 	}
 }
 
@@ -789,11 +797,9 @@ static NSMutableArray* ignoreWords;
 	[ud registerDefaults:d];
 	[ud addObserver:self forKeyPath:@"keywords" options:NSKeyValueObservingOptionNew context:NULL];
 	[ud addObserver:self forKeyPath:@"excludeWords" options:NSKeyValueObservingOptionNew context:NULL];
-	[ud addObserver:self forKeyPath:@"ignoreWords" options:NSKeyValueObservingOptionNew context:NULL];
 
 	[self loadKeywords];
 	[self loadExcludeWords];
-	[self loadIgnoreWords];
 }
 
 #pragma mark -
@@ -825,18 +831,6 @@ static NSMutableArray* ignoreWords;
 		
 		oldKey = @"Preferences.Keyword.dislike_words";
 		newKey = @"excludeWords";
-		ary = [ud objectForKey:oldKey];
-		if (ary) {
-			NSMutableArray* result = [NSMutableArray array];
-			for (NSString* s in ary) {
-				[result addObject:[NSMutableDictionary dictionaryWithObject:s forKey:@"string"]];
-			}
-			[ud setObject:result forKey:newKey];
-			[ud removeObjectForKey:oldKey];
-		}
-		
-		oldKey = @"Preferences.Keyword.ignore_words";
-		newKey = @"ignoreWords";
 		ary = [ud objectForKey:oldKey];
 		if (ary) {
 			NSMutableArray* result = [NSMutableArray array];

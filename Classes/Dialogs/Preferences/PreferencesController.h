@@ -16,10 +16,8 @@
 	
 	IBOutlet NSTableView* keywordsTable;
 	IBOutlet NSTableView* excludeWordsTable;
-	IBOutlet NSTableView* ignoreWordsTable;
 	IBOutlet NSArrayController* keywordsArrayController;
 	IBOutlet NSArrayController* excludeWordsArrayController;
-	IBOutlet NSArrayController* ignoreWordsArrayController;
 	IBOutlet NSPopUpButton* transcriptFolderButton;
 	IBOutlet NSPopUpButton* themeButton;
 	
@@ -38,7 +36,6 @@
 
 - (void)onAddKeyword:(id)sender;
 - (void)onAddExcludeWord:(id)sender;
-- (void)onAddIgnoreWord:(id)sender;
 
 - (void)onTranscriptFolderChanged:(id)sender;
 - (void)onLayoutChanged:(id)sender;

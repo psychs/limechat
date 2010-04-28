@@ -128,7 +128,7 @@ typedef enum {
 
 + (NSArray*)keywords;
 + (NSArray*)excludeWords;
-+ (NSArray*)ignoreWords;
++ (void)cleanUpWords;
 
 + (void)initPreferences;
 + (void)migrate;

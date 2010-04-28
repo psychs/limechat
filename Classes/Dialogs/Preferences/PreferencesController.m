@@ -436,12 +436,6 @@
 	[self performSelector:@selector(editTable:) withObject:excludeWordsTable afterDelay:0];
 }
 
-- (void)onAddIgnoreWord:(id)sender
-{
-	[ignoreWordsArrayController add:nil];
-	[self performSelector:@selector(editTable:) withObject:ignoreWordsTable afterDelay:0];
-}
-
 - (void)onLayoutChanged:(id)sender
 {
 	NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
@@ -453,6 +447,7 @@
 
 - (void)windowWillClose:(NSNotification *)note
 {
+	[Preferences cleanUpWords];
 	[[NSUserDefaults standardUserDefaults] synchronize];
 	
 	if ([delegate respondsToSelector:@selector(preferencesDialogWillClose:)]) {
