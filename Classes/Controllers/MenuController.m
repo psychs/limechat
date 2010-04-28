@@ -116,11 +116,11 @@
 			return KEY_WINDOW && u && c;
 		case 203:	// close window / close current panel
 			if (KEY_WINDOW) {
-				[closeWindowItem setTitle:_(@"CloseCurrentPanelMenuTitle")];
+				[closeWindowItem setTitle:NSLocalizedString(@"CloseCurrentPanelMenuTitle", nil)];
 				return u && c;
 			}
 			else {
-				[closeWindowItem setTitle:_(@"CloseWindowMenuTitle")];
+				[closeWindowItem setTitle:NSLocalizedString(@"CloseWindowMenuTitle", nil)];
 				return YES;
 			}
 		case 313:	// paste

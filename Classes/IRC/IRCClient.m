@@ -2462,7 +2462,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 			[self sendCTCPReply:nick command:command text:config.userInfo ?: @""];
 		}
 		else if ([command isEqualToString:CLIENTINFO]) {
-			[self sendCTCPReply:nick command:command text:_(@"CTCPClientInfo")];
+			[self sendCTCPReply:nick command:command text:NSLocalizedString(@"CTCPClientInfo", nil)];
 		}
 	}
 }

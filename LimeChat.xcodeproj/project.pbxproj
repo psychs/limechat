@@ -28,7 +28,6 @@
 		7835FB921177341D005DC0B4 /* ListDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 7835FB911177341D005DC0B4 /* ListDialog.m */; };
 		783E6ADB1173802100261552 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 783E6AD91173802100261552 /* main.m */; };
 		784773D8117EB07400466C56 /* OnigRegexp.m in Sources */ = {isa = PBXBuildFile; fileRef = 784773BF117EB07400466C56 /* OnigRegexp.m */; };
-		784773D9117EB07400466C56 /* OnigRegexpUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 784773C1117EB07400466C56 /* OnigRegexpUtility.m */; };
 		784773DB117EB07400466C56 /* ascii.c in Sources */ = {isa = PBXBuildFile; fileRef = 784773C6117EB07400466C56 /* ascii.c */; };
 		784773DC117EB07400466C56 /* unicode.c in Sources */ = {isa = PBXBuildFile; fileRef = 784773C7117EB07400466C56 /* unicode.c */; };
 		784773DD117EB07400466C56 /* utf16_le.c in Sources */ = {isa = PBXBuildFile; fileRef = 784773C8117EB07400466C56 /* utf16_le.c */; };
@@ -223,8 +222,6 @@
 		783E6AD91173802100261552 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		784773BE117EB07400466C56 /* OnigRegexp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnigRegexp.h; sourceTree = "<group>"; };
 		784773BF117EB07400466C56 /* OnigRegexp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnigRegexp.m; sourceTree = "<group>"; };
-		784773C0117EB07400466C56 /* OnigRegexpUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnigRegexpUtility.h; sourceTree = "<group>"; };
-		784773C1117EB07400466C56 /* OnigRegexpUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnigRegexpUtility.m; sourceTree = "<group>"; };
 		784773C3117EB07400466C56 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
 		784773C6117EB07400466C56 /* ascii.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ascii.c; sourceTree = "<group>"; };
 		784773C7117EB07400466C56 /* unicode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = unicode.c; sourceTree = "<group>"; };
@@ -580,8 +577,6 @@
 				784773C2117EB07400466C56 /* oniguruma */,
 				784773BE117EB07400466C56 /* OnigRegexp.h */,
 				784773BF117EB07400466C56 /* OnigRegexp.m */,
-				784773C0117EB07400466C56 /* OnigRegexpUtility.h */,
-				784773C1117EB07400466C56 /* OnigRegexpUtility.m */,
 			);
 			path = CocoaOniguruma;
 			sourceTree = "<group>";
@@ -1160,7 +1155,6 @@
 				78A7B58711744F12006B324A /* InviteSheet.m in Sources */,
 				7835FB921177341D005DC0B4 /* ListDialog.m in Sources */,
 				784773D8117EB07400466C56 /* OnigRegexp.m in Sources */,
-				784773D9117EB07400466C56 /* OnigRegexpUtility.m in Sources */,
 				784773DB117EB07400466C56 /* ascii.c in Sources */,
 				784773DC117EB07400466C56 /* unicode.c in Sources */,
 				784773DD117EB07400466C56 /* utf16_le.c in Sources */,

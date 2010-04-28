@@ -27,8 +27,6 @@ struct st_table {
 
 enum st_retval {ST_CONTINUE, ST_STOP, ST_DELETE, ST_CHECK};
 
-#undef _()
-
 #ifndef _
 # define _(args) args
 #endif
