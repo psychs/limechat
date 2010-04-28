@@ -7,15 +7,14 @@
     <language>ja</language>
 
     <item>
-      <title>2.9</title>
-      <link>http://limechat.net/mac/ja.html#v2.9</link>
-      <pubDate>Mon, 26 Apr 2010 18:24:04 +0900</pubDate>
+      <title>2.10</title>
+      <link>http://limechat.net/mac/ja.html#v2.10</link>
+      <pubDate>Wed, 28 Apr 2010 16:58:21 +0900</pubDate>
       <content:encoded><![CDATA[
   			<ul>
-          <li>パフォーマンスを改善した。</li>
-          <li>画像サービスのURLに対応した。 (twitpic, tweetphoto, yfrog, twitgoo, img.ly, movapic, f.hatena.ne.jp)</li>
-          <li>スクロール位置を一番下に保つ方法を変更した。コードを提供してくれた Allan に感謝。</li>
-          <li>テーマでカスタム Javascript を使えるようにした。</li>
+          <li>NickServ への登録が終わるまで、自動JOINを遅らせるようにした。</li>
+          <li>ニックネームを変更したときに、必要なら NickServ に登録するようにした。</li>
+          <li>ISO-8859-11 (タイ語) をエンコーディングに追加した。</li>
           <li>細かいバグをfixした。</li>
         </ul>
       ]]></content:encoded>

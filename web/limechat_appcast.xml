@@ -7,7 +7,7 @@
     <language>en</language>
     
     <item>
-      <title>LimeChat 2.9</title>
+      <title>LimeChat 2.10</title>
       <description><![CDATA[
         <html>
         <body>
@@ -22,21 +22,20 @@
             margin: 0.2em 0;
           }
         </style>
-        <h1>LimeChat 2.9</h1>
+        <h1>LimeChat 2.10</h1>
         <ul>
-          <li>Improved performance.</li>
-          <li>Image services support. (twitpic, tweetphoto, yfrog, twitgoo and img.ly)</li>
-          <li>Changed the way to keep scroller at bottom. Thanks to Allan.</li>
-          <li>Enabled custom javascript in theme.</li>
-          <li>Minor bug fixes.</li>
+          <li>Delay auto join until NickServ registration is completed.</li>
+          <li>Register to NickServ when changed nick.</li>
+          <li>ISO-8859-11 (Thai) support.</li>
+          <li>Fixed minor bugs.</li>
         </ul>
         </body>
         </html>
       ]]></description>
-      <pubDate>Mon, 26 Apr 2010 18:24:04 +0900</pubDate>
-      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/LimeChat_2.9.tbz"
-                  sparkle:version="2.9" length="1080283" type="application/octet-stream"
-                  sparkle:dsaSignature="MCwCFBeYDNYS53LXWYeMzElNK40em0fyAhQmZd9BFk5Ljk6h/nLb1qNvtXBQZQ=="/>
+      <pubDate>Wed, 28 Apr 2010 16:58:21 +0900</pubDate>
+      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/LimeChat_2.10.tbz"
+                  sparkle:version="2.10" length="1077330" type="application/octet-stream"
+                  sparkle:dsaSignature="MC0CFQCcoTXX3VnmLrBMvEtD+MZjRIoNjwIUWXtqTKr5Caoc14EzUQRdfKuGiKc="/>
     </item>
     
   </channel>

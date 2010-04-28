@@ -7,16 +7,15 @@
     <language>en-us</language>
 
     <item>
-      <title>2.9</title>
-      <link>http://limechat.net/mac/#v2.9</link>
-      <pubDate>Mon, 26 Apr 2010 18:24:04 +0900</pubDate>
+      <title>2.10</title>
+      <link>http://limechat.net/mac/#v2.10</link>
+      <pubDate>Wed, 28 Apr 2010 16:58:21 +0900</pubDate>
       <content:encoded><![CDATA[
   			<ul>
-          <li>Improved performance.</li>
-          <li>Image services support. (twitpic, tweetphoto, yfrog, twitgoo and img.ly)</li>
-          <li>Changed the way to keep scroller at bottom. Thanks to Allan.</li>
-          <li>Enabled custom javascript in theme.</li>
-          <li>Minor bug fixes.</li>
+          <li>Delay auto join until NickServ registration is completed.</li>
+          <li>Register to NickServ when changed nick.</li>
+          <li>ISO-8859-11 (Thai) support.</li>
+          <li>Fixed minor bugs.</li>
         </ul>
       ]]></content:encoded>
     </item>
