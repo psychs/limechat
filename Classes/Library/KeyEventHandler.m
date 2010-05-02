@@ -90,7 +90,7 @@
 	
 	NSMutableDictionary* characterMap = [characterHandlerMap objectForKey:modsKey];
 	if (characterMap) {
-		NSString* str = [e charactersIgnoringModifiers];
+		NSString* str = [[e charactersIgnoringModifiers] lowercaseString];
 		if (str.length) {
 			UniChar c = [str characterAtIndex:0];
 			NSNumber* charKey = [NSNumber numberWithInt:c];
