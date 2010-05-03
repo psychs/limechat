@@ -229,7 +229,7 @@
 			return LOGIN_CHANTALK && [self checkSelectedMembers:item];
 		case 2005:	// invite
 		{
-			if (!LOGIN) return NO;
+			if (!LOGIN || ![self checkSelectedMembers:item]) return NO;
 			int count = 0;
 			for (IRCChannel* e in u.channels) {
 				if (e != c && e.isChannel) {
