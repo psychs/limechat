@@ -37,7 +37,7 @@ Yukihiro Matsumoto         # Ruby logo in Limelight theme
 
 * License
 
-The new BSD license
+The New BSD License
 
 Copyright (c) 2008-2010  Satoshi Nakagawa  <psychs AT limechat DOT net>
 All rights reserved.
