@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="9"/>
+			<integer value="6"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -539,7 +539,7 @@
 											<object class="NSTextField" id="1038744280">
 												<reference key="NSNextResponder" ref="912828137"/>
 												<int key="NSvFlags">256</int>
-												<string key="NSFrame">{{135, 12}, {182, 17}}</string>
+												<string key="NSFrame">{{141, 12}, {182, 17}}</string>
 												<reference key="NSSuperview" ref="912828137"/>
 												<bool key="NSEnabled">YES</bool>
 												<object class="NSTextFieldCell" key="NSCell" id="1024326854">
@@ -4840,13 +4840,6 @@
 					<string key="className">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Classes/Views/DialogWindow.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">Classes/Views/FieldEditorTextView.h</string>
 					</object>
 				</object>
@@ -4978,7 +4971,6 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>onAddExcludeWord:</string>
-							<string>onAddIgnoreWord:</string>
 							<string>onAddKeyword:</string>
 							<string>onChangedTheme:</string>
 							<string>onChangedTransparency:</string>
@@ -4999,7 +4991,6 @@
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
-							<string>id</string>
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="outlets">
@@ -5010,8 +5001,6 @@
 							<string>excludeWordsArrayController</string>
 							<string>excludeWordsTable</string>
 							<string>hotKey</string>
-							<string>ignoreWordsArrayController</string>
-							<string>ignoreWordsTable</string>
 							<string>keywordsArrayController</string>
 							<string>keywordsTable</string>
 							<string>themeButton</string>
@@ -5023,8 +5012,6 @@
 							<string>NSArrayController</string>
 							<string>NSTableView</string>
 							<string>KeyRecorder</string>
-							<string>NSArrayController</string>
-							<string>NSTableView</string>
 							<string>NSArrayController</string>
 							<string>NSTableView</string>
 							<string>NSPopUpButton</string>
