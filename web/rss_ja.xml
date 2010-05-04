@@ -7,14 +7,12 @@
     <language>ja</language>
 
     <item>
-      <title>2.10</title>
-      <link>http://limechat.net/mac/ja.html#v2.10</link>
-      <pubDate>Wed, 28 Apr 2010 16:58:21 +0900</pubDate>
+      <title>2.11</title>
+      <link>http://limechat.net/mac/ja.html#v2.11</link>
+      <pubDate>Mon, 03 May 2010 19:53:03 +0900</pubDate>
       <content:encoded><![CDATA[
   			<ul>
-          <li>NickServ への登録が終わるまで、自動JOINを遅らせるようにした。</li>
-          <li>ニックネームを変更したときに、必要なら NickServ に登録するようにした。</li>
-          <li>ISO-8859-11 (タイ語) をエンコーディングに追加した。</li>
+          <li>Fallback encoding が保存されていなかったバグをfixした。</li>
           <li>細かいバグをfixした。</li>
         </ul>
       ]]></content:encoded>

@@ -7,15 +7,13 @@
     <language>en-us</language>
 
     <item>
-      <title>2.10</title>
-      <link>http://limechat.net/mac/#v2.10</link>
-      <pubDate>Wed, 28 Apr 2010 16:58:21 +0900</pubDate>
+      <title>2.11</title>
+      <link>http://limechat.net/mac/#v2.11</link>
+      <pubDate>Mon, 03 May 2010 19:53:03 +0900</pubDate>
       <content:encoded><![CDATA[
   			<ul>
-          <li>Delay auto join until NickServ registration is completed.</li>
-          <li>Register to NickServ when changed nick.</li>
-          <li>ISO-8859-11 (Thai) support.</li>
-          <li>Fixed minor bugs.</li>
+          <li>Fixed a bug, fallback encoding wasn't saved correctly.</li>
+          <li>Minor bugs fixes.</li>
         </ul>
       ]]></content:encoded>
     </item>
