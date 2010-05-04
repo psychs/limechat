@@ -40,8 +40,8 @@
 	MenuController* menuController;
 	DCCController* dcc;
 	ViewTheme* viewTheme;
-	NSMenuItem* serverMenu;
-	NSMenuItem* channelMenu;
+	NSMenu* serverMenu;
+	NSMenu* channelMenu;
 	NSMenu* treeMenu;
 	NSMenu* logMenu;
 	NSMenu* consoleMenu;
@@ -77,8 +77,6 @@
 @property (nonatomic, assign) MenuController* menuController;
 @property (nonatomic, assign) DCCController* dcc;
 @property (nonatomic, assign) ViewTheme* viewTheme;
-@property (nonatomic, assign) NSMenuItem* serverMenu;
-@property (nonatomic, assign) NSMenuItem* channelMenu;
 @property (nonatomic, assign) NSMenu* treeMenu;
 @property (nonatomic, assign) NSMenu* logMenu;
 @property (nonatomic, assign) NSMenu* consoleMenu;
@@ -97,6 +95,9 @@
 - (void)setupTree;
 - (void)save;
 - (NSMutableDictionary*)dictionaryValue;
+
+- (void)setServerMenuItem:(NSMenuItem*)item;
+- (void)setChannelMenuItem:(NSMenuItem*)item;
 
 - (void)onTimer;
 - (void)autoConnect:(BOOL)afterWakeUp;

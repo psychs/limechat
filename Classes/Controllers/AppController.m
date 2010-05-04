@@ -135,8 +135,8 @@
 	world.chatBox = chatBox;
 	world.fieldEditor = fieldEditor;
 	world.memberList = memberList;
-	world.serverMenu = serverMenu;
-	world.channelMenu = channelMenu;
+	[world setServerMenuItem:serverMenu];
+	[world setChannelMenuItem:channelMenu];
 	world.treeMenu = treeMenu;
 	world.logMenu = logMenu;
 	world.consoleMenu = consoleMenu;

@@ -40,8 +40,6 @@
 @synthesize menuController;
 @synthesize dcc;
 @synthesize viewTheme;
-@synthesize serverMenu;
-@synthesize channelMenu;
 @synthesize treeMenu;
 @synthesize logMenu;
 @synthesize consoleMenu;
@@ -66,6 +64,8 @@
 - (void)dealloc
 {
 	[icon release];
+	[serverMenu release];
+	[channelMenu release];
 	[consoleLog release];
 	[dummyLog release];
 	[config release];
@@ -142,6 +142,20 @@
 	
 	[dic setObject:ary forKey:@"clients"];
 	return dic;
+}
+
+- (void)setServerMenuItem:(NSMenuItem*)item
+{
+	if (serverMenu) return;
+	
+	serverMenu = [[item submenu] copy];
+}
+
+- (void)setChannelMenuItem:(NSMenuItem*)item
+{
+	if (channelMenu) return;
+
+	channelMenu = [[item submenu] copy];
 }
 
 #pragma mark -
@@ -944,13 +958,13 @@
 	[log notifyDidBecomeVisible];
 	
 	if ([selected isClient]) {
-		tree.menu = [serverMenu submenu];
+		tree.menu = serverMenu;
 		memberList.dataSource = nil;
 		memberList.delegate = nil;
 		[memberList reloadData];
 	}
 	else {
-		tree.menu = [channelMenu submenu];
+		tree.menu = channelMenu;
 		memberList.dataSource = selected;
 		memberList.delegate = selected;
 		[memberList reloadData];
