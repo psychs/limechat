@@ -77,9 +77,13 @@
 	BOOL res = NO;
 	
 	CFAbsoluteTime now = CFAbsoluteTimeGetCurrent();
+	float doubleClickThreshold = GetDblTime() / 60.0;
+	if (doubleClickThreshold == 0) {
+		doubleClickThreshold = 0.5;
+	}
 	
 	if (x-d <= cx && cx <= x+d && y-d <= cy && cy <= y+d) {
-		if (now < lastClickTime + GetDblTime() / 60.0) {
+		if (now < lastClickTime + doubleClickThreshold) {
 			res = YES;
 		}
 	}

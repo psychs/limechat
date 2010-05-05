@@ -12,7 +12,7 @@
 @property (nonatomic, assign) id keyDelegate;
 
 - (int)countSelectedRows;
-- (void)select:(int)index;
+- (void)selectItemAtIndex:(int)index;
 
 @end
 

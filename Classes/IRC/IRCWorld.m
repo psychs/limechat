@@ -116,10 +116,10 @@
 		[tree expandItem:client];
 		int n = [tree rowForItem:client];
 		if (client.channels.count) ++n;
-		[tree select:n];
+		[tree selectItemAtIndex:n];
 	}
 	else if (clients.count > 0) {
-		[tree select:0];
+		[tree selectItemAtIndex:0];
 	}
 	
 	[self outlineViewSelectionDidChange:nil];
@@ -289,7 +289,7 @@
 {
 	int row = [tree selectedRow];
 	if (0 <= row && selected && selected != [tree itemAtRow:row]) {
-		[tree select:[tree rowForItem:selected]];
+		[tree selectItemAtIndex:[tree rowForItem:selected]];
 		[self reloadTree];
 	}
 }
@@ -516,7 +516,7 @@
 	
 	int i = [tree rowForItem:item];
 	if (i < 0) return;
-	[tree select:i];
+	[tree selectItemAtIndex:i];
 	
 	client.lastSelectedChannel = isClient ? nil : (IRCChannel*)item;
 }
@@ -750,7 +750,7 @@
 	[self reloadTree];
 	
 	if (selected) {
-		[tree select:[tree rowForItem:sel]];
+		[tree selectItemAtIndex:[tree rowForItem:sel]];
 	}
 }
 
@@ -916,7 +916,7 @@
 	return [item numberOfChildren] > 0;
 }
 
-- (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(id)item
+- (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(IRCTreeItem*)item
 {
 	if (!item) return [clients objectAtIndex:index];
 	return [item childAtIndex:index];

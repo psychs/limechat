@@ -13,7 +13,7 @@
 	return [[self selectedRowIndexes] count];
 }
 
-- (void)select:(int)index
+- (void)selectItemAtIndex:(int)index
 {
 	[self selectRowIndexes:[NSIndexSet indexSetWithIndex:index] byExtendingSelection:NO];
 	[self scrollRowToVisible:index];
@@ -24,7 +24,7 @@
 	NSPoint p = [self convertPoint:[e locationInWindow] fromView:nil];
 	int i = [self rowAtPoint:p];
 	if (i >= 0) {
-		[self select:i];
+		[self selectItemAtIndex:i];
 	}
 	return [self menu];
 }

@@ -106,7 +106,7 @@
 	[channels addObject:@""];
 	[channelTable reloadData];
 	int row = channels.count - 1;
-	[channelTable select:row];
+	[channelTable selectItemAtIndex:row];
 	[channelTable editColumn:0 row:row withEvent:nil select:YES];
 }
 
@@ -119,7 +119,7 @@
 		int count = channels.count;
 		if (count <= n) n = count - 1;
 		if (n >= 0) {
-			[channelTable select:n];
+			[channelTable selectItemAtIndex:n];
 		}
 		[self tableViewSelectionIsChanging:nil];
 	}
@@ -152,7 +152,7 @@
 		NSString* s = [[[[[note object] textStorage] string] copy] autorelease];
 		[channels replaceObjectAtIndex:n withObject:s];
 		[channelTable reloadData];
-		[channelTable select:n];
+		[channelTable selectItemAtIndex:n];
 		[self tableViewSelectionIsChanging:nil];
 	}
 }

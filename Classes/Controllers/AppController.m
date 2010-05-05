@@ -1,4 +1,5 @@
 #import "AppController.h"
+#import <Carbon/Carbon.h>
 #import "Preferences.h"
 #import "IRCTreeItem.h"
 #import "NSDictionaryHelper.h"

@@ -14,7 +14,7 @@
 	return [[self selectedRowIndexes] count];
 }
 
-- (void)select:(int)index
+- (void)selectItemAtIndex:(int)index
 {
 	[self selectRowIndexes:[NSIndexSet indexSetWithIndex:index] byExtendingSelection:NO];
 	[self scrollRowToVisible:index];
@@ -41,7 +41,7 @@
 	int i = [self rowAtPoint:p];
 	if (i >= 0) {
 		if (![[self selectedRowIndexes] containsIndex:i]) {
-			[self select:i];
+			[self selectItemAtIndex:i];
 		}
 	}
 	

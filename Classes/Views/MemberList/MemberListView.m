@@ -151,7 +151,7 @@
 			[self deselectAll:nil];
 		}
 		else {
-			[self select:row];
+			[self selectItemAtIndex:row];
 		}
 	}
 	else {

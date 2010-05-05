@@ -314,10 +314,10 @@
 	int count = config.channels.count;
 	if (count) {
 		if (count <= sel) {
-			[channelTable select:count - 1];
+			[channelTable selectItemAtIndex:count - 1];
 		}
 		else {
-			[channelTable select:sel];
+			[channelTable selectItemAtIndex:sel];
 		}
 	}
 	
@@ -417,7 +417,7 @@
 		
 		sel = [ary indexOfObjectIdenticalTo:target];
 		if (0 <= sel) {
-			[channelTable select:sel];
+			[channelTable selectItemAtIndex:sel];
 		}
 		
 		return YES;

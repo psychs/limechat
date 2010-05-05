@@ -5,6 +5,7 @@
 #import "IRCWorld.h"
 #import "IRCClient.h"
 #import "IRCChannel.h"
+#import "MemberListView.h"
 #import "ServerDialog.h"
 #import "ChannelDialog.h"
 #import "URLOpener.h"
@@ -992,12 +993,13 @@
 
 - (void)memberListDoubleClicked:(id)sender
 {
+	MemberListView* view = sender;
 	NSPoint pt = [window mouseLocationOutsideOfEventStream];
-	pt = [sender convertPoint:pt fromView:nil];
-	int n = [sender rowAtPoint:pt];
+	pt = [view convertPoint:pt fromView:nil];
+	int n = [view rowAtPoint:pt];
 	if (n >= 0) {
-		if ([[sender selectedRowIndexes] count] > 0) {
-			[sender select:n];
+		if ([[view selectedRowIndexes] count] > 0) {
+			[view selectItemAtIndex:n];
 		}
 		[self whoisSelectedMembers:nil deselect:NO];
 	}
