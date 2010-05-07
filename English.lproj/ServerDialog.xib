@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="6"/>
+			<integer value="8"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -44,7 +44,7 @@
 				<string key="NSWindowRect">{{625, 619}, {409, 512}}</string>
 				<int key="NSWTFlags">1886912512</int>
 				<string key="NSWindowTitle">Server Properties</string>
-				<string key="NSWindowClass">NSWindow</string>
+				<string key="NSWindowClass">DialogWindow</string>
 				<object class="NSMutableString" key="NSViewClass">
 					<characters key="NS.bytes">View</characters>
 				</object>
@@ -65,7 +65,7 @@
 								<object class="NSTabViewItem" id="376318744">
 									<string key="NSIdentifier">1</string>
 									<object class="NSView" key="NSView" id="912828137">
-										<nil key="NSNextResponder"/>
+										<reference key="NSNextResponder" ref="1048651597"/>
 										<int key="NSvFlags">256</int>
 										<object class="NSMutableArray" key="NSSubviews">
 											<bool key="EncodedWithXMLCoder">YES</bool>
@@ -596,6 +596,7 @@
 											</object>
 										</object>
 										<string key="NSFrame">{{10, 33}, {405, 416}}</string>
+										<reference key="NSSuperview" ref="1048651597"/>
 									</object>
 									<string key="NSLabel">General</string>
 									<reference key="NSColor" ref="719856035"/>
@@ -1979,7 +1980,7 @@
 								<object class="NSTabViewItem" id="62619894">
 									<string key="NSIdentifier">Item 3</string>
 									<object class="NSView" key="NSView" id="576575972">
-										<reference key="NSNextResponder" ref="1048651597"/>
+										<nil key="NSNextResponder"/>
 										<int key="NSvFlags">256</int>
 										<object class="NSMutableArray" key="NSSubviews">
 											<bool key="EncodedWithXMLCoder">YES</bool>
@@ -2203,21 +2204,20 @@
 											</object>
 										</object>
 										<string key="NSFrame">{{10, 33}, {405, 416}}</string>
-										<reference key="NSSuperview" ref="1048651597"/>
 									</object>
 									<string key="NSLabel">Ignores</string>
 									<reference key="NSColor" ref="719856035"/>
 									<reference key="NSTabView" ref="1048651597"/>
 								</object>
 							</object>
-							<reference key="NSSelectedTabViewItem" ref="62619894"/>
+							<reference key="NSSelectedTabViewItem" ref="376318744"/>
 							<reference key="NSFont" ref="788253527"/>
 							<int key="NSTvFlags">0</int>
 							<bool key="NSAllowTruncatedLabels">YES</bool>
 							<bool key="NSDrawsBackground">YES</bool>
 							<object class="NSMutableArray" key="NSSubviews">
 								<bool key="EncodedWithXMLCoder">YES</bool>
-								<reference ref="576575972"/>
+								<reference ref="912828137"/>
 							</object>
 						</object>
 						<object class="NSButton" id="941270739">
@@ -4815,6 +4815,14 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="875470812">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">Classes/Dialogs/DCC/DCCSender.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">DialogWindow</string>
+					<string key="superclassName">NSWindow</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">Classes/Views/DialogWindow.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
