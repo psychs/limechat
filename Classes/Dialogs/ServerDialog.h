@@ -15,6 +15,8 @@
 	int uid;
 	IRCClientConfig* config;
 
+	IBOutlet NSTabView* tab;
+	
 	IBOutlet NSTextField* nameText;
 	IBOutlet NSButton* autoConnectCheck;
 	
@@ -65,7 +67,7 @@
 @property (nonatomic, assign) int uid;
 @property (nonatomic, retain) IRCClientConfig* config;
 
-- (void)start;
+- (void)startWithIgnoreTab:(BOOL)ignoreTab;
 - (void)show;
 - (void)close;
 

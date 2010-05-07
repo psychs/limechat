@@ -13,6 +13,7 @@
 
 @class AppController;
 @class IRCWorld;
+@class IRCClient;
 
 
 @interface MenuController : NSObject
@@ -59,6 +60,7 @@
 
 - (void)terminate;
 - (void)startPasteSheetWithContent:(NSString*)content nick:(NSString*)nick uid:(int)uid cid:(int)cid editMode:(BOOL)editMode;
+- (void)showServerPropertyDialog:(IRCClient*)client ignore:(BOOL)ignore;
 
 - (void)onPreferences:(id)sender;
 - (void)onAutoOp:(id)sender;

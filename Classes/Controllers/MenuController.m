@@ -715,7 +715,7 @@
 	d.config = [[IRCClientConfig new] autorelease];
 	d.uid = -1;
 	[serverDialogs addObject:d];
-	[d start];
+	[d startWithIgnoreTab:NO];
 }
 
 - (void)onCopyServer:(id)sender
@@ -747,9 +747,8 @@
 	[world save];
 }
 
-- (void)onServerProperties:(id)sender
+- (void)showServerPropertyDialog:(IRCClient*)u ignore:(BOOL)ignore
 {
-	IRCClient* u = world.selectedClient;
 	if (!u) return;
 	
 	if (u.propertyDialog) {
@@ -763,7 +762,12 @@
 	d.config = u.storedConfig;
 	d.uid = u.uid;
 	[serverDialogs addObject:d];
-	[d start];
+	[d startWithIgnoreTab:ignore];
+}
+
+- (void)onServerProperties:(id)sender
+{
+	[self showServerPropertyDialog:world.selectedClient ignore:NO];
 }
 
 - (void)serverDialogOnOK:(ServerDialog*)sender

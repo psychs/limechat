@@ -8,6 +8,8 @@
 #import "IgnoreItem.h"
 
 
+#define IGNORE_TAB_INDEX	3
+
 #define TABLE_ROW_TYPE		@"row"
 #define TABLE_ROW_TYPES		[NSArray arrayWithObject:TABLE_ROW_TYPE]
 
@@ -51,7 +53,7 @@
 	[super dealloc];
 }
 
-- (void)start
+- (void)startWithIgnoreTab:(BOOL)ignoreTab
 {
 	if (uid < 0) {
 		[self.window setTitle:@"New Server"];
@@ -73,6 +75,10 @@
 	[self proxyChanged:nil];
 	[self reloadChannelTable];
 	[self reloadIgnoreTable];
+	
+	if (ignoreTab) {
+		[tab selectTabViewItem:[tab tabViewItemAtIndex:IGNORE_TAB_INDEX]];
+	}
 	
 	[self show];
 }

@@ -1216,7 +1216,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	}
 	else if ([cmd isEqualToString:IGNORE] || [cmd isEqualToString:UNIGNORE]) {
 		if (!s.length) {
-			LOG(@"show dialog");
+			[world.menuController showServerPropertyDialog:self ignore:YES];
 			return YES;
 		}
 		
@@ -1295,9 +1295,6 @@ static NSDateFormatter* dateTimeFormatter = nil;
 				NSMutableArray* ignores = config.ignores;
 				for (int i=ignores.count-1; i>=0; --i) {
 					IgnoreItem* e = [ignores objectAtIndex:i];
-					
-					LOG(@"###checking: %@ %@ %@", e.nick, e.text, e.channels);
-					
 					if ([g isEqual:e]) {
 						[ignores removeObjectAtIndex:i];
 						[world save];
