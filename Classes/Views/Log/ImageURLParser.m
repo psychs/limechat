@@ -80,6 +80,25 @@
 			}
 		}
 	}
+	else if ([host hasSuffix:@"youtube.com"]) {
+		NSString* query = u.query;
+		if (query.length) {
+			NSArray* queries = [query componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"&"]];
+			if (queries.count) {
+				NSCharacterSet* equal = [NSCharacterSet characterSetWithCharactersInString:@"="];
+				for (NSString* e in queries) {
+					NSArray* ary = [e componentsSeparatedByCharactersInSet:equal];
+					if (ary.count >= 2) {
+						NSString* key = [ary objectAtIndex:0];
+						NSString* value = [ary objectAtIndex:1];
+						if ([key isEqualToString:@"v"]) {
+							return [NSString stringWithFormat:@"http://img.youtube.com/vi/%@/default.jpg", value];
+						}
+					}
+				}
+			}
+		}
+	}
 	
 	return nil;
 }
