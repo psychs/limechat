@@ -115,19 +115,25 @@
 			return [NSString stringWithFormat:@"http://img.youtube.com/vi/%@/default.jpg", vid];
 		}
 	}
-	else if ([host isEqualToString:@"www.nicovideo.jp"] || [host isEqualToString:@"nico.ms"]) {
+	else if ([host hasSuffix:@"nicovideo.jp"] || [host isEqualToString:@"nico.ms"]) {
 		NSString* vid = nil;
 		
 		if ([host isEqualToString:@"nico.ms"]) {
 			NSString* path = u.path;
 			if (path.length > 1) {
-				vid = [path substringFromIndex:1];
+				path = [path substringFromIndex:1];
+				if ([path hasPrefix:@"sm"] || [path hasPrefix:@"nm"]) {
+					vid = path;
+				}
 			}
 		}
 		else {
 			NSString* path = u.path;
 			if ([path hasPrefix:@"/watch/"]) {
-				vid = [path substringFromIndex:7];
+				path = [path substringFromIndex:7];
+				if ([path hasPrefix:@"sm"] || [path hasPrefix:@"nm"]) {
+					vid = path;
+				}
 			}
 		}
 		
