@@ -2419,6 +2419,10 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	NSMutableString* s = [[text mutableCopy] autorelease];
 	NSString* command = [[s getToken] uppercaseString];
 	
+	if ([self checkIgnore:nil nick:nick channel:nil]) {
+		return;
+	}
+	
 	if ([command isEqualToString:DCC]) {
 		NSString* subCommand = [[s getToken] uppercaseString];
 		if ([subCommand isEqualToString:SEND]) {
@@ -2489,6 +2493,10 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	NSString* nick = m.sender.nick;
 	NSMutableString* s = [[text mutableCopy] autorelease];
 	NSString* command = [[s getToken] uppercaseString];
+	
+	if ([self checkIgnore:nil nick:nick channel:nil]) {
+		return;
+	}
 	
 	if ([command isEqualToString:PING]) {
 		double time = [s doubleValue];

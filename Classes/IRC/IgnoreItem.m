@@ -101,28 +101,6 @@
 
 - (BOOL)checkIgnore:(NSString*)inputText nick:(NSString*)inputNick channel:(NSString*)channel
 {
-	// check channels
-	if (!channel && channels.count) {
-		return NO;
-	}
-	
-	if (channel && channels.count) {
-		BOOL matched = NO;
-		for (NSString* s in channels) {
-			if (![s isChannelName]) {
-				s = [@"#" stringByAppendingString:s];
-			}
-			if ([channel isEqualNoCase:s]) {
-				matched = YES;
-				break;
-			}
-		}
-		
-		if (!matched) {
-			return NO;
-		}
-	}
-	
 	// check nick
 	if (!inputNick && nick.length) {
 		return NO;
@@ -149,6 +127,10 @@
 	}
 	
 	// check text
+	if (!inputText && text.length) {
+		return NO;
+	}
+	
 	if (inputText && text.length > 0) {
 		if (useRegexForText) {
 			if (!textRegex) {
@@ -167,6 +149,28 @@
 			if (range.location == NSNotFound) {
 				return NO;
 			}
+		}
+	}
+	
+	// check channels
+	if (!channel && channels.count) {
+		return NO;
+	}
+	
+	if (channel && channels.count) {
+		BOOL matched = NO;
+		for (NSString* s in channels) {
+			if (![s isChannelName]) {
+				s = [@"#" stringByAppendingString:s];
+			}
+			if ([channel isEqualNoCase:s]) {
+				matched = YES;
+				break;
+			}
+		}
+		
+		if (!matched) {
+			return NO;
 		}
 	}
 	
