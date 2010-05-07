@@ -92,6 +92,7 @@
 						NSString* key = [ary objectAtIndex:0];
 						NSString* value = [ary objectAtIndex:1];
 						if ([key isEqualToString:@"v"]) {
+							//return [NSString stringWithFormat:@"http://img.youtube.com/vi/%@/0.jpg", value];
 							return [NSString stringWithFormat:@"http://img.youtube.com/vi/%@/default.jpg", value];
 						}
 					}
