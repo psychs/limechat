@@ -80,24 +80,39 @@
 			}
 		}
 	}
-	else if ([host hasSuffix:@"youtube.com"]) {
-		NSString* query = u.query;
-		if (query.length) {
-			NSArray* queries = [query componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"&"]];
-			if (queries.count) {
-				NSCharacterSet* equal = [NSCharacterSet characterSetWithCharactersInString:@"="];
-				for (NSString* e in queries) {
-					NSArray* ary = [e componentsSeparatedByCharactersInSet:equal];
-					if (ary.count >= 2) {
-						NSString* key = [ary objectAtIndex:0];
-						NSString* value = [ary objectAtIndex:1];
-						if ([key isEqualToString:@"v"]) {
-							//return [NSString stringWithFormat:@"http://img.youtube.com/vi/%@/0.jpg", value];
-							return [NSString stringWithFormat:@"http://img.youtube.com/vi/%@/default.jpg", value];
+	else if ([host hasSuffix:@"youtube.com"] || [host isEqualToString:@"youtu.be"]) {
+		NSString* vid = nil;
+		
+		if ([host isEqualToString:@"youtu.be"]) {
+			NSString* path = u.path;
+			if (path.length > 1) {
+				vid = [path substringFromIndex:1];
+			}
+		}
+		else {
+			NSString* query = u.query;
+			if (query.length) {
+				NSArray* queries = [query componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"&"]];
+				if (queries.count) {
+					NSCharacterSet* equal = [NSCharacterSet characterSetWithCharactersInString:@"="];
+					for (NSString* e in queries) {
+						NSArray* ary = [e componentsSeparatedByCharactersInSet:equal];
+						if (ary.count >= 2) {
+							NSString* key = [ary objectAtIndex:0];
+							NSString* value = [ary objectAtIndex:1];
+							if ([key isEqualToString:@"v"]) {
+								vid = value;
+								break;
+							}
 						}
 					}
 				}
 			}
+		}
+		
+		if (vid) {
+			//return [NSString stringWithFormat:@"http://img.youtube.com/vi/%@/0.jpg", vid];
+			return [NSString stringWithFormat:@"http://img.youtube.com/vi/%@/default.jpg", vid];
 		}
 	}
 	
