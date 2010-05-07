@@ -12,9 +12,9 @@
       <pubDate>Fri, 07 May 2010 19:24:42 +0900</pubDate>
       <content:encoded><![CDATA[
   			<ul>
+          <li>64bit support.</li>
           <li>Added ignore feature.</li>
           <li>Recognize YouTube URLs for inline images.</li>
-          <li>64bit support.</li>
         </ul>
       ]]></content:encoded>
     </item>
