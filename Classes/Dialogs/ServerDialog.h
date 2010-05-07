@@ -5,6 +5,7 @@
 #import "IRCClientConfig.h"
 #import "ListView.h"
 #import "ChannelDialog.h"
+#import "IgnoreItemSheet.h"
 
 
 @interface ServerDialog : NSWindowController
@@ -48,9 +49,15 @@
 	IBOutlet NSTextView* loginCommandsText;
 	IBOutlet NSButton* invisibleCheck;
 	
+	IBOutlet ListView* ignoreTable;
+	IBOutlet NSButton* addIgnoreButton;
+	IBOutlet NSButton* editIgnoreButton;
+	IBOutlet NSButton* deleteIgnoreButton;
+	
 	IBOutlet NSButton* okButton;
 	
 	ChannelDialog* channelSheet;
+	IgnoreItemSheet* ignoreSheet;
 }
 
 @property (nonatomic, assign) id delegate;
@@ -73,6 +80,10 @@
 - (void)addChannel:(id)sender;
 - (void)editChannel:(id)sender;
 - (void)deleteChannel:(id)sender;
+
+- (void)addIgnore:(id)sender;
+- (void)editIgnore:(id)sender;
+- (void)deleteIgnore:(id)sender;
 
 + (NSArray*)availableServers;
 

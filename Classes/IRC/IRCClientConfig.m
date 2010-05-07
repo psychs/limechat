@@ -3,6 +3,7 @@
 
 #import "IRCClientConfig.h"
 #import "IRCChannelConfig.h"
+#import "IgnoreItem.h"
 #import "NSDictionaryHelper.h"
 #import "NSLocaleHelper.h"
 
@@ -37,6 +38,7 @@
 @synthesize loginCommands;
 @synthesize channels;
 @synthesize autoOp;
+@synthesize ignores;
 
 @synthesize uid;
 
@@ -45,8 +47,9 @@
 	if (self = [super init]) {
 		altNicks = [NSMutableArray new];
 		loginCommands = [NSMutableArray new];
-		autoOp = [NSMutableArray new];
 		channels = [NSMutableArray new];
+		autoOp = [NSMutableArray new];
+		ignores = [NSMutableArray new];
 		
 		name = @"";
 		host = @"";
@@ -113,6 +116,11 @@
 	
 	[autoOp addObjectsFromArray:[dic arrayForKey:@"autoop"]];
 	
+	for (NSDictionary* e in [dic arrayForKey:@"ignores"]) {
+		IgnoreItem* ignore = [[[IgnoreItem alloc] initWithDictionary:e] autorelease];
+		[ignores addObject:ignore];
+	}
+	
 	return self;
 }
 
@@ -138,6 +146,7 @@
 	[loginCommands release];
 	[channels release];
 	[autoOp release];
+	[ignores release];
 	
 	[super dealloc];
 }
@@ -181,6 +190,14 @@
 	[dic setObject:channelAry forKey:@"channels"];
 	
 	[dic setObject:autoOp forKey:@"autoop"];
+	
+	NSMutableArray* ignoreAry = [NSMutableArray array];
+	for (IgnoreItem* e in ignores) {
+		if (e.isValid) {
+			[ignoreAry addObject:[e dictionaryValue]];
+		}
+	}
+	[dic setObject:ignoreAry forKey:@"ignores"];
 	
 	return dic;
 }

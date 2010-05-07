@@ -5,6 +5,7 @@
 #import "NSWindowHelper.h"
 #import "NSLocaleHelper.h"
 #import "IRCChannelConfig.h"
+#import "IgnoreItem.h"
 
 
 #define TABLE_ROW_TYPE		@"row"
@@ -17,6 +18,8 @@
 - (void)updateConnectionPage;
 - (void)updateChannelsPage;
 - (void)reloadChannelTable;
+- (void)updateIgnoresPage;
+- (void)reloadIgnoreTable;
 @end
 
 
@@ -44,6 +47,7 @@
 {
 	[config release];
 	[channelSheet release];
+	[ignoreSheet release];
 	[super dealloc];
 }
 
@@ -56,13 +60,19 @@
 	[channelTable setTarget:self];
 	[channelTable setDoubleAction:@selector(tableViewDoubleClicked:)];
 	[channelTable registerForDraggedTypes:TABLE_ROW_TYPES];
-
+	
+	[ignoreTable setTarget:self];
+	[ignoreTable setDoubleAction:@selector(tableViewDoubleClicked:)];
+	[ignoreTable registerForDraggedTypes:TABLE_ROW_TYPES];
+	
 	[self load];
 	[self updateConnectionPage];
 	[self updateChannelsPage];
+	[self updateIgnoresPage];
 	[self encodingChanged:nil];
 	[self proxyChanged:nil];
 	[self reloadChannelTable];
+	[self reloadIgnoreTable];
 	
 	[self show];
 }
@@ -177,7 +187,7 @@
 
 - (void)updateChannelsPage
 {
-	int i = [channelTable selectedRow];
+	NSInteger i = [channelTable selectedRow];
 	BOOL enabled = (i >= 0);
 	[editChannelButton setEnabled:enabled];
 	[deleteChannelButton setEnabled:enabled];
@@ -188,12 +198,34 @@
 	[channelTable reloadData];
 }
 
+- (void)updateIgnoresPage
+{
+	NSInteger i = [ignoreTable selectedRow];
+	BOOL enabled = (i >= 0);
+	[editIgnoreButton setEnabled:enabled];
+	[deleteIgnoreButton setEnabled:enabled];
+}
+
+- (void)reloadIgnoreTable
+{
+	[ignoreTable reloadData];
+}
+
 #pragma mark -
 #pragma mark Actions
 
 - (void)ok:(id)sender
 {
 	[self save];
+	
+	// remove invalid ignores
+	NSMutableArray* ignores = config.ignores;
+	for (int i=ignores.count-1; i>=0; --i) {
+		IgnoreItem* g = [ignores objectAtIndex:i];
+		if (!g.isValid) {
+			[ignores removeObjectAtIndex:i];
+		}
+	}
 	
 	if ([delegate respondsToSelector:@selector(serverDialogOnOK:)]) {
 		[delegate serverDialogOnOK:self];
@@ -234,9 +266,12 @@
 	//[sslCheck setEnabled:tag == PROXY_NONE];
 }
 
+#pragma mark -
+#pragma mark Channel Actions
+
 - (void)addChannel:(id)sender
 {
-	int sel = [channelTable selectedRow];
+	NSInteger sel = [channelTable selectedRow];
 	IRCChannelConfig* conf;
 	if (sel < 0) {
 		conf = [[IRCChannelConfig new] autorelease];
@@ -259,7 +294,7 @@
 
 - (void)editChannel:(id)sender
 {
-	int sel = [channelTable selectedRow];
+	NSInteger sel = [channelTable selectedRow];
 	if (sel < 0) return;
 	IRCChannelConfig* c = [[[config.channels objectAtIndex:sel] mutableCopy] autorelease];
 	
@@ -306,7 +341,7 @@
 
 - (void)deleteChannel:(id)sender
 {
-	int sel = [channelTable selectedRow];
+	NSInteger sel = [channelTable selectedRow];
 	if (sel < 0) return;
 	
 	[config.channels removeObjectAtIndex:sel];
@@ -325,26 +360,106 @@
 }
 
 #pragma mark -
+#pragma mark Ignore Actions
+
+- (void)addIgnore:(id)sender
+{
+	[ignoreSheet release];
+	ignoreSheet = [IgnoreItemSheet new];
+	ignoreSheet.delegate = self;
+	ignoreSheet.window = self.window;
+	ignoreSheet.ignore = [[IgnoreItem new] autorelease];
+	ignoreSheet.newItem = YES;
+	[ignoreSheet start];
+}
+
+- (void)editIgnore:(id)sender
+{
+	NSInteger sel = [ignoreTable selectedRow];
+	if (sel < 0) return;
+	
+	[ignoreSheet release];
+	ignoreSheet = [IgnoreItemSheet new];
+	ignoreSheet.delegate = self;
+	ignoreSheet.window = self.window;
+	ignoreSheet.ignore = [config.ignores objectAtIndex:sel];
+	[ignoreSheet start];
+}
+
+- (void)deleteIgnore:(id)sender
+{
+	NSInteger sel = [ignoreTable selectedRow];
+	if (sel < 0) return;
+	
+	[config.ignores removeObjectAtIndex:sel];
+	
+	int count = config.ignores.count;
+	if (count) {
+		if (count <= sel) {
+			[ignoreTable selectItemAtIndex:count - 1];
+		}
+		else {
+			[ignoreTable selectItemAtIndex:sel];
+		}
+	}
+	
+	[self reloadIgnoreTable];
+}
+
+- (void)ignoreItemSheetOnOK:(IgnoreItemSheet*)sender
+{
+	if (sender.newItem) {
+		[config.ignores addObject:sender.ignore];
+	}
+	
+	[self reloadIgnoreTable];
+}
+
+- (void)ignoreItemSheetWillClose:(IgnoreItemSheet*)sender
+{
+	[ignoreSheet autorelease];
+	ignoreSheet = nil;
+}
+
+#pragma mark -
 #pragma mark NSTableViwe Delegate
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)sender
 {
-	return config.channels.count;
+	if (sender == channelTable) {
+		return config.channels.count;
+	}
+	else {
+		return config.ignores.count;
+	}
 }
 
 - (id)tableView:(NSTableView *)sender objectValueForTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
-	IRCChannelConfig* c = [config.channels objectAtIndex:row];
-	NSString* columnId = [column identifier];
-	
-	if ([columnId isEqualToString:@"name"]) {
-		return c.name;
+	if (sender == channelTable) {
+		IRCChannelConfig* c = [config.channels objectAtIndex:row];
+		NSString* columnId = [column identifier];
+		
+		if ([columnId isEqualToString:@"name"]) {
+			return c.name;
+		}
+		else if ([columnId isEqualToString:@"pass"]) {
+			return c.password;
+		}
+		else if ([columnId isEqualToString:@"join"]) {
+			return [NSNumber numberWithBool:c.autoJoin];
+		}
 	}
-	else if ([columnId isEqualToString:@"pass"]) {
-		return c.password;
-	}
-	else if ([columnId isEqualToString:@"join"]) {
-		return [NSNumber numberWithBool:c.autoJoin];
+	else {
+		IgnoreItem* g = [config.ignores objectAtIndex:row];
+		NSString* columnId = [column identifier];
+		
+		if ([columnId isEqualToString:@"nick"]) {
+			return g.displayNick;
+		}
+		else if ([columnId isEqualToString:@"message"]) {
+			return g.displayText;
+		}
 	}
 	
 	return nil;
@@ -352,38 +467,64 @@
 
 - (void)tableView:(NSTableView *)sender setObjectValue:(id)obj forTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
-	IRCChannelConfig* c = [config.channels objectAtIndex:row];
-	NSString* columnId = [column identifier];
-	
-	if ([columnId isEqualToString:@"join"]) {
-		c.autoJoin = [obj intValue] != 0;
+	if (sender == channelTable) {
+		IRCChannelConfig* c = [config.channels objectAtIndex:row];
+		NSString* columnId = [column identifier];
+		
+		if ([columnId isEqualToString:@"join"]) {
+			c.autoJoin = [obj intValue] != 0;
+		}
+	}
+	else {
+		;
 	}
 }
 
 - (void)tableViewSelectionDidChange:(NSNotification *)note
 {
-	[self updateChannelsPage];
+	id sender = [note object];
+	
+	if (sender == channelTable) {
+		[self updateChannelsPage];
+	}
+	else {
+		[self updateIgnoresPage];
+	}
 }
 
 - (void)tableViewDoubleClicked:(id)sender
 {
-	[self editChannel:nil];
+	if (sender == channelTable) {
+		[self editChannel:nil];
+	}
+	else {
+		[self editIgnore:nil];
+	}
 }
 
 - (BOOL)tableView:(NSTableView *)sender writeRowsWithIndexes:(NSIndexSet *)rows toPasteboard:(NSPasteboard *)pboard
 {
-	NSArray* ary = [NSArray arrayWithObject:[NSNumber numberWithInt:[rows firstIndex]]];
-	
-	[pboard declareTypes:TABLE_ROW_TYPES owner:self];
-	[pboard setPropertyList:ary forType:TABLE_ROW_TYPE];
+	if (sender == channelTable) {
+		NSArray* ary = [NSArray arrayWithObject:[NSNumber numberWithInt:[rows firstIndex]]];
+		[pboard declareTypes:TABLE_ROW_TYPES owner:self];
+		[pboard setPropertyList:ary forType:TABLE_ROW_TYPE];
+	}
+	else {
+		;
+	}
 	return YES;
 }
 
 - (NSDragOperation)tableView:(NSTableView *)sender validateDrop:(id < NSDraggingInfo >)info proposedRow:(NSInteger)row proposedDropOperation:(NSTableViewDropOperation)op
 {
-	NSPasteboard* pboard = [info draggingPasteboard];
-	if (op == NSTableViewDropAbove && [pboard availableTypeFromArray:TABLE_ROW_TYPES]) {
-		return NSDragOperationGeneric;
+	if (sender == channelTable) {
+		NSPasteboard* pboard = [info draggingPasteboard];
+		if (op == NSTableViewDropAbove && [pboard availableTypeFromArray:TABLE_ROW_TYPES]) {
+			return NSDragOperationGeneric;
+		}
+		else {
+			return NSDragOperationNone;
+		}
 	}
 	else {
 		return NSDragOperationNone;
@@ -392,35 +533,40 @@
 
 - (BOOL)tableView:(NSTableView *)sender acceptDrop:(id < NSDraggingInfo >)info row:(NSInteger)row dropOperation:(NSTableViewDropOperation)op
 {
-	NSPasteboard* pboard = [info draggingPasteboard];
-	if (op == NSTableViewDropAbove && [pboard availableTypeFromArray:TABLE_ROW_TYPES]) {
-		NSArray* selectedRows = [pboard propertyListForType:TABLE_ROW_TYPE];
-		int sel = [[selectedRows objectAtIndex:0] intValue];
-		
-		NSMutableArray* ary = config.channels;
-		IRCChannelConfig* target = [ary objectAtIndex:sel];
-		[[target retain] autorelease];
+	if (sender == channelTable) {
+		NSPasteboard* pboard = [info draggingPasteboard];
+		if (op == NSTableViewDropAbove && [pboard availableTypeFromArray:TABLE_ROW_TYPES]) {
+			NSArray* selectedRows = [pboard propertyListForType:TABLE_ROW_TYPE];
+			int sel = [[selectedRows objectAtIndex:0] intValue];
+			
+			NSMutableArray* ary = config.channels;
+			IRCChannelConfig* target = [ary objectAtIndex:sel];
+			[[target retain] autorelease];
 
-		NSMutableArray* low = [[[ary subarrayWithRange:NSMakeRange(0, row)] mutableCopy] autorelease];
-		NSMutableArray* high = [[[ary subarrayWithRange:NSMakeRange(row, ary.count - row)] mutableCopy] autorelease];
-		
-		[low removeObjectIdenticalTo:target];
-		[high removeObjectIdenticalTo:target];
-		
-		[ary removeAllObjects];
-		
-		[ary addObjectsFromArray:low];
-		[ary addObject:target];
-		[ary addObjectsFromArray:high];
-		
-		[self reloadChannelTable];
-		
-		sel = [ary indexOfObjectIdenticalTo:target];
-		if (0 <= sel) {
-			[channelTable selectItemAtIndex:sel];
+			NSMutableArray* low = [[[ary subarrayWithRange:NSMakeRange(0, row)] mutableCopy] autorelease];
+			NSMutableArray* high = [[[ary subarrayWithRange:NSMakeRange(row, ary.count - row)] mutableCopy] autorelease];
+			
+			[low removeObjectIdenticalTo:target];
+			[high removeObjectIdenticalTo:target];
+			
+			[ary removeAllObjects];
+			
+			[ary addObjectsFromArray:low];
+			[ary addObject:target];
+			[ary addObjectsFromArray:high];
+			
+			[self reloadChannelTable];
+			
+			sel = [ary indexOfObjectIdenticalTo:target];
+			if (0 <= sel) {
+				[channelTable selectItemAtIndex:sel];
+			}
+			
+			return YES;
 		}
-		
-		return YES;
+	}
+	else {
+		;
 	}
 	return NO;
 }

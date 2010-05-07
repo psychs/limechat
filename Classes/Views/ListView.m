@@ -110,6 +110,9 @@
 	if ([textDelegate respondsToSelector:@selector(textDidEndEditing:)]) {
 		[textDelegate textDidEndEditing:note];
 	}
+	else {
+		[super textDidEndEditing:note];
+	}
 }
 
 @end

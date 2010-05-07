@@ -46,6 +46,7 @@ typedef enum {
 	NSMutableArray* loginCommands;
 	NSMutableArray* channels;
 	NSMutableArray* autoOp;
+	NSMutableArray* ignores;
 	
 	// internal
 	int uid;
@@ -79,6 +80,7 @@ typedef enum {
 @property (nonatomic, readonly) NSMutableArray* loginCommands;
 @property (nonatomic, readonly) NSMutableArray* channels;
 @property (nonatomic, readonly) NSMutableArray* autoOp;
+@property (nonatomic, readonly) NSMutableArray* ignores;
 
 @property (nonatomic, assign) int uid;
 

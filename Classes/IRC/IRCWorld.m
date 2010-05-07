@@ -287,7 +287,7 @@
 
 - (void)adjustSelection
 {
-	int row = [tree selectedRow];
+	NSInteger row = [tree selectedRow];
 	if (0 <= row && selected && selected != [tree itemAtRow:row]) {
 		[tree selectItemAtIndex:[tree rowForItem:selected]];
 		[self reloadTree];
