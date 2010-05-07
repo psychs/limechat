@@ -192,16 +192,12 @@ static NSInteger compareItems(NSArray* self, NSArray* other, void* context)
 		ary = filteredList;
 	}
 	
-	NSIndexSet* set = [table selectedRowIndexes];
-	NSUInteger i = [set firstIndex];
-	while (i != NSNotFound) {
+	NSIndexSet* indexes = [table selectedRowIndexes];
+	for (NSUInteger i=[indexes firstIndex]; i!=NSNotFound; i=[indexes indexGreaterThanIndex:i]) {
 		NSArray* item = [ary objectAtIndex:i];
-		
 		if ([delegate respondsToSelector:@selector(listDialogOnJoin:channel:)]) {
 			[delegate listDialogOnJoin:self channel:[item objectAtIndex:0]];
 		}
-		
-		i = [set indexGreaterThanIndex:i];
 	}
 }
 

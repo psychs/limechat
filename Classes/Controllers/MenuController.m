@@ -316,11 +316,9 @@
 		else {
 			NSMutableArray* ary = [NSMutableArray array];
 			NSIndexSet* indexes = [memberList selectedRowIndexes];
-			NSUInteger n = [indexes firstIndex];
-			while (n != NSNotFound) {
-				IRCUser* m = [c memberAtIndex:n];
+			for (NSUInteger i=[indexes firstIndex]; i!=NSNotFound; i=[indexes indexGreaterThanIndex:i]) {
+				IRCUser* m = [c memberAtIndex:i];
 				[ary addObject:m];
-				n = [indexes indexGreaterThanIndex:n];
 			}
 			return ary;
 		}

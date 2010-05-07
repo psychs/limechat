@@ -309,10 +309,8 @@
 		
 		NSMutableArray* sel = [NSMutableArray array];
 		NSIndexSet* indexes = [receiverTable selectedRowIndexes];
-		NSUInteger i = [indexes firstIndex];
-		while (i != NSNotFound) {
+		for (NSUInteger i=[indexes firstIndex]; i!=NSNotFound; i=[indexes indexGreaterThanIndex:i]) {
 			[sel addObject:[receivers objectAtIndex:i]];
-			i = [indexes indexGreaterThanIndex:i];
 		}
 		
 		switch (tag) {
@@ -355,10 +353,8 @@
 		
 		NSMutableArray* sel = [NSMutableArray array];
 		NSIndexSet* indexes = [senderTable selectedRowIndexes];
-		NSUInteger i = [indexes firstIndex];
-		while (i != NSNotFound) {
+		for (NSUInteger i=[indexes firstIndex]; i!=NSNotFound; i=[indexes indexGreaterThanIndex:i]) {
 			[sel addObject:[senders objectAtIndex:i]];
-			i = [indexes indexGreaterThanIndex:i];
 		}
 		
 		switch (tag) {
@@ -407,11 +403,9 @@
 - (void)startReceiver:(id)sender
 {
 	NSIndexSet* indexes = [receiverTable selectedRowIndexes];
-	NSUInteger i = [indexes firstIndex];
-	while (i != NSNotFound) {
+	for (NSUInteger i=[indexes firstIndex]; i!=NSNotFound; i=[indexes indexGreaterThanIndex:i]) {
 		DCCReceiver* e = [receivers objectAtIndex:i];
 		[e open];
-		i = [indexes indexGreaterThanIndex:i];
 	}
 	
 	[self reloadReceiverTable];
@@ -421,11 +415,9 @@
 - (void)stopReceiver:(id)sender
 {
 	NSIndexSet* indexes = [receiverTable selectedRowIndexes];
-	NSUInteger i = [indexes firstIndex];
-	while (i != NSNotFound) {
+	for (NSUInteger i=[indexes firstIndex]; i!=NSNotFound; i=[indexes indexGreaterThanIndex:i]) {
 		DCCReceiver* e = [receivers objectAtIndex:i];
 		[e close];
-		i = [indexes indexGreaterThanIndex:i];
 	}
 	
 	[self reloadReceiverTable];
@@ -435,10 +427,8 @@
 - (void)deleteReceiver:(id)sender
 {
 	NSIndexSet* indexes = [receiverTable selectedRowIndexes];
-	NSUInteger i = [indexes lastIndex];
-	while (i != NSNotFound) {
+	for (NSUInteger i=[indexes lastIndex]; i!=NSNotFound; i=[indexes indexLessThanIndex:i]) {
 		[self destroyReceiverAtIndex:i];
-		i = [indexes indexLessThanIndex:i];
 	}
 	
 	[self reloadReceiverTable];
@@ -450,11 +440,9 @@
 	NSWorkspace* ws = [NSWorkspace sharedWorkspace];
 	
 	NSIndexSet* indexes = [receiverTable selectedRowIndexes];
-	NSUInteger i = [indexes firstIndex];
-	while (i != NSNotFound) {
+	for (NSUInteger i=[indexes firstIndex]; i!=NSNotFound; i=[indexes indexGreaterThanIndex:i]) {
 		DCCReceiver* e = [receivers objectAtIndex:i];
 		[ws openFile:e.downloadFileName];
-		i = [indexes indexGreaterThanIndex:i];
 	}
 	
 	[self reloadReceiverTable];
@@ -466,11 +454,9 @@
 	NSWorkspace* ws = [NSWorkspace sharedWorkspace];
 	
 	NSIndexSet* indexes = [receiverTable selectedRowIndexes];
-	NSUInteger i = [indexes firstIndex];
-	while (i != NSNotFound) {
+	for (NSUInteger i=[indexes firstIndex]; i!=NSNotFound; i=[indexes indexGreaterThanIndex:i]) {
 		DCCReceiver* e = [receivers objectAtIndex:i];
 		[ws selectFile:e.downloadFileName inFileViewerRootedAtPath:nil];
-		i = [indexes indexGreaterThanIndex:i];
 	}
 	
 	[self reloadReceiverTable];
@@ -480,11 +466,9 @@
 - (void)startSender:(id)sender
 {
 	NSIndexSet* indexes = [senderTable selectedRowIndexes];
-	NSUInteger i = [indexes firstIndex];
-	while (i != NSNotFound) {
+	for (NSUInteger i=[indexes firstIndex]; i!=NSNotFound; i=[indexes indexGreaterThanIndex:i]) {
 		DCCSender* e = [senders objectAtIndex:i];
 		[e open];
-		i = [indexes indexGreaterThanIndex:i];
 	}
 	
 	[self reloadSenderTable];
@@ -494,11 +478,9 @@
 - (void)stopSender:(id)sender
 {
 	NSIndexSet* indexes = [senderTable selectedRowIndexes];
-	NSUInteger i = [indexes firstIndex];
-	while (i != NSNotFound) {
+	for (NSUInteger i=[indexes firstIndex]; i!=NSNotFound; i=[indexes indexGreaterThanIndex:i]) {
 		DCCSender* e = [senders objectAtIndex:i];
 		[e close];
-		i = [indexes indexGreaterThanIndex:i];
 	}
 	
 	[self reloadSenderTable];
@@ -508,10 +490,8 @@
 - (void)deleteSender:(id)sender
 {
 	NSIndexSet* indexes = [senderTable selectedRowIndexes];
-	NSUInteger i = [indexes lastIndex];
-	while (i != NSNotFound) {
+	for (NSUInteger i=[indexes lastIndex]; i!=NSNotFound; i=[indexes indexLessThanIndex:i]) {
 		[self destroySenderAtIndex:i];
-		i = [indexes indexLessThanIndex:i];
 	}
 	
 	[self reloadSenderTable];
