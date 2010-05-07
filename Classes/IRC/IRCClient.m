@@ -1214,6 +1214,101 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	else if ([cmd isEqualToString:T]) {
 		cmd = TOPIC;
 	}
+	else if ([cmd isEqualToString:IGNORE] || [cmd isEqualToString:UNIGNORE]) {
+		if (!s.length) {
+			LOG(@"show dialog");
+			return YES;
+		}
+		
+		BOOL useNick = NO;
+		BOOL useText = NO;
+		
+		if ([s hasPrefix:@"-"]) {
+			NSString* options = [s getToken];
+			useNick = [options contains:@"n"];
+			useText = [options contains:@"m"];
+		}
+
+		if (!useNick && !useText) {
+			useNick = YES;
+		}
+		
+		NSString* nick = nil;
+		NSString* text = nil;
+		BOOL useRegexForNick = NO;
+		BOOL useRegexForText = NO;
+		NSMutableArray* chnames = [NSMutableArray array];
+		
+		if (useNick) {
+			nick = [s getIgnoreToken];
+			if (nick.length > 2) {
+				if ([nick hasPrefix:@"/"] && [nick hasSuffix:@"/"]) {
+					useRegexForNick = YES;
+					nick = [nick substringWithRange:NSMakeRange(1, nick.length-2)];
+				}
+			}
+		}
+		
+		if (useText) {
+			text = [s getIgnoreToken];
+			if (text.length) {
+				if ([text hasPrefix:@"/"] && [text hasSuffix:@"/"]) {
+					useRegexForText = YES;
+					text = [text substringWithRange:NSMakeRange(1, text.length-2)];
+				}
+				else if ([text hasPrefix:@"\""] && [text hasSuffix:@"\""]) {
+					text = [text substringWithRange:NSMakeRange(1, text.length-2)];
+				}
+			}
+		}
+		
+		while (s.length) {
+			NSString* chname = [s getToken];
+			if (chname.length) {
+				[chnames addObject:chname];
+			}
+		}
+		
+		IgnoreItem* g = [[IgnoreItem new] autorelease];
+		g.nick = nick;
+		g.text = text;
+		g.useRegexForNick = useRegexForNick;
+		g.useRegexForText = useRegexForText;
+		g.channels = chnames;
+		
+		if (g.isValid) {
+			if ([cmd isEqualToString:IGNORE]) {
+				BOOL found = NO;
+				for (IgnoreItem* e in config.ignores) {
+					if ([g isEqual:e]) {
+						found = YES;
+						break;
+					}
+				}
+				
+				if (!found) {
+					[config.ignores addObject:g];
+					[world save];
+				}
+			}
+			else {
+				NSMutableArray* ignores = config.ignores;
+				for (int i=ignores.count-1; i>=0; --i) {
+					IgnoreItem* e = [ignores objectAtIndex:i];
+					
+					LOG(@"###checking: %@ %@ %@", e.nick, e.text, e.channels);
+					
+					if ([g isEqual:e]) {
+						[ignores removeObjectAtIndex:i];
+						[world save];
+						break;
+					}
+				}
+			}
+		}
+		
+		return YES;
+	}
 	else if ([cmd isEqualToString:RAW] || [cmd isEqualToString:QUOTE]) {
 		[self sendLine:s];
 		return YES;

@@ -29,6 +29,7 @@
 
 - (id)initWithDictionary:(NSDictionary*)dic;
 - (NSDictionary*)dictionaryValue;
+- (BOOL)isEqual:(id)other;
 
 - (BOOL)checkIgnore:(NSString*)inputText nick:(NSString*)inputNick channel:(NSString*)channel;
 

@@ -588,7 +588,12 @@ BOOL isUnicharDigit(unichar c)
 
 - (NSString*)getToken
 {
-	NSRange r = [self rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:@" "]];
+	static NSCharacterSet* spaceSet = nil;
+	if (!spaceSet) {
+		spaceSet = [[NSCharacterSet characterSetWithCharactersInString:@" "] retain];
+	}
+	
+	NSRange r = [self rangeOfCharacterFromSet:spaceSet];
 	if (r.location != NSNotFound) {
 		NSString* result = [self substringToIndex:r.location];
 		int len = [self length];
@@ -598,6 +603,63 @@ BOOL isUnicharDigit(unichar c)
 		}
 		[self deleteCharactersInRange:NSMakeRange(0, pos)];
 		return result;
+	}
+	
+	NSString* result = [[self copy] autorelease];
+	[self setString:@""];
+	return result;
+}
+
+- (NSString*)getIgnoreToken
+{
+	BOOL useAnchor = NO;
+	UniChar anchor;
+	BOOL escaped = NO;
+	
+	int len = [self length];
+	for (int i=0; i<len; ++i) {
+		UniChar c = [self characterAtIndex:i];
+		
+		if (i == 0) {
+			if (c == '/') {
+				useAnchor = YES;
+				anchor = '/';
+				continue;
+			}
+			else if (c == '"') {
+				useAnchor = YES;
+				anchor = '"';
+				continue;
+			}
+		}
+		
+		if (escaped) {
+			escaped = NO;
+		}
+		else if (c == '\\') {
+			escaped = YES;
+		}
+		else if (useAnchor && c == anchor || !useAnchor && c == ' ') {
+			if (useAnchor) {
+				++i;
+			}
+			NSString* result = [self substringToIndex:i];
+			
+			int right;
+			for (right=i+1; right<len; ++right) {
+				UniChar c = [self characterAtIndex:right];
+				if (c != ' ') {
+					break;
+				}
+			}
+			
+			if (len <= right) {
+				right = len;
+			}
+			
+			[self deleteCharactersInRange:NSMakeRange(0, right)];
+			return result;
+		}
 	}
 	
 	NSString* result = [[self copy] autorelease];

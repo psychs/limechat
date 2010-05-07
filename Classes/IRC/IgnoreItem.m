@@ -58,6 +58,42 @@
 	return dic;
 }
 
+- (BOOL)isEqual:(id)other
+{
+	if (![other isKindOfClass:[IgnoreItem class]]) {
+		return NO;
+	}
+	
+	IgnoreItem* g = (IgnoreItem*)other;
+	
+	if (useRegexForNick != g.useRegexForNick) {
+		return NO;
+	}
+	
+	if (useRegexForText != g.useRegexForText) {
+		return NO;
+	}
+	
+	if (nick && g.nick && ![nick isEqualNoCase:g.nick]) {
+		return NO;
+	}
+	
+	if (text && g.text && ![text isEqualNoCase:g.text]) {
+		return NO;
+	}
+	
+	if ((!channels || !channels.count) && (!g.channels || !g.channels.count)) {
+		;
+	}
+	else {
+		if (![channels isEqualToArray:g.channels]) {
+			return NO;
+		}
+	}
+	
+	return YES;
+}
+
 - (void)setNick:(NSString *)value
 {
 	if (![nick isEqualToString:value]) {

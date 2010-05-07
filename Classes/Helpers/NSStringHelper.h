@@ -58,5 +58,6 @@
 @interface NSMutableString (NSMutableStringHelper)
 
 - (NSString*)getToken;
+- (NSString*)getIgnoreToken;
 
 @end
