@@ -616,10 +616,10 @@
 	if (commandMode) {
 		choices = [NSArray arrayWithObjects:
 				   @"action", @"away", @"ban", @"clear", @"ctcp", @"ctcpquery", @"cycle",
-				   @"hop", @"invite", @"j", @"join", @"kick", @"kill", @"leave", @"list",
+				   @"hop", @"ignore", @"invite", @"j", @"join", @"kick", @"kill", @"leave", @"list",
 				   @"me", @"mode", @"msg", @"nick", @"notice", @"op", @"part", @"ping",
 				   @"privmsg", @"query", @"quit", @"quote", @"raw", @"rejoin", @"t",
-				   @"timer", @"topic", @"unban", @"voice", @"weights",
+				   @"timer", @"topic", @"unban", "unignore", @"voice", @"weights",
 				   nil];
 		lowerChoices = choices;
 	}
