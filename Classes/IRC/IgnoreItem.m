@@ -3,6 +3,7 @@
 
 #import "IgnoreItem.h"
 #import "NSDictionaryHelper.h"
+#import "NSStringHelper.h"
 
 
 @implementation IgnoreItem
@@ -18,6 +19,8 @@
 	[nick release];
 	[text release];
 	[channels release];
+	[nickRegex release];
+	[textRegex release];
 	[super dealloc];
 }
 
@@ -55,6 +58,28 @@
 	return dic;
 }
 
+- (void)setNick:(NSString *)value
+{
+	if (![nick isEqualToString:value]) {
+		[nick release];
+		nick = [value retain];
+		
+		[nickRegex release];
+		nickRegex = nil;
+	}
+}
+
+- (void)setText:(NSString *)value
+{
+	if (![text isEqualToString:value]) {
+		[text release];
+		text = [value retain];
+		
+		[textRegex release];
+		textRegex = nil;
+	}
+}
+
 - (BOOL)isValid
 {
 	return nick.length > 0 || text.length > 0;
@@ -72,6 +97,80 @@
 	if (!text || !text.length) return @"";
 	if (!useRegexForText) return text;
 	return [NSString stringWithFormat:@"/%@/", text];
+}
+
+- (BOOL)checkIgnore:(NSString*)inputText nick:(NSString*)inputNick channel:(NSString*)channel
+{
+	// check channels
+	if (!channel && channels.count) {
+		return NO;
+	}
+	
+	if (channel && channels.count) {
+		BOOL matched = NO;
+		for (NSString* s in channels) {
+			if (![s isChannelName]) {
+				s = [@"#" stringByAppendingString:s];
+			}
+			if ([channel isEqualNoCase:s]) {
+				matched = YES;
+				break;
+			}
+		}
+		
+		if (!matched) {
+			return NO;
+		}
+	}
+	
+	// check nick
+	if (!inputNick && nick.length) {
+		return NO;
+	}
+	
+	if (inputNick.length > 0 && nick.length > 0) {
+		if (useRegexForNick) {
+			if (!nickRegex) {
+				nickRegex = [[OnigRegexp compileIgnorecase:nick] retain];
+			}
+			
+			if (nickRegex) {
+				OnigResult* result = [nickRegex search:inputNick];
+				if (!result) {
+					return NO;
+				}
+			}
+		}
+		else {
+			if (![inputNick isEqualNoCase:nick]) {
+				return NO;
+			}
+		}
+	}
+	
+	// check text
+	if (inputText && text.length > 0) {
+		if (useRegexForText) {
+			if (!textRegex) {
+				textRegex = [[OnigRegexp compileIgnorecase:text] retain];
+			}
+			
+			if (textRegex) {
+				OnigResult* result = [textRegex search:inputText];
+				if (!result) {
+					return NO;
+				}
+			}
+		}
+		else {
+			NSRange range = [inputText rangeOfString:text options:NSCaseInsensitiveSearch];
+			if (range.location == NSNotFound) {
+				return NO;
+			}
+		}
+	}
+	
+	return YES;
 }
 
 @end

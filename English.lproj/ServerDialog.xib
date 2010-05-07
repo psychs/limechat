@@ -65,7 +65,7 @@
 								<object class="NSTabViewItem" id="376318744">
 									<string key="NSIdentifier">1</string>
 									<object class="NSView" key="NSView" id="912828137">
-										<reference key="NSNextResponder" ref="1048651597"/>
+										<nil key="NSNextResponder"/>
 										<int key="NSvFlags">256</int>
 										<object class="NSMutableArray" key="NSSubviews">
 											<bool key="EncodedWithXMLCoder">YES</bool>
@@ -596,7 +596,6 @@
 											</object>
 										</object>
 										<string key="NSFrame">{{10, 33}, {405, 416}}</string>
-										<reference key="NSSuperview" ref="1048651597"/>
 									</object>
 									<string key="NSLabel">General</string>
 									<reference key="NSColor" ref="719856035"/>
@@ -1980,7 +1979,7 @@
 								<object class="NSTabViewItem" id="62619894">
 									<string key="NSIdentifier">Item 3</string>
 									<object class="NSView" key="NSView" id="576575972">
-										<nil key="NSNextResponder"/>
+										<reference key="NSNextResponder" ref="1048651597"/>
 										<int key="NSvFlags">256</int>
 										<object class="NSMutableArray" key="NSSubviews">
 											<bool key="EncodedWithXMLCoder">YES</bool>
@@ -2204,20 +2203,21 @@
 											</object>
 										</object>
 										<string key="NSFrame">{{10, 33}, {405, 416}}</string>
+										<reference key="NSSuperview" ref="1048651597"/>
 									</object>
 									<string key="NSLabel">Ignores</string>
 									<reference key="NSColor" ref="719856035"/>
 									<reference key="NSTabView" ref="1048651597"/>
 								</object>
 							</object>
-							<reference key="NSSelectedTabViewItem" ref="376318744"/>
+							<reference key="NSSelectedTabViewItem" ref="62619894"/>
 							<reference key="NSFont" ref="788253527"/>
 							<int key="NSTvFlags">0</int>
 							<bool key="NSAllowTruncatedLabels">YES</bool>
 							<bool key="NSDrawsBackground">YES</bool>
 							<object class="NSMutableArray" key="NSSubviews">
 								<bool key="EncodedWithXMLCoder">YES</bool>
-								<reference ref="912828137"/>
+								<reference ref="576575972"/>
 							</object>
 						</object>
 						<object class="NSButton" id="941270739">

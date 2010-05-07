@@ -2,6 +2,7 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 #import <Foundation/Foundation.h>
+#import "OnigRegexp.h"
 
 
 @interface IgnoreItem : NSObject
@@ -11,6 +12,9 @@
 	BOOL useRegexForNick;
 	BOOL useRegexForText;
 	NSArray* channels;
+	
+	OnigRegexp* nickRegex;
+	OnigRegexp* textRegex;
 }
 
 @property (nonatomic, retain) NSString* nick;
@@ -25,5 +29,7 @@
 
 - (id)initWithDictionary:(NSDictionary*)dic;
 - (NSDictionary*)dictionaryValue;
+
+- (BOOL)checkIgnore:(NSString*)inputText nick:(NSString*)inputNick channel:(NSString*)channel;
 
 @end

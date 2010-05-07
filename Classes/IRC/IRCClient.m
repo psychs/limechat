@@ -371,6 +371,17 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	[world reloadTree];
 }
 
+- (BOOL)checkIgnore:(NSString*)text nick:(NSString*)nick channel:(NSString*)channel
+{
+	for (IgnoreItem* g in config.ignores) {
+		if ([g checkIgnore:text nick:nick channel:channel]) {
+			return YES;
+		}
+	}
+		
+	return NO;
+}
+
 #pragma mark -
 #pragma mark ListDialog
 
@@ -2297,6 +2308,10 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	
 	if ([target hasPrefix:@"@"]) {
 		target = [target substringFromIndex:1];
+	}
+	
+	if ([self checkIgnore:text nick:nick channel:target]) {
+		return;
 	}
 	
 	if (target.isChannelName) {
