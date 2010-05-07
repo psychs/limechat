@@ -7,13 +7,14 @@
     <language>en-us</language>
 
     <item>
-      <title>2.11</title>
-      <link>http://limechat.net/mac/#v2.11</link>
-      <pubDate>Mon, 03 May 2010 19:53:03 +0900</pubDate>
+      <title>2.12</title>
+      <link>http://limechat.net/mac/#v2.12</link>
+      <pubDate>Fri, 07 May 2010 19:24:42 +0900</pubDate>
       <content:encoded><![CDATA[
   			<ul>
-          <li>Fixed a bug, fallback encoding wasn't saved correctly.</li>
-          <li>Minor bugs fixes.</li>
+          <li>Added ignore feature.</li>
+          <li>Recognize YouTube URLs for inline images.</li>
+          <li>64bit support.</li>
         </ul>
       ]]></content:encoded>
     </item>

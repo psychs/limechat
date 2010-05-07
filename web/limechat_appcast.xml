@@ -7,7 +7,7 @@
     <language>en</language>
     
     <item>
-      <title>LimeChat 2.11</title>
+      <title>LimeChat 2.12</title>
       <description><![CDATA[
         <html>
         <body>
@@ -22,18 +22,19 @@
             margin: 0.2em 0;
           }
         </style>
-        <h1>LimeChat 2.11</h1>
+        <h1>LimeChat 2.12</h1>
         <ul>
-          <li>Fixed a bug, fallback encoding wasn't saved correctly.</li>
-          <li>Minor bugs fixes.</li>
+          <li>Added ignore feature.</li>
+          <li>Recognize YouTube URLs for inline images.</li>
+          <li>64bit support.</li>
         </ul>
         </body>
         </html>
       ]]></description>
-      <pubDate>Mon, 03 May 2010 19:53:03 +0900</pubDate>
-      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/LimeChat_2.11.tbz"
-                  sparkle:version="2.11" length="1076557" type="application/octet-stream"
-                  sparkle:dsaSignature="MC0CFDTB8LPclDsQsx7FsYVW7Ho8e0RRAhUAwiqCbDavpc+AccOFA67/wD5PhSo="/>
+      <pubDate>Fri, 07 May 2010 19:24:42 +0900</pubDate>
+      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/LimeChat_2.12.tbz"
+                  sparkle:version="2.12" length="1568959" type="application/octet-stream"
+                  sparkle:dsaSignature="MC0CFDwAR+h2LrFIh2NHcQBA0tp/Ehg4AhUAwqipPH6wrPPHeYr43y7ZZ8Q9LbE="/>
     </item>
     
   </channel>
