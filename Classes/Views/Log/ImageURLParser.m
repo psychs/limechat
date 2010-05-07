@@ -115,6 +115,27 @@
 			return [NSString stringWithFormat:@"http://img.youtube.com/vi/%@/default.jpg", vid];
 		}
 	}
+	else if ([host isEqualToString:@"www.nicovideo.jp"] || [host isEqualToString:@"nico.ms"]) {
+		NSString* vid = nil;
+		
+		if ([host isEqualToString:@"nico.ms"]) {
+			NSString* path = u.path;
+			if (path.length > 1) {
+				vid = [path substringFromIndex:1];
+			}
+		}
+		else {
+			NSString* path = u.path;
+			if ([path hasPrefix:@"/watch/"]) {
+				vid = [path substringFromIndex:7];
+			}
+		}
+		
+		if (vid && vid.length > 2) {
+			long long vidNum = [[vid substringFromIndex:2] longLongValue];
+			return [NSString stringWithFormat:@"http://tn-skr%qi.smilevideo.jp/smile?i=%qi", (vidNum%4 + 1), vidNum];
+		}
+	}
 	
 	return nil;
 }
