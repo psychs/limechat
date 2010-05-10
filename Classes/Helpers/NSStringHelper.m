@@ -364,7 +364,7 @@ BOOL isUnicharDigit(unichar c)
 	
 	static OnigRegexp* regex = nil;
 	if (!regex) {
-		NSString* pattern = @"(?<![a-z0-9_])(https?|ftp|itms)://[^\\s!\"#$\\&'()*+,/;<=>?\\[\\\\\\]\\^_`{|}　、，。．・…]+(/[^\\s\"'`<>　、，。．・…]*)?";
+		NSString* pattern = @"(?<![a-z0-9_])(https?|ftp|itms)://([^\\s!\"#$\\&'()*+,/;<=>?\\[\\\\\\]\\^_`{|}　、，。．・…]+)(/[^\\s\"'`<>　、，。．・…]*)?";
 		regex = [[OnigRegexp compileIgnorecase:pattern] retain];
 	}
 	
@@ -372,6 +372,30 @@ BOOL isUnicharDigit(unichar c)
 	if (!result) return NSMakeRange(NSNotFound, 0);
 	
 	NSRange r = result.bodyRange;
+	
+	// exclude non ASCII characters from URLs except for wikipedia
+	NSString* host = [[self substringWithRange:[result rangeAt:2]] lowercaseString];
+	if (![host hasSuffix:@"wikipedia.org"]) {
+		NSRange pathRange = [result rangeAt:3];
+		NSString* path = [self substringWithRange:pathRange];
+		if (path.length) {
+			static OnigRegexp* pathRegex = nil;
+			if (!pathRegex) {
+				NSString* pathPattern = @"^/[a-zA-Z0-9\\-._~!#$%&'()*+,-./:;=?@\\[\\]]*";
+				pathRegex = [[OnigRegexp compile:pathPattern] retain];
+			}
+			
+			OnigResult* pathResult = [pathRegex search:path];
+			if (pathResult) {
+				NSRange newPathRange = pathResult.bodyRange;
+				int delta = pathRange.length - newPathRange.length;
+				if (delta > 0) {
+					r.length -= delta;
+				}
+			}
+		}
+	}
+	
 	NSString* url = [self substringWithRange:r];
 	
 	int len = url.length;
