@@ -495,7 +495,6 @@
 			NSString* lastLine = [lines objectAtIndex:1];
 			multiLine = lastLine.length > 0;
 		}
-		
 		IRCChannel* c = world.selectedChannel;
 		
 		if (c && multiLine) {
