@@ -1936,7 +1936,7 @@
 											<object class="NSTextField" id="1040343440">
 												<reference key="NSNextResponder" ref="139671347"/>
 												<int key="NSvFlags">256</int>
-												<string key="NSFrame">{{14, 318}, {197, 18}}</string>
+												<string key="NSFrame">{{14, 318}, {200, 18}}</string>
 												<reference key="NSSuperview" ref="139671347"/>
 												<bool key="NSEnabled">YES</bool>
 												<object class="NSTextFieldCell" key="NSCell" id="515348729">
@@ -5377,6 +5377,52 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
+					<string key="className">IgnoreItemSheet</string>
+					<string key="superclassName">SheetBase</string>
+					<object class="NSMutableDictionary" key="actions">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>addChannel:</string>
+							<string>deleteChannel:</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
+							<string>id</string>
+						</object>
+					</object>
+					<object class="NSMutableDictionary" key="outlets">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>channelTable</string>
+							<string>deleteChannelButton</string>
+							<string>messageCheck</string>
+							<string>messagePopup</string>
+							<string>messageText</string>
+							<string>nickCheck</string>
+							<string>nickPopup</string>
+							<string>nickText</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>ListView</string>
+							<string>NSButton</string>
+							<string>NSButton</string>
+							<string>NSPopUpButton</string>
+							<string>NSTextField</string>
+							<string>NSButton</string>
+							<string>NSPopUpButton</string>
+							<string>NSTextField</string>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="270286843">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">Classes/Dialogs/IgnoreItemSheet.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
 					<string key="className">InviteSheet</string>
 					<string key="superclassName">SheetBase</string>
 					<object class="NSMutableDictionary" key="actions">
@@ -5592,6 +5638,23 @@
 						</object>
 					</object>
 					<reference key="sourceIdentifier" ref="94808595"/>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
+					<object class="NSMutableDictionary" key="actions">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>ignoreItemSheetOnOK:</string>
+							<string>ignoreItemSheetWillClose:</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>IgnoreItemSheet</string>
+							<string>IgnoreItemSheet</string>
+						</object>
+					</object>
+					<reference key="sourceIdentifier" ref="270286843"/>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSObject</string>
@@ -6042,9 +6105,12 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>addChannel:</string>
+							<string>addIgnore:</string>
 							<string>cancel:</string>
 							<string>deleteChannel:</string>
+							<string>deleteIgnore:</string>
 							<string>editChannel:</string>
+							<string>editIgnore:</string>
 							<string>encodingChanged:</string>
 							<string>hostComboChanged:</string>
 							<string>ok:</string>
@@ -6060,6 +6126,9 @@
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="outlets">
@@ -6067,15 +6136,19 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>addChannelButton</string>
+							<string>addIgnoreButton</string>
 							<string>altNicksText</string>
 							<string>autoConnectCheck</string>
 							<string>channelTable</string>
 							<string>delegate</string>
 							<string>deleteChannelButton</string>
+							<string>deleteIgnoreButton</string>
 							<string>editChannelButton</string>
+							<string>editIgnoreButton</string>
 							<string>encodingCombo</string>
 							<string>fallbackEncodingCombo</string>
 							<string>hostCombo</string>
+							<string>ignoreTable</string>
 							<string>invisibleCheck</string>
 							<string>leavingCommentText</string>
 							<string>loginCommandsText</string>
@@ -6092,11 +6165,13 @@
 							<string>proxyUserText</string>
 							<string>realNameText</string>
 							<string>sslCheck</string>
+							<string>tab</string>
 							<string>userInfoText</string>
 							<string>usernameText</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>NSButton</string>
 							<string>NSButton</string>
 							<string>NSTextField</string>
 							<string>NSButton</string>
@@ -6104,9 +6179,12 @@
 							<string>id</string>
 							<string>NSButton</string>
 							<string>NSButton</string>
+							<string>NSButton</string>
+							<string>NSButton</string>
 							<string>NSPopUpButton</string>
 							<string>NSPopUpButton</string>
 							<string>NSComboBox</string>
+							<string>ListView</string>
 							<string>NSButton</string>
 							<string>NSTextField</string>
 							<string>NSTextView</string>
@@ -6123,6 +6201,7 @@
 							<string>NSTextField</string>
 							<string>NSTextField</string>
 							<string>NSButton</string>
+							<string>NSTabView</string>
 							<string>NSTextField</string>
 							<string>NSTextField</string>
 						</object>
