@@ -3609,12 +3609,14 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	isConnected = reconnectEnabled = YES;
 	encoding = config.encoding;
 	
-	[inputNick autorelease];
+	if (!inputNick.length) {
+		[inputNick autorelease];
+		inputNick = [config.nick retain];
+	}
 	[sentNick autorelease];
 	[myNick autorelease];
-	inputNick = [config.nick retain];
-	sentNick = [config.nick retain];
-	myNick = [config.nick retain];
+	sentNick = [inputNick retain];
+	myNick = [inputNick retain];
 	
 	[isupport reset];
 	[myMode clear];
