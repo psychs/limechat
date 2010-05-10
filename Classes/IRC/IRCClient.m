@@ -3620,8 +3620,11 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	[myMode clear];
 	
 	int modeParam = config.invisibleMode ? 8 : 0;
-	NSString* user = config.username ?: config.nick;
-	NSString* realName = config.realName ?: config.nick;
+	NSString* user = config.username;
+	NSString* realName = config.realName;
+	
+	if (!user.length) user = config.nick;
+	if (!realName.length) realName = config.nick;
 	
 	if (config.password.length) [self send:PASS, config.password, nil];
 	[self send:NICK, sentNick, nil];
