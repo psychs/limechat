@@ -7,14 +7,16 @@
     <language>en-us</language>
 
     <item>
-      <title>2.12</title>
-      <link>http://limechat.net/mac/#v2.12</link>
-      <pubDate>Fri, 07 May 2010 19:24:42 +0900</pubDate>
+      <title>2.13</title>
+      <link>http://limechat.net/mac/#v2.13</link>
+      <pubDate>Tue, 11 May 2010 19:27:49 +0900</pubDate>
       <content:encoded><![CDATA[
   			<ul>
-          <li>64bit support.</li>
-          <li>Added ignore feature.</li>
-          <li>Recognize YouTube URLs for inline images.</li>
+          <li>Improved command completion.</li>
+          <li>Use the current nick when reconnected.</li>
+          <li>Use nickname when provided empty login name or real name.</li>
+          <li>Fixed a bug where paste dialog didn't show up after closed on ESC previously.</li>
+          <li>Exclude non ASCII characters from URLs.</li>
         </ul>
       ]]></content:encoded>
     </item>

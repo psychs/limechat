@@ -7,7 +7,7 @@
     <language>en</language>
     
     <item>
-      <title>LimeChat 2.12</title>
+      <title>LimeChat 2.13</title>
       <description><![CDATA[
         <html>
         <body>
@@ -22,19 +22,21 @@
             margin: 0.2em 0;
           }
         </style>
-        <h1>LimeChat 2.12</h1>
+        <h1>LimeChat 2.13</h1>
         <ul>
-          <li>Added ignore feature.</li>
-          <li>Recognize YouTube URLs for inline images.</li>
-          <li>64bit support.</li>
+          <li>Improved command completion.</li>
+          <li>Use the current nick when reconnected.</li>
+          <li>Use nickname when provided empty login name or real name.</li>
+          <li>Fixed a bug where paste dialog didn't show up after closed on ESC previously.</li>
+          <li>Exclude non ASCII characters from URLs.</li>
         </ul>
         </body>
         </html>
       ]]></description>
-      <pubDate>Fri, 07 May 2010 19:24:42 +0900</pubDate>
-      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/LimeChat_2.12.tbz"
-                  sparkle:version="2.12" length="1568959" type="application/octet-stream"
-                  sparkle:dsaSignature="MC0CFDwAR+h2LrFIh2NHcQBA0tp/Ehg4AhUAwqipPH6wrPPHeYr43y7ZZ8Q9LbE="/>
+      <pubDate>Tue, 11 May 2010 19:27:49 +0900</pubDate>
+      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/LimeChat_2.13.tbz"
+                  sparkle:version="2.13" length="1569333" type="application/octet-stream"
+                  sparkle:dsaSignature="MC0CFDuHDu9vl/YzD+E/VNbMHuvR2tcIAhUAi31vkvpg7dJ0M0ih3HqSy41iRVk="/>
     </item>
     
   </channel>

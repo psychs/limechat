@@ -7,14 +7,16 @@
     <language>ja</language>
 
     <item>
-      <title>2.12</title>
-      <link>http://limechat.net/mac/ja.html#v2.12</link>
-      <pubDate>Fri, 07 May 2010 19:24:42 +0900</pubDate>
+      <title>2.13</title>
+      <link>http://limechat.net/mac/ja.html#v2.13</link>
+      <pubDate>Tue, 11 May 2010 19:27:49 +0900</pubDate>
       <content:encoded><![CDATA[
   			<ul>
-          <li>64bit サポート。</li>
-          <li>無視機能を追加した。</li>
-          <li>YouTube とニコニコ動画の URL を認識するようにした。</li>
+          <li>補完できるコマンドを調整した。</li>
+          <li>再接続したときに、現在のニックネームを使うようにした。</li>
+          <li>ログイン名と名前が空のとき、代わりにニックネームを使うようにした。</li>
+          <li>ペーストダイアログを ESC で閉じると、次に開かなくなるバグをfixした。</li>
+          <li>日本語の文字を URL に含めないようにした。</li>
         </ul>
       ]]></content:encoded>
     </item>
