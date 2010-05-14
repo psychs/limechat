@@ -3397,7 +3397,8 @@ static NSDateFormatter* dateTimeFormatter = nil;
 					// set mode if creator
 					NSString* m = c.config.mode;
 					if (m.length) {
-						[self send:MODE, chname, m, nil];
+						NSString* line = [NSString stringWithFormat:@"%@ %@ %@", MODE, chname, m];
+						[self sendLine:line];
 					}
 					c.isModeInit = YES;
 				}
