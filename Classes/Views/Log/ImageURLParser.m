@@ -68,6 +68,12 @@
 			}
 		}
 	}
+	else if ([host hasSuffix:@"imgur.com"]) {
+		if (path.length > 1) {
+			NSString* s = [path substringFromIndex:1];
+				return [NSString stringWithFormat:@"http://i.imgur.com/%@m.jpg", s];
+		}
+	}
 	else if ([host hasSuffix:@"f.hatena.ne.jp"]) {
 		NSArray* ary = [path componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"/"]];
 		if (ary.count >= 3) {
