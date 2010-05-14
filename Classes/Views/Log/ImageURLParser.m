@@ -68,10 +68,18 @@
 			}
 		}
 	}
-	else if ([host hasSuffix:@"imgur.com"]) {
+	else if ([host isEqualToString:@"imgur.com"]) {
+		if ([path hasPrefix:@"/gallery/"]) {
+			NSString* s = [path substringFromIndex:9];
+			if ([s isAlphaNumOnly]) {
+				return [NSString stringWithFormat:@"http://i.imgur.com/%@m.jpg", s];
+			}
+		}
 		if (path.length > 1) {
 			NSString* s = [path substringFromIndex:1];
+			if ([s isAlphaNumOnly]) {
 				return [NSString stringWithFormat:@"http://i.imgur.com/%@m.jpg", s];
+			}
 		}
 	}
 	else if ([host hasSuffix:@"f.hatena.ne.jp"]) {
