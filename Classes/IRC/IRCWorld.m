@@ -1147,6 +1147,11 @@
 		[self save];
 	}
 	
+	int n = [tree rowForItem:selected];
+	if (n >= 0) {
+		[tree selectItemAtIndex:n];
+	}
+	
 	return YES;
 }
 
