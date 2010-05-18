@@ -129,6 +129,15 @@
 			return [NSString stringWithFormat:@"http://img.youtube.com/vi/%@/default.jpg", vid];
 		}
 	}
+	else if ([host hasSuffix:@"twitvid.com"]) {
+		NSString* path = u.path;
+		if (path.length > 1) {
+			NSString* s = [path substringFromIndex:1];
+			if ([s isAlphaNumOnly]) {
+				return [NSString stringWithFormat:@"http://images.twitvid.com/%@.jpg", s];
+			}
+		}
+	}
 	else if ([host hasSuffix:@"nicovideo.jp"] || [host isEqualToString:@"nico.ms"]) {
 		NSString* vid = nil;
 		
