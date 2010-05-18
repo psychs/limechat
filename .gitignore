@@ -2,12 +2,8 @@ build
 Packages
 .DS_Store
 .LSOverride
-*.o
-*.ob
 *.pbxuser
-*.tmproj
 *.mode1*
-*.build
 *~.nib
+*.tmproj
 *.tm_build_errors
-
