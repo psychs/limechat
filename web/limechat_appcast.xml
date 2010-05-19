@@ -7,7 +7,7 @@
     <language>en</language>
     
     <item>
-      <title>LimeChat 2.13</title>
+      <title>LimeChat 2.14</title>
       <description><![CDATA[
         <html>
         <body>
@@ -22,21 +22,20 @@
             margin: 0.2em 0;
           }
         </style>
-        <h1>LimeChat 2.13</h1>
+        <h1>LimeChat 2.14</h1>
         <ul>
-          <li>Improved command completion.</li>
-          <li>Use the current nick when reconnected.</li>
-          <li>Use nickname when provided empty login name or real name.</li>
-          <li>Fixed a bug where paste dialog didn't show up after closed on ESC previously.</li>
-          <li>Exclude non ASCII characters from URLs.</li>
+          <li>Inline image support for imgur.com and twitvid.</li>
+          <li>Always accept drag and drop text on the input box.</li>
+          <li>Rearrange selection when moved tree items.</li>
+          <li>Fixed a bug where setting mode failed when the mode contains spaces.</li>
         </ul>
         </body>
         </html>
       ]]></description>
-      <pubDate>Tue, 11 May 2010 19:27:49 +0900</pubDate>
-      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/LimeChat_2.13.tbz"
-                  sparkle:version="2.13" length="1569333" type="application/octet-stream"
-                  sparkle:dsaSignature="MC0CFDuHDu9vl/YzD+E/VNbMHuvR2tcIAhUAi31vkvpg7dJ0M0ih3HqSy41iRVk="/>
+      <pubDate>Wed, 19 May 2010 20:05:33 +0900</pubDate>
+      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/LimeChat_2.14.tbz"
+                  sparkle:version="2.14" length="1570598" type="application/octet-stream"
+                  sparkle:dsaSignature="MCsCFEAjTp0glByKXp1euxudd0ukZS3BAhM1u3PW1MspvNGHotmZWjPxqR0n"/>
     </item>
     
   </channel>

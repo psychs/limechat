@@ -7,16 +7,15 @@
     <language>en-us</language>
 
     <item>
-      <title>2.13</title>
-      <link>http://limechat.net/mac/#v2.13</link>
-      <pubDate>Tue, 11 May 2010 19:27:49 +0900</pubDate>
+      <title>2.14</title>
+      <link>http://limechat.net/mac/#v2.14</link>
+      <pubDate>Wed, 19 May 2010 20:05:33 +0900</pubDate>
       <content:encoded><![CDATA[
   			<ul>
-          <li>Improved command completion.</li>
-          <li>Use the current nick when reconnected.</li>
-          <li>Use nickname when provided empty login name or real name.</li>
-          <li>Fixed a bug where paste dialog didn't show up after closed on ESC previously.</li>
-          <li>Exclude non ASCII characters from URLs.</li>
+          <li>Inline image support for imgur.com and twitvid.</li>
+          <li>Always accept drag and drop text on the input box.</li>
+          <li>Rearrange selection when moved tree items.</li>
+          <li>Fixed a bug where setting mode failed when the mode contains spaces.</li>
         </ul>
       ]]></content:encoded>
     </item>

@@ -7,16 +7,15 @@
     <language>ja</language>
 
     <item>
-      <title>2.13</title>
-      <link>http://limechat.net/mac/ja.html#v2.13</link>
-      <pubDate>Tue, 11 May 2010 19:27:49 +0900</pubDate>
+      <title>2.14</title>
+      <link>http://limechat.net/mac/ja.html#v2.14</link>
+      <pubDate>Wed, 19 May 2010 20:05:33 +0900</pubDate>
       <content:encoded><![CDATA[
   			<ul>
-          <li>補完できるコマンドを調整した。</li>
-          <li>再接続したときに、現在のニックネームを使うようにした。</li>
-          <li>ログイン名と名前が空のとき、代わりにニックネームを使うようにした。</li>
-          <li>ペーストダイアログを ESC で閉じると、次に開かなくなるバグをfixした。</li>
-          <li>日本語の文字を URL に含めないようにした。</li>
+          <li>imgur.com と twitvid のインライン画像表示をサポートした。</li>
+          <li>入力用のテキストボックスに、いつでもテキストをドラッグ&amp;ドロップで追記できるようにした。</li>
+          <li>サーバツリーの項目を移動したときに、選択位置を認識しなおすようにした。</li>
+          <li>Initial mode にスペースが含まれていた場合、うまく mode が設定されないバグをfixした。</li>
         </ul>
       ]]></content:encoded>
     </item>
