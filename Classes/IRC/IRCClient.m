@@ -3659,8 +3659,19 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	
 	NSString* s = [[[NSString alloc] initWithData:data encoding:enc] autorelease];
 	if (!s) {
-		s = [[[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding] autorelease];
-		if (!s) return;
+		if (encoding == NSISO2022JPStringEncoding) {
+			// avoid incomplete sequence
+			for (int i=data.length-1; i>0; --i) {
+				NSData* d = [data subdataWithRange:NSMakeRange(0, i)];
+				s = [[[NSString alloc] initWithData:d encoding:enc] autorelease];
+				if (s) break;
+			}
+		}
+		
+		if (!s) {
+			s = [[[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding] autorelease];
+			if (!s) return;
+		}
 	}
 	
 	IRCMessage* m = [[[IRCMessage alloc] initWithLine:s] autorelease];
