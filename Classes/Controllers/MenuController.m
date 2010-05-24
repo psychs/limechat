@@ -662,6 +662,7 @@
 	IRCClient* u = world.selectedClient;
 	if (!u) return;
 	[u quit];
+	[u cancelReconnect];
 }
 
 - (void)onCancelReconnecting:(id)sender
