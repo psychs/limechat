@@ -3662,7 +3662,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		if (encoding == NSISO2022JPStringEncoding) {
 			// avoid incomplete sequence
 			NSMutableData* d = [[data mutableCopy] autorelease];
-			while (d.length > 0) {
+			while (d.length > 1) {
 				[d setLength:d.length - 1];
 				s = [[[NSString alloc] initWithData:d encoding:enc] autorelease];
 				if (s) break;
