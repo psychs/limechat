@@ -2971,13 +2971,15 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	
 	NSString* text = [NSString stringWithFormat:@"%@ has invited you to %@", nick, chname];
 	[self printBoth:self type:LINE_TYPE_INVITE text:text];
-	IRCChannel* c = [self findChannel: chname];
-	if ( !c ) {
-		IRCChannelConfig* seed = [[IRCChannelConfig new] autorelease];
-		seed.name = chname;
-		c = [world createChannel:seed client:self reload:YES adjust:YES];
-		[world save];
-		[self joinChannel: c];
+	if ( [Preferences autoJoinOnInvited] ) {
+		IRCChannel* c = [self findChannel: chname];
+		if ( !c ) {
+			IRCChannelConfig* seed = [[IRCChannelConfig new] autorelease];
+			seed.name = chname;
+			c = [world createChannel:seed client:self reload:YES adjust:YES];
+			[world save];
+			[self joinChannel: c];
+		}
 	}
 
 	[self notifyEvent:GROWL_INVITED target:nil nick:nick text:chname];

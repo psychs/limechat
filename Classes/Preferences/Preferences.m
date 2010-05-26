@@ -98,6 +98,13 @@
 	return [ud boolForKey:@"Preferences.General.stop_growl_on_active"];
 }
 
++ (BOOL)autoJoinOnInvited
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	return [ud boolForKey:@"Preferences.General.auto_join_on_invited"];
+}
+
+
 + (TabActionType)tabAction
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
