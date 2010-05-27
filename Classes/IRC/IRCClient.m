@@ -2969,6 +2969,10 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	NSString* nick = m.sender.nick;
 	NSString* chname = [m paramAt:1];
 	
+	if ([self checkIgnore:nil nick:nick channel:chname]) {
+		return;
+	}
+	
 	NSString* text = [NSString stringWithFormat:@"%@ has invited you to %@", nick, chname];
 	[self printBoth:self type:LINE_TYPE_INVITE text:text];
 	
