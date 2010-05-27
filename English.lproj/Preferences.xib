@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="11"/>
+			<integer value="7"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -922,7 +922,7 @@
 															<object class="NSTableView" id="687623475">
 																<reference key="NSNextResponder" ref="108631011"/>
 																<int key="NSvFlags">256</int>
-																<string key="NSFrameSize">{403, 241}</string>
+																<string key="NSFrameSize">{403, 209}</string>
 																<reference key="NSSuperview" ref="108631011"/>
 																<bool key="NSEnabled">YES</bool>
 																<object class="NSTableHeaderView" key="NSHeaderView" id="822421650">
@@ -1103,7 +1103,7 @@
 																<int key="NSTableViewDraggingDestinationStyle">0</int>
 															</object>
 														</object>
-														<string key="NSFrame">{{1, 17}, {403, 241}}</string>
+														<string key="NSFrame">{{1, 17}, {403, 209}}</string>
 														<reference key="NSSuperview" ref="945477186"/>
 														<reference key="NSNextKeyView" ref="687623475"/>
 														<reference key="NSDocView" ref="687623475"/>
@@ -1145,7 +1145,7 @@
 													</object>
 													<reference ref="704437210"/>
 												</object>
-												<string key="NSFrame">{{17, 17}, {405, 259}}</string>
+												<string key="NSFrame">{{17, 17}, {405, 227}}</string>
 												<reference key="NSSuperview" ref="528046259"/>
 												<reference key="NSNextKeyView" ref="108631011"/>
 												<int key="NSsFlags">562</int>
@@ -1159,7 +1159,7 @@
 											<object class="NSButton" id="693983636">
 												<reference key="NSNextResponder" ref="528046259"/>
 												<int key="NSvFlags">268</int>
-												<string key="NSFrame">{{15, 291}, {406, 18}}</string>
+												<string key="NSFrame">{{15, 261}, {416, 18}}</string>
 												<reference key="NSSuperview" ref="528046259"/>
 												<bool key="NSEnabled">YES</bool>
 												<object class="NSButtonCell" key="NSCell" id="978918802">
@@ -1181,7 +1181,7 @@
 											<object class="NSButton" id="976558301">
 												<reference key="NSNextResponder" ref="528046259"/>
 												<int key="NSvFlags">256</int>
-												<string key="NSFrame">{{15, 321}, {326, 18}}</string>
+												<string key="NSFrame">{{15, 291}, {409, 18}}</string>
 												<reference key="NSSuperview" ref="528046259"/>
 												<bool key="NSEnabled">YES</bool>
 												<object class="NSButtonCell" key="NSCell" id="88996143">
@@ -1190,6 +1190,28 @@
 													<string key="NSContents">Rejoin automatically to get op back in a channel</string>
 													<reference key="NSSupport" ref="325354301"/>
 													<reference key="NSControlView" ref="976558301"/>
+													<int key="NSButtonFlags">1211912703</int>
+													<int key="NSButtonFlags2">2</int>
+													<reference key="NSNormalImage" ref="1024925729"/>
+													<reference key="NSAlternateImage" ref="730435101"/>
+													<string key="NSAlternateContents"/>
+													<string key="NSKeyEquivalent"/>
+													<int key="NSPeriodicDelay">200</int>
+													<int key="NSPeriodicInterval">25</int>
+												</object>
+											</object>
+											<object class="NSButton" id="623140117">
+												<reference key="NSNextResponder" ref="528046259"/>
+												<int key="NSvFlags">256</int>
+												<string key="NSFrame">{{15, 321}, {409, 18}}</string>
+												<reference key="NSSuperview" ref="528046259"/>
+												<bool key="NSEnabled">YES</bool>
+												<object class="NSButtonCell" key="NSCell" id="714414274">
+													<int key="NSCellFlags">67239424</int>
+													<int key="NSCellFlags2">0</int>
+													<string key="NSContents">Join a channel automatically when invited</string>
+													<reference key="NSSupport" ref="325354301"/>
+													<reference key="NSControlView" ref="623140117"/>
 													<int key="NSButtonFlags">1211912703</int>
 													<int key="NSButtonFlags2">2</int>
 													<reference key="NSNormalImage" ref="1024925729"/>
@@ -2165,6 +2187,10 @@
 				<string key="NSMaxSize">{1.79769e+308, 1.79769e+308}</string>
 			</object>
 			<object class="NSUserDefaultsController" id="1032655829">
+				<object class="NSMutableArray" key="NSDeclaredKeys">
+					<bool key="EncodedWithXMLCoder">YES</bool>
+					<string>Preferences.General.auto_join_on_invited</string>
+				</object>
 				<bool key="NSSharedInstance">YES</bool>
 			</object>
 			<object class="NSArrayController" id="737951276">
@@ -3307,6 +3333,22 @@
 					</object>
 					<int key="connectionID">4423</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: values.Preferences.General.auto_join_on_invited</string>
+						<reference key="source" ref="623140117"/>
+						<reference key="destination" ref="1032655829"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="623140117"/>
+							<reference key="NSDestination" ref="1032655829"/>
+							<string key="NSLabel">value: values.Preferences.General.auto_join_on_invited</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">values.Preferences.General.auto_join_on_invited</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">4427</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -3785,6 +3827,7 @@
 							<reference ref="976558301"/>
 							<reference ref="945477186"/>
 							<reference ref="693983636"/>
+							<reference ref="623140117"/>
 						</object>
 						<reference key="parent" ref="937542876"/>
 					</object>
@@ -4646,6 +4689,20 @@
 						<reference key="object" ref="406024116"/>
 						<reference key="parent" ref="500692336"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">4424</int>
+						<reference key="object" ref="623140117"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="714414274"/>
+						</object>
+						<reference key="parent" ref="528046259"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">4425</int>
+						<reference key="object" ref="714414274"/>
+						<reference key="parent" ref="623140117"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -4875,6 +4932,9 @@
 					<string>4419.ImportedFromIB2</string>
 					<string>4420.IBEditorWindowLastContentRect</string>
 					<string>4420.IBPluginDependency</string>
+					<string>4424.IBPluginDependency</string>
+					<string>4424.ImportedFromIB2</string>
+					<string>4425.IBPluginDependency</string>
 					<string>45.IBPluginDependency</string>
 					<string>45.ImportedFromIB2</string>
 					<string>46.IBPluginDependency</string>
@@ -5175,6 +5235,9 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
@@ -5261,7 +5324,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">4423</int>
+			<int key="maxID">4427</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
