@@ -78,6 +78,8 @@
 
 - (void)connection:(NSURLConnection*)sender didFailWithError:(NSError*)error
 {
+	if (conn != sender) return;
+	
 	[self cancel];
 	
 	if ([delegate respondsToSelector:@selector(gistClient:didFailWithError:statusCode:)]) {
@@ -87,6 +89,8 @@
 
 - (NSURLRequest *)connection:(NSURLConnection *)sender willSendRequest:(NSURLRequest *)req redirectResponse:(NSHTTPURLResponse *)res
 {
+	if (conn != sender) return nil;
+	
 	if (res && res.statusCode == 302) {
 		if ([delegate respondsToSelector:@selector(gistClient:didReceiveResponse:)]) {
 			[delegate gistClient:self didReceiveResponse:req.URL.absoluteString];
