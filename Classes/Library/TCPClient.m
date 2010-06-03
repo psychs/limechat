@@ -4,6 +4,10 @@
 #import "TCPClient.h"
 
 
+#define LF	0xa
+#define CR	0xd
+
+
 @interface TCPClient (Private)
 - (BOOL)checkTag:(AsyncSocket*)sock;
 - (void)waitRead;
@@ -108,13 +112,13 @@
 	if (!len) return nil;
 	
 	const char* bytes = [buffer bytes];
-	char* p = memchr(bytes, 0xa, len);
+	char* p = memchr(bytes, LF, len);
 	if (!p) return nil;
 	int n = p - bytes;
 	
 	if (n > 0) {
 		char prev = *(p - 1);
-		if (prev == 0xd) {
+		if (prev == CR) {
 			--n;
 		}
 	}
