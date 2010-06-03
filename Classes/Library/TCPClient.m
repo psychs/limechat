@@ -44,7 +44,7 @@
 	
 	conn = [socket retain];
 	conn.delegate = self;
-	[conn setUserData:[NSNumber numberWithInt:tag]];
+	[conn setUserData:tag];
 	active = connecting = YES;
 	sendQueueSize = 0;
 	
@@ -75,8 +75,8 @@
 	[buffer setLength:0];
 	++tag;
 	
-	conn = [[AsyncSocket alloc] initWithDelegate:self userData:[NSNumber numberWithInt:tag]];
-	[conn connectToHost:host onPort:[NSNumber numberWithInt:port] error:NULL];
+	conn = [[AsyncSocket alloc] initWithDelegate:self userData:tag];
+	[conn connectToHost:host onPort:port error:NULL];
 	active = connecting = YES;
 	sendQueueSize = 0;
 }
@@ -150,7 +150,7 @@
 	return [conn isConnected];
 }
 
-- (void)onSocketWillConnect:(AsyncSocket*)sender
+- (BOOL)onSocketWillConnect:(AsyncSocket*)sender
 {
 	if (useSystemSocks) {
 		[conn useSystemSocksProxy];
@@ -161,9 +161,10 @@
 	else if (useSSL) {
 		[conn useSSL];
 	}
+	return YES;
 }
 
-- (void)onSocket:(AsyncSocket*)sender didConnectToHost:(NSString*)aHost port:(NSNumber*)aPort
+- (void)onSocket:(AsyncSocket *)sender didConnectToHost:(NSString *)aHost port:(UInt16)aPort
 {
 	if (![self checkTag:sender]) return;
 	[self waitRead];
@@ -205,7 +206,7 @@
 	}
 }
 
-- (void)onSocket:(AsyncSocket*)sender didReadData:(NSData*)data withTag:(NSNumber*)aTag
+- (void)onSocket:(AsyncSocket *)sender didReadData:(NSData *)data withTag:(long)aTag
 {
 	if (![self checkTag:sender]) return;
 	
@@ -218,7 +219,7 @@
 	[self waitRead];
 }
 
-- (void)onSocket:(AsyncSocket*)sender didWriteDataWithTag:(NSNumber*)aTag
+- (void)onSocket:(AsyncSocket*)sender didWriteDataWithTag:(long)aTag
 {
 	if (![self checkTag:sender]) return;
 	
@@ -231,7 +232,7 @@
 
 - (BOOL)checkTag:(AsyncSocket*)sock
 {
-	return tag == [[sock userData] intValue];
+	return tag == [sock userData];
 }
 
 - (void)waitRead

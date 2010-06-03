@@ -38,7 +38,7 @@
 	}
 	
 	conn = [[AsyncSocket alloc] initWithDelegate:self];
-	isActive = [conn acceptOnPort:[NSNumber numberWithInt:port] error:NULL];
+	isActive = [conn acceptOnPort:port error:NULL];
 	if (!isActive) {
 		[self close];
 	}
