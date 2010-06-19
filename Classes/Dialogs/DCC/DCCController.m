@@ -661,6 +661,7 @@
 		DCCSender* e = [senders objectAtIndex:row];
 		double speed = e.speed;
 		
+		c.sendingItem = YES;
 		c.stringValue = e.fileName;
 		c.peerNick = e.peerNick;
 		c.size = e.size;
@@ -678,6 +679,7 @@
 		DCCReceiver* e = [receivers objectAtIndex:row];
 		double speed = e.speed;
 		
+		c.sendingItem = NO;
 		c.stringValue = (e.status == DCC_COMPLETE) ? [e.downloadFileName lastPathComponent] : e.fileName;
 		c.peerNick = e.peerNick;
 		c.size = e.size;
