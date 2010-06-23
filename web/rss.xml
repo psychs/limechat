@@ -7,15 +7,15 @@
     <language>en-us</language>
 
     <item>
-      <title>2.14</title>
-      <link>http://limechat.net/mac/#v2.14</link>
-      <pubDate>Wed, 19 May 2010 20:05:33 +0900</pubDate>
+      <title>2.15</title>
+      <link>http://limechat.net/mac/#v2.15</link>
+      <pubDate>Wed, 23 Jun 2010 19:46:01 +0900</pubDate>
       <content:encoded><![CDATA[
   			<ul>
-          <li>Inline image support for imgur.com and twitvid.</li>
-          <li>Always accept drag and drop text on the input box.</li>
-          <li>Rearrange selection when moved tree items.</li>
-          <li>Fixed a bug where setting mode failed when the mode contains spaces.</li>
+          <li>Join a channel automatically when invited option.</li>
+          <li>Handle incomplete ISO-2022-JP sequences.</li>
+          <li>Cancel reconnection when disconnect from menu.</li>
+          <li>Fixed minor bugs.</li>
         </ul>
       ]]></content:encoded>
     </item>

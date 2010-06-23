@@ -7,7 +7,7 @@
     <language>en</language>
     
     <item>
-      <title>LimeChat 2.14</title>
+      <title>LimeChat 2.15</title>
       <description><![CDATA[
         <html>
         <body>
@@ -22,20 +22,20 @@
             margin: 0.2em 0;
           }
         </style>
-        <h1>LimeChat 2.14</h1>
+        <h1>LimeChat 2.15</h1>
         <ul>
-          <li>Inline image support for imgur.com and twitvid.</li>
-          <li>Always accept drag and drop text on the input box.</li>
-          <li>Rearrange selection when moved tree items.</li>
-          <li>Fixed a bug where setting mode failed when the mode contains spaces.</li>
+          <li>Join a channel automatically when invited option.</li>
+          <li>Handle incomplete ISO-2022-JP sequences.</li>
+          <li>Cancel reconnection when disconnect from menu.</li>
+          <li>Fixed minor bugs.</li>
         </ul>
         </body>
         </html>
       ]]></description>
-      <pubDate>Wed, 19 May 2010 20:05:33 +0900</pubDate>
-      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/LimeChat_2.14.tbz"
-                  sparkle:version="2.14" length="1570598" type="application/octet-stream"
-                  sparkle:dsaSignature="MCsCFEAjTp0glByKXp1euxudd0ukZS3BAhM1u3PW1MspvNGHotmZWjPxqR0n"/>
+      <pubDate>Wed, 23 Jun 2010 19:46:01 +0900</pubDate>
+      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/LimeChat_2.15.tbz"
+                  sparkle:version="2.15" length="1586227" type="application/octet-stream"
+                  sparkle:dsaSignature="MC0CFDCEQhBiCCbw5sDeVUCG9AUZ8RD3AhUAoq3+aufu0QEiLUnAfkb9HO5q7Ow="/>
     </item>
     
   </channel>

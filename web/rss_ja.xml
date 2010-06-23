@@ -7,15 +7,15 @@
     <language>ja</language>
 
     <item>
-      <title>2.14</title>
-      <link>http://limechat.net/mac/ja.html#v2.14</link>
-      <pubDate>Wed, 19 May 2010 20:05:33 +0900</pubDate>
+      <title>2.15</title>
+      <link>http://limechat.net/mac/ja.html#v2.15</link>
+      <pubDate>Wed, 23 Jun 2010 19:46:01 +0900</pubDate>
       <content:encoded><![CDATA[
   			<ul>
-          <li>imgur.com と twitvid のインライン画像表示をサポートした。</li>
-          <li>入力用のテキストボックスに、いつでもテキストをドラッグ&amp;ドロップで追記できるようにした。</li>
-          <li>サーバツリーの項目を移動したときに、選択位置を認識しなおすようにした。</li>
-          <li>Initial mode にスペースが含まれていた場合、うまく mode が設定されないバグをfixした。</li>
+          <li>招待されたら自動でjoinするオプションを追加した。</li>
+          <li>ISO-2022-JP のシーケンスが途中で切れている場合に対応した。</li>
+          <li>メニューから切断すると、どんなときでも再接続しないようにした。</li>
+          <li>細かいバグをfixした。</li>
         </ul>
       ]]></content:encoded>
     </item>
