@@ -439,7 +439,7 @@
 - (void)updateClientTitle:(IRCClient*)client
 {
 	if (!client || !selected) return;
-	if (selected == client) {
+	if ([selected client] == client) {
 		[self updateTitle];
 	}
 }
