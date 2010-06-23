@@ -9,6 +9,10 @@
 
 #define DOUBLE_CLICK_RADIUS	3
 
+@interface NSEvent (SnowLeopardCompatibility)
++ (NSTimeInterval)doubleClickInterval;
+@end
+
 
 @implementation LogScriptEventSink
 
@@ -76,12 +80,18 @@
 	
 	BOOL res = NO;
 	
-	CFAbsoluteTime now = CFAbsoluteTimeGetCurrent();
-	float doubleClickThreshold = GetDblTime() / 60.0;
+	CFAbsoluteTime doubleClickThreshold = 0;
+	if ([NSEvent respondsToSelector:@selector(doubleClickInterval)]) {
+		doubleClickThreshold = [NSEvent doubleClickInterval];
+	}
+	else {
+		doubleClickThreshold = GetDblTime() / 60.0;
+	}
 	if (doubleClickThreshold == 0) {
 		doubleClickThreshold = 0.5;
 	}
 	
+	CFAbsoluteTime now = CFAbsoluteTimeGetCurrent();
 	if (x-d <= cx && cx <= x+d && y-d <= cy && cy <= y+d) {
 		if (now < lastClickTime + doubleClickThreshold) {
 			res = YES;
