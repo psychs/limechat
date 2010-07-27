@@ -1,5 +1,5 @@
 // Created by Allan Odgaard.
-// You can redistribute it and/or modify it under the new BSD license.
+// You can redistribute it and/or modify it under the terms of the GPL version 2 (see the file GPL.txt).
 
 #import "WebViewAutoScroll.h"
 
