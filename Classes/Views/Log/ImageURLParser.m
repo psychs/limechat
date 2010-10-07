@@ -34,6 +34,11 @@
 			}
 		}
 	}
+	else if ([host hasSuffix:@"plixi.com"]) {
+		if (path.length > 1) {
+			return [NSString stringWithFormat:@"http://api.plixi.com/api/TPAPI.svc/imagefromurl?size=medium&url=%@", [url encodeURIComponent]];
+		}
+	}
 	else if ([host hasSuffix:@"tweetphoto.com"]) {
 		if (path.length > 1) {
 			return [NSString stringWithFormat:@"http://TweetPhotoAPI.com/api/TPAPI.svc/imagefromurl?size=medium&url=%@", [url encodeURIComponent]];
