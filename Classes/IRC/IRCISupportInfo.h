@@ -9,6 +9,7 @@
 
 @interface IRCISupportInfo : NSObject
 {
+	NSMutableDictionary *prefixesMap;
 	unsigned char modes[MODES_SIZE];
 	int nickLen;
 	int modesCount;
@@ -16,10 +17,12 @@
 
 @property (nonatomic, readonly) int nickLen;
 @property (nonatomic, readonly) int modesCount;
+@property (nonatomic, readonly) NSMutableDictionary *prefixesMap;
 
 - (void)reset;
 - (void)update:(NSString*)s;
 - (NSArray*)parseMode:(NSString*)s;
+- (NSString*)modeForPrefix:(NSString*)p;
 
 @end
 

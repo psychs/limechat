@@ -23,6 +23,8 @@
 
 @synthesize nickLen;
 @synthesize modesCount;
+@synthesize prefixesMap;
+
 
 - (id)init
 {
@@ -61,6 +63,16 @@
 	[self setValue:4 forMode:'a'];
 	[self setValue:4 forMode:'q'];
 	[self setValue:4 forMode:'r'];
+	
+	prefixesMap = [[NSMutableDictionary alloc] initWithCapacity:6];
+	// The problem is that with a dictionary I cannot make the following rule:
+	// if q and not o then still o
+	[prefixesMap setObject:@"~" forKey:@"q"];
+	[prefixesMap setObject:@"!" forKey:@"o"];
+	[prefixesMap setObject:@"&" forKey:@"o"];
+	[prefixesMap setObject:@"@" forKey:@"o"];
+	[prefixesMap setObject:@"%" forKey:@"h"];
+	[prefixesMap setObject:@"+" forKey:@"v"];
 }
 
 - (void)update:(NSString*)str
@@ -172,12 +184,16 @@
 	if ([str hasPrefix:@"("]) {
 		NSRange r = [str rangeOfString:@")"];
 		if (r.location != NSNotFound) {
-			str = [str substringWithRange:NSMakeRange(1, r.location - 1)];
-			
-			int len = str.length;
+			NSString *ms = [str substringWithRange:NSMakeRange(1, r.location - 1)];
+			int len = ms.length;
+			// XXX Can easily go out of range and then bad things may happen
+			NSString *ps = [str substringWithRange:NSMakeRange(r.location+1, len)];
 			for (int i=0; i<len; i++) {
-				UniChar c = [str characterAtIndex:i];
-				[self setValue:OP_VALUE forMode:c];
+				UniChar m = [ms characterAtIndex:i];
+				[self setValue:OP_VALUE forMode:m];
+				UniChar p = [ps characterAtIndex:i];
+				[prefixesMap setObject:[NSString stringWithFormat:@"%C",m]
+							 forKey:[NSString stringWithFormat:@"%C",p]];
 			}
 		}
 	}
@@ -222,6 +238,12 @@
 	}
 	return 0;
 }
+
+- (NSString*)modeForPrefix:(NSString*)p
+{
+	return [prefixesMap objectForKey:p];
+}
+
 
 @end
 
