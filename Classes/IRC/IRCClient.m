@@ -3373,19 +3373,21 @@ static NSDateFormatter* dateTimeFormatter = nil;
 				for (NSString* nick in ary) {
 					if (!nick.length) continue;
 					UniChar u = [nick characterAtIndex:0];
-					char op = ' ';
-					if (u == '@' || u == '~' || u == '&' || u == '%' || u == '+') {
-						op = u;
-						nick = [nick substringFromIndex:1];
-					}
-					
+					NSString *str_u = [NSString stringWithFormat:@"%C", u];
+					UniChar mode = [isupport userModeByPrefix:str_u];
+
 					IRCUser* m = [[IRCUser new] autorelease];
+
+					if (mode) {
+						nick = [nick substringFromIndex:1];
+						m.q = mode == 'q';
+						m.a = mode == 'a';
+						m.o = mode == 'o';
+						m.h = mode == 'h';
+						m.v = mode == 'v';
+					}
+
 					m.nick = nick;
-					m.q = op == '~';
-					m.a = op == '&';
-					m.o = op == '@' || m.q;
-					m.h = op == '%';
-					m.v = op == '+';
 					m.isMyself = [nick isEqualNoCase:myNick];
 					[c addMember:m reload:NO];
 					if ([myNick isEqualNoCase:nick]) {

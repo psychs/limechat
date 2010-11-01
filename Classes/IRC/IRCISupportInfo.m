@@ -67,6 +67,7 @@
 	prefixesMap = [[NSMutableDictionary alloc] initWithCapacity:6];
 	// The problem is that with a dictionary I cannot make the following rule:
 	// if q and not o then still o
+	// NOTE what if I don't need to?
 	[prefixesMap setObject:@"~" forKey:@"q"];
 	[prefixesMap setObject:@"!" forKey:@"o"];
 	[prefixesMap setObject:@"&" forKey:@"o"];
@@ -192,8 +193,8 @@
 				UniChar m = [ms characterAtIndex:i];
 				[self setValue:OP_VALUE forMode:m];
 				UniChar p = [ps characterAtIndex:i];
-				[prefixesMap setObject:[NSString stringWithFormat:@"%C",m]
-							 forKey:[NSString stringWithFormat:@"%C",p]];
+				[prefixesMap setObject:[NSString stringWithFormat:@"%C", m]
+						     forKey:[NSString stringWithFormat:@"%C", p]];
 			}
 		}
 	}
@@ -239,9 +240,12 @@
 	return 0;
 }
 
-- (NSString*)modeForPrefix:(NSString*)p
+- (UniChar)userModeByPrefix:(NSString*)p
 {
-	return [prefixesMap objectForKey:p];
+	NSString *obj = [prefixesMap objectForKey:p];
+	if ((obj != nil) && obj.length)
+		return (UniChar)[obj characterAtIndex:0];
+	return nil;
 }
 
 

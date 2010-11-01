@@ -22,7 +22,7 @@
 - (void)reset;
 - (void)update:(NSString*)s;
 - (NSArray*)parseMode:(NSString*)s;
-- (NSString*)modeForPrefix:(NSString*)p;
+- (UniChar)userModeByPrefix:(NSString*)p;
 
 @end
 
