@@ -37,6 +37,7 @@
 
 - (void)dealloc
 {
+	[modesMap release];
 	[super dealloc];
 }
 
@@ -65,22 +66,21 @@
 	[self setValue:4 forMode:'q'];
 	[self setValue:4 forMode:'r'];
 	
-	prefixesMap = [[NSMutableDictionary alloc] initWithCapacity:6];
+	prefixesMap = [[NSMutableDictionary alloc] initWithCapacity:4];
 	// The problem is that with a dictionary I cannot make the following rule:
 	// if q and not o then still o
 	// NOTE what if I don't need to?
-	[prefixesMap setObject:@"~" forKey:@"q"];
-	[prefixesMap setObject:@"!" forKey:@"o"];
-	[prefixesMap setObject:@"&" forKey:@"o"];
-	[prefixesMap setObject:@"@" forKey:@"o"];
-	[prefixesMap setObject:@"%" forKey:@"h"];
-	[prefixesMap setObject:@"+" forKey:@"v"];
+	[prefixesMap setObject:@"q" forKey:@"~"];
+	[prefixesMap setObject:@"o" forKey:@"@"];
+	//[prefixesMap setObject:@"o" forKey:@"&"];
+	[prefixesMap setObject:@"h" forKey:@"%"];
+	[prefixesMap setObject:@"v" forKey:@"+"];
 
 	modesMap = [[NSMutableDictionary alloc] initWithCapacity:4];
-	[modesMap setObject:@"q" forKey:@"~"];
-	[modesMap setObject:@"o" forKey:@"@"];
-	[modesMap setObject:@"h" forKey:@"%"];
-	[modesMap setObject:@"v" forKey:@"+"];
+	[modesMap setObject:@"~" forKey:@"q"];
+	[modesMap setObject:@"@" forKey:@"o"];
+	[modesMap setObject:@"%" forKey:@"h"];
+	[modesMap setObject:@"+" forKey:@"v"];
 }
 
 - (void)update:(NSString*)str
@@ -200,10 +200,15 @@
 				UniChar m = [ms characterAtIndex:i];
 				[self setValue:OP_VALUE forMode:m];
 				UniChar p = [ps characterAtIndex:i];
-				[prefixesMap setObject:[NSString stringWithFormat:@"%C", m]
-								forKey:[NSString stringWithFormat:@"%C", p]];
-				[modesMap setObject:[NSString stringWithFormat:@"%C", p]
-							 forKey:[NSString stringWithFormat:@"%C", m]];
+//				[prefixesMap setObject:[NSString stringWithFormat:@"%c", m]
+//								forKey:[NSString stringWithFormat:@"%c", p]];
+//				[modesMap setObject:[NSString stringWithFormat:@"%c", p]
+//							 forKey:[NSString stringWithFormat:@"%c", m]];
+				NSString *str_m = [NSString stringWithCharacters:&m length:1];
+				NSString *str_p = [NSString stringWithCharacters:&p length:1];
+				[prefixesMap setObject:str_m forKey:str_p];
+				[modesMap setObject:str_p forKey:str_m];
+				NSLog(@"%@", [NSString stringWithFormat:@"[parsePrefix] mode=%@, prefix=%@", str_m, str_p]);
 			}
 		}
 	}
@@ -251,6 +256,13 @@
 
 - (UniChar)userModeByPrefix:(NSString*)p
 {
+	NSString *key;
+	for (key in prefixesMap) {
+		NSLog(@"%@", [NSString stringWithFormat:@"userModeByPrefix: prefixesMap[%@]=%@", key, [prefixesMap objectForKey:key]]);
+	}
+	for (key in modesMap) {
+		NSLog(@"%@", [NSString stringWithFormat:@"userModeByPrefix: modesMap[%@]=%@", key, [modesMap objectForKey:key]]);
+	}
 	NSString *obj = [prefixesMap objectForKey:p];
 	if ((obj != nil) && obj.length)
 		return (UniChar)[obj characterAtIndex:0];

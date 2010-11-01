@@ -35,16 +35,18 @@
 		colorNumber = -1;
 		lastFadedWeights = CFAbsoluteTimeGetCurrent();
 	}
+	modesMap = nil;
+	NSLog([NSString stringWithFormat:@"[%p] alloc modesMap: %p", self, modesMap]);
 	return self;
 }
 
 - (void)dealloc
 {
+	NSLog([NSString stringWithFormat:@"[%p] dealloc"]);
 	[nick release];
 	[canonicalNick release];
 	[username release];
 	[address release];
-	[modesMap release];
 	[super dealloc];
 }
 
@@ -62,12 +64,14 @@
 - (void)setModesMap:(NSDictionary *)map
 {
 	modesMap = [[NSDictionary alloc] initWithDictionary:map copyItems:YES];
+	NSLog([NSString stringWithFormat:@"%p setModesMap: %p", self, modesMap]);
 }
 
 - (char)mark
 {
 	if (modesMap == nil)
-		modesMap = [NSDictionary dictionary];
+		return ' ';
+	NSLog([NSString stringWithFormat:@"[%p] mark modesMap: %p", self, modesMap]);
 	NSString *key = nil;
 	if (q) key = @"q";
 	else if (a) key = @"a";

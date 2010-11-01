@@ -42,7 +42,7 @@
 @property (nonatomic, readonly) CGFloat weight;
 @property (nonatomic, readonly) CGFloat incomingWeight;
 @property (nonatomic, readonly) CGFloat outgoingWeight;
-@property (nonatomic, readonly) NSDictionary* modesMap;
+@property (nonatomic, readonly, retain) NSDictionary* modesMap;
 
 - (BOOL)hasMode:(char)mode;
 

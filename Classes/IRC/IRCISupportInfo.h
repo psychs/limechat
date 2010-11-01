@@ -18,8 +18,8 @@
 
 @property (nonatomic, readonly) int nickLen;
 @property (nonatomic, readonly) int modesCount;
-@property (nonatomic, readonly) NSMutableDictionary *prefixesMap;
-@property (nonatomic, assign) NSMutableDictionary *modesMap;
+@property (nonatomic, readonly, retain) NSMutableDictionary *prefixesMap;
+@property (nonatomic, readonly, retain) NSMutableDictionary *modesMap;
 
 - (void)reset;
 - (void)update:(NSString*)s;
