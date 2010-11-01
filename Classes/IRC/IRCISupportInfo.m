@@ -66,13 +66,13 @@
 	[self setValue:4 forMode:'q'];
 	[self setValue:4 forMode:'r'];
 	
-	prefixesMap = [[NSMutableDictionary alloc] initWithCapacity:4];
+	prefixesMap = [[NSMutableDictionary alloc] initWithCapacity:5];
 	// The problem is that with a dictionary I cannot make the following rule:
 	// if q and not o then still o
 	// NOTE what if I don't need to?
 	[prefixesMap setObject:@"q" forKey:@"~"];
 	[prefixesMap setObject:@"o" forKey:@"@"];
-	//[prefixesMap setObject:@"o" forKey:@"&"];
+	[prefixesMap setObject:@"o" forKey:@"&"];
 	[prefixesMap setObject:@"h" forKey:@"%"];
 	[prefixesMap setObject:@"v" forKey:@"+"];
 
