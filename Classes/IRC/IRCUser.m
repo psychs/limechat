@@ -27,6 +27,7 @@
 @synthesize isMyself;
 @synthesize incomingWeight;
 @synthesize outgoingWeight;
+@synthesize modesMap;
 
 - (id)init
 {
@@ -43,6 +44,7 @@
 	[canonicalNick release];
 	[username release];
 	[address release];
+	[modesMap release];
 	[super dealloc];
 }
 
@@ -57,13 +59,28 @@
 	}
 }
 
+- (void)setModesMap:(NSDictionary *)map
+{
+	modesMap = [[NSDictionary alloc] initWithDictionary:map copyItems:YES];
+}
+
 - (char)mark
 {
-	if (q) return '~';
-	if (a) return '&';
-	if (o) return '@';
-	if (h) return '%';
-	if (v) return '+';
+	if (modesMap == nil)
+		modesMap = [NSDictionary dictionary];
+	NSString *key = nil;
+	if (q) key = @"q";
+	else if (a) key = @"a";
+	else if (o) key = @"o";
+	else if (h) key = @"h";
+	else if (v) key = @"v";
+
+	if (key) {
+		NSString *prefix = [modesMap objectForKey:key];
+		if (prefix && prefix.length) {
+			return (char)[prefix characterAtIndex:0];
+		}
+	}
 	return ' ';
 }
 

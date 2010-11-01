@@ -22,6 +22,8 @@
 	CGFloat incomingWeight;
 	CGFloat outgoingWeight;
 	CFAbsoluteTime lastFadedWeights;
+	
+	NSDictionary* modesMap;
 }
 
 @property (nonatomic, retain) NSString* nick;
@@ -40,12 +42,14 @@
 @property (nonatomic, readonly) CGFloat weight;
 @property (nonatomic, readonly) CGFloat incomingWeight;
 @property (nonatomic, readonly) CGFloat outgoingWeight;
+@property (nonatomic, readonly) NSDictionary* modesMap;
 
 - (BOOL)hasMode:(char)mode;
 
 - (void)outgoingConversation;
 - (void)incomingConversation;
 - (void)conversation;
+- (void)setModesMap:(NSDictionary*)map;
 
 - (NSComparisonResult)compare:(IRCUser*)other;
 

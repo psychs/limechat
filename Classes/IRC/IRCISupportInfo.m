@@ -24,6 +24,7 @@
 @synthesize nickLen;
 @synthesize modesCount;
 @synthesize prefixesMap;
+@synthesize modesMap;
 
 
 - (id)init
@@ -74,6 +75,12 @@
 	[prefixesMap setObject:@"@" forKey:@"o"];
 	[prefixesMap setObject:@"%" forKey:@"h"];
 	[prefixesMap setObject:@"+" forKey:@"v"];
+
+	modesMap = [[NSMutableDictionary alloc] initWithCapacity:4];
+	[modesMap setObject:@"q" forKey:@"~"];
+	[modesMap setObject:@"o" forKey:@"@"];
+	[modesMap setObject:@"h" forKey:@"%"];
+	[modesMap setObject:@"v" forKey:@"+"];
 }
 
 - (void)update:(NSString*)str
@@ -194,7 +201,9 @@
 				[self setValue:OP_VALUE forMode:m];
 				UniChar p = [ps characterAtIndex:i];
 				[prefixesMap setObject:[NSString stringWithFormat:@"%C", m]
-						     forKey:[NSString stringWithFormat:@"%C", p]];
+								forKey:[NSString stringWithFormat:@"%C", p]];
+				[modesMap setObject:[NSString stringWithFormat:@"%C", p]
+							 forKey:[NSString stringWithFormat:@"%C", m]];
 			}
 		}
 	}

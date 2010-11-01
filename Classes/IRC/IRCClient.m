@@ -3377,6 +3377,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 					UniChar mode = [isupport userModeByPrefix:str_u];
 
 					IRCUser* m = [[IRCUser new] autorelease];
+					m.modesMap = [NSDictionary dictionaryWithDictionary:[isupport modesMap]];
 
 					if (mode) {
 						nick = [nick substringFromIndex:1];
