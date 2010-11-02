@@ -2691,6 +2691,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	
 	if (c) {
 		IRCUser* u = [[IRCUser new] autorelease];
+		u.modesMap = [NSDictionary dictionaryWithDictionary:[isupport modesMap]];
 		u.nick = nick;
 		u.username = m.sender.user;
 		u.address = m.sender.address;
@@ -2710,6 +2711,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	c = [self findChannel:nick];
 	if (c) {
 		IRCUser* u = [[IRCUser new] autorelease];
+		u.modesMap = [NSDictionary dictionaryWithDictionary:[isupport modesMap]];
 		u.nick = nick;
 		u.username = m.sender.user;
 		u.address = m.sender.address;
