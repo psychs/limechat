@@ -208,7 +208,7 @@
 				NSString *str_p = [NSString stringWithCharacters:&p length:1];
 				[prefixesMap setObject:str_m forKey:str_p];
 				[modesMap setObject:str_p forKey:str_m];
-				NSLog(@"%@", [NSString stringWithFormat:@"[parsePrefix] mode=%@, prefix=%@", str_m, str_p]);
+				//NSLog(@"%@", [NSString stringWithFormat:@"[parsePrefix] mode=%@, prefix=%@", str_m, str_p]);
 			}
 		}
 	}
@@ -256,13 +256,13 @@
 
 - (UniChar)userModeByPrefix:(NSString*)p
 {
-	NSString *key;
-	for (key in prefixesMap) {
-		NSLog(@"%@", [NSString stringWithFormat:@"userModeByPrefix: prefixesMap[%@]=%@", key, [prefixesMap objectForKey:key]]);
-	}
-	for (key in modesMap) {
-		NSLog(@"%@", [NSString stringWithFormat:@"userModeByPrefix: modesMap[%@]=%@", key, [modesMap objectForKey:key]]);
-	}
+	//NSString *key;
+//	for (key in prefixesMap) {
+//		NSLog(@"%@", [NSString stringWithFormat:@"userModeByPrefix: prefixesMap[%@]=%@", key, [prefixesMap objectForKey:key]]);
+//	}
+//	for (key in modesMap) {
+//		NSLog(@"%@", [NSString stringWithFormat:@"userModeByPrefix: modesMap[%@]=%@", key, [modesMap objectForKey:key]]);
+//	}
 	NSString *obj = [prefixesMap objectForKey:p];
 	if ((obj != nil) && obj.length)
 		return (UniChar)[obj characterAtIndex:0];
