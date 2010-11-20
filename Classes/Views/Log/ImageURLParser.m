@@ -170,6 +170,11 @@
 			return [NSString stringWithFormat:@"http://tn-skr%qi.smilevideo.jp/smile?i=%qi", (vidNum%4 + 1), vidNum];
 		}
 	}
+	else if ([host hasSuffix:@"puu.sh"]) {
+		if(path.length > 1) {
+			return url;
+		}
+	}
 	
 	return nil;
 }
