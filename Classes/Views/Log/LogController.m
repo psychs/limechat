@@ -438,32 +438,25 @@
 	BOOL isText = type == LINE_TYPE_PRIVMSG || type == LINE_TYPE_NOTICE || type == LINE_TYPE_ACTION;
 	BOOL showInlineImage = NO;
 
+	[s appendFormat:@"<span class=\"message\" type=\"%@\">%@", lineTypeString, body];
 	if (isText && !console && urlRanges.count && [Preferences showInlineImages]) {
 		//
 		// expand image URLs
 		//
-		NSString* imagePageUrl = nil;
 		NSString* imageUrl = nil;
 		
 		for (NSValue* rangeValue in urlRanges) {
 			NSString* url = [line.body substringWithRange:[rangeValue rangeValue]];
 			imageUrl = [ImageURLParser imageURLForURL:url];
 			if (imageUrl) {
-				imagePageUrl = url;
-				break;
+				if(!showInlineImage)
+					[s appendString:@"<br/>"];
+				showInlineImage = YES;
+				[s appendFormat:@"<a href=\"%@\"><img src=\"%@\" class=\"inlineimage\"/></a>", url, imageUrl];
 			}
 		}
-		
-		if (imageUrl) {
-			showInlineImage = YES;
-			[s appendFormat:@"<span class=\"message\" type=\"%@\">%@<br/>", lineTypeString, body];
-			[s appendFormat:@"<a href=\"%@\"><img src=\"%@\" class=\"inlineimage\"/></a></span>", imagePageUrl, imageUrl];
-		}
 	}
-	
-	if (!showInlineImage) {
-		[s appendFormat:@"<span class=\"message\" type=\"%@\">%@</span>", lineTypeString, body];
-	}
+	[s appendString:@"</span>"];
 
 	NSString* klass = isText ? @"line text" : @"line event";
 	
