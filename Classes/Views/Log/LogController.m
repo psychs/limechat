@@ -130,6 +130,7 @@
 	if ([view respondsToSelector:@selector(setBackgroundColor:)]) {
 		[(id)view setBackgroundColor:initialBackgroundColor];
 	}
+	view.resourceLoadDelegate = self;
 	view.frameLoadDelegate = self;
 	view.UIDelegate = policy;
 	view.policyDelegate = policy;
@@ -920,6 +921,19 @@
 - (NSColor*)markedScrollerColor:(MarkedScroller*)sender
 {
 	return [[theme other] logScrollerMarkColor];
+}
+
+- (NSURLRequest *)webView:(WebView *)sender resource:(id)identifier willSendRequest:(NSURLRequest *)request
+		 redirectResponse:(NSURLResponse *)redirectResponse fromDataSource:(WebDataSource *)dataSource
+{
+	NSString *host = [[request URL] host];
+	if (!([host hasPrefix:@"img"] && [host hasSuffix:@".pixiv.net"])) {
+		return request;
+	}
+	NSMutableURLRequest *req = [request mutableCopy];
+	[req addValue:@"http://www.pixiv.net" forHTTPHeaderField:@"Referer"];
+	[req autorelease];
+	return req;
 }
 
 @end
