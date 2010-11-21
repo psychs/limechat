@@ -225,6 +225,12 @@
 	return [ud boolForKey:@"Preferences.Theme.override_log_font"];
 }
 
++ (BOOL)themeOverrideInputFont
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	return [ud boolForKey:@"Preferences.Theme.override_input_font"];
+}
+
 + (BOOL)themeOverrideNickFormat
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];

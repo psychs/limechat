@@ -70,6 +70,7 @@ typedef enum {
 + (void)setThemeLogFontSize:(double)value;
 + (NSString*)themeNickFormat;
 + (BOOL)themeOverrideLogFont;
++ (BOOL)themeOverrideInputFont;
 + (BOOL)themeOverrideNickFormat;
 + (BOOL)themeOverrideTimestampFormat;
 + (NSString*)themeTimestampFormat;

@@ -567,11 +567,11 @@
 		}
 	}
 	
+	[self changeInputTextTheme];
 	for (LogController* log in logs) {
 		[log reloadTheme];
 	}
 	
-	[self changeInputTextTheme];
 	[self changeTreeTheme];
 	[self changeMemberListTheme];
 }
@@ -583,7 +583,11 @@
 	[fieldEditor setInsertionPointColor:theme.inputTextColor];
 	[text setTextColor:theme.inputTextColor];
 	[text setBackgroundColor:theme.inputTextBgColor];
-	[chatBox setInputTextFont:theme.inputTextFont];
+	if ([Preferences themeOverrideInputFont]) {
+		[chatBox setInputTextFont:[NSFont fontWithName:[Preferences themeLogFontName] size:[Preferences themeLogFontSize]]];
+	} else {
+		[chatBox setInputTextFont:theme.inputTextFont];
+	}
 }
 
 - (void)changeTreeTheme
