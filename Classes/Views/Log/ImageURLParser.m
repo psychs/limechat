@@ -9,21 +9,33 @@
 
 + (NSString*)imageURLForURL:(NSString*)url
 {
-	NSString* lowerUrl = [url lowercaseString];
-	
-	if ([lowerUrl hasSuffix:@".jpg"]
-		|| [lowerUrl hasSuffix:@".jpeg"]
-		|| [lowerUrl hasSuffix:@".png"]
-		|| [lowerUrl hasSuffix:@".gif"]
-		|| [lowerUrl hasSuffix:@".svg"]) {
-		return url;
-	}
-	
 	NSString* encodedUrl = [url encodeURIFragment];
 	NSURL* u = [NSURL URLWithString:encodedUrl];
 	NSString* host = [u.host lowercaseString];
 	NSString* path = u.path;
 	
+	if ([host hasPrefix:@"img"] && [host hasSuffix:@".pixiv.net"]) {
+		if (path.length > 1) {
+			NSArray *parts = [path split:@"/"];
+			NSMutableString *pixivUrl = [NSMutableString string];
+			[pixivUrl appendFormat:@"http://%@/img/%@/", host, [parts objectAtIndex:2]];
+			NSScanner *scanner = [NSScanner scannerWithString:[parts objectAtIndex:3]];
+			long long imageid;
+			[scanner scanLongLong:&imageid];
+			[scanner scanUpToString:@"." intoString:NULL];
+			[pixivUrl appendFormat:@"%lld_m%@", imageid, [[scanner string] substringFromIndex:[scanner scanLocation]]];
+
+			return pixivUrl;
+		}
+	}
+	if ([path hasSuffix:@".jpg"]
+		|| [path hasSuffix:@".jpeg"]
+		|| [path hasSuffix:@".png"]
+		|| [path hasSuffix:@".gif"]
+		|| [path hasSuffix:@".svg"]) {
+		return url;
+	}
+
 	if ([host hasSuffix:@"twitpic.com"]) {
 		if (path.length > 1) {
 			NSString* s = [path substringFromIndex:1];
