@@ -29,6 +29,7 @@
 	if (self = [super init]) {
 		[NSBundle loadNibNamed:@"Preferences" owner:self];
 	}
+	[[NSFontManager sharedFontManager] setAction:@selector(changeOverrideFont:)];
 	return self;
 }
 
@@ -393,7 +394,7 @@
 	[fm orderFrontFontPanel:self];
 }
 
-- (void)changeFont:(id)sender
+- (void)changeOverrideFont:(id)sender
 {
 	[logFont autorelease];
 	logFont = [[sender convertFont:logFont] retain];
