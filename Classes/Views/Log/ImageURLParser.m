@@ -9,6 +9,7 @@
 
 + (NSString*)imageURLForURL:(NSString*)url
 {
+	NSString* lowerUrl = [url lowercaseString];
 	NSString* encodedUrl = [url encodeURIFragment];
 	NSURL* u = [NSURL URLWithString:encodedUrl];
 	NSString* host = [u.host lowercaseString];
@@ -28,11 +29,11 @@
 			return pixivUrl;
 		}
 	}
-	if ([path hasSuffix:@".jpg"]
-		|| [path hasSuffix:@".jpeg"]
-		|| [path hasSuffix:@".png"]
-		|| [path hasSuffix:@".gif"]
-		|| [path hasSuffix:@".svg"]) {
+	if ([lowerUrl hasSuffix:@".jpg"]
+		|| [lowerUrl hasSuffix:@".jpeg"]
+		|| [lowerUrl hasSuffix:@".png"]
+		|| [lowerUrl hasSuffix:@".gif"]
+		|| [lowerUrl hasSuffix:@".svg"]) {
 		return url;
 	}
 
