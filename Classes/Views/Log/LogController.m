@@ -453,6 +453,25 @@
 				if(!showInlineImage)
 					[s appendString:@"<br/>"];
 				showInlineImage = YES;
+				
+				NSString* encodedUrl = [url encodeURIFragment];
+				NSURL* u = [NSURL URLWithString:encodedUrl];
+				NSString* host = [u.host lowercaseString];
+				NSString* path = u.path;
+				
+				if ([host hasPrefix:@"img"] && [host hasSuffix:@".pixiv.net"]) {
+					if (path.length > 1) {
+						NSArray *parts = [path split:@"/"];
+						NSMutableString *pixivUrl = [NSMutableString string];
+						[pixivUrl appendString:@"http://www.pixiv.net/member_illust.php?mode=big&illust_id="];
+						NSScanner *scanner = [NSScanner scannerWithString:[parts objectAtIndex:3]];
+						long long imageid;
+						[scanner scanLongLong:&imageid];
+						[pixivUrl appendFormat:@"%lld", imageid];
+						url = pixivUrl;
+					}
+				}
+				
 				[s appendFormat:@"<a href=\"%@\"><img src=\"%@\" class=\"inlineimage\"/></a>", url, imageUrl];
 			}
 		}
