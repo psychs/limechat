@@ -99,6 +99,11 @@
 			}
 		}
 	}
+	else if ([host hasSuffix:@"puu.sh"]) {
+		if (path.length > 1) {
+			return url;
+		}
+	}
 	else if ([host hasSuffix:@"youtube.com"] || [host isEqualToString:@"youtu.be"]) {
 		NSString* vid = nil;
 		
@@ -168,11 +173,6 @@
 		if (vid && vid.length > 2) {
 			long long vidNum = [[vid substringFromIndex:2] longLongValue];
 			return [NSString stringWithFormat:@"http://tn-skr%qi.smilevideo.jp/smile?i=%qi", (vidNum%4 + 1), vidNum];
-		}
-	}
-	else if ([host hasSuffix:@"puu.sh"]) {
-		if(path.length > 1) {
-			return url;
 		}
 	}
 	
