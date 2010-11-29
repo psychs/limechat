@@ -10,19 +10,19 @@
 + (NSString*)imageURLForURL:(NSString*)url
 {
 	NSString* lowerUrl = [url lowercaseString];
-	
 	if ([lowerUrl hasSuffix:@".jpg"]
 		|| [lowerUrl hasSuffix:@".jpeg"]
 		|| [lowerUrl hasSuffix:@".png"]
-		|| [lowerUrl hasSuffix:@".gif"]) {
+		|| [lowerUrl hasSuffix:@".gif"]
+		|| [lowerUrl hasSuffix:@".svg"]) {
 		return url;
 	}
-	
+
 	NSString* encodedUrl = [url encodeURIFragment];
 	NSURL* u = [NSURL URLWithString:encodedUrl];
 	NSString* host = [u.host lowercaseString];
 	NSString* path = u.path;
-	
+
 	if ([host hasSuffix:@"twitpic.com"]) {
 		if (path.length > 1) {
 			NSString* s = [path substringFromIndex:1];
