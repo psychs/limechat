@@ -449,8 +449,9 @@
 			NSString* url = [line.body substringWithRange:[rangeValue rangeValue]];
 			imageUrl = [ImageURLParser imageURLForURL:url];
 			if (imageUrl) {
-				if(!showInlineImage)
+				if (!showInlineImage) {
 					[s appendString:@"<br/>"];
+				}
 				showInlineImage = YES;
 				[s appendFormat:@"<a href=\"%@\"><img src=\"%@\" class=\"inlineimage\"/></a>", url, imageUrl];
 			}
@@ -610,9 +611,7 @@
 		@"}"
 	 
 		@".inlineimage {"
-		@"margin-top: 10px;"
-		@"margin-bottom: 15px;"
-		@"margin-left: 40px;"
+		@"margin: 10px 0 15px 40px;"
 		@"max-width: 200px;"
 		@"max-height: 150px;"
 		@"-webkit-box-shadow: 2px 2px 2px #888;"

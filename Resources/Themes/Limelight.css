@@ -1,15 +1,15 @@
 html {
-  font-family: "Dejavu Sans Mono";
-  font-size: 9pt;
-  background-color: #202020;
-  color: #FFFFFF;
-  padding: 0;
-  margin: 0;
+	font-family: "Dejavu Sans Mono";
+	font-size: 9pt;
+	background-color: #202020;
+	color: #FFFFFF;
+	padding: 0;
+	margin: 0;
 }
 
 body {
 	margin: 0;
-  padding: 0.5ex 1.5ex;
+	padding: 0.5ex 1.5ex;
 }
 body.console {}
 body.normal {
@@ -23,10 +23,10 @@ a {
 }
 
 .inlineimage {
-	margin: 10px 0 15px 0;
-  max-width: 200px;
-  max-height: 150px;
-  -webkit-box-shadow: 2px 2px 2px #888;
+	margin: 10px 20px 15px 0;
+	max-width: 200px;
+	max-height: 150px;
+	-webkit-box-shadow: 2px 2px 2px #888;
 }
 
 .line  { padding: 0.2ex 0; }
@@ -153,7 +153,7 @@ body.normal .sender[type=myself]:after {
 }
 
 .line[highlight=true] {
-  background-color: transparent;
+	background-color: transparent;
 }
 
 /* disable funky mirc colours */
@@ -194,4 +194,3 @@ html[channelname="##apple"].normal {
 html[channelname="#python"].normal {
 	background: #202020 url('Limelight/python.png') no-repeat fixed bottom right;
 }
-
