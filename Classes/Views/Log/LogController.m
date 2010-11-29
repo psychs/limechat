@@ -722,7 +722,8 @@
 		
 		scroller = [[MarkedScroller alloc] initWithFrame:NSMakeRect(-16, -64, 16, 64)];
 		scroller.dataSource = self;
-		[scroller setFloatValue:[old floatValue] knobProportion:[old knobProportion]];
+		[scroller setFloatValue:[old floatValue]];
+		[scroller setKnobProportion:[old knobProportion]];
 		[scrollView setVerticalScroller:scroller];
 	}
 }
