@@ -24,11 +24,15 @@
 	NSMutableArray* sounds;
 	NSOpenPanel* transcriptFolderOpenPanel;
 	NSFont* logFont;
+	NSFont* inputFont;
+	BOOL changingLogFont;
 }
 
 @property (nonatomic, assign) id delegate;
 @property (nonatomic, assign) NSString* fontDisplayName;
 @property (nonatomic, assign) CGFloat fontPointSize;
+@property (nonatomic, assign) NSString* inputFontDisplayName;
+@property (nonatomic, assign) CGFloat inputFontPointSize;
 @property (nonatomic, readonly) NSArray* availableSounds;
 @property (nonatomic, readonly) NSMutableArray* sounds;
 
@@ -42,6 +46,7 @@
 - (void)onChangedTheme:(id)sender;
 - (void)onOpenThemePath:(id)sender;
 - (void)onSelectFont:(id)sender;
+- (void)onInputSelectFont:(id)sender;
 - (void)onOverrideFontChanged:(id)sender;
 - (void)onChangedTransparency:(id)sender;
 

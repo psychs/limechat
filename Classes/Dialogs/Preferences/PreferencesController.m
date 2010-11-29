@@ -37,6 +37,7 @@
 	[sounds release];
 	[transcriptFolderOpenPanel release];
 	[logFont release];
+	[inputFont release];
 	[super dealloc];
 }
 
@@ -51,6 +52,9 @@
 	
 	[logFont release];
 	logFont = [[NSFont fontWithName:[Preferences themeLogFontName] size:[Preferences themeLogFontSize]] retain];
+	
+	[inputFont release];
+	inputFont = [[NSFont fontWithName:[Preferences themeInputFontName] size:[Preferences themeInputFontSize]] retain];
 	
 	if (![self.window isVisible]) {
 		[self.window center];
@@ -80,6 +84,26 @@
 - (CGFloat)fontPointSize
 {
 	return [Preferences themeLogFontSize];
+}
+
+- (void)setInputFontDisplayName:(NSString*)value
+{
+	[Preferences setThemeInputFontName:value];
+}
+
+- (NSString*)inputFontDisplayName
+{
+	return [Preferences themeInputFontName];
+}
+
+- (void)setInputFontPointSize:(CGFloat)value
+{
+	[Preferences setThemeInputFontSize:value];
+}
+
+- (CGFloat)inputFontPointSize
+{
+	return [Preferences themeInputFontSize];
 }
 
 - (int)dccFirstPort
@@ -388,18 +412,36 @@
 
 - (void)onSelectFont:(id)sender
 {
+	changingLogFont = YES;
+	
 	NSFontManager* fm = [NSFontManager sharedFontManager];
 	[fm setSelectedFont:logFont isMultiple:NO];
 	[fm orderFrontFontPanel:self];
 }
 
+- (void)onInputSelectFont:(id)sender
+{
+	changingLogFont = NO;
+	
+	NSFontManager* fm = [NSFontManager sharedFontManager];
+	[fm setSelectedFont:inputFont isMultiple:NO];
+	[fm orderFrontFontPanel:self];
+}
+
 - (void)changeFont:(id)sender
 {
-	[logFont autorelease];
-	logFont = [[sender convertFont:logFont] retain];
-	
-	[self setValue:logFont.fontName forKey:@"fontDisplayName"];
-	[self setValue:[NSNumber numberWithDouble:logFont.pointSize] forKey:@"fontPointSize"];
+	if (changingLogFont) {
+		[logFont autorelease];
+		logFont = [[sender convertFont:logFont] retain];
+		[self setValue:logFont.fontName forKey:@"fontDisplayName"];
+		[self setValue:[NSNumber numberWithDouble:logFont.pointSize] forKey:@"fontPointSize"];
+	}
+	else {
+		[inputFont autorelease];
+		inputFont = [[sender convertFont:inputFont] retain];
+		[self setValue:inputFont.fontName forKey:@"inputFontDisplayName"];
+		[self setValue:[NSNumber numberWithDouble:inputFont.pointSize] forKey:@"inputFontPointSize"];
+	}
 	
 	[self onLayoutChanged:nil];
 }

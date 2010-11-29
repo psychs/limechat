@@ -583,7 +583,15 @@
 	[fieldEditor setInsertionPointColor:theme.inputTextColor];
 	[text setTextColor:theme.inputTextColor];
 	[text setBackgroundColor:theme.inputTextBgColor];
-	[chatBox setInputTextFont:theme.inputTextFont];
+	
+	NSFont* inputFont = nil;
+	if ([Preferences themeOverrideInputFont]) {
+		inputFont = [NSFont fontWithName:[Preferences themeInputFontName] size:[Preferences themeInputFontSize]];
+	}
+	if (!inputFont) {
+		inputFont = theme.inputTextFont;
+	}
+	[chatBox setInputTextFont:inputFont];
 }
 
 - (void)changeTreeTheme
