@@ -7,7 +7,7 @@
     <language>en</language>
     
     <item>
-      <title>LimeChat 2.15</title>
+      <title>LimeChat 2.16</title>
       <description><![CDATA[
         <html>
         <body>
@@ -22,20 +22,23 @@
             margin: 0.2em 0;
           }
         </style>
-        <h1>LimeChat 2.15</h1>
+        <h1>LimeChat 2.16</h1>
         <ul>
-          <li>Join a channel automatically when invited option.</li>
-          <li>Handle incomplete ISO-2022-JP sequences.</li>
-          <li>Cancel reconnection when disconnect from menu.</li>
-          <li>Fixed minor bugs.</li>
+          <li>Added override input text font option.</li>
+          <li>Show all thumbnails for multiple image links in a message.</li>
+          <li>Supported inline images on plixi.com and puu.sh.</li>
+          <li>Follow the changes of gist.</li>
+          <li>Updated server list.</li>
+          <li>Fixed a bug in /omsg and /onotice commands.</li>
+          <li>KOI8-R and KOI8-U support.</li>
         </ul>
         </body>
         </html>
       ]]></description>
-      <pubDate>Wed, 23 Jun 2010 19:46:01 +0900</pubDate>
-      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/LimeChat_2.15.tbz"
-                  sparkle:version="2.15" length="1586227" type="application/octet-stream"
-                  sparkle:dsaSignature="MC0CFDCEQhBiCCbw5sDeVUCG9AUZ8RD3AhUAoq3+aufu0QEiLUnAfkb9HO5q7Ow="/>
+      <pubDate>Sun, 05 Dec 2010 20:08:28 -0800</pubDate>
+      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/LimeChat_2.16.tbz"
+                  sparkle:version="2.16" length="1598632" type="application/octet-stream"
+                  sparkle:dsaSignature="MCsCE0ID/YPOhIe3zm2j4DPAKUVjTH8CFGjI4/jOJXZvZUo9Tq1Jr6WYrPJZ"/>
     </item>
     
   </channel>

@@ -7,15 +7,18 @@
     <language>en-us</language>
 
     <item>
-      <title>2.15</title>
-      <link>http://limechat.net/mac/#v2.15</link>
-      <pubDate>Wed, 23 Jun 2010 19:46:01 +0900</pubDate>
+      <title>2.16</title>
+      <link>http://limechat.net/mac/#v2.16</link>
+      <pubDate>Sun, 05 Dec 2010 20:08:28 -0800</pubDate>
       <content:encoded><![CDATA[
   			<ul>
-          <li>Join a channel automatically when invited option.</li>
-          <li>Handle incomplete ISO-2022-JP sequences.</li>
-          <li>Cancel reconnection when disconnect from menu.</li>
-          <li>Fixed minor bugs.</li>
+          <li>Added override input text font option.</li>
+          <li>Show all thumbnails for multiple image links in a message.</li>
+          <li>Supported inline images on plixi.com and puu.sh.</li>
+          <li>Follow the changes of gist.</li>
+          <li>Updated server list.</li>
+          <li>Fixed a bug in /omsg and /onotice commands.</li>
+          <li>KOI8-R and KOI8-U support.</li>
         </ul>
       ]]></content:encoded>
     </item>

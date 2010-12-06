@@ -7,15 +7,18 @@
     <language>ja</language>
 
     <item>
-      <title>2.15</title>
-      <link>http://limechat.net/mac/ja.html#v2.15</link>
-      <pubDate>Wed, 23 Jun 2010 19:46:01 +0900</pubDate>
+      <title>2.16</title>
+      <link>http://limechat.net/mac/ja.html#v2.16</link>
+      <pubDate>Sun, 05 Dec 2010 20:08:28 -0800</pubDate>
       <content:encoded><![CDATA[
   			<ul>
-          <li>招待されたら自動でjoinするオプションを追加した。</li>
-          <li>ISO-2022-JP のシーケンスが途中で切れている場合に対応した。</li>
-          <li>メニューから切断すると、どんなときでも再接続しないようにした。</li>
-          <li>細かいバグをfixした。</li>
+          <li>入力部分のフォントをオーバーライドする設定を追加。</li>
+          <li>1つのメッセージに複数の画像リンクが入っているとき、すべてをプレビューするようにした。</li>
+          <li>plixi.com と puu.sh の画像プレビューに対応。</li>
+          <li>gist の変更に追随した。</li>
+          <li>サーバリストを更新した。</li>
+          <li>/omsg、/onotice がうまく送れなかったバグをなおした。</li>
+          <li>KOI8-R と KOI8-U をサポートした。</li>
         </ul>
       ]]></content:encoded>
     </item>
