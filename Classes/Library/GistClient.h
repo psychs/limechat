@@ -4,16 +4,30 @@
 #import <Foundation/Foundation.h>
 
 
+typedef enum {
+	kGistClientGetTop,
+	kGistClientPost,
+} GistClientStage;
+
+
 @interface GistClient : NSObject
 {
 	id delegate;
+	
+	GistClientStage stage;
+	NSString* text;
+	NSString* fileType;
+	BOOL isPrivate;
+	
 	NSURLConnection* conn;
+	NSMutableData* buf;
+	NSString* destUrl;
 }
 
 @property (nonatomic, assign) id delegate;
 
 - (void)cancel;
-- (void)send:(NSString*)text fileType:(NSString*)fileType private:(BOOL)private;
+- (void)send:(NSString*)text fileType:(NSString*)fileType private:(BOOL)isPrivate;
 
 @end
 
