@@ -164,6 +164,7 @@
 	menu.tree = tree;
 	menu.memberList = memberList;
 	menu.text = text;
+	[menu setUp];
 	
 	memberList.target = menu;
 	[memberList setDoubleAction:@selector(memberListDoubleClicked:)];

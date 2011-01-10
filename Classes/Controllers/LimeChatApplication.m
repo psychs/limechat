@@ -9,8 +9,10 @@
 - (id)init
 {
 	if (self = [super init]) {
+#ifndef TARGET_APP_STORE
 		// migrate from the old .plist
 		CFPreferencesAddSuitePreferencesToApp(kCFPreferencesCurrentApplication, CFSTR("LimeChat"));
+#endif
 	}
 	return self;
 }

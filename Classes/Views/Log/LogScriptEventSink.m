@@ -84,9 +84,11 @@
 	if ([NSEvent respondsToSelector:@selector(doubleClickInterval)]) {
 		doubleClickThreshold = [NSEvent doubleClickInterval];
 	}
+#ifndef TARGET_APP_STORE
 	else {
 		doubleClickThreshold = GetDblTime() / 60.0;
 	}
+#endif
 	if (doubleClickThreshold == 0) {
 		doubleClickThreshold = 0.5;
 	}
