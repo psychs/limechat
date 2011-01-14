@@ -175,7 +175,19 @@
 			return [NSString stringWithFormat:@"http://tn-skr%qi.smilevideo.jp/smile?i=%qi", (vidNum%4 + 1), vidNum];
 		}
 	}
-	
+	else if ([host hasSuffix:@"pikubo.jp"]) {
+		if ([path hasPrefix:@"/photo/"]) {
+			path = [path substringWithRange:NSMakeRange(7, 22)];
+			return [NSString stringWithFormat:@"http://pikubo.jp/p/p/%@", path];
+		}
+	}
+	else if ([host hasSuffix:@"pikubo.me"]) {
+		if (path.length > 1) {
+			path = [path substringFromIndex:1];
+			return [NSString stringWithFormat:@"http://pikubo.me/p/%@", path];
+		}
+	}
+
 	return nil;
 }
 
