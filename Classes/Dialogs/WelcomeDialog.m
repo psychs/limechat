@@ -35,6 +35,8 @@
 - (void)dealloc
 {
 	[channels release];
+	channelTable.delegate = nil;
+	channelTable.dataSource = nil;
 	[super dealloc];
 }
 
@@ -67,6 +69,18 @@
 
 - (void)onOK:(id)sender
 {
+	NSText* fieldEditor = [self.window fieldEditor:NO forObject:channelTable];
+	if (fieldEditor) {
+		[[channelTable cell] endEditing:fieldEditor];
+		NSInteger n = [channelTable editedRow];
+		if (n != NSNotFound) {
+			NSString* s = [[[fieldEditor string] copy] autorelease];
+			if (n < channels.count) {
+				[channels replaceObjectAtIndex:n withObject:s];
+			}
+		}
+	}
+	
 	NSMutableSet* set = [NSMutableSet set];
 	NSMutableArray* chans = [NSMutableArray array];
 	
