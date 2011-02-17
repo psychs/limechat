@@ -7,7 +7,7 @@
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleGetInfoString</key>
-	<string>LimeChat for Mac, Copyright 2007-2010 Satoshi Nakagawa</string>
+	<string>LimeChat for Mac, Copyright 2007-2011 Satoshi Nakagawa</string>
 	<key>CFBundleIconFile</key>
 	<string>application.icns</string>
 	<key>CFBundleIdentifier</key>
@@ -19,9 +19,17 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.16</string>
+	<string>2.17</string>
+	<key>CFBundleVersion</key>
+	<string>2.17</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>NSMainNibFile</key>
+	<string>MainMenu</string>
+	<key>NSPrincipalClass</key>
+	<string>LimeChatApplication</string>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright 2007-2011 Satoshi Nakagawa</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -34,8 +42,6 @@
 			</array>
 		</dict>
 	</array>
-	<key>CFBundleVersion</key>
-	<string>2.16</string>
 	<key>LCApplicationName</key>
 	<string>LimeChat for Mac</string>
 	<key>LSMinimumSystemVersion</key>
@@ -51,12 +57,6 @@
 		<key>x86_64</key>
 		<string>10.6.0</string>
 	</dict>
-	<key>NSHumanReadableCopyright</key>
-	<string>Copyright 2007-2010 Satoshi Nakagawa</string>
-	<key>NSMainNibFile</key>
-	<string>MainMenu</string>
-	<key>NSPrincipalClass</key>
-	<string>LimeChatApplication</string>
 	<key>SUEnableAutomaticChecks</key>
 	<true/>
 	<key>SUFeedURL</key>

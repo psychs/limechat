@@ -7,18 +7,14 @@
     <language>ja</language>
 
     <item>
-      <title>2.16</title>
-      <link>http://limechat.net/mac/ja.html#v2.16</link>
-      <pubDate>Sun, 05 Dec 2010 20:08:28 -0800</pubDate>
+      <title>2.17</title>
+      <link>http://limechat.net/mac/ja.html#v2.17</link>
+      <pubDate>Thu, 17 Feb 2011 10:46:00 -0800</pubDate>
       <content:encoded><![CDATA[
   			<ul>
-          <li>入力部分のフォントをオーバーライドする設定を追加。</li>
-          <li>1つのメッセージに複数の画像リンクが入っているとき、すべてをプレビューするようにした。</li>
-          <li>plixi.com と puu.sh の画像プレビューに対応。</li>
-          <li>gist の変更に追随した。</li>
-          <li>サーバリストを更新した。</li>
-          <li>/omsg、/onotice がうまく送れなかったバグをなおした。</li>
-          <li>KOI8-R と KOI8-U をサポートした。</li>
+	        <li>アイコンを変更。.</li>
+	        <li>ficia.com and pikubo.jp の画像プレビューをサポート。</li>
+	        <li>初回起動時に表示されるダイアログでクラッシュするバグを直した。</li>
         </ul>
       ]]></content:encoded>
     </item>
