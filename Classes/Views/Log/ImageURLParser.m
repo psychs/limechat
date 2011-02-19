@@ -203,6 +203,10 @@
 			}
 		}
 	}
+	else if ([host hasSuffix:@"flic.kr"]) {
+		NSString* shortId = [path substringFromIndex:2];
+		return [NSString stringWithFormat:@"http://flic.kr/p/img/%@_m.jpg", shortId];
+	}
 	return nil;
 }
 
