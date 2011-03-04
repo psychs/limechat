@@ -176,7 +176,7 @@
 		}
 	}
 	else if ([host hasSuffix:@"pikubo.jp"]) {
-		if ([path hasPrefix:@"/photo/"]) {
+		if ([path hasPrefix:@"/photo/"] && path.length >= 29) {
 			path = [path substringWithRange:NSMakeRange(7, 22)];
 			return [NSString stringWithFormat:@"http://pikubo.jp/p/p/%@", path];
 		}
@@ -188,18 +188,21 @@
 		}
 	}
 	else if ([host hasSuffix:@".ficia.com"]) {
-		NSString* fragment = u.fragment;
-		NSString* user = [host substringToIndex:host.length - 10];
-		if (path.length > 60) {
-			if ([path hasPrefix:@"/pl/album-photo/"]) {
-				NSString* s = [path substringFromIndex:53];
-				return [NSString stringWithFormat:@"http://%@.pst.ficia.com/p/%@.jpg", user, s];
+		int subdomainLen = host.length - 10;
+		if (subdomainLen > 0) {
+			NSString* user = [host substringToIndex:subdomainLen];
+			NSString* fragment = u.fragment;
+			if (path.length > 60) {
+				if ([path hasPrefix:@"/pl/album-photo/"]) {
+					NSString* s = [path substringFromIndex:53];
+					return [NSString stringWithFormat:@"http://%@.pst.ficia.com/p/%@.jpg", user, s];
+				}
 			}
-		}
-		else if (fragment.length > 60) {
-			if ([fragment hasPrefix:@"album-photo/"]) {
-				NSString* s = [fragment substringFromIndex:49];
-				return [NSString stringWithFormat:@"http://%@.pst.ficia.com/p/%@.jpg", user, s];
+			else if (fragment.length > 60) {
+				if ([fragment hasPrefix:@"album-photo/"]) {
+					NSString* s = [fragment substringFromIndex:49];
+					return [NSString stringWithFormat:@"http://%@.pst.ficia.com/p/%@.jpg", user, s];
+				}
 			}
 		}
 	}
