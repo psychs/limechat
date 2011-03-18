@@ -23,7 +23,8 @@
 
 - (id)init
 {
-	if (self = [super init]) {
+	self = [super init];
+	if (self) {
 		type = CHANNEL_TYPE_CHANNEL;
 		autoOp = [NSMutableArray new];
 		

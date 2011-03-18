@@ -34,7 +34,8 @@
 
 - (id)init
 {
-	if (self = [super init]) {
+	self = [super init];
+	if (self) {
 		[NSBundle loadNibNamed:@"ServerDialog" owner:self];
 		
 		NSArray* servers = [[self class] availableServers];

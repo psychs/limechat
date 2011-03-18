@@ -54,7 +54,8 @@
 
 - (id)init
 {
-	if (self = [super init]) {
+	self = [super init];
+	if (self) {
 		icon = [IconController new];
 		clients = [NSMutableArray new];
 	}

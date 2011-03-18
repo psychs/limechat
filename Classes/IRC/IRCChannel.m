@@ -33,7 +33,8 @@
 
 - (id)init
 {
-	if (self = [super init]) {
+	self = [super init];
+	if (self) {
 		mode = [IRCChannelMode new];
 		members = [NSMutableArray new];
 	}

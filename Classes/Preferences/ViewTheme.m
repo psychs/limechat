@@ -23,7 +23,8 @@ static NSString* userBasePath;
 
 - (id)init
 {
-	if (self = [super init]) {
+	self = [super init];
+	if (self) {
 		log = [LogTheme new];
 		other = [OtherTheme new];
 		js = [CustomJSFile new];

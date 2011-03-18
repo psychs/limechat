@@ -19,7 +19,8 @@
 
 - (id)init
 {
-	if (self = [super init]) {
+	self = [super init];
+	if (self) {
 		[NSBundle loadNibNamed:@"WelcomeDialog" owner:self];
 		
 		channels = [NSMutableArray new];

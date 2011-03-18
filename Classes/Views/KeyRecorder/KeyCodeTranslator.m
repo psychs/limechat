@@ -11,7 +11,8 @@
 
 - (id)initWithKeyboardLayout:(TISInputSourceRef)aLayout
 {
-	if (self = [super init]) {
+	self = [super init];
+	if (self) {
 		layout = aLayout;
 		CFDataRef data = TISGetInputSourceProperty(layout , kTISPropertyUnicodeKeyLayoutData);
 		layoutData = (const UCKeyboardLayout*)CFDataGetBytePtr(data);

@@ -44,7 +44,8 @@
 
 - (id)init
 {
-	if (self = [super init]) {
+	self = [super init];
+	if (self) {
 		altNicks = [NSMutableArray new];
 		loginCommands = [NSMutableArray new];
 		channels = [NSMutableArray new];
