@@ -85,14 +85,15 @@
 	if ([NSEvent respondsToSelector:@selector(doubleClickInterval)]) {
 		doubleClickThreshold = [NSEvent doubleClickInterval];
 	}
-#ifndef TARGET_APP_STORE
 	else {
-		doubleClickThreshold = GetDblTime() / 60.0;
-	}
-#endif
-	if (doubleClickThreshold == 0) {
 		doubleClickThreshold = 0.5;
 	}
+	
+	/*
+#ifndef TARGET_APP_STORE
+	doubleClickThreshold = GetDblTime() / 60.0;
+#endif
+	 */
 	
 	CFAbsoluteTime now = CFAbsoluteTimeGetCurrent();
 	if (x-d <= cx && cx <= x+d && y-d <= cy && cy <= y+d) {
