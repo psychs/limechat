@@ -1,5 +1,6 @@
 build
 Packages
+xcuserdata
 .DS_Store
 .LSOverride
 *.pbxuser
