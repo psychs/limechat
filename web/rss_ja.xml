@@ -7,14 +7,14 @@
     <language>ja</language>
 
     <item>
-      <title>2.17</title>
-      <link>http://limechat.net/mac/ja.html#v2.17</link>
-      <pubDate>Thu, 17 Feb 2011 10:46:00 -0800</pubDate>
+      <title>2.18</title>
+      <link>http://limechat.net/mac/ja.html#v2.18</link>
+      <pubDate>Sun, 20 Mar 2011 14:51:00 -0700</pubDate>
       <content:encoded><![CDATA[
   			<ul>
-	        <li>アイコンを変更。</li>
-	        <li>ficia.com と pikubo.jp の画像プレビューをサポート。</li>
-	        <li>初回起動時に表示されるダイアログでクラッシュするバグを直した。</li>
+          <li>インライン画像プレビューで flic.kr をサポート。</li>
+          <li>メモリの消費を抑えるため、インライン画像プレビューに小さい画像を使うようにした。</li>
+          <li>不正な画像URLを受信したときに、落ちるバグを fix した。</li>
         </ul>
       ]]></content:encoded>
     </item>

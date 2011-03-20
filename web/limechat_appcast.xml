@@ -7,7 +7,7 @@
     <language>en</language>
     
     <item>
-      <title>LimeChat 2.17</title>
+      <title>LimeChat 2.18</title>
       <description><![CDATA[
         <html>
         <body>
@@ -22,19 +22,19 @@
             margin: 0.2em 0;
           }
         </style>
-        <h1>LimeChat 2.17</h1>
+        <h1>LimeChat 2.18</h1>
         <ul>
-          <li>New icon.</li>
-          <li>Supported image preview for ficia.com and pikubo.jp.</li>
-          <li>Fixed a crashing issue in the setup dialog.</li>
+          <li>Add flic.kr support to inline images.</li>
+          <li>Use smaller preview images to reduce memory usage.</li>
+          <li>Fixed crashing issues when received malformed image URLs.</li>
         </ul>
         </body>
         </html>
       ]]></description>
-      <pubDate>Thu, 17 Feb 2011 10:40:51 -0800</pubDate>
-      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/LimeChat_2.17.tbz"
-                  sparkle:version="2.17" length="1867809" type="application/octet-stream"
-                  sparkle:dsaSignature="MC0CFD/8bzervoqPZuSBgX7xuv0knnbsAhUApS2EZkm+NHOCzEOmSqd9zBQ2X2A="/>
+      <pubDate>Sun, 20 Mar 2011 14:48:49 -0700</pubDate>
+      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/LimeChat_2.18.tbz"
+                  sparkle:version="2.18" length="1568561" type="application/octet-stream"
+                  sparkle:dsaSignature="MC0CFB+wZaCtt8eMoEQkoG/4XB1fFFgGAhUAhlKkiQ7R34E30JEjNDrpPyU18zc="/>
     </item>
     
   </channel>

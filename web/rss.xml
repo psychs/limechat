@@ -7,14 +7,14 @@
     <language>en-us</language>
 
     <item>
-      <title>2.17</title>
-      <link>http://limechat.net/mac/#v2.17</link>
-      <pubDate>Thu, 17 Feb 2011 10:46:00 -0800</pubDate>
+      <title>2.18</title>
+      <link>http://limechat.net/mac/#v2.18</link>
+      <pubDate>Sun, 20 Mar 2011 14:51:00 -0700</pubDate>
       <content:encoded><![CDATA[
   			<ul>
-	        <li>New icon.</li>
-	        <li>Supported image preview for ficia.com and pikubo.jp.</li>
-	        <li>Fixed a crashing issue in the setup dialog.</li>
+          <li>Add flic.kr support to inline images.</li>
+          <li>Use smaller preview images to reduce memory usage.</li>
+          <li>Fixed crashing issues when received malformed image URLs.</li>
         </ul>
       ]]></content:encoded>
     </item>
