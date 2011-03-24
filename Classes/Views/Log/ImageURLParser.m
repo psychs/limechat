@@ -180,6 +180,7 @@
 	}
 	else if ([host hasSuffix:@"nicovideo.jp"] || [host isEqualToString:@"nico.ms"]) {
 		NSString* vid = nil;
+		NSString* iid = nil;
 		
 		if ([host isEqualToString:@"nico.ms"]) {
 			NSString* path = u.path;
@@ -187,6 +188,9 @@
 				path = [path substringFromIndex:1];
 				if ([path hasPrefix:@"sm"] || [path hasPrefix:@"nm"]) {
 					vid = path;
+				}
+				else if ([path hasPrefix:@"im"]) {
+					iid = path;
 				}
 			}
 		}
@@ -198,11 +202,21 @@
 					vid = path;
 				}
 			}
+			else if ([path hasPrefix:@"/seiga/"]) {
+				path = [path substringFromIndex:7];
+				if ([path hasPrefix:@"im"]) {
+					iid = path;
+				}
+			}
 		}
 		
 		if (vid && vid.length > 2) {
 			long long vidNum = [[vid substringFromIndex:2] longLongValue];
 			return [NSString stringWithFormat:@"http://tn-skr%qi.smilevideo.jp/smile?i=%qi", (vidNum%4 + 1), vidNum];
+		}
+		else if (iid && iid.length > 2) {
+			long long iidNum = [[iid substringFromIndex:2] longLongValue];
+			return [NSString stringWithFormat:@"http://lohas.nicoseiga.jp/thumb/%qiq?", iidNum];
 		}
 	}
 	
