@@ -680,6 +680,8 @@
 		}
 	}
 	
+	if (!currentChoices.count) return;
+	
 	// find the next choice
 	
 	NSString* t;
