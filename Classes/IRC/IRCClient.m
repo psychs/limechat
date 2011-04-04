@@ -3028,7 +3028,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	
 	if ([command isEqualNoCase:@"+"]) {
 		NSString* base = [NSString stringWithFormat:@"%@\0%@\0%@", config.nick, config.username, config.nickPassword];
-		NSData* data = [base dataUsingEncoding:NSUTF8StringEncoding];
+		NSData* data = [base dataUsingEncoding:encoding];
 		NSString* authStr = [GTMBase64 stringByEncodingData:data];
 		[self send:AUTHENTICATE, authStr, nil];
 	}
