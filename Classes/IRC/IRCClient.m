@@ -3027,7 +3027,12 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	NSString* command = [[m paramAt:0] trim];
 	
 	if ([command isEqualNoCase:@"+"]) {
-		NSString* base = [NSString stringWithFormat:@"%@\0%@\0%@", config.nick, config.username, config.nickPassword];
+		NSString* user = config.username;
+		NSString* pass = config.nickPassword;
+		if (!user.length) user = config.nick;
+		if (!pass.length) pass = config.password;
+		
+		NSString* base = [NSString stringWithFormat:@"%@\0%@\0%@", config.nick, user, pass];
 		NSData* data = [base dataUsingEncoding:encoding];
 		NSString* authStr = [GTMBase64 stringByEncodingData:data];
 		[self send:AUTHENTICATE, authStr, nil];
@@ -3693,7 +3698,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	if (!user.length) user = config.nick;
 	if (!realName.length) realName = config.nick;
 	
-	if (config.nick.length && config.username.length && config.nickPassword.length) {
+	if (config.nick.length && user && (config.nickPassword.length || config.password.length)) {
 		[self send:CAP, @"REQ", @"sasl", nil];
 	}
 	
