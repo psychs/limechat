@@ -33,6 +33,8 @@
 #define WHO			@"WHO"
 #define WHOIS		@"WHOIS"
 #define WHOWAS		@"WHOWAS"
+#define CAP			@"CAP"
+#define AUTHENTICATE	@"AUTHENTICATE"
 
 #define ACTION		@"ACTION"
 #define DCC			@"DCC"

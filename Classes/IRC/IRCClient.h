@@ -52,6 +52,7 @@ typedef enum {
 	int tryingNickNumber;
 	
 	NSString* serverHostname;
+	BOOL isRegisteredWithSASL;
 	BOOL registeringToNickServ;
 	BOOL inWhois;
 	BOOL inList;
