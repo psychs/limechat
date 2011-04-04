@@ -2,13 +2,13 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">10F569</string>
-		<string key="IBDocument.InterfaceBuilderVersion">788</string>
-		<string key="IBDocument.AppKitVersion">1038.29</string>
+		<string key="IBDocument.SystemVersion">10J869</string>
+		<string key="IBDocument.InterfaceBuilderVersion">851</string>
+		<string key="IBDocument.AppKitVersion">1038.35</string>
 		<string key="IBDocument.HIToolboxVersion">461.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">788</string>
+			<string key="NS.object.0">851</string>
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -19,13 +19,8 @@
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 		</object>
 		<object class="NSMutableDictionary" key="IBDocument.Metadata">
-			<bool key="EncodedWithXMLCoder">YES</bool>
-			<object class="NSArray" key="dict.sortedKeys" id="0">
-				<bool key="EncodedWithXMLCoder">YES</bool>
-			</object>
-			<object class="NSMutableArray" key="dict.values">
-				<bool key="EncodedWithXMLCoder">YES</bool>
-			</object>
+			<string key="NS.key.0">PluginDependencyRecalculationVersion</string>
+			<integer value="1" key="NS.object.0"/>
 		</object>
 		<object class="NSMutableArray" key="IBDocument.RootObjects" id="672049093">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -303,13 +298,13 @@
 											<object class="NSTextField" id="921169328">
 												<reference key="NSNextResponder" ref="912828137"/>
 												<int key="NSvFlags">256</int>
-												<string key="NSFrame">{{57, 225}, {82, 17}}</string>
+												<string key="NSFrame">{{14, 225}, {125, 17}}</string>
 												<reference key="NSSuperview" ref="912828137"/>
 												<bool key="NSEnabled">YES</bool>
 												<object class="NSTextFieldCell" key="NSCell" id="694788583">
 													<int key="NSCellFlags">67239424</int>
 													<int key="NSCellFlags2">71303168</int>
-													<string key="NSContents">Password:</string>
+													<string key="NSContents">Server Password:</string>
 													<reference key="NSSupport" ref="788253527"/>
 													<reference key="NSControlView" ref="921169328"/>
 													<reference key="NSBackgroundColor" ref="719856035"/>
@@ -587,7 +582,7 @@
 												<object class="NSTextFieldCell" key="NSCell" id="485298007">
 													<int key="NSCellFlags">67239424</int>
 													<int key="NSCellFlags2">71303168</int>
-													<string key="NSContents">Nickserv Password:</string>
+													<string key="NSContents">Password:</string>
 													<reference key="NSSupport" ref="788253527"/>
 													<reference key="NSControlView" ref="728843887"/>
 													<reference key="NSBackgroundColor" ref="719856035"/>
@@ -2748,7 +2743,9 @@
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<object class="IBObjectRecord">
 						<int key="objectID">0</int>
-						<reference key="object" ref="0"/>
+						<object class="NSArray" key="object" id="0">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+						</object>
 						<reference key="children" ref="672049093"/>
 						<nil key="parent"/>
 					</object>
@@ -4640,9 +4637,9 @@
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>{{733, 479}, {409, 512}}</string>
+					<string>{{1277, 682}, {409, 512}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{733, 479}, {409, 512}}</string>
+					<string>{{1277, 682}, {409, 512}}</string>
 					<boolean value="YES"/>
 					<boolean value="YES"/>
 					<string>{213, 107}</string>
@@ -6344,6 +6341,7 @@
 							<string>onAddKeyword:</string>
 							<string>onChangedTheme:</string>
 							<string>onChangedTransparency:</string>
+							<string>onInputSelectFont:</string>
 							<string>onLayoutChanged:</string>
 							<string>onOpenThemePath:</string>
 							<string>onOverrideFontChanged:</string>
@@ -6352,6 +6350,7 @@
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -6371,6 +6370,7 @@
 							<string>onAddKeyword:</string>
 							<string>onChangedTheme:</string>
 							<string>onChangedTransparency:</string>
+							<string>onInputSelectFont:</string>
 							<string>onLayoutChanged:</string>
 							<string>onOpenThemePath:</string>
 							<string>onOverrideFontChanged:</string>
@@ -6393,6 +6393,10 @@
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">onChangedTransparency:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">onInputSelectFont:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -7986,6 +7990,10 @@
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencies">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>
 			<integer value="1050" key="NS.object.0"/>
+		</object>
+		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencyDefaults">
+			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>
+			<integer value="1060" key="NS.object.0"/>
 		</object>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDevelopmentDependencies">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.InterfaceBuilder3</string>
