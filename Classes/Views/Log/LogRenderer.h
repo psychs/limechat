@@ -5,6 +5,7 @@
 
 
 NSString* logEscape(NSString* s);
+NSString* tagEscape(NSString* s);
 
 
 @interface LogRenderer : NSObject

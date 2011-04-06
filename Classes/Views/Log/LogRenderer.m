@@ -69,6 +69,11 @@ NSString* logEscape(NSString* s)
 	return [s stringByReplacingOccurrencesOfString:@"  " withString:@" &nbsp;"];
 }
 
+NSString* tagEscape(NSString* s)
+{
+	return [s gtm_stringByEscapingForHTML];
+}
+
 static NSString* renderRange(NSString* body, attr_t attr, int start, int len)
 {
 	NSString* content = [body substringWithRange:NSMakeRange(start, len)];

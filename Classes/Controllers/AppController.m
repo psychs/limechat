@@ -4,16 +4,17 @@
 #import "AppController.h"
 #import <Carbon/Carbon.h>
 #import "Preferences.h"
-#import "IRCTreeItem.h"
-#import "NSDictionaryHelper.h"
 #import "IRC.h"
+#import "IRCTreeItem.h"
 #import "IRCWorld.h"
 #import "IRCClient.h"
 #import "ViewTheme.h"
 #import "MemberListViewCell.h"
+#import "ImageDownloadManager.h"
 #import "OnigRegexp.h"
 #import "NSPasteboardHelper.h"
 #import "NSStringHelper.h"
+#import "NSDictionaryHelper.h"
 #import "NSLocaleHelper.h"
 
 
@@ -183,6 +184,8 @@
 	
 	inputHistory = [InputHistory new];
 
+	[ImageDownloadManager instance].world = world;
+
 	[self registerKeyHandlers];
 }
 
@@ -310,6 +313,7 @@
 	[dcc terminate];
 	[world terminate];
 	[menu terminate];
+	[ImageDownloadManager disposeInstance];
 	[NSApp unregisterHotKey];
 	[self saveWindowState];
 }

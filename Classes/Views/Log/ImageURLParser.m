@@ -7,17 +7,23 @@
 
 @implementation ImageURLParser
 
-+ (NSString*)imageURLForURL:(NSString*)url
++ (BOOL)isImageFileURL:(NSString*)url
 {
 	NSString* lowerUrl = [url lowercaseString];
-	if ([lowerUrl hasSuffix:@".jpg"]
-		|| [lowerUrl hasSuffix:@".jpeg"]
-		|| [lowerUrl hasSuffix:@".png"]
-		|| [lowerUrl hasSuffix:@".gif"]
-		|| [lowerUrl hasSuffix:@".svg"]) {
-		return url;
-	}
+	return [lowerUrl hasSuffix:@".jpg"]
+			|| [lowerUrl hasSuffix:@".jpeg"]
+			|| [lowerUrl hasSuffix:@".png"]
+			|| [lowerUrl hasSuffix:@".gif"]
+			|| [lowerUrl hasSuffix:@".svg"];
+}
 
++ (BOOL)isImageURL:(NSString*)url
+{
+	return [self isImageURL:url] || [self serviceImageURLForURL:url] != nil;
+}
+
++ (NSString*)serviceImageURLForURL:(NSString*)url
+{
 	NSString* encodedUrl = [url encodeURIFragment];
 	NSURL* u = [NSURL URLWithString:encodedUrl];
 	NSString* host = [u.host lowercaseString];
