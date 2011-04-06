@@ -7,14 +7,14 @@
     <language>en-us</language>
 
     <item>
-      <title>2.18</title>
-      <link>http://limechat.net/mac/#v2.18</link>
-      <pubDate>Sun, 20 Mar 2011 14:51:00 -0700</pubDate>
+      <title>2.19</title>
+      <link>http://limechat.net/mac/#v2.19</link>
+      <pubDate>Wed, 06 Apr 2011 11:50:00 -0700</pubDate>
       <content:encoded><![CDATA[
   			<ul>
-          <li>Add flic.kr support to inline images.</li>
-          <li>Use smaller preview images to reduce memory usage.</li>
-          <li>Fixed crashing issues when received malformed image URLs.</li>
+          <li>SASL support.</li>
+          <li>Prevent from loading big images.</li>
+          <li>Improved nick completion to work even when the input text field is empty.</li>
         </ul>
       ]]></content:encoded>
     </item>

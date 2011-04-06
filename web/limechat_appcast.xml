@@ -7,7 +7,7 @@
     <language>en</language>
     
     <item>
-      <title>LimeChat 2.18</title>
+      <title>LimeChat 2.19</title>
       <description><![CDATA[
         <html>
         <body>
@@ -22,19 +22,19 @@
             margin: 0.2em 0;
           }
         </style>
-        <h1>LimeChat 2.18</h1>
+        <h1>LimeChat 2.19</h1>
         <ul>
-          <li>Add flic.kr support to inline images.</li>
-          <li>Use smaller preview images to reduce memory usage.</li>
-          <li>Fixed crashing issues when received malformed image URLs.</li>
+          <li>SASL support.</li>
+          <li>Prevent from loading big images.</li>
+          <li>Improved nick completion to work even when the input text field is empty.</li>
         </ul>
         </body>
         </html>
       ]]></description>
-      <pubDate>Sun, 20 Mar 2011 14:48:49 -0700</pubDate>
-      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/LimeChat_2.18.tbz"
-                  sparkle:version="2.18" length="1568561" type="application/octet-stream"
-                  sparkle:dsaSignature="MC0CFB+wZaCtt8eMoEQkoG/4XB1fFFgGAhUAhlKkiQ7R34E30JEjNDrpPyU18zc="/>
+      <pubDate>Wed, 06 Apr 2011 11:46:45 -0700</pubDate>
+      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/LimeChat_2.19.tbz"
+                  sparkle:version="2.19" length="1576206" type="application/octet-stream"
+                  sparkle:dsaSignature="MC0CFCzYbNzk3HgzOYK0C8JLGeGf0HbGAhUAwN5NxlgdyaI7GcVhhVgH87mvxNY="/>
     </item>
     
   </channel>
