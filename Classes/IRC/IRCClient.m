@@ -32,7 +32,6 @@
 static NSDateFormatter* dateTimeFormatter = nil;
 
 
-
 @interface IRCClient (Private)
 - (void)setKeywordState:(id)target;
 - (void)setNewTalkState:(id)target;
