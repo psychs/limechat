@@ -7,12 +7,12 @@
     <language>en-us</language>
 
     <item>
-      <title>2.20</title>
-      <link>http://limechat.net/mac/#v2.20</link>
-      <pubDate>Wed, 06 Apr 2011 19:09:00 -0700</pubDate>
+      <title>2.21</title>
+      <link>http://limechat.net/mac/#v2.21</link>
+      <pubDate>Wed, 06 Apr 2011 19:59:00 -0700</pubDate>
       <content:encoded><![CDATA[
   			<ul>
-          <li>Fixed a compatibility issue with some servers.</li>
+          <li>Added use SASL option in server property dialog.</li>
         </ul>
       ]]></content:encoded>
     </item>
