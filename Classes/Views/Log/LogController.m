@@ -310,7 +310,7 @@
 	if (!loaded) return;
 	
 	if (contentLength > INLINE_IMAGE_MAX_SIZE) {
-		LOG(@"Ignore image link: %@ (%qi bytes)", url, contentLength);
+		LOG(@"Ignore too big image: %@ (%qi bytes)", url, contentLength);
 		return;
 	}
 	
@@ -524,11 +524,27 @@
 		
 		for (NSValue* rangeValue in urlRanges) {
 			NSString* url = [line.body substringWithRange:[rangeValue rangeValue]];
+			
+			BOOL isFileURL = NO;
+			BOOL checkingSize = NO;
+			
 			if ([ImageURLParser isImageFileURL:url]) {
-				[[ImageDownloadManager instance] checkImageSize:url client:client channel:channel lineNumber:lineNumber imageIndex:imageIndex];
+				isFileURL = YES;
+				if (![url hasPrefix:@"http://gyazo.com/"]) {
+					checkingSize = YES;
+					[[ImageDownloadManager instance] checkImageSize:url client:client channel:channel lineNumber:lineNumber imageIndex:imageIndex];
+				}
 			}
-			else {
-				NSString* imageUrl = [ImageURLParser serviceImageURLForURL:url];
+			
+			if (!checkingSize) {
+				NSString* imageUrl = nil;
+				if (isFileURL) {
+					imageUrl = url;
+				}
+				else {
+					imageUrl = [ImageURLParser serviceImageURLForURL:url];
+				}
+				
 				if (imageUrl) {
 					if (!showInlineImage) {
 						[s appendString:@"<br/>"];
