@@ -3698,14 +3698,14 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	if (!user.length) user = config.nick;
 	if (!realName.length) realName = config.nick;
 	
-	if (config.nick.length && user && (config.nickPassword.length || config.password.length)) {
-		[self send:CAP, @"REQ", @"sasl", nil];
-	}
-	
 	if (config.password.length) [self send:PASS, config.password, nil];
 	
 	[self send:NICK, sentNick, nil];
 	[self send:USER, user, [NSString stringWithFormat:@"%d", modeParam], @"*", realName, nil];
+	
+	if (config.nick.length && user && (config.nickPassword.length || config.password.length)) {
+		[self send:CAP, @"REQ", @"sasl", nil];
+	}
 	
 	[self updateClientTitle];
 }
