@@ -3693,12 +3693,11 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	int modeParam = config.invisibleMode ? 8 : 0;
 	NSString* user = config.username;
 	NSString* realName = config.realName;
-	
 	if (!user.length) user = config.nick;
 	if (!realName.length) realName = config.nick;
 	
 	if (config.useSASL) {
-		if (config.nick.length && user && config.nickPassword.length) {
+		if (config.nick.length && config.nickPassword.length) {
 			[self send:CAP, @"REQ", @"sasl", nil];
 		}
 	}
