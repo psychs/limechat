@@ -14,7 +14,7 @@
 
 
 #define BOTTOM_EPSILON			20
-#define INLINE_IMAGE_MAX_SIZE	(256 * 1024)
+#define INLINE_IMAGE_MAX_SIZE	(1024 * 1024)
 
 
 @interface NSScrollView (Private)
