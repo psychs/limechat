@@ -76,7 +76,6 @@
 - (void)cancel:(id)sender;
 
 - (void)hostComboChanged:(id)sender;
-- (void)nickPasswordTextChanged:(id)sender;
 
 - (void)encodingChanged:(id)sender;
 - (void)proxyChanged:(id)sender;
