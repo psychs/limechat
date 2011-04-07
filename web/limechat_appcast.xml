@@ -7,7 +7,7 @@
     <language>en</language>
     
     <item>
-      <title>LimeChat 2.19</title>
+      <title>LimeChat 2.20</title>
       <description><![CDATA[
         <html>
         <body>
@@ -22,19 +22,17 @@
             margin: 0.2em 0;
           }
         </style>
-        <h1>LimeChat 2.19</h1>
+        <h1>LimeChat 2.20</h1>
         <ul>
-          <li>SASL support.</li>
-          <li>Prevent from loading big images.</li>
-          <li>Improved nick completion to work even when the input text field is empty.</li>
+          <li>Fixed a compatibility issue with some servers.</li>
         </ul>
         </body>
         </html>
       ]]></description>
-      <pubDate>Wed, 06 Apr 2011 11:46:45 -0700</pubDate>
-      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/LimeChat_2.19.tbz"
-                  sparkle:version="2.19" length="1576206" type="application/octet-stream"
-                  sparkle:dsaSignature="MC0CFCzYbNzk3HgzOYK0C8JLGeGf0HbGAhUAwN5NxlgdyaI7GcVhhVgH87mvxNY="/>
+      <pubDate>Wed, 06 Apr 2011 19:00:56 -0700</pubDate>
+      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/LimeChat_2.20.tbz"
+                  sparkle:version="2.20" length="1576852" type="application/octet-stream"
+                  sparkle:dsaSignature="MC0CFQCdROUNle6iSab1hOi1LyR6b/L3KwIUfJMrdYAKm48PDSvbOckC/dC+Ymw="/>
     </item>
     
   </channel>
