@@ -3029,7 +3029,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		NSString* user = config.username;
 		NSString* pass = config.nickPassword;
 		if (!user.length) user = config.nick;
-		if (!pass.length) pass = config.password;
+		if (!pass.length) pass = @"";
 		
 		NSString* base = [NSString stringWithFormat:@"%@\0%@\0%@", config.nick, user, pass];
 		NSData* data = [base dataUsingEncoding:encoding];
@@ -3697,14 +3697,18 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	if (!user.length) user = config.nick;
 	if (!realName.length) realName = config.nick;
 	
-	if (config.password.length) [self send:PASS, config.password, nil];
+	if (config.useSASL) {
+		if (config.nick.length && user && config.nickPassword.length) {
+			[self send:CAP, @"REQ", @"sasl", nil];
+		}
+	}
+	
+	if (config.password.length) {
+		[self send:PASS, config.password, nil];
+	}
 	
 	[self send:NICK, sentNick, nil];
 	[self send:USER, user, [NSString stringWithFormat:@"%d", modeParam], @"*", realName, nil];
-	
-	if (config.nick.length && user && (config.nickPassword.length || config.password.length)) {
-		[self send:CAP, @"REQ", @"sasl", nil];
-	}
 	
 	[self updateClientTitle];
 }

@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="6"/>
+			<integer value="9"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -554,7 +554,7 @@
 											<object class="NSButton" id="458615225">
 												<reference key="NSNextResponder" ref="912828137"/>
 												<int key="NSvFlags">268</int>
-												<string key="NSFrame">{{217, 255}, {117, 18}}</string>
+												<string key="NSFrame">{{217, 255}, {173, 18}}</string>
 												<reference key="NSSuperview" ref="912828137"/>
 												<bool key="NSEnabled">YES</bool>
 												<object class="NSButtonCell" key="NSCell" id="259090245">
@@ -587,6 +587,28 @@
 													<reference key="NSControlView" ref="728843887"/>
 													<reference key="NSBackgroundColor" ref="719856035"/>
 													<reference key="NSTextColor" ref="471903258"/>
+												</object>
+											</object>
+											<object class="NSButton" id="513354672">
+												<reference key="NSNextResponder" ref="912828137"/>
+												<int key="NSvFlags">268</int>
+												<string key="NSFrame">{{274, 68}, {116, 18}}</string>
+												<reference key="NSSuperview" ref="912828137"/>
+												<bool key="NSEnabled">YES</bool>
+												<object class="NSButtonCell" key="NSCell" id="864545368">
+													<int key="NSCellFlags">-2080244224</int>
+													<int key="NSCellFlags2">0</int>
+													<string key="NSContents">Use SASL</string>
+													<reference key="NSSupport" ref="788253527"/>
+													<reference key="NSControlView" ref="513354672"/>
+													<int key="NSButtonFlags">1211912703</int>
+													<int key="NSButtonFlags2">2</int>
+													<reference key="NSNormalImage" ref="1005416969"/>
+													<reference key="NSAlternateImage" ref="335051110"/>
+													<string key="NSAlternateContents"/>
+													<string key="NSKeyEquivalent"/>
+													<int key="NSPeriodicDelay">200</int>
+													<int key="NSPeriodicInterval">25</int>
 												</object>
 											</object>
 										</object>
@@ -2737,6 +2759,22 @@
 					</object>
 					<int key="connectionID">1058</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">delegate</string>
+						<reference key="source" ref="307098088"/>
+						<reference key="destination" ref="108852464"/>
+					</object>
+					<int key="connectionID">1067</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">saslCheck</string>
+						<reference key="source" ref="108852464"/>
+						<reference key="destination" ref="513354672"/>
+					</object>
+					<int key="connectionID">1068</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -2837,6 +2875,7 @@
 							<reference ref="312433823"/>
 							<reference ref="640853772"/>
 							<reference ref="250491753"/>
+							<reference ref="513354672"/>
 						</object>
 						<reference key="parent" ref="376318744"/>
 					</object>
@@ -4164,6 +4203,20 @@
 						<reference key="object" ref="581023760"/>
 						<reference key="parent" ref="700175597"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1063</int>
+						<reference key="object" ref="513354672"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="864545368"/>
+						</object>
+						<reference key="parent" ref="912828137"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1064</int>
+						<reference key="object" ref="864545368"/>
+						<reference key="parent" ref="513354672"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -4202,6 +4255,8 @@
 					<string>1060.IBPluginDependency</string>
 					<string>1061.IBPluginDependency</string>
 					<string>1062.IBPluginDependency</string>
+					<string>1063.IBPluginDependency</string>
+					<string>1064.IBPluginDependency</string>
 					<string>11.IBPluginDependency</string>
 					<string>11.ImportedFromIB2</string>
 					<string>110.IBPluginDependency</string>
@@ -4523,6 +4578,8 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
@@ -4819,7 +4876,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">1062</int>
+			<int key="maxID">1068</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -6017,6 +6074,13 @@
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSObject</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">Classes/Library/ImageSizeCheckClient.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
 					<object class="NSMutableDictionary" key="actions">
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
@@ -6513,11 +6577,13 @@
 							<string>editIgnore:</string>
 							<string>encodingChanged:</string>
 							<string>hostComboChanged:</string>
+							<string>nickPasswordTextChanged:</string>
 							<string>ok:</string>
 							<string>proxyChanged:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -6544,6 +6610,7 @@
 							<string>editIgnore:</string>
 							<string>encodingChanged:</string>
 							<string>hostComboChanged:</string>
+							<string>nickPasswordTextChanged:</string>
 							<string>ok:</string>
 							<string>proxyChanged:</string>
 						</object>
@@ -6583,6 +6650,10 @@
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">hostComboChanged:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">nickPasswordTextChanged:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -6628,6 +6699,7 @@
 							<string>proxyPortText</string>
 							<string>proxyUserText</string>
 							<string>realNameText</string>
+							<string>saslCheck</string>
 							<string>sslCheck</string>
 							<string>tab</string>
 							<string>userInfoText</string>
@@ -6664,6 +6736,7 @@
 							<string>NSTextField</string>
 							<string>NSTextField</string>
 							<string>NSTextField</string>
+							<string>NSButton</string>
 							<string>NSButton</string>
 							<string>NSTabView</string>
 							<string>NSTextField</string>
@@ -6703,6 +6776,7 @@
 							<string>proxyPortText</string>
 							<string>proxyUserText</string>
 							<string>realNameText</string>
+							<string>saslCheck</string>
 							<string>sslCheck</string>
 							<string>tab</string>
 							<string>userInfoText</string>
@@ -6825,6 +6899,10 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">realNameText</string>
 								<string key="candidateClassName">NSTextField</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">saslCheck</string>
+								<string key="candidateClassName">NSButton</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">sslCheck</string>

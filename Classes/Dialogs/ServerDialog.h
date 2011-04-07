@@ -29,6 +29,7 @@
 	IBOutlet NSTextField* usernameText;
 	IBOutlet NSTextField* realNameText;
 	IBOutlet NSTextField* nickPasswordText;
+	IBOutlet NSButton* saslCheck;
 	IBOutlet NSTextField* altNicksText;
 	
 	IBOutlet NSTextField* leavingCommentText;
@@ -75,6 +76,7 @@
 - (void)cancel:(id)sender;
 
 - (void)hostComboChanged:(id)sender;
+- (void)nickPasswordTextChanged:(id)sender;
 
 - (void)encodingChanged:(id)sender;
 - (void)proxyChanged:(id)sender;

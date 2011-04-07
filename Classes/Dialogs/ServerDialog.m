@@ -112,6 +112,7 @@
 	usernameText.stringValue = config.username;
 	realNameText.stringValue = config.realName;
 	nickPasswordText.stringValue = config.nickPassword;
+	saslCheck.state = config.useSASL;
 	if (config.altNicks.count) {
 		altNicksText.stringValue = [config.altNicks componentsJoinedByString:@" "];
 	}
@@ -149,6 +150,7 @@
 	config.username = usernameText.stringValue;
 	config.realName = realNameText.stringValue;
 	config.nickPassword = nickPasswordText.stringValue;
+	config.useSASL = saslCheck.state;
 	
 	NSArray* nicks = [altNicksText.stringValue componentsSeparatedByString:@" "];
 	[config.altNicks removeAllObjects];
@@ -187,9 +189,13 @@
 	NSString* host = [hostCombo stringValue];
 	int port = [portText intValue];
 	NSString* nick = [nickText stringValue];
+	NSString* nickPassword = [nickPasswordText stringValue];
 	
-	BOOL enabled = name.length > 0 && host.length > 0 && ![host isEqualToString:@"-"] && port > 0 && nick.length > 0;
+	BOOL enabled = name.length && host.length && ![host isEqualToString:@"-"] && port > 0 && nick.length;
 	[okButton setEnabled:enabled];
+	
+	BOOL saslEnabled = nickPassword.length > 0;
+	[saslCheck setEnabled:saslEnabled];
 }
 
 - (void)updateChannelsPage
