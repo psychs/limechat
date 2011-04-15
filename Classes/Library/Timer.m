@@ -22,7 +22,7 @@
 
 - (void)dealloc
 {
-	[self stop];
+	[timer release];
 	[super dealloc];
 }
 
@@ -41,6 +41,8 @@
 
 - (void)stop
 {
+	[[self retain] autorelease];
+	
 	[timer invalidate];
 	[timer release];
 	timer = nil;
