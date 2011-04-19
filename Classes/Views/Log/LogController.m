@@ -161,7 +161,6 @@
 
 - (void)moveToBottom
 {
-	/*
 	movingToBottom = NO;
 	
 	if (!loaded) return;
@@ -169,7 +168,6 @@
 	if (!doc) return;
 	DOMHTMLElement* body = [doc body];
 	[body setValue:[body valueForKey:@"scrollHeight"] forKey:@"scrollTop"];
-	 */
 }
 
 - (BOOL)viewingBottom
@@ -190,11 +188,9 @@
 
 - (void)savePosition
 {
-	/*
 	if (loadingImages == 0) {
 		bottom = [self viewingBottom];
 	}
-	 */
 }
 
 - (void)restorePosition
