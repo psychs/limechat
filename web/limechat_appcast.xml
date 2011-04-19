@@ -7,7 +7,7 @@
     <language>en</language>
     
     <item>
-      <title>LimeChat 2.21</title>
+      <title>LimeChat 2.22</title>
       <description><![CDATA[
         <html>
         <body>
@@ -22,17 +22,19 @@
             margin: 0.2em 0;
           }
         </style>
-        <h1>LimeChat 2.21</h1>
+        <h1>LimeChat 2.22</h1>
         <ul>
-          <li>Added use SASL option in server property dialog.</li>
+          <li>Fixed the auto scroll problem.</li>
+          <li>Added pong interval option.</li>
+          <li>Refined preferences dialog.</li>
         </ul>
         </body>
         </html>
       ]]></description>
-      <pubDate>Wed, 06 Apr 2011 19:57:21 -0700</pubDate>
-      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/LimeChat_2.21.tbz"
-                  sparkle:version="2.21" length="1576856" type="application/octet-stream"
-                  sparkle:dsaSignature="MC0CFDNi1sTqPNl4G4lvBKxSK28lWbT8AhUAloUp/A1ewNQS5VW8xzs3/RY3SmU="/>
+      <pubDate>Tue, 19 Apr 2011 10:39:46 -0700</pubDate>
+      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/LimeChat_2.22.tbz"
+                  sparkle:version="2.22" length="1578739" type="application/octet-stream"
+                  sparkle:dsaSignature="MC0CFAxxEUlKovXaVK4nwg08XIi3shCYAhUAwaxd6iPzW7DIWbTBDuRV2ImCoo8="/>
     </item>
     
   </channel>
