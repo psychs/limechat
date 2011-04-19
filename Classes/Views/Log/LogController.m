@@ -161,6 +161,7 @@
 
 - (void)moveToBottom
 {
+	/*
 	movingToBottom = NO;
 	
 	if (!loaded) return;
@@ -168,6 +169,7 @@
 	if (!doc) return;
 	DOMHTMLElement* body = [doc body];
 	[body setValue:[body valueForKey:@"scrollHeight"] forKey:@"scrollTop"];
+	 */
 }
 
 - (BOOL)viewingBottom
@@ -188,26 +190,32 @@
 
 - (void)savePosition
 {
+	/*
 	if (loadingImages == 0) {
 		bottom = [self viewingBottom];
 	}
+	 */
 }
 
 - (void)restorePosition
 {
+	/*
 	if (bottom) {
 		[self moveToBottom];
 	}
+	 */
 }
 
 - (void)restorePositionWithDelay
 {
+	/*
 	if (bottom) {
 		if (!movingToBottom) {
 			movingToBottom = YES;
 			[self performSelector:@selector(moveToBottom) withObject:nil afterDelay:0];
 		}
 	}
+	 */
 }
 
 - (void)mark
@@ -844,12 +852,10 @@
 	loadingImages = 0;
 	[self setUpScroller];
 	
-	/*
 	if (!autoScroller) {
 		autoScroller = [WebViewAutoScroll new];
 	}
 	autoScroller.webFrame = view.mainFrame.frameView;
-	*/
 	
 	if (html) {
 		DOMHTMLDocument* doc = (DOMHTMLDocument*)[[view mainFrame] DOMDocument];
