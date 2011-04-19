@@ -7,7 +7,7 @@
     <language>en</language>
     
     <item>
-      <title>LimeChat 2.22</title>
+      <title>LimeChat 2.23</title>
       <description><![CDATA[
         <html>
         <body>
@@ -22,7 +22,7 @@
             margin: 0.2em 0;
           }
         </style>
-        <h1>LimeChat 2.22</h1>
+        <h1>LimeChat 2.23</h1>
         <ul>
           <li>Fixed the auto scroll problem.</li>
           <li>Added pong interval option.</li>
@@ -31,10 +31,10 @@
         </body>
         </html>
       ]]></description>
-      <pubDate>Tue, 19 Apr 2011 10:39:46 -0700</pubDate>
-      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/LimeChat_2.22.tbz"
-                  sparkle:version="2.22" length="1578739" type="application/octet-stream"
-                  sparkle:dsaSignature="MC0CFAxxEUlKovXaVK4nwg08XIi3shCYAhUAwaxd6iPzW7DIWbTBDuRV2ImCoo8="/>
+      <pubDate>Tue, 19 Apr 2011 10:58:53 -0700</pubDate>
+      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/LimeChat_2.23.tbz"
+                  sparkle:version="2.23" length="1579799" type="application/octet-stream"
+                  sparkle:dsaSignature="MC0CFQCXqjeoYBN/hZ+Vzxgf5tEYI12TJwIUOhkcYdvl8BEnIGXzw+h+sjuCo0o="/>
     </item>
     
   </channel>
