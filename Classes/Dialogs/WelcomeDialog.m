@@ -70,6 +70,9 @@
 
 - (void)onOK:(id)sender
 {
+	[self.window endEditingFor:nil];
+	
+	/*
 	NSText* fieldEditor = [self.window fieldEditor:NO forObject:channelTable];
 	if (fieldEditor) {
 		[[channelTable cell] endEditing:fieldEditor];
@@ -81,6 +84,7 @@
 			}
 		}
 	}
+	 */
 	
 	NSMutableSet* set = [NSMutableSet set];
 	NSMutableArray* chans = [NSMutableArray array];
