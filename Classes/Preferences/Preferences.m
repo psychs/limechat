@@ -307,6 +307,22 @@
 }
 
 #pragma mark -
+#pragma mark Connectivity
+
++ (int)pongInterval
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	return [ud integerForKey:@"Preferences.Advanced.pongInterval"];
+}
+
++ (void)setPongInterval:(int)value
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	[ud setInteger:value forKey:@"Preferences.Advanced.pongInterval"];
+	[ud synchronize];
+}
+
+#pragma mark -
 #pragma mark Max Log Lines
 
 + (int)maxLogLines
@@ -828,6 +844,7 @@ static NSMutableArray* excludeWords;
 	[d setDouble:1 forKey:@"Preferences.Theme.transparency"];
 	[d setInt:1096 forKey:@"Preferences.Dcc.first_port"];
 	[d setInt:1115 forKey:@"Preferences.Dcc.last_port"];
+	[d setInt:60 forKey:@"Preferences.Advanced.pongInterval"];
 	[d setInt:300 forKey:@"Preferences.General.max_log_lines"];
 	[d setObject:@"~/Documents/LimeChat Transcripts" forKey:@"Preferences.General.transcript_folder"];
 	[d setInt:0 forKey:@"Preferences.General.hotkey_key_code"];

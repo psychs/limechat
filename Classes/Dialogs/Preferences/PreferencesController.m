@@ -11,6 +11,7 @@
 #define LINES_MIN			100
 #define PORT_MIN			1024
 #define PORT_MAX			65535
+#define PONG_INTERVAL_MIN	20
 
 
 @interface PreferencesController (Private)
@@ -137,6 +138,16 @@
 	[Preferences setMaxLogLines:value];
 }
 
+- (int)pongInterval
+{
+	return [Preferences pongInterval];
+}
+
+- (void)setPongInterval:(int)value
+{
+	[Preferences setPongInterval:value];
+}
+
 - (BOOL)validateValue:(id *)value forKey:(NSString *)key error:(NSError **)error
 {
 	if ([key isEqualToString:@"maxLogLines"]) {
@@ -161,6 +172,12 @@
 		}
 		else if (PORT_MAX < n) {
 			*value = [NSNumber numberWithInt:PORT_MAX];
+		}
+	}
+	else if ([key isEqualToString:@"pongInterval"]) {
+		int n = [*value intValue];
+		if (n < PONG_INTERVAL_MIN) {
+			*value = [NSNumber numberWithInt:PONG_INTERVAL_MIN];
 		}
 	}
 	return YES;
@@ -490,6 +507,8 @@
 
 - (void)windowWillClose:(NSNotification *)note
 {
+	[self.window endEditingFor:nil];
+	
 	[Preferences cleanUpWords];
 	[[NSUserDefaults standardUserDefaults] synchronize];
 	

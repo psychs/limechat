@@ -64,6 +64,7 @@ typedef enum {
 	NSString* joinMyAddress;
 	NSString* myAddress;
 	CFAbsoluteTime lastCTCPTime;
+	int pongInterval;
 	
 	Timer* pongTimer;
 	Timer* quitTimer;

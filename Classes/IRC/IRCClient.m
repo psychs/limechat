@@ -20,7 +20,6 @@
 #define MAX_BODY_LEN		480
 #define TIME_BUFFER_SIZE	256
 
-#define PONG_INTERVAL		130
 #define QUIT_INTERVAL		5
 #define RECONNECT_INTERVAL	20
 #define RETRY_INTERVAL		240
@@ -33,6 +32,9 @@ static NSDateFormatter* dateTimeFormatter = nil;
 
 
 @interface IRCClient (Private)
+- (void)startPongTimer;
+- (void)stopPongTimer;
+
 - (void)setKeywordState:(id)target;
 - (void)setNewTalkState:(id)target;
 - (void)setUnreadState:(id)target;
@@ -362,6 +364,16 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		}
 	}
 	
+	if (isLoggedIn) {
+		if (pongInterval != [Preferences pongInterval]) {
+			if (serverHostname.length) {
+				[self send:PONG, serverHostname, nil];
+			}
+			[self stopPongTimer];
+			[self startPongTimer];
+		}
+	}
+	
 	for (IRCChannel* c in channels) {
 		[c preferencesChanged];
 	}
@@ -419,9 +431,11 @@ static NSDateFormatter* dateTimeFormatter = nil;
 
 - (void)startPongTimer
 {
+	if (!isLoggedIn) return;
 	if (pongTimer.isActive) return;
 	
-	[pongTimer start:PONG_INTERVAL];
+	pongInterval = [Preferences pongInterval];
+	[pongTimer start:pongInterval];
 }
 
 - (void)stopPongTimer
@@ -3042,12 +3056,6 @@ static NSDateFormatter* dateTimeFormatter = nil;
 {
 	if (isLoggedIn) return;
 	
-	[self startPongTimer];
-	[self stopRetryTimer];
-	[self stopAutoJoinTimer];
-	
-	[world expandClient:self];
-	
 	isLoggedIn = YES;
 	conn.loggedIn = YES;
 	tryingNickNumber = -1;
@@ -3055,6 +3063,12 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	registeringToNickServ = NO;
 	inWhois = NO;
 	inList = NO;
+	
+	[self startPongTimer];
+	[self stopRetryTimer];
+	[self stopAutoJoinTimer];
+	
+	[world expandClient:self];
 	
 	[serverHostname release];
 	serverHostname = [m.sender.raw retain];

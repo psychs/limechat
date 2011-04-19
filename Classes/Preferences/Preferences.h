@@ -85,6 +85,9 @@ typedef enum {
 + (int)dccLastPort;
 + (void)setDccLastPort:(int)value;
 
++ (int)pongInterval;
++ (void)setPongInterval:(int)value;
+
 + (int)maxLogLines;
 + (void)setMaxLogLines:(int)value;
 
