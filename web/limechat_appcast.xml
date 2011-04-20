@@ -32,9 +32,9 @@
         </html>
       ]]></description>
       <pubDate>Tue, 19 Apr 2011 10:58:53 -0700</pubDate>
-      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/LimeChat_2.23.tbz"
-                  sparkle:version="2.23" length="1579799" type="application/octet-stream"
-                  sparkle:dsaSignature="MC0CFQCXqjeoYBN/hZ+Vzxgf5tEYI12TJwIUOhkcYdvl8BEnIGXzw+h+sjuCo0o="/>
+      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/LimeChat_2.23a.tbz"
+                  sparkle:version="2.23" length="1886262" type="application/octet-stream"
+                  sparkle:dsaSignature="MCwCFEZhVffWSLV++MSQrBdHmGsCtYzDAhRtik8Wu3fjXy5sqHT0Gotrwm7+iA=="/>
     </item>
     
   </channel>
