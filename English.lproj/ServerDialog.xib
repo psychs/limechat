@@ -576,13 +576,13 @@
 											<object class="NSTextField" id="728843887">
 												<reference key="NSNextResponder" ref="912828137"/>
 												<int key="NSvFlags">256</int>
-												<string key="NSFrame">{{14, 67}, {125, 19}}</string>
+												<string key="NSFrame">{{7, 67}, {132, 19}}</string>
 												<reference key="NSSuperview" ref="912828137"/>
 												<bool key="NSEnabled">YES</bool>
 												<object class="NSTextFieldCell" key="NSCell" id="485298007">
 													<int key="NSCellFlags">67239424</int>
 													<int key="NSCellFlags2">71303168</int>
-													<string key="NSContents">Password:</string>
+													<string key="NSContents">Nickserv Password:</string>
 													<reference key="NSSupport" ref="788253527"/>
 													<reference key="NSControlView" ref="728843887"/>
 													<reference key="NSBackgroundColor" ref="719856035"/>
@@ -6577,13 +6577,11 @@
 							<string>editIgnore:</string>
 							<string>encodingChanged:</string>
 							<string>hostComboChanged:</string>
-							<string>nickPasswordTextChanged:</string>
 							<string>ok:</string>
 							<string>proxyChanged:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -6610,7 +6608,6 @@
 							<string>editIgnore:</string>
 							<string>encodingChanged:</string>
 							<string>hostComboChanged:</string>
-							<string>nickPasswordTextChanged:</string>
 							<string>ok:</string>
 							<string>proxyChanged:</string>
 						</object>
@@ -6650,10 +6647,6 @@
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">hostComboChanged:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">nickPasswordTextChanged:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
