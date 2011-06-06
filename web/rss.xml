@@ -7,14 +7,15 @@
     <language>en-us</language>
 
     <item>
-      <title>2.23</title>
-      <link>http://limechat.net/mac/#v2.23</link>
-      <pubDate>Tue, 19 Apr 2011 10:59:00 -0700</pubDate>
+      <title>2.24</title>
+      <link>http://limechat.net/mac/#v2.24</link>
+      <pubDate>Mon, 05 Jun 2011 22:13:00 -0700</pubDate>
       <content:encoded><![CDATA[
   			<ul>
-          <li>Fixed the auto scroll problem.</li>
-          <li>Added pong interval option.</li>
-          <li>Refined preferences dialog.</li>
+          <li>Fixed a bug in parsing mode.</li>
+          <li>Updated Limelight theme.</li>
+          <li>Use chat01.ustream.tv instead of chat1.ustream.tv.</li>
+          <li>Changed caption for Nickserv password.</li>
         </ul>
       ]]></content:encoded>
     </item>

@@ -7,7 +7,7 @@
     <language>en</language>
     
     <item>
-      <title>LimeChat 2.23</title>
+      <title>LimeChat 2.24</title>
       <description><![CDATA[
         <html>
         <body>
@@ -22,19 +22,20 @@
             margin: 0.2em 0;
           }
         </style>
-        <h1>LimeChat 2.23</h1>
+        <h1>LimeChat 2.24</h1>
         <ul>
-          <li>Fixed the auto scroll problem.</li>
-          <li>Added pong interval option.</li>
-          <li>Refined preferences dialog.</li>
+          <li>Fixed a bug in parsing mode.</li>
+          <li>Updated Limelight theme.</li>
+          <li>Use chat01.ustream.tv instead of chat1.ustream.tv.</li>
+          <li>Changed caption for Nickserv password.</li>
         </ul>
         </body>
         </html>
       ]]></description>
-      <pubDate>Tue, 19 Apr 2011 10:58:53 -0700</pubDate>
-      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/LimeChat_2.23a.tbz"
-                  sparkle:version="2.23" length="1886262" type="application/octet-stream"
-                  sparkle:dsaSignature="MCwCFEZhVffWSLV++MSQrBdHmGsCtYzDAhRtik8Wu3fjXy5sqHT0Gotrwm7+iA=="/>
+      <pubDate>Sun, 05 Jun 2011 22:10:04 -0700</pubDate>
+      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/LimeChat_2.24.tbz"
+                  sparkle:version="2.24" length="1886322" type="application/octet-stream"
+                  sparkle:dsaSignature="MCwCFBoYUTYe7kWVBjz+wOOlQMVSo9ZpAhR4I+VyyamHNRVhJ8i7gPuij+6qUA=="/>
     </item>
     
   </channel>
