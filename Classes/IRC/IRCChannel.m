@@ -276,6 +276,8 @@
 
 - (void)renameMember:(NSString*)fromNick to:(NSString*)toNick
 {
+    if ([fromNick isEqualToString:toNick]) return;
+    
 	int n = [self indexOfMember:fromNick];
 	if (n < 0) return;
 	
