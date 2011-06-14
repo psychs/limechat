@@ -14,7 +14,8 @@
 
 - (id)initWithCommand:(NSString*)aCommand
 {
-	if (self = [super init]) {
+	self = [super init];
+	if (self) {
 		command = [[aCommand uppercaseString] retain];
 		penalty = IRC_PENALTY_NORMAL;
 		completeColon = YES;

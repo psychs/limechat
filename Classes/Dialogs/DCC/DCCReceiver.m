@@ -33,7 +33,8 @@
 
 - (id)init
 {
-	if (self = [super init]) {
+	self = [super init];
+	if (self) {
 		speedRecords = [NSMutableArray new];
 	}
 	return self;
@@ -175,7 +176,7 @@
 			++i;
 		}
 		
-		[fm movePath:downloadFileName toPath:fullName handler:nil];
+		[fm moveItemAtPath:downloadFileName toPath:fullName error:NULL];
 		[downloadFileName release];
 		downloadFileName = [fullName retain];
 	}

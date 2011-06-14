@@ -19,7 +19,8 @@
 
 - (id)init
 {
-	if (self = [super init]) {
+	self = [super init];
+	if (self) {
 		[self parseLine:@""];
 	}
 	return self;
@@ -27,7 +28,8 @@
 
 - (id)initWithLine:(NSString*)line
 {
-	if (self = [super init]) {
+	self = [super init];
+	if (self) {
 		[self parseLine:line];
 	}
 	return self;

@@ -4,16 +4,17 @@
 #import "AppController.h"
 #import <Carbon/Carbon.h>
 #import "Preferences.h"
-#import "IRCTreeItem.h"
-#import "NSDictionaryHelper.h"
 #import "IRC.h"
+#import "IRCTreeItem.h"
 #import "IRCWorld.h"
 #import "IRCClient.h"
 #import "ViewTheme.h"
 #import "MemberListViewCell.h"
+#import "ImageDownloadManager.h"
 #import "OnigRegexp.h"
 #import "NSPasteboardHelper.h"
 #import "NSStringHelper.h"
+#import "NSDictionaryHelper.h"
 #import "NSLocaleHelper.h"
 
 
@@ -74,7 +75,7 @@
 	[wsnc addObserver:self selector:@selector(computerDidWakeUp:) name:NSWorkspaceDidWakeNotification object:nil];
 	[wsnc addObserver:self selector:@selector(computerWillPowerOff:) name:NSWorkspaceWillPowerOffNotification object:nil];
 	
-	// register URL handler
+	// URL handler
 	NSAppleEventManager* em = [NSAppleEventManager sharedAppleEventManager];
 	[em setEventHandler:self andSelector:@selector(handleURLEvent:withReplyEvent:) forEventClass:KInternetEventClass andEventID:KAEGetURL];
 
@@ -164,6 +165,7 @@
 	menu.tree = tree;
 	menu.memberList = memberList;
 	menu.text = text;
+	[menu setUp];
 	
 	memberList.target = menu;
 	[memberList setDoubleAction:@selector(memberListDoubleClicked:)];
@@ -181,6 +183,8 @@
 	[growl registerToGrowl];
 	
 	inputHistory = [InputHistory new];
+
+	[ImageDownloadManager instance].world = world;
 
 	[self registerKeyHandlers];
 }
@@ -309,6 +313,7 @@
 	[dcc terminate];
 	[world terminate];
 	[menu terminate];
+	[ImageDownloadManager disposeInstance];
 	[NSApp unregisterHotKey];
 	[self saveWindowState];
 }
@@ -571,23 +576,23 @@
 		}
 	}
 	
-	if (!pre.length) return;
-	
 	BOOL commandMode = NO;
 	BOOL twitterMode = NO;
 	
-	UniChar c = [pre characterAtIndex:0];
-	if (head && c == '/') {
-		// command mode
-		commandMode = YES;
-		pre = [pre substringFromIndex:1];
-		if (!pre.length) return;
-	}
-	else if (c == '@') {
-		// workaround for @nick form
-		twitterMode = YES;
-		pre = [pre substringFromIndex:1];
-		if (!pre.length) return;
+	if (pre.length) {
+		UniChar c = [pre characterAtIndex:0];
+		if (head && c == '/') {
+			// command mode
+			commandMode = YES;
+			pre = [pre substringFromIndex:1];
+			if (!pre.length) return;
+		}
+		else if (c == '@') {
+			// workaround for @nick form
+			twitterMode = YES;
+			pre = [pre substringFromIndex:1];
+			if (!pre.length) return;
+		}
 	}
 	
 	// prepare for matching
@@ -605,8 +610,8 @@
 			break;
 		}
 	}
-
-	if (!current.length) return;
+	
+	if (!current.length && (commandMode || twitterMode)) return;
 
 	// sort the choices
 	
@@ -615,6 +620,8 @@
 	
 	NSArray* lowerChoices;
 	NSArray* choices;
+	
+	CGFloat firstUserWeight = 0;
 	
 	if (commandMode) {
 		choices = [NSArray arrayWithObjects:
@@ -637,8 +644,13 @@
 		NSMutableArray* nicks = [NSMutableArray array];
 		NSMutableArray* lowerNicks = [NSMutableArray array];
 		
+		BOOL seenFirstUser = NO;
 		for (IRCUser* m in users) {
 			if (!m.isMyself) {
+				if (!seenFirstUser) {
+					seenFirstUser = YES;
+					firstUserWeight = m.weight;
+				}
 				[nicks addObject:m.nick];
 				[lowerNicks addObject:m.canonicalNick];
 			}
@@ -660,6 +672,18 @@
 		++i;
 	}
 
+	// If we're trying to complete a half-entered string, and we can't find a
+	// choice with a common prefix, there is nothing more to be done.
+	// Otherwise, pick the user with the highest weight.
+	if (!currentChoices.count) {
+		if (current.length) return;
+		if (!commandMode && !twitterMode && firstUserWeight > 0) {
+			NSString* firstChoice = [choices objectAtIndex:0];
+			[currentChoices addObject:firstChoice];
+			[currentLowerChoices addObject:[firstChoice lowercaseString]];
+		}
+	}
+	
 	if (!currentChoices.count) return;
 	
 	// find the next choice

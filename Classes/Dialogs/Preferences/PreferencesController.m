@@ -11,6 +11,7 @@
 #define LINES_MIN			100
 #define PORT_MIN			1024
 #define PORT_MAX			65535
+#define PONG_INTERVAL_MIN	20
 
 
 @interface PreferencesController (Private)
@@ -26,7 +27,8 @@
 
 - (id)init
 {
-	if (self = [super init]) {
+	self = [super init];
+	if (self) {
 		[NSBundle loadNibNamed:@"Preferences" owner:self];
 	}
 	return self;
@@ -37,6 +39,7 @@
 	[sounds release];
 	[transcriptFolderOpenPanel release];
 	[logFont release];
+	[inputFont release];
 	[super dealloc];
 }
 
@@ -51,6 +54,9 @@
 	
 	[logFont release];
 	logFont = [[NSFont fontWithName:[Preferences themeLogFontName] size:[Preferences themeLogFontSize]] retain];
+	
+	[inputFont release];
+	inputFont = [[NSFont fontWithName:[Preferences themeInputFontName] size:[Preferences themeInputFontSize]] retain];
 	
 	if (![self.window isVisible]) {
 		[self.window center];
@@ -80,6 +86,26 @@
 - (CGFloat)fontPointSize
 {
 	return [Preferences themeLogFontSize];
+}
+
+- (void)setInputFontDisplayName:(NSString*)value
+{
+	[Preferences setThemeInputFontName:value];
+}
+
+- (NSString*)inputFontDisplayName
+{
+	return [Preferences themeInputFontName];
+}
+
+- (void)setInputFontPointSize:(CGFloat)value
+{
+	[Preferences setThemeInputFontSize:value];
+}
+
+- (CGFloat)inputFontPointSize
+{
+	return [Preferences themeInputFontSize];
 }
 
 - (int)dccFirstPort
@@ -112,6 +138,16 @@
 	[Preferences setMaxLogLines:value];
 }
 
+- (int)pongInterval
+{
+	return [Preferences pongInterval];
+}
+
+- (void)setPongInterval:(int)value
+{
+	[Preferences setPongInterval:value];
+}
+
 - (BOOL)validateValue:(id *)value forKey:(NSString *)key error:(NSError **)error
 {
 	if ([key isEqualToString:@"maxLogLines"]) {
@@ -136,6 +172,12 @@
 		}
 		else if (PORT_MAX < n) {
 			*value = [NSNumber numberWithInt:PORT_MAX];
+		}
+	}
+	else if ([key isEqualToString:@"pongInterval"]) {
+		int n = [*value intValue];
+		if (n < PONG_INTERVAL_MIN) {
+			*value = [NSNumber numberWithInt:PONG_INTERVAL_MIN];
 		}
 	}
 	return YES;
@@ -388,18 +430,36 @@
 
 - (void)onSelectFont:(id)sender
 {
+	changingLogFont = YES;
+	
 	NSFontManager* fm = [NSFontManager sharedFontManager];
 	[fm setSelectedFont:logFont isMultiple:NO];
 	[fm orderFrontFontPanel:self];
 }
 
+- (void)onInputSelectFont:(id)sender
+{
+	changingLogFont = NO;
+	
+	NSFontManager* fm = [NSFontManager sharedFontManager];
+	[fm setSelectedFont:inputFont isMultiple:NO];
+	[fm orderFrontFontPanel:self];
+}
+
 - (void)changeFont:(id)sender
 {
-	[logFont autorelease];
-	logFont = [[sender convertFont:logFont] retain];
-	
-	[self setValue:logFont.fontName forKey:@"fontDisplayName"];
-	[self setValue:[NSNumber numberWithDouble:logFont.pointSize] forKey:@"fontPointSize"];
+	if (changingLogFont) {
+		[logFont autorelease];
+		logFont = [[sender convertFont:logFont] retain];
+		[self setValue:logFont.fontName forKey:@"fontDisplayName"];
+		[self setValue:[NSNumber numberWithDouble:logFont.pointSize] forKey:@"fontPointSize"];
+	}
+	else {
+		[inputFont autorelease];
+		inputFont = [[sender convertFont:inputFont] retain];
+		[self setValue:inputFont.fontName forKey:@"inputFontDisplayName"];
+		[self setValue:[NSNumber numberWithDouble:inputFont.pointSize] forKey:@"inputFontPointSize"];
+	}
 	
 	[self onLayoutChanged:nil];
 }
@@ -447,6 +507,8 @@
 
 - (void)windowWillClose:(NSNotification *)note
 {
+	[self.window endEditingFor:nil];
+	
 	[Preferences cleanUpWords];
 	[[NSUserDefaults standardUserDefaults] synchronize];
 	

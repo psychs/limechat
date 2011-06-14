@@ -17,7 +17,8 @@
 
 - (id)init
 {
-	if (self = [super init]) {
+	self = [super init];
+	if (self) {
 		[NSBundle loadNibNamed:@"IgnoreItemSheet" owner:self];
 	}
 	return self;

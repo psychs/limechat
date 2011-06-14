@@ -10,7 +10,8 @@
 
 - (id)initWithFrame:(NSRect)frameRect textContainer:(NSTextContainer *)aTextContainer
 {
-	if (self = [super initWithFrame:frameRect textContainer:aTextContainer]) {
+	self = [super initWithFrame:frameRect textContainer:aTextContainer];
+	if (self) {
 		keyHandler = [KeyEventHandler new];
 	}
 	return self;

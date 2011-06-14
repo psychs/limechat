@@ -24,7 +24,7 @@
 @class AppController;
 
 
-@interface IRCWorld : NSObject
+@interface IRCWorld : NSObject <NSOutlineViewDataSource, NSOutlineViewDelegate>
 {
 	AppController* app;
 	MainWindow* window;

@@ -3,14 +3,174 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 42;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		780844D2134CD34B003BB84C /* ImageDownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 780844D1134CD34B003BB84C /* ImageDownloadManager.m */; };
+		780844D3134CD34B003BB84C /* ImageDownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 780844D1134CD34B003BB84C /* ImageDownloadManager.m */; };
+		780844F6134CD45E003BB84C /* ImageSizeCheckClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 780844F5134CD45E003BB84C /* ImageSizeCheckClient.m */; };
+		780844F7134CD45E003BB84C /* ImageSizeCheckClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 780844F5134CD45E003BB84C /* ImageSizeCheckClient.m */; };
 		780C67C811822AFF00CB739F /* ImageURLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 780C67C711822AFF00CB739F /* ImageURLParser.m */; };
 		780C685E118230EE00CB739F /* WebViewAutoScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 780C685D118230EE00CB739F /* WebViewAutoScroll.m */; };
 		780FF69F11813BC3003C7648 /* CustomJSFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 780FF69E11813BC3003C7648 /* CustomJSFile.m */; };
 		78287EB70D742DBD008D5656 /* Themes in CopyFiles */ = {isa = PBXBuildFile; fileRef = 78287EA90D742DAA008D5656 /* Themes */; };
+		782DA85A12DB5A3800C07861 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 78AD78E20C61B8F8001E77F4 /* Localizable.strings */; };
+		782DA85B12DB5A3800C07861 /* application.icns in Resources */ = {isa = PBXBuildFile; fileRef = 78B2DF1F0D0417160092EBDA /* application.icns */; };
+		782DA85C12DB5A3800C07861 /* bluestar.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 784BBE901085BC950080898B /* bluestar.tiff */; };
+		782DA85D12DB5A3800C07861 /* keyrecorder_erase.png in Resources */ = {isa = PBXBuildFile; fileRef = 784BBE911085BC950080898B /* keyrecorder_erase.png */; };
+		782DA85E12DB5A3800C07861 /* keyrecorder_erase_pushed.png in Resources */ = {isa = PBXBuildFile; fileRef = 784BBE921085BC950080898B /* keyrecorder_erase_pushed.png */; };
+		782DA85F12DB5A3800C07861 /* redstar.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 784BBE931085BC950080898B /* redstar.tiff */; };
+		782DA86012DB5A3800C07861 /* AutoOpDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78347EB91158D4B00073E2F0 /* AutoOpDialog.xib */; };
+		782DA86112DB5A3800C07861 /* ChannelDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78347EBB1158D4B00073E2F0 /* ChannelDialog.xib */; };
+		782DA86212DB5A3800C07861 /* TopicSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78347EBD1158D4B00073E2F0 /* TopicSheet.xib */; };
+		782DA86312DB5A3800C07861 /* DCCDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78347EBF1158D4B00073E2F0 /* DCCDialog.xib */; };
+		782DA86412DB5A3800C07861 /* ListDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78347EC11158D4B00073E2F0 /* ListDialog.xib */; };
+		782DA86512DB5A3800C07861 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78347EC31158D4B00073E2F0 /* MainMenu.xib */; };
+		782DA86612DB5A3800C07861 /* ModeSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78347EC51158D4B00073E2F0 /* ModeSheet.xib */; };
+		782DA86712DB5A3800C07861 /* NickSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78347EC71158D4B00073E2F0 /* NickSheet.xib */; };
+		782DA86812DB5A3800C07861 /* PasteSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78347EC91158D4B00073E2F0 /* PasteSheet.xib */; };
+		782DA86912DB5A3800C07861 /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78347ECB1158D4B00073E2F0 /* Preferences.xib */; };
+		782DA86A12DB5A3800C07861 /* ServerDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78347ECD1158D4B00073E2F0 /* ServerDialog.xib */; };
+		782DA86B12DB5A3800C07861 /* WelcomeDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78347ECF1158D4B00073E2F0 /* WelcomeDialog.xib */; };
+		782DA86C12DB5A3800C07861 /* WhoisDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78347ED11158D4B00073E2F0 /* WhoisDialog.xib */; };
+		782DA86E12DB5A3800C07861 /* README in Resources */ = {isa = PBXBuildFile; fileRef = 78A8C14A11737F660044E7A1 /* README */; };
+		782DA86F12DB5A3800C07861 /* COPYING in Resources */ = {isa = PBXBuildFile; fileRef = 78A8C14E11737F660044E7A1 /* COPYING */; };
+		782DA87012DB5A3800C07861 /* InviteSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78A7B5D811745616006B324A /* InviteSheet.xib */; };
+		782DA87112DB5A3800C07861 /* IgnoreItemSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 789ED4B11193FA9E00CFC0B2 /* IgnoreItemSheet.xib */; };
+		782DA87312DB5A3800C07861 /* AppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0C311737F660044E7A1 /* AppController.m */; };
+		782DA87412DB5A3800C07861 /* GrowlController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0C511737F660044E7A1 /* GrowlController.m */; };
+		782DA87512DB5A3800C07861 /* MenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0C711737F660044E7A1 /* MenuController.m */; };
+		782DA87612DB5A3800C07861 /* NickCompletinStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0C911737F660044E7A1 /* NickCompletinStatus.m */; };
+		782DA87712DB5A3800C07861 /* ChannelDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0CC11737F660044E7A1 /* ChannelDialog.m */; };
+		782DA87812DB5A3800C07861 /* DCCController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0CF11737F660044E7A1 /* DCCController.m */; };
+		782DA87912DB5A3800C07861 /* DCCFileTransferCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0D111737F660044E7A1 /* DCCFileTransferCell.m */; };
+		782DA87A12DB5A3800C07861 /* DCCReceiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0D311737F660044E7A1 /* DCCReceiver.m */; };
+		782DA87B12DB5A3800C07861 /* DCCSender.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0D511737F660044E7A1 /* DCCSender.m */; };
+		782DA87C12DB5A3800C07861 /* ModeSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0D711737F660044E7A1 /* ModeSheet.m */; };
+		782DA87D12DB5A3800C07861 /* NickSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0D911737F660044E7A1 /* NickSheet.m */; };
+		782DA87E12DB5A3800C07861 /* PasteSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0DB11737F660044E7A1 /* PasteSheet.m */; };
+		782DA87F12DB5A3800C07861 /* PreferencesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0DE11737F660044E7A1 /* PreferencesController.m */; };
+		782DA88012DB5A3800C07861 /* SoundWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0E011737F660044E7A1 /* SoundWrapper.m */; };
+		782DA88112DB5A3800C07861 /* ServerDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0E211737F660044E7A1 /* ServerDialog.m */; };
+		782DA88212DB5A3800C07861 /* SheetBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0E411737F660044E7A1 /* SheetBase.m */; };
+		782DA88312DB5A3800C07861 /* TopicSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0E611737F660044E7A1 /* TopicSheet.m */; };
+		782DA88412DB5A3800C07861 /* WelcomeDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0E811737F660044E7A1 /* WelcomeDialog.m */; };
+		782DA88512DB5A3800C07861 /* WhoisDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0EA11737F660044E7A1 /* WhoisDialog.m */; };
+		782DA88612DB5A3800C07861 /* GTMBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0ED11737F660044E7A1 /* GTMBase64.m */; };
+		782DA88712DB5A3800C07861 /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0F111737F660044E7A1 /* GTMNSString+HTML.m */; };
+		782DA88812DB5A3800C07861 /* GTMNSString+URLArguments.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0F311737F660044E7A1 /* GTMNSString+URLArguments.m */; };
+		782DA88912DB5A3800C07861 /* NSArrayHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0F511737F660044E7A1 /* NSArrayHelper.m */; };
+		782DA88A12DB5A3800C07861 /* NSColorHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0F711737F660044E7A1 /* NSColorHelper.m */; };
+		782DA88B12DB5A3800C07861 /* NSDataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0F911737F660044E7A1 /* NSDataHelper.m */; };
+		782DA88C12DB5A3800C07861 /* NSDictionaryHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0FB11737F660044E7A1 /* NSDictionaryHelper.m */; };
+		782DA88D12DB5A3800C07861 /* NSLocaleHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0FD11737F660044E7A1 /* NSLocaleHelper.m */; };
+		782DA88E12DB5A3800C07861 /* NSPasteboardHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0FF11737F660044E7A1 /* NSPasteboardHelper.m */; };
+		782DA88F12DB5A3800C07861 /* NSRectHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C10111737F660044E7A1 /* NSRectHelper.m */; };
+		782DA89012DB5A3800C07861 /* NSStringHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C10311737F660044E7A1 /* NSStringHelper.m */; };
+		782DA89112DB5A3800C07861 /* NSWindowHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C10511737F660044E7A1 /* NSWindowHelper.m */; };
+		782DA89212DB5A3800C07861 /* SoundPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C10711737F660044E7A1 /* SoundPlayer.m */; };
+		782DA89312DB5A3800C07861 /* UnicodeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C10911737F660044E7A1 /* UnicodeHelper.m */; };
+		782DA89412DB5A3800C07861 /* URLOpener.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C10B11737F660044E7A1 /* URLOpener.m */; };
+		782DA89512DB5A3800C07861 /* IRCChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C10F11737F660044E7A1 /* IRCChannel.m */; };
+		782DA89612DB5A3800C07861 /* IRCChannelConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C11111737F660044E7A1 /* IRCChannelConfig.m */; };
+		782DA89712DB5A3800C07861 /* IRCChannelMode.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C11311737F660044E7A1 /* IRCChannelMode.m */; };
+		782DA89812DB5A3800C07861 /* IRCClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C11511737F660044E7A1 /* IRCClient.m */; };
+		782DA89912DB5A3800C07861 /* IRCClientConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C11711737F660044E7A1 /* IRCClientConfig.m */; };
+		782DA89A12DB5A3800C07861 /* IRCConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C11911737F660044E7A1 /* IRCConnection.m */; };
+		782DA89B12DB5A3800C07861 /* IRCISupportInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C11B11737F660044E7A1 /* IRCISupportInfo.m */; };
+		782DA89C12DB5A3800C07861 /* IRCMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C11D11737F660044E7A1 /* IRCMessage.m */; };
+		782DA89D12DB5A3800C07861 /* IRCPrefix.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C11F11737F660044E7A1 /* IRCPrefix.m */; };
+		782DA89E12DB5A3800C07861 /* IRCSendingMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C12111737F660044E7A1 /* IRCSendingMessage.m */; };
+		782DA89F12DB5A3800C07861 /* IRCTreeItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C12311737F660044E7A1 /* IRCTreeItem.m */; };
+		782DA8A012DB5A3800C07861 /* IRCUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C12511737F660044E7A1 /* IRCUser.m */; };
+		782DA8A112DB5A3800C07861 /* IRCUserMode.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C12711737F660044E7A1 /* IRCUserMode.m */; };
+		782DA8A212DB5A3800C07861 /* IRCWorld.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C12911737F660044E7A1 /* IRCWorld.m */; };
+		782DA8A312DB5A3800C07861 /* IRCWorldConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C12B11737F660044E7A1 /* IRCWorldConfig.m */; };
+		782DA8A412DB5A3800C07861 /* TimerCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C12D11737F660044E7A1 /* TimerCommand.m */; };
+		782DA8A512DB5A3800C07861 /* AsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C13011737F660044E7A1 /* AsyncSocket.m */; };
+		782DA8A612DB5A3800C07861 /* FileLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C13211737F660044E7A1 /* FileLogger.m */; };
+		782DA8A712DB5A3800C07861 /* GistClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C13411737F660044E7A1 /* GistClient.m */; };
+		782DA8A812DB5A3800C07861 /* HostResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C13611737F660044E7A1 /* HostResolver.m */; };
+		782DA8A912DB5A3800C07861 /* HotKeyManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C13811737F660044E7A1 /* HotKeyManager.m */; };
+		782DA8AA12DB5A3800C07861 /* IconController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C13A11737F660044E7A1 /* IconController.m */; };
+		782DA8AB12DB5A3800C07861 /* InputHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C13C11737F660044E7A1 /* InputHistory.m */; };
+		782DA8AC12DB5A3800C07861 /* KeyEventHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C13E11737F660044E7A1 /* KeyEventHandler.m */; };
+		782DA8AD12DB5A3800C07861 /* TCPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C14211737F660044E7A1 /* TCPClient.m */; };
+		782DA8AE12DB5A3800C07861 /* TCPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C14411737F660044E7A1 /* TCPServer.m */; };
+		782DA8AF12DB5A3800C07861 /* Timer.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C14611737F660044E7A1 /* Timer.m */; };
+		782DA8B012DB5A3800C07861 /* TinyGrowlClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C14811737F660044E7A1 /* TinyGrowlClient.m */; };
+		782DA8B112DB5A3800C07861 /* bytecode.c in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C14D11737F660044E7A1 /* bytecode.c */; };
+		782DA8B212DB5A3800C07861 /* emitter.c in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C14F11737F660044E7A1 /* emitter.c */; };
+		782DA8B312DB5A3800C07861 /* gram.c in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C15011737F660044E7A1 /* gram.c */; };
+		782DA8B412DB5A3800C07861 /* handler.c in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C15211737F660044E7A1 /* handler.c */; };
+		782DA8B512DB5A3800C07861 /* implicit.c in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C15311737F660044E7A1 /* implicit.c */; };
+		782DA8B612DB5A3800C07861 /* node.c in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C15411737F660044E7A1 /* node.c */; };
+		782DA8B712DB5A3800C07861 /* syck.c in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C15511737F660044E7A1 /* syck.c */; };
+		782DA8B812DB5A3800C07861 /* syck_st.c in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C15711737F660044E7A1 /* syck_st.c */; };
+		782DA8B912DB5A3800C07861 /* token.c in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C15A11737F660044E7A1 /* token.c */; };
+		782DA8BA12DB5A3800C07861 /* yaml2byte.c in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C15B11737F660044E7A1 /* yaml2byte.c */; };
+		782DA8BB12DB5A3800C07861 /* SyckInput.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C15D11737F660044E7A1 /* SyckInput.m */; };
+		782DA8BC12DB5A3800C07861 /* YAMLCategories.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C16011737F660044E7A1 /* YAMLCategories.m */; };
+		782DA8BD12DB5A3800C07861 /* LogTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C16911737F660044E7A1 /* LogTheme.m */; };
+		782DA8BE12DB5A3800C07861 /* OtherTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C16B11737F660044E7A1 /* OtherTheme.m */; };
+		782DA8BF12DB5A3800C07861 /* Preferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C16D11737F660044E7A1 /* Preferences.m */; };
+		782DA8C012DB5A3800C07861 /* ViewTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C16F11737F660044E7A1 /* ViewTheme.m */; };
+		782DA8C112DB5A3800C07861 /* ChatBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C17211737F660044E7A1 /* ChatBox.m */; };
+		782DA8C212DB5A3800C07861 /* DialogWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C17411737F660044E7A1 /* DialogWindow.m */; };
+		782DA8C312DB5A3800C07861 /* FieldEditorTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C17611737F660044E7A1 /* FieldEditorTextView.m */; };
+		782DA8C412DB5A3800C07861 /* InputTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C17811737F660044E7A1 /* InputTextField.m */; };
+		782DA8C512DB5A3800C07861 /* KeyCodeTranslator.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C17B11737F660044E7A1 /* KeyCodeTranslator.m */; };
+		782DA8C612DB5A3800C07861 /* KeyRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C17D11737F660044E7A1 /* KeyRecorder.m */; };
+		782DA8C712DB5A3800C07861 /* KeyRecorderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C17F11737F660044E7A1 /* KeyRecorderCell.m */; };
+		782DA8C812DB5A3800C07861 /* ListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C18111737F660044E7A1 /* ListView.m */; };
+		782DA8C912DB5A3800C07861 /* LogController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C18411737F660044E7A1 /* LogController.m */; };
+		782DA8CA12DB5A3800C07861 /* LogLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C18611737F660044E7A1 /* LogLine.m */; };
+		782DA8CB12DB5A3800C07861 /* LogPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C18811737F660044E7A1 /* LogPolicy.m */; };
+		782DA8CC12DB5A3800C07861 /* LogRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C18A11737F660044E7A1 /* LogRenderer.m */; };
+		782DA8CD12DB5A3800C07861 /* LogScriptEventSink.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C18C11737F660044E7A1 /* LogScriptEventSink.m */; };
+		782DA8CE12DB5A3800C07861 /* LogView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C18E11737F660044E7A1 /* LogView.m */; };
+		782DA8CF12DB5A3800C07861 /* MainWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C19011737F660044E7A1 /* MainWindow.m */; };
+		782DA8D012DB5A3800C07861 /* MarkedScroller.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C19211737F660044E7A1 /* MarkedScroller.m */; };
+		782DA8D112DB5A3800C07861 /* MemberListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C19511737F660044E7A1 /* MemberListView.m */; };
+		782DA8D212DB5A3800C07861 /* MemberListViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C19711737F660044E7A1 /* MemberListViewCell.m */; };
+		782DA8D312DB5A3800C07861 /* ServerTreeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C19911737F660044E7A1 /* ServerTreeView.m */; };
+		782DA8D412DB5A3800C07861 /* SingleLineFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C19B11737F660044E7A1 /* SingleLineFormatter.m */; };
+		782DA8D512DB5A3800C07861 /* TableProgressIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C19D11737F660044E7A1 /* TableProgressIndicator.m */; };
+		782DA8D612DB5A3800C07861 /* TextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C19F11737F660044E7A1 /* TextField.m */; };
+		782DA8D712DB5A3800C07861 /* TextFieldWithDisabledState.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C1A111737F660044E7A1 /* TextFieldWithDisabledState.m */; };
+		782DA8D812DB5A3800C07861 /* ThinSplitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C1A311737F660044E7A1 /* ThinSplitView.m */; };
+		782DA8D912DB5A3800C07861 /* TreeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C1A511737F660044E7A1 /* TreeView.m */; };
+		782DA8DA12DB5A3800C07861 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 783E6AD91173802100261552 /* main.m */; };
+		782DA8DB12DB5A3800C07861 /* LimeChatApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 782FCF881173824C007BE697 /* LimeChatApplication.m */; };
+		782DA8DC12DB5A3800C07861 /* NSData+Kana.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A7B4F51174427C006B324A /* NSData+Kana.m */; };
+		782DA8DD12DB5A3800C07861 /* InviteSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A7B58611744F12006B324A /* InviteSheet.m */; };
+		782DA8DE12DB5A3800C07861 /* ListDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 7835FB911177341D005DC0B4 /* ListDialog.m */; };
+		782DA8DF12DB5A3800C07861 /* OnigRegexp.m in Sources */ = {isa = PBXBuildFile; fileRef = 784773BF117EB07400466C56 /* OnigRegexp.m */; };
+		782DA8E012DB5A3800C07861 /* ascii.c in Sources */ = {isa = PBXBuildFile; fileRef = 784773C6117EB07400466C56 /* ascii.c */; };
+		782DA8E112DB5A3800C07861 /* unicode.c in Sources */ = {isa = PBXBuildFile; fileRef = 784773C7117EB07400466C56 /* unicode.c */; };
+		782DA8E212DB5A3800C07861 /* utf16_le.c in Sources */ = {isa = PBXBuildFile; fileRef = 784773C8117EB07400466C56 /* utf16_le.c */; };
+		782DA8E312DB5A3800C07861 /* regcomp.c in Sources */ = {isa = PBXBuildFile; fileRef = 784773CA117EB07400466C56 /* regcomp.c */; };
+		782DA8E412DB5A3800C07861 /* regenc.c in Sources */ = {isa = PBXBuildFile; fileRef = 784773CB117EB07400466C56 /* regenc.c */; };
+		782DA8E512DB5A3800C07861 /* regerror.c in Sources */ = {isa = PBXBuildFile; fileRef = 784773CD117EB07400466C56 /* regerror.c */; };
+		782DA8E612DB5A3800C07861 /* regexec.c in Sources */ = {isa = PBXBuildFile; fileRef = 784773CE117EB07400466C56 /* regexec.c */; };
+		782DA8E712DB5A3800C07861 /* regext.c in Sources */ = {isa = PBXBuildFile; fileRef = 784773CF117EB07400466C56 /* regext.c */; };
+		782DA8E812DB5A3800C07861 /* regparse.c in Sources */ = {isa = PBXBuildFile; fileRef = 784773D1117EB07400466C56 /* regparse.c */; };
+		782DA8E912DB5A3800C07861 /* regsyntax.c in Sources */ = {isa = PBXBuildFile; fileRef = 784773D3117EB07400466C56 /* regsyntax.c */; };
+		782DA8EA12DB5A3800C07861 /* regtrav.c in Sources */ = {isa = PBXBuildFile; fileRef = 784773D4117EB07400466C56 /* regtrav.c */; };
+		782DA8EB12DB5A3800C07861 /* regversion.c in Sources */ = {isa = PBXBuildFile; fileRef = 784773D5117EB07400466C56 /* regversion.c */; };
+		782DA8EC12DB5A3800C07861 /* st.c in Sources */ = {isa = PBXBuildFile; fileRef = 784773D6117EB07400466C56 /* st.c */; };
+		782DA8ED12DB5A3800C07861 /* CustomJSFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 780FF69E11813BC3003C7648 /* CustomJSFile.m */; };
+		782DA8EE12DB5A3800C07861 /* ImageURLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 780C67C711822AFF00CB739F /* ImageURLParser.m */; };
+		782DA8EF12DB5A3800C07861 /* WebViewAutoScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 780C685D118230EE00CB739F /* WebViewAutoScroll.m */; };
+		782DA8F012DB5A3800C07861 /* IgnoreItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 789ED3F21193EF4400CFC0B2 /* IgnoreItem.m */; };
+		782DA8F112DB5A3800C07861 /* IgnoreItemSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 789ED4831193F9EB00CFC0B2 /* IgnoreItemSheet.m */; };
+		782DA8F312DB5A3800C07861 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		782DA8F412DB5A3800C07861 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 788D56F00BB6872B00DDBF69 /* WebKit.framework */; };
+		782DA8F512DB5A3800C07861 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 787FD46C0BFE960100F2F22D /* Carbon.framework */; };
+		782DA8F612DB5A3800C07861 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 780253C20C09525900C170D4 /* CoreServices.framework */; };
+		782DA8F812DB5A3800C07861 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78835405109FEA7F00CD2FFF /* SystemConfiguration.framework */; };
+		782DA8FA12DB5A3800C07861 /* Themes in CopyFiles */ = {isa = PBXBuildFile; fileRef = 78287EA90D742DAA008D5656 /* Themes */; };
 		782FCF891173824C007BE697 /* LimeChatApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 782FCF881173824C007BE697 /* LimeChatApplication.m */; };
 		78347ED31158D4B00073E2F0 /* AutoOpDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78347EB91158D4B00073E2F0 /* AutoOpDialog.xib */; };
 		78347ED41158D4B00073E2F0 /* ChannelDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78347EBB1158D4B00073E2F0 /* ChannelDialog.xib */; };
@@ -45,7 +205,6 @@
 		784BBE951085BC950080898B /* keyrecorder_erase.png in Resources */ = {isa = PBXBuildFile; fileRef = 784BBE911085BC950080898B /* keyrecorder_erase.png */; };
 		784BBE961085BC950080898B /* keyrecorder_erase_pushed.png in Resources */ = {isa = PBXBuildFile; fileRef = 784BBE921085BC950080898B /* keyrecorder_erase_pushed.png */; };
 		784BBE971085BC950080898B /* redstar.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 784BBE931085BC950080898B /* redstar.tiff */; };
-		7851AEF71168A91A00AC449F /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7851AEF61168A91A00AC449F /* libicucore.dylib */; };
 		78835406109FEA7F00CD2FFF /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78835405109FEA7F00CD2FFF /* SystemConfiguration.framework */; };
 		789ED3F31193EF4400CFC0B2 /* IgnoreItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 789ED3F21193EF4400CFC0B2 /* IgnoreItem.m */; };
 		789ED4841193F9EB00CFC0B2 /* IgnoreItemSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 789ED4831193F9EB00CFC0B2 /* IgnoreItemSheet.m */; };
@@ -170,6 +329,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		782DA8F912DB5A3800C07861 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = ..;
+			dstSubfolderSpec = 7;
+			files = (
+				782DA8FA12DB5A3800C07861 /* Themes in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7835DF2C0D0414020064916A /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -197,6 +366,10 @@
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		780253C20C09525900C170D4 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
+		780844D0134CD34B003BB84C /* ImageDownloadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageDownloadManager.h; sourceTree = "<group>"; };
+		780844D1134CD34B003BB84C /* ImageDownloadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageDownloadManager.m; sourceTree = "<group>"; };
+		780844F4134CD45E003BB84C /* ImageSizeCheckClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageSizeCheckClient.h; sourceTree = "<group>"; };
+		780844F5134CD45E003BB84C /* ImageSizeCheckClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageSizeCheckClient.m; sourceTree = "<group>"; };
 		780C67C611822AFF00CB739F /* ImageURLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageURLParser.h; sourceTree = "<group>"; };
 		780C67C711822AFF00CB739F /* ImageURLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageURLParser.m; sourceTree = "<group>"; };
 		780C685C118230EE00CB739F /* WebViewAutoScroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewAutoScroll.h; sourceTree = "<group>"; };
@@ -204,6 +377,8 @@
 		780FF69D11813BC3003C7648 /* CustomJSFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomJSFile.h; sourceTree = "<group>"; };
 		780FF69E11813BC3003C7648 /* CustomJSFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomJSFile.m; sourceTree = "<group>"; };
 		78287EA90D742DAA008D5656 /* Themes */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Themes; path = Resources/Themes; sourceTree = "<group>"; };
+		782DA90012DB5A3800C07861 /* LimeChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LimeChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		782DA90212DB5A3800C07861 /* Info-AppStore.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Info-AppStore.plist"; path = "Others/Info-AppStore.plist"; sourceTree = "<group>"; };
 		782FCF871173824C007BE697 /* LimeChatApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LimeChatApplication.h; sourceTree = "<group>"; };
 		782FCF881173824C007BE697 /* LimeChatApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LimeChatApplication.m; sourceTree = "<group>"; };
 		78347EBA1158D4B00073E2F0 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/AutoOpDialog.xib; sourceTree = "<group>"; };
@@ -248,7 +423,6 @@
 		784BBE911085BC950080898B /* keyrecorder_erase.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = keyrecorder_erase.png; sourceTree = "<group>"; };
 		784BBE921085BC950080898B /* keyrecorder_erase_pushed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = keyrecorder_erase_pushed.png; sourceTree = "<group>"; };
 		784BBE931085BC950080898B /* redstar.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = redstar.tiff; sourceTree = "<group>"; };
-		7851AEF61168A91A00AC449F /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = /usr/lib/libicucore.dylib; sourceTree = "<absolute>"; };
 		787FD46C0BFE960100F2F22D /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		78835405109FEA7F00CD2FFF /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = /System/Library/Frameworks/SystemConfiguration.framework; sourceTree = "<absolute>"; };
 		788D56F00BB6872B00DDBF69 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
@@ -477,6 +651,18 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		782DA8F212DB5A3800C07861 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				782DA8F312DB5A3800C07861 /* Cocoa.framework in Frameworks */,
+				782DA8F412DB5A3800C07861 /* WebKit.framework in Frameworks */,
+				782DA8F512DB5A3800C07861 /* Carbon.framework in Frameworks */,
+				782DA8F612DB5A3800C07861 /* CoreServices.framework in Frameworks */,
+				782DA8F812DB5A3800C07861 /* SystemConfiguration.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		78E570CE0C1C306500BDF7EC /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -487,7 +673,6 @@
 				78E5723D0C1C30BA00BDF7EC /* CoreServices.framework in Frameworks */,
 				78FA9F651085AA1400001F13 /* Sparkle.framework in Frameworks */,
 				78835406109FEA7F00CD2FFF /* SystemConfiguration.framework in Frameworks */,
-				7851AEF71168A91A00AC449F /* libicucore.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -512,6 +697,7 @@
 			isa = PBXGroup;
 			children = (
 				78E570D00C1C306500BDF7EC /* LimeChat.app */,
+				782DA90012DB5A3800C07861 /* LimeChat.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -533,6 +719,7 @@
 			children = (
 				784BBE8F1085BC950080898B /* images */,
 				78C8911B1173806A002EED61 /* Info.plist */,
+				782DA90212DB5A3800C07861 /* Info-AppStore.plist */,
 				78347EC31158D4B00073E2F0 /* MainMenu.xib */,
 				78347ECB1158D4B00073E2F0 /* Preferences.xib */,
 				78347EC71158D4B00073E2F0 /* NickSheet.xib */,
@@ -566,7 +753,6 @@
 				788D56F00BB6872B00DDBF69 /* WebKit.framework */,
 				78835405109FEA7F00CD2FFF /* SystemConfiguration.framework */,
 				78FA9F641085AA1400001F13 /* Sparkle.framework */,
-				7851AEF61168A91A00AC449F /* libicucore.dylib */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -646,6 +832,8 @@
 				78A8C0C711737F660044E7A1 /* MenuController.m */,
 				78A8C0C411737F660044E7A1 /* GrowlController.h */,
 				78A8C0C511737F660044E7A1 /* GrowlController.m */,
+				780844D0134CD34B003BB84C /* ImageDownloadManager.h */,
+				780844D1134CD34B003BB84C /* ImageDownloadManager.m */,
 				78A8C0C811737F660044E7A1 /* NickCompletinStatus.h */,
 				78A8C0C911737F660044E7A1 /* NickCompletinStatus.m */,
 				782FCF871173824C007BE697 /* LimeChatApplication.h */,
@@ -811,6 +999,8 @@
 				78A8C13211737F660044E7A1 /* FileLogger.m */,
 				78A8C13311737F660044E7A1 /* GistClient.h */,
 				78A8C13411737F660044E7A1 /* GistClient.m */,
+				780844F4134CD45E003BB84C /* ImageSizeCheckClient.h */,
+				780844F5134CD45E003BB84C /* ImageSizeCheckClient.m */,
 				78A8C13511737F660044E7A1 /* HostResolver.h */,
 				78A8C13611737F660044E7A1 /* HostResolver.m */,
 				78A8C13711737F660044E7A1 /* HotKeyManager.h */,
@@ -985,6 +1175,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		782DA85812DB5A3800C07861 /* LimeChat-AppStore */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 782DA8FD12DB5A3800C07861 /* Build configuration list for PBXNativeTarget "LimeChat-AppStore" */;
+			buildPhases = (
+				782DA85912DB5A3800C07861 /* Resources */,
+				782DA87212DB5A3800C07861 /* Sources */,
+				782DA8F212DB5A3800C07861 /* Frameworks */,
+				782DA8F912DB5A3800C07861 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "LimeChat-AppStore";
+			productName = LimeChat;
+			productReference = 782DA90012DB5A3800C07861 /* LimeChat.app */;
+			productType = "com.apple.product-type.application";
+		};
 		78E570CF0C1C306500BDF7EC /* LimeChat */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 78E570D30C1C306500BDF7EC /* Build configuration list for PBXNativeTarget "LimeChat" */;
@@ -1010,7 +1218,7 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "LimeChat" */;
-			compatibilityVersion = "Xcode 2.4";
+			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
@@ -1024,11 +1232,42 @@
 			projectRoot = "";
 			targets = (
 				78E570CF0C1C306500BDF7EC /* LimeChat */,
+				782DA85812DB5A3800C07861 /* LimeChat-AppStore */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		782DA85912DB5A3800C07861 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				782DA85A12DB5A3800C07861 /* Localizable.strings in Resources */,
+				782DA85B12DB5A3800C07861 /* application.icns in Resources */,
+				782DA85C12DB5A3800C07861 /* bluestar.tiff in Resources */,
+				782DA85D12DB5A3800C07861 /* keyrecorder_erase.png in Resources */,
+				782DA85E12DB5A3800C07861 /* keyrecorder_erase_pushed.png in Resources */,
+				782DA85F12DB5A3800C07861 /* redstar.tiff in Resources */,
+				782DA86012DB5A3800C07861 /* AutoOpDialog.xib in Resources */,
+				782DA86112DB5A3800C07861 /* ChannelDialog.xib in Resources */,
+				782DA86212DB5A3800C07861 /* TopicSheet.xib in Resources */,
+				782DA86312DB5A3800C07861 /* DCCDialog.xib in Resources */,
+				782DA86412DB5A3800C07861 /* ListDialog.xib in Resources */,
+				782DA86512DB5A3800C07861 /* MainMenu.xib in Resources */,
+				782DA86612DB5A3800C07861 /* ModeSheet.xib in Resources */,
+				782DA86712DB5A3800C07861 /* NickSheet.xib in Resources */,
+				782DA86812DB5A3800C07861 /* PasteSheet.xib in Resources */,
+				782DA86912DB5A3800C07861 /* Preferences.xib in Resources */,
+				782DA86A12DB5A3800C07861 /* ServerDialog.xib in Resources */,
+				782DA86B12DB5A3800C07861 /* WelcomeDialog.xib in Resources */,
+				782DA86C12DB5A3800C07861 /* WhoisDialog.xib in Resources */,
+				782DA86E12DB5A3800C07861 /* README in Resources */,
+				782DA86F12DB5A3800C07861 /* COPYING in Resources */,
+				782DA87012DB5A3800C07861 /* InviteSheet.xib in Resources */,
+				782DA87112DB5A3800C07861 /* IgnoreItemSheet.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		78E570CC0C1C306500BDF7EC /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1063,6 +1302,142 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		782DA87212DB5A3800C07861 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				782DA87312DB5A3800C07861 /* AppController.m in Sources */,
+				782DA87412DB5A3800C07861 /* GrowlController.m in Sources */,
+				782DA87512DB5A3800C07861 /* MenuController.m in Sources */,
+				782DA87612DB5A3800C07861 /* NickCompletinStatus.m in Sources */,
+				782DA87712DB5A3800C07861 /* ChannelDialog.m in Sources */,
+				782DA87812DB5A3800C07861 /* DCCController.m in Sources */,
+				782DA87912DB5A3800C07861 /* DCCFileTransferCell.m in Sources */,
+				782DA87A12DB5A3800C07861 /* DCCReceiver.m in Sources */,
+				782DA87B12DB5A3800C07861 /* DCCSender.m in Sources */,
+				782DA87C12DB5A3800C07861 /* ModeSheet.m in Sources */,
+				782DA87D12DB5A3800C07861 /* NickSheet.m in Sources */,
+				782DA87E12DB5A3800C07861 /* PasteSheet.m in Sources */,
+				782DA87F12DB5A3800C07861 /* PreferencesController.m in Sources */,
+				782DA88012DB5A3800C07861 /* SoundWrapper.m in Sources */,
+				782DA88112DB5A3800C07861 /* ServerDialog.m in Sources */,
+				782DA88212DB5A3800C07861 /* SheetBase.m in Sources */,
+				782DA88312DB5A3800C07861 /* TopicSheet.m in Sources */,
+				782DA88412DB5A3800C07861 /* WelcomeDialog.m in Sources */,
+				782DA88512DB5A3800C07861 /* WhoisDialog.m in Sources */,
+				782DA88612DB5A3800C07861 /* GTMBase64.m in Sources */,
+				782DA88712DB5A3800C07861 /* GTMNSString+HTML.m in Sources */,
+				782DA88812DB5A3800C07861 /* GTMNSString+URLArguments.m in Sources */,
+				782DA88912DB5A3800C07861 /* NSArrayHelper.m in Sources */,
+				782DA88A12DB5A3800C07861 /* NSColorHelper.m in Sources */,
+				782DA88B12DB5A3800C07861 /* NSDataHelper.m in Sources */,
+				782DA88C12DB5A3800C07861 /* NSDictionaryHelper.m in Sources */,
+				782DA88D12DB5A3800C07861 /* NSLocaleHelper.m in Sources */,
+				782DA88E12DB5A3800C07861 /* NSPasteboardHelper.m in Sources */,
+				782DA88F12DB5A3800C07861 /* NSRectHelper.m in Sources */,
+				782DA89012DB5A3800C07861 /* NSStringHelper.m in Sources */,
+				782DA89112DB5A3800C07861 /* NSWindowHelper.m in Sources */,
+				782DA89212DB5A3800C07861 /* SoundPlayer.m in Sources */,
+				782DA89312DB5A3800C07861 /* UnicodeHelper.m in Sources */,
+				782DA89412DB5A3800C07861 /* URLOpener.m in Sources */,
+				782DA89512DB5A3800C07861 /* IRCChannel.m in Sources */,
+				782DA89612DB5A3800C07861 /* IRCChannelConfig.m in Sources */,
+				782DA89712DB5A3800C07861 /* IRCChannelMode.m in Sources */,
+				782DA89812DB5A3800C07861 /* IRCClient.m in Sources */,
+				782DA89912DB5A3800C07861 /* IRCClientConfig.m in Sources */,
+				782DA89A12DB5A3800C07861 /* IRCConnection.m in Sources */,
+				782DA89B12DB5A3800C07861 /* IRCISupportInfo.m in Sources */,
+				782DA89C12DB5A3800C07861 /* IRCMessage.m in Sources */,
+				782DA89D12DB5A3800C07861 /* IRCPrefix.m in Sources */,
+				782DA89E12DB5A3800C07861 /* IRCSendingMessage.m in Sources */,
+				782DA89F12DB5A3800C07861 /* IRCTreeItem.m in Sources */,
+				782DA8A012DB5A3800C07861 /* IRCUser.m in Sources */,
+				782DA8A112DB5A3800C07861 /* IRCUserMode.m in Sources */,
+				782DA8A212DB5A3800C07861 /* IRCWorld.m in Sources */,
+				782DA8A312DB5A3800C07861 /* IRCWorldConfig.m in Sources */,
+				782DA8A412DB5A3800C07861 /* TimerCommand.m in Sources */,
+				782DA8A512DB5A3800C07861 /* AsyncSocket.m in Sources */,
+				782DA8A612DB5A3800C07861 /* FileLogger.m in Sources */,
+				782DA8A712DB5A3800C07861 /* GistClient.m in Sources */,
+				782DA8A812DB5A3800C07861 /* HostResolver.m in Sources */,
+				782DA8A912DB5A3800C07861 /* HotKeyManager.m in Sources */,
+				782DA8AA12DB5A3800C07861 /* IconController.m in Sources */,
+				782DA8AB12DB5A3800C07861 /* InputHistory.m in Sources */,
+				782DA8AC12DB5A3800C07861 /* KeyEventHandler.m in Sources */,
+				782DA8AD12DB5A3800C07861 /* TCPClient.m in Sources */,
+				782DA8AE12DB5A3800C07861 /* TCPServer.m in Sources */,
+				782DA8AF12DB5A3800C07861 /* Timer.m in Sources */,
+				782DA8B012DB5A3800C07861 /* TinyGrowlClient.m in Sources */,
+				782DA8B112DB5A3800C07861 /* bytecode.c in Sources */,
+				782DA8B212DB5A3800C07861 /* emitter.c in Sources */,
+				782DA8B312DB5A3800C07861 /* gram.c in Sources */,
+				782DA8B412DB5A3800C07861 /* handler.c in Sources */,
+				782DA8B512DB5A3800C07861 /* implicit.c in Sources */,
+				782DA8B612DB5A3800C07861 /* node.c in Sources */,
+				782DA8B712DB5A3800C07861 /* syck.c in Sources */,
+				782DA8B812DB5A3800C07861 /* syck_st.c in Sources */,
+				782DA8B912DB5A3800C07861 /* token.c in Sources */,
+				782DA8BA12DB5A3800C07861 /* yaml2byte.c in Sources */,
+				782DA8BB12DB5A3800C07861 /* SyckInput.m in Sources */,
+				782DA8BC12DB5A3800C07861 /* YAMLCategories.m in Sources */,
+				782DA8BD12DB5A3800C07861 /* LogTheme.m in Sources */,
+				782DA8BE12DB5A3800C07861 /* OtherTheme.m in Sources */,
+				782DA8BF12DB5A3800C07861 /* Preferences.m in Sources */,
+				782DA8C012DB5A3800C07861 /* ViewTheme.m in Sources */,
+				782DA8C112DB5A3800C07861 /* ChatBox.m in Sources */,
+				782DA8C212DB5A3800C07861 /* DialogWindow.m in Sources */,
+				782DA8C312DB5A3800C07861 /* FieldEditorTextView.m in Sources */,
+				782DA8C412DB5A3800C07861 /* InputTextField.m in Sources */,
+				782DA8C512DB5A3800C07861 /* KeyCodeTranslator.m in Sources */,
+				782DA8C612DB5A3800C07861 /* KeyRecorder.m in Sources */,
+				782DA8C712DB5A3800C07861 /* KeyRecorderCell.m in Sources */,
+				782DA8C812DB5A3800C07861 /* ListView.m in Sources */,
+				782DA8C912DB5A3800C07861 /* LogController.m in Sources */,
+				782DA8CA12DB5A3800C07861 /* LogLine.m in Sources */,
+				782DA8CB12DB5A3800C07861 /* LogPolicy.m in Sources */,
+				782DA8CC12DB5A3800C07861 /* LogRenderer.m in Sources */,
+				782DA8CD12DB5A3800C07861 /* LogScriptEventSink.m in Sources */,
+				782DA8CE12DB5A3800C07861 /* LogView.m in Sources */,
+				782DA8CF12DB5A3800C07861 /* MainWindow.m in Sources */,
+				782DA8D012DB5A3800C07861 /* MarkedScroller.m in Sources */,
+				782DA8D112DB5A3800C07861 /* MemberListView.m in Sources */,
+				782DA8D212DB5A3800C07861 /* MemberListViewCell.m in Sources */,
+				782DA8D312DB5A3800C07861 /* ServerTreeView.m in Sources */,
+				782DA8D412DB5A3800C07861 /* SingleLineFormatter.m in Sources */,
+				782DA8D512DB5A3800C07861 /* TableProgressIndicator.m in Sources */,
+				782DA8D612DB5A3800C07861 /* TextField.m in Sources */,
+				782DA8D712DB5A3800C07861 /* TextFieldWithDisabledState.m in Sources */,
+				782DA8D812DB5A3800C07861 /* ThinSplitView.m in Sources */,
+				782DA8D912DB5A3800C07861 /* TreeView.m in Sources */,
+				782DA8DA12DB5A3800C07861 /* main.m in Sources */,
+				782DA8DB12DB5A3800C07861 /* LimeChatApplication.m in Sources */,
+				782DA8DC12DB5A3800C07861 /* NSData+Kana.m in Sources */,
+				782DA8DD12DB5A3800C07861 /* InviteSheet.m in Sources */,
+				782DA8DE12DB5A3800C07861 /* ListDialog.m in Sources */,
+				782DA8DF12DB5A3800C07861 /* OnigRegexp.m in Sources */,
+				782DA8E012DB5A3800C07861 /* ascii.c in Sources */,
+				782DA8E112DB5A3800C07861 /* unicode.c in Sources */,
+				782DA8E212DB5A3800C07861 /* utf16_le.c in Sources */,
+				782DA8E312DB5A3800C07861 /* regcomp.c in Sources */,
+				782DA8E412DB5A3800C07861 /* regenc.c in Sources */,
+				782DA8E512DB5A3800C07861 /* regerror.c in Sources */,
+				782DA8E612DB5A3800C07861 /* regexec.c in Sources */,
+				782DA8E712DB5A3800C07861 /* regext.c in Sources */,
+				782DA8E812DB5A3800C07861 /* regparse.c in Sources */,
+				782DA8E912DB5A3800C07861 /* regsyntax.c in Sources */,
+				782DA8EA12DB5A3800C07861 /* regtrav.c in Sources */,
+				782DA8EB12DB5A3800C07861 /* regversion.c in Sources */,
+				782DA8EC12DB5A3800C07861 /* st.c in Sources */,
+				782DA8ED12DB5A3800C07861 /* CustomJSFile.m in Sources */,
+				782DA8EE12DB5A3800C07861 /* ImageURLParser.m in Sources */,
+				782DA8EF12DB5A3800C07861 /* WebViewAutoScroll.m in Sources */,
+				782DA8F012DB5A3800C07861 /* IgnoreItem.m in Sources */,
+				782DA8F112DB5A3800C07861 /* IgnoreItemSheet.m in Sources */,
+				780844D3134CD34B003BB84C /* ImageDownloadManager.m in Sources */,
+				780844F7134CD45E003BB84C /* ImageSizeCheckClient.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		78E570CD0C1C306500BDF7EC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1194,6 +1569,8 @@
 				780C685E118230EE00CB739F /* WebViewAutoScroll.m in Sources */,
 				789ED3F31193EF4400CFC0B2 /* IgnoreItem.m in Sources */,
 				789ED4841193F9EB00CFC0B2 /* IgnoreItemSheet.m in Sources */,
+				780844D2134CD34B003BB84C /* ImageDownloadManager.m in Sources */,
+				780844F6134CD45E003BB84C /* ImageSizeCheckClient.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1331,6 +1708,73 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		782DA8FE12DB5A3800C07861 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Satoshi Nakagawa";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Others/LimeChat_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					TARGET_APP_STORE,
+					DEBUG,
+				);
+				INFOPLIST_FILE = "Others/Info-AppStore.plist";
+				INSTALL_PATH = /Applications;
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = LimeChat;
+				SDKROOT = macosx;
+				VALID_ARCHS = "i386 x86_64";
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = YES;
+			};
+			name = Debug;
+		};
+		782DA8FF12DB5A3800C07861 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Satoshi Nakagawa";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Others/LimeChat_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = TARGET_APP_STORE;
+				INFOPLIST_FILE = "Others/Info-AppStore.plist";
+				INSTALL_PATH = /Applications;
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = LimeChat;
+				SDKROOT = macosx;
+				VALID_ARCHS = "i386 x86_64";
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
 		78E570D40C1C306500BDF7EC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1359,7 +1803,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = LimeChat;
-				SDKROOT = "";
+				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = YES;
 			};
@@ -1392,8 +1836,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = LimeChat;
-				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.6.sdk";
-				STRIP_INSTALLED_PRODUCT = YES;
+				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
 			};
@@ -1402,23 +1845,30 @@
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ONLY_ACTIVE_ARCH_PRE_XCODE_3_1)";
+				ARCHS = (
+					i386,
+					x86_64,
+					ppc,
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				ONLY_ACTIVE_ARCH_PRE_XCODE_3_1 = "$(NATIVE_ARCH_ACTUAL)";
+				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
-				SDKROOT = /Developer/SDKs/MacOSX10.5.sdk;
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
 		C01FCF5008A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1)";
-				ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1 = "x86_64 i386 ppc";
+				ARCHS = (
+					i386,
+					x86_64,
+					ppc,
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -1426,13 +1876,22 @@
 				INSTALL_PATH = /Applications;
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				PREBINDING = NO;
-				SDKROOT = /Developer/SDKs/MacOSX10.5.sdk;
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		782DA8FD12DB5A3800C07861 /* Build configuration list for PBXNativeTarget "LimeChat-AppStore" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				782DA8FE12DB5A3800C07861 /* Debug */,
+				782DA8FF12DB5A3800C07861 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		78E570D30C1C306500BDF7EC /* Build configuration list for PBXNativeTarget "LimeChat" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

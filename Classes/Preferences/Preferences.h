@@ -68,8 +68,13 @@ typedef enum {
 + (void)setThemeLogFontName:(NSString*)value;
 + (double)themeLogFontSize;
 + (void)setThemeLogFontSize:(double)value;
++ (NSString*)themeInputFontName;
++ (void)setThemeInputFontName:(NSString*)value;
++ (double)themeInputFontSize;
++ (void)setThemeInputFontSize:(double)value;
 + (NSString*)themeNickFormat;
 + (BOOL)themeOverrideLogFont;
++ (BOOL)themeOverrideInputFont;
 + (BOOL)themeOverrideNickFormat;
 + (BOOL)themeOverrideTimestampFormat;
 + (NSString*)themeTimestampFormat;
@@ -79,6 +84,9 @@ typedef enum {
 + (void)setDccFirstPort:(int)value;
 + (int)dccLastPort;
 + (void)setDccLastPort:(int)value;
+
++ (int)pongInterval;
++ (void)setPongInterval:(int)value;
 
 + (int)maxLogLines;
 + (void)setMaxLogLines:(int)value;

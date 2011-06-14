@@ -20,6 +20,7 @@ body[channelname=#limechat] {}
 
 hr { margin: 0.5em 2em; }
 a {}
+.inlineimage {}
 
 /* lines */
 .line { margin: 0 -4px; padding: 0 4px 1px 4px; }

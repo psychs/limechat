@@ -34,7 +34,8 @@
 
 - (id)init
 {
-	if (self = [super init]) {
+	self = [super init];
+	if (self) {
 		receivers = [NSMutableArray new];
 		senders = [NSMutableArray new];
 		

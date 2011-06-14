@@ -21,6 +21,7 @@
 @synthesize username;
 @synthesize realName;
 @synthesize nickPassword;
+@synthesize useSASL;
 @synthesize altNicks;
 
 @synthesize proxyType;
@@ -44,7 +45,8 @@
 
 - (id)init
 {
-	if (self = [super init]) {
+	self = [super init];
+	if (self) {
 		altNicks = [NSMutableArray new];
 		loginCommands = [NSMutableArray new];
 		channels = [NSMutableArray new];
@@ -92,6 +94,7 @@
 	username = [[dic stringForKey:@"username"] retain] ?: @"";
 	realName = [[dic stringForKey:@"realname"] retain] ?: @"";
 	nickPassword = [[dic stringForKey:@"nickPassword"] retain] ?: @"";
+	useSASL = [dic boolForKey:@"useSASL"];
 	[altNicks addObjectsFromArray:[dic arrayForKey:@"alt_nicks"]];
 	
 	proxyType = [dic intForKey:@"proxy"];
@@ -166,6 +169,7 @@
 	if (username) [dic setObject:username forKey:@"username"];
 	if (realName) [dic setObject:realName forKey:@"realname"];
 	if (nickPassword) [dic setObject:nickPassword forKey:@"nickPassword"];
+	[dic setBool:useSASL forKey:@"useSASL"];
 	if (altNicks) [dic setObject:altNicks forKey:@"alt_nicks"];
 	
 	[dic setInt:proxyType forKey:@"proxy"];

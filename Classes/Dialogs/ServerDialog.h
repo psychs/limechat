@@ -29,6 +29,7 @@
 	IBOutlet NSTextField* usernameText;
 	IBOutlet NSTextField* realNameText;
 	IBOutlet NSTextField* nickPasswordText;
+	IBOutlet NSButton* saslCheck;
 	IBOutlet NSTextField* altNicksText;
 	
 	IBOutlet NSTextField* leavingCommentText;

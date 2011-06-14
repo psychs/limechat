@@ -213,6 +213,30 @@
 	[ud setDouble:value forKey:@"Preferences.Theme.log_font_size"];
 }
 
++ (NSString*)themeInputFontName
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	return [ud objectForKey:@"Preferences.Theme.input_font_name"];
+}
+
++ (void)setThemeInputFontName:(NSString*)value
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	[ud setObject:value forKey:@"Preferences.Theme.input_font_name"];
+}
+
++ (double)themeInputFontSize
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	return [ud doubleForKey:@"Preferences.Theme.input_font_size"];
+}
+
++ (void)setThemeInputFontSize:(double)value
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	[ud setDouble:value forKey:@"Preferences.Theme.input_font_size"];
+}
+
 + (NSString*)themeNickFormat
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
@@ -223,6 +247,12 @@
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
 	return [ud boolForKey:@"Preferences.Theme.override_log_font"];
+}
+
++ (BOOL)themeOverrideInputFont
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	return [ud boolForKey:@"Preferences.Theme.override_input_font"];
 }
 
 + (BOOL)themeOverrideNickFormat
@@ -274,6 +304,22 @@
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
 	[ud setInteger:value forKey:@"Preferences.Dcc.last_port"];
+}
+
+#pragma mark -
+#pragma mark Connectivity
+
++ (int)pongInterval
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	return [ud integerForKey:@"Preferences.Advanced.pongInterval"];
+}
+
++ (void)setPongInterval:(int)value
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	[ud setInteger:value forKey:@"Preferences.Advanced.pongInterval"];
+	[ud synchronize];
 }
 
 #pragma mark -
@@ -787,14 +833,18 @@ static NSMutableArray* excludeWords;
 	[d setObject:@"resource:Limelight" forKey:@"Preferences.Theme.name"];
 	[d setObject:@"Lucida Grande" forKey:@"Preferences.Theme.log_font_name"];
 	[d setDouble:12 forKey:@"Preferences.Theme.log_font_size"];
+	[d setObject:@"Lucida Grande" forKey:@"Preferences.Theme.input_font_name"];
+	[d setDouble:12 forKey:@"Preferences.Theme.input_font_size"];
 	[d setObject:@"%n: " forKey:@"Preferences.Theme.nick_format"];
 	[d setBool:NO forKey:@"Preferences.Theme.override_log_font"];
+	[d setBool:NO forKey:@"Preferences.Theme.override_input_font"];
 	[d setBool:NO forKey:@"Preferences.Theme.override_nick_format"];
 	[d setBool:NO forKey:@"Preferences.Theme.override_timestamp_format"];
 	[d setObject:@"%H:%M" forKey:@"Preferences.Theme.timestamp_format"];
 	[d setDouble:1 forKey:@"Preferences.Theme.transparency"];
 	[d setInt:1096 forKey:@"Preferences.Dcc.first_port"];
 	[d setInt:1115 forKey:@"Preferences.Dcc.last_port"];
+	[d setInt:60 forKey:@"Preferences.Advanced.pongInterval"];
 	[d setInt:300 forKey:@"Preferences.General.max_log_lines"];
 	[d setObject:@"~/Documents/LimeChat Transcripts" forKey:@"Preferences.General.transcript_folder"];
 	[d setInt:0 forKey:@"Preferences.General.hotkey_key_code"];

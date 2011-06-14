@@ -17,6 +17,10 @@
 #import "NSStringHelper.h"
 #import "NSDictionaryHelper.h"
 
+#ifndef TARGET_APP_STORE
+#import "Sparkle/Sparkle.h"
+#endif
+
 
 #define CONNECTED				(u && u.isConnected)
 #define NOT_CONNECTED			(u && !u.isConnected)
@@ -55,7 +59,8 @@
 
 - (id)init
 {
-	if (self = [super init]) {
+	self = [super init];
+	if (self) {
 		serverDialogs = [NSMutableArray new];
 		channelDialogs = [NSMutableArray new];
 	}
@@ -81,6 +86,18 @@
 	[fileSendPanel release];
 	[fileSendTargets release];
 	[super dealloc];
+}
+
+- (void)setUp
+{
+#ifdef TARGET_APP_STORE
+	[[checkForUpdateItem menu] removeItem:checkForUpdateItem];
+#else
+	sparkleUpdater = [SUUpdater new];
+	[sparkleUpdater setDelegate:app];
+	[checkForUpdateItem setTarget:sparkleUpdater];
+	[checkForUpdateItem setAction:@selector(checkForUpdates:)];
+#endif
 }
 
 - (void)terminate

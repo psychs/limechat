@@ -52,6 +52,7 @@ typedef enum {
 	int tryingNickNumber;
 	
 	NSString* serverHostname;
+	BOOL isRegisteredWithSASL;
 	BOOL registeringToNickServ;
 	BOOL inWhois;
 	BOOL inList;
@@ -63,6 +64,7 @@ typedef enum {
 	NSString* joinMyAddress;
 	NSString* myAddress;
 	CFAbsoluteTime lastCTCPTime;
+	int pongInterval;
 	
 	Timer* pongTimer;
 	Timer* quitTimer;

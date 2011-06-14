@@ -7,15 +7,15 @@
     <language>en-us</language>
 
     <item>
-      <title>2.15</title>
-      <link>http://limechat.net/mac/#v2.15</link>
-      <pubDate>Wed, 23 Jun 2010 19:46:01 +0900</pubDate>
+      <title>2.24</title>
+      <link>http://limechat.net/mac/#v2.24</link>
+      <pubDate>Mon, 05 Jun 2011 22:13:00 -0700</pubDate>
       <content:encoded><![CDATA[
   			<ul>
-          <li>Join a channel automatically when invited option.</li>
-          <li>Handle incomplete ISO-2022-JP sequences.</li>
-          <li>Cancel reconnection when disconnect from menu.</li>
-          <li>Fixed minor bugs.</li>
+          <li>Fixed a bug in parsing mode.</li>
+          <li>Updated Limelight theme.</li>
+          <li>Use chat01.ustream.tv instead of chat1.ustream.tv.</li>
+          <li>Changed caption for Nickserv password.</li>
         </ul>
       ]]></content:encoded>
     </item>

@@ -30,7 +30,8 @@ static NSDictionary* SYNTAX_EXT_MAP;
 
 - (id)init
 {
-	if (self = [super init]) {
+	self = [super init];
+	if (self) {
 		[NSBundle loadNibNamed:@"PasteSheet" owner:self];
 		
 		if (!SYNTAXES) {

@@ -23,6 +23,7 @@
 {
 	IBOutlet NSMenuItem* closeWindowItem;
 	IBOutlet NSMenuItem* closeCurrentPanelItem;
+	IBOutlet NSMenuItem* checkForUpdateItem;
 	
 	AppController* app;
 	IRCWorld* world;
@@ -36,6 +37,7 @@
 	NSString* pointedNick;
 	NSString* pointedChannelName;
 	
+	id sparkleUpdater;
 	PreferencesController* preferencesController;
 	NSMutableArray* serverDialogs;
 	NSMutableArray* channelDialogs;
@@ -61,6 +63,7 @@
 @property (nonatomic, retain) NSString* pointedNick;
 @property (nonatomic, retain) NSString* pointedChannelName;
 
+- (void)setUp;
 - (void)terminate;
 - (void)startPasteSheetWithContent:(NSString*)content nick:(NSString*)nick uid:(int)uid cid:(int)cid editMode:(BOOL)editMode;
 - (void)showServerPropertyDialog:(IRCClient*)client ignore:(BOOL)ignore;

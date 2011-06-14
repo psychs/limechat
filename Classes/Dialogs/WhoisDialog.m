@@ -22,7 +22,8 @@ static int windowPlace;
 
 - (id)init
 {
-	if (self = [super init]) {
+	self = [super init];
+	if (self) {
 		[NSBundle loadNibNamed:@"WhoisDialog" owner:self];
 	}
 	return self;

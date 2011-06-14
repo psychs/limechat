@@ -31,7 +31,8 @@
 
 - (id)init
 {
-	if (self = [super init]) {
+	self = [super init];
+	if (self) {
 		colorNumber = -1;
 		lastFadedWeights = CFAbsoluteTimeGetCurrent();
 	}

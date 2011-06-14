@@ -21,7 +21,8 @@
 
 - (id)init
 {
-	if (self = [super init]) {
+	self = [super init];
+	if (self) {
 		x = -10000;
 		y = -10000;
 	}
@@ -85,11 +86,14 @@
 		doubleClickThreshold = [NSEvent doubleClickInterval];
 	}
 	else {
-		doubleClickThreshold = GetDblTime() / 60.0;
-	}
-	if (doubleClickThreshold == 0) {
 		doubleClickThreshold = 0.5;
 	}
+	
+	/*
+#ifndef TARGET_APP_STORE
+	doubleClickThreshold = GetDblTime() / 60.0;
+#endif
+	 */
 	
 	CFAbsoluteTime now = CFAbsoluteTimeGetCurrent();
 	if (x-d <= cx && cx <= x+d && y-d <= cy && cy <= y+d) {

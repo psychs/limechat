@@ -8,9 +8,12 @@
 
 - (id)init
 {
-	if (self = [super init]) {
+	self = [super init];
+	if (self) {
+#ifndef TARGET_APP_STORE
 		// migrate from the old .plist
 		CFPreferencesAddSuitePreferencesToApp(kCFPreferencesCurrentApplication, CFSTR("LimeChat"));
+#endif
 	}
 	return self;
 }
@@ -25,8 +28,9 @@
 {
 	if ([e type] == 14 && [e subtype] == 6) {
 		if (hotkey && [hotkey enabled]) {
-			if ([[self delegate] respondsToSelector:@selector(applicationDidReceiveHotKey:)]) {
-				[[self delegate] applicationDidReceiveHotKey:self];
+			id delegate = [self delegate];
+			if ([delegate respondsToSelector:@selector(applicationDidReceiveHotKey:)]) {
+				[delegate applicationDidReceiveHotKey:self];
 			}
 		}
 	}

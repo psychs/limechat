@@ -21,7 +21,8 @@
 
 - (id)init
 {
-	if (self = [super init]) {
+	self = [super init];
+	if (self) {
 		k = @"";
 	}
 	return self;
@@ -122,7 +123,7 @@
 	NSMutableString* trail = [NSMutableString string];
 	
 	if (a != mode.a) {
-		[str appendString:s ? @"-a" : @"+a"];
+		[str appendString:a ? @"-a" : @"+a"];
 	}
 	if (i != mode.i) {
 		[str appendString:i ? @"-i" : @"+i"];
@@ -131,7 +132,7 @@
 		[str appendString:m ? @"-m" : @"+m"];
 	}
 	if (n != mode.n) {
-		[str appendString:s ? @"-n" : @"+n"];
+		[str appendString:n ? @"-n" : @"+n"];
 	}
 	if (p != mode.p) {
 		[str appendString:p ? @"-p" : @"+p"];
@@ -140,7 +141,7 @@
 		[str appendString:q ? @"-q" : @"+q"];
 	}
 	if (r != mode.r) {
-		[str appendString:s ? @"-r" : @"+r"];
+		[str appendString:r ? @"-r" : @"+r"];
 	}
 	if (s != mode.s) {
 		[str appendString:s ? @"-s" : @"+s"];

@@ -10,10 +10,11 @@
 #import "OnigRegexp.h"
 #import "NSLocaleHelper.h"
 #import "ImageURLParser.h"
+#import "ImageDownloadManager.h"
 
 
-#define BOTTOM_EPSILON	20
-
+#define BOTTOM_EPSILON			20
+#define INLINE_IMAGE_MAX_SIZE	(1024 * 1024)
 
 
 @interface NSScrollView (Private)
@@ -50,7 +51,8 @@
 
 - (id)init
 {
-	if (self = [super init]) {
+	self = [super init];
+	if (self) {
 		bottom = YES;
 		maxLines = 300;
 		lines = [NSMutableArray new];
@@ -307,6 +309,85 @@
 	[self restorePosition];
 }
 
+- (void)expandImage:(NSString*)url lineNumber:(int)aLineNumber imageIndex:(int)imageIndex contentLength:(long long)contentLength
+{
+	if (!loaded) return;
+	
+	if (contentLength > INLINE_IMAGE_MAX_SIZE) {
+		LOG(@"Ignore too big image: %@ (%qi bytes)", url, contentLength);
+		return;
+	}
+	
+	DOMHTMLDocument* doc = (DOMHTMLDocument*)[[view mainFrame] DOMDocument];
+	if (!doc) return;
+
+	NSString* lineIdStr = [NSString stringWithFormat:@"line%d", aLineNumber];
+	DOMHTMLElement* lineElement = (DOMHTMLElement*)[doc getElementById:lineIdStr];
+	if (lineElement) {
+		DOMHTMLElement* messageTag = nil;
+		
+		DOMNodeList* nodeList = [lineElement childNodes];
+		int nodeCount = [nodeList length];
+		for (int i=0; i<nodeCount; ++i) {
+			DOMHTMLElement* node = (DOMHTMLElement*)[nodeList item:i];
+			if ([node isKindOfClass:[DOMHTMLElement class]]) {
+				NSString* klass = [node className];
+				if ([klass isEqualToString:@"message"]) {
+					messageTag = node;
+					break;
+				}
+			}
+		}
+
+		if (messageTag) {
+			DOMElement* beforeTag = nil;
+			
+			DOMNodeList* nodeList = [messageTag childNodes];
+			int nodeCount = [nodeList length];
+			for (int i=0; i<nodeCount; ++i) {
+				DOMHTMLElement* node = (DOMHTMLElement*)[nodeList item:i];
+				if ([node isKindOfClass:[DOMHTMLBRElement class]]) {
+					beforeTag = node;
+				}
+				else if ([node isKindOfClass:[DOMHTMLAnchorElement class]]) {
+					if ([node hasAttribute:@"imageindex"]) {
+						NSString* indexStr = [node getAttribute:@"imageindex"];
+						int index = [indexStr intValue];
+						if (index < imageIndex) {
+							beforeTag = node;
+						}
+					}
+				}
+			}
+			
+			if (!beforeTag) {
+				DOMElement* brTag = [doc createElement:@"br"];
+				[messageTag appendChild:brTag];
+				beforeTag = brTag;
+			}
+			
+			[self savePosition];
+
+			DOMHTMLElement* imageAnchorTag = (DOMHTMLElement*)[doc createElement:@"a"];
+			[imageAnchorTag setAttribute:@"href" value:url];
+			[imageAnchorTag setAttribute:@"imageindex" value:[NSString stringWithFormat:@"%d", imageIndex]];
+			
+			NSString* imageAnchorTagContent = [NSString stringWithFormat:@"<img src=\"%@\" class=\"inlineimage\"/>", url];
+			[imageAnchorTag setInnerHTML:imageAnchorTagContent];
+			
+			DOMElement* after = [beforeTag nextElementSibling];
+			if (after) {
+				[messageTag insertBefore:imageAnchorTag refChild:after];
+			}
+			else {
+				[messageTag appendChild:imageAnchorTag];
+			}
+			
+			[self restorePositionWithDelay];
+		}
+	}
+}
+
 - (void)limitNumberOfLines
 {
 	needsLimitNumberOfLines = NO;
@@ -423,7 +504,7 @@
 	if (line.place) [s appendFormat:@"<span class=\"place\">%@</span>", logEscape(line.place)];
 	if (line.nick) {
 		if (line.useAvatar && line.nickInfo) {
-			[s appendFormat:@"<img class=\"avatar\" src=\"http://img.tweetimag.es/i/%@\" />", logEscape(line.nickInfo)];
+			[s appendFormat:@"<img class=\"avatar\" src=\"http://img.tweetimag.es/i/%@\" />", tagEscape(line.nickInfo)];
 		}
 		[s appendFormat:@"<span class=\"sender\" type=\"%@\"", [LogLine memberTypeString:line.memberType]];
 		if (!console) [s appendString:@" oncontextmenu=\"on_nick()\""];
@@ -436,34 +517,50 @@
 	LogLineType type = line.lineType;
 	NSString* lineTypeString = [LogLine lineTypeString:type];
 	BOOL isText = type == LINE_TYPE_PRIVMSG || type == LINE_TYPE_NOTICE || type == LINE_TYPE_ACTION;
-	BOOL showInlineImage = NO;
 
+	[s appendFormat:@"<span class=\"message\" type=\"%@\">%@", lineTypeString, body];
 	if (isText && !console && urlRanges.count && [Preferences showInlineImages]) {
 		//
 		// expand image URLs
 		//
-		NSString* imagePageUrl = nil;
-		NSString* imageUrl = nil;
+		BOOL showInlineImage = NO;
+		int imageIndex = 0;
 		
 		for (NSValue* rangeValue in urlRanges) {
 			NSString* url = [line.body substringWithRange:[rangeValue rangeValue]];
-			imageUrl = [ImageURLParser imageURLForURL:url];
-			if (imageUrl) {
-				imagePageUrl = url;
-				break;
+			
+			BOOL isFileURL = NO;
+			BOOL checkingSize = NO;
+			
+			if ([ImageURLParser isImageFileURL:url]) {
+				isFileURL = YES;
+				if (![url hasPrefix:@"http://gyazo.com/"]) {
+					checkingSize = YES;
+					[[ImageDownloadManager instance] checkImageSize:url client:client channel:channel lineNumber:lineNumber imageIndex:imageIndex];
+				}
 			}
-		}
-		
-		if (imageUrl) {
-			showInlineImage = YES;
-			[s appendFormat:@"<span class=\"message\" type=\"%@\">%@<br/>", lineTypeString, body];
-			[s appendFormat:@"<a href=\"%@\"><img src=\"%@\" class=\"inlineimage\"/></a></span>", imagePageUrl, imageUrl];
+			
+			if (!checkingSize) {
+				NSString* imageUrl = nil;
+				if (isFileURL) {
+					imageUrl = url;
+				}
+				else {
+					imageUrl = [ImageURLParser serviceImageURLForURL:url];
+				}
+				
+				if (imageUrl) {
+					if (!showInlineImage) {
+						[s appendString:@"<br/>"];
+					}
+					showInlineImage = YES;
+					[s appendFormat:@"<a href=\"%@\" imageindex=\"%d\"><img src=\"%@\" class=\"inlineimage\"/></a>", url, imageIndex, imageUrl];
+				}
+			}
+			++imageIndex;
 		}
 	}
-	
-	if (!showInlineImage) {
-		[s appendFormat:@"<span class=\"message\" type=\"%@\">%@</span>", lineTypeString, body];
-	}
+	[s appendString:@"</span>"];
 
 	NSString* klass = isText ? @"line text" : @"line event";
 	
@@ -495,6 +592,7 @@
 {
 	[self savePosition];
 	
+	int currentLineNumber = lineNumber;
 	++lineNumber;
 	++count;
 
@@ -508,7 +606,7 @@
 		NSString* value = [attrs objectForKey:key];
 		[div setAttribute:key value:value];
 	}
-	[div setAttribute:@"id" value:[NSString stringWithFormat:@"line%d", lineNumber]];
+	[div setAttribute:@"id" value:[NSString stringWithFormat:@"line%d", currentLineNumber]];
 	[body appendChild:div];
 	
 	if (maxLines > 0 && count > maxLines) {
@@ -516,7 +614,7 @@
 	}
 	
 	if ([[attrs objectForKey:@"highlight"] isEqualToString:@"true"]) {
-		[highlightedLineNumbers addObject:[NSNumber numberWithInt:lineNumber]];
+		[highlightedLineNumbers addObject:[NSNumber numberWithInt:currentLineNumber]];
 	}
 	
 	if (scroller) {
@@ -533,7 +631,7 @@
 	if (channel) {
 		[bodyAttrs appendFormat:@"type=\"%@\"", [channel channelTypeString]];
 		if ([channel isChannel]) {
-			[bodyAttrs appendFormat:@" channelname=\"%@\"", logEscape([channel name])];
+			[bodyAttrs appendFormat:@" channelname=\"%@\"", tagEscape([channel name])];
 		}
 	}
 	else if (console) {
@@ -617,9 +715,7 @@
 		@"}"
 	 
 		@".inlineimage {"
-		@"margin-top: 10px;"
-		@"margin-bottom: 15px;"
-		@"margin-left: 40px;"
+		@"margin: 10px 0 15px 40px;"
 		@"max-width: 200px;"
 		@"max-height: 150px;"
 		@"-webkit-box-shadow: 2px 2px 2px #888;"
@@ -730,7 +826,8 @@
 		
 		scroller = [[MarkedScroller alloc] initWithFrame:NSMakeRect(-16, -64, 16, 64)];
 		scroller.dataSource = self;
-		[scroller setFloatValue:[old floatValue] knobProportion:[old knobProportion]];
+		[scroller setFloatValue:[old floatValue]];
+		[scroller setKnobProportion:[old knobProportion]];
 		[scrollView setVerticalScroller:scroller];
 	}
 }

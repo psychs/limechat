@@ -46,7 +46,8 @@ static NSImage* eraseButtonPushedImage;
 
 - (id)initWithFrame:(NSRect)frame
 {
-	if (self = [super initWithFrame:frame]) {
+	self = [super initWithFrame:frame];
+	if (self) {
 	}
 	return self;
 }

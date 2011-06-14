@@ -27,6 +27,7 @@ typedef enum {
 	NSString* username;
 	NSString* realName;
 	NSString* nickPassword;
+	BOOL useSASL;
 	NSMutableArray* altNicks;
 	
 	// proxy
@@ -63,6 +64,7 @@ typedef enum {
 @property (nonatomic, retain) NSString* username;
 @property (nonatomic, retain) NSString* realName;
 @property (nonatomic, retain) NSString* nickPassword;
+@property (nonatomic, assign) BOOL useSASL;
 @property (nonatomic, readonly) NSMutableArray* altNicks;
 
 @property (nonatomic, assign) ProxyType proxyType;

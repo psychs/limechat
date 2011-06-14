@@ -33,7 +33,8 @@
 
 - (id)init
 {
-	if (self = [super init]) {
+	self = [super init];
+	if (self) {
 		mode = [IRCChannelMode new];
 		members = [NSMutableArray new];
 	}
@@ -275,6 +276,8 @@
 
 - (void)renameMember:(NSString*)fromNick to:(NSString*)toNick
 {
+	if ([fromNick isEqualToString:toNick]) return;
+
 	int n = [self indexOfMember:fromNick];
 	if (n < 0) return;
 	

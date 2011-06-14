@@ -35,7 +35,8 @@
 
 - (id)init
 {
-	if (self = [super init]) {
+	self = [super init];
+	if (self) {
 		registered = [Preferences registeredToGrowl];
 	}
 	return self;
@@ -155,6 +156,8 @@
 			desc = [NSString stringWithFormat:@"To %@\n%@", title, desc];
 			title = @"File send failed";
 			context = @"dcc";
+			break;
+		default:
 			break;
 	}
 	

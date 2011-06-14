@@ -38,7 +38,8 @@
 
 - (id)init
 {
-	if (self = [super init]) {
+	self = [super init];
+	if (self) {
 		encoding = NSUTF8StringEncoding;
 		sendQueue = [NSMutableArray new];
 		timer = [Timer new];

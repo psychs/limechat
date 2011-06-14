@@ -13,13 +13,13 @@
 #import "NSStringHelper.h"
 #import "NSDataHelper.h"
 #import "NSData+Kana.h"
+#import "GTMBase64.h"
 
 
 #define MAX_JOIN_CHANNELS	10
 #define MAX_BODY_LEN		480
 #define TIME_BUFFER_SIZE	256
 
-#define PONG_INTERVAL		130
 #define QUIT_INTERVAL		5
 #define RECONNECT_INTERVAL	20
 #define RETRY_INTERVAL		240
@@ -31,8 +31,10 @@
 static NSDateFormatter* dateTimeFormatter = nil;
 
 
-
 @interface IRCClient (Private)
+- (void)startPongTimer;
+- (void)stopPongTimer;
+
 - (void)setKeywordState:(id)target;
 - (void)setNewTalkState:(id)target;
 - (void)setUnreadState:(id)target;
@@ -112,7 +114,8 @@ static NSDateFormatter* dateTimeFormatter = nil;
 
 - (id)init
 {
-	if (self = [super init]) {
+	self = [super init];
+	if (self) {
 		tryingNickNumber = -1;
 		channels = [NSMutableArray new];
 		isupport = [IRCISupportInfo new];
@@ -361,6 +364,16 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		}
 	}
 	
+	if (isLoggedIn) {
+		if (pongInterval != [Preferences pongInterval]) {
+			if (serverHostname.length) {
+				[self send:PONG, serverHostname, nil];
+			}
+			[self stopPongTimer];
+			[self startPongTimer];
+		}
+	}
+	
 	for (IRCChannel* c in channels) {
 		[c preferencesChanged];
 	}
@@ -418,9 +431,11 @@ static NSDateFormatter* dateTimeFormatter = nil;
 
 - (void)startPongTimer
 {
+	if (!isLoggedIn) return;
 	if (pongTimer.isActive) return;
 	
-	[pongTimer start:PONG_INTERVAL];
+	pongInterval = [Preferences pongInterval];
+	[pongTimer start:pongInterval];
 }
 
 - (void)stopPongTimer
@@ -1541,7 +1556,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 				t = [NSString stringWithFormat:@"\x01%@ %@\x01", ACTION, t];
 			}
 			
-			[self send:localCmd, [targets componentsJoinedByString:@","], t, nil];
+			[self send:localCmd, [targetsResult componentsJoinedByString:@","], t, nil];
 		}
 	}
 	else if ([cmd isEqualToString:CTCP]) {
@@ -3006,15 +3021,42 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	[self startPongTimer];
 }
 
-- (void)receiveInit:(IRCMessage*)m
+- (void)receiveCap:(IRCMessage*)m
+{
+	if (isLoggedIn) return;
+
+	NSString* command = [m paramAt:1];
+	NSString* params = [[m paramAt:2] trim];
+	
+	if ([command isEqualNoCase:@"ack"]) {
+		if ([params isEqualNoCase:@"sasl"]) {
+			[self send:AUTHENTICATE, @"PLAIN", nil];
+		}
+	}
+}
+
+- (void)receiveAuthenticate:(IRCMessage*)m
 {
 	if (isLoggedIn) return;
 	
-	[self startPongTimer];
-	[self stopRetryTimer];
-	[self stopAutoJoinTimer];
+	NSString* command = [[m paramAt:0] trim];
 	
-	[world expandClient:self];
+	if ([command isEqualNoCase:@"+"]) {
+		NSString* user = config.username;
+		NSString* pass = config.nickPassword;
+		if (!user.length) user = config.nick;
+		if (!pass.length) pass = @"";
+		
+		NSString* base = [NSString stringWithFormat:@"%@\0%@\0%@", config.nick, user, pass];
+		NSData* data = [base dataUsingEncoding:encoding];
+		NSString* authStr = [GTMBase64 stringByEncodingData:data];
+		[self send:AUTHENTICATE, authStr, nil];
+	}
+}
+
+- (void)receiveInit:(IRCMessage*)m
+{
+	if (isLoggedIn) return;
 	
 	isLoggedIn = YES;
 	conn.loggedIn = YES;
@@ -3023,6 +3065,12 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	registeringToNickServ = NO;
 	inWhois = NO;
 	inList = NO;
+	
+	[self startPongTimer];
+	[self stopRetryTimer];
+	[self stopAutoJoinTimer];
+	
+	[world expandClient:self];
 	
 	[serverHostname release];
 	serverHostname = [m.sender.raw retain];
@@ -3034,7 +3082,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	[self notifyEvent:GROWL_LOGIN];
 	[SoundPlayer play:[Preferences soundForEvent:GROWL_LOGIN]];
 	
-	if (config.nickPassword.length) {
+	if (!isRegisteredWithSASL && config.nickPassword.length) {
 		registeringToNickServ = YES;
 		[self startAutoJoinTimer];
 		[self send:PRIVMSG, @"NickServ", [NSString stringWithFormat:@"IDENTIFY %@", config.nickPassword], nil];
@@ -3480,6 +3528,24 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		case 323:	// RPL_LISTEND
 			inList = NO;
 			break;
+		case 900:	// SASL logged in
+		{
+			isRegisteredWithSASL = YES;
+			NSString* text = [m sequence:3];
+			[self printBoth:nil type:LINE_TYPE_REPLY text:text];
+			break;
+		}
+		case 903:	// SASL authentication successful
+			[self printReply:m];
+			[self send:CAP, @"END", nil];
+			break;
+		case 904:	// SASL authentication failed
+			[self printReply:m];
+			[self send:CAP, @"END", nil];
+			break;
+		case 906:	// SASL authentication aborted
+			[self printReply:m];
+			break;
 		default:
 			[self printUnknownReply:m];
 			break;
@@ -3629,6 +3695,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	isConnecting = isLoggedIn = NO;
 	isConnected = reconnectEnabled = YES;
 	encoding = config.encoding;
+	isRegisteredWithSASL = NO;
 	
 	if (!inputNick.length) {
 		[inputNick autorelease];
@@ -3645,11 +3712,19 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	int modeParam = config.invisibleMode ? 8 : 0;
 	NSString* user = config.username;
 	NSString* realName = config.realName;
-	
 	if (!user.length) user = config.nick;
 	if (!realName.length) realName = config.nick;
 	
-	if (config.password.length) [self send:PASS, config.password, nil];
+	if (config.useSASL) {
+		if (config.nick.length && config.nickPassword.length) {
+			[self send:CAP, @"REQ", @"sasl", nil];
+		}
+	}
+	
+	if (config.password.length) {
+		[self send:PASS, config.password, nil];
+	}
+	
 	[self send:NICK, sentNick, nil];
 	[self send:USER, user, [NSString stringWithFormat:@"%d", modeParam], @"*", realName, nil];
 	
@@ -3711,6 +3786,8 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	else if ([cmd isEqualToString:INVITE]) [self receiveInvite:m];
 	else if ([cmd isEqualToString:ERROR]) [self receiveError:m];
 	else if ([cmd isEqualToString:PING]) [self receivePing:m];
+	else if ([cmd isEqualToString:CAP]) [self receiveCap:m];
+	else if ([cmd isEqualToString:AUTHENTICATE]) [self receiveAuthenticate:m];
 }
 
 - (void)ircConnectionWillSend:(NSString*)line

@@ -34,7 +34,8 @@
 
 - (id)init
 {
-	if (self = [super init]) {
+	self = [super init];
+	if (self) {
 		[NSBundle loadNibNamed:@"ServerDialog" owner:self];
 		
 		NSArray* servers = [[self class] availableServers];
@@ -111,6 +112,7 @@
 	usernameText.stringValue = config.username;
 	realNameText.stringValue = config.realName;
 	nickPasswordText.stringValue = config.nickPassword;
+	saslCheck.state = config.useSASL;
 	if (config.altNicks.count) {
 		altNicksText.stringValue = [config.altNicks componentsJoinedByString:@" "];
 	}
@@ -148,6 +150,7 @@
 	config.username = usernameText.stringValue;
 	config.realName = realNameText.stringValue;
 	config.nickPassword = nickPasswordText.stringValue;
+	config.useSASL = saslCheck.state;
 	
 	NSArray* nicks = [altNicksText.stringValue componentsSeparatedByString:@" "];
 	[config.altNicks removeAllObjects];
@@ -186,9 +189,13 @@
 	NSString* host = [hostCombo stringValue];
 	int port = [portText intValue];
 	NSString* nick = [nickText stringValue];
+	NSString* nickPassword = [nickPasswordText stringValue];
 	
-	BOOL enabled = name.length > 0 && host.length > 0 && ![host isEqualToString:@"-"] && port > 0 && nick.length > 0;
+	BOOL enabled = name.length && host.length && ![host isEqualToString:@"-"] && port > 0 && nick.length;
 	[okButton setEnabled:enabled];
+	
+	BOOL saslEnabled = nickPassword.length > 0;
+	[saslCheck setEnabled:saslEnabled];
 }
 
 - (void)updateChannelsPage
@@ -608,19 +615,17 @@
 			[servers addObject:@"chat.freenode.net (freenode)"];
 			[servers addObject:@"eu.undernet.org (Undernet)"];
 			[servers addObject:@"irc.quakenet.org (QuakeNet)"];
-			[servers addObject:@"chat1.ustream.tv (Ustream)"];
+			[servers addObject:@"chat01.ustream.tv (Ustream)"];
 		}
 		else {
 			[servers addObject:@"chat.freenode.net (freenode)"];
 			[servers addObject:@"irc.efnet.net (EFnet)"];
-			[servers addObject:@"irc.us.ircnet.net (IRCnet)"];
-			[servers addObject:@"irc.fr.ircnet.net (IRCnet)"];
 			[servers addObject:@"us.undernet.org (Undernet)"];
 			[servers addObject:@"eu.undernet.org (Undernet)"];
 			[servers addObject:@"irc.quakenet.org (QuakeNet)"];
 			[servers addObject:@"uk.quakenet.org (QuakeNet)"];
 			[servers addObject:@"irc.mozilla.org (Mozilla)"];
-			[servers addObject:@"chat1.ustream.tv (Ustream)"];
+			[servers addObject:@"chat01.ustream.tv (Ustream)"];
 		}
 	}
 	return servers;

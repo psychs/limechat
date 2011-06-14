@@ -23,7 +23,8 @@ static NSString* userBasePath;
 
 - (id)init
 {
-	if (self = [super init]) {
+	self = [super init];
+	if (self) {
 		log = [LogTheme new];
 		other = [OtherTheme new];
 		js = [CustomJSFile new];
@@ -138,7 +139,12 @@ static NSString* userBasePath;
 + (NSString*)userBasePath
 {
 	if (!userBasePath) {
+#ifdef TARGET_APP_STORE
+		NSString* bundleId = [[NSBundle mainBundle] bundleIdentifier];
+		userBasePath = [[[NSString stringWithFormat:@"~/Library/Application Support/%@/Themes", bundleId] stringByExpandingTildeInPath] retain];
+#else
 		userBasePath = [[@"~/Library/Application Support/LimeChat/Themes" stringByExpandingTildeInPath] retain];
+#endif
 	}
 	return userBasePath;
 }
