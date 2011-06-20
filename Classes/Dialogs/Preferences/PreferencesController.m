@@ -487,13 +487,13 @@
 - (void)onAddKeyword:(id)sender
 {
 	[keywordsArrayController add:nil];
-	[self performSelector:@selector(editTable:) withObject:keywordsTable afterDelay:0];
+	[self performSelector:@selector(editTable:) withObject:keywordsTable afterDelay:0.01];
 }
 
 - (void)onAddExcludeWord:(id)sender
 {
 	[excludeWordsArrayController add:nil];
-	[self performSelector:@selector(editTable:) withObject:excludeWordsTable afterDelay:0];
+	[self performSelector:@selector(editTable:) withObject:excludeWordsTable afterDelay:0.01];
 }
 
 - (void)onLayoutChanged:(id)sender
