@@ -45,6 +45,11 @@
 			return [NSString stringWithFormat:@"http://api.plixi.com/api/TPAPI.svc/imagefromurl?size=thumbnail&url=%@", [url encodeURIComponent]];
 		}
 	}
+	else if ([host hasSuffix:@"lockerz.com"]) {
+		if ([path hasPrefix:@"/s/"]) {
+			return [NSString stringWithFormat:@"http://api.plixi.com/api/TPAPI.svc/imagefromurl?size=thumbnail&url=%@", [url encodeURIComponent]];
+		}
+	}
 	else if ([host hasSuffix:@"yfrog.com"]) {
 		if (path.length > 1) {
 			return [NSString stringWithFormat:@"%@:small", url];
