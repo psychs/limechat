@@ -94,7 +94,7 @@
 	else if ([host hasSuffix:@"instagr.am"]) {
 		if (path.length > 3) {
 			NSString* shortId = [path substringFromIndex:3];
-			return [NSString stringWithFormat:@"http://instagr.am/p/%@/media/?size=m", shortId];
+			return [NSString stringWithFormat:@"http://instagr.am/p/%@/media/?size=t", shortId];
 		}
 	}
 	else if ([host hasSuffix:@"movapic.com"]) {
