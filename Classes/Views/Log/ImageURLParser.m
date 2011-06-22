@@ -41,7 +41,7 @@
 		}
 	}
 	else if ([host hasSuffix:@"plixi.com"]) {
-		if (path.length > 1) {
+		if ([path hasPrefix:@"/p/"]) {
 			return [NSString stringWithFormat:@"http://api.plixi.com/api/TPAPI.svc/imagefromurl?size=thumbnail&url=%@", [url encodeURIComponent]];
 		}
 	}
