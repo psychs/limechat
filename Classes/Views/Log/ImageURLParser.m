@@ -86,8 +86,10 @@
 		}
 	}
 	else if ([host hasSuffix:@"flic.kr"]) {
-		NSString* shortId = [path substringFromIndex:3];
-		return [NSString stringWithFormat:@"http://flic.kr/p/img/%@_m.jpg", shortId];
+		if (path.length > 3) {
+			NSString* shortId = [path substringFromIndex:3];
+			return [NSString stringWithFormat:@"http://flic.kr/p/img/%@_m.jpg", shortId];
+		}
 	}
     else if ([host hasSuffix:@"instagr.am"]) {
         NSString* shortId = [path substringFromIndex:3];
