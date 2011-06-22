@@ -81,9 +81,13 @@
 		}
 	}
 	else if ([host hasSuffix:@"flic.kr"]) {
-		NSString* shortId = [path substringFromIndex:2];
+		NSString* shortId = [path substringFromIndex:3];
 		return [NSString stringWithFormat:@"http://flic.kr/p/img/%@_m.jpg", shortId];
 	}
+    else if ([host hasSuffix:@"instagr.am"]) {
+        NSString* shortId = [path substringFromIndex:3];
+        return [NSString stringWithFormat:@"http://instagr.am/p/%@/media/?size=m", shortId];
+    }
 	else if ([host hasSuffix:@"movapic.com"]) {
 		if ([path hasPrefix:@"/pic/"]) {
 			NSString* s = [path substringFromIndex:5];
