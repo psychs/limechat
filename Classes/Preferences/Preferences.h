@@ -50,6 +50,7 @@ typedef enum {
 + (BOOL)showInlineImages;
 + (BOOL)showJoinLeave;
 + (BOOL)stopGrowlOnActive;
++ (BOOL)notifyEveryTalk;
 + (BOOL)autoJoinOnInvited;
 + (TabActionType)tabAction;
 + (BOOL)useHotkey;

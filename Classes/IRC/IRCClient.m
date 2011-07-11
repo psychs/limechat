@@ -2501,7 +2501,13 @@ static NSDateFormatter* dateTimeFormatter = nil;
 				if (keyword) [self setKeywordState:t];
 				if (newTalk) [self setNewTalkState:t];
 				
-				GrowlNotificationType kind = keyword ? GROWL_HIGHLIGHT : newTalk ? GROWL_NEW_TALK : GROWL_TALK_MSG;
+				GrowlNotificationType kind;
+				if ([Preferences notifyEveryTalk]) {
+					kind = keyword ? GROWL_HIGHLIGHT : GROWL_NEW_TALK;
+				}
+				else {
+					kind = keyword ? GROWL_HIGHLIGHT : newTalk ? GROWL_NEW_TALK : GROWL_TALK_MSG;
+				}
 				[self notifyText:kind target:(c ?: (id)target) nick:nick text:text];
 				[SoundPlayer play:[Preferences soundForEvent:kind]];
 			}

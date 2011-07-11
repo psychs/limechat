@@ -98,6 +98,12 @@
 	return [ud boolForKey:@"Preferences.General.stop_growl_on_active"];
 }
 
++ (BOOL)notifyEveryTalk
+{
+	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+	return [ud boolForKey:@"Preferences.General.notify_every_talk"];
+}
+
 + (BOOL)autoJoinOnInvited
 {
 	NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
@@ -821,6 +827,7 @@ static NSMutableArray* excludeWords;
 	[d setBool:YES forKey:@"Preferences.General.show_join_leave"];
 	[d setBool:YES forKey:@"Preferences.General.use_growl"];
 	[d setBool:YES forKey:@"Preferences.General.stop_growl_on_active"];
+	[d setBool:NO forKey:@"Preferences.General.notify_every_talk"];
 	[d setBool:YES forKey:@"eventHighlightGrowl"];
 	[d setBool:YES forKey:@"eventNewtalkGrowl"];
 	[d setInt:TAB_COMPLETE_NICK forKey:@"Preferences.General.tab_action"];
