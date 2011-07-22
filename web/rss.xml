@@ -7,15 +7,15 @@
     <language>en-us</language>
 
     <item>
-      <title>2.24</title>
-      <link>http://limechat.net/mac/#v2.24</link>
-      <pubDate>Mon, 05 Jun 2011 22:13:00 -0700</pubDate>
+      <title>2.25</title>
+      <link>http://limechat.net/mac/#v2.25</link>
+      <pubDate>Fri, 22 Jul 2011 15:59:00 -0700</pubDate>
       <content:encoded><![CDATA[
   			<ul>
-          <li>Fixed a bug in parsing mode.</li>
-          <li>Updated Limelight theme.</li>
-          <li>Use chat01.ustream.tv instead of chat1.ustream.tv.</li>
-          <li>Changed caption for Nickserv password.</li>
+	          <li>Improved image URL parser.</li>
+	          <li>Don't attempt to rename nicks if the new nick is the same.</li>
+	          <li>Fixed an issue that Adding highlight word didn't work well on Lion.</li>
+	          <li>Don't use custom scrollers on Lion.</li>
         </ul>
       ]]></content:encoded>
     </item>
