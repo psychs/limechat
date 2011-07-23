@@ -63,6 +63,10 @@
 
 - (void)awakeFromNib
 {
+	if ([window respondsToSelector: @selector(setCollectionBehavior:)]) {
+		[window setCollectionBehavior:NSWindowCollectionBehaviorFullScreenPrimary];
+	}
+
 	[self prelude];
 
 	[Preferences initPreferences];
