@@ -378,6 +378,11 @@
 	[world.dcc show:YES];
 }
 
+- (void)onMainWindow:(id)sender
+{
+	[window makeKeyAndOrderFront:nil];
+}
+
 - (void)onHelp:(id)sender
 {
 	[URLOpener openAndActivate:[NSURL URLWithString:@"http://limechat.net/mac/"]];

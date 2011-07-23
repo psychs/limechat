@@ -2,25 +2,25 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">10J567</string>
-		<string key="IBDocument.InterfaceBuilderVersion">823</string>
-		<string key="IBDocument.AppKitVersion">1038.35</string>
-		<string key="IBDocument.HIToolboxVersion">462.00</string>
+		<string key="IBDocument.SystemVersion">10K540</string>
+		<string key="IBDocument.InterfaceBuilderVersion">851</string>
+		<string key="IBDocument.AppKitVersion">1038.36</string>
+		<string key="IBDocument.HIToolboxVersion">461.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">823</string>
+			<string key="NS.object.0">851</string>
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="387"/>
 			<integer value="432"/>
-			<integer value="426"/>
-			<integer value="374"/>
 			<integer value="327"/>
-			<integer value="963"/>
+			<integer value="387"/>
 			<integer value="367"/>
+			<integer value="374"/>
+			<integer value="426"/>
 			<integer value="233"/>
-			<integer value="57"/>
+			<integer value="963"/>
+			<integer value="24"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1488,6 +1488,14 @@
 							</object>
 							<object class="NSMutableArray" key="NSMenuItems">
 								<bool key="EncodedWithXMLCoder">YES</bool>
+								<object class="NSMenuItem" id="371985104">
+									<reference key="NSMenu" ref="272041888"/>
+									<string key="NSTitle">Main Window</string>
+									<string key="NSKeyEquiv"/>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="821023625"/>
+									<reference key="NSMixedImage" ref="353314363"/>
+								</object>
 								<object class="NSMenuItem" id="535537578">
 									<reference key="NSMenu" ref="272041888"/>
 									<string key="NSTitle">Minimize</string>
@@ -3122,6 +3130,14 @@
 					</object>
 					<int key="connectionID">1009</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">onMainWindow:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="371985104"/>
+					</object>
+					<int key="connectionID">1011</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -3312,6 +3328,7 @@
 							<reference ref="502566836"/>
 							<reference ref="775558905"/>
 							<reference ref="409038012"/>
+							<reference ref="371985104"/>
 						</object>
 						<reference key="parent" ref="158979937"/>
 					</object>
@@ -4451,6 +4468,11 @@
 						<reference key="object" ref="787257747"/>
 						<reference key="parent" ref="765356395"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1010</int>
+						<reference key="object" ref="371985104"/>
+						<reference key="parent" ref="272041888"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -4462,6 +4484,7 @@
 					<string>1000.IBPluginDependency</string>
 					<string>1001.IBPluginDependency</string>
 					<string>1003.IBPluginDependency</string>
+					<string>1010.IBPluginDependency</string>
 					<string>103.IBPluginDependency</string>
 					<string>103.ImportedFromIB2</string>
 					<string>106.IBEditorWindowLastContentRect</string>
@@ -4870,6 +4893,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>{{565, 936}, {151, 23}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -4948,9 +4972,9 @@
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>{{646, 436}, {632, 501}}</string>
+					<string>{{1072, 338}, {632, 501}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{646, 436}, {632, 501}}</string>
+					<string>{{1072, 338}, {632, 501}}</string>
 					<boolean value="YES"/>
 					<boolean value="YES"/>
 					<string>{213, 107}</string>
@@ -4969,7 +4993,7 @@
 					<string>ThinSplitView</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>{{522, 880}, {218, 103}}</string>
+					<string>{{508, 807}, {218, 123}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -4996,7 +5020,7 @@
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>{{126, 959}, {500, 20}}</string>
+					<string>{{140, 930}, {500, 20}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -5184,7 +5208,7 @@
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>{{138, 756}, {229, 203}}</string>
+					<string>{{164, 813}, {229, 203}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -5286,7 +5310,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">1009</int>
+			<int key="maxID">1011</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -6145,6 +6169,7 @@
 							<string>onJoin:</string>
 							<string>onJoinChannel:</string>
 							<string>onLeave:</string>
+							<string>onMainWindow:</string>
 							<string>onMakeTextBigger:</string>
 							<string>onMakeTextSmaller:</string>
 							<string>onMarkAllAsRead:</string>
@@ -6242,6 +6267,7 @@
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
+							<string>id</string>
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="actionInfosByName">
@@ -6274,6 +6300,7 @@
 							<string>onJoin:</string>
 							<string>onJoinChannel:</string>
 							<string>onLeave:</string>
+							<string>onMainWindow:</string>
 							<string>onMakeTextBigger:</string>
 							<string>onMakeTextSmaller:</string>
 							<string>onMarkAllAsRead:</string>
@@ -6413,6 +6440,10 @@
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">onLeave:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">onMainWindow:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -7315,6 +7346,13 @@
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSObject</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">Classes/Library/ImageSizeCheckClient.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
 					<object class="NSMutableDictionary" key="actions">
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
@@ -7923,6 +7961,7 @@
 							<string>proxyPortText</string>
 							<string>proxyUserText</string>
 							<string>realNameText</string>
+							<string>saslCheck</string>
 							<string>sslCheck</string>
 							<string>tab</string>
 							<string>userInfoText</string>
@@ -7959,6 +7998,7 @@
 							<string>NSTextField</string>
 							<string>NSTextField</string>
 							<string>NSTextField</string>
+							<string>NSButton</string>
 							<string>NSButton</string>
 							<string>NSTabView</string>
 							<string>NSTextField</string>
@@ -7998,6 +8038,7 @@
 							<string>proxyPortText</string>
 							<string>proxyUserText</string>
 							<string>realNameText</string>
+							<string>saslCheck</string>
 							<string>sslCheck</string>
 							<string>tab</string>
 							<string>userInfoText</string>
@@ -8120,6 +8161,10 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">realNameText</string>
 								<string key="candidateClassName">NSTextField</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">saslCheck</string>
+								<string key="candidateClassName">NSButton</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">sslCheck</string>

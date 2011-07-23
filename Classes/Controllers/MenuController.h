@@ -71,6 +71,7 @@
 - (void)onPreferences:(id)sender;
 - (void)onAutoOp:(id)sender;
 - (void)onDcc:(id)sender;
+- (void)onMainWindow:(id)sender;
 - (void)onHelp:(id)sender;
 
 - (void)onCloseWindow:(id)sender;
