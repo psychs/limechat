@@ -4,7 +4,7 @@
 
 void cocoa_syck_error_handler( SyckParser *p, const char *msg )
 {
-	NSLog(@"syck error:%s position:(%d, %d)", msg, p->linect, p->cursor - p->lineptr);
+	NSLog(@"syck error:%s position:(%d, %lu)", msg, p->linect, p->cursor - p->lineptr);
 }
 
 SYMID cocoa_syck_parse_handler(SyckParser *p, SyckNode *n)
