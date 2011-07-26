@@ -10,6 +10,8 @@
 	EventHotKeyRef handle;
 }
 
+@property (nonatomic, readonly) EventHotKeyRef handle;
+
 - (BOOL)enabled;
 - (BOOL)registerHotKeyCode:(int)keyCode withModifier:(NSUInteger)modifier;
 - (void)unregisterHotKey;

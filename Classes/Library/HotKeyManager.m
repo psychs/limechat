@@ -6,6 +6,8 @@
 
 @implementation HotKeyManager
 
+@synthesize handle;
+
 - (void)dealloc
 {
 	[self unregisterHotKey];

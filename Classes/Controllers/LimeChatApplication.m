@@ -4,6 +4,12 @@
 #import "LimeChatApplication.h"
 
 
+enum {
+	kEventHotKeyPressedSubtype = 6,
+	kEventHotKeyReleasedSubtype = 9,
+};
+
+
 @implementation LimeChatApplication
 
 - (id)init
@@ -26,11 +32,17 @@
 
 - (void)sendEvent:(NSEvent *)e
 {
-	if ([e type] == 14 && [e subtype] == 6) {
+	if ([e type] == NSSystemDefined && [e subtype] == kEventHotKeyPressedSubtype) {
 		if (hotkey && [hotkey enabled]) {
-			id delegate = [self delegate];
-			if ([delegate respondsToSelector:@selector(applicationDidReceiveHotKey:)]) {
-				[delegate applicationDidReceiveHotKey:self];
+			unsigned long long handle = (unsigned long long)hotkey.handle;
+			unsigned long long data1 = [e data1];
+			handle &= 0xffffffff;
+			data1 &= 0xffffffff;
+			if (handle == data1) {
+				id delegate = [self delegate];
+				if ([delegate respondsToSelector:@selector(applicationDidReceiveHotKey:)]) {
+					[delegate applicationDidReceiveHotKey:self];
+				}
 			}
 		}
 	}
