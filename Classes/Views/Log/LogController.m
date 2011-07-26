@@ -821,21 +821,19 @@
 	if (!version) {
 		Gestalt(gestaltSystemVersion, &version);
 	}
-	
-	if (version < 0x1070) {
-		NSScroller* old = [scrollView verticalScroller];
-		if (old && ![old isKindOfClass:[MarkedScroller class]]) {
-			if (scroller) {
-				[scroller removeFromSuperview];
-				[scroller release];
-			}
-			
-			scroller = [[MarkedScroller alloc] initWithFrame:NSMakeRect(-16, -64, 16, 64)];
-			scroller.dataSource = self;
-			[scroller setFloatValue:[old floatValue]];
-			[scroller setKnobProportion:[old knobProportion]];
-			[scrollView setVerticalScroller:scroller];
+
+	NSScroller* old = [scrollView verticalScroller];
+	if (old && ![old isKindOfClass:[MarkedScroller class]]) {
+		if (scroller) {
+			[scroller removeFromSuperview];
+			[scroller release];
 		}
+		
+		scroller = [[MarkedScroller alloc] initWithFrame:NSMakeRect(-16, -64, 16, 64)];
+		scroller.dataSource = self;
+		[scroller setFloatValue:[old floatValue]];
+		[scroller setKnobProportion:[old knobProportion]];
+		[scrollView setVerticalScroller:scroller];
 	}
 }
 

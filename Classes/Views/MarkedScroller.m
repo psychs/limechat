@@ -8,11 +8,14 @@
 
 @synthesize dataSource;
 
++ (BOOL)isCompatibleWithOverlayScrollers {
+    return self == [MarkedScroller class];
+}
 
-- (void)drawRect:(NSRect)dirtyRect
+- (void)drawKnob
 {
-	[super drawRect:dirtyRect];
-	
+	[super drawKnob];
+
 	if (!dataSource) return;
 	if (![dataSource respondsToSelector:@selector(markedScrollerPositions:)]) return;
 	if (![dataSource respondsToSelector:@selector(markedScrollerColor:)]) return;
@@ -63,8 +66,6 @@
 	for (NSBezierPath* e in lines) {
 		[e stroke];
 	}
-	
-	[self drawKnob];
 }
 
 @end
