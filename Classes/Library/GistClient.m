@@ -154,6 +154,11 @@
 		if (authToken) {
 			[self postDataWithAutheToken:authToken];
 		}
+		else {
+			if ([delegate respondsToSelector:@selector(gistClient:didFailWithError:statusCode:)]) {
+				[delegate gistClient:self didFailWithError:@"Failed to post to Gist" statusCode:0];
+			}
+		}
 	}
 	else {
 		if ([delegate respondsToSelector:@selector(gistClient:didReceiveResponse:)]) {
