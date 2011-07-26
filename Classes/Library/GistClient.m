@@ -119,13 +119,40 @@
 	
 	if (stage == kGistClientGetTop) {
 		NSString* s = [[[NSString alloc] initWithData:buf encoding:NSUTF8StringEncoding] autorelease];
-		NSRange start = [s rangeOfString:@"window._auth_token = \""];
-		if (start.location != NSNotFound) {
-			NSRange end = [s rangeOfString:@"\"" options:0 range:NSMakeRange(start.location, s.length - start.location)];
-			if (end.location != NSNotFound) {
-				NSString* authToken = [s substringWithRange:NSMakeRange(start.location, end.location - start.location)];
-				[self postDataWithAutheToken:authToken];
+		NSString* authToken = nil;
+		
+		NSRange authInputTagRange = [s rangeOfString:@"<input name=\"authenticity_token\""];
+		if (authInputTagRange.location != NSNotFound) {
+			int start = NSMaxRange(authInputTagRange);
+			NSRange tokenStartRange = [s rangeOfString:@"value=\"" options:0 range:NSMakeRange(start, s.length - start)];
+			if (tokenStartRange.location != NSNotFound) {
+				start = NSMaxRange(tokenStartRange);
+				NSRange tokenEndRange = [s rangeOfString:@"\"" options:0 range:NSMakeRange(start, s.length - start)];
+				if (tokenEndRange.location != NSNotFound) {
+					start = NSMaxRange(tokenStartRange);
+					int end = tokenEndRange.location;
+					authToken = [s substringWithRange:NSMakeRange(start, end - start)];
+				}
 			}
+		}
+		
+		if (!authToken) {
+			NSRange csrfTokenRange = [s rangeOfString:@"\"csrf-token"];
+			if (csrfTokenRange.location != NSNotFound) {
+				NSRange tokenEndRange = [s rangeOfString:@"\"" options:NSBackwardsSearch range:NSMakeRange(0, csrfTokenRange.location)];
+				if (tokenEndRange.location != NSNotFound) {
+					NSRange tokenStartRange = [s rangeOfString:@"\"" options:NSBackwardsSearch range:NSMakeRange(0, tokenEndRange.location)];
+					if (tokenStartRange.location != NSNotFound) {
+						int start = tokenStartRange.location + 1;
+						int end = tokenEndRange.location;
+						authToken = [s substringWithRange:NSMakeRange(start, end - start)];
+					}
+				}
+			}
+		}
+		
+		if (authToken) {
+			[self postDataWithAutheToken:authToken];
 		}
 	}
 	else {
