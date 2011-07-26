@@ -7,7 +7,7 @@
     <language>en</language>
     
     <item>
-      <title>LimeChat 2.25</title>
+      <title>LimeChat 2.26</title>
       <description><![CDATA[
         <html>
         <body>
@@ -22,20 +22,21 @@
             margin: 0.2em 0;
           }
         </style>
-        <h1>LimeChat 2.25</h1>
+        <h1>LimeChat 2.26</h1>
         <ul>
-          <li>Improved image URL parser.</li>
-          <li>Don't attempt to rename nicks if the new nick is the same.</li>
-          <li>Fixed an issue that adding highlight word didn't work well on Lion.</li>
-          <li>Don't use custom scrollers on Lion.</li>
+          <li>Full screen support for Lion.</li>
+          <li>Catch up on updates of Gist.</li>
+          <li>Added main window menu item to main menu.</li>
+          <li>Changed button caption in paste dialog from "Send in Channel" to "Send".</li>
+          <li>Fixed a bug where 3 fingers double tap in the other app caused wrong hot key event.</li>
         </ul>
         </body>
         </html>
       ]]></description>
-      <pubDate>Fri, 22 Jul 2011 15:56:49 -0700</pubDate>
-      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/LimeChat_2.25.tbz"
-                  sparkle:version="2.25" length="1887576" type="application/octet-stream"
-                  sparkle:dsaSignature="MC0CFCtoYYdXSjHbWryHsKVGKLcA9bWgAhUAudXc/qapRbU37fpa5nPqaQymKWM="/>
+      <pubDate>Tue, 26 Jul 2011 16:18:24 -0700</pubDate>
+      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/LimeChat_2.26.tbz"
+                  sparkle:version="2.26" length="1889085" type="application/octet-stream"
+                  sparkle:dsaSignature="MCwCFCwmdmIt6PDmQJVfHaFD8YVPWnKXAhQpaSjdKWlc9Ituh/+f383U4Wl56g=="/>
     </item>
     
   </channel>
