@@ -1831,21 +1831,13 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	if (![Preferences growlEnabledForEvent:type]) return;
 	
 	IRCChannel* channel = nil;
-	NSString* chname = nil;
 	if (target) {
 		if ([target isKindOfClass:[IRCChannel class]]) {
 			channel = (IRCChannel*)target;
-			chname = channel.name;
 			if (!channel.config.growl) {
 				return;
 			}
 		}
-		else {
-			chname = (NSString*)target;
-		}
-	}
-	if (!chname) {
-		chname = self.name;
 	}
 	
 	NSString* title = @"";
@@ -2137,7 +2129,6 @@ static NSDateFormatter* dateTimeFormatter = nil;
 - (BOOL)printChannel:(id)chan type:(LogLineType)type nick:(NSString*)nick text:(NSString*)text identified:(BOOL)identified
 {
 	NSString* time = [self now];
-	NSString* channelName = nil;
 	IRCChannel* channel = nil;
 	NSString* place = nil;
 	NSString* nickStr = nil;
@@ -2152,11 +2143,9 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	
 	if ([chan isKindOfClass:[IRCChannel class]]) {
 		channel = chan;
-		channelName = channel.name;
 	}
 	else if ([chan isKindOfClass:[NSString class]]) {
-		channelName = chan;
-		place = [NSString stringWithFormat:@"<%@> ", channelName];
+		place = [NSString stringWithFormat:@"<%@> ", chan];
 	}
 	
 	if (nick.length > 0) {
