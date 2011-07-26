@@ -63,6 +63,17 @@
 
 - (void)awakeFromNib
 {
+	SInt32 version = 0;
+	Gestalt(gestaltSystemVersion, &version);
+	if (version >= 0x1070) {
+		if ([window respondsToSelector:@selector(setCollectionBehavior:)]) {
+			const int LCNSWindowCollectionBehaviorFullScreenPrimary = 1 << 7;
+			NSWindowCollectionBehavior behavior = [window collectionBehavior];
+			behavior |= LCNSWindowCollectionBehaviorFullScreenPrimary;
+			[window setCollectionBehavior:behavior];
+		}
+	}
+	
 	[self prelude];
 
 	[Preferences initPreferences];
