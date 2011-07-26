@@ -13,11 +13,11 @@
 {
 	if (keyDelegate) {
 		NSUInteger m = [e modifierFlags];
-		BOOL ctrl = m & NSControlKeyMask != 0;
-		BOOL alt = m & NSAlternateKeyMask != 0;
-		BOOL cmd = m & NSCommandKeyMask != 0;
+		BOOL ctrl = m & NSControlKeyMask;
+		BOOL alt = m & NSAlternateKeyMask;
+		BOOL cmd = m & NSCommandKeyMask;
 		
-		if (!ctrl && !alt && !cmd) {
+		if (!(ctrl || alt || cmd)) {
 			if ([keyDelegate respondsToSelector:@selector(logViewKeyDown:)]) {
 				[keyDelegate logViewKeyDown:e];
 			}
