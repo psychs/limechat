@@ -4,19 +4,11 @@
 #import "MarkedScroller.h"
 
 
-static BOOL isLionAndOver()
-{
-	static SInt32 version = 0;
-	if (!version) {
-		Gestalt(gestaltSystemVersion, &version);
-	}
-	return version >= 0x1070;
-}
-
-
 @implementation MarkedScroller
 
 @synthesize dataSource;
+
+const static int INSET = 3;
 
 + (BOOL)isCompatibleWithOverlayScrollers
 {
@@ -38,9 +30,10 @@ static BOOL isLionAndOver()
 	// prepare transform
 	//
 	NSAffineTransform* transform = [NSAffineTransform transform];
-	int width = [MarkedScroller scrollerWidth];
+	int width = [self rectForPart:NSScrollerKnobSlot].size.width - INSET * 2;
 	CGFloat scale = [self rectForPart:NSScrollerKnobSlot].size.height / (CGFloat)contentHeight;
 	int offset = [self rectForPart:NSScrollerKnobSlot].origin.y;
+	int indent = [self rectForPart:NSScrollerKnobSlot].origin.x + INSET;
 	[transform scaleXBy:1 yBy:scale];
 	[transform translateXBy:0 yBy:offset];
 	
@@ -52,7 +45,7 @@ static BOOL isLionAndOver()
 	
 	for (NSNumber* e in ary) {
 		int i = [e intValue];
-		NSPoint pt = NSMakePoint(0, i);
+		NSPoint pt = NSMakePoint(indent, i);
 		pt = [transform transformPoint:pt];
 		pt.x = ceil(pt.x);
 		pt.y = ceil(pt.y) + 0.5;
@@ -68,7 +61,6 @@ static BOOL isLionAndOver()
 	//
 	// draw lines
 	//
-	NSRectClip(NSInsetRect([self rectForPart:NSScrollerKnobSlot], 3, 4));
 	NSColor* color = [dataSource markedScrollerColor:self];
 	[color set];
 	
@@ -77,23 +69,10 @@ static BOOL isLionAndOver()
 	}
 }
 
-- (void)drawRect:(NSRect)dirtyRect
-{
-	[super drawRect:dirtyRect];
-	
-	if (!isLionAndOver()) {
-		[self drawContentInMarkedScroller];
-		[self drawKnob];
-	}
-}
-
 - (void)drawKnob
 {
+	[self drawContentInMarkedScroller];
 	[super drawKnob];
-	
-	if (isLionAndOver()) {
-		[self drawContentInMarkedScroller];
-	}
 }
 
 @end
