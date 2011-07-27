@@ -4,18 +4,27 @@
 #import "MarkedScroller.h"
 
 
+static BOOL isLionAndOver()
+{
+	static SInt32 version = 0;
+	if (!version) {
+		Gestalt(gestaltSystemVersion, &version);
+	}
+	return version >= 0x1070;
+}
+
+
 @implementation MarkedScroller
 
 @synthesize dataSource;
 
-+ (BOOL)isCompatibleWithOverlayScrollers {
-    return self == [MarkedScroller class];
++ (BOOL)isCompatibleWithOverlayScrollers
+{
+	return self == [MarkedScroller class];
 }
 
-- (void)drawKnob
+- (void)drawContentInMarkedScroller
 {
-	[super drawKnob];
-
 	if (!dataSource) return;
 	if (![dataSource respondsToSelector:@selector(markedScrollerPositions:)]) return;
 	if (![dataSource respondsToSelector:@selector(markedScrollerColor:)]) return;
@@ -65,6 +74,25 @@
 	
 	for (NSBezierPath* e in lines) {
 		[e stroke];
+	}
+}
+
+- (void)drawRect:(NSRect)dirtyRect
+{
+	[super drawRect:dirtyRect];
+	
+	if (!isLionAndOver()) {
+		[self drawContentInMarkedScroller];
+		[self drawKnob];
+	}
+}
+
+- (void)drawKnob
+{
+	[super drawKnob];
+	
+	if (isLionAndOver()) {
+		[self drawContentInMarkedScroller];
 	}
 }
 
