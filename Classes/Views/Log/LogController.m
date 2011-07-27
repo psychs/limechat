@@ -817,11 +817,6 @@
 		[(id)scrollView setAllowsHorizontalScrolling:NO];
 	}
 	
-	static SInt32 version = 0;
-	if (!version) {
-		Gestalt(gestaltSystemVersion, &version);
-	}
-
 	NSScroller* old = [scrollView verticalScroller];
 	if (old && ![old isKindOfClass:[MarkedScroller class]]) {
 		if (scroller) {
