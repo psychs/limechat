@@ -364,7 +364,7 @@ BOOL isUnicharDigit(unichar c)
 	
 	static OnigRegexp* regex = nil;
 	if (!regex) {
-		NSString* pattern = @"(?<![a-z0-9_])(https?|ftp|itms)://([^\\s!\"#$\\&'()*+,/;<=>?\\[\\\\\\]\\^_`{|}　、，。．・…]+)(/[^\\s\"'`<>　、，。．・…]*)?";
+		NSString* pattern = @"(?<![a-z0-9_])(https?|ftp|itms)://([^\\s!\"#$\\&'()*+,/;<=>?\\[\\\\\\]\\^_`{|}　、，。．・…]+)(/[^\\s\"`<>　、，。．・…]*)?";
 		regex = [[OnigRegexp compileIgnorecase:pattern] retain];
 	}
 	
