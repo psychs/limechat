@@ -7,9 +7,13 @@
 @implementation WebViewAutoScroll
 - (void)scrollViewToBottom:(NSView*)aView
 {
+	if (![aView lockFocusIfCanDraw])
+		return;
+
 	NSRect visibleRect = [aView visibleRect];
 	visibleRect.origin.y = NSHeight([aView frame]) - NSHeight(visibleRect);
 	[aView scrollRectToVisible:visibleRect];
+	[aView unlockFocus];
 }
 
 - (void)dealloc
