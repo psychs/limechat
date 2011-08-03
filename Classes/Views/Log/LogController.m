@@ -816,6 +816,9 @@
 	if ([scrollView respondsToSelector:@selector(setAllowsHorizontalScrolling:)]) {
 		[(id)scrollView setAllowsHorizontalScrolling:NO];
 	}
+	if ([scrollView respondsToSelector:@selector(setVerticalScrollElasticity:)]) {
+		[(id)scrollView setVerticalScrollElasticity:NSScrollElasticityNone];
+	}
 	
 	NSScroller* old = [scrollView verticalScroller];
 	if (old && ![old isKindOfClass:[MarkedScroller class]]) {
