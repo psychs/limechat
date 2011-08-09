@@ -2,7 +2,7 @@
 // You can redistribute it and/or modify it under the terms of the GPL version 2 (see the file GPL.txt).
 
 #import <Foundation/Foundation.h>
-#import "TinyGrowlClient.h"
+#import "Growl/Growl.h"
 
 
 @class IRCWorld;
@@ -28,18 +28,15 @@ typedef enum {
 } GrowlNotificationType;
 
 
-@interface GrowlController : NSObject
+@interface GrowlController : NSObject <GrowlApplicationBridgeDelegate>
 {
 	IRCWorld* owner;
-	TinyGrowlClient* growl;
 	id lastClickedContext;
 	CFAbsoluteTime lastClickedTime;
-	BOOL registered;
 }
 
 @property (nonatomic, assign) IRCWorld* owner;
 
-- (void)registerToGrowl;
 - (void)notify:(GrowlNotificationType)type title:(NSString*)title desc:(NSString*)desc context:(id)context;
 
 @end

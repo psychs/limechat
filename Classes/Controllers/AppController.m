@@ -191,7 +191,6 @@
 	growl = [GrowlController new];
 	growl.owner = world;
 	world.growl = growl;
-	[growl registerToGrowl];
 	
 	inputHistory = [InputHistory new];
 

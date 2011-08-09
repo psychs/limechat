@@ -99,7 +99,6 @@
 		782DA8AD12DB5A3800C07861 /* TCPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C14211737F660044E7A1 /* TCPClient.m */; };
 		782DA8AE12DB5A3800C07861 /* TCPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C14411737F660044E7A1 /* TCPServer.m */; };
 		782DA8AF12DB5A3800C07861 /* Timer.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C14611737F660044E7A1 /* Timer.m */; };
-		782DA8B012DB5A3800C07861 /* TinyGrowlClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C14811737F660044E7A1 /* TinyGrowlClient.m */; };
 		782DA8B112DB5A3800C07861 /* bytecode.c in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C14D11737F660044E7A1 /* bytecode.c */; };
 		782DA8B212DB5A3800C07861 /* emitter.c in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C14F11737F660044E7A1 /* emitter.c */; };
 		782DA8B312DB5A3800C07861 /* gram.c in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C15011737F660044E7A1 /* gram.c */; };
@@ -273,7 +272,6 @@
 		78A8C1E111737F660044E7A1 /* TCPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C14211737F660044E7A1 /* TCPClient.m */; };
 		78A8C1E211737F660044E7A1 /* TCPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C14411737F660044E7A1 /* TCPServer.m */; };
 		78A8C1E311737F660044E7A1 /* Timer.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C14611737F660044E7A1 /* Timer.m */; };
-		78A8C1E411737F660044E7A1 /* TinyGrowlClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C14811737F660044E7A1 /* TinyGrowlClient.m */; };
 		78A8C1E511737F660044E7A1 /* README in Resources */ = {isa = PBXBuildFile; fileRef = 78A8C14A11737F660044E7A1 /* README */; };
 		78A8C1E611737F660044E7A1 /* bytecode.c in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C14D11737F660044E7A1 /* bytecode.c */; };
 		78A8C1E711737F660044E7A1 /* COPYING in Resources */ = {isa = PBXBuildFile; fileRef = 78A8C14E11737F660044E7A1 /* COPYING */; };
@@ -323,6 +321,8 @@
 		78B9B84213F1E677005E1BC8 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78B9B84013F1E677005E1BC8 /* Growl.framework */; };
 		78B9B85D13F1E698005E1BC8 /* Growl.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 78B9B84013F1E677005E1BC8 /* Growl.framework */; };
 		78B9B85E13F1E69B005E1BC8 /* Growl.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 78B9B84013F1E677005E1BC8 /* Growl.framework */; };
+		78B9B86313F1E6EF005E1BC8 /* Growl Registration Ticket.growlRegDict in Resources */ = {isa = PBXBuildFile; fileRef = 78B9B86213F1E6EF005E1BC8 /* Growl Registration Ticket.growlRegDict */; };
+		78B9B86413F1E6EF005E1BC8 /* Growl Registration Ticket.growlRegDict in Resources */ = {isa = PBXBuildFile; fileRef = 78B9B86213F1E6EF005E1BC8 /* Growl Registration Ticket.growlRegDict */; };
 		78C2D609115A428C00705817 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 78C2D608115A428C00705817 /* dsa_pub.pem */; };
 		78E572390C1C30BA00BDF7EC /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		78E5723B0C1C30BA00BDF7EC /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 788D56F00BB6872B00DDBF69 /* WebKit.framework */; };
@@ -576,8 +576,6 @@
 		78A8C14411737F660044E7A1 /* TCPServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPServer.m; sourceTree = "<group>"; };
 		78A8C14511737F660044E7A1 /* Timer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Timer.h; sourceTree = "<group>"; };
 		78A8C14611737F660044E7A1 /* Timer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Timer.m; sourceTree = "<group>"; };
-		78A8C14711737F660044E7A1 /* TinyGrowlClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TinyGrowlClient.h; sourceTree = "<group>"; };
-		78A8C14811737F660044E7A1 /* TinyGrowlClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TinyGrowlClient.m; sourceTree = "<group>"; };
 		78A8C14A11737F660044E7A1 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		78A8C14D11737F660044E7A1 /* bytecode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = bytecode.c; sourceTree = "<group>"; };
 		78A8C14E11737F660044E7A1 /* COPYING */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = COPYING; sourceTree = "<group>"; };
@@ -660,6 +658,7 @@
 		78AD78E30C61B8F8001E77F4 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
 		78B2DF1F0D0417160092EBDA /* application.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = application.icns; path = ../icon/application.icns; sourceTree = "<group>"; };
 		78B9B84013F1E677005E1BC8 /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = Frameworks/Growl.framework; sourceTree = "<group>"; };
+		78B9B86213F1E6EF005E1BC8 /* Growl Registration Ticket.growlRegDict */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "Growl Registration Ticket.growlRegDict"; path = "Others/Growl Registration Ticket.growlRegDict"; sourceTree = "<group>"; };
 		78C2D608115A428C00705817 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = dsa_pub.pem; path = etc/dsa_pub.pem; sourceTree = "<group>"; };
 		78C8911B1173806A002EED61 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Others/Info.plist; sourceTree = "<group>"; };
 		78E570D00C1C306500BDF7EC /* LimeChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LimeChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -755,6 +754,7 @@
 				78347EB91158D4B00073E2F0 /* AutoOpDialog.xib */,
 				78AD78E20C61B8F8001E77F4 /* Localizable.strings */,
 				78C2D608115A428C00705817 /* dsa_pub.pem */,
+				78B9B86213F1E6EF005E1BC8 /* Growl Registration Ticket.growlRegDict */,
 				78287EA90D742DAA008D5656 /* Themes */,
 			);
 			name = Resources;
@@ -1036,8 +1036,6 @@
 				78A8C14411737F660044E7A1 /* TCPServer.m */,
 				78A8C14511737F660044E7A1 /* Timer.h */,
 				78A8C14611737F660044E7A1 /* Timer.m */,
-				78A8C14711737F660044E7A1 /* TinyGrowlClient.h */,
-				78A8C14811737F660044E7A1 /* TinyGrowlClient.m */,
 			);
 			name = Library;
 			path = Classes/Library;
@@ -1285,6 +1283,7 @@
 				782DA86F12DB5A3800C07861 /* COPYING in Resources */,
 				782DA87012DB5A3800C07861 /* InviteSheet.xib in Resources */,
 				782DA87112DB5A3800C07861 /* IgnoreItemSheet.xib in Resources */,
+				78B9B86413F1E6EF005E1BC8 /* Growl Registration Ticket.growlRegDict in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1316,6 +1315,7 @@
 				78A8C1E711737F660044E7A1 /* COPYING in Resources */,
 				78A7B5DA11745616006B324A /* InviteSheet.xib in Resources */,
 				789ED4B31193FA9E00CFC0B2 /* IgnoreItemSheet.xib in Resources */,
+				78B9B86313F1E6EF005E1BC8 /* Growl Registration Ticket.growlRegDict in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1387,7 +1387,6 @@
 				782DA8AD12DB5A3800C07861 /* TCPClient.m in Sources */,
 				782DA8AE12DB5A3800C07861 /* TCPServer.m in Sources */,
 				782DA8AF12DB5A3800C07861 /* Timer.m in Sources */,
-				782DA8B012DB5A3800C07861 /* TinyGrowlClient.m in Sources */,
 				782DA8B112DB5A3800C07861 /* bytecode.c in Sources */,
 				782DA8B212DB5A3800C07861 /* emitter.c in Sources */,
 				782DA8B312DB5A3800C07861 /* gram.c in Sources */,
@@ -1523,7 +1522,6 @@
 				78A8C1E111737F660044E7A1 /* TCPClient.m in Sources */,
 				78A8C1E211737F660044E7A1 /* TCPServer.m in Sources */,
 				78A8C1E311737F660044E7A1 /* Timer.m in Sources */,
-				78A8C1E411737F660044E7A1 /* TinyGrowlClient.m in Sources */,
 				78A8C1E611737F660044E7A1 /* bytecode.c in Sources */,
 				78A8C1E811737F660044E7A1 /* emitter.c in Sources */,
 				78A8C1E911737F660044E7A1 /* gram.c in Sources */,

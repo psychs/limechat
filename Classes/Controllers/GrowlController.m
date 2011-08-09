@@ -25,10 +25,6 @@
 #define CLICK_INTERVAL						2
 
 
-@interface GrowlController (Private)
-@end
-
-
 @implementation GrowlController
 
 @synthesize owner;
@@ -37,41 +33,15 @@
 {
 	self = [super init];
 	if (self) {
-		registered = [Preferences registeredToGrowl];
+		[GrowlApplicationBridge setGrowlDelegate:self];
 	}
 	return self;
 }
 
 - (void)dealloc
 {
-	[growl release];
 	[lastClickedContext release];
 	[super dealloc];
-}
-
-- (void)registerToGrowl
-{
-	if (growl) return;
-	
-	growl = [TinyGrowlClient new];
-	growl.delegate = self;
-	
-	if (!registered) {
-		// reset growl settings
-		growl.allNotifications = [NSArray array];
-		growl.defaultNotifications = growl.allNotifications;
-		[growl registerApplication];
-	}
-	
-	growl.allNotifications = [NSArray arrayWithObjects:
-							  GROWL_MSG_LOGIN, GROWL_MSG_DISCONNECT, GROWL_MSG_HIGHLIGHT,
-							  GROWL_MSG_NEW_TALK, GROWL_MSG_CHANNEL_MSG, GROWL_MSG_CHANNEL_NOTICE,
-							  GROWL_MSG_TALK_MSG, GROWL_MSG_TALK_NOTICE, GROWL_MSG_KICKED, 
-							  GROWL_MSG_INVITED, GROWL_MSG_FILE_RECEIVE_REQUEST, GROWL_MSG_FILE_RECEIVE_SUCCEEDED,
-							  GROWL_MSG_FILE_RECEIVE_FAILED, GROWL_MSG_FILE_SEND_SUCCEEDED, GROWL_NSG_FILE_SEND_FAILED,
-							  nil];
-	growl.defaultNotifications = growl.allNotifications;
-	[growl registerApplication];
 }
 
 - (void)notify:(GrowlNotificationType)type title:(NSString*)title desc:(NSString*)desc context:(id)context
@@ -161,10 +131,34 @@
 			break;
 	}
 	
-	[growl notifyWithType:kind title:title description:desc clickContext:context sticky:sticky priority:priority icon:nil];
+	
+	[GrowlApplicationBridge notifyWithTitle:title
+								description:desc
+						   notificationName:kind
+								   iconData:nil
+								   priority:priority
+								   isSticky:sticky
+							   clickContext:context];
 }
 
-- (void)tinyGrowlClient:(TinyGrowlClient*)sender didClick:(id)context
+/*
+- (NSDictionary*)registrationDictionaryForGrowl
+{
+	NSMutableDictionary* dic = [NSMutableDictionary dictionary];
+	NSArray* all = [NSArray arrayWithObjects:
+					GROWL_MSG_LOGIN, GROWL_MSG_DISCONNECT, GROWL_MSG_HIGHLIGHT,
+					GROWL_MSG_NEW_TALK, GROWL_MSG_CHANNEL_MSG, GROWL_MSG_CHANNEL_NOTICE,
+					GROWL_MSG_TALK_MSG, GROWL_MSG_TALK_NOTICE, GROWL_MSG_KICKED, 
+					GROWL_MSG_INVITED, GROWL_MSG_FILE_RECEIVE_REQUEST, GROWL_MSG_FILE_RECEIVE_SUCCEEDED,
+					GROWL_MSG_FILE_RECEIVE_FAILED, GROWL_MSG_FILE_SEND_SUCCEEDED, GROWL_NSG_FILE_SEND_FAILED,
+					nil];
+	[dic setObject:all forKey:GROWL_NOTIFICATIONS_ALL];
+	[dic setObject:all forKey:GROWL_NOTIFICATIONS_DEFAULT];
+	return dic;
+}
+*/
+
+- (void)growlNotificationWasClicked:(id)context
 {
 	CFAbsoluteTime now = CFAbsoluteTimeGetCurrent();
 	
@@ -177,11 +171,6 @@
 	lastClickedTime = now;
 	[lastClickedContext release];
 	lastClickedContext = [context retain];
-	
-	if (!registered) {
-		registered = YES;
-		[Preferences setRegisteredToGrowl:YES];
-	}
 	
 	[owner.window makeKeyAndOrderFront:nil];
 	[NSApp activateIgnoringOtherApps:YES];
@@ -213,14 +202,6 @@
 				[owner select:u];
 			}
 		}
-	}
-}
-
-- (void)tinyGrowlClient:(TinyGrowlClient*)sender didTimeOut:(id)context
-{
-	if (!registered) {
-		registered = YES;
-		[Preferences setRegisteredToGrowl:YES];
 	}
 }
 
