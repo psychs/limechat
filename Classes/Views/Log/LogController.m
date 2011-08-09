@@ -608,6 +608,7 @@
 	}
 	[div setAttribute:@"id" value:[NSString stringWithFormat:@"line%d", currentLineNumber]];
 	[body appendChild:div];
+	[body valueForKey:@"scrollHeight"]; // Forces the view to recalculate instead of being lazy
 	
 	if (maxLines > 0 && count > maxLines) {
 		[self setNeedsLimitNumberOfLines];
