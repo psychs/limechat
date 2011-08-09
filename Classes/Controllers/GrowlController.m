@@ -141,7 +141,6 @@
 							   clickContext:context];
 }
 
-/*
 - (NSDictionary*)registrationDictionaryForGrowl
 {
 	NSMutableDictionary* dic = [NSMutableDictionary dictionary];
@@ -156,7 +155,6 @@
 	[dic setObject:all forKey:GROWL_NOTIFICATIONS_DEFAULT];
 	return dic;
 }
-*/
 
 - (void)growlNotificationWasClicked:(id)context
 {
