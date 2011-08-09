@@ -319,6 +319,10 @@
 		78A8C21211737F660044E7A1 /* TreeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C1A511737F660044E7A1 /* TreeView.m */; };
 		78AD78E40C61B8F8001E77F4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 78AD78E20C61B8F8001E77F4 /* Localizable.strings */; };
 		78B2DF210D0417160092EBDA /* application.icns in Resources */ = {isa = PBXBuildFile; fileRef = 78B2DF1F0D0417160092EBDA /* application.icns */; };
+		78B9B84113F1E677005E1BC8 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78B9B84013F1E677005E1BC8 /* Growl.framework */; };
+		78B9B84213F1E677005E1BC8 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78B9B84013F1E677005E1BC8 /* Growl.framework */; };
+		78B9B85D13F1E698005E1BC8 /* Growl.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 78B9B84013F1E677005E1BC8 /* Growl.framework */; };
+		78B9B85E13F1E69B005E1BC8 /* Growl.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 78B9B84013F1E677005E1BC8 /* Growl.framework */; };
 		78C2D609115A428C00705817 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 78C2D608115A428C00705817 /* dsa_pub.pem */; };
 		78E572390C1C30BA00BDF7EC /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		78E5723B0C1C30BA00BDF7EC /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 788D56F00BB6872B00DDBF69 /* WebKit.framework */; };
@@ -356,6 +360,17 @@
 			dstSubfolderSpec = 10;
 			files = (
 				78FA9F6E1085AA1A00001F13 /* Sparkle.framework in CopyFiles */,
+				78B9B85D13F1E698005E1BC8 /* Growl.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		78B9B85C13F1E693005E1BC8 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				78B9B85E13F1E69B005E1BC8 /* Growl.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -644,6 +659,7 @@
 		78A8C1A511737F660044E7A1 /* TreeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TreeView.m; sourceTree = "<group>"; };
 		78AD78E30C61B8F8001E77F4 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
 		78B2DF1F0D0417160092EBDA /* application.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = application.icns; path = ../icon/application.icns; sourceTree = "<group>"; };
+		78B9B84013F1E677005E1BC8 /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = Frameworks/Growl.framework; sourceTree = "<group>"; };
 		78C2D608115A428C00705817 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = dsa_pub.pem; path = etc/dsa_pub.pem; sourceTree = "<group>"; };
 		78C8911B1173806A002EED61 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Others/Info.plist; sourceTree = "<group>"; };
 		78E570D00C1C306500BDF7EC /* LimeChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LimeChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -660,6 +676,7 @@
 				782DA8F512DB5A3800C07861 /* Carbon.framework in Frameworks */,
 				782DA8F612DB5A3800C07861 /* CoreServices.framework in Frameworks */,
 				782DA8F812DB5A3800C07861 /* SystemConfiguration.framework in Frameworks */,
+				78B9B84213F1E677005E1BC8 /* Growl.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -673,6 +690,7 @@
 				78E5723D0C1C30BA00BDF7EC /* CoreServices.framework in Frameworks */,
 				78FA9F651085AA1400001F13 /* Sparkle.framework in Frameworks */,
 				78835406109FEA7F00CD2FFF /* SystemConfiguration.framework in Frameworks */,
+				78B9B84113F1E677005E1BC8 /* Growl.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -753,6 +771,7 @@
 				788D56F00BB6872B00DDBF69 /* WebKit.framework */,
 				78835405109FEA7F00CD2FFF /* SystemConfiguration.framework */,
 				78FA9F641085AA1400001F13 /* Sparkle.framework */,
+				78B9B84013F1E677005E1BC8 /* Growl.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1183,6 +1202,7 @@
 				782DA87212DB5A3800C07861 /* Sources */,
 				782DA8F212DB5A3800C07861 /* Frameworks */,
 				782DA8F912DB5A3800C07861 /* CopyFiles */,
+				78B9B85C13F1E693005E1BC8 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -1715,7 +1735,10 @@
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Satoshi Nakagawa";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Frameworks\"",
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
@@ -1751,7 +1774,10 @@
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Satoshi Nakagawa";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Frameworks\"",
+				);
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
@@ -1783,6 +1809,7 @@
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
+					"\"$(SRCROOT)/Frameworks\"",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/Frameworks\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/Frameworks\"";
@@ -1817,6 +1844,7 @@
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
+					"\"$(SRCROOT)/Frameworks\"",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/Frameworks\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/Frameworks\"";
