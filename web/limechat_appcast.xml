@@ -24,8 +24,9 @@
         </style>
         <h1>LimeChat 2.27</h1>
         <ul>
-          <li>Allow single quotation in URLs.</li>
           <li>Make marked scroller work in Lion.</li>
+          <li>Fixed an issue that Growl notifications didn't work on some environments.</li>
+          <li>Allow single quotation in URLs.</li>
         </ul>
         </body>
         </html>

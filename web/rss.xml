@@ -7,16 +7,14 @@
     <language>en-us</language>
 
     <item>
-      <title>2.26</title>
-      <link>http://limechat.net/mac/#v2.26</link>
-      <pubDate>Tue, 26 Jul 2011 16:23:00 -0700</pubDate>
+      <title>2.27</title>
+      <link>http://limechat.net/mac/#v2.27</link>
+      <pubDate>Tue, 09 Aug 2011 15:55:00 -0700</pubDate>
       <content:encoded><![CDATA[
   			<ul>
-	          <li>Full screen support for Lion.</li>
-	          <li>Catch up on updates of Gist.</li>
-	          <li>Added main window menu item to main menu.</li>
-	          <li>Changed button caption in paste dialog from "Send in Channel" to "Send".</li>
-	          <li>Fixed a bug where 3 fingers double tap in the other app caused wrong hot key event.</li>
+	          <li>Make marked scroller work in Lion.</li>
+	          <li>Fixed an issue that Growl notifications didn't work on some environments.</li>
+	          <li>Allow single quotation in URLs.</li>
         </ul>
       ]]></content:encoded>
     </item>
