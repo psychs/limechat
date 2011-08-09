@@ -1729,7 +1729,6 @@
 		782DA8FE12DB5A3800C07861 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Satoshi Nakagawa";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
@@ -1749,7 +1748,6 @@
 					DEBUG,
 				);
 				INFOPLIST_FILE = "Others/Info-AppStore.plist";
-				INSTALL_PATH = /Applications;
 				OTHER_LDFLAGS = (
 					"-framework",
 					Foundation,
@@ -1758,8 +1756,6 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = LimeChat;
-				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64";
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = YES;
 			};
@@ -1768,7 +1764,6 @@
 		782DA8FF12DB5A3800C07861 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Satoshi Nakagawa";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -1783,7 +1778,6 @@
 				GCC_PREFIX_HEADER = Others/LimeChat_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = TARGET_APP_STORE;
 				INFOPLIST_FILE = "Others/Info-AppStore.plist";
-				INSTALL_PATH = /Applications;
 				OTHER_LDFLAGS = (
 					"-framework",
 					Foundation,
@@ -1792,8 +1786,6 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = LimeChat;
-				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64";
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
 			};
@@ -1809,8 +1801,6 @@
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
 					"\"$(SRCROOT)/Frameworks\"",
 				);
-				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/Frameworks\"";
-				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/Frameworks\"";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
@@ -1819,7 +1809,6 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Others/LimeChat_Prefix.pch;
 				INFOPLIST_FILE = Others/Info.plist;
-				INSTALL_PATH = /Applications;
 				OTHER_LDFLAGS = (
 					"-framework",
 					Foundation,
@@ -1828,7 +1817,6 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = LimeChat;
-				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = YES;
 			};
@@ -1844,15 +1832,12 @@
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
 					"\"$(SRCROOT)/Frameworks\"",
 				);
-				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/Frameworks\"";
-				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/Frameworks\"";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Others/LimeChat_Prefix.pch;
 				INFOPLIST_FILE = Others/Info.plist;
-				INSTALL_PATH = /Applications;
 				OTHER_LDFLAGS = (
 					"-framework",
 					Foundation,
@@ -1861,7 +1846,6 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = LimeChat;
-				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
 			};
@@ -1870,38 +1854,33 @@
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					i386,
-					x86_64,
-					ppc,
-				);
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				SDKROOT = macosx;
+				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Debug;
 		};
 		C01FCF5008A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					i386,
-					x86_64,
-					ppc,
-				);
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INSTALL_PATH = /Applications;
-				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PREBINDING = NO;
 				SDKROOT = macosx;
+				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Release;
 		};
