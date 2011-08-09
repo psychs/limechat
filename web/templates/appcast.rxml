@@ -32,9 +32,43 @@
         </html>
       ]]></description>
       <pubDate><%= ftime %></pubDate>
+  	  <sparkle:minimumSystemVersion>10.6.0</sparkle:minimumSystemVersion>
       <enclosure url="http://cloud.github.com/downloads/psychs/limechat/<%= package_fname %>"
                   sparkle:version="<%= version %>" length="<%= fsize %>" type="application/octet-stream"
                   sparkle:dsaSignature="<%= dsa_signature %>"/>
+    </item>
+    
+    <item>
+      <title>LimeChat 2.26</title>
+      <description><![CDATA[
+        <html>
+        <body>
+        <style>
+          body {
+            font-size: medium;
+          }
+          h1 {
+            font-size: large;
+          }
+          li {
+            margin: 0.2em 0;
+          }
+        </style>
+        <h1>LimeChat 2.26</h1>
+        <ul>
+          <li>Full screen support for Lion.</li>
+          <li>Catch up on updates of Gist.</li>
+          <li>Added main window menu item to main menu.</li>
+          <li>Changed button caption in paste dialog from "Send in Channel" to "Send".</li>
+          <li>Fixed a bug where 3 fingers double tap in the other app caused wrong hot key event.</li>
+        </ul>
+        </body>
+        </html>
+      ]]></description>
+      <pubDate>Tue, 26 Jul 2011 16:18:24 -0700</pubDate>
+      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/LimeChat_2.26.tbz"
+                  sparkle:version="2.26" length="1889085" type="application/octet-stream"
+                  sparkle:dsaSignature="MCwCFCwmdmIt6PDmQJVfHaFD8YVPWnKXAhQpaSjdKWlc9Ituh/+f383U4Wl56g=="/>
     </item>
     
   </channel>

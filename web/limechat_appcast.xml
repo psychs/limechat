@@ -7,6 +7,37 @@
     <language>en</language>
     
     <item>
+      <title>LimeChat 2.27</title>
+      <description><![CDATA[
+        <html>
+        <body>
+        <style>
+          body {
+            font-size: medium;
+          }
+          h1 {
+            font-size: large;
+          }
+          li {
+            margin: 0.2em 0;
+          }
+        </style>
+        <h1>LimeChat 2.27</h1>
+        <ul>
+          <li>Allow single quotation in URLs.</li>
+          <li>Make marked scroller work in Lion.</li>
+        </ul>
+        </body>
+        </html>
+      ]]></description>
+      <pubDate>Tue, 09 Aug 2011 15:42:47 -0700</pubDate>
+  	  <sparkle:minimumSystemVersion>10.6.0</sparkle:minimumSystemVersion>
+      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/LimeChat_2.27.tbz"
+                  sparkle:version="2.27" length="1631021" type="application/octet-stream"
+                  sparkle:dsaSignature="MCwCFAR5D8CrZxdW5tYzn6DbXAPWaf0/AhRLfMgZ8pd0pavMNhBNZQMd/4qvvA=="/>
+    </item>
+    
+    <item>
       <title>LimeChat 2.26</title>
       <description><![CDATA[
         <html>
