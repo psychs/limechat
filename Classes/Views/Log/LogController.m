@@ -608,7 +608,6 @@
 	}
 	[div setAttribute:@"id" value:[NSString stringWithFormat:@"line%d", currentLineNumber]];
 	[body appendChild:div];
-	[body valueForKey:@"scrollHeight"]; // Forces the view to recalculate instead of being lazy
 	
 	if (maxLines > 0 && count > maxLines) {
 		[self setNeedsLimitNumberOfLines];
@@ -619,6 +618,7 @@
 	}
 	
 	if (scroller) {
+		[scroller updateScroller];
 		[scroller setNeedsDisplay];
 	}
 	
@@ -853,6 +853,7 @@
 		autoScroller = [WebViewAutoScroll new];
 	}
 	autoScroller.webFrame = view.mainFrame.frameView;
+	autoScroller.scroller = scroller;
 	
 	if (html) {
 		DOMHTMLDocument* doc = (DOMHTMLDocument*)[[view mainFrame] DOMDocument];
