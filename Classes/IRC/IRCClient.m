@@ -2676,6 +2676,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		if (!c) {
 			IRCChannelConfig* seed = [[IRCChannelConfig new] autorelease];
 			seed.name = chname;
+			seed.autoJoin = NO;
 			c = [world createChannel:seed client:self reload:YES adjust:YES];
 			[world save];
 		}
