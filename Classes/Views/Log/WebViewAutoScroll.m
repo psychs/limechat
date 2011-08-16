@@ -50,6 +50,8 @@
 	
 	//LOG(@"bounds changed: %@ → %@", NSStringFromRect(lastVisibleRect), NSStringFromRect([[clipView documentView] visibleRect]));
 	lastVisibleRect = [[clipView documentView] visibleRect];
+
+	[scroller updateScroller];
 }
 
 - (void)webViewDidChangeFrame:(NSNotification*)aNotification
@@ -79,7 +81,10 @@
 			[self scrollViewToBottom:[webFrame documentView]];
 		}
 	}
+
+	[scroller updateScroller];
 }
 
 @synthesize webFrame;
+@synthesize scroller;
 @end

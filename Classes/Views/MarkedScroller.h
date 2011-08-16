@@ -7,9 +7,13 @@
 @interface MarkedScroller : NSScroller
 {
 	id dataSource;
+	NSArray* markData;
 }
 
 @property (nonatomic, assign) id dataSource;
+@property (nonatomic, copy) NSArray* markData;
+
+- (void)updateScroller;
 
 @end
 

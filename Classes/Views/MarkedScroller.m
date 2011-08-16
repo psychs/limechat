@@ -7,12 +7,18 @@
 @implementation MarkedScroller
 
 @synthesize dataSource;
+@synthesize markData;
 
 const static int INSET = 3;
 
 + (BOOL)isCompatibleWithOverlayScrollers
 {
 	return self == [MarkedScroller class];
+}
+
+- (void)updateScroller
+{
+	self.markData = [dataSource markedScrollerPositions:self];
 }
 
 - (void)drawContentInMarkedScroller
@@ -23,8 +29,7 @@ const static int INSET = 3;
 	
 	NSScrollView* scrollView = (NSScrollView*)[self superview];
 	int contentHeight = [[scrollView contentView] documentRect].size.height;
-	NSArray* ary = [dataSource markedScrollerPositions:self];
-	if (!ary || !ary.count) return;
+	if (!markData || !markData.count) return;
 	
 	//
 	// prepare transform
@@ -43,7 +48,7 @@ const static int INSET = 3;
 	NSMutableArray* lines = [NSMutableArray array];
 	NSPoint prev = NSMakePoint(-1, -1);
 	
-	for (NSNumber* e in ary) {
+	for (NSNumber* e in markData) {
 		int i = [e intValue];
 		NSPoint pt = NSMakePoint(indent, i);
 		pt = [transform transformPoint:pt];

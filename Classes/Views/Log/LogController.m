@@ -618,6 +618,7 @@
 	}
 	
 	if (scroller) {
+		[scroller updateScroller];
 		[scroller setNeedsDisplay];
 	}
 	
@@ -852,6 +853,7 @@
 		autoScroller = [WebViewAutoScroll new];
 	}
 	autoScroller.webFrame = view.mainFrame.frameView;
+	autoScroller.scroller = scroller;
 	
 	if (html) {
 		DOMHTMLDocument* doc = (DOMHTMLDocument*)[[view mainFrame] DOMDocument];
