@@ -238,6 +238,9 @@
 			return [NSString stringWithFormat:@"http://lohas.nicoseiga.jp/thumb/%qiq?", iidNum];
 		}
 	}
+	else if ([host isEqualToString:@"gyazo.com"]) {
+		return [NSString stringWithFormat:@"http://cache.gyazo.com%@.png", path];
+	}
 	
 	return nil;
 }
