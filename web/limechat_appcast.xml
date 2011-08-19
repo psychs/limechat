@@ -7,7 +7,7 @@
     <language>en</language>
     
     <item>
-      <title>LimeChat 2.27</title>
+      <title>LimeChat 2.28</title>
       <description><![CDATA[
         <html>
         <body>
@@ -22,20 +22,19 @@
             margin: 0.2em 0;
           }
         </style>
-        <h1>LimeChat 2.27</h1>
+        <h1>LimeChat 2.28</h1>
         <ul>
-          <li>Make marked scroller work in Lion.</li>
-          <li>Fixed an issue that Growl notifications didn't work on some environments.</li>
-          <li>Allow single quotation in URLs.</li>
+	      <li>Fixed a redraw issue in log view.</li>
+	      <li>Do not set auto join when adding a channel with /join.</li>
         </ul>
         </body>
         </html>
       ]]></description>
-      <pubDate>Tue, 09 Aug 2011 15:42:47 -0700</pubDate>
+      <pubDate>Fri, 19 Aug 2011 12:20:44 -0700</pubDate>
   	  <sparkle:minimumSystemVersion>10.6.0</sparkle:minimumSystemVersion>
-      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/LimeChat_2.27.tbz"
-                  sparkle:version="2.27" length="1631021" type="application/octet-stream"
-                  sparkle:dsaSignature="MCwCFAR5D8CrZxdW5tYzn6DbXAPWaf0/AhRLfMgZ8pd0pavMNhBNZQMd/4qvvA=="/>
+      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/LimeChat_2.28.tbz"
+                  sparkle:version="2.28" length="1631191" type="application/octet-stream"
+                  sparkle:dsaSignature="MCwCFEqq0rpRuRAlb9cjM/mt3ike1eAKAhQtIbY9rHpnfhQPnWRAvHLwR2m7Cg=="/>
     </item>
     
     <item>

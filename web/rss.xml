@@ -11,10 +11,9 @@
       <link>http://limechat.net/mac/#v2.27</link>
       <pubDate>Tue, 09 Aug 2011 15:55:00 -0700</pubDate>
       <content:encoded><![CDATA[
-  			<ul>
-	          <li>Make marked scroller work in Lion.</li>
-	          <li>Fixed an issue that Growl notifications didn't work on some environments.</li>
-	          <li>Allow single quotation in URLs.</li>
+  		<ul>
+	      <li>Fixed a redraw issue in log view.</li>
+	      <li>Do not set auto join when adding a channel with /join.</li>
         </ul>
       ]]></content:encoded>
     </item>
