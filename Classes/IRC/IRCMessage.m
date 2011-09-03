@@ -80,7 +80,7 @@
 	command = [[[s getToken] uppercaseString] retain];
 	numericReply = [command intValue];
 	
-	while (!s.isEmpty) {
+	while (s.length) {
 		if ([s hasPrefix:@":"]) {
 			[params addObject:[s substringFromIndex:1]];
 			break;

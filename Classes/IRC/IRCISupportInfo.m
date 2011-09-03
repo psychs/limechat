@@ -99,9 +99,9 @@
 	NSMutableString* s = [[str mutableCopy] autorelease];
 	BOOL plus = NO;
 	
-	while (!s.isEmpty) {
+	while (s.length) {
 		NSString* token = [s getToken];
-		if (token.isEmpty) break;
+		if (!token.length) break;
 		UniChar c = [token characterAtIndex:0];
 		
 		if (c == '+' || c == '-') {

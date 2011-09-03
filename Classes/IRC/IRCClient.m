@@ -766,10 +766,10 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		NSMutableString* prevTarget = [[target mutableCopy] autorelease];
 		NSMutableString* prevPass = [[pass mutableCopy] autorelease];
 		
-		if (!target.isEmpty) [target appendString:@","];
+		if (target.length) [target appendString:@","];
 		[target appendString:c.name];
-		if (!c.password.isEmpty) {
-			if (!pass.isEmpty) [pass appendString:@","];
+		if (c.password.length) {
+			if (pass.length) [pass appendString:@","];
 			[pass appendString:c.password];
 		}
 		
@@ -777,8 +777,8 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		NSData* passData = [pass dataUsingEncoding:conn.encoding];
 		
 		if (targetData.length + passData.length > MAX_BODY_LEN) {
-			if (!prevTarget.isEmpty) {
-				if (prevPass.isEmpty) {
+			if (prevTarget.length) {
+				if (!prevPass.length) {
 					[self send:JOIN, prevTarget, nil];
 				}
 				else {
@@ -788,7 +788,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 				[pass setString:c.password];
 			}
 			else {
-				if (c.password.isEmpty) {
+				if (!c.password.length) {
 					[self send:JOIN, c.name, nil];
 				}
 				else {
@@ -800,8 +800,8 @@ static NSDateFormatter* dateTimeFormatter = nil;
 		}
 	}
 	
-	if (!target.isEmpty) {
-		if (pass.isEmpty) {
+	if (target.length) {
+		if (!pass.length) {
 			[self send:JOIN, target, nil];
 		}
 		else {
@@ -831,7 +831,7 @@ static NSDateFormatter* dateTimeFormatter = nil;
 	BOOL pass = YES;
 	
 	for (IRCChannel* c in chans) {
-		BOOL hasPass = !c.password.isEmpty;
+		BOOL hasPass = c.password.length > 0;
 		
 		if (pass) {
 			pass = hasPass;

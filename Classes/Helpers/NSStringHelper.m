@@ -31,11 +31,6 @@
 	return [self caseInsensitiveCompare:other] == NSOrderedSame;
 }
 
-- (BOOL)isEmpty
-{
-	return [self length] == 0;
-}
-
 - (BOOL)contains:(NSString*)str
 {
 	NSRange r = [self rangeOfString:str];

@@ -14,7 +14,6 @@
 @interface NSString (NSStringHelper)
 
 - (BOOL)isEqualNoCase:(NSString*)other;
-- (BOOL)isEmpty;
 - (BOOL)contains:(NSString*)str;
 - (BOOL)containsIgnoringCase:(NSString*)str;
 - (int)findCharacter:(UniChar)c;
