@@ -1,6 +1,7 @@
 build
 Packages
 xcuserdata
+project.xcworkspace
 .DS_Store
 .LSOverride
 *.pbxuser
