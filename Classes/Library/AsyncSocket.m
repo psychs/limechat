@@ -32,12 +32,6 @@
 NSString *const AsyncSocketException = @"AsyncSocketException";
 NSString *const AsyncSocketErrorDomain = @"AsyncSocketErrorDomain";
 
-#if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_5
-// Mutex lock used by all instances of AsyncSocket, to protect getaddrinfo.
-// Prior to Mac OS X 10.5 this method was not thread-safe.
-static NSString *getaddrinfoLock = @"lock";
-#endif
-
 enum AsyncSocketFlags
 {
 	kEnablePreBuffering      = 1 <<  0,  // If set, pre-buffering is enabled
@@ -982,9 +976,6 @@ static void MyCFWriteStreamCallback(CFWriteStreamRef stream, CFStreamEventType t
 	{
 		NSString *portStr = [NSString stringWithFormat:@"%hu", port];
 
-#if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_5
-		@synchronized (getaddrinfoLock)
-#endif
 		{
 			struct addrinfo hints, *res, *res0;
 			
@@ -2594,16 +2585,8 @@ Failed:
     if (theSocket)
     {
 		CFDataRef peeraddr = CFSocketCopyPeerAddress(theSocket);
-		
 		if (peeraddr == NULL) return nil;
-		
-	#if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_5
-		NSData *result = [NSData dataWithBytes:CFDataGetBytePtr(peeraddr) length:CFDataGetLength(peeraddr)];
-		CFRelease(peeraddr);
-		return result;
-	#else
-		return [(NSData *)NSMakeCollectable(peeraddr) autorelease];
-	#endif
+		return [NSMakeCollectable(peeraddr) autorelease];
 	}
 	
 	// Extract address from CFSocketNativeHandle
@@ -2651,16 +2634,8 @@ Failed:
     if (theSocket)
     {
 		CFDataRef selfaddr = CFSocketCopyAddress(theSocket);
-		
 		if (selfaddr == NULL) return nil;
-		
-	#if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_5
-		NSData *result = [NSData dataWithBytes:CFDataGetBytePtr(selfaddr) length:CFDataGetLength(selfaddr)];
-		CFRelease(selfaddr);
-		return result;
-	#else
-		return [(NSData *)NSMakeCollectable(selfaddr) autorelease];
-	#endif
+		return [NSMakeCollectable(selfaddr) autorelease];
 	}
 	
 	// Extract address from CFSocketNativeHandle
