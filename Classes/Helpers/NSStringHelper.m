@@ -53,7 +53,8 @@
 	NSRange r = [self rangeOfCharacterFromSet:[NSCharacterSet characterSetWithRange:NSMakeRange(c, 1)] options:0 range:NSMakeRange(start, [self length] - start)];
 	if (r.location != NSNotFound) {
 		return r.location;
-	} else {
+	}
+	else {
 		return -1;
 	}
 }
@@ -63,7 +64,8 @@
 	NSRange r = [self rangeOfString:str];
 	if (r.location != NSNotFound) {
 		return r.location;
-	} else {
+	}
+	else {
 		return -1;
 	}
 }
@@ -502,7 +504,7 @@ BOOL isUnicharDigit(unichar c)
 	
 	OnigResult* result = [regex search:self start:start];
 	if (!result) return NSMakeRange(NSNotFound, 0);
-
+	
 	NSRange r = result.bodyRange;
 	
 	int prev = r.location - 1;
