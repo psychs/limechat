@@ -1,5 +1,5 @@
-// LimeChat is copyrighted free software by Satoshi Nakagawa <psychs AT limechat DOT net>.
-// You can redistribute it and/or modify it under the terms of the GPL version 2 (see the file GPL.txt).
+// CocoaOniguruma is copyrighted free software by Satoshi Nakagawa <psychs AT limechat DOT net>.
+// You can redistribute it and/or modify it under the new BSD license.
 
 #import "OnigRegexp.h"
 
@@ -16,6 +16,9 @@
 
 @interface OnigResult (Private)
 - (id)initWithRegexp:(OnigRegexp*)expression region:(OnigRegion*)region target:(NSString*)target;
+
+- (NSMutableArray*) captureNameArray;
+
 @end
 
 
@@ -38,29 +41,74 @@
     [super dealloc];
 }
 
+- (void)finalize
+{
+    if (_entity) onig_free(_entity);
+    [super finalize];
+}
+
 + (OnigRegexp*)compile:(NSString*)expression
 {
-    return [self compile:expression ignorecase:NO multiline:NO extended:NO];
+    return [self compile:expression ignorecase:NO multiline:NO extended:NO error:NULL];
+}
+
++ (OnigRegexp*)compile:(NSString*)expression error:(NSError **)error
+{
+    return [self compile:expression ignorecase:NO multiline:NO extended:NO error:error];
 }
 
 + (OnigRegexp*)compileIgnorecase:(NSString*)expression
 {
-    return [self compile:expression ignorecase:YES multiline:NO extended:NO];	 
+    return [self compile:expression ignorecase:YES multiline:NO extended:NO error:NULL];
+}
+
++ (OnigRegexp*)compileIgnorecase:(NSString*)expression error:(NSError **)error
+{
+    return [self compile:expression ignorecase:YES multiline:NO extended:NO error:error];
 }
 
 + (OnigRegexp*)compile:(NSString*)expression ignorecase:(BOOL)ignorecase multiline:(BOOL)multiline
 {
-    return [self compile:expression ignorecase:ignorecase multiline:multiline extended:NO];	 
+    return [self compile:expression ignorecase:ignorecase multiline:multiline extended:NO error:NULL];
+}
+
++ (OnigRegexp*)compile:(NSString*)expression ignorecase:(BOOL)ignorecase multiline:(BOOL)multiline error:(NSError **)error
+{
+    return [self compile:expression ignorecase:ignorecase multiline:multiline extended:NO error:NULL];
 }
 
 + (OnigRegexp*)compile:(NSString*)expression ignorecase:(BOOL)ignorecase multiline:(BOOL)multiline extended:(BOOL)extended
 {
-    if (!expression) return nil;
+    return [self compile:expression ignorecase:ignorecase multiline:multiline extended:extended error:NULL];
+}
+
++ (OnigRegexp*)compile:(NSString*)expression ignorecase:(BOOL)ignorecase multiline:(BOOL)multiline extended:(BOOL)extended error:(NSError **)error
+{
+    OnigOption options = OnigOptionNone;
+    options |= multiline ? OnigOptionMultiline : OnigOptionSingleline;
+    if(ignorecase) options |= OnigOptionIgnorecase;
+    if(extended) options |= OnigOptionExtend;
+    return [self compile:expression options:options error:error];
+}
+
++ (OnigRegexp*)compile:(NSString*)expression options:(OnigOption)theOptions
+{
+    return [self compile:expression options:theOptions error:NULL];
+}
+
++ (OnigRegexp*)compile:(NSString*)expression options:(OnigOption)theOptions error:(NSError **)error
+{
+    if (!expression) {
+        if(error != NULL) {
+            //Make NSError;
+            NSDictionary* dict = [NSDictionary dictionaryWithObject:@"Invalid expression argument"
+                                                             forKey:NSLocalizedDescriptionKey];
+            *error = [NSError errorWithDomain:@"CocoaOniguruma" code:ONIG_NORMAL userInfo:dict];
+        }
+        return nil;
+    }
     
-    OnigOptionType option = ONIG_OPTION_NONE;
-    option |= multiline ? ONIG_OPTION_MULTILINE : ONIG_OPTION_SINGLELINE;
-    if (ignorecase) option |= ONIG_OPTION_IGNORECASE;
-    if (extended) option |= ONIG_OPTION_EXTEND;
+    OnigOptionType option = theOptions;
     
     OnigErrorInfo err;
     regex_t* entity = 0;
@@ -78,6 +126,16 @@
         return [[[self alloc] initWithEntity:entity expression:expression] autorelease];
     }
     else {
+        if(error != NULL) {
+            //Make NSError;
+            UChar str[ONIG_MAX_ERROR_MESSAGE_LEN];
+            onig_error_code_to_str(str, status, &err);
+            NSString* errorStr = [NSString stringWithCString:(char*)str
+                                                    encoding:NSASCIIStringEncoding];
+            NSDictionary* dict = [NSDictionary dictionaryWithObject:errorStr
+                                                             forKey:NSLocalizedDescriptionKey];
+            *error = [NSError errorWithDomain:@"CocoaOniguruma" code:status userInfo:dict];
+        }
         if (entity) onig_free(entity);
         return nil;
     }
@@ -173,6 +231,7 @@
         _expression = [expression retain];
         _region = region;
         _target = [target copy];
+        _captureNames = [NSMutableArray array];
     }
     return self;
 }
@@ -183,6 +242,12 @@
     if (_region) onig_region_free(_region, 1);
     [_target release];
     [super dealloc];
+}
+
+- (void)finalize
+{
+    if (_region) onig_region_free(_region, 1);
+    [super finalize];
 }
 
 - (NSString*)target
@@ -227,7 +292,7 @@
 
 - (int)lengthAt:(int)index
 {
-    return (*(_region->end + index) - *(_region->beg + index)) / CHAR_SIZE;	 
+    return (*(_region->end + index) - *(_region->beg + index)) / CHAR_SIZE;
 }
 
 - (NSString*)body
@@ -250,6 +315,24 @@
     return [_target substringFromIndex:[self locationAt:0] + [self lengthAt:0]];
 }
 
+- (NSMutableArray*) captureNameArray {
+    return self->_captureNames;
+}
+
+// Used to get list of names
+int co_name_callback(const OnigUChar* name, const OnigUChar* end, int ngroups, int* group_list, OnigRegex re, void* arg) {
+    OnigResult *result = (OnigResult *)arg;
+    
+    [[result captureNameArray] addObject:[NSString stringWithCharacters:(unichar*)name length:((end-name)/CHAR_SIZE)]];
+    return 0;
+}
+
+- (NSArray*)captureNames
+{
+    onig_foreach_name([self->_expression entity], co_name_callback, self);
+    return [NSArray arrayWithArray:self->_captureNames];
+}
+
 - (int)indexForName:(NSString*)name
 {
     NSIndexSet* indexes = [self indexesForName:name];
@@ -258,9 +341,7 @@
 
 - (NSIndexSet*)indexesForName:(NSString*)name
 {
-    int len = sizeof(int) * [self count];
-    int* buf = alloca(len);
-    memset(&buf, 0, len);
+    int* buf = NULL;
     const UChar* str = (const UChar*)[name cStringUsingEncoding:STRING_ENCODING];
     
     int num = onig_name_to_group_numbers([_expression entity], str, str + [name length] * CHAR_SIZE, &buf);
@@ -269,7 +350,7 @@
     NSMutableIndexSet* indexes = [NSMutableIndexSet indexSet];
     int i;
     for (i=0; i<num; i++) {
-        [indexes addIndex:*(buf+i)];
+        [indexes addIndex:buf[i]];
     }
     return indexes;
 }
@@ -286,7 +367,8 @@
     if (!indexes) return nil;
     
     NSMutableArray* array = [NSMutableArray array];
-    for (NSUInteger i=[indexes firstIndex]; i!=NSNotFound; i=[indexes indexGreaterThanIndex:i]) {
+    NSUInteger i;
+    for (i=[indexes firstIndex]; i!=NSNotFound; i=[indexes indexGreaterThanIndex:i]) {
         [array addObject:[self stringAt:i]];
     }
     return array;
