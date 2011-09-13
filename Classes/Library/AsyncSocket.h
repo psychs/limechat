@@ -648,10 +648,4 @@ typedef enum AsyncSocketError AsyncSocketError;
 /* POSIX error */
 + (NSString*)posixErrorStringFromErrno:(int)code;
 
-/* A few common line separators, for use with the readDataToData:... methods. */
-+ (NSData *)CRLFData;   // 0x0D0A
-+ (NSData *)CRData;     // 0x0D
-+ (NSData *)LFData;     // 0x0A
-+ (NSData *)ZeroData;   // 0x00
-
 @end
