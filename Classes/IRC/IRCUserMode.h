@@ -6,13 +6,13 @@
 
 @interface IRCUserMode : NSObject
 {
-	BOOL a;
-	BOOL i;
-	BOOL r;
-	BOOL s;
-	BOOL w;
-	BOOL o;
-	BOOL O;
+    BOOL a;
+    BOOL i;
+    BOOL r;
+    BOOL s;
+    BOOL w;
+    BOOL o;
+    BOOL O;
 }
 
 @property (nonatomic, assign) BOOL a;

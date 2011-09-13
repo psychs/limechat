@@ -8,13 +8,13 @@
 
 @interface ServerTreeView : TreeView
 {
-	id responderDelegate;
-	OtherTheme* theme;
-	
-	NSColor* bgColor;
-	NSColor* topLineColor;
-	NSColor* bottomLineColor;
-	NSGradient* gradient;
+    id responderDelegate;
+    OtherTheme* theme;
+    
+    NSColor* bgColor;
+    NSColor* topLineColor;
+    NSColor* bottomLineColor;
+    NSGradient* gradient;
 }
 
 @property (nonatomic, assign) id responderDelegate;

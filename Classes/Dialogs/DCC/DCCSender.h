@@ -8,24 +8,24 @@
 
 @interface DCCSender : NSObject
 {
-	id delegate;
-	int uid;
-	NSString* peerNick;
-	int port;
-	NSString* fileName;
-	NSString* fullFileName;
-	long long size;
-	long long processedSize;
-	DCCFileTransferStatus status;
-	NSString* error;
-	NSImage* icon;
-	NSProgressIndicator* progressBar;
-
-	TCPServer* sock;
-	TCPClient* client;
-	NSFileHandle* file;
-	NSMutableArray* speedRecords;
-	double currentRecord;
+    id delegate;
+    int uid;
+    NSString* peerNick;
+    int port;
+    NSString* fileName;
+    NSString* fullFileName;
+    long long size;
+    long long processedSize;
+    DCCFileTransferStatus status;
+    NSString* error;
+    NSImage* icon;
+    NSProgressIndicator* progressBar;
+    
+    TCPServer* sock;
+    TCPClient* client;
+    NSFileHandle* file;
+    NSMutableArray* speedRecords;
+    double currentRecord;
 }
 
 @property (nonatomic, assign) id delegate;

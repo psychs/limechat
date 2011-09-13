@@ -4,10 +4,6 @@
 #import "CustomJSFile.h"
 
 
-@interface CustomJSFile (Private)
-@end
-
-
 @implementation CustomJSFile
 
 @synthesize fileName;
@@ -15,35 +11,35 @@
 
 - (id)init
 {
-	self = [super init];
-	if (self) {
-	}
-	return self;
+    self = [super init];
+    if (self) {
+    }
+    return self;
 }
 
 - (void)dealloc
 {
-	[fileName release];
-	[content release];
-	[super dealloc];
+    [fileName release];
+    [content release];
+    [super dealloc];
 }
 
 - (void)setFileName:(NSString *)value
 {
-	if (fileName != value) {
-		[fileName release];
-		fileName = [value retain];
-	}
-	
-	[self reload];
+    if (fileName != value) {
+        [fileName release];
+        fileName = [value retain];
+    }
+    
+    [self reload];
 }
 
 - (void)reload
 {
-	[content release];
-	
-	NSData* data = [NSData dataWithContentsOfFile:fileName];
-	content = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    [content release];
+    
+    NSData* data = [NSData dataWithContentsOfFile:fileName];
+    content = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 }
 
 @end

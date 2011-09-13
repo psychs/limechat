@@ -5,23 +5,23 @@
 
 
 typedef enum {
-	kGistClientGetTop,
-	kGistClientPost,
+    kGistClientGetTop,
+    kGistClientPost,
 } GistClientStage;
 
 
 @interface GistClient : NSObject
 {
-	id delegate;
-	
-	GistClientStage stage;
-	NSString* text;
-	NSString* fileType;
-	BOOL isPrivate;
-	
-	NSURLConnection* conn;
-	NSMutableData* buf;
-	NSString* destUrl;
+    id delegate;
+    
+    GistClientStage stage;
+    NSString* text;
+    NSString* fileType;
+    BOOL isPrivate;
+    
+    NSURLConnection* conn;
+    NSMutableData* buf;
+    NSString* destUrl;
 }
 
 @property (nonatomic, assign) id delegate;

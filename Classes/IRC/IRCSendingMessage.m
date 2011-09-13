@@ -14,82 +14,82 @@
 
 - (id)initWithCommand:(NSString*)aCommand
 {
-	self = [super init];
-	if (self) {
-		command = [[aCommand uppercaseString] retain];
-		penalty = IRC_PENALTY_NORMAL;
-		completeColon = YES;
-		params = [NSMutableArray new];
-	}
-	return self;
+    self = [super init];
+    if (self) {
+        command = [[aCommand uppercaseString] retain];
+        penalty = IRC_PENALTY_NORMAL;
+        completeColon = YES;
+        params = [NSMutableArray new];
+    }
+    return self;
 }
 
 - (void)dealloc
 {
-	[command release];
-	[params release];
-	[super dealloc];
+    [command release];
+    [params release];
+    [super dealloc];
 }
 
 - (void)addParameter:(NSString*)parameter
 {
-	[params addObject:parameter];
+    [params addObject:parameter];
 }
 
 - (NSString*)string
 {
-	if (!string) {
-		BOOL forceCompleteColon = NO;
-		
-		if ([command isEqualToString:PRIVMSG] ||[command isEqualToString:NOTICE]) {
-			forceCompleteColon = YES;
-		}
-		else if ([command isEqualToString:NICK]
-				 || [command isEqualToString:MODE]
-				 || [command isEqualToString:JOIN]
-				 || [command isEqualToString:NAMES]
-				 || [command isEqualToString:WHO]
-				 || [command isEqualToString:LIST]
-				 || [command isEqualToString:INVITE]
-				 || [command isEqualToString:WHOIS]
-				 || [command isEqualToString:WHOWAS]
-				 || [command isEqualToString:ISON]
-				 || [command isEqualToString:USER]) {
-			completeColon = NO;
-		}
-		
-		NSMutableString* d = [NSMutableString new];
-		
-		[d appendString:command];
-		
-		int count = [params count];
-		if (count > 0) {
-			for (int i=0; i<count-1; ++i) {
-				NSString* s = [params objectAtIndex:i];
-				[d appendString:@" "];
-				[d appendString:s];
-			}
-			
-			[d appendString:@" "];
-			NSString* s = [params objectAtIndex:count-1];
-			int len = s.length;
-			BOOL firstColonOrSpace = NO;
-			if (len > 0) {
-				UniChar c = [s characterAtIndex:0];
-				firstColonOrSpace = (c == ' ' || c == ':');
-			}
-			
-			if (forceCompleteColon || completeColon && (s.length == 0 || firstColonOrSpace)) {
-				[d appendString:@":"];
-			}
-			[d appendString:s];
-		}
-		
-		[d appendString:@"\r\n"];
-		
-		string = d;
-	}
-	return string;
+    if (!string) {
+        BOOL forceCompleteColon = NO;
+        
+        if ([command isEqualToString:PRIVMSG] ||[command isEqualToString:NOTICE]) {
+            forceCompleteColon = YES;
+        }
+        else if ([command isEqualToString:NICK]
+                 || [command isEqualToString:MODE]
+                 || [command isEqualToString:JOIN]
+                 || [command isEqualToString:NAMES]
+                 || [command isEqualToString:WHO]
+                 || [command isEqualToString:LIST]
+                 || [command isEqualToString:INVITE]
+                 || [command isEqualToString:WHOIS]
+                 || [command isEqualToString:WHOWAS]
+                 || [command isEqualToString:ISON]
+                 || [command isEqualToString:USER]) {
+            completeColon = NO;
+        }
+        
+        NSMutableString* d = [NSMutableString new];
+        
+        [d appendString:command];
+        
+        int count = [params count];
+        if (count > 0) {
+            for (int i=0; i<count-1; ++i) {
+                NSString* s = [params objectAtIndex:i];
+                [d appendString:@" "];
+                [d appendString:s];
+            }
+            
+            [d appendString:@" "];
+            NSString* s = [params objectAtIndex:count-1];
+            int len = s.length;
+            BOOL firstColonOrSpace = NO;
+            if (len > 0) {
+                UniChar c = [s characterAtIndex:0];
+                firstColonOrSpace = (c == ' ' || c == ':');
+            }
+            
+            if (forceCompleteColon || completeColon && (s.length == 0 || firstColonOrSpace)) {
+                [d appendString:@":"];
+            }
+            [d appendString:s];
+        }
+        
+        [d appendString:@"\r\n"];
+        
+        string = d;
+    }
+    return string;
 }
 
 @end

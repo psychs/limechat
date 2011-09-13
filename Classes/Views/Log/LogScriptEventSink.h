@@ -10,12 +10,12 @@
 
 @interface LogScriptEventSink : NSObject
 {
-	LogController* owner;
-	LogPolicy* policy;
-	
-	int x;
-	int y;
-	CFAbsoluteTime lastClickTime;
+    LogController* owner;
+    LogPolicy* policy;
+    
+    int x;
+    int y;
+    CFAbsoluteTime lastClickTime;
 }
 
 @property (nonatomic, assign) id owner;

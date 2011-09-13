@@ -11,41 +11,41 @@
 
 - (id)init
 {
-	self = [super init];
-	if (self) {
-	}
-	return self;
+    self = [super init];
+    if (self) {
+    }
+    return self;
 }
 
 - (void)dealloc
 {
-	[sheet release];
-	[super dealloc];
+    [sheet release];
+    [super dealloc];
 }
 
 - (void)startSheet
 {
-	[NSApp beginSheet:sheet modalForWindow:window modalDelegate:self didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:) contextInfo:nil];
+    [NSApp beginSheet:sheet modalForWindow:window modalDelegate:self didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:) contextInfo:nil];
 }
 
 - (void)endSheet
 {
-	[NSApp endSheet:sheet];
+    [NSApp endSheet:sheet];
 }
 
 - (void)sheetDidEnd:(NSWindow*)sender returnCode:(NSInteger)returnCode contextInfo:(void*)contextInfo
 {
-	[sheet close];
+    [sheet close];
 }
 
 - (void)ok:(id)sender
 {
-	[self endSheet];
+    [self endSheet];
 }
 
 - (void)cancel:(id)sender
 {
-	[self endSheet];
+    [self endSheet];
 }
 
 @end

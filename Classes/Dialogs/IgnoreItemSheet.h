@@ -9,18 +9,18 @@
 
 @interface IgnoreItemSheet : SheetBase
 {
-	IBOutlet NSButton* nickCheck;
-	IBOutlet NSPopUpButton* nickPopup;
-	IBOutlet NSTextField* nickText;
-	IBOutlet NSButton* messageCheck;
-	IBOutlet NSPopUpButton* messagePopup;
-	IBOutlet NSTextField* messageText;
-	IBOutlet ListView* channelTable;
-	IBOutlet NSButton* deleteChannelButton;
-	
-	IgnoreItem* ignore;
-	BOOL newItem;
-	NSMutableArray* channels;
+    IBOutlet NSButton* nickCheck;
+    IBOutlet NSPopUpButton* nickPopup;
+    IBOutlet NSTextField* nickText;
+    IBOutlet NSButton* messageCheck;
+    IBOutlet NSPopUpButton* messagePopup;
+    IBOutlet NSTextField* messageText;
+    IBOutlet ListView* channelTable;
+    IBOutlet NSButton* deleteChannelButton;
+    
+    IgnoreItem* ignore;
+    BOOL newItem;
+    NSMutableArray* channels;
 }
 
 @property (nonatomic, retain) IgnoreItem* ignore;

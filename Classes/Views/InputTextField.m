@@ -8,35 +8,35 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-	[super drawRect:dirtyRect];
-	[[self backgroundColor] set];
-	NSFrameRectWithWidth([self bounds], 3);
+    [super drawRect:dirtyRect];
+    [[self backgroundColor] set];
+    NSFrameRectWithWidth([self bounds], 3);
 }
 
 - (void)awakeFromNib
 {
-	[self registerForDraggedTypes:[NSArray arrayWithObject:NSStringPboardType]];
+    [self registerForDraggedTypes:[NSArray arrayWithObject:NSStringPboardType]];
 }
 
 - (NSString*)draggedString:(id <NSDraggingInfo>)sender
 {
-	return [[sender draggingPasteboard] stringForType:NSStringPboardType];
+    return [[sender draggingPasteboard] stringForType:NSStringPboardType];
 }
 
 - (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender
 {
-	NSString* s = [self draggedString:sender];
-	if (s.length) {
-		return NSDragOperationCopy;
-	}
-	else {
-		return NSDragOperationNone;
-	}
+    NSString* s = [self draggedString:sender];
+    if (s.length) {
+        return NSDragOperationCopy;
+    }
+    else {
+        return NSDragOperationNone;
+    }
 }
 
 - (NSDragOperation)draggingUpdated:(id <NSDraggingInfo>)sender
 {
-	return NSDragOperationCopy;
+    return NSDragOperationCopy;
 }
 
 - (void)draggingEnded:(id <NSDraggingInfo>)sender
@@ -49,18 +49,18 @@
 
 - (BOOL)prepareForDragOperation:(id <NSDraggingInfo>)sender
 {
-	NSString* s = [self draggedString:sender];
-	return s.length > 0;
+    NSString* s = [self draggedString:sender];
+    return s.length > 0;
 }
 
 - (BOOL)performDragOperation:(id <NSDraggingInfo>)sender
 {
-	NSString* s = [self draggedString:sender];
-	if (s.length) {
-		[self setStringValue:[[self stringValue] stringByAppendingString:s]];
-		return YES;
-	}
-	return NO;
+    NSString* s = [self draggedString:sender];
+    if (s.length) {
+        [self setStringValue:[[self stringValue] stringByAppendingString:s]];
+        return YES;
+    }
+    return NO;
 }
 
 - (void)concludeDragOperation:(id <NSDraggingInfo>)sender

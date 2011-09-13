@@ -13,20 +13,20 @@
 
 @interface DCCController : NSWindowController
 {
-	id delegate;
-	IRCWorld* world;
-	NSWindow* mainWindow;
-	
-	BOOL loaded;
-	NSMutableArray* receivers;
-	NSMutableArray* senders;
-	
-	Timer* timer;
-	
-	IBOutlet ListView* receiverTable;
-	IBOutlet ListView* senderTable;
-	IBOutlet ThinSplitView* splitter;
-	IBOutlet NSButton* clearButton;
+    id delegate;
+    IRCWorld* world;
+    NSWindow* mainWindow;
+    
+    BOOL loaded;
+    NSMutableArray* receivers;
+    NSMutableArray* senders;
+    
+    Timer* timer;
+    
+    IBOutlet ListView* receiverTable;
+    IBOutlet ListView* senderTable;
+    IBOutlet ThinSplitView* splitter;
+    IBOutlet NSButton* clearButton;
 }
 
 @property (nonatomic, assign) id delegate;

@@ -11,8 +11,8 @@
 
 @interface OnigRegexp : NSObject
 {
-	regex_t* _entity;
-	NSString* _expression;
+    regex_t* _entity;
+    NSString* _expression;
 }
 
 + (OnigRegexp*)compile:(NSString*)expression;
@@ -35,9 +35,9 @@
 
 @interface OnigResult : NSObject
 {
-	OnigRegexp* _expression;
-	OnigRegion* _region;
-	NSString* _target;
+    OnigRegexp* _expression;
+    OnigRegion* _region;
+    NSString* _target;
 }
 
 - (NSString*)target;

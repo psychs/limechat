@@ -4,8 +4,8 @@
 #import "DCCReceiver.h"
 
 
-#define DOWNLOADING_PREFIX	@"__download__"
-#define RECORDS_LEN			10
+#define DOWNLOADING_PREFIX  @"__download__"
+#define RECORDS_LEN         10
 
 
 @interface DCCReceiver (Private)
@@ -33,153 +33,153 @@
 
 - (id)init
 {
-	self = [super init];
-	if (self) {
-		speedRecords = [NSMutableArray new];
-	}
-	return self;
+    self = [super init];
+    if (self) {
+        speedRecords = [NSMutableArray new];
+    }
+    return self;
 }
 
 - (void)dealloc
 {
-	[peerNick release];
-	[host release];
-	[error release];
-	[path release];
-	[fileName release];
-	[downloadFileName release];
-	[icon release];
-	[progressBar release];
-	
-	[sock close];
-	[sock autorelease];
-	[file release];
-	[speedRecords release];
-	[super dealloc];
+    [peerNick release];
+    [host release];
+    [error release];
+    [path release];
+    [fileName release];
+    [downloadFileName release];
+    [icon release];
+    [progressBar release];
+    
+    [sock close];
+    [sock autorelease];
+    [file release];
+    [speedRecords release];
+    [super dealloc];
 }
 
 - (void)setPath:(NSString *)value
 {
-	if (path != value) {
-		[path release];
-		path = [[value stringByExpandingTildeInPath] retain];
-	}
+    if (path != value) {
+        [path release];
+        path = [[value stringByExpandingTildeInPath] retain];
+    }
 }
 
 - (void)setFileName:(NSString *)value
 {
-	if (fileName != value) {
-		[fileName release];
-		fileName = [value retain];
-		
-		[icon release];
-		icon = [[[NSWorkspace sharedWorkspace] iconForFileType:[fileName pathExtension]] retain];
-	}
+    if (fileName != value) {
+        [fileName release];
+        fileName = [value retain];
+        
+        [icon release];
+        icon = [[[NSWorkspace sharedWorkspace] iconForFileType:[fileName pathExtension]] retain];
+    }
 }
 
 - (double)speed
 {
-	if (!speedRecords.count) return 0;
-	
-	double sum = 0;
-	for (NSNumber* num in speedRecords) {
-		sum += [num doubleValue];
-	}
-	return sum / speedRecords.count;
+    if (!speedRecords.count) return 0;
+    
+    double sum = 0;
+    for (NSNumber* num in speedRecords) {
+        sum += [num doubleValue];
+    }
+    return sum / speedRecords.count;
 }
 
 - (void)open
 {
-	if (sock) {
-		[self close];
-	}
-	
-	currentRecord = 0;
-	[speedRecords removeAllObjects];
-
-	sock = [TCPClient new];
-	sock.delegate = self;
-	sock.host = host;
-	sock.port = port;
-	[sock open];
+    if (sock) {
+        [self close];
+    }
+    
+    currentRecord = 0;
+    [speedRecords removeAllObjects];
+    
+    sock = [TCPClient new];
+    sock.delegate = self;
+    sock.host = host;
+    sock.port = port;
+    [sock open];
 }
 
 - (void)close
 {
-	[sock close];
-	[sock autorelease];
-	sock = nil;
-	
-	[self closeFile];
-	
-	if (status != DCC_ERROR && status != DCC_COMPLETE) {
-		status = DCC_STOP;
-	}
-	
-	[delegate dccReceiveOnClose:self];
+    [sock close];
+    [sock autorelease];
+    sock = nil;
+    
+    [self closeFile];
+    
+    if (status != DCC_ERROR && status != DCC_COMPLETE) {
+        status = DCC_STOP;
+    }
+    
+    [delegate dccReceiveOnClose:self];
 }
 
 - (void)onTimer
 {
-	if (status != DCC_RECEIVING) return;
-	
-	[speedRecords addObject:[NSNumber numberWithDouble:currentRecord]];
-	if (speedRecords.count > RECORDS_LEN) [speedRecords removeObjectAtIndex:0];
-	currentRecord = 0;
+    if (status != DCC_RECEIVING) return;
+    
+    [speedRecords addObject:[NSNumber numberWithDouble:currentRecord]];
+    if (speedRecords.count > RECORDS_LEN) [speedRecords removeObjectAtIndex:0];
+    currentRecord = 0;
 }
 
 - (void)openFile
 {
-	if (file) return;
-	
-	NSString* base = [fileName stringByDeletingPathExtension];
-	NSString* ext = [fileName pathExtension];
-	
-	NSFileManager* fm = [NSFileManager defaultManager];
-	NSString* fullName = [path stringByAppendingPathComponent:[NSString stringWithFormat:@"%@%@", DOWNLOADING_PREFIX, fileName]];
-	
-	int i = 0;
-	while ([fm fileExistsAtPath:fullName]) {
-		fullName = [path stringByAppendingPathComponent:[NSString stringWithFormat:@"%@%@_%d.%@", DOWNLOADING_PREFIX, base, i, ext]];
-		++i;
-	}
-	
-	NSString* dir = [fullName stringByDeletingLastPathComponent];
-	[fm createDirectoryAtPath:dir withIntermediateDirectories:YES attributes:nil error:NULL];
-	[fm createFileAtPath:fullName contents:[NSData data] attributes:nil];
-	
-	[file release];
-	file = [[NSFileHandle fileHandleForUpdatingAtPath:fullName] retain];
-	
-	[downloadFileName release];
-	downloadFileName = [fullName retain];
+    if (file) return;
+    
+    NSString* base = [fileName stringByDeletingPathExtension];
+    NSString* ext = [fileName pathExtension];
+    
+    NSFileManager* fm = [NSFileManager defaultManager];
+    NSString* fullName = [path stringByAppendingPathComponent:[NSString stringWithFormat:@"%@%@", DOWNLOADING_PREFIX, fileName]];
+    
+    int i = 0;
+    while ([fm fileExistsAtPath:fullName]) {
+        fullName = [path stringByAppendingPathComponent:[NSString stringWithFormat:@"%@%@_%d.%@", DOWNLOADING_PREFIX, base, i, ext]];
+        ++i;
+    }
+    
+    NSString* dir = [fullName stringByDeletingLastPathComponent];
+    [fm createDirectoryAtPath:dir withIntermediateDirectories:YES attributes:nil error:NULL];
+    [fm createFileAtPath:fullName contents:[NSData data] attributes:nil];
+    
+    [file release];
+    file = [[NSFileHandle fileHandleForUpdatingAtPath:fullName] retain];
+    
+    [downloadFileName release];
+    downloadFileName = [fullName retain];
 }
 
 - (void)closeFile
 {
-	if (!file) return;
-	
-	[file closeFile];
-	[file release];
-	file = nil;
-	
-	if (status == DCC_COMPLETE) {
-		NSString* base = [fileName stringByDeletingPathExtension];
-		NSString* ext = [fileName pathExtension];
-		NSString* fullName = [path stringByAppendingPathComponent:fileName];
-
-		NSFileManager* fm = [NSFileManager defaultManager];
-		
-		int i = 0;
-		while ([fm fileExistsAtPath:fullName]) {
-			fullName = [path stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_%d.%@", base, i, ext]];
-			++i;
-		}
-		
-		[fm moveItemAtPath:downloadFileName toPath:fullName error:NULL];
-		[downloadFileName release];
-		downloadFileName = [fullName retain];
-	}
+    if (!file) return;
+    
+    [file closeFile];
+    [file release];
+    file = nil;
+    
+    if (status == DCC_COMPLETE) {
+        NSString* base = [fileName stringByDeletingPathExtension];
+        NSString* ext = [fileName pathExtension];
+        NSString* fullName = [path stringByAppendingPathComponent:fileName];
+        
+        NSFileManager* fm = [NSFileManager defaultManager];
+        
+        int i = 0;
+        while ([fm fileExistsAtPath:fullName]) {
+            fullName = [path stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_%d.%@", base, i, ext]];
+            ++i;
+        }
+        
+        [fm moveItemAtPath:downloadFileName toPath:fullName error:NULL];
+        [downloadFileName release];
+        downloadFileName = [fullName retain];
+    }
 }
 
 #pragma mark -
@@ -187,64 +187,64 @@
 
 - (void)tcpClientDidConnect:(TCPClient*)sender
 {
-	processedSize = 0;
-	status = DCC_RECEIVING;
-	
-	[self openFile];
-	
-	[delegate dccReceiveOnOpen:self];
+    processedSize = 0;
+    status = DCC_RECEIVING;
+    
+    [self openFile];
+    
+    [delegate dccReceiveOnOpen:self];
 }
 
 - (void)tcpClientDidDisconnect:(TCPClient*)sender
 {
-	if (status == DCC_COMPLETE || status == DCC_ERROR) return;
-	
-	status = DCC_ERROR;
-	[error release];
-	error = @"Disconnected";
-	[self close];
-	
-	[delegate dccReceiveOnError:self];
+    if (status == DCC_COMPLETE || status == DCC_ERROR) return;
+    
+    status = DCC_ERROR;
+    [error release];
+    error = @"Disconnected";
+    [self close];
+    
+    [delegate dccReceiveOnError:self];
 }
 
 - (void)tcpClient:(TCPClient*)sender error:(NSString*)err
 {
-	if (status == DCC_COMPLETE || status == DCC_ERROR) return;
-	
-	status = DCC_ERROR;
-	[error release];
-	error = [err retain];
-	[self close];
-	
-	[delegate dccReceiveOnError:self];
+    if (status == DCC_COMPLETE || status == DCC_ERROR) return;
+    
+    status = DCC_ERROR;
+    [error release];
+    error = [err retain];
+    [self close];
+    
+    [delegate dccReceiveOnError:self];
 }
 
 - (void)tcpClientDidReceiveData:(TCPClient*)sender
 {
-	NSData* data = [sock read];
-	processedSize += data.length;
-	currentRecord += data.length;
-
-	if (data.length) {
-		[file writeData:data];
-	}
-	
-	uint32_t rsize = processedSize & 0xFFFFFFFF;
-	unsigned char ack[4];
-	ack[0] = (rsize >> 24) & 0xFF;
-	ack[1] = (rsize >> 16) & 0xFF;
-	ack[2] = (rsize >>  8) & 0xFF;
-	ack[3] = rsize & 0xFF;
-	[sock write:[NSData dataWithBytes:ack length:4]];
-	
-	progressBar.doubleValue = processedSize;
-	[progressBar setNeedsDisplay:YES];
-	
-	if (processedSize >= size) {
-		status = DCC_COMPLETE;
-		[self close];
-		[delegate dccReceiveOnComplete:self];
-	}
+    NSData* data = [sock read];
+    processedSize += data.length;
+    currentRecord += data.length;
+    
+    if (data.length) {
+        [file writeData:data];
+    }
+    
+    uint32_t rsize = processedSize & 0xFFFFFFFF;
+    unsigned char ack[4];
+    ack[0] = (rsize >> 24) & 0xFF;
+    ack[1] = (rsize >> 16) & 0xFF;
+    ack[2] = (rsize >>  8) & 0xFF;
+    ack[3] = rsize & 0xFF;
+    [sock write:[NSData dataWithBytes:ack length:4]];
+    
+    progressBar.doubleValue = processedSize;
+    [progressBar setNeedsDisplay:YES];
+    
+    if (processedSize >= size) {
+        status = DCC_COMPLETE;
+        [self close];
+        [delegate dccReceiveOnComplete:self];
+    }
 }
 
 - (void)tcpClientDidSendData:(TCPClient*)sender

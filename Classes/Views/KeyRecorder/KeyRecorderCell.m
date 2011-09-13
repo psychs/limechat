@@ -9,34 +9,34 @@
 
 - (id)init
 {
-	self = [super init];
-	if (self) {
-	}
-	return self;
+    self = [super init];
+    if (self) {
+    }
+    return self;
 }
 
 - (void)dealloc
 {
-	[super dealloc];
+    [super dealloc];
 }
 
 - (NSBezierPath*)borderPathForBounds:(NSRect)r
 {
-	//r = NSInsetRect(r, 0.5, 0.5);
-	CGFloat radius = r.size.height / 2;
-	return [NSBezierPath bezierPathWithRoundedRect:r xRadius:radius yRadius:radius];
+    //r = NSInsetRect(r, 0.5, 0.5);
+    CGFloat radius = r.size.height / 2;
+    return [NSBezierPath bezierPathWithRoundedRect:r xRadius:radius yRadius:radius];
 }
 
 - (void)drawInteriorWithFrame:(NSRect)rect inView:(NSView*)contentView
 {
-	[NSGraphicsContext saveGraphicsState];
-	
-	if ([self showsFirstResponder]) {
-		NSSetFocusRingStyle(NSFocusRingOnly);
-		[[self borderPathForBounds:rect] fill];
-	}
-	
-	[NSGraphicsContext restoreGraphicsState];
+    [NSGraphicsContext saveGraphicsState];
+    
+    if ([self showsFirstResponder]) {
+        NSSetFocusRingStyle(NSFocusRingOnly);
+        [[self borderPathForBounds:rect] fill];
+    }
+    
+    [NSGraphicsContext restoreGraphicsState];
 }
 
 @end

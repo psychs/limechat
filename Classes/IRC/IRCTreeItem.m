@@ -14,48 +14,48 @@
 
 - (void)dealloc
 {
-	[log release];
-	[super dealloc];
+    [log release];
+    [super dealloc];
 }
 
 - (IRCClient*)client
 {
-	return nil;
+    return nil;
 }
 
 - (BOOL)isClient
 {
-	return NO;
+    return NO;
 }
 
 - (BOOL)isActive
 {
-	return NO;
+    return NO;
 }
 
 - (void)resetState
 {
-	isKeyword = isUnread = isNewTalk = NO;
+    isKeyword = isUnread = isNewTalk = NO;
 }
 
 - (int)numberOfChildren
 {
-	return 0;
+    return 0;
 }
 
 - (IRCTreeItem*)childAtIndex:(int)index
 {
-	return nil;
+    return nil;
 }
 
 - (NSString*)label
 {
-	return @"";
+    return @"";
 }
 
 - (NSString*)name
 {
-	return @"";
+    return @"";
 }
 
 @end

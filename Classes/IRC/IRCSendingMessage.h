@@ -6,11 +6,11 @@
 
 @interface IRCSendingMessage : NSObject
 {
-	NSString* command;
-	NSMutableArray* params;
-	int penalty;
-	BOOL completeColon;
-	NSString* string;
+    NSString* command;
+    NSMutableArray* params;
+    int penalty;
+    BOOL completeColon;
+    NSString* string;
 }
 
 @property (nonatomic, readonly) NSString* command;

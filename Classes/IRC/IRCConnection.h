@@ -8,27 +8,27 @@
 
 @interface IRCConnection : NSObject
 {
-	id delegate;
-	
-	NSString* host;
-	int port;
-	BOOL useSSL;
-	NSStringEncoding encoding;
-	
-	BOOL useSystemSocks;
-	BOOL useSocks;
-	int socksVersion;
-	NSString* proxyHost;
-	int proxyPort;
-	NSString* proxyUser;
-	NSString* proxyPassword;
-	
-	TCPClient* conn;
-	NSMutableArray* sendQueue;
-	Timer* timer;
-	BOOL sending;
-	int penalty;
-	BOOL loggedIn;
+    id delegate;
+    
+    NSString* host;
+    int port;
+    BOOL useSSL;
+    NSStringEncoding encoding;
+    
+    BOOL useSystemSocks;
+    BOOL useSocks;
+    int socksVersion;
+    NSString* proxyHost;
+    int proxyPort;
+    NSString* proxyUser;
+    NSString* proxyPassword;
+    
+    TCPClient* conn;
+    NSMutableArray* sendQueue;
+    Timer* timer;
+    BOOL sending;
+    int penalty;
+    BOOL loggedIn;
 }
 
 @property (nonatomic, assign) id delegate;

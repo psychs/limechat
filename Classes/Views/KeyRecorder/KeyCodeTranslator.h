@@ -7,8 +7,8 @@
 
 @interface KeyCodeTranslator : NSObject
 {
-	TISInputSourceRef	layout;
-	const UCKeyboardLayout* layoutData;
+    TISInputSourceRef	layout;
+    const UCKeyboardLayout* layoutData;
 }
 
 + (id)sharedInstance;

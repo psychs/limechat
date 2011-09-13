@@ -6,23 +6,23 @@
 #import "Preferences.h"
 
 
-#define GROWL_MSG_LOGIN						@"Logged in"
-#define GROWL_MSG_DISCONNECT				@"Disconnected"
-#define GROWL_MSG_HIGHLIGHT					@"Highlight message received"
-#define GROWL_MSG_NEW_TALK					@"New talk started"
-#define GROWL_MSG_CHANNEL_MSG				@"Channel message received"
-#define GROWL_MSG_CHANNEL_NOTICE			@"Channel notice received"
-#define GROWL_MSG_TALK_MSG					@"Talk message received"
-#define GROWL_MSG_TALK_NOTICE				@"Talk notice received"
-#define GROWL_MSG_KICKED					@"Kicked out from channel"
-#define GROWL_MSG_INVITED					@"Invited to channel"
-#define GROWL_MSG_FILE_RECEIVE_REQUEST		@"File receive requested"
-#define GROWL_MSG_FILE_RECEIVE_SUCCEEDED	@"File receive succeeded"
-#define GROWL_MSG_FILE_RECEIVE_FAILED		@"File receive failed"
-#define GROWL_MSG_FILE_SEND_SUCCEEDED		@"File send succeeded"
-#define GROWL_NSG_FILE_SEND_FAILED			@"File send failed"
+#define GROWL_MSG_LOGIN                     @"Logged in"
+#define GROWL_MSG_DISCONNECT                @"Disconnected"
+#define GROWL_MSG_HIGHLIGHT                 @"Highlight message received"
+#define GROWL_MSG_NEW_TALK                  @"New talk started"
+#define GROWL_MSG_CHANNEL_MSG               @"Channel message received"
+#define GROWL_MSG_CHANNEL_NOTICE            @"Channel notice received"
+#define GROWL_MSG_TALK_MSG                  @"Talk message received"
+#define GROWL_MSG_TALK_NOTICE               @"Talk notice received"
+#define GROWL_MSG_KICKED                    @"Kicked out from channel"
+#define GROWL_MSG_INVITED                   @"Invited to channel"
+#define GROWL_MSG_FILE_RECEIVE_REQUEST      @"File receive requested"
+#define GROWL_MSG_FILE_RECEIVE_SUCCEEDED    @"File receive succeeded"
+#define GROWL_MSG_FILE_RECEIVE_FAILED       @"File receive failed"
+#define GROWL_MSG_FILE_SEND_SUCCEEDED       @"File send succeeded"
+#define GROWL_NSG_FILE_SEND_FAILED          @"File send failed"
 
-#define CLICK_INTERVAL						2
+#define CLICK_INTERVAL                      2
 
 
 @implementation GrowlController

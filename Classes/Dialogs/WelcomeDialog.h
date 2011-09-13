@@ -7,16 +7,16 @@
 
 @interface WelcomeDialog : NSWindowController
 {
-	id delegate;
-	NSMutableArray* channels;
-	
-	IBOutlet NSTextField* nickText;
-	IBOutlet NSComboBox* hostCombo;
-	IBOutlet ListView* channelTable;
-	IBOutlet NSButton* autoConnectCheck;
-	IBOutlet NSButton* addChannelButton;
-	IBOutlet NSButton* deleteChannelButton;
-	IBOutlet NSButton* okButton;
+    id delegate;
+    NSMutableArray* channels;
+    
+    IBOutlet NSTextField* nickText;
+    IBOutlet NSComboBox* hostCombo;
+    IBOutlet ListView* channelTable;
+    IBOutlet NSButton* autoConnectCheck;
+    IBOutlet NSButton* addChannelButton;
+    IBOutlet NSButton* deleteChannelButton;
+    IBOutlet NSButton* okButton;
 }
 
 @property (nonatomic, assign) id delegate;

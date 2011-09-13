@@ -26,42 +26,42 @@
 
 @interface IRCWorld : NSObject <NSOutlineViewDataSource, NSOutlineViewDelegate>
 {
-	AppController* app;
-	MainWindow* window;
-	GrowlController* growl;
-	IconController* icon;
-	ServerTreeView* tree;
-	InputTextField* text;
-	NSBox* logBase;
-	NSBox* consoleBase;
-	ChatBox* chatBox;
-	FieldEditorTextView* fieldEditor;
-	MemberListView* memberList;
-	MenuController* menuController;
-	DCCController* dcc;
-	ViewTheme* viewTheme;
-	NSMenu* serverMenu;
-	NSMenu* channelMenu;
-	NSMenu* treeMenu;
-	NSMenu* logMenu;
-	NSMenu* consoleMenu;
-	NSMenu* urlMenu;
-	NSMenu* addrMenu;
-	NSMenu* chanMenu;
-	NSMenu* memberMenu;
-	
-	LogController* consoleLog;
-	LogController* dummyLog;
-	
-	IRCWorldConfig* config;
-	NSMutableArray* clients;
-	
-	int itemId;
-	BOOL reloadingTree;
-	IRCTreeItem* selected;
-	
-	int previousSelectedClientId;
-	int previousSelectedChannelId;
+    AppController* app;
+    MainWindow* window;
+    GrowlController* growl;
+    IconController* icon;
+    ServerTreeView* tree;
+    InputTextField* text;
+    NSBox* logBase;
+    NSBox* consoleBase;
+    ChatBox* chatBox;
+    FieldEditorTextView* fieldEditor;
+    MemberListView* memberList;
+    MenuController* menuController;
+    DCCController* dcc;
+    ViewTheme* viewTheme;
+    NSMenu* serverMenu;
+    NSMenu* channelMenu;
+    NSMenu* treeMenu;
+    NSMenu* logMenu;
+    NSMenu* consoleMenu;
+    NSMenu* urlMenu;
+    NSMenu* addrMenu;
+    NSMenu* chanMenu;
+    NSMenu* memberMenu;
+    
+    LogController* consoleLog;
+    LogController* dummyLog;
+    
+    IRCWorldConfig* config;
+    NSMutableArray* clients;
+    
+    int itemId;
+    BOOL reloadingTree;
+    IRCTreeItem* selected;
+    
+    int previousSelectedClientId;
+    int previousSelectedChannelId;
 }
 
 @property (nonatomic, assign) AppController* app;

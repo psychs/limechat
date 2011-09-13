@@ -30,161 +30,161 @@ static NSDictionary* SYNTAX_EXT_MAP;
 
 - (id)init
 {
-	self = [super init];
-	if (self) {
-		[NSBundle loadNibNamed:@"PasteSheet" owner:self];
-		
-		if (!SYNTAXES) {
-			SYNTAXES = [[NSArray arrayWithObjects:
-						 @"privmsg", @"notice", @"c", @"css", @"diff", @"html",
-						 @"java", @"javascript", @"php", @"plain text", @"python",
-						 @"ruby", @"sql", @"shell script", @"perl", @"haskell",
-						 @"scheme", @"objective-c",
-						 nil] retain];
-		}
-		
-		if (!SYNTAX_EXT_MAP) {
-			SYNTAX_EXT_MAP = [[NSDictionary dictionaryWithObjectsAndKeys:
-							   @".c", @"c",
-							   @".css", @"css",
-							   @".diff", @"diff",
-							   @".hs", @"haskell",
-							   @".html", @"html",
-							   @".java", @"java",
-							   @".js", @"javascript",
-							   @".m", @"objective-c",
-							   @".pl", @"perl",
-							   @".aw", @"php",
-							   @".txt", @"plain_text",
-							   @".py", @"python",
-							   @".rb", @"ruby",
-							   @".scm", @"scheme",
-							   @".sh", @"shell script",
-							   @".sql", @"sql",
-							   nil, nil] retain];
-		}
-	}
-	return self;
+    self = [super init];
+    if (self) {
+        [NSBundle loadNibNamed:@"PasteSheet" owner:self];
+        
+        if (!SYNTAXES) {
+            SYNTAXES = [[NSArray arrayWithObjects:
+                         @"privmsg", @"notice", @"c", @"css", @"diff", @"html",
+                         @"java", @"javascript", @"php", @"plain text", @"python",
+                         @"ruby", @"sql", @"shell script", @"perl", @"haskell",
+                         @"scheme", @"objective-c",
+                         nil] retain];
+        }
+        
+        if (!SYNTAX_EXT_MAP) {
+            SYNTAX_EXT_MAP = [[NSDictionary dictionaryWithObjectsAndKeys:
+                               @".c", @"c",
+                               @".css", @"css",
+                               @".diff", @"diff",
+                               @".hs", @"haskell",
+                               @".html", @"html",
+                               @".java", @"java",
+                               @".js", @"javascript",
+                               @".m", @"objective-c",
+                               @".pl", @"perl",
+                               @".aw", @"php",
+                               @".txt", @"plain_text",
+                               @".py", @"python",
+                               @".rb", @"ruby",
+                               @".scm", @"scheme",
+                               @".sh", @"shell script",
+                               @".sql", @"sql",
+                               nil, nil] retain];
+        }
+    }
+    return self;
 }
 
 - (void)dealloc
 {
-	[nick release];
-	[originalText release];
-	[syntax release];
-	[command release];
-	[gist cancel];
-	[gist autorelease];
-	[super dealloc];
+    [nick release];
+    [originalText release];
+    [syntax release];
+    [command release];
+    [gist cancel];
+    [gist autorelease];
+    [super dealloc];
 }
 
 - (void)start
 {
-	if (editMode) {
-		NSArray* lines = [originalText splitIntoLines];
-		isShortText = lines.count <= 3;
-		if (isShortText) {
-			self.syntax = @"privmsg";
-		}
-		[sheet makeFirstResponder:bodyText];
-	}
-	
-	[syntaxPopup selectItemWithTag:[self tagFromSyntax:syntax]];
-	[commandPopup selectItemWithTag:[self tagFromSyntax:command]];
-	[bodyText setString:originalText];
-	
-	if (!NSEqualSizes(size, NSZeroSize)) {
-		[sheet setContentSize:size];
-	}
-	
-	[self startSheet];
+    if (editMode) {
+        NSArray* lines = [originalText splitIntoLines];
+        isShortText = lines.count <= 3;
+        if (isShortText) {
+            self.syntax = @"privmsg";
+        }
+        [sheet makeFirstResponder:bodyText];
+    }
+    
+    [syntaxPopup selectItemWithTag:[self tagFromSyntax:syntax]];
+    [commandPopup selectItemWithTag:[self tagFromSyntax:command]];
+    [bodyText setString:originalText];
+    
+    if (!NSEqualSizes(size, NSZeroSize)) {
+        [sheet setContentSize:size];
+    }
+    
+    [self startSheet];
 }
 
 - (void)pasteOnline:(id)sender
 {
-	[self setRequesting:YES];
-	
-	if (gist) {
-		[gist cancel];
-		[gist autorelease];
-	}
-	
-	NSString* s = bodyText.string;
-	NSString* fileType = [SYNTAX_EXT_MAP objectForKey:[self syntaxFromTag:syntaxPopup.selectedTag]];
-	if (!fileType) {
-		fileType = @".txt";
-	}
-	
-	gist = [GistClient new];
-	gist.delegate = self;
-	[gist send:s fileType:fileType private:YES];
+    [self setRequesting:YES];
+    
+    if (gist) {
+        [gist cancel];
+        [gist autorelease];
+    }
+    
+    NSString* s = bodyText.string;
+    NSString* fileType = [SYNTAX_EXT_MAP objectForKey:[self syntaxFromTag:syntaxPopup.selectedTag]];
+    if (!fileType) {
+        fileType = @".txt";
+    }
+    
+    gist = [GistClient new];
+    gist.delegate = self;
+    [gist send:s fileType:fileType private:YES];
 }
 
 - (void)sendInChannel:(id)sender
 {
-	[command release];
-	command = [[self syntaxFromTag:commandPopup.selectedTag] retain];
-	
-	NSString* s = bodyText.string;
-
-	if ([delegate respondsToSelector:@selector(pasteSheet:onPasteText:)]) {
-		[delegate pasteSheet:self onPasteText:s];
-	}
-	
-	[self endSheet];
+    [command release];
+    command = [[self syntaxFromTag:commandPopup.selectedTag] retain];
+    
+    NSString* s = bodyText.string;
+    
+    if ([delegate respondsToSelector:@selector(pasteSheet:onPasteText:)]) {
+        [delegate pasteSheet:self onPasteText:s];
+    }
+    
+    [self endSheet];
 }
 
 - (void)cancel:(id)sender
 {
-	if ([delegate respondsToSelector:@selector(pasteSheetOnCancel:)]) {
-		[delegate pasteSheetOnCancel:self];
-	}
-	
-	[super cancel:nil];
+    if ([delegate respondsToSelector:@selector(pasteSheetOnCancel:)]) {
+        [delegate pasteSheetOnCancel:self];
+    }
+    
+    [super cancel:nil];
 }
 
 - (void)setRequesting:(BOOL)value
 {
-	errorLabel.stringValue = value ? @"Sending…" : @"";
-	if (value) {
-		[uploadIndicator startAnimation:nil];
-	}
-	else {
-		[uploadIndicator stopAnimation:nil];
-	}
-	
-	[pasteOnlineButton setEnabled:!value];
-	[sendInChannelButton setEnabled:!value];
-	[syntaxPopup setEnabled:!value];
-	[commandPopup setEnabled:!value];
-	
-	if (value) {
-		[bodyText setEditable:NO];
-		[bodyText setTextColor:[NSColor disabledControlTextColor]];
-		[bodyText setBackgroundColor:[NSColor windowBackgroundColor]];
-	}
-	else {
-		[bodyText setTextColor:[NSColor textColor]];
-		[bodyText setBackgroundColor:[NSColor textBackgroundColor]];
-		[bodyText setEditable:YES];
-	}
+    errorLabel.stringValue = value ? @"Sending…" : @"";
+    if (value) {
+        [uploadIndicator startAnimation:nil];
+    }
+    else {
+        [uploadIndicator stopAnimation:nil];
+    }
+    
+    [pasteOnlineButton setEnabled:!value];
+    [sendInChannelButton setEnabled:!value];
+    [syntaxPopup setEnabled:!value];
+    [commandPopup setEnabled:!value];
+    
+    if (value) {
+        [bodyText setEditable:NO];
+        [bodyText setTextColor:[NSColor disabledControlTextColor]];
+        [bodyText setBackgroundColor:[NSColor windowBackgroundColor]];
+    }
+    else {
+        [bodyText setTextColor:[NSColor textColor]];
+        [bodyText setBackgroundColor:[NSColor textBackgroundColor]];
+        [bodyText setEditable:YES];
+    }
 }
 
 - (int)tagFromSyntax:(NSString*)s
 {
-	NSUInteger n = [SYNTAXES indexOfObject:s];
-	if (n != NSNotFound) {
-		return n;
-	}
-	return -1;
+    NSUInteger n = [SYNTAXES indexOfObject:s];
+    if (n != NSNotFound) {
+        return n;
+    }
+    return -1;
 }
 
 - (NSString*)syntaxFromTag:(int)tag
 {
-	if (0 <= tag && tag < SYNTAXES.count) {
-		return [SYNTAXES objectAtIndex:tag];
-	}
-	return nil;
+    if (0 <= tag && tag < SYNTAXES.count) {
+        return [SYNTAXES objectAtIndex:tag];
+    }
+    return nil;
 }
 
 #pragma mark -
@@ -192,32 +192,32 @@ static NSDictionary* SYNTAX_EXT_MAP;
 
 - (void)gistClient:(GistClient*)sender didReceiveResponse:(NSString*)url
 {
-	[gist autorelease];
-	gist = nil;
-
-	[self setRequesting:NO];
-	
-	if (url.length) {
-		[errorLabel setStringValue:@""];
-		
-		if ([delegate respondsToSelector:@selector(pasteSheet:onPasteURL:)]) {
-			[delegate pasteSheet:self onPasteURL:url];
-		}
-		
-		[self endSheet];
-	}
-	else {
-		[errorLabel setStringValue:@"Could not get an URL from Gist"];
-	}
+    [gist autorelease];
+    gist = nil;
+    
+    [self setRequesting:NO];
+    
+    if (url.length) {
+        [errorLabel setStringValue:@""];
+        
+        if ([delegate respondsToSelector:@selector(pasteSheet:onPasteURL:)]) {
+            [delegate pasteSheet:self onPasteURL:url];
+        }
+        
+        [self endSheet];
+    }
+    else {
+        [errorLabel setStringValue:@"Could not get an URL from Gist"];
+    }
 }
 
 - (void)gistClient:(GistClient*)sender didFailWithError:(NSString*)error statusCode:(int)statusCode
 {
-	[gist autorelease];
-	gist = nil;
-	
-	[self setRequesting:NO];
-	[errorLabel setStringValue:[NSString stringWithFormat:@"Gist error: %@", error]];
+    [gist autorelease];
+    gist = nil;
+    
+    [self setRequesting:NO];
+    [errorLabel setStringValue:[NSString stringWithFormat:@"Gist error: %@", error]];
 }
 
 #pragma mark -
@@ -225,17 +225,17 @@ static NSDictionary* SYNTAX_EXT_MAP;
 
 - (void)windowWillClose:(NSNotification*)note
 {
-	[syntax release];
-	[command release];
-	syntax = [[self syntaxFromTag:syntaxPopup.selectedTag] retain];
-	command = [[self syntaxFromTag:commandPopup.selectedTag] retain];
-	
-	NSView* contentView = [sheet contentView];
-	size = contentView.frame.size;
-	
-	if ([delegate respondsToSelector:@selector(pasteSheetWillClose:)]) {
-		[delegate pasteSheetWillClose:self];
-	}
+    [syntax release];
+    [command release];
+    syntax = [[self syntaxFromTag:syntaxPopup.selectedTag] retain];
+    command = [[self syntaxFromTag:commandPopup.selectedTag] retain];
+    
+    NSView* contentView = [sheet contentView];
+    size = contentView.frame.size;
+    
+    if ([delegate respondsToSelector:@selector(pasteSheetWillClose:)]) {
+        [delegate pasteSheetWillClose:self];
+    }
 }
 
 @end

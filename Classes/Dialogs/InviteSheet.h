@@ -7,11 +7,11 @@
 
 @interface InviteSheet : SheetBase
 {
-	NSArray* nicks;
-	int uid;
-	
-	IBOutlet NSTextField* titleLabel;
-	IBOutlet NSPopUpButton* channelPopup;
+    NSArray* nicks;
+    int uid;
+    
+    IBOutlet NSTextField* titleLabel;
+    IBOutlet NSPopUpButton* channelPopup;
 }
 
 @property (nonatomic, retain) NSArray* nicks;

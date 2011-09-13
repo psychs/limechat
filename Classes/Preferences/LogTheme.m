@@ -12,45 +12,45 @@
 
 - (id)init
 {
-	self = [super init];
-	if (self) {
-	}
-	return self;
+    self = [super init];
+    if (self) {
+    }
+    return self;
 }
 
 - (void)dealloc
 {
-	[fileName release];
-	[baseUrl release];
-	[content release];
-	[super dealloc];
+    [fileName release];
+    [baseUrl release];
+    [content release];
+    [super dealloc];
 }
 
 - (void)setFileName:(NSString *)value
 {
-	if (fileName != value) {
-		[fileName release];
-		fileName = [value retain];
-
-		[baseUrl release];
-		baseUrl = nil;
-
-		if (fileName) {
-			baseUrl = [[NSURL fileURLWithPath:[fileName stringByDeletingLastPathComponent]] retain];
-		}
-	}
-	
-	[self reload];
+    if (fileName != value) {
+        [fileName release];
+        fileName = [value retain];
+        
+        [baseUrl release];
+        baseUrl = nil;
+        
+        if (fileName) {
+            baseUrl = [[NSURL fileURLWithPath:[fileName stringByDeletingLastPathComponent]] retain];
+        }
+    }
+    
+    [self reload];
 }
 
 - (void)reload
 {
-	[content release];
-	content = nil;
-	
-	if (fileName) {
-		content = [[NSString stringWithContentsOfFile:fileName encoding:NSUTF8StringEncoding error:NULL] retain];
-	}
+    [content release];
+    content = nil;
+    
+    if (fileName) {
+        content = [[NSString stringWithContentsOfFile:fileName encoding:NSUTF8StringEncoding error:NULL] retain];
+    }
 }
 
 @end

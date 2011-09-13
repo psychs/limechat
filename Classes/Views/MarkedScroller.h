@@ -6,8 +6,8 @@
 
 @interface MarkedScroller : NSScroller
 {
-	id dataSource;
-	NSArray* markData;
+    id dataSource;
+    NSArray* markData;
 }
 
 @property (nonatomic, assign) id dataSource;

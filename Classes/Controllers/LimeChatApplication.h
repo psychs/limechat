@@ -7,7 +7,7 @@
 
 @interface LimeChatApplication : NSApplication
 {
-	HotKeyManager* hotkey;
+    HotKeyManager* hotkey;
 }
 
 - (void)registerHotKey:(int)keyCode modifierFlags:(NSUInteger)modFlags;

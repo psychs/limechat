@@ -28,123 +28,123 @@
 
 - (id)init
 {
-	self = [super init];
-	if (self) {
-	}
-	return self;
+    self = [super init];
+    if (self) {
+    }
+    return self;
 }
 
 - (void)dealloc
 {
-	[menu release];
-	[urlMenu release];
-	[addrMenu release];
-	[memberMenu release];
-	[chanMenu release];
-	[url release];
-	[addr release];
-	[nick release];
-	[chan release];
-	[super dealloc];
+    [menu release];
+    [urlMenu release];
+    [addrMenu release];
+    [memberMenu release];
+    [chanMenu release];
+    [url release];
+    [addr release];
+    [nick release];
+    [chan release];
+    [super dealloc];
 }
 
 - (NSUInteger)webView:(WebView*)sender dragDestinationActionMaskForDraggingInfo:(id)draggingInfo
 {
-	return WebDragDestinationActionNone;
+    return WebDragDestinationActionNone;
 }
 
 - (NSArray *)webView:(WebView *)sender contextMenuItemsForElement:(NSDictionary *)element defaultMenuItems:(NSArray *)defaultMenuItems
 {
-	if (url) {
-		menuController.pointedUrl = url;
-		[url autorelease];
-		url = nil;
-		
-		NSMutableArray* ary = [NSMutableArray array];
-		for (NSMenuItem* item in [urlMenu itemArray]) {
-			[ary addObject:[[item copy] autorelease]];
-		}
-		return ary;
-	}
-	else if (addr) {
-		menuController.pointedAddress = addr;
-		[addr autorelease];
-		addr = nil;
-		
-		NSMutableArray* ary = [NSMutableArray array];
-		for (NSMenuItem* item in [addrMenu itemArray]) {
-			[ary addObject:[[item copy] autorelease]];
-		}
-		return ary;
-	}
-	else if (nick) {
-		NSMutableArray* ary = [NSMutableArray array];
-		NSMenuItem* nickItem = [[[NSMenuItem alloc] initWithTitle:nick action:nil keyEquivalent:@""] autorelease];
-		[ary addObject:nickItem];
-		[ary addObject:[NSMenuItem separatorItem]];
-		
-		menuController.pointedNick = nick;
-		[nick autorelease];
-		nick = nil;
-		
-		for (NSMenuItem* item in [memberMenu itemArray]) {
-			item = [[item copy] autorelease];
-			[self modifyMemberMenuItem:item];
-			[ary addObject:item];
-		}
-		return ary;
-	}
-	else if (chan) {
-		menuController.pointedChannelName = chan;
-		[chan autorelease];
-		chan = nil;
-		
-		NSMutableArray* ary = [NSMutableArray array];
-		for (NSMenuItem* item in [chanMenu itemArray]) {
-			[ary addObject:[[item copy] autorelease]];
-		}
-		return ary;
-	}
-	else if (menu){
-		NSMutableArray* ary = [NSMutableArray array];
-		for (NSMenuItem* item in [menu itemArray]) {
-			[ary addObject:[[item copy] autorelease]];
-		}
-		return ary;
-	}
-	else {
-		return [NSArray array];
-	}
+    if (url) {
+        menuController.pointedUrl = url;
+        [url autorelease];
+        url = nil;
+        
+        NSMutableArray* ary = [NSMutableArray array];
+        for (NSMenuItem* item in [urlMenu itemArray]) {
+            [ary addObject:[[item copy] autorelease]];
+        }
+        return ary;
+    }
+    else if (addr) {
+        menuController.pointedAddress = addr;
+        [addr autorelease];
+        addr = nil;
+        
+        NSMutableArray* ary = [NSMutableArray array];
+        for (NSMenuItem* item in [addrMenu itemArray]) {
+            [ary addObject:[[item copy] autorelease]];
+        }
+        return ary;
+    }
+    else if (nick) {
+        NSMutableArray* ary = [NSMutableArray array];
+        NSMenuItem* nickItem = [[[NSMenuItem alloc] initWithTitle:nick action:nil keyEquivalent:@""] autorelease];
+        [ary addObject:nickItem];
+        [ary addObject:[NSMenuItem separatorItem]];
+        
+        menuController.pointedNick = nick;
+        [nick autorelease];
+        nick = nil;
+        
+        for (NSMenuItem* item in [memberMenu itemArray]) {
+            item = [[item copy] autorelease];
+            [self modifyMemberMenuItem:item];
+            [ary addObject:item];
+        }
+        return ary;
+    }
+    else if (chan) {
+        menuController.pointedChannelName = chan;
+        [chan autorelease];
+        chan = nil;
+        
+        NSMutableArray* ary = [NSMutableArray array];
+        for (NSMenuItem* item in [chanMenu itemArray]) {
+            [ary addObject:[[item copy] autorelease]];
+        }
+        return ary;
+    }
+    else if (menu){
+        NSMutableArray* ary = [NSMutableArray array];
+        for (NSMenuItem* item in [menu itemArray]) {
+            [ary addObject:[[item copy] autorelease]];
+        }
+        return ary;
+    }
+    else {
+        return [NSArray array];
+    }
 }
 
 - (void)modifyMemberMenu:(NSMenu*)submenu
 {
-	for (NSMenuItem* item in [submenu itemArray]) {
-		[self modifyMemberMenuItem:item];
-	}
+    for (NSMenuItem* item in [submenu itemArray]) {
+        [self modifyMemberMenuItem:item];
+    }
 }
 
 - (void)modifyMemberMenuItem:(NSMenuItem*)item
 {
-	item.tag += 500;
-	if ([item hasSubmenu]) [self modifyMemberMenu:item.submenu];
+    item.tag += 500;
+    if ([item hasSubmenu]) [self modifyMemberMenu:item.submenu];
 }
 
 - (void)webView:(WebView *)webView decidePolicyForNavigationAction:(NSDictionary *)actionInformation request:(NSURLRequest *)request frame:(WebFrame *)frame decisionListener:(id < WebPolicyDecisionListener >)listener
 {
-	int action = [[actionInformation objectForKey:WebActionNavigationTypeKey] intValue];
-	switch (action) {
-		case WebNavigationTypeLinkClicked:
-			[listener ignore];
-			[URLOpener open:[actionInformation objectForKey:WebActionOriginalURLKey]];
-			break;
-		case WebNavigationTypeOther:
-			[listener use];
-			break;
-		default:
-			[listener ignore];
-			break;
-	}
+    int action = [[actionInformation objectForKey:WebActionNavigationTypeKey] intValue];
+    switch (action) {
+        case WebNavigationTypeLinkClicked:
+            [listener ignore];
+            [URLOpener open:[actionInformation objectForKey:WebActionOriginalURLKey]];
+            break;
+        case WebNavigationTypeOther:
+            [listener use];
+            break;
+        default:
+            [listener ignore];
+            break;
+    }
 }
 
 @end

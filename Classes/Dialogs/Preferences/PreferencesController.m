@@ -27,20 +27,20 @@
 
 - (id)init
 {
-	self = [super init];
-	if (self) {
-		[NSBundle loadNibNamed:@"Preferences" owner:self];
-	}
-	return self;
+    self = [super init];
+    if (self) {
+        [NSBundle loadNibNamed:@"Preferences" owner:self];
+    }
+    return self;
 }
 
 - (void)dealloc
 {
-	[sounds release];
-	[transcriptFolderOpenPanel release];
-	[logFont release];
-	[inputFont release];
-	[super dealloc];
+    [sounds release];
+    [transcriptFolderOpenPanel release];
+    [logFont release];
+    [inputFont release];
+    [super dealloc];
 }
 
 #pragma mark -
@@ -48,21 +48,21 @@
 
 - (void)show
 {
-	[self loadHotKey];
-	[self updateTranscriptFolder];
-	[self updateTheme];
-	
-	[logFont release];
-	logFont = [[NSFont fontWithName:[Preferences themeLogFontName] size:[Preferences themeLogFontSize]] retain];
-	
-	[inputFont release];
-	inputFont = [[NSFont fontWithName:[Preferences themeInputFontName] size:[Preferences themeInputFontSize]] retain];
-	
-	if (![self.window isVisible]) {
-		[self.window center];
-	}
-	
-	[self.window makeKeyAndOrderFront:nil];
+    [self loadHotKey];
+    [self updateTranscriptFolder];
+    [self updateTheme];
+    
+    [logFont release];
+    logFont = [[NSFont fontWithName:[Preferences themeLogFontName] size:[Preferences themeLogFontSize]] retain];
+    
+    [inputFont release];
+    inputFont = [[NSFont fontWithName:[Preferences themeInputFontName] size:[Preferences themeInputFontSize]] retain];
+    
+    if (![self.window isVisible]) {
+        [self.window center];
+    }
+    
+    [self.window makeKeyAndOrderFront:nil];
 }
 
 #pragma mark -
@@ -70,117 +70,117 @@
 
 - (void)setFontDisplayName:(NSString*)value
 {
-	[Preferences setThemeLogFontName:value];
+    [Preferences setThemeLogFontName:value];
 }
 
 - (NSString*)fontDisplayName
 {
-	return [Preferences themeLogFontName];
+    return [Preferences themeLogFontName];
 }
 
 - (void)setFontPointSize:(CGFloat)value
 {
-	[Preferences setThemeLogFontSize:value];
+    [Preferences setThemeLogFontSize:value];
 }
 
 - (CGFloat)fontPointSize
 {
-	return [Preferences themeLogFontSize];
+    return [Preferences themeLogFontSize];
 }
 
 - (void)setInputFontDisplayName:(NSString*)value
 {
-	[Preferences setThemeInputFontName:value];
+    [Preferences setThemeInputFontName:value];
 }
 
 - (NSString*)inputFontDisplayName
 {
-	return [Preferences themeInputFontName];
+    return [Preferences themeInputFontName];
 }
 
 - (void)setInputFontPointSize:(CGFloat)value
 {
-	[Preferences setThemeInputFontSize:value];
+    [Preferences setThemeInputFontSize:value];
 }
 
 - (CGFloat)inputFontPointSize
 {
-	return [Preferences themeInputFontSize];
+    return [Preferences themeInputFontSize];
 }
 
 - (int)dccFirstPort
 {
-	return [Preferences dccFirstPort];
+    return [Preferences dccFirstPort];
 }
 
 - (void)setDccFirstPort:(int)value
 {
-	[Preferences setDccFirstPort:value];
+    [Preferences setDccFirstPort:value];
 }
 
 - (int)dccLastPort
 {
-	return [Preferences dccLastPort];
+    return [Preferences dccLastPort];
 }
 
 - (void)setDccLastPort:(int)value
 {
-	[Preferences setDccLastPort:value];
+    [Preferences setDccLastPort:value];
 }
 
 - (int)maxLogLines
 {
-	return [Preferences maxLogLines];
+    return [Preferences maxLogLines];
 }
 
 - (void)setMaxLogLines:(int)value
 {
-	[Preferences setMaxLogLines:value];
+    [Preferences setMaxLogLines:value];
 }
 
 - (int)pongInterval
 {
-	return [Preferences pongInterval];
+    return [Preferences pongInterval];
 }
 
 - (void)setPongInterval:(int)value
 {
-	[Preferences setPongInterval:value];
+    [Preferences setPongInterval:value];
 }
 
 - (BOOL)validateValue:(id *)value forKey:(NSString *)key error:(NSError **)error
 {
-	if ([key isEqualToString:@"maxLogLines"]) {
-		int n = [*value intValue];
-		if (n < LINES_MIN) {
-			*value = [NSNumber numberWithInt:LINES_MIN];
-		}
-	}
-	else if ([key isEqualToString:@"dccFirstPort"]) {
-		int n = [*value intValue];
-		if (n < PORT_MIN) {
-			*value = [NSNumber numberWithInt:PORT_MIN];
-		}
-		else if (PORT_MAX < n) {
-			*value = [NSNumber numberWithInt:PORT_MAX];
-		}
-	}
-	else if ([key isEqualToString:@"dccLastPort"]) {
-		int n = [*value intValue];
-		if (n < PORT_MIN) {
-			*value = [NSNumber numberWithInt:PORT_MIN];
-		}
-		else if (PORT_MAX < n) {
-			*value = [NSNumber numberWithInt:PORT_MAX];
-		}
-	}
-	else if ([key isEqualToString:@"pongInterval"]) {
-		int n = [*value intValue];
-		if (n < PONG_INTERVAL_MIN) {
-			*value = [NSNumber numberWithInt:PONG_INTERVAL_MIN];
-		}
-	}
-	return YES;
+    if ([key isEqualToString:@"maxLogLines"]) {
+        int n = [*value intValue];
+        if (n < LINES_MIN) {
+            *value = [NSNumber numberWithInt:LINES_MIN];
+        }
+    }
+    else if ([key isEqualToString:@"dccFirstPort"]) {
+        int n = [*value intValue];
+        if (n < PORT_MIN) {
+            *value = [NSNumber numberWithInt:PORT_MIN];
+        }
+        else if (PORT_MAX < n) {
+            *value = [NSNumber numberWithInt:PORT_MAX];
+        }
+    }
+    else if ([key isEqualToString:@"dccLastPort"]) {
+        int n = [*value intValue];
+        if (n < PORT_MIN) {
+            *value = [NSNumber numberWithInt:PORT_MIN];
+        }
+        else if (PORT_MAX < n) {
+            *value = [NSNumber numberWithInt:PORT_MAX];
+        }
+    }
+    else if ([key isEqualToString:@"pongInterval"]) {
+        int n = [*value intValue];
+        if (n < PONG_INTERVAL_MIN) {
+            *value = [NSNumber numberWithInt:PONG_INTERVAL_MIN];
+        }
+    }
+    return YES;
 }
 
 #pragma mark -
@@ -188,24 +188,24 @@
 
 - (void)loadHotKey
 {
-	hotKey.keyCode = [Preferences hotKeyKeyCode];
-	hotKey.modifierFlags = [Preferences hotKeyModifierFlags];
+    hotKey.keyCode = [Preferences hotKeyKeyCode];
+    hotKey.modifierFlags = [Preferences hotKeyModifierFlags];
 }
 
 - (void)keyRecorderDidChangeKey:(KeyRecorder*)sender
 {
-	int code = hotKey.keyCode;
-	NSUInteger mods = hotKey.modifierFlags;
-	
-	[Preferences setHotKeyKeyCode:code];
-	[Preferences setHotKeyModifierFlags:mods];
-	
-	if (hotKey.keyCode) {
-		[(LimeChatApplication*)NSApp registerHotKey:code modifierFlags:mods];
-	}
-	else {
-		[(LimeChatApplication*)NSApp unregisterHotKey];
-	}
+    int code = hotKey.keyCode;
+    NSUInteger mods = hotKey.modifierFlags;
+    
+    [Preferences setHotKeyKeyCode:code];
+    [Preferences setHotKeyModifierFlags:mods];
+    
+    if (hotKey.keyCode) {
+        [(LimeChatApplication*)NSApp registerHotKey:code modifierFlags:mods];
+    }
+    else {
+        [(LimeChatApplication*)NSApp unregisterHotKey];
+    }
 }
 
 #pragma mark -
@@ -213,67 +213,67 @@
 
 - (NSArray*)availableSounds
 {
-	static NSArray* ary;
-	if (!ary) {
-		ary = [[NSArray arrayWithObjects:@"-", @"Beep", @"Basso", @"Blow", @"Bottle", @"Frog", @"Funk", @"Glass", @"Hero", @"Morse", @"Ping", @"Pop", @"Purr", @"Sosumi", @"Submarine", @"Tink", nil] retain];
-	}
-	return ary;
+    static NSArray* ary;
+    if (!ary) {
+        ary = [[NSArray arrayWithObjects:@"-", @"Beep", @"Basso", @"Blow", @"Bottle", @"Frog", @"Funk", @"Glass", @"Hero", @"Morse", @"Ping", @"Pop", @"Purr", @"Sosumi", @"Submarine", @"Tink", nil] retain];
+    }
+    return ary;
 }
 
 - (NSMutableArray*)sounds
 {
-	if (!sounds) {
-		NSMutableArray* ary = [NSMutableArray new];
-		SoundWrapper* e;
-		
-		e = [SoundWrapper soundWrapperWithEventType:GROWL_LOGIN];
-		[ary addObject:e];
-		
-		e = [SoundWrapper soundWrapperWithEventType:GROWL_DISCONNECT];
-		[ary addObject:e];
-		
-		e = [SoundWrapper soundWrapperWithEventType:GROWL_HIGHLIGHT];
-		[ary addObject:e];
-		
-		e = [SoundWrapper soundWrapperWithEventType:GROWL_NEW_TALK];
-		[ary addObject:e];
-		
-		e = [SoundWrapper soundWrapperWithEventType:GROWL_KICKED];
-		[ary addObject:e];
-		
-		e = [SoundWrapper soundWrapperWithEventType:GROWL_INVITED];
-		[ary addObject:e];
-		
-		e = [SoundWrapper soundWrapperWithEventType:GROWL_CHANNEL_MSG];
-		[ary addObject:e];
-		
-		e = [SoundWrapper soundWrapperWithEventType:GROWL_CHANNEL_NOTICE];
-		[ary addObject:e];
-		
-		e = [SoundWrapper soundWrapperWithEventType:GROWL_TALK_MSG];
-		[ary addObject:e];
-		
-		e = [SoundWrapper soundWrapperWithEventType:GROWL_TALK_NOTICE];
-		[ary addObject:e];
-		
-		e = [SoundWrapper soundWrapperWithEventType:GROWL_FILE_RECEIVE_REQUEST];
-		[ary addObject:e];
-		
-		e = [SoundWrapper soundWrapperWithEventType:GROWL_FILE_RECEIVE_SUCCESS];
-		[ary addObject:e];
-		
-		e = [SoundWrapper soundWrapperWithEventType:GROWL_FILE_RECEIVE_ERROR];
-		[ary addObject:e];
-		
-		e = [SoundWrapper soundWrapperWithEventType:GROWL_FILE_SEND_SUCCESS];
-		[ary addObject:e];
-		
-		e = [SoundWrapper soundWrapperWithEventType:GROWL_FILE_SEND_ERROR];
-		[ary addObject:e];
-		
-		sounds = ary;
-	}
-	return sounds;
+    if (!sounds) {
+        NSMutableArray* ary = [NSMutableArray new];
+        SoundWrapper* e;
+        
+        e = [SoundWrapper soundWrapperWithEventType:GROWL_LOGIN];
+        [ary addObject:e];
+        
+        e = [SoundWrapper soundWrapperWithEventType:GROWL_DISCONNECT];
+        [ary addObject:e];
+        
+        e = [SoundWrapper soundWrapperWithEventType:GROWL_HIGHLIGHT];
+        [ary addObject:e];
+        
+        e = [SoundWrapper soundWrapperWithEventType:GROWL_NEW_TALK];
+        [ary addObject:e];
+        
+        e = [SoundWrapper soundWrapperWithEventType:GROWL_KICKED];
+        [ary addObject:e];
+        
+        e = [SoundWrapper soundWrapperWithEventType:GROWL_INVITED];
+        [ary addObject:e];
+        
+        e = [SoundWrapper soundWrapperWithEventType:GROWL_CHANNEL_MSG];
+        [ary addObject:e];
+        
+        e = [SoundWrapper soundWrapperWithEventType:GROWL_CHANNEL_NOTICE];
+        [ary addObject:e];
+        
+        e = [SoundWrapper soundWrapperWithEventType:GROWL_TALK_MSG];
+        [ary addObject:e];
+        
+        e = [SoundWrapper soundWrapperWithEventType:GROWL_TALK_NOTICE];
+        [ary addObject:e];
+        
+        e = [SoundWrapper soundWrapperWithEventType:GROWL_FILE_RECEIVE_REQUEST];
+        [ary addObject:e];
+        
+        e = [SoundWrapper soundWrapperWithEventType:GROWL_FILE_RECEIVE_SUCCESS];
+        [ary addObject:e];
+        
+        e = [SoundWrapper soundWrapperWithEventType:GROWL_FILE_RECEIVE_ERROR];
+        [ary addObject:e];
+        
+        e = [SoundWrapper soundWrapperWithEventType:GROWL_FILE_SEND_SUCCESS];
+        [ary addObject:e];
+        
+        e = [SoundWrapper soundWrapperWithEventType:GROWL_FILE_SEND_ERROR];
+        [ary addObject:e];
+        
+        sounds = ary;
+    }
+    return sounds;
 }
 
 #pragma mark -
@@ -281,58 +281,58 @@
 
 - (void)updateTranscriptFolder
 {
-	NSString* path = [Preferences transcriptFolder];
-	path = [path stringByExpandingTildeInPath];
-	NSString* dirName = [path lastPathComponent];
-	
-	NSImage* icon = [[NSWorkspace sharedWorkspace] iconForFile:path];
-	[icon setSize:NSMakeSize(16, 16)];
-	
-	NSMenuItem* item = [transcriptFolderButton itemAtIndex:0];
-	[item setTitle:dirName];
-	[item setImage:icon];
+    NSString* path = [Preferences transcriptFolder];
+    path = [path stringByExpandingTildeInPath];
+    NSString* dirName = [path lastPathComponent];
+    
+    NSImage* icon = [[NSWorkspace sharedWorkspace] iconForFile:path];
+    [icon setSize:NSMakeSize(16, 16)];
+    
+    NSMenuItem* item = [transcriptFolderButton itemAtIndex:0];
+    [item setTitle:dirName];
+    [item setImage:icon];
 }
 
 - (void)transcriptFolderPanelDidEnd:(NSOpenPanel *)panel returnCode:(int)returnCode contextInfo:(void  *)contextInfo
 {
-	[transcriptFolderButton selectItem:[transcriptFolderButton itemAtIndex:0]];
-	
-	if (returnCode == NSOKButton) {
-		NSString* path = [[panel filenames] objectAtIndex:0];
-		
-		// create directory
-		NSFileManager* fm = [NSFileManager defaultManager];
-		BOOL isDir;
-		if (![fm fileExistsAtPath:path isDirectory:&isDir]) {
-			[fm createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:NULL];
-		}
-		
-		[Preferences setTranscriptFolder:[path stringByAbbreviatingWithTildeInPath]];
-		[self updateTranscriptFolder];
-	}
-		
-	[transcriptFolderOpenPanel autorelease];
-	transcriptFolderOpenPanel = nil;
+    [transcriptFolderButton selectItem:[transcriptFolderButton itemAtIndex:0]];
+    
+    if (returnCode == NSOKButton) {
+        NSString* path = [[panel filenames] objectAtIndex:0];
+        
+        // create directory
+        NSFileManager* fm = [NSFileManager defaultManager];
+        BOOL isDir;
+        if (![fm fileExistsAtPath:path isDirectory:&isDir]) {
+            [fm createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:NULL];
+        }
+        
+        [Preferences setTranscriptFolder:[path stringByAbbreviatingWithTildeInPath]];
+        [self updateTranscriptFolder];
+    }
+    
+    [transcriptFolderOpenPanel autorelease];
+    transcriptFolderOpenPanel = nil;
 }
 
 - (void)onTranscriptFolderChanged:(id)sender
 {
-	if ([transcriptFolderButton selectedTag] != 2) return;
-	
-	NSString* path = [Preferences transcriptFolder];
-	path = [path stringByExpandingTildeInPath];
-	NSString* parentPath = [path stringByDeletingLastPathComponent];
-	
-	NSOpenPanel* d = [NSOpenPanel openPanel];
-	[d setCanChooseFiles:NO];
-	[d setCanChooseDirectories:YES];
-	[d setResolvesAliases:YES];
-	[d setAllowsMultipleSelection:NO];
-	[d setCanCreateDirectories:YES];
-	[d beginForDirectory:parentPath file:nil types:nil modelessDelegate:self didEndSelector:@selector(transcriptFolderPanelDidEnd:returnCode:contextInfo:) contextInfo:nil];
-	
-	[transcriptFolderOpenPanel release];
-	transcriptFolderOpenPanel = [d retain];
+    if ([transcriptFolderButton selectedTag] != 2) return;
+    
+    NSString* path = [Preferences transcriptFolder];
+    path = [path stringByExpandingTildeInPath];
+    NSString* parentPath = [path stringByDeletingLastPathComponent];
+    
+    NSOpenPanel* d = [NSOpenPanel openPanel];
+    [d setCanChooseFiles:NO];
+    [d setCanChooseDirectories:YES];
+    [d setResolvesAliases:YES];
+    [d setAllowsMultipleSelection:NO];
+    [d setCanCreateDirectories:YES];
+    [d beginForDirectory:parentPath file:nil types:nil modelessDelegate:self didEndSelector:@selector(transcriptFolderPanelDidEnd:returnCode:contextInfo:) contextInfo:nil];
+    
+    [transcriptFolderOpenPanel release];
+    transcriptFolderOpenPanel = [d retain];
 }
 
 #pragma mark -
@@ -340,138 +340,138 @@
 
 - (void)updateTheme
 {
-	//
-	// update menu
-	//
-	
-	[themeButton removeAllItems];
-	[themeButton addItemWithTitle:@"Default"];
-	[[themeButton itemAtIndex:0] setTag:0];
-	
-	NSFileManager* fm = [NSFileManager defaultManager];
-	NSArray* ary = [NSArray arrayWithObjects:[ViewTheme resourceBasePath], [ViewTheme userBasePath], nil];
-	int tag = 0;
-	
-	for (NSString* path in ary) {
-		NSMutableSet* set = [NSMutableSet set];
-		NSArray* files = [fm contentsOfDirectoryAtPath:path error:NULL];
-		for (NSString* file in files) {
-			if ([file hasSuffix:@".css"] || [file hasSuffix:@".yaml"]) {
-				NSString* baseName = [file stringByDeletingPathExtension];
-				if (tag == 0 && [baseName isEqualToString:@"Sample"]) {
-					continue;
-				}
-				[set addObject:baseName];
-			}
-		}
-		
-		files = [[set allObjects] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
-		if (files.count) {
-			[themeButton.menu addItem:[NSMenuItem separatorItem]];
-			
-			int i = 0;
-			for (NSString* f in files) {
-				NSMenuItem* item = [[[NSMenuItem alloc] initWithTitle:f action:nil keyEquivalent:@""] autorelease];
-				[item setTag:tag];
-				[themeButton.menu addItem:item];
-				++i;
-			}
-		}
-		
-		++tag;
-	}
-	
-	//
-	// select current one
-	//
-	
-	NSArray* kindAndName = [ViewTheme extractFileName:[Preferences themeName]];
-	if (!kindAndName) {
-		[themeButton selectItemAtIndex:0];
-		return;
-	}
-	
-	NSString* kind = [kindAndName objectAtIndex:0];
-	NSString* name = [kindAndName objectAtIndex:1];
-	
-	int targetTag = 0;
-	if (![kind isEqualToString:@"resource"]) {
-		targetTag = 1;
-	}
-	
-	int count = [themeButton numberOfItems];
-	for (int i=0; i<count; i++) {
-		NSMenuItem* item = [themeButton itemAtIndex:i];
-		if ([item tag] == targetTag && [[item title] isEqualToString:name]) {
-			[themeButton selectItemAtIndex:i];
-			break;
-		}
-	}
+    //
+    // update menu
+    //
+    
+    [themeButton removeAllItems];
+    [themeButton addItemWithTitle:@"Default"];
+    [[themeButton itemAtIndex:0] setTag:0];
+    
+    NSFileManager* fm = [NSFileManager defaultManager];
+    NSArray* ary = [NSArray arrayWithObjects:[ViewTheme resourceBasePath], [ViewTheme userBasePath], nil];
+    int tag = 0;
+    
+    for (NSString* path in ary) {
+        NSMutableSet* set = [NSMutableSet set];
+        NSArray* files = [fm contentsOfDirectoryAtPath:path error:NULL];
+        for (NSString* file in files) {
+            if ([file hasSuffix:@".css"] || [file hasSuffix:@".yaml"]) {
+                NSString* baseName = [file stringByDeletingPathExtension];
+                if (tag == 0 && [baseName isEqualToString:@"Sample"]) {
+                    continue;
+                }
+                [set addObject:baseName];
+            }
+        }
+        
+        files = [[set allObjects] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
+        if (files.count) {
+            [themeButton.menu addItem:[NSMenuItem separatorItem]];
+            
+            int i = 0;
+            for (NSString* f in files) {
+                NSMenuItem* item = [[[NSMenuItem alloc] initWithTitle:f action:nil keyEquivalent:@""] autorelease];
+                [item setTag:tag];
+                [themeButton.menu addItem:item];
+                ++i;
+            }
+        }
+        
+        ++tag;
+    }
+    
+    //
+    // select current one
+    //
+    
+    NSArray* kindAndName = [ViewTheme extractFileName:[Preferences themeName]];
+    if (!kindAndName) {
+        [themeButton selectItemAtIndex:0];
+        return;
+    }
+    
+    NSString* kind = [kindAndName objectAtIndex:0];
+    NSString* name = [kindAndName objectAtIndex:1];
+    
+    int targetTag = 0;
+    if (![kind isEqualToString:@"resource"]) {
+        targetTag = 1;
+    }
+    
+    int count = [themeButton numberOfItems];
+    for (int i=0; i<count; i++) {
+        NSMenuItem* item = [themeButton itemAtIndex:i];
+        if ([item tag] == targetTag && [[item title] isEqualToString:name]) {
+            [themeButton selectItemAtIndex:i];
+            break;
+        }
+    }
 }
 
 - (void)onChangedTheme:(id)sender
 {
-	NSMenuItem* item = [themeButton selectedItem];
-	NSString* name = [item title];
-	if (item.tag == 0) {
-		[Preferences setThemeName:[ViewTheme buildResourceFileName:name]];
-	}
-	else {
-		[Preferences setThemeName:[ViewTheme buildUserFileName:name]];
-	}
-	[self onLayoutChanged:nil];
+    NSMenuItem* item = [themeButton selectedItem];
+    NSString* name = [item title];
+    if (item.tag == 0) {
+        [Preferences setThemeName:[ViewTheme buildResourceFileName:name]];
+    }
+    else {
+        [Preferences setThemeName:[ViewTheme buildUserFileName:name]];
+    }
+    [self onLayoutChanged:nil];
 }
 
 - (void)onOpenThemePath:(id)sender
 {
-	NSString* path = [ViewTheme userBasePath];
-	[[NSWorkspace sharedWorkspace] openFile:path];
+    NSString* path = [ViewTheme userBasePath];
+    [[NSWorkspace sharedWorkspace] openFile:path];
 }
 
 - (void)onSelectFont:(id)sender
 {
-	changingLogFont = YES;
-	
-	NSFontManager* fm = [NSFontManager sharedFontManager];
-	[fm setSelectedFont:logFont isMultiple:NO];
-	[fm orderFrontFontPanel:self];
+    changingLogFont = YES;
+    
+    NSFontManager* fm = [NSFontManager sharedFontManager];
+    [fm setSelectedFont:logFont isMultiple:NO];
+    [fm orderFrontFontPanel:self];
 }
 
 - (void)onInputSelectFont:(id)sender
 {
-	changingLogFont = NO;
-	
-	NSFontManager* fm = [NSFontManager sharedFontManager];
-	[fm setSelectedFont:inputFont isMultiple:NO];
-	[fm orderFrontFontPanel:self];
+    changingLogFont = NO;
+    
+    NSFontManager* fm = [NSFontManager sharedFontManager];
+    [fm setSelectedFont:inputFont isMultiple:NO];
+    [fm orderFrontFontPanel:self];
 }
 
 - (void)changeFont:(id)sender
 {
-	if (changingLogFont) {
-		[logFont autorelease];
-		logFont = [[sender convertFont:logFont] retain];
-		[self setValue:logFont.fontName forKey:@"fontDisplayName"];
-		[self setValue:[NSNumber numberWithDouble:logFont.pointSize] forKey:@"fontPointSize"];
-	}
-	else {
-		[inputFont autorelease];
-		inputFont = [[sender convertFont:inputFont] retain];
-		[self setValue:inputFont.fontName forKey:@"inputFontDisplayName"];
-		[self setValue:[NSNumber numberWithDouble:inputFont.pointSize] forKey:@"inputFontPointSize"];
-	}
-	
-	[self onLayoutChanged:nil];
+    if (changingLogFont) {
+        [logFont autorelease];
+        logFont = [[sender convertFont:logFont] retain];
+        [self setValue:logFont.fontName forKey:@"fontDisplayName"];
+        [self setValue:[NSNumber numberWithDouble:logFont.pointSize] forKey:@"fontPointSize"];
+    }
+    else {
+        [inputFont autorelease];
+        inputFont = [[sender convertFont:inputFont] retain];
+        [self setValue:inputFont.fontName forKey:@"inputFontDisplayName"];
+        [self setValue:[NSNumber numberWithDouble:inputFont.pointSize] forKey:@"inputFontPointSize"];
+    }
+    
+    [self onLayoutChanged:nil];
 }
 
 - (void)onOverrideFontChanged:(id)sender
 {
-	[self onLayoutChanged:nil];
+    [self onLayoutChanged:nil];
 }
 
 - (void)onChangedTransparency:(id)sender
 {
-	[self onLayoutChanged:nil];
+    [self onLayoutChanged:nil];
 }
 
 #pragma mark -
@@ -479,27 +479,27 @@
 
 - (void)editTable:(NSTableView*)table
 {
-	int row = [table numberOfRows] - 1;
-	[table scrollRowToVisible:row];
-	[table editColumn:0 row:row withEvent:nil select:YES];
+    int row = [table numberOfRows] - 1;
+    [table scrollRowToVisible:row];
+    [table editColumn:0 row:row withEvent:nil select:YES];
 }
 
 - (void)onAddKeyword:(id)sender
 {
-	[keywordsArrayController add:nil];
-	[self performSelector:@selector(editTable:) withObject:keywordsTable afterDelay:0.01];
+    [keywordsArrayController add:nil];
+    [self performSelector:@selector(editTable:) withObject:keywordsTable afterDelay:0.01];
 }
 
 - (void)onAddExcludeWord:(id)sender
 {
-	[excludeWordsArrayController add:nil];
-	[self performSelector:@selector(editTable:) withObject:excludeWordsTable afterDelay:0.01];
+    [excludeWordsArrayController add:nil];
+    [self performSelector:@selector(editTable:) withObject:excludeWordsTable afterDelay:0.01];
 }
 
 - (void)onLayoutChanged:(id)sender
 {
-	NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
-	[nc postNotificationName:ThemeDidChangeNotification object:nil userInfo:nil];
+    NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
+    [nc postNotificationName:ThemeDidChangeNotification object:nil userInfo:nil];
 }
 
 #pragma mark -
@@ -507,14 +507,14 @@
 
 - (void)windowWillClose:(NSNotification *)note
 {
-	[self.window endEditingFor:nil];
-	
-	[Preferences cleanUpWords];
-	[[NSUserDefaults standardUserDefaults] synchronize];
-	
-	if ([delegate respondsToSelector:@selector(preferencesDialogWillClose:)]) {
-		[delegate preferencesDialogWillClose:self];
-	}
+    [self.window endEditingFor:nil];
+    
+    [Preferences cleanUpWords];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    if ([delegate respondsToSelector:@selector(preferencesDialogWillClose:)]) {
+        [delegate preferencesDialogWillClose:self];
+    }
 }
 
 @end

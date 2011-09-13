@@ -8,23 +8,23 @@
 
 @interface ModeSheet : SheetBase
 {
-	IRCChannelMode* mode;
-	NSString* channelName;
-	int uid;
-	int cid;
-	
-	IBOutlet NSButton* sCheck;
-	IBOutlet NSButton* pCheck;
-	IBOutlet NSButton* nCheck;
-	IBOutlet NSButton* tCheck;
-	IBOutlet NSButton* iCheck;
-	IBOutlet NSButton* mCheck;
-	IBOutlet NSButton* aCheck;
-	IBOutlet NSButton* rCheck;
-	IBOutlet NSButton* kCheck;
-	IBOutlet NSButton* lCheck;
-	IBOutlet NSTextField* kText;
-	IBOutlet NSTextField* lText;
+    IRCChannelMode* mode;
+    NSString* channelName;
+    int uid;
+    int cid;
+    
+    IBOutlet NSButton* sCheck;
+    IBOutlet NSButton* pCheck;
+    IBOutlet NSButton* nCheck;
+    IBOutlet NSButton* tCheck;
+    IBOutlet NSButton* iCheck;
+    IBOutlet NSButton* mCheck;
+    IBOutlet NSButton* aCheck;
+    IBOutlet NSButton* rCheck;
+    IBOutlet NSButton* kCheck;
+    IBOutlet NSButton* lCheck;
+    IBOutlet NSTextField* kText;
+    IBOutlet NSTextField* lText;
 }
 
 @property (nonatomic, retain) IRCChannelMode* mode;

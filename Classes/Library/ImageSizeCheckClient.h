@@ -8,15 +8,15 @@
 
 @interface ImageSizeCheckClient : NSObject
 {
-	id delegate;
-	NSString* url;
-	int uid;
-	int cid;
-	int lineNumber;
-	int imageIndex;
-	
-	NSURLConnection* conn;
-	NSHTTPURLResponse* response;
+    id delegate;
+    NSString* url;
+    int uid;
+    int cid;
+    int lineNumber;
+    int imageIndex;
+    
+    NSURLConnection* conn;
+    NSHTTPURLResponse* response;
 }
 
 @property (nonatomic, assign) id delegate;

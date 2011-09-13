@@ -10,39 +10,39 @@
 
 - (void)dealloc
 {
-	[self unregisterHotKey];
-	[super dealloc];
+    [self unregisterHotKey];
+    [super dealloc];
 }
 
 - (BOOL)enabled
 {
-  return handle != 0;
+    return handle != 0;
 }
 
 - (BOOL)registerHotKeyCode:(int)keyCode withModifier:(NSUInteger)modifier
 {
-	static UInt32 serial = 0;
-	
-	[self unregisterHotKey];
-	
-	UInt32 mod = 0;
-	if (modifier & NSShiftKeyMask) { mod |= shiftKey; }
-	if (modifier & NSControlKeyMask) { mod |= controlKey; }
-	if (modifier & NSCommandKeyMask) { mod |= cmdKey; }
-	if (modifier & NSAlternateKeyMask) { mod |= optionKey; }
-	
-	EventHotKeyID keyId = {'LmCt', serial++};
-	
-	OSStatus status = RegisterEventHotKey(keyCode, mod, keyId, GetApplicationEventTarget(), 0, &handle);
-	return status == noErr;
+    static UInt32 serial = 0;
+    
+    [self unregisterHotKey];
+    
+    UInt32 mod = 0;
+    if (modifier & NSShiftKeyMask) { mod |= shiftKey; }
+    if (modifier & NSControlKeyMask) { mod |= controlKey; }
+    if (modifier & NSCommandKeyMask) { mod |= cmdKey; }
+    if (modifier & NSAlternateKeyMask) { mod |= optionKey; }
+    
+    EventHotKeyID keyId = {'LmCt', serial++};
+    
+    OSStatus status = RegisterEventHotKey(keyCode, mod, keyId, GetApplicationEventTarget(), 0, &handle);
+    return status == noErr;
 }
 
 - (void)unregisterHotKey
 {
-	if (handle) {
-		UnregisterEventHotKey(handle);
-		handle = 0;
-	}
+    if (handle) {
+        UnregisterEventHotKey(handle);
+        handle = 0;
+    }
 }
 
 @end

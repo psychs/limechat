@@ -14,23 +14,23 @@
 
 - (id)init
 {
-	self = [super init];
-	if (self) {
-		raw = @"";
-		nick = @"";
-		user = @"";
-		address = @"";
-	}
-	return self;
+    self = [super init];
+    if (self) {
+        raw = @"";
+        nick = @"";
+        user = @"";
+        address = @"";
+    }
+    return self;
 }
 
 - (void)dealloc
 {
-	[raw release];
-	[nick release];
-	[user release];
-	[address release];
-	[super dealloc];
+    [raw release];
+    [nick release];
+    [user release];
+    [address release];
+    [super dealloc];
 }
 
 @end

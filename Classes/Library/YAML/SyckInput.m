@@ -4,7 +4,7 @@
 
 void cocoa_syck_error_handler( SyckParser *p, const char *msg )
 {
-	NSLog(@"syck error:%s position:(%d, %lu)", msg, p->linect, p->cursor - p->lineptr);
+    NSLog(@"syck error:%s position:(%d, %lu)", msg, p->linect, p->cursor - p->lineptr);
 }
 
 SYMID cocoa_syck_parse_handler(SyckParser *p, SyckNode *n)
@@ -15,53 +15,53 @@ SYMID cocoa_syck_parse_handler(SyckParser *p, SyckNode *n)
     long i = 0;
     char *type_id = n->type_id;
     int transferred = 0;
-	
-	if ( type_id != NULL && strncmp( type_id, "tag:yaml.org,2002:", 18 ) == 0 )
+    
+    if ( type_id != NULL && strncmp( type_id, "tag:yaml.org,2002:", 18 ) == 0 )
     {
         type_id += 18;
     }
-	
+    
     switch ( n->kind )
     {
         case syck_str_kind:
             transferred = 1;
-			if ( type_id == NULL || strcmp( type_id, "str" ) == 0 )
+            if ( type_id == NULL || strcmp( type_id, "str" ) == 0 )
             {
-				v = [NSString yamlStringWithUTF8String:n->data.str->ptr length:n->data.str->len];
+                v = [NSString yamlStringWithUTF8String:n->data.str->ptr length:n->data.str->len];
             }
             else if ( strcmp( type_id, "null" ) == 0 )
-			{
-				v = [NSNull null];
-			}
+            {
+                v = [NSNull null];
+            }
             else if ( strcmp( type_id, "binary" ) == 0 )
-			{
-				v = [GTMBase64 decodeString:[NSString yamlStringWithUTF8String:n->data.str->ptr length:n->data.str->len]];
-            
+            {
+                v = [GTMBase64 decodeString:[NSString yamlStringWithUTF8String:n->data.str->ptr length:n->data.str->len]];
+                
                 NSString *string = [NSString yamlStringWithUTF8String:[v bytes] length:[v length]];
                 if(string) 
                 {
                     v = string;
                 }
             }
-			else if ( strcmp( type_id, "bool#yes" ) == 0 )
-			{
-				v = [NSNumber numberWithBool:YES];
-			}
+            else if ( strcmp( type_id, "bool#yes" ) == 0 )
+            {
+                v = [NSNumber numberWithBool:YES];
+            }
             else if ( strcmp( type_id, "bool#no" ) == 0 )
-			{
-				v = [NSNumber numberWithBool:NO];
-			}
+            {
+                v = [NSNumber numberWithBool:NO];
+            }
             else if ( strcmp( type_id, "int#hex" ) == 0 )
             {
                 syck_str_blow_away_commas( n );
                 long i2 = strtol( n->data.str->ptr, NULL, 16 );
-				v = [NSNumber numberWithLong:i2];
+                v = [NSNumber numberWithLong:i2];
             }
             else if ( strcmp( type_id, "int#oct" ) == 0 )
             {
                 syck_str_blow_away_commas( n );
                 long i2 = strtol( n->data.str->ptr, NULL, 8 );
-				v = [NSNumber numberWithLong:i2];
+                v = [NSNumber numberWithLong:i2];
             }
             else if ( strcmp( type_id, "int#base60" ) == 0 )
             {
@@ -80,7 +80,7 @@ SYMID cocoa_syck_parse_handler(SyckParser *p, SyckNode *n)
                         colon--;
                     }
                     if ( *colon == ':' ) *colon = '\0';
-
+                    
                     bnum = strtol( colon + 1, NULL, 10 );
                     total += bnum * sixty;
                     sixty *= 60;
@@ -91,7 +91,7 @@ SYMID cocoa_syck_parse_handler(SyckParser *p, SyckNode *n)
             else if ( strncmp( type_id, "int", 3 ) == 0 )
             {
                 syck_str_blow_away_commas( n );
-				v = [NSNumber numberWithLong:strtol( n->data.str->ptr, NULL, 10 )];
+                v = [NSNumber numberWithLong:strtol( n->data.str->ptr, NULL, 10 )];
             }
             else if ( strcmp( type_id, "float#base60" ) == 0 )
             {
@@ -110,7 +110,7 @@ SYMID cocoa_syck_parse_handler(SyckParser *p, SyckNode *n)
                         colon--;
                     }
                     if ( *colon == ':' ) *colon = '\0';
-
+                    
                     bnum = strtod( colon + 1, NULL );
                     total += bnum * sixty;
                     sixty *= 60;
@@ -120,73 +120,73 @@ SYMID cocoa_syck_parse_handler(SyckParser *p, SyckNode *n)
             }
             else if ( strcmp( type_id, "float#nan" ) == 0 )
             {
-				v = [NSNumber numberWithFloat:NAN];
+                v = [NSNumber numberWithFloat:NAN];
             }
             else if ( strcmp( type_id, "float#inf" ) == 0 )
             {
-				v = [NSNumber numberWithFloat:INFINITY];
+                v = [NSNumber numberWithFloat:INFINITY];
             }
             else if ( strcmp( type_id, "float#neginf" ) == 0 )
             {
-				v = [NSNumber numberWithFloat:-INFINITY];
+                v = [NSNumber numberWithFloat:-INFINITY];
             }
             else if ( strncmp( type_id, "float", 5 ) == 0 )
             {
                 syck_str_blow_away_commas( n );
-				v = [NSNumber numberWithFloat:strtod( n->data.str->ptr, NULL )];
+                v = [NSNumber numberWithFloat:strtod( n->data.str->ptr, NULL )];
             }
-/*
-			else if ( strcmp( type_id, "timestamp#iso8601" ) == 0 )
-            {
-                v = [NSDate dateWithNaturalLanguageString:[NSString stringWithUTF8String:n->data.str->ptr length:n->data.str->len]];
-            }
-            else if ( strcmp( type_id, "timestamp#spaced" ) == 0 )
-            {
-                v = [NSDate dateWithNaturalLanguageString:[NSString stringWithUTF8String:n->data.str->ptr length:n->data.str->len]];
-            }
-            else if ( strcmp( type_id, "timestamp#ymd" ) == 0 )
-            {
-                v = [NSDate dateWithNaturalLanguageString:[NSString stringWithUTF8String:n->data.str->ptr length:n->data.str->len]];
-            }
- */
-/*
-#if !TARGET_OS_IPHONE
-            else if ( strncmp( type_id, "timestamp", 9 ) == 0 )
-            {
-                v = [NSDate dateWithNaturalLanguageString:[NSString stringWithUTF8String:n->data.str->ptr length:n->data.str->len]];
-            }
-#endif
-*/
+            /*
+             else if ( strcmp( type_id, "timestamp#iso8601" ) == 0 )
+             {
+             v = [NSDate dateWithNaturalLanguageString:[NSString stringWithUTF8String:n->data.str->ptr length:n->data.str->len]];
+             }
+             else if ( strcmp( type_id, "timestamp#spaced" ) == 0 )
+             {
+             v = [NSDate dateWithNaturalLanguageString:[NSString stringWithUTF8String:n->data.str->ptr length:n->data.str->len]];
+             }
+             else if ( strcmp( type_id, "timestamp#ymd" ) == 0 )
+             {
+             v = [NSDate dateWithNaturalLanguageString:[NSString stringWithUTF8String:n->data.str->ptr length:n->data.str->len]];
+             }
+             */
+            /*
+             #if !TARGET_OS_IPHONE
+             else if ( strncmp( type_id, "timestamp", 9 ) == 0 )
+             {
+             v = [NSDate dateWithNaturalLanguageString:[NSString stringWithUTF8String:n->data.str->ptr length:n->data.str->len]];
+             }
+             #endif
+             */
             else if ( strncmp( type_id, "merge", 5 ) == 0 )
             {
                 v = @"MERGE"; //rely on constants being the same
             }
             else
             {
-				v = [NSString yamlStringWithUTF8String:n->data.str->ptr length:n->data.str->len];
-				transferred = 0;
+                v = [NSString yamlStringWithUTF8String:n->data.str->ptr length:n->data.str->len];
+                transferred = 0;
             }
-        break;
-
+            break;
+            
         case syck_seq_kind:
-			v = [NSMutableArray array];
+            v = [NSMutableArray array];
             for ( i = 0; i < n->data.list->idx; i++ )
             {
                 oid = syck_seq_read( n, i );
                 syck_lookup_sym( p, oid, (char **)&o2 );
-				[v addObject:o2];
+                [v addObject:o2];
             }
             if ( type_id != NULL && strcmp( type_id, "set" ) == 0 )
             {
-				v = [NSSet setWithArray:v];
+                v = [NSSet setWithArray:v];
                 transferred = 1;
             }
             else if ( type_id == NULL || strcmp( type_id, "seq" ) == 0 )
             {
                 transferred = 1;
             }
-        break;
-
+            break;
+            
         case syck_map_kind:
             v = [NSMutableDictionary dictionary];
             for ( i = 0; i < n->data.pairs->idx; i++ )
@@ -195,39 +195,39 @@ SYMID cocoa_syck_parse_handler(SyckParser *p, SyckNode *n)
                 syck_lookup_sym( p, oid, (char **)&o2 );
                 oid = syck_map_read( n, map_value, i );
                 syck_lookup_sym( p, oid, (char **)&o3 );
-				
-				if(o2 == @"MERGE")
-				{
-					if([o3 isKindOfClass:[NSDictionary class]])
-						[v addEntriesFromDictionary:o3];
-					else if([o3 isKindOfClass:[NSArray class]])
-						[v yamlPerformSelector:@selector(addEntriesFromDictionary:) withEachObjectInArray:o3];
-				}
-				else
-					[v setObject:o3 forKey:o2];
+                
+                if(o2 == @"MERGE")
+                {
+                    if([o3 isKindOfClass:[NSDictionary class]])
+                        [v addEntriesFromDictionary:o3];
+                    else if([o3 isKindOfClass:[NSArray class]])
+                        [v yamlPerformSelector:@selector(addEntriesFromDictionary:) withEachObjectInArray:o3];
+                }
+                else
+                    [v setObject:o3 forKey:o2];
             }
             if ( type_id == NULL || strcmp( type_id, "map" ) == 0 )
             {
                 transferred = 1;
             }
-        break;
+            break;
     }
-	
-	// types
-	if(!transferred && type_id != NULL)
-	{
-		NSString *type = [NSString stringWithUTF8String:type_id];
-		if([type hasPrefix:@"x-private:"])
-		{
-			//Class	myClass = NSClassFromString([type substringFromIndex:10]);
-			//if(myClass) v = [myClass objectWithYAML:v];
-		}
-	}
-	
-	//make sure any bad creations don't kill whole parse
-	if(!v)
-		v = [NSNull null];
-
+    
+    // types
+    if(!transferred && type_id != NULL)
+    {
+        NSString *type = [NSString stringWithUTF8String:type_id];
+        if([type hasPrefix:@"x-private:"])
+        {
+            //Class	myClass = NSClassFromString([type substringFromIndex:10]);
+            //if(myClass) v = [myClass objectWithYAML:v];
+        }
+    }
+    
+    //make sure any bad creations don't kill whole parse
+    if(!v)
+        v = [NSNull null];
+    
     oid = syck_add_sym( p, (char*)v );
     return oid;
 }
@@ -247,7 +247,7 @@ id yaml_parse_raw_utf8(const char *str, long len)
     v = syck_parse( parser );
     if(v)
         syck_lookup_sym( parser, v, (char **)&obj );
-	
+    
     syck_free_parser( parser );
     return obj;    
 }

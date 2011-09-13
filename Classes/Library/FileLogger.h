@@ -10,11 +10,11 @@
 
 @interface FileLogger : NSObject
 {
-	IRCClient* client;
-	IRCChannel* channel;
-	
-	NSString* fileName;
-	NSFileHandle* file;
+    IRCClient* client;
+    IRCChannel* channel;
+    
+    NSString* fileName;
+    NSFileHandle* file;
 }
 
 @property (nonatomic, assign) IRCClient* client;

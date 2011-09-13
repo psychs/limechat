@@ -7,14 +7,14 @@
 
 @interface IgnoreItem : NSObject
 {
-	NSString* nick;
-	NSString* text;
-	BOOL useRegexForNick;
-	BOOL useRegexForText;
-	NSArray* channels;
-	
-	OnigRegexp* nickRegex;
-	OnigRegexp* textRegex;
+    NSString* nick;
+    NSString* text;
+    BOOL useRegexForNick;
+    BOOL useRegexForText;
+    NSArray* channels;
+    
+    OnigRegexp* nickRegex;
+    OnigRegexp* textRegex;
 }
 
 @property (nonatomic, retain) NSString* nick;

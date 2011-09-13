@@ -7,7 +7,7 @@
 
 @interface HotKeyManager : NSObject
 {
-	EventHotKeyRef handle;
+    EventHotKeyRef handle;
 }
 
 @property (nonatomic, readonly) EventHotKeyRef handle;

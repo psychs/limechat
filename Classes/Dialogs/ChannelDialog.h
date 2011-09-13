@@ -7,24 +7,24 @@
 
 @interface ChannelDialog : NSObject
 {
-	id delegate;
-	NSWindow* parentWindow;
-	int uid;
-	int cid;
-	IRCChannelConfig* config;
-	
-	IBOutlet NSWindow* window;
-	
-	IBOutlet NSTextField* nameText;
-	IBOutlet NSTextField* passwordText;
-	IBOutlet NSTextField* modeText;
-	IBOutlet NSTextField* topicText;
-	IBOutlet NSButton* autoJoinCheck;
-	IBOutlet NSButton* consoleCheck;
-	IBOutlet NSButton* growlCheck;
-	IBOutlet NSButton* okButton;
-	
-	BOOL isSheet;
+    id delegate;
+    NSWindow* parentWindow;
+    int uid;
+    int cid;
+    IRCChannelConfig* config;
+    
+    IBOutlet NSWindow* window;
+    
+    IBOutlet NSTextField* nameText;
+    IBOutlet NSTextField* passwordText;
+    IBOutlet NSTextField* modeText;
+    IBOutlet NSTextField* topicText;
+    IBOutlet NSButton* autoJoinCheck;
+    IBOutlet NSButton* consoleCheck;
+    IBOutlet NSButton* growlCheck;
+    IBOutlet NSButton* okButton;
+    
+    BOOL isSheet;
 }
 
 @property (nonatomic, assign) id delegate;

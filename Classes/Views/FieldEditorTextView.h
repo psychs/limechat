@@ -7,8 +7,8 @@
 
 @interface FieldEditorTextView : NSTextView
 {
-	id pasteDelegate;
-	KeyEventHandler* keyHandler;
+    id pasteDelegate;
+    KeyEventHandler* keyHandler;
 }
 
 @property (nonatomic, assign) id pasteDelegate;

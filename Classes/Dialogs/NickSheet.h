@@ -7,10 +7,10 @@
 
 @interface NickSheet : SheetBase
 {
-	int uid;
-	
-	IBOutlet NSTextField* currentText;
-	IBOutlet NSTextField* newText;
+    int uid;
+    
+    IBOutlet NSTextField* currentText;
+    IBOutlet NSTextField* newText;
 }
 
 @property (nonatomic, assign) int uid;

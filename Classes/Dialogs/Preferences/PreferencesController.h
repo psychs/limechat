@@ -10,22 +10,22 @@
 
 @interface PreferencesController : NSWindowController
 {
-	id delegate;
-	
-	IBOutlet KeyRecorder* hotKey;
-	
-	IBOutlet NSTableView* keywordsTable;
-	IBOutlet NSTableView* excludeWordsTable;
-	IBOutlet NSArrayController* keywordsArrayController;
-	IBOutlet NSArrayController* excludeWordsArrayController;
-	IBOutlet NSPopUpButton* transcriptFolderButton;
-	IBOutlet NSPopUpButton* themeButton;
-	
-	NSMutableArray* sounds;
-	NSOpenPanel* transcriptFolderOpenPanel;
-	NSFont* logFont;
-	NSFont* inputFont;
-	BOOL changingLogFont;
+    id delegate;
+    
+    IBOutlet KeyRecorder* hotKey;
+    
+    IBOutlet NSTableView* keywordsTable;
+    IBOutlet NSTableView* excludeWordsTable;
+    IBOutlet NSArrayController* keywordsArrayController;
+    IBOutlet NSArrayController* excludeWordsArrayController;
+    IBOutlet NSPopUpButton* transcriptFolderButton;
+    IBOutlet NSPopUpButton* themeButton;
+    
+    NSMutableArray* sounds;
+    NSOpenPanel* transcriptFolderOpenPanel;
+    NSFont* logFont;
+    NSFont* inputFont;
+    BOOL changingLogFont;
 }
 
 @property (nonatomic, assign) id delegate;

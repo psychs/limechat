@@ -11,23 +11,23 @@
 
 - (id)init
 {
-	self = [super init];
-	if (self) {
-		[self clear];
-	}
-	return self;
+    self = [super init];
+    if (self) {
+        [self clear];
+    }
+    return self;
 }
 
 - (void)dealloc
 {
-	[text release];
-	[super dealloc];
+    [text release];
+    [super dealloc];
 }
 
 - (void)clear
 {
-	self.text = nil;
-	range = NSMakeRange(NSNotFound, 0);
+    self.text = nil;
+    range = NSMakeRange(NSNotFound, 0);
 }
 
 @end

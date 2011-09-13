@@ -7,10 +7,10 @@
 
 @interface TopicSheet : SheetBase
 {
-	int uid;
-	int cid;
-
-	IBOutlet NSTextField* text;
+    int uid;
+    int cid;
+    
+    IBOutlet NSTextField* text;
 }
 
 @property (nonatomic, assign) int uid;

@@ -18,40 +18,40 @@
 
 @interface LogController : NSObject
 {
-	LogView* view;
-	LogPolicy* policy;
-	LogScriptEventSink* sink;
-	MarkedScroller* scroller;
-	WebScriptObject* js;
-	WebViewAutoScroll* autoScroller;
-
-	IRCWorld* world;
-	IRCClient* client;
-	IRCChannel* channel;
-	NSMenu* menu;
-	NSMenu* urlMenu;
-	NSMenu* addrMenu;
-	NSMenu* chanMenu;
-	NSMenu* memberMenu;
-	ViewTheme* theme;
-	int maxLines;
-	BOOL console;
-	NSColor* initialBackgroundColor;
-	
-	BOOL becameVisible;
-	BOOL bottom;
-	BOOL movingToBottom;
-	NSMutableArray* lines;
-	int lineNumber;
-	int count;
-	BOOL needsLimitNumberOfLines;
-	BOOL loaded;
-	NSMutableArray* highlightedLineNumbers;
-	int loadingImages;
-	NSString* prevNickInfo;
-	NSString* html;
-	BOOL scrollBottom;
-	int scrollTop;
+    LogView* view;
+    LogPolicy* policy;
+    LogScriptEventSink* sink;
+    MarkedScroller* scroller;
+    WebScriptObject* js;
+    WebViewAutoScroll* autoScroller;
+    
+    IRCWorld* world;
+    IRCClient* client;
+    IRCChannel* channel;
+    NSMenu* menu;
+    NSMenu* urlMenu;
+    NSMenu* addrMenu;
+    NSMenu* chanMenu;
+    NSMenu* memberMenu;
+    ViewTheme* theme;
+    int maxLines;
+    BOOL console;
+    NSColor* initialBackgroundColor;
+    
+    BOOL becameVisible;
+    BOOL bottom;
+    BOOL movingToBottom;
+    NSMutableArray* lines;
+    int lineNumber;
+    int count;
+    BOOL needsLimitNumberOfLines;
+    BOOL loaded;
+    NSMutableArray* highlightedLineNumbers;
+    int loadingImages;
+    NSString* prevNickInfo;
+    NSString* html;
+    BOOL scrollBottom;
+    int scrollTop;
 }
 
 @property (nonatomic, readonly) LogView* view;

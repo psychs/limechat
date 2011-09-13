@@ -15,31 +15,31 @@
 
 - (id)init
 {
-	self = [super init];
-	if (self) {
-		[NSBundle loadNibNamed:@"TopicSheet" owner:self];
-	}
-	return self;
+    self = [super init];
+    if (self) {
+        [NSBundle loadNibNamed:@"TopicSheet" owner:self];
+    }
+    return self;
 }
 
 - (void)dealloc
 {
-	[super dealloc];
+    [super dealloc];
 }
 
 - (void)start:(NSString*)topic
 {
-	[text setStringValue:topic ?: @""];
-	[self startSheet];
+    [text setStringValue:topic ?: @""];
+    [self startSheet];
 }
 
 - (void)ok:(id)sender
 {
-	if ([delegate respondsToSelector:@selector(topicSheet:onOK:)]) {
-		[delegate topicSheet:self onOK:[text stringValue]];
-	}
-	
-	[super ok:nil];
+    if ([delegate respondsToSelector:@selector(topicSheet:onOK:)]) {
+        [delegate topicSheet:self onOK:[text stringValue]];
+    }
+    
+    [super ok:nil];
 }
 
 #pragma mark -
@@ -47,9 +47,9 @@
 
 - (void)windowWillClose:(NSNotification*)note
 {
-	if ([delegate respondsToSelector:@selector(topicSheetWillClose:)]) {
-		[delegate topicSheetWillClose:self];
-	}
+    if ([delegate respondsToSelector:@selector(topicSheetWillClose:)]) {
+        [delegate topicSheetWillClose:self];
+    }
 }
 
 @end

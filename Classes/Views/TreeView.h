@@ -6,7 +6,7 @@
 
 @interface TreeView : NSOutlineView
 {
-	id keyDelegate;
+    id keyDelegate;
 }
 
 @property (nonatomic, assign) id keyDelegate;

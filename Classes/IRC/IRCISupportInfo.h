@@ -4,14 +4,14 @@
 #import <Foundation/Foundation.h>
 
 
-#define MODES_SIZE	52
+#define MODES_SIZE  52
 
 
 @interface IRCISupportInfo : NSObject
 {
-	unsigned char modes[MODES_SIZE];
-	int nickLen;
-	int modesCount;
+    unsigned char modes[MODES_SIZE];
+    int nickLen;
+    int modesCount;
 }
 
 @property (nonatomic, readonly) int nickLen;
@@ -26,11 +26,11 @@
 
 @interface IRCModeInfo : NSObject
 {
-	unsigned char mode;
-	BOOL plus;
-	BOOL op;
-	BOOL simpleMode;
-	NSString* param;
+    unsigned char mode;
+    BOOL plus;
+    BOOL op;
+    BOOL simpleMode;
+    NSString* param;
 }
 
 @property (nonatomic, assign) unsigned char mode;

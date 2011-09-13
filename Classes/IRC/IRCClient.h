@@ -20,65 +20,65 @@
 
 
 typedef enum {
-	CONNECT_NORMAL,
-	CONNECT_RECONNECT,
-	CONNECT_RETRY,
+    CONNECT_NORMAL,
+    CONNECT_RECONNECT,
+    CONNECT_RETRY,
 } ConnectMode;
 
 
 @interface IRCClient : IRCTreeItem
 {
-	IRCWorld* world;
-	IRCClientConfig* config;
-	
-	NSMutableArray* channels;
-	IRCISupportInfo* isupport;
-	IRCUserMode* myMode;
-	
-	IRCConnection* conn;
-	int connectDelay;
-	BOOL reconnectEnabled;
-	BOOL retryEnabled;
-	
-	BOOL isConnecting;
-	BOOL isConnected;
-	BOOL isLoggedIn;
-	BOOL isQuitting;
-	NSStringEncoding encoding;
-	
-	NSString* inputNick;
-	NSString* sentNick;
-	NSString* myNick;
-	int tryingNickNumber;
-	
-	NSString* serverHostname;
-	BOOL isRegisteredWithSASL;
-	BOOL registeringToNickServ;
-	BOOL inWhois;
-	BOOL inList;
-	BOOL identifyMsg;
-	BOOL identifyCTCP;
-	
-	AddressDetectionType addressDetectionMethod;
-	HostResolver* nameResolver;
-	NSString* joinMyAddress;
-	NSString* myAddress;
-	CFAbsoluteTime lastCTCPTime;
-	int pongInterval;
-	
-	Timer* pongTimer;
-	Timer* quitTimer;
-	Timer* reconnectTimer;
-	Timer* retryTimer;
-	Timer* autoJoinTimer;
-	Timer* commandQueueTimer;
-	NSMutableArray* commandQueue;
-	
-	IRCChannel* lastSelectedChannel;
-	
-	NSMutableArray* whoisDialogs;
-	ListDialog* channelListDialog;
-	ServerDialog* propertyDialog;
+    IRCWorld* world;
+    IRCClientConfig* config;
+    
+    NSMutableArray* channels;
+    IRCISupportInfo* isupport;
+    IRCUserMode* myMode;
+    
+    IRCConnection* conn;
+    int connectDelay;
+    BOOL reconnectEnabled;
+    BOOL retryEnabled;
+    
+    BOOL isConnecting;
+    BOOL isConnected;
+    BOOL isLoggedIn;
+    BOOL isQuitting;
+    NSStringEncoding encoding;
+    
+    NSString* inputNick;
+    NSString* sentNick;
+    NSString* myNick;
+    int tryingNickNumber;
+    
+    NSString* serverHostname;
+    BOOL isRegisteredWithSASL;
+    BOOL registeringToNickServ;
+    BOOL inWhois;
+    BOOL inList;
+    BOOL identifyMsg;
+    BOOL identifyCTCP;
+    
+    AddressDetectionType addressDetectionMethod;
+    HostResolver* nameResolver;
+    NSString* joinMyAddress;
+    NSString* myAddress;
+    CFAbsoluteTime lastCTCPTime;
+    int pongInterval;
+    
+    Timer* pongTimer;
+    Timer* quitTimer;
+    Timer* reconnectTimer;
+    Timer* retryTimer;
+    Timer* autoJoinTimer;
+    Timer* commandQueueTimer;
+    NSMutableArray* commandQueue;
+    
+    IRCChannel* lastSelectedChannel;
+    
+    NSMutableArray* whoisDialogs;
+    ListDialog* channelListDialog;
+    ServerDialog* propertyDialog;
 }
 
 @property (nonatomic, assign) IRCWorld* world;

@@ -10,51 +10,51 @@
 
 - (id)initWithDelegate:(id)aDelegate
 {
-	self = [super init];
-	if (self) {
-		delegate = aDelegate;
-	}
-	return self;
+    self = [super init];
+    if (self) {
+        delegate = aDelegate;
+    }
+    return self;
 }
 
 - (void)resolve:(NSString*)hostname
 {
-	if (hostname.length) {
-		[NSThread detachNewThreadSelector:@selector(resolveInternal:) toTarget:self withObject:hostname];
-	}
+    if (hostname.length) {
+        [NSThread detachNewThreadSelector:@selector(resolveInternal:) toTarget:self withObject:hostname];
+    }
 }
 
 - (void)resolveInternal:(NSString*)hostname
 {
-	[self retain];
-	
-	NSAutoreleasePool* pool = [NSAutoreleasePool new];
-	
-	NSHost* host = [NSHost hostWithName:hostname];
-	NSArray* info = [NSArray arrayWithObjects:hostname, host, nil];
-	[self performSelectorOnMainThread:@selector(hostResolved:) withObject:info waitUntilDone:YES];
-	
-	[pool release];
-	
-	[self release];
+    [self retain];
+    
+    NSAutoreleasePool* pool = [NSAutoreleasePool new];
+    
+    NSHost* host = [NSHost hostWithName:hostname];
+    NSArray* info = [NSArray arrayWithObjects:hostname, host, nil];
+    [self performSelectorOnMainThread:@selector(hostResolved:) withObject:info waitUntilDone:YES];
+    
+    [pool release];
+    
+    [self release];
 }
 
 - (void)hostResolved:(NSArray*)info
 {
-	if (!delegate) return;
-	
-	if ([info count] == 2) {
-		NSHost* host = [info objectAtIndex:1];
-		if ([delegate respondsToSelector:@selector(hostResolver:didResolve:)]) {
-			[delegate hostResolver:self didResolve:host];
-		}
-	}
-	else {
-		NSString* hostname = [info objectAtIndex:0];
-		if ([delegate respondsToSelector:@selector(hostResolver:didNotResolve:)]) {
-			[delegate hostResolver:self didNotResolve:hostname];
-		}
-	}
+    if (!delegate) return;
+    
+    if ([info count] == 2) {
+        NSHost* host = [info objectAtIndex:1];
+        if ([delegate respondsToSelector:@selector(hostResolver:didResolve:)]) {
+            [delegate hostResolver:self didResolve:host];
+        }
+    }
+    else {
+        NSString* hostname = [info objectAtIndex:0];
+        if ([delegate respondsToSelector:@selector(hostResolver:didNotResolve:)]) {
+            [delegate hostResolver:self didNotResolve:hostname];
+        }
+    }
 }
 
 @end

@@ -10,57 +10,57 @@
 
 @interface ServerDialog : NSWindowController
 {
-	id delegate;
-	NSWindow* parentWindow;
-	int uid;
-	IRCClientConfig* config;
-
-	IBOutlet NSTabView* tab;
-	
-	IBOutlet NSTextField* nameText;
-	IBOutlet NSButton* autoConnectCheck;
-	
-	IBOutlet NSComboBox* hostCombo;
-	IBOutlet NSButton* sslCheck;
-	IBOutlet NSTextField* portText;
-	
-	IBOutlet NSTextField* nickText;
-	IBOutlet NSTextField* passwordText;
-	IBOutlet NSTextField* usernameText;
-	IBOutlet NSTextField* realNameText;
-	IBOutlet NSTextField* nickPasswordText;
-	IBOutlet NSButton* saslCheck;
-	IBOutlet NSTextField* altNicksText;
-	
-	IBOutlet NSTextField* leavingCommentText;
-	IBOutlet NSTextField* userInfoText;
-	
-	IBOutlet NSPopUpButton* encodingCombo;
-	IBOutlet NSPopUpButton* fallbackEncodingCombo;
-	
-	IBOutlet NSPopUpButton* proxyCombo;
-	IBOutlet NSTextField* proxyHostText;
-	IBOutlet NSTextField* proxyPortText;
-	IBOutlet NSTextField* proxyUserText;
-	IBOutlet NSTextField* proxyPasswordText;
-	
-	IBOutlet ListView* channelTable;
-	IBOutlet NSButton* addChannelButton;
-	IBOutlet NSButton* editChannelButton;
-	IBOutlet NSButton* deleteChannelButton;
-	
-	IBOutlet NSTextView* loginCommandsText;
-	IBOutlet NSButton* invisibleCheck;
-	
-	IBOutlet ListView* ignoreTable;
-	IBOutlet NSButton* addIgnoreButton;
-	IBOutlet NSButton* editIgnoreButton;
-	IBOutlet NSButton* deleteIgnoreButton;
-	
-	IBOutlet NSButton* okButton;
-	
-	ChannelDialog* channelSheet;
-	IgnoreItemSheet* ignoreSheet;
+    id delegate;
+    NSWindow* parentWindow;
+    int uid;
+    IRCClientConfig* config;
+    
+    IBOutlet NSTabView* tab;
+    
+    IBOutlet NSTextField* nameText;
+    IBOutlet NSButton* autoConnectCheck;
+    
+    IBOutlet NSComboBox* hostCombo;
+    IBOutlet NSButton* sslCheck;
+    IBOutlet NSTextField* portText;
+    
+    IBOutlet NSTextField* nickText;
+    IBOutlet NSTextField* passwordText;
+    IBOutlet NSTextField* usernameText;
+    IBOutlet NSTextField* realNameText;
+    IBOutlet NSTextField* nickPasswordText;
+    IBOutlet NSButton* saslCheck;
+    IBOutlet NSTextField* altNicksText;
+    
+    IBOutlet NSTextField* leavingCommentText;
+    IBOutlet NSTextField* userInfoText;
+    
+    IBOutlet NSPopUpButton* encodingCombo;
+    IBOutlet NSPopUpButton* fallbackEncodingCombo;
+    
+    IBOutlet NSPopUpButton* proxyCombo;
+    IBOutlet NSTextField* proxyHostText;
+    IBOutlet NSTextField* proxyPortText;
+    IBOutlet NSTextField* proxyUserText;
+    IBOutlet NSTextField* proxyPasswordText;
+    
+    IBOutlet ListView* channelTable;
+    IBOutlet NSButton* addChannelButton;
+    IBOutlet NSButton* editChannelButton;
+    IBOutlet NSButton* deleteChannelButton;
+    
+    IBOutlet NSTextView* loginCommandsText;
+    IBOutlet NSButton* invisibleCheck;
+    
+    IBOutlet ListView* ignoreTable;
+    IBOutlet NSButton* addIgnoreButton;
+    IBOutlet NSButton* editIgnoreButton;
+    IBOutlet NSButton* deleteIgnoreButton;
+    
+    IBOutlet NSButton* okButton;
+    
+    ChannelDialog* channelSheet;
+    IgnoreItemSheet* ignoreSheet;
 }
 
 @property (nonatomic, assign) id delegate;

@@ -8,7 +8,7 @@
 
 @interface MemberListViewCell : NSCell
 {
-	IRCUser* member;
+    IRCUser* member;
 }
 
 @property (nonatomic, retain) IRCUser* member;

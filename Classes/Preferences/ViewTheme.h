@@ -9,10 +9,10 @@
 
 @interface ViewTheme : NSObject
 {
-	NSString* name;
-	LogTheme* log;
-	OtherTheme* other;
-	CustomJSFile* js;
+    NSString* name;
+    LogTheme* log;
+    OtherTheme* other;
+    CustomJSFile* js;
 }
 
 @property (nonatomic, retain) NSString* name;

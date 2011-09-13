@@ -6,8 +6,8 @@
 
 @interface ListView : NSTableView
 {
-	id keyDelegate;
-	id textDelegate;
+    id keyDelegate;
+    id textDelegate;
 }
 
 @property (nonatomic, assign) id keyDelegate;

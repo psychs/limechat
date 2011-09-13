@@ -6,8 +6,8 @@
 
 @interface InputHistory : NSObject
 {
-	NSMutableArray* buf;
-	int pos;
+    NSMutableArray* buf;
+    int pos;
 }
 
 - (void)add:(NSString*)s;

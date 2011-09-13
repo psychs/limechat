@@ -10,34 +10,34 @@
 
 - (id)init
 {
-	self = [super init];
-	if (self) {
-		[NSBundle loadNibNamed:@"NickSheet" owner:self];
-	}
-	return self;
+    self = [super init];
+    if (self) {
+        [NSBundle loadNibNamed:@"NickSheet" owner:self];
+    }
+    return self;
 }
 
 - (void)dealloc
 {
-	[super dealloc];
+    [super dealloc];
 }
 
 - (void)start:(NSString*)nick
 {
-	[currentText setStringValue:nick];
-	[newText setStringValue:nick];
-	[sheet makeFirstResponder:newText];
-	
-	[self startSheet];
+    [currentText setStringValue:nick];
+    [newText setStringValue:nick];
+    [sheet makeFirstResponder:newText];
+    
+    [self startSheet];
 }
 
 - (void)ok:(id)sender
 {
-	if ([delegate respondsToSelector:@selector(nickSheet:didInputNick:)]) {
-		[delegate nickSheet:self didInputNick:newText.stringValue];
-	}
-	
-	[super ok:sender];
+    if ([delegate respondsToSelector:@selector(nickSheet:didInputNick:)]) {
+        [delegate nickSheet:self didInputNick:newText.stringValue];
+    }
+    
+    [super ok:sender];
 }
 
 #pragma mark -
@@ -45,9 +45,9 @@
 
 - (void)windowWillClose:(NSNotification*)note
 {
-	if ([delegate respondsToSelector:@selector(nickSheetWillClose:)]) {
-		[delegate nickSheetWillClose:self];
-	}
+    if ([delegate respondsToSelector:@selector(nickSheetWillClose:)]) {
+        [delegate nickSheetWillClose:self];
+    }
 }
 
 @end

@@ -7,7 +7,7 @@
 
 @interface MainWindow : NSWindow
 {
-	KeyEventHandler* keyHandler;
+    KeyEventHandler* keyHandler;
 }
 
 - (void)setKeyHandlerTarget:(id)target;

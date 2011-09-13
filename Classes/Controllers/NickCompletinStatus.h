@@ -6,8 +6,8 @@
 
 @interface NickCompletinStatus : NSObject
 {
-	NSString* text;
-	NSRange range;
+    NSString* text;
+    NSRange range;
 }
 
 @property (nonatomic, retain) NSString* text;

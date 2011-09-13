@@ -10,53 +10,53 @@
 
 - (id)initWithFrame:(NSRect)frameRect textContainer:(NSTextContainer *)aTextContainer
 {
-	self = [super initWithFrame:frameRect textContainer:aTextContainer];
-	if (self) {
-		keyHandler = [KeyEventHandler new];
-	}
-	return self;
+    self = [super initWithFrame:frameRect textContainer:aTextContainer];
+    if (self) {
+        keyHandler = [KeyEventHandler new];
+    }
+    return self;
 }
 
 - (void)dealloc
 {
-	[keyHandler release];
-	[super dealloc];
+    [keyHandler release];
+    [super dealloc];
 }
 
 - (void)paste:(id)sender
 {
-	if (pasteDelegate) {
-		BOOL result = [pasteDelegate fieldEditorTextViewPaste:self];
-		if (result) {
-			return;
-		}
-	}
-	
-	[super paste:sender];
+    if (pasteDelegate) {
+        BOOL result = [pasteDelegate fieldEditorTextViewPaste:self];
+        if (result) {
+            return;
+        }
+    }
+    
+    [super paste:sender];
 }
 
 - (void)setKeyHandlerTarget:(id)target
 {
-	[keyHandler setTarget:target];
+    [keyHandler setTarget:target];
 }
 
 - (void)registerKeyHandler:(SEL)selector key:(int)code modifiers:(NSUInteger)mods
 {
-	[keyHandler registerSelector:selector key:code modifiers:mods];
+    [keyHandler registerSelector:selector key:code modifiers:mods];
 }
 
 - (void)registerKeyHandler:(SEL)selector character:(UniChar)c modifiers:(NSUInteger)mods
 {
-	[keyHandler registerSelector:selector character:c modifiers:mods];
+    [keyHandler registerSelector:selector character:c modifiers:mods];
 }
 
 - (void)keyDown:(NSEvent *)e
 {
-	if ([keyHandler processKeyEvent:e]) {
-		return;
-	}
-	
-	[super keyDown:e];
+    if ([keyHandler processKeyEvent:e]) {
+        return;
+    }
+    
+    [super keyDown:e];
 }
 
 @end

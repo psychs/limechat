@@ -7,8 +7,8 @@
 
 @interface LogView : WebView
 {
-	id keyDelegate;
-	id resizeDelegate;
+    id keyDelegate;
+    id resizeDelegate;
 }
 
 @property (nonatomic, assign) id keyDelegate;

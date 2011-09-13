@@ -6,7 +6,7 @@
 
 @interface HostResolver : NSObject
 {
-	id delegate;
+    id delegate;
 }
 
 @property (nonatomic, assign) id delegate;

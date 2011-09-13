@@ -12,53 +12,53 @@
 
 - (id)init
 {
-	self = [super init];
-	if (self) {
-		reqeat = YES;
-		selector = @selector(timerOnTimer:);
-	}
-	return self;
+    self = [super init];
+    if (self) {
+        reqeat = YES;
+        selector = @selector(timerOnTimer:);
+    }
+    return self;
 }
 
 - (void)dealloc
 {
-	[timer release];
-	[super dealloc];
+    [timer release];
+    [super dealloc];
 }
 
 - (BOOL)isActive
 {
-	return timer != nil;
+    return timer != nil;
 }
 
 - (void)start:(NSTimeInterval)interval
 {
-	[self stop];
-	
-	timer = [[NSTimer scheduledTimerWithTimeInterval:interval target:self selector:@selector(onTimer:) userInfo:nil repeats:reqeat] retain];
-	[[NSRunLoop currentRunLoop] addTimer:timer forMode:NSEventTrackingRunLoopMode];
+    [self stop];
+    
+    timer = [[NSTimer scheduledTimerWithTimeInterval:interval target:self selector:@selector(onTimer:) userInfo:nil repeats:reqeat] retain];
+    [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSEventTrackingRunLoopMode];
 }
 
 - (void)stop
 {
-	[[self retain] autorelease];
-	
-	[timer invalidate];
-	[timer release];
-	timer = nil;
+    [[self retain] autorelease];
+    
+    [timer invalidate];
+    [timer release];
+    timer = nil;
 }
 
 - (void)onTimer:(id)sender
 {
-	if (!self.isActive) return;
-	
-	if (!reqeat) {
-		[self stop];
-	}
-	
-	if ([delegate respondsToSelector:selector]) {
-		[delegate performSelector:selector withObject:self];
-	}
+    if (!self.isActive) return;
+    
+    if (!reqeat) {
+        [self stop];
+    }
+    
+    if ([delegate respondsToSelector:selector]) {
+        [delegate performSelector:selector withObject:self];
+    }
 }
 
 @end

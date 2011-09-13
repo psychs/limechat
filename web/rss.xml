@@ -7,9 +7,9 @@
     <language>en-us</language>
 
     <item>
-      <title>2.27</title>
+      <title>2.28</title>
       <link>http://limechat.net/mac/#v2.27</link>
-      <pubDate>Tue, 09 Aug 2011 15:55:00 -0700</pubDate>
+      <pubDate>Fri, 19 Aug 2011 17:20:00 -0700</pubDate>
       <content:encoded><![CDATA[
   		<ul>
 	      <li>Fixed a redraw issue in log view.</li>

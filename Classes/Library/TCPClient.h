@@ -7,27 +7,27 @@
 
 @interface TCPClient : NSObject
 {
-	id delegate;
-	
-	NSString* host;
-	int port;
-	BOOL useSSL;
-	
-	BOOL useSystemSocks;
-	BOOL useSocks;
-	int socksVersion;
-	NSString* proxyHost;
-	int proxyPort;
-	NSString* proxyUser;
-	NSString* proxyPassword;
-	
-	int sendQueueSize;
-	
-	AsyncSocket* conn;
-	NSMutableData* buffer;
-	int tag;
-	BOOL active;
-	BOOL connecting;
+    id delegate;
+    
+    NSString* host;
+    int port;
+    BOOL useSSL;
+    
+    BOOL useSystemSocks;
+    BOOL useSocks;
+    int socksVersion;
+    NSString* proxyHost;
+    int proxyPort;
+    NSString* proxyUser;
+    NSString* proxyPassword;
+    
+    int sendQueueSize;
+    
+    AsyncSocket* conn;
+    NSMutableData* buffer;
+    int tag;
+    BOOL active;
+    BOOL connecting;
 }
 
 @property (nonatomic, assign) id delegate;

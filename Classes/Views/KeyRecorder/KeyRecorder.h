@@ -7,13 +7,13 @@
 
 @interface KeyRecorder : NSControl
 {
-	id delegate;
-	int keyCode;
-	NSUInteger modifierFlags;
-	
-	BOOL recording;
-	BOOL eraseButtonPushed;
-	BOOL eraseButtonHighlighted;
+    id delegate;
+    int keyCode;
+    NSUInteger modifierFlags;
+    
+    BOOL recording;
+    BOOL eraseButtonPushed;
+    BOOL eraseButtonHighlighted;
 }
 
 @property (nonatomic, assign) IBOutlet id delegate;

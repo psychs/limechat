@@ -6,22 +6,22 @@
 
 @interface WhoisDialog : NSWindowController
 {
-	id delegate;
-	NSString* nick;
-	BOOL isOperator;
-	
-	IBOutlet NSTextField* nickText;
-	IBOutlet NSTextField* logInText;
-	IBOutlet NSTextField* realnameText;
-	IBOutlet NSTextField* addressText;
-	IBOutlet NSTextField* serverText;
-	IBOutlet NSTextField* serverInfoText;
-	IBOutlet NSPopUpButton* channelsCombo;
-	IBOutlet NSTextField* awayText;
-	IBOutlet NSTextField* idleText;
-	IBOutlet NSTextField* signOnText;
-	IBOutlet NSButton* joinButton;
-	IBOutlet NSButton* closeButton;
+    id delegate;
+    NSString* nick;
+    BOOL isOperator;
+    
+    IBOutlet NSTextField* nickText;
+    IBOutlet NSTextField* logInText;
+    IBOutlet NSTextField* realnameText;
+    IBOutlet NSTextField* addressText;
+    IBOutlet NSTextField* serverText;
+    IBOutlet NSTextField* serverInfoText;
+    IBOutlet NSPopUpButton* channelsCombo;
+    IBOutlet NSTextField* awayText;
+    IBOutlet NSTextField* idleText;
+    IBOutlet NSTextField* signOnText;
+    IBOutlet NSButton* joinButton;
+    IBOutlet NSButton* closeButton;
 }
 
 @property (nonatomic, assign) id delegate;

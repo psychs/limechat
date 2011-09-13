@@ -21,34 +21,34 @@
 
 @interface MenuController : NSObject
 {
-	IBOutlet NSMenuItem* closeWindowItem;
-	IBOutlet NSMenuItem* closeCurrentPanelItem;
-	IBOutlet NSMenuItem* checkForUpdateItem;
-	
-	AppController* app;
-	IRCWorld* world;
-	MainWindow* window;
-	InputTextField* text;
-	ServerTreeView* tree;
-	MemberListView* memberList;
-	
-	NSString* pointedUrl;
-	NSString* pointedAddress;
-	NSString* pointedNick;
-	NSString* pointedChannelName;
-	
-	id sparkleUpdater;
-	PreferencesController* preferencesController;
-	NSMutableArray* serverDialogs;
-	NSMutableArray* channelDialogs;
-	NickSheet* nickSheet;
-	ModeSheet* modeSheet;
-	TopicSheet* topicSheet;
-	PasteSheet* pasteSheet;
-	InviteSheet* inviteSheet;
-	NSOpenPanel* fileSendPanel;
-	NSArray* fileSendTargets;
-	int fileSendUID;
+    IBOutlet NSMenuItem* closeWindowItem;
+    IBOutlet NSMenuItem* closeCurrentPanelItem;
+    IBOutlet NSMenuItem* checkForUpdateItem;
+    
+    AppController* app;
+    IRCWorld* world;
+    MainWindow* window;
+    InputTextField* text;
+    ServerTreeView* tree;
+    MemberListView* memberList;
+    
+    NSString* pointedUrl;
+    NSString* pointedAddress;
+    NSString* pointedNick;
+    NSString* pointedChannelName;
+    
+    id sparkleUpdater;
+    PreferencesController* preferencesController;
+    NSMutableArray* serverDialogs;
+    NSMutableArray* channelDialogs;
+    NickSheet* nickSheet;
+    ModeSheet* modeSheet;
+    TopicSheet* topicSheet;
+    PasteSheet* pasteSheet;
+    InviteSheet* inviteSheet;
+    NSOpenPanel* fileSendPanel;
+    NSArray* fileSendTargets;
+    int fileSendUID;
 }
 
 @property (nonatomic, assign) AppController* app;

@@ -8,13 +8,13 @@
 
 @interface MemberListView : ListView
 {
-	id dropDelegate;
-	OtherTheme* theme;
-	
-	NSColor* bgColor;
-	NSColor* topLineColor;
-	NSColor* bottomLineColor;
-	NSGradient* gradient;
+    id dropDelegate;
+    OtherTheme* theme;
+    
+    NSColor* bgColor;
+    NSColor* topLineColor;
+    NSColor* bottomLineColor;
+    NSGradient* gradient;
 }
 
 @property (nonatomic, assign) id dropDelegate;

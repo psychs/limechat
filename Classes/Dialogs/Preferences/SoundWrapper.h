@@ -5,12 +5,12 @@
 #import "GrowlController.h"
 
 
-#define EMPTY_SOUND		@"-"
+#define EMPTY_SOUND     @"-"
 
 
 @interface SoundWrapper : NSObject
 {
-	GrowlNotificationType eventType;
+    GrowlNotificationType eventType;
 }
 
 @property (nonatomic, readonly) NSString* displayName;

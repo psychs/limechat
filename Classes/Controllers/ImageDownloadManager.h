@@ -8,8 +8,8 @@
 
 @interface ImageDownloadManager : NSObject
 {
-	IRCWorld* world;
-	NSMutableSet* checkers;
+    IRCWorld* world;
+    NSMutableSet* checkers;
 }
 
 @property (nonatomic, assign) IRCWorld* world;

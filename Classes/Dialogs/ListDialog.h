@@ -7,15 +7,15 @@
 
 @interface ListDialog : NSWindowController
 {
-	id delegate;
-	NSMutableArray* list;
-	NSMutableArray* filteredList;
-	int sortKey;
-	NSComparisonResult sortOrder;
-	
-	IBOutlet ListView* table;
-	IBOutlet NSSearchField* filterText;
-	IBOutlet NSButton* updateButton;
+    id delegate;
+    NSMutableArray* list;
+    NSMutableArray* filteredList;
+    int sortKey;
+    NSComparisonResult sortOrder;
+    
+    IBOutlet ListView* table;
+    IBOutlet NSSearchField* filterText;
+    IBOutlet NSButton* updateButton;
 }
 
 @property (nonatomic, assign) id delegate;

@@ -6,30 +6,30 @@
 
 
 typedef enum {
-	ADDRESS_DETECT_SPECIFY = 0,
-	ADDRESS_DETECT_JOIN = 2,
+    ADDRESS_DETECT_SPECIFY = 0,
+    ADDRESS_DETECT_JOIN = 2,
 } AddressDetectionType;
 
 typedef enum {
-	DCC_AUTO_ACCEPT = 0,
-	DCC_SHOW_DIALOG,
-	DCC_IGNORE,
+    DCC_AUTO_ACCEPT = 0,
+    DCC_SHOW_DIALOG,
+    DCC_IGNORE,
 } DCCActionType;
 
 typedef enum {
-	MAIN_WINDOW_LAYOUT_2_COLUMN = 0,
-	MAIN_WINDOW_LAYOUT_3_COLUMN,
+    MAIN_WINDOW_LAYOUT_2_COLUMN = 0,
+    MAIN_WINDOW_LAYOUT_3_COLUMN,
 } MainWindowLayoutType;
 
 typedef enum {
-	KEYWORD_MATCH_PARTIAL = 0,
-	KEYWORD_MATCH_EXACT,
+    KEYWORD_MATCH_PARTIAL = 0,
+    KEYWORD_MATCH_EXACT,
 } KeywordMatchType;
 
 typedef enum {
-	TAB_COMPLETE_NICK = 0,
-	TAB_UNREAD,
-	TAB_NONE = 100,
+    TAB_COMPLETE_NICK = 0,
+    TAB_UNREAD,
+    TAB_NONE = 100,
 } TabActionType;
 
 

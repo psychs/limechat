@@ -5,30 +5,30 @@
 
 
 typedef enum {
-	DCC_INIT,
-	DCC_ERROR,
-	DCC_STOP,
-	DCC_CONNECTING,
-	DCC_LISTENING,
-	DCC_RECEIVING,
-	DCC_SENDING,
-	DCC_COMPLETE,
+    DCC_INIT,
+    DCC_ERROR,
+    DCC_STOP,
+    DCC_CONNECTING,
+    DCC_LISTENING,
+    DCC_RECEIVING,
+    DCC_SENDING,
+    DCC_COMPLETE,
 } DCCFileTransferStatus;
 
 
 @interface DCCFileTransferCell : NSCell
 {
-	NSString* peerNick;
-	long long processedSize;
-	long long size;
-	long long speed;
-	long long timeRemaining;
-	DCCFileTransferStatus status;
-	NSString* error;
-	
-	NSProgressIndicator* progressBar;
-	NSImage* icon;
-	BOOL sendingItem;
+    NSString* peerNick;
+    long long processedSize;
+    long long size;
+    long long speed;
+    long long timeRemaining;
+    DCCFileTransferStatus status;
+    NSString* error;
+    
+    NSProgressIndicator* progressBar;
+    NSImage* icon;
+    BOOL sendingItem;
 }
 
 @property (nonatomic, retain) NSString* peerNick;
