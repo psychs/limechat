@@ -353,6 +353,24 @@
 }
 
 #pragma mark -
+#pragma mark Inline Image Ignore List
+
+// These are saved as arrays in case the UI is changed to use a table
+// instead of a comma separated string. Plus, the array is easier to work
+// with in the code when looking up the nick
++ (NSArray *)inlineImageIgnoreList
+{
+    NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+    return [ud objectForKey:@"Preferences.General.inline_image_ignore_list"];
+}
+
++ (void)setInlineImageIgnoreList:(NSArray *)value
+{
+    NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+    [ud setObject:value forKey:@"Preferences.General.inline_image_ignore_list"];
+}
+
+#pragma mark -
 #pragma mark Events
 
 + (NSString*)titleForEvent:(GrowlNotificationType)event

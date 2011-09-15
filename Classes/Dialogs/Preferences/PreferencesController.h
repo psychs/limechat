@@ -20,6 +20,8 @@
     IBOutlet NSArrayController* excludeWordsArrayController;
     IBOutlet NSPopUpButton* transcriptFolderButton;
     IBOutlet NSPopUpButton* themeButton;
+    IBOutlet NSTextField* inlineImageIgnoreListLabel;
+    IBOutlet NSTextField* inlineImageIgnoreListField;
     
     NSMutableArray* sounds;
     NSOpenPanel* transcriptFolderOpenPanel;
@@ -49,6 +51,7 @@
 - (void)onInputSelectFont:(id)sender;
 - (void)onOverrideFontChanged:(id)sender;
 - (void)onChangedTransparency:(id)sender;
+- (IBAction)onShowImageLinksChanged:(id)sender;
 
 @end
 
