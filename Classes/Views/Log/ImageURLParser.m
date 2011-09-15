@@ -241,6 +241,32 @@
     else if ([host isEqualToString:@"gyazo.com"]) {
         return [NSString stringWithFormat:@"http://cache.gyazo.com%@.png", path];
     }
+    else if ([host isEqualToString:@"cl.ly"]) {
+        // For Cloud App, there isn't a way to construct a URL to the image based on the URL provided. We have to grab the page.
+        // Once we have the page, there are many ways we could construct a URL.
+        // Here we are using the direct link URL provided on the page.
+        NSURLResponse *response = nil;
+        NSError *responseError = nil;
+        // This is a synchronous call that blocks the thread until it completes or times out.
+        // Would be better as an asynchronous call, but didn't fit into the workflow without some refactoring.
+        NSData *responseData = [NSURLConnection sendSynchronousRequest:[NSURLRequest requestWithURL:u] 
+                                                     returningResponse:&response 
+                                                                 error:&responseError];
+        
+        if (responseData) {
+            NSXMLDocument *htmlDoc = [[NSXMLDocument alloc] initWithData:responseData options:NSXMLDocumentTidyHTML error:nil];
+            // loop through the tags in the <body> and find the <a> of class "embed" if it exists
+            // If the cl.ly link is to a non-image file, this will not match and the return value will correctly fall through to be nil
+            for (NSXMLNode *node in [[[[htmlDoc rootElement] children] objectAtIndex:1] children]) {
+                if (node.kind == NSXMLElementKind && [[node XMLString] rangeOfString:@"class=\"embed\""].location != NSNotFound) {
+                    return [[[(NSXMLElement *)node attributes] objectAtIndex:1] stringValue];
+                }
+            }
+        }
+        else {
+            NSLog(@"Could not retrieve Cloud App html page: %@",responseError);
+        }
+    }
     
     return nil;
 }

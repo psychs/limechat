@@ -148,6 +148,22 @@
     [Preferences setPongInterval:value];
 }
 
+- (NSString *)inlineImageIgnoreList
+{
+    return [[Preferences inlineImageIgnoreList] componentsJoinedByString:@","];
+}
+
+- (void)setInlineImageIgnoreList:(NSString *)newIgnoreList
+{
+    NSArray *unscrubbedArray = [newIgnoreList componentsSeparatedByString:@","];
+    NSMutableArray *scrubbedArray = [NSMutableArray array];
+    for (NSString *item in unscrubbedArray) {
+        // Remove any whitespace from the nicks in case someone puts a space after the comma
+        [scrubbedArray addObject:[item stringByReplacingOccurrencesOfString:@" " withString:@""]];
+    }
+    [Preferences setInlineImageIgnoreList:scrubbedArray];
+}
+
 - (BOOL)validateValue:(id *)value forKey:(NSString *)key error:(NSError **)error
 {
     if ([key isEqualToString:@"maxLogLines"]) {
@@ -500,6 +516,20 @@
 {
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
     [nc postNotificationName:ThemeDidChangeNotification object:nil userInfo:nil];
+}
+
+- (IBAction)onShowImageLinksChanged:(id)sender
+{
+    if (([(NSButton *)sender state] == NSOnState)) {
+        [inlineImageIgnoreListLabel setEnabled:YES];
+        [inlineImageIgnoreListLabel setTextColor:[NSColor controlTextColor]];
+        [inlineImageIgnoreListField setEnabled:YES];
+    }
+    else {
+        [inlineImageIgnoreListLabel setEnabled:NO];
+        [inlineImageIgnoreListLabel setTextColor:[NSColor disabledControlTextColor]];
+        [inlineImageIgnoreListField setEnabled:NO];
+    }
 }
 
 #pragma mark -
