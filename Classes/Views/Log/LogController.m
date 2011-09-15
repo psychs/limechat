@@ -519,7 +519,8 @@
     BOOL isText = type == LINE_TYPE_PRIVMSG || type == LINE_TYPE_NOTICE || type == LINE_TYPE_ACTION;
     
     [s appendFormat:@"<span class=\"message\" type=\"%@\">%@", lineTypeString, body];
-    if (isText && !console && urlRanges.count && [Preferences showInlineImages]) {
+    if (isText && !console && urlRanges.count && [Preferences showInlineImages] && [[Preferences inlineImageIgnoreList] containsObject:line.nick] == NO) {
+        
         //
         // expand image URLs
         //
