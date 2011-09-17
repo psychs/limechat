@@ -507,7 +507,7 @@
             [s appendFormat:@"<img class=\"avatar\" src=\"http://img.tweetimag.es/i/%@\" />", tagEscape(line.nickInfo)];
         }
         [s appendFormat:@"<span class=\"sender\" type=\"%@\"", [LogLine memberTypeString:line.memberType]];
-        if (!console) [s appendString:@" oncontextmenu=\"on_nick()\""];
+        if (!console) [s appendFormat:@" oncontextmenu=\"on_nick()\" ondblclick=\"on_nickdblclick()\" clickinfo=\"%@\"", line.clickInfo];
         [s appendFormat:@" identified=\"%@\"", line.identified ? @"true" : @"false"];
         if (line.memberType == MEMBER_TYPE_NORMAL) [s appendFormat:@" colornumber=\"%d\"", line.nickColorNumber];
         if (line.nickInfo) [s appendFormat:@" first=\"%@\"", [line.nickInfo isEqualToString:prevNickInfo] ? @"false" : @"true"];
@@ -937,6 +937,11 @@
          @"function on_nick() {"
          @"  var t = event.target;"
          @"  app.setNick(t.parentNode.getAttribute('nick'));"
+         @"}"
+         @"function on_nickdblclick() {"
+         @"  var t = event.target;"
+         @"  app.onDblClick(t.getAttribute('clickinfo'));"
+         @"  event.stopPropagation();"
          @"}"
          @"function on_chname() {"
          @"  var t = event.target;"
