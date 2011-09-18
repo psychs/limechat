@@ -3,6 +3,7 @@
 
 #import "ImageURLParser.h"
 #import "NSStringHelper.h"
+#import "SBJson.h"
 
 
 @implementation ImageURLParser
@@ -240,6 +241,21 @@
     }
     else if ([host isEqualToString:@"gyazo.com"]) {
         return [NSString stringWithFormat:@"http://cache.gyazo.com%@.png", path];
+    }
+    else if ([host isEqualToString:@"cl.ly"]) {
+        NSMutableURLRequest *cloudURLRequest = [NSMutableURLRequest requestWithURL:u];
+        [cloudURLRequest setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+        NSURLResponse *cloudResponse = nil;
+        NSError *cloudError = nil;
+        NSData *cloudData = [NSURLConnection sendSynchronousRequest:cloudURLRequest returningResponse:&cloudResponse error:&cloudError];
+        if (!cloudData) {
+            NSLog(@"There was an error getting the cloud app data: %@",cloudError);
+            return nil;
+        }
+        NSDictionary *responseDict = [[[NSString alloc] initWithData:cloudData encoding:NSUTF8StringEncoding] JSONValue];
+        if ([[responseDict objectForKey:@"item_type"] isEqualToString:@"image"]) {
+            return [responseDict objectForKey:@"content_url"];
+        }
     }
     
     return nil;
