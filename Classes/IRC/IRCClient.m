@@ -2492,8 +2492,7 @@ static NSDateFormatter* dateTimeFormatter;
                 id t = c ?: (id)self;
                 [self setUnreadState:t];
                 if (keyword) [self setKeywordState:t];
-                if (newTalk) [self setNewTalkState:t];
-                if (moreTalk) [self setNewTalkState:t];
+                if (newTalk || moreTalk) [self setNewTalkState:t];
                 
                 GrowlNotificationType kind = keyword ? GROWL_HIGHLIGHT : newTalk ? GROWL_NEW_TALK : GROWL_TALK_MSG;
                 [self notifyText:kind target:(c ?: (id)target) nick:nick text:text];
