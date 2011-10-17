@@ -56,7 +56,14 @@
     
     NSMutableString* s = [line mutableCopy];
     
-    time(&receivedAt);
+    if ([s hasPrefix:@"@"]) {
+        NSString* t = [s getToken];
+        t = [t substringFromIndex:1];
+        receivedAt = [t longLongValue];
+    }
+    else {
+        time(&receivedAt);
+    }
     
     if ([s hasPrefix:@":"]) {
         NSString* t = [s getToken];
