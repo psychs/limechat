@@ -3739,15 +3739,16 @@ static NSDateFormatter* dateTimeFormatter;
     if (!user.length) user = config.nick;
     if (!realName.length) realName = config.nick;
     
-    NSString* capabilities = @"znc.in/server-time";
-    
     if (config.useSASL) {
+        // If you send REQ to some servers (hyperion or etc) before PASS, the server refuses connection.
+        // To avoid this, do not send REQ if SASL setting is off.
         if (config.nick.length && config.nickPassword.length) {
-            capabilities = [capabilities stringByAppendingString:@" sasl"];
+            [self send:CAP, @"REQ", @"sasl", @"znc.in/server-time", nil];
+        }
+        else {
+            [self send:CAP, @"REQ", @"znc.in/server-time", nil];
         }
     }
-    
-    [self send:CAP, @"REQ", capabilities, nil];
     
     if (config.password.length) {
         [self send:PASS, config.password, nil];
