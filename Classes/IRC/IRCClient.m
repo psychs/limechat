@@ -590,6 +590,8 @@ static NSDateFormatter* dateTimeFormatter;
             conn.proxyUser = config.proxyUser;
             conn.proxyPassword = config.proxyPassword;
             break;
+        default:
+            break;
     }
     
     [conn open];
@@ -1662,7 +1664,7 @@ static NSDateFormatter* dateTimeFormatter;
     id obj;
     va_list args;
     va_start(args, str);
-    while (obj = va_arg(args, id)) {
+    while ((obj = va_arg(args, id))) {
         [ary addObject:obj];
     }
     va_end(args);
@@ -2057,7 +2059,7 @@ static NSDateFormatter* dateTimeFormatter;
     NSString* channelName = nil;
     NSString* place = nil;
     NSString* nickStr = nil;
-    LogLineType memberType = MEMBER_TYPE_NORMAL;
+    LogMemberType memberType = MEMBER_TYPE_NORMAL;
     int colorNumber = 0;
     id clickContext = nil;
     NSArray* keywords = nil;
@@ -2150,7 +2152,7 @@ static NSDateFormatter* dateTimeFormatter;
     IRCChannel* channel = nil;
     NSString* place = nil;
     NSString* nickStr = nil;
-    LogLineType memberType = MEMBER_TYPE_NORMAL;
+    LogMemberType memberType = MEMBER_TYPE_NORMAL;
     int colorNumber = 0;
     NSArray* keywords = nil;
     NSArray* excludeWords = nil;

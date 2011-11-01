@@ -59,7 +59,7 @@
     return nil;
 }
 
-- (void)connection:(NSURLConnection *)sender didReceiveResponse:(NSURLResponse *)aResponse
+- (void)connection:(NSURLConnection *)sender didReceiveResponse:(NSHTTPURLResponse *)aResponse
 {
     if (conn != sender) return;
     
