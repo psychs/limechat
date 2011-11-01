@@ -7,12 +7,14 @@
 
 @interface IRCMessage : NSObject
 {
+    time_t receivedAt;
     IRCPrefix* sender;
     NSString* command;
     int numericReply;
     NSMutableArray* params;
 }
 
+@property (nonatomic, assign) time_t receivedAt;
 @property (nonatomic, retain) IRCPrefix* sender;
 @property (nonatomic, retain) NSString* command;
 @property (nonatomic, assign) int numericReply;
