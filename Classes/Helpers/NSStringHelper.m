@@ -660,7 +660,7 @@ BOOL isUnicharDigit(unichar c)
         else if (c == '\\') {
             escaped = YES;
         }
-        else if (useAnchor && c == anchor || !useAnchor && c == ' ') {
+        else if ((useAnchor && c == anchor) || (!useAnchor && c == ' ')) {
             if (useAnchor) {
                 ++i;
             }
