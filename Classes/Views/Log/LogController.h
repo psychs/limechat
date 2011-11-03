@@ -22,7 +22,6 @@
     LogPolicy* policy;
     LogScriptEventSink* sink;
     MarkedScroller* scroller;
-    WebScriptObject* js;
     WebViewAutoScroll* autoScroller;
     
     IRCWorld* world;
