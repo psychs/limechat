@@ -186,9 +186,16 @@
     if (!error) return;
     
     NSString* msg = nil;
+    NSString* domain = error.domain;
+    int code = error.code;
     
-    if ([[error domain] isEqualToString:NSPOSIXErrorDomain]) {
+    if ([domain isEqualToString:NSPOSIXErrorDomain]) {
         msg = [AsyncSocket posixErrorStringFromErrno:[error code]];
+    }
+    else if ([domain isEqualToString:(NSString*)kCFStreamErrorDomainSSL]) {
+        if (-9818 <= code && code <= -9800) {
+            msg = @"Connection failed: SSL problem (possibly the server doesn't support SSL or uses a bad certificate)";
+        }
     }
     
     if (!msg) {
