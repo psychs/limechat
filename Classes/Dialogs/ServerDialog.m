@@ -615,7 +615,7 @@
             [servers addObject:@"chat.freenode.net (freenode)"];
             [servers addObject:@"eu.undernet.org (Undernet)"];
             [servers addObject:@"irc.quakenet.org (QuakeNet)"];
-            [servers addObject:@"chat01.ustream.tv (Ustream)"];
+            [servers addObject:@"chat1.ustream.tv (Ustream)"];
         }
         else {
             [servers addObject:@"chat.freenode.net (freenode)"];
@@ -625,7 +625,7 @@
             [servers addObject:@"irc.quakenet.org (QuakeNet)"];
             [servers addObject:@"uk.quakenet.org (QuakeNet)"];
             [servers addObject:@"irc.mozilla.org (Mozilla)"];
-            [servers addObject:@"chat01.ustream.tv (Ustream)"];
+            [servers addObject:@"chat1.ustream.tv (Ustream)"];
         }
     }
     return servers;
