@@ -59,9 +59,7 @@
     
     while ([s hasPrefix:@"@"]) {
         NSString* t = [s getToken];
-        if (t.length) {
-            t = [t substringFromIndex:1];
-        }
+        t = [t substringFromIndex:1];
         
         int i = [t findCharacter:'='];
         if (i < 0) {
