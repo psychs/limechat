@@ -3742,11 +3742,10 @@ static NSDateFormatter* dateTimeFormatter;
     if (config.useSASL) {
         // If you send REQ to some servers (hyperion or etc) before PASS, the server refuses connection.
         // To avoid this, do not send REQ if SASL setting is off.
+        [self send:CAP, @"REQ", @"znc.in/server-time", nil];
+        
         if (config.nick.length && config.nickPassword.length) {
-            [self send:CAP, @"REQ", @"sasl", @"znc.in/server-time", nil];
-        }
-        else {
-            [self send:CAP, @"REQ", @"znc.in/server-time", nil];
+            [self send:CAP, @"REQ", @"sasl", nil];
         }
     }
     
