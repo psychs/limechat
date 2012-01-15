@@ -52,16 +52,29 @@
     
     sender = [IRCPrefix new];
     command = @"";
+    receivedAt = 0;
     params = [NSMutableArray new];
     
     NSMutableString* s = [line mutableCopy];
     
-    if ([s hasPrefix:@"@"]) {
+    while ([s hasPrefix:@"@"]) {
         NSString* t = [s getToken];
         t = [t substringFromIndex:1];
-        receivedAt = [t longLongValue];
+        
+        int i = [t findCharacter:'='];
+        if (i < 0) {
+            continue;
+        }
+        
+        NSString* key = [t substringToIndex:i];
+        NSString* value = [t substringFromIndex:i+1];
+        
+        if ([key isEqualToString:@"t"]) {
+            receivedAt = [value longLongValue];
+        }
     }
-    else {
+    
+    if (receivedAt == 0) {
         time(&receivedAt);
     }
     
