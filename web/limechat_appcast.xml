@@ -7,7 +7,7 @@
     <language>en</language>
     
     <item>
-      <title>LimeChat 2.28</title>
+      <title>LimeChat 2.29</title>
       <description><![CDATA[
         <html>
         <body>
@@ -22,19 +22,22 @@
             margin: 0.2em 0;
           }
         </style>
-        <h1>LimeChat 2.28</h1>
+        <h1>LimeChat 2.29</h1>
         <ul>
-	      <li>Fixed a redraw issue in log view.</li>
-	      <li>Do not set auto join when adding a channel with /join.</li>
+          <li>Added a setting for double click actions in user list.</li>
+          <li>Support ZNC capability to send server times when SASL is enabled.</li>
+          <li>Changed ustream host name to chat1.ustream.tv.</li>
+          <li>Show SSL errors more clearly.</li>
+          <li>Recognize afp:// URLs.</li>
         </ul>
         </body>
         </html>
       ]]></description>
-      <pubDate>Fri, 19 Aug 2011 12:20:44 -0700</pubDate>
+      <pubDate>Sun, 15 Jan 2012 18:52:25 -0800</pubDate>
   	  <sparkle:minimumSystemVersion>10.6.0</sparkle:minimumSystemVersion>
-      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/LimeChat_2.28.tbz"
-                  sparkle:version="2.28" length="1631191" type="application/octet-stream"
-                  sparkle:dsaSignature="MCwCFEqq0rpRuRAlb9cjM/mt3ike1eAKAhQtIbY9rHpnfhQPnWRAvHLwR2m7Cg=="/>
+      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/LimeChat_2.29.tbz"
+                  sparkle:version="2.29" length="1637724" type="application/octet-stream"
+                  sparkle:dsaSignature="MCwCFEPD54AM9UNOpRDfS+Yv/quSyzHIAhRpJiOdS0B3R98nPSjUdJclYBeopA=="/>
     </item>
     
     <item>
