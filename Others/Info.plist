@@ -2,36 +2,26 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CFBundleInfoDictionaryVersion</key>
-	<string>6.0</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
+	<key>CFBundleGetInfoString</key>
+	<string>LimeChat for Mac, Copyright 2007-2012 Satoshi Nakagawa</string>
 	<key>CFBundleIconFile</key>
 	<string>application.icns</string>
 	<key>CFBundleIdentifier</key>
 	<string>net.limechat.LimeChat</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>${PRODUCT_NAME}</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.28</string>
-	<key>CFBundleVersion</key>
-	<string>2.28</string>
-	<key>LSMinimumSystemVersion</key>
-	<string>10.6.0</string>
+	<string>2.29</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
-	<key>NSMainNibFile</key>
-	<string>MainMenu</string>
-	<key>NSPrincipalClass</key>
-	<string>LimeChatApplication</string>
-	<key>NSHumanReadableCopyright</key>
-	<string>Copyright 2007-2011 Satoshi Nakagawa</string>
-	<key>CFBundleGetInfoString</key>
-	<string>LimeChat for Mac, Copyright 2007-2011 Satoshi Nakagawa</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -44,8 +34,18 @@
 			</array>
 		</dict>
 	</array>
+	<key>CFBundleVersion</key>
+	<string>2.29</string>
 	<key>LCApplicationName</key>
 	<string>LimeChat for Mac</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>10.6.0</string>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright 2007-2012 Satoshi Nakagawa</string>
+	<key>NSMainNibFile</key>
+	<string>MainMenu</string>
+	<key>NSPrincipalClass</key>
+	<string>LimeChatApplication</string>
 	<key>SUEnableAutomaticChecks</key>
 	<true/>
 	<key>SUFeedURL</key>

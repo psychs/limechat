@@ -1018,26 +1018,7 @@
     }
 }
 
-- (void)memberListDoubleClicked:(id)sender
-{
-    MemberListView* view = sender;
-    NSPoint pt = [window mouseLocationOutsideOfEventStream];
-    pt = [view convertPoint:pt fromView:nil];
-    int n = [view rowAtPoint:pt];
-    if (n >= 0) {
-        if ([[view selectedRowIndexes] count] > 0) {
-            [view selectItemAtIndex:n];
-        }
-        [self whoisSelectedMembers:nil deselect:NO];
-    }
-}
-
-- (void)onMemberWhois:(id)sender
-{
-    [self whoisSelectedMembers:sender deselect:YES];
-}
-
-- (void)onMemberTalk:(id)sender
+- (void)talkSelectedMembers:(id)sender deselect:(BOOL)deselect
 {
     IRCClient* u = world.selectedClient;
     if (!u) return;
@@ -1050,7 +1031,41 @@
         [world select:c];
     }
     
-    [self deselectMembers:sender];
+    if (deselect) {
+        [self deselectMembers:sender];
+    }
+}
+
+- (void)memberListDoubleClicked:(id)sender
+{
+    MemberListView* view = sender;
+    NSPoint pt = [window mouseLocationOutsideOfEventStream];
+    pt = [view convertPoint:pt fromView:nil];
+    int n = [view rowAtPoint:pt];
+    if (n >= 0) {
+        if ([[view selectedRowIndexes] count] > 0) {
+            [view selectItemAtIndex:n];
+        }
+        
+        switch ([Preferences doubleClickUserAction]) {
+            case DOUBLE_CLICK_USER_ACTION_TALK:
+                [self talkSelectedMembers:nil deselect:NO];
+                break;
+            case DOUBLE_CLICK_USER_ACTION_WHOIS:
+                [self whoisSelectedMembers:nil deselect:NO];
+                break;
+        }
+    }
+}
+
+- (void)onMemberWhois:(id)sender
+{
+    [self whoisSelectedMembers:sender deselect:YES];
+}
+
+- (void)onMemberTalk:(id)sender
+{
+    [self talkSelectedMembers:sender deselect:YES];
 }
 
 - (void)changeOp:(id)sender mode:(char)mode value:(BOOL)value

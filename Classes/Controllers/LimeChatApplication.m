@@ -2,6 +2,7 @@
 // You can redistribute it and/or modify it under the terms of the GPL version 2 (see the file GPL.txt).
 
 #import "LimeChatApplication.h"
+#import "Preferences.h"
 
 
 enum {
@@ -20,6 +21,9 @@ enum {
         // migrate from the old .plist
         CFPreferencesAddSuitePreferencesToApp(kCFPreferencesCurrentApplication, CFSTR("LimeChat"));
 #endif
+        
+        [Preferences migrate];
+        [Preferences initPreferences];
     }
     return self;
 }

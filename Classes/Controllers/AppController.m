@@ -74,10 +74,6 @@
         }
     }
     
-    [self prelude];
-    
-    [Preferences initPreferences];
-    
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(themeDidChange:) name:ThemeDidChangeNotification object:nil];
     
@@ -987,6 +983,8 @@ typedef enum {
         case TAB_UNREAD:
             [self move:MOVE_DOWN target:MOVE_UNREAD];
             break;
+        default:
+            break;
     }
 }
 
@@ -998,6 +996,8 @@ typedef enum {
             break;
         case TAB_UNREAD:
             [self move:MOVE_UP target:MOVE_UNREAD];
+            break;
+        default:
             break;
     }
 }
@@ -1089,14 +1089,6 @@ typedef enum {
     [self inputHandler:@selector(inputHistoryUp:) code:KEY_UP mods:NSAlternateKeyMask];
     [self inputHandler:@selector(inputHistoryDown:) code:KEY_DOWN mods:0];
     [self inputHandler:@selector(inputHistoryDown:) code:KEY_DOWN mods:NSAlternateKeyMask];
-}
-
-#pragma mark -
-#pragma mark Migration
-
-- (void)prelude
-{
-    [Preferences migrate];
 }
 
 #pragma mark -

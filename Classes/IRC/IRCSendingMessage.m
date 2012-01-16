@@ -79,7 +79,7 @@
                 firstColonOrSpace = (c == ' ' || c == ':');
             }
             
-            if (forceCompleteColon || completeColon && (s.length == 0 || firstColonOrSpace)) {
+            if (forceCompleteColon || (completeColon && (s.length == 0 || firstColonOrSpace))) {
                 [d appendString:@":"];
             }
             [d appendString:s];

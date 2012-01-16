@@ -68,7 +68,6 @@
     [policy release];
     [sink release];
     [scroller release];
-    [js release];
     [autoScroller release];
     
     [menu release];
@@ -817,6 +816,7 @@
     if ([scrollView respondsToSelector:@selector(setAllowsHorizontalScrolling:)]) {
         [(id)scrollView setAllowsHorizontalScrolling:NO];
     }
+    [[view windowScriptObject] evaluateWebScript:@"document.body.style.overflowX='hidden';"];
     
     NSScroller* old = [scrollView verticalScroller];
     if (old && ![old isKindOfClass:[MarkedScroller class]]) {
@@ -838,9 +838,7 @@
 
 - (void)webView:(WebView *)sender didClearWindowObject:(WebScriptObject *)windowObject forFrame:(WebFrame *)frame
 {
-    [js release];
-    js = [windowObject retain];
-    [js setValue:sink forKey:@"app"];
+    [[view windowScriptObject] setValue:sink forKey:@"app"];
 }
 
 - (void)webView:(WebView *)sender didFinishLoadForFrame:(WebFrame *)frame
@@ -945,11 +943,11 @@
          ];
     }
     
-    [js evaluateWebScript:s];
+    [[view windowScriptObject] evaluateWebScript:s];
     
     // evaluate theme js
     if (theme.js.content.length) {
-        [js evaluateWebScript:theme.js.content];
+        [[view windowScriptObject] evaluateWebScript:theme.js.content];
     }
 }
 

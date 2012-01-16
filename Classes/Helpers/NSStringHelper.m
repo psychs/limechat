@@ -361,7 +361,7 @@ BOOL isUnicharDigit(unichar c)
     
     static OnigRegexp* regex = nil;
     if (!regex) {
-        NSString* pattern = @"(?<![a-z0-9_])(https?|ftp|itms)://([^\\s!\"#$\\&'()*+,/;<=>?\\[\\\\\\]\\^_`{|}　、，。．・…]+)(/[^\\s\"`<>　、，。．・…]*)?";
+        NSString* pattern = @"(?<![a-z0-9_])(https?|ftp|itms|afp)://([^\\s!\"#$\\&'()*+,/;<=>?\\[\\\\\\]\\^_`{|}　、，。．・…]+)(/[^\\s\"`<>　、，。．・…]*)?";
         regex = [[OnigRegexp compileIgnorecase:pattern] retain];
     }
     
@@ -660,7 +660,7 @@ BOOL isUnicharDigit(unichar c)
         else if (c == '\\') {
             escaped = YES;
         }
-        else if (useAnchor && c == anchor || !useAnchor && c == ' ') {
+        else if ((useAnchor && c == anchor) || (!useAnchor && c == ' ')) {
             if (useAnchor) {
                 ++i;
             }

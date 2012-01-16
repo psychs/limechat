@@ -29,9 +29,9 @@
 	<key>NSPrincipalClass</key>
 	<string>LimeChatApplication</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright 2007-2011 Satoshi Nakagawa</string>
+	<string>Copyright 2007-2012 Satoshi Nakagawa</string>
 	<key>CFBundleGetInfoString</key>
-	<string>LimeChat for Mac, Copyright 2007-2011 Satoshi Nakagawa</string>
+	<string>LimeChat for Mac, Copyright 2007-2012 Satoshi Nakagawa</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
