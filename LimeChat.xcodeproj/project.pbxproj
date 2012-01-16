@@ -845,6 +845,8 @@
 		78A8C0C111737F660044E7A1 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				782FCF871173824C007BE697 /* LimeChatApplication.h */,
+				782FCF881173824C007BE697 /* LimeChatApplication.m */,
 				78A8C0C211737F660044E7A1 /* AppController.h */,
 				78A8C0C311737F660044E7A1 /* AppController.m */,
 				78A8C0C611737F660044E7A1 /* MenuController.h */,
@@ -855,8 +857,6 @@
 				780844D1134CD34B003BB84C /* ImageDownloadManager.m */,
 				78A8C0C811737F660044E7A1 /* NickCompletinStatus.h */,
 				78A8C0C911737F660044E7A1 /* NickCompletinStatus.m */,
-				782FCF871173824C007BE697 /* LimeChatApplication.h */,
-				782FCF881173824C007BE697 /* LimeChatApplication.m */,
 			);
 			name = Controllers;
 			path = Classes/Controllers;

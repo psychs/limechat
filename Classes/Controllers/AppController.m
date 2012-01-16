@@ -74,10 +74,6 @@
         }
     }
     
-    [self prelude];
-    
-    [Preferences initPreferences];
-    
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(themeDidChange:) name:ThemeDidChangeNotification object:nil];
     
@@ -1093,14 +1089,6 @@ typedef enum {
     [self inputHandler:@selector(inputHistoryUp:) code:KEY_UP mods:NSAlternateKeyMask];
     [self inputHandler:@selector(inputHistoryDown:) code:KEY_DOWN mods:0];
     [self inputHandler:@selector(inputHistoryDown:) code:KEY_DOWN mods:NSAlternateKeyMask];
-}
-
-#pragma mark -
-#pragma mark Migration
-
-- (void)prelude
-{
-    [Preferences migrate];
 }
 
 #pragma mark -
