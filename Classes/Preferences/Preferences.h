@@ -94,6 +94,10 @@ typedef enum {
 + (NSString*)transcriptFolder;
 + (void)setTranscriptFolder:(NSString*)value;
 
++ (NSArray *)inlineImageIgnoreList;
++ (void)setInlineImageIgnoreList:(NSArray *)value;
+
+
 + (NSString*)titleForEvent:(GrowlNotificationType)event;
 + (NSString*)soundForEvent:(GrowlNotificationType)event;
 + (void)setSound:(NSString*)value forEvent:(GrowlNotificationType)event;
