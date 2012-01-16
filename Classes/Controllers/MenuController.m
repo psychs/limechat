@@ -1028,7 +1028,7 @@
         if ([[view selectedRowIndexes] count] > 0) {
             [view selectItemAtIndex:n];
         }
-        [self whoisSelectedMembers:nil deselect:NO];
+        [self onMemberTalk:nil];
     }
 }
 
