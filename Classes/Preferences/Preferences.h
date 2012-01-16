@@ -22,6 +22,11 @@ typedef enum {
 } MainWindowLayoutType;
 
 typedef enum {
+    DOUBLE_CLICK_USER_ACTION_TALK = 0,
+    DOUBLE_CLICK_USER_ACTION_WHOIS,
+} DoubleClickUserActionType;
+
+typedef enum {
     KEYWORD_MATCH_PARTIAL = 0,
     KEYWORD_MATCH_EXACT,
 } KeywordMatchType;
@@ -40,6 +45,7 @@ typedef enum {
 + (NSString*)dccMyaddress;
 + (BOOL)autoRejoin;
 + (BOOL)confirmQuit;
++ (DoubleClickUserActionType)doubleClickUserAction;
 + (BOOL)connectOnDoubleclick;
 + (BOOL)disconnectOnDoubleclick;
 + (BOOL)joinOnDoubleclick;

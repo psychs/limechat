@@ -38,6 +38,12 @@
     return [ud boolForKey:@"Preferences.General.confirm_quit"];
 }
 
++ (DoubleClickUserActionType)doubleClickUserAction
+{
+    NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+    return [ud integerForKey:@"Preferences.General.doubleClickUser"];
+}
+
 + (BOOL)connectOnDoubleclick
 {
     NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
@@ -816,6 +822,7 @@ static NSMutableArray* excludeWords;
     [d setObject:@"" forKey:@"Preferences.Dcc.myaddress"];
     [d setBool:NO forKey:@"Preferences.General.auto_rejoin"];
     [d setBool:YES forKey:@"Preferences.General.confirm_quit"];
+    [d setInt:DOUBLE_CLICK_USER_ACTION_TALK forKey:@"Preferences.General.doubleClickUser"];
     [d setBool:NO forKey:@"Preferences.General.connect_on_doubleclick"];
     [d setBool:NO forKey:@"Preferences.General.disconnect_on_doubleclick"];
     [d setBool:NO forKey:@"Preferences.General.join_on_doubleclick"];
@@ -917,8 +924,19 @@ static NSMutableArray* excludeWords;
                 [Preferences setSound:s forEvent:i];
             }
         }
+    }
+    
+    if (version <= 2) {
+        // set double click action in user list
         
-        [ud setInteger:2 forKey:@"version"];
+        if ([NSLocale prefersJapaneseLanguage]) {
+            [ud setInteger:DOUBLE_CLICK_USER_ACTION_WHOIS forKey:@"Preferences.General.doubleClickUser"];
+        }
+        else {
+            [ud setInteger:DOUBLE_CLICK_USER_ACTION_TALK forKey:@"Preferences.General.doubleClickUser"];
+        }
+        
+        [ud setInteger:3 forKey:@"version"];
         [ud synchronize];
     }
 }
