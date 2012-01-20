@@ -2500,7 +2500,7 @@ static NSDateFormatter* dateTimeFormatter;
                 c = [world createTalk:nick client:self];
                 newTalk = YES;
             }
-            else if (c && type != LINE_TYPE_NOTICE) {
+            else if (c && type != LINE_TYPE_NOTICE && [Preferences bounceIconOnEveryPrivateMessage]) {
                 moreTalk = YES;
             }
             
