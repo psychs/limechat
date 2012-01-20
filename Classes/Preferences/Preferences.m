@@ -373,15 +373,15 @@
         case GROWL_HIGHLIGHT:
             return @"Highlight";
         case GROWL_NEW_TALK:
-            return @"New talk";
+            return @"New private message";
         case GROWL_CHANNEL_MSG:
-            return @"Channel text";
+            return @"Channel message";
         case GROWL_CHANNEL_NOTICE:
             return @"Channel notice";
         case GROWL_TALK_MSG:
-            return @"Talk text";
+            return @"Private message";
         case GROWL_TALK_NOTICE:
-            return @"Talk notice";
+            return @"Private notice";
         case GROWL_KICKED:
             return @"Kicked";
         case GROWL_INVITED:

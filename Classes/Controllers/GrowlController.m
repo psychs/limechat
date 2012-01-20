@@ -9,11 +9,11 @@
 #define GROWL_MSG_LOGIN                     @"Logged in"
 #define GROWL_MSG_DISCONNECT                @"Disconnected"
 #define GROWL_MSG_HIGHLIGHT                 @"Highlight message received"
-#define GROWL_MSG_NEW_TALK                  @"New talk started"
+#define GROWL_MSG_NEW_TALK                  @"New private message started"
 #define GROWL_MSG_CHANNEL_MSG               @"Channel message received"
 #define GROWL_MSG_CHANNEL_NOTICE            @"Channel notice received"
-#define GROWL_MSG_TALK_MSG                  @"Talk message received"
-#define GROWL_MSG_TALK_NOTICE               @"Talk notice received"
+#define GROWL_MSG_TALK_MSG                  @"Private message received"
+#define GROWL_MSG_TALK_NOTICE               @"Private notice received"
 #define GROWL_MSG_KICKED                    @"Kicked out from channel"
 #define GROWL_MSG_INVITED                   @"Invited to channel"
 #define GROWL_MSG_FILE_RECEIVE_REQUEST      @"File receive requested"
@@ -61,8 +61,7 @@
 		case GROWL_NEW_TALK:
 			kind = GROWL_MSG_NEW_TALK;
 			priority = 1;
-			title = @"New Talk";
-			//title = [NSString stringWithFormat:@"New Talk: %@", title];
+			title = @"New Private Message";
 			break;
 		case GROWL_CHANNEL_MSG:
 			kind = GROWL_MSG_CHANNEL_MSG;
@@ -73,13 +72,11 @@
 			break;
 		case GROWL_TALK_MSG:
 			kind = GROWL_MSG_TALK_MSG;
-			title = @"Talk";
-			//title = [NSString stringWithFormat:@"Talk: %@", title];
+			title = @"Private Message";
 			break;
 		case GROWL_TALK_NOTICE:
 			kind = GROWL_MSG_TALK_NOTICE;
-			title = @"Talk Notice";
-			//title = [NSString stringWithFormat:@"Talk Notice: %@", title];
+			title = @"Private Notice";
 			break;
 		case GROWL_KICKED:
 			kind = GROWL_MSG_KICKED;
