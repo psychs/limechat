@@ -7,16 +7,12 @@
     <language>en-us</language>
 
     <item>
-      <title>2.29</title>
-      <link>http://limechat.net/mac/#v2.29</link>
-      <pubDate>Sun, 15 Jan 2012 18:53:00 -0800</pubDate>
+      <title>2.30</title>
+      <link>http://limechat.net/mac/#v2.30</link>
+      <pubDate>Fri, 20 Jan 2012 11:04:45 -0800</pubDate>
       <content:encoded><![CDATA[
   		<ul>
-          <li>Added a setting for double click actions in user list.</li>
-          <li>Support ZNC capability to send server times when SASL is enabled.</li>
-          <li>Changed ustream host name to chat1.ustream.tv.</li>
-          <li>Show SSL errors more clearly.</li>
-          <li>Recognize afp:// URLs.</li>
+          <li>Added an option to bounce dock icon on every unread private message.</li>
         </ul>
       ]]></content:encoded>
     </item>
