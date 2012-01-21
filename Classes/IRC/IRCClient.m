@@ -2156,6 +2156,7 @@ static NSDateFormatter* dateTimeFormatter;
     int colorNumber = 0;
     NSArray* keywords = nil;
     NSArray* excludeWords = nil;
+    NSString* clickContext = nil;
     
     if (time.length) {
         time = [time stringByAppendingString:@" "];
@@ -2175,6 +2176,8 @@ static NSDateFormatter* dateTimeFormatter;
         else {
             nickStr = [self formatNick:nick channel:channel];
         }
+        
+        clickContext = [NSString stringWithFormat:@"nick %d %@", uid, nick];
     }
     
     if (nick && [nick isEqualToString:myNick]) {
@@ -2209,7 +2212,7 @@ static NSDateFormatter* dateTimeFormatter;
     c.lineType = type;
     c.memberType = memberType;
     c.nickInfo = nick;
-    c.clickInfo = nil;
+    c.clickInfo = clickContext;
     c.identified = identified;
     c.nickColorNumber = colorNumber;
     c.keywords = keywords;

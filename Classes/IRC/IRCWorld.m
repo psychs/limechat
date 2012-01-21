@@ -873,6 +873,18 @@
                 }
             }
         }
+        else if ([kind isEqualToString:@"nick"]) {
+            if (ary.count >= 3) {
+                int uid = [[ary objectAtIndex:1] intValue];
+                NSString* nick = [ary objectAtIndex:2];
+                IRCClient* u = [self findClientById:uid];
+                IRCChannel* c = [u findChannel:nick];
+                if (!c) {
+                    c = [self createTalk:nick client:u];
+                }
+                [self select:c];
+            }
+        }
     }
 }
 
