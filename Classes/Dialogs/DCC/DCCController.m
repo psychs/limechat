@@ -279,6 +279,9 @@
 - (void)destroyReceiverAtIndex:(int)i
 {
     DCCReceiver* e = [receivers objectAtIndex:i];
+    e.delegate = nil;
+    [e close];
+
     NSProgressIndicator* bar = e.progressBar;
     if (bar) {
         [bar removeFromSuperview];
@@ -290,6 +293,9 @@
 - (void)destroySenderAtIndex:(int)i
 {
     DCCSender* e = [senders objectAtIndex:i];
+    e.delegate = nil;
+    [e close];
+    
     NSProgressIndicator* bar = e.progressBar;
     if (bar) {
         [bar removeFromSuperview];
