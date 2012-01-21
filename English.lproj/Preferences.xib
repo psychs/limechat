@@ -754,7 +754,7 @@
 											<object class="NSTextField" id="645503749">
 												<reference key="NSNextResponder" ref="367708041"/>
 												<int key="NSvFlags">256</int>
-												<string key="NSFrame">{{14, 188}, {64, 17}}</string>
+												<string key="NSFrame">{{13, 188}, {64, 17}}</string>
 												<reference key="NSSuperview" ref="367708041"/>
 												<reference key="NSNextKeyView" ref="434159682"/>
 												<bool key="NSEnabled">YES</bool>
@@ -771,7 +771,7 @@
 											<object class="NSPopUpButton" id="434159682">
 												<reference key="NSNextResponder" ref="367708041"/>
 												<int key="NSvFlags">256</int>
-												<string key="NSFrame">{{80, 182}, {246, 26}}</string>
+												<string key="NSFrame">{{79, 182}, {247, 26}}</string>
 												<reference key="NSSuperview" ref="367708041"/>
 												<reference key="NSNextKeyView" ref="905881487"/>
 												<bool key="NSEnabled">YES</bool>
@@ -931,7 +931,7 @@
 											<object class="NSTextField" id="342310367">
 												<reference key="NSNextResponder" ref="367708041"/>
 												<int key="NSvFlags">268</int>
-												<string key="NSFrame">{{26, 219}, {178, 17}}</string>
+												<string key="NSFrame">{{14, 219}, {175, 17}}</string>
 												<reference key="NSSuperview" ref="367708041"/>
 												<reference key="NSNextKeyView" ref="399851948"/>
 												<bool key="NSEnabled">YES</bool>
@@ -971,7 +971,7 @@
 											<object class="NSPopUpButton" id="173926742">
 												<reference key="NSNextResponder" ref="367708041"/>
 												<int key="NSvFlags">268</int>
-												<string key="NSFrame">{{178, 151}, {148, 26}}</string>
+												<string key="NSFrame">{{178, 150}, {148, 26}}</string>
 												<reference key="NSSuperview" ref="367708041"/>
 												<reference key="NSNextKeyView" ref="754348382"/>
 												<string key="NSReuseIdentifierKey">_NS:868</string>
@@ -1030,7 +1030,7 @@
 											<object class="NSTextField" id="905881487">
 												<reference key="NSNextResponder" ref="367708041"/>
 												<int key="NSvFlags">256</int>
-												<string key="NSFrame">{{14, 157}, {162, 17}}</string>
+												<string key="NSFrame">{{14, 156}, {162, 17}}</string>
 												<reference key="NSSuperview" ref="367708041"/>
 												<reference key="NSNextKeyView" ref="173926742"/>
 												<bool key="NSEnabled">YES</bool>
@@ -1811,7 +1811,7 @@
 															<object class="NSTableView" id="687623475">
 																<reference key="NSNextResponder" ref="108631011"/>
 																<int key="NSvFlags">256</int>
-																<string key="NSFrameSize">{403, 171}</string>
+																<string key="NSFrameSize">{403, 178}</string>
 																<reference key="NSSuperview" ref="108631011"/>
 																<reference key="NSNextKeyView" ref="341263181"/>
 																<bool key="NSEnabled">YES</bool>
@@ -1996,7 +1996,7 @@
 																<int key="NSTableViewGroupRowStyle">1</int>
 															</object>
 														</object>
-														<string key="NSFrame">{{1, 17}, {403, 171}}</string>
+														<string key="NSFrame">{{1, 17}, {403, 178}}</string>
 														<reference key="NSSuperview" ref="945477186"/>
 														<reference key="NSNextKeyView" ref="687623475"/>
 														<reference key="NSDocView" ref="687623475"/>
@@ -2040,7 +2040,7 @@
 													</object>
 													<reference ref="704437210"/>
 												</object>
-												<string key="NSFrame">{{17, 17}, {405, 189}}</string>
+												<string key="NSFrame">{{17, 17}, {405, 196}}</string>
 												<reference key="NSSuperview" ref="528046259"/>
 												<reference key="NSNextKeyView" ref="97585446"/>
 												<int key="NSsFlags">133682</int>
@@ -4284,8 +4284,8 @@
 							<reference ref="905881487"/>
 							<reference ref="173926742"/>
 							<reference ref="9719432"/>
-							<reference ref="399851948"/>
 							<reference ref="957161030"/>
+							<reference ref="399851948"/>
 						</object>
 						<reference key="parent" ref="320289833"/>
 					</object>
