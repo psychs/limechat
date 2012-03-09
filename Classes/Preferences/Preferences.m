@@ -104,6 +104,12 @@
     return [ud boolForKey:@"Preferences.General.stop_growl_on_active"];
 }
 
++ (BOOL)bounceIconOnEveryPrivateMessage
+{
+    NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+    return [ud boolForKey:@"Preferences.General.bounceIconOnEveryPrivateMessage"];
+}
+
 + (BOOL)autoJoinOnInvited
 {
     NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
@@ -367,15 +373,15 @@
         case GROWL_HIGHLIGHT:
             return @"Highlight";
         case GROWL_NEW_TALK:
-            return @"New talk";
+            return @"New private message";
         case GROWL_CHANNEL_MSG:
-            return @"Channel text";
+            return @"Channel message";
         case GROWL_CHANNEL_NOTICE:
             return @"Channel notice";
         case GROWL_TALK_MSG:
-            return @"Talk text";
+            return @"Private message";
         case GROWL_TALK_NOTICE:
-            return @"Talk notice";
+            return @"Private notice";
         case GROWL_KICKED:
             return @"Kicked";
         case GROWL_INVITED:
@@ -834,6 +840,7 @@ static NSMutableArray* excludeWords;
     [d setBool:YES forKey:@"Preferences.General.show_join_leave"];
     [d setBool:YES forKey:@"Preferences.General.use_growl"];
     [d setBool:YES forKey:@"Preferences.General.stop_growl_on_active"];
+    [d setBool:YES forKey:@"Preferences.General.bounceIconOnEveryPrivateMessage"];
     [d setBool:YES forKey:@"eventHighlightGrowl"];
     [d setBool:YES forKey:@"eventNewtalkGrowl"];
     [d setInt:TAB_COMPLETE_NICK forKey:@"Preferences.General.tab_action"];

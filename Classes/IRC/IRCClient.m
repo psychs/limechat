@@ -2495,9 +2495,13 @@ static NSDateFormatter* dateTimeFormatter;
             // talk
             IRCChannel* c = [self findChannel:nick];
             BOOL newTalk = NO;
+            BOOL moreTalk = NO;
             if (!c && type != LINE_TYPE_NOTICE) {
                 c = [world createTalk:nick client:self];
                 newTalk = YES;
+            }
+            else if (c && type != LINE_TYPE_NOTICE && [Preferences bounceIconOnEveryPrivateMessage]) {
+                moreTalk = YES;
             }
             
             BOOL keyword = [self printBoth:c type:type nick:nick text:text identified:identified receivedAt:m.receivedAt];
@@ -2527,7 +2531,7 @@ static NSDateFormatter* dateTimeFormatter;
                 id t = c ?: (id)self;
                 [self setUnreadState:t];
                 if (keyword) [self setKeywordState:t];
-                if (newTalk) [self setNewTalkState:t];
+                if (newTalk || moreTalk) [self setNewTalkState:t];
                 
                 GrowlNotificationType kind = keyword ? GROWL_HIGHLIGHT : newTalk ? GROWL_NEW_TALK : GROWL_TALK_MSG;
                 [self notifyText:kind target:(c ?: (id)target) nick:nick text:text];

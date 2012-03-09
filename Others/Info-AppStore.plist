@@ -11,15 +11,15 @@
 	<key>CFBundleIconFile</key>
 	<string>application.icns</string>
 	<key>CFBundleIdentifier</key>
-	<string>net.limechat.LimeChat-AppStore</string>
+	<string>${LIMECHAT_BUNDLE_IDENTIFIER}</string>
 	<key>CFBundleName</key>
 	<string>${PRODUCT_NAME}</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleVersion</key>
-	<string>2.28</string>
+	<string>2.30</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.28</string>
+	<string>2.30</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>10.6.6</string>
 	<key>CFBundleSignature</key>

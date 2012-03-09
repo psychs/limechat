@@ -1845,6 +1845,7 @@
 					DEBUG,
 				);
 				INFOPLIST_FILE = "Others/Info-AppStore.plist";
+				LIMECHAT_BUNDLE_IDENTIFIER = "net.limechat.LimeChat-AppStore_debug";
 			};
 			name = Debug;
 		};
@@ -1854,6 +1855,7 @@
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Satoshi Nakagawa";
 				GCC_PREPROCESSOR_DEFINITIONS = TARGET_APP_STORE;
 				INFOPLIST_FILE = "Others/Info-AppStore.plist";
+				LIMECHAT_BUNDLE_IDENTIFIER = "net.limechat.LimeChat-AppStore";
 			};
 			name = Release;
 		};
@@ -1892,6 +1894,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				LIMECHAT_BUNDLE_IDENTIFIER = net.limechat.LimeChat_debug;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
@@ -1926,6 +1929,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INSTALL_PATH = /Applications;
+				LIMECHAT_BUNDLE_IDENTIFIER = net.limechat.LimeChat;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_LDFLAGS = (
 					"-framework",
