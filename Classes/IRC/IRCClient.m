@@ -3123,6 +3123,7 @@ static NSDateFormatter* dateTimeFormatter;
         if ([s hasPrefix:@"/"]) {
             s = [s substringFromIndex:1];
         }
+        s=[s stringByReplacingOccurrencesOfString:@"$NICK" withString:config.nick options:NSCaseInsensitiveSearch range:NSRangeFromString(s)];
         [self sendCommand:s completeTarget:NO target:nil];
     }
     
