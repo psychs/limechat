@@ -3123,8 +3123,8 @@ static NSDateFormatter* dateTimeFormatter;
         if ([s hasPrefix:@"/"]) {
             s = [s substringFromIndex:1];
         }
-        s=[s stringByReplacingOccurrencesOfString:@"$NICK" withString:config.nick options:NSCaseInsensitiveSearch range:NSRangeFromString(s)];
-        [self sendCommand:s completeTarget:NO target:nil];
+        NSString *r=[[s stringByReplacingOccurrencesOfString:@"$NICK" withString:config.nick options:NSCaseInsensitiveSearch range:NSMakeRange(0, [s length])] autorelease];
+        [self sendCommand:r completeTarget:NO target:nil];
     }
     
     for (IRCChannel* c in channels) {
