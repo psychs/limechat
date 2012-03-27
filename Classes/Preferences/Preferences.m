@@ -334,6 +334,20 @@
     [ud synchronize];
 }
 
++ (NSString*)gistUrl
+{
+    NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+    NSString* str = [ud stringForKey:@"Preferences.Advanced.gistUrl"];
+    return str;
+}
+
++ (void)setGistUrl:(NSString*)value
+{
+    NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+    [ud setObject:value forKey:@"Preferences.Advanced.gistUrl"];
+    [ud synchronize];
+}
+
 #pragma mark -
 #pragma mark Max Log Lines
 
@@ -865,6 +879,7 @@ static NSMutableArray* excludeWords;
     [d setInt:1096 forKey:@"Preferences.Dcc.first_port"];
     [d setInt:1115 forKey:@"Preferences.Dcc.last_port"];
     [d setInt:60 forKey:@"Preferences.Advanced.pongInterval"];
+    [d setObject:@"https://gist.github.com/" forKey:@"Preferences.Advanced.gistUrl"];
     [d setInt:300 forKey:@"Preferences.General.max_log_lines"];
     [d setObject:@"~/Documents/LimeChat Transcripts" forKey:@"Preferences.General.transcript_folder"];
     [d setInt:0 forKey:@"Preferences.General.hotkey_key_code"];

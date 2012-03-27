@@ -94,6 +94,8 @@ typedef enum {
 
 + (int)pongInterval;
 + (void)setPongInterval:(int)value;
++ (NSString*)gistUrl;
++ (void)setGistUrl:(NSString*)value;
 
 + (int)maxLogLines;
 + (void)setMaxLogLines:(int)value;

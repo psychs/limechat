@@ -148,6 +148,16 @@
     [Preferences setPongInterval:value];
 }
 
+- (NSString*)gistUrl
+{
+    return [Preferences gistUrl];
+}
+
+- (void)setGistUrl:(NSString*)value
+{
+    [Preferences setGistUrl:value];
+}
+
 - (BOOL)validateValue:(id *)value forKey:(NSString *)key error:(NSError **)error
 {
     if ([key isEqualToString:@"maxLogLines"]) {
