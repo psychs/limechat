@@ -100,6 +100,11 @@
     return config.password ?: @"";
 }
 
+- (NSString*)command
+{
+    return config.command ?: @"";
+}
+
 - (BOOL)isChannel
 {
     return config.type == CHANNEL_TYPE_CHANNEL;

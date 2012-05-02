@@ -18,6 +18,7 @@
 
 @synthesize mode;
 @synthesize topic;
+@synthesize command;
 
 @synthesize autoOp;
 
@@ -36,6 +37,7 @@
         password = @"";
         mode = @"+sn";
         topic = @"";
+        command = @"";
     }
     return self;
 }
@@ -55,6 +57,7 @@
     
     mode = [[dic stringForKey:@"mode"] retain] ?: @"";
     topic = [[dic stringForKey:@"topic"] retain] ?: @"";
+    command = [[dic stringForKey:@"command"] retain] ?: @"";
     
     [autoOp addObjectsFromArray:[dic arrayForKey:@"autoop"]];
     
@@ -68,6 +71,7 @@
     
     [mode release];
     [topic release];
+    [command release];
     
     [autoOp release];
     
@@ -89,6 +93,7 @@
     
     if (mode) [dic setObject:mode forKey:@"mode"];
     if (topic) [dic setObject:topic forKey:@"topic"];
+    if (command) [dic setObject:command forKey:@"command"];
     
     if (autoOp) [dic setObject:autoOp forKey:@"autoop"];
     

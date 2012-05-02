@@ -23,6 +23,7 @@ typedef enum {
     
     NSString* mode;
     NSString* topic;
+    NSString* command;
     
     NSMutableArray* autoOp;
 }
@@ -38,6 +39,7 @@ typedef enum {
 
 @property (nonatomic, retain) NSString* mode;
 @property (nonatomic, retain) NSString* topic;
+@property (nonatomic, retain) NSString* command;
 
 @property (nonatomic, readonly) NSMutableArray* autoOp;
 

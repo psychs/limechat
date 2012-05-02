@@ -19,6 +19,7 @@
     IBOutlet NSTextField* passwordText;
     IBOutlet NSTextField* modeText;
     IBOutlet NSTextField* topicText;
+    IBOutlet NSTextField* commandText;
     IBOutlet NSButton* autoJoinCheck;
     IBOutlet NSButton* consoleCheck;
     IBOutlet NSButton* growlCheck;

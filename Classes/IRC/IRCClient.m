@@ -654,6 +654,14 @@ static NSDateFormatter* dateTimeFormatter;
     if (!password.length) password = nil;
     
     [self send:JOIN, channel.name, password, nil];
+    
+    if (channel.config.command.length) {
+        NSString* s = channel.config.command;
+        if ([s hasPrefix:@"/"]) {
+            s = [s substringFromIndex:1];
+        }
+        [self sendCommand:s completeTarget:NO target:nil];
+    }
 }
 
 - (void)joinChannel:(IRCChannel*)channel password:(NSString*)password
@@ -664,6 +672,14 @@ static NSDateFormatter* dateTimeFormatter;
     if (!password.length) password = nil;
     
     [self send:JOIN, channel.name, password, nil];
+
+    if (channel.config.command.length) {
+        NSString* s = channel.config.command;
+        if ([s hasPrefix:@"/"]) {
+            s = [s substringFromIndex:1];
+        }
+        [self sendCommand:s completeTarget:NO target:nil];
+    }
 }
 
 - (void)partChannel:(IRCChannel*)channel
@@ -814,6 +830,18 @@ static NSDateFormatter* dateTimeFormatter;
         else {
             [self send:JOIN, target, pass, nil];
         }
+    }
+    
+    // send "commands to execute on joining this channel"
+    for (IRCChannel* c in chans) {
+        if (c.command.length) {
+            NSString* s = c.command;
+            if ([s hasPrefix:@"/"]) {
+                s = [s substringFromIndex:1];
+            }
+            [self sendCommand:s completeTarget:NO target:nil];
+        }
+
     }
 }
 
