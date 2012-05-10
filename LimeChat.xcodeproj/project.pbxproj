@@ -1738,7 +1738,7 @@
 					DEBUG,
 				);
 				INFOPLIST_FILE = "Others/Info-AppStore.plist";
-				LIMECHAT_BUNDLE_IDENTIFIER = "net.limechat.LimeChat-AppStore_debug";
+				LIMECHAT_BUNDLE_IDENTIFIER = "net.limechat.LimeChat-AppStore-debug";
 			};
 			name = Debug;
 		};
@@ -1787,7 +1787,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				LIMECHAT_BUNDLE_IDENTIFIER = net.limechat.LimeChat_debug;
+				LIMECHAT_BUNDLE_IDENTIFIER = "net.limechat.LimeChat-debug";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
