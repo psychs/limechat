@@ -149,8 +149,8 @@ static NSString* renderRange(NSString* body, attr_t attr, int start, int len)
     //
     // effects
     //
-    UniChar source[len];
-    CFStringGetCharacters((CFStringRef)body, CFRangeMake(0, len), source);
+    const UniChar* source = [body getCharactersBuffer];
+    if (!source) return body;
     
     attr_t currentAttr = 0;
     UniChar dest[len];

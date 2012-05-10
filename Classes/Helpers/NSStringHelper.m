@@ -19,7 +19,7 @@
     if (!buffer) {
         NSMutableData* data = [NSMutableData dataWithLength:len * sizeof(UniChar)];
         if (!data) return NULL;
-        [self getCharacters:[data mutableBytes]];
+        [self getCharacters:[data mutableBytes] range:NSMakeRange(0, len)];
         buffer = [data bytes];
         if (!buffer) return NULL;
     }
@@ -92,8 +92,10 @@
 - (NSArray*)splitIntoLines
 {
     int len = self.length;
-    UniChar buf[len];
-    [self getCharacters:buf range:NSMakeRange(0, len)];
+    const UniChar* buf = [self getCharactersBuffer];
+    if (!buf) {
+        return [NSArray array];
+    }
     
     NSMutableArray* lines = [NSMutableArray array];
     int start = 0;
@@ -269,12 +271,10 @@ BOOL isUnicharDigit(unichar c)
     int len = self.length;
     if (len == 0) return self;
     
-    int buflen = len * sizeof(unichar);
+    const UniChar* src = [self getCharactersBuffer];
+    if (!src) return self;
     
-    unichar* src = alloca(buflen);
-    [self getCharacters:src];
-    
-    unichar* buf = alloca(buflen);
+    UniChar buf[len];
     int pos = 0;
     
     for (int i=0; i<len; i++) {
@@ -396,8 +396,8 @@ BOOL isUnicharDigit(unichar c)
     NSString* url = [self substringWithRange:r];
     
     int len = url.length;
-    UniChar buf[len];
-    CFStringGetCharacters((CFStringRef)url, CFRangeMake(0, len), buf);
+    const UniChar* buf = [self getCharactersBuffer];
+    if (!buf) return NSMakeRange(NSNotFound, 0);
     
     int paren = 0;
     
