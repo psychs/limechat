@@ -13,6 +13,7 @@
 
 @interface NSString (NSStringHelper)
 
+- (const UniChar*)getCharactersBuffer;
 - (BOOL)isEqualNoCase:(NSString*)other;
 - (BOOL)contains:(NSString*)str;
 - (BOOL)containsIgnoringCase:(NSString*)str;
