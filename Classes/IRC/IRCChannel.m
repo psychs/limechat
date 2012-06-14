@@ -283,7 +283,7 @@
     
     IRCUser* m = [members objectAtIndex:n];
     [[m retain] autorelease];
-    if (![fromNick compare:toNick options:NSCaseInsensitiveSearch] == NSOrderedSame) {
+    if (![fromNick isEqualNoCase:toNick]) {
         [self removeMember:toNick reload:NO];
     }
     
