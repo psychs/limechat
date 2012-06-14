@@ -2214,7 +2214,7 @@ static NSDateFormatter* dateTimeFormatter;
     c.nickColorNumber = colorNumber;
     c.keywords = keywords;
     c.excludeWords = excludeWords;
-    c.useAvatar = type == LINE_TYPE_PRIVMSG && [config.userInfo contains:@"showTwitterAvatar"];
+    c.useAvatar = type == LINE_TYPE_PRIVMSG && [[config.userInfo lowercaseString] contains:@"showtwitteravatar"];
     
     if (channel) {
         return [channel print:c];

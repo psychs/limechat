@@ -283,13 +283,14 @@
     
     IRCUser* m = [members objectAtIndex:n];
     [[m retain] autorelease];
-    [self removeMember:toNick reload:NO];
+    if (![fromNick compare:toNick options:NSCaseInsensitiveSearch] == NSOrderedSame) {
+        [self removeMember:toNick reload:NO];
+    }
     
     m.nick = toNick;
     
     [[[members objectAtIndex:n] retain] autorelease];
     [members removeObjectAtIndex:n];
-    
     [self sortedInsert:m];
     
     [self reloadMemberList];

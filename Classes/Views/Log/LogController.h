@@ -51,6 +51,7 @@
     NSString* html;
     BOOL scrollBottom;
     int scrollTop;
+    NSMutableSet *fetchingAvatarScreenNames;
 }
 
 @property (nonatomic, readonly) LogView* view;
