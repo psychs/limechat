@@ -79,6 +79,7 @@
     passwordText.stringValue = config.password;
     modeText.stringValue = config.mode;
     topicText.stringValue = config.topic;
+    commandText.stringValue = config.command;
     
     autoJoinCheck.state = config.autoJoin;
     consoleCheck.state = config.logToConsole;
@@ -91,7 +92,8 @@
     config.password = passwordText.stringValue;
     config.mode = modeText.stringValue;
     config.topic = topicText.stringValue;
-    
+    config.command = commandText.stringValue;
+
     config.autoJoin = autoJoinCheck.state;
     config.logToConsole = consoleCheck.state;
     config.growl = growlCheck.state;

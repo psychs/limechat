@@ -41,6 +41,7 @@
 @property (nonatomic, readonly) IRCChannelConfig* config;
 @property (nonatomic, assign) NSString* name;
 @property (nonatomic, readonly) NSString* password;
+@property (nonatomic, readonly) NSString* command;
 @property (nonatomic, readonly) IRCChannelMode* mode;
 @property (nonatomic, readonly) NSMutableArray* members;
 @property (nonatomic, readonly) NSString* channelTypeString;
