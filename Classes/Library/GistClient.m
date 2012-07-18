@@ -3,10 +3,10 @@
 
 #import "GistClient.h"
 #import "GTMNSString+URLArguments.h"
+#import "Preferences.h"
 
 
-#define GIST_TOP_URL    @"https://gist.github.com/"
-#define GIST_POST_URL   @"https://gist.github.com/gists"
+#define GIST_URL_POSTFIX @"/gists"
 #define TIMEOUT         10
 
 
@@ -68,7 +68,7 @@
     fileType = [aFileType retain];
     isPrivate = aIsPrivate;
     
-    NSMutableURLRequest* req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:GIST_TOP_URL] cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:TIMEOUT];
+    NSMutableURLRequest* req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[Preferences gistUrl]] cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:TIMEOUT];
     conn = [[NSURLConnection alloc] initWithRequest:req delegate:self];
 }
 
@@ -91,7 +91,9 @@
     
     NSData* body = [[self formatParameters:params] dataUsingEncoding:NSUTF8StringEncoding];
     
-    NSMutableURLRequest* req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:GIST_POST_URL] cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:TIMEOUT];
+    NSString* gistUrl = [[Preferences gistUrl] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"/"]];
+    NSString* fullUrl = [gistUrl stringByAppendingString:GIST_URL_POSTFIX];
+    NSMutableURLRequest* req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:fullUrl] cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:TIMEOUT];
     [req setHTTPMethod:@"POST"];
     [req setHTTPBody:body];
     
