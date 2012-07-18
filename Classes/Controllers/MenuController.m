@@ -1196,7 +1196,7 @@
 - (void)fileSendPanelDidEnd:(NSOpenPanel *)panel returnCode:(int)returnCode contextInfo:(void  *)contextInfo
 {
     if (returnCode == NSOKButton) {
-        NSArray* files = [panel filenames];
+        NSArray* files = [panel URLs];
         
         for (IRCUser* m in fileSendTargets) {
             for (NSString* fname in files) {
