@@ -55,6 +55,7 @@ typedef enum {
 + (BOOL)openBrowserInBackground;
 + (BOOL)showInlineImages;
 + (BOOL)showJoinLeave;
++ (BOOL)showRename;
 + (BOOL)stopGrowlOnActive;
 + (BOOL)bounceIconOnEveryPrivateMessage;
 + (BOOL)autoJoinOnInvited;
