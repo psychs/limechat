@@ -109,7 +109,7 @@ static NSMutableParagraphStyle* nickStyle;
     
     char mark = [member mark];
     if (mark != ' ') {
-        NSString* markStr = [NSString stringWithFormat:@"%C", mark];
+        NSString* markStr = [NSString stringWithFormat:@"%hhd", mark];
         [markStr drawInRect:rect withAttributes:style];
     }
     

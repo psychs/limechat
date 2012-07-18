@@ -298,7 +298,7 @@
     [transcriptFolderButton selectItem:[transcriptFolderButton itemAtIndex:0]];
     
     if (returnCode == NSOKButton) {
-        NSString* path = [[panel filenames] objectAtIndex:0];
+        NSString* path = [[panel URLs] objectAtIndex:0];
         
         // create directory
         NSFileManager* fm = [NSFileManager defaultManager];
