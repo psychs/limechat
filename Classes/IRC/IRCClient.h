@@ -28,7 +28,7 @@ typedef enum {
 
 @interface IRCClient : IRCTreeItem
 {
-    IRCWorld* world;
+    __weak IRCWorld* world;
     IRCClientConfig* config;
     
     NSMutableArray* channels;
@@ -81,7 +81,7 @@ typedef enum {
     ServerDialog* propertyDialog;
 }
 
-@property (nonatomic, assign) IRCWorld* world;
+@property (nonatomic, weak) IRCWorld* world;
 @property (nonatomic, readonly) NSString* name;
 @property (nonatomic, readonly) IRCClientConfig* config;
 @property (nonatomic, readonly) IRCISupportInfo* isupport;

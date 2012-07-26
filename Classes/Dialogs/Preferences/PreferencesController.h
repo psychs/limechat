@@ -10,7 +10,7 @@
 
 @interface PreferencesController : NSWindowController
 {
-    id delegate;
+    __weak id delegate;
     
     IBOutlet KeyRecorder* hotKey;
     
@@ -28,10 +28,10 @@
     BOOL changingLogFont;
 }
 
-@property (nonatomic, assign) id delegate;
-@property (nonatomic, assign) NSString* fontDisplayName;
+@property (nonatomic, weak) id delegate;
+@property (nonatomic, retain) NSString* fontDisplayName;
 @property (nonatomic, assign) CGFloat fontPointSize;
-@property (nonatomic, assign) NSString* inputFontDisplayName;
+@property (nonatomic, retain) NSString* inputFontDisplayName;
 @property (nonatomic, assign) CGFloat inputFontPointSize;
 @property (nonatomic, readonly) NSArray* availableSounds;
 @property (nonatomic, readonly) NSMutableArray* sounds;

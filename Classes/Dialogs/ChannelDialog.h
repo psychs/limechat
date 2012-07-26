@@ -7,8 +7,8 @@
 
 @interface ChannelDialog : NSObject
 {
-    id delegate;
-    NSWindow* parentWindow;
+    __weak id delegate;
+    __weak NSWindow* parentWindow;
     int uid;
     int cid;
     IRCChannelConfig* config;
@@ -27,9 +27,9 @@
     BOOL isSheet;
 }
 
-@property (nonatomic, assign) id delegate;
+@property (nonatomic, weak) id delegate;
 @property (nonatomic, readonly) NSWindow* window;
-@property (nonatomic, assign) NSWindow* parentWindow;
+@property (nonatomic, weak) NSWindow* parentWindow;
 @property (nonatomic, assign) int uid;
 @property (nonatomic, assign) int cid;
 @property (nonatomic, retain) IRCChannelConfig* config;

@@ -24,9 +24,9 @@
     MarkedScroller* scroller;
     WebViewAutoScroll* autoScroller;
     
-    IRCWorld* world;
-    IRCClient* client;
-    IRCChannel* channel;
+    __weak IRCWorld* world;
+    __weak IRCClient* client;
+    __weak IRCChannel* channel;
     NSMenu* menu;
     NSMenu* urlMenu;
     NSMenu* addrMenu;
@@ -55,9 +55,9 @@
 }
 
 @property (nonatomic, readonly) LogView* view;
-@property (nonatomic, assign) IRCWorld* world;
-@property (nonatomic, assign) IRCClient* client;
-@property (nonatomic, assign) IRCChannel* channel;
+@property (nonatomic, weak) IRCWorld* world;
+@property (nonatomic, weak) IRCClient* client;
+@property (nonatomic, weak) IRCChannel* channel;
 @property (nonatomic, retain) NSMenu* menu;
 @property (nonatomic, retain) NSMenu* urlMenu;
 @property (nonatomic, retain) NSMenu* addrMenu;

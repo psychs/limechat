@@ -7,12 +7,12 @@
 
 @interface LogView : WebView
 {
-    id keyDelegate;
-    id resizeDelegate;
+    __weak id keyDelegate;
+    __weak id resizeDelegate;
 }
 
-@property (nonatomic, assign) id keyDelegate;
-@property (nonatomic, assign) id resizeDelegate;
+@property (nonatomic, weak) id keyDelegate;
+@property (nonatomic, weak) id resizeDelegate;
 
 - (NSString*)contentString;
 

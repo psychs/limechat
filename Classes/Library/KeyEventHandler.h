@@ -23,12 +23,12 @@
 
 @interface KeyEventHandler : NSObject
 {
-    id target;
+    __weak id target;
     NSMutableDictionary* codeHandlerMap;
     NSMutableDictionary* characterHandlerMap;
 }
 
-@property (nonatomic, assign) id target;
+@property (nonatomic, weak) id target;
 
 - (void)registerSelector:(SEL)selector key:(int)code modifiers:(NSUInteger)mods;
 - (void)registerSelector:(SEL)selector character:(UniChar)c modifiers:(NSUInteger)mods;

@@ -6,7 +6,7 @@
 
 @interface TwitterImageURLClient : NSObject
 {
-    id delegate;
+    __weak id delegate;
     NSString* screenName;
     
     CFReadStreamRef stream;
@@ -14,7 +14,7 @@
     NSTimer* timeoutTimer;
 }
 
-@property (nonatomic, assign) id delegate;
+@property (nonatomic, weak) id delegate;
 @property (nonatomic, retain) NSString* screenName;
 
 - (void)cancel;

@@ -6,10 +6,10 @@
 
 @interface HostResolver : NSObject
 {
-    id delegate;
+    __weak id delegate;
 }
 
-@property (nonatomic, assign) id delegate;
+@property (nonatomic, weak) id delegate;
 
 - (id)initWithDelegate:(id)aDelegate;
 - (void)resolve:(NSString*)hostname;

@@ -25,12 +25,12 @@
     IBOutlet NSMenuItem* closeCurrentPanelItem;
     IBOutlet NSMenuItem* checkForUpdateItem;
     
-    AppController* app;
-    IRCWorld* world;
-    MainWindow* window;
-    InputTextField* text;
-    ServerTreeView* tree;
-    MemberListView* memberList;
+    __weak AppController* app;
+    __weak IRCWorld* world;
+    __weak MainWindow* window;
+    __weak InputTextField* text;
+    __weak ServerTreeView* tree;
+    __weak MemberListView* memberList;
     
     NSString* pointedUrl;
     NSString* pointedAddress;
@@ -51,12 +51,12 @@
     int fileSendUID;
 }
 
-@property (nonatomic, assign) AppController* app;
-@property (nonatomic, assign) IRCWorld* world;
-@property (nonatomic, assign) MainWindow* window;
-@property (nonatomic, assign) InputTextField* text;
-@property (nonatomic, assign) ServerTreeView* tree;
-@property (nonatomic, assign) MemberListView* memberList;
+@property (nonatomic, weak) AppController* app;
+@property (nonatomic, weak) IRCWorld* world;
+@property (nonatomic, weak) MainWindow* window;
+@property (nonatomic, weak) InputTextField* text;
+@property (nonatomic, weak) ServerTreeView* tree;
+@property (nonatomic, weak) MemberListView* memberList;
 
 @property (nonatomic, retain) NSString* pointedUrl;
 @property (nonatomic, retain) NSString* pointedAddress;

@@ -7,7 +7,7 @@
 
 @interface WelcomeDialog : NSWindowController
 {
-    id delegate;
+    __weak id delegate;
     NSMutableArray* channels;
     
     IBOutlet NSTextField* nickText;
@@ -19,7 +19,7 @@
     IBOutlet NSButton* okButton;
 }
 
-@property (nonatomic, assign) id delegate;
+@property (nonatomic, weak) id delegate;
 
 - (void)show;
 - (void)close;

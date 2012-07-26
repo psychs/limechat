@@ -10,8 +10,8 @@
 
 @interface ServerDialog : NSWindowController
 {
-    id delegate;
-    NSWindow* parentWindow;
+    __weak id delegate;
+    __weak NSWindow* parentWindow;
     int uid;
     IRCClientConfig* config;
     
@@ -63,8 +63,8 @@
     IgnoreItemSheet* ignoreSheet;
 }
 
-@property (nonatomic, assign) id delegate;
-@property (nonatomic, assign) NSWindow* parentWindow;
+@property (nonatomic, weak) id delegate;
+@property (nonatomic, weak) NSWindow* parentWindow;
 @property (nonatomic, assign) int uid;
 @property (nonatomic, retain) IRCClientConfig* config;
 

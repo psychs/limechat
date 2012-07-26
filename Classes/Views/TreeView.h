@@ -6,10 +6,10 @@
 
 @interface TreeView : NSOutlineView
 {
-    id keyDelegate;
+    __weak id keyDelegate;
 }
 
-@property (nonatomic, assign) id keyDelegate;
+@property (nonatomic, weak) id keyDelegate;
 
 - (int)countSelectedRows;
 - (void)selectItemAtIndex:(int)index;

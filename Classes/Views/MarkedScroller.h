@@ -6,11 +6,11 @@
 
 @interface MarkedScroller : NSScroller
 {
-    id dataSource;
+    __weak id dataSource;
     NSArray* markData;
 }
 
-@property (nonatomic, assign) id dataSource;
+@property (nonatomic, weak) id dataSource;
 @property (nonatomic, copy) NSArray* markData;
 
 - (void)updateScroller;

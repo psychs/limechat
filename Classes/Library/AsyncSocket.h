@@ -178,7 +178,7 @@ typedef enum AsyncSocketError AsyncSocketError;
     AsyncWritePacket *theCurrentWrite;
     NSTimer *theWriteTimer;
     
-    id theDelegate;
+    __weak id theDelegate;
     UInt16 theFlags;
     
     long theUserData;

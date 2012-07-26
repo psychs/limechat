@@ -13,9 +13,9 @@
 
 @interface DCCController : NSWindowController
 {
-    id delegate;
-    IRCWorld* world;
-    NSWindow* mainWindow;
+    __weak id delegate;
+    __weak IRCWorld* world;
+    __weak NSWindow* mainWindow;
     
     BOOL loaded;
     NSMutableArray* receivers;
@@ -29,9 +29,9 @@
     IBOutlet NSButton* clearButton;
 }
 
-@property (nonatomic, assign) id delegate;
-@property (nonatomic, assign) IRCWorld* world;
-@property (nonatomic, assign) NSWindow* mainWindow;
+@property (nonatomic, weak) id delegate;
+@property (nonatomic, weak) IRCWorld* world;
+@property (nonatomic, weak) NSWindow* mainWindow;
 
 - (void)show:(BOOL)key;
 - (void)close;

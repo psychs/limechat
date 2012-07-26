@@ -7,11 +7,11 @@
 
 @interface FieldEditorTextView : NSTextView
 {
-    id pasteDelegate;
+    __weak id pasteDelegate;
     KeyEventHandler* keyHandler;
 }
 
-@property (nonatomic, assign) id pasteDelegate;
+@property (nonatomic, weak) id pasteDelegate;
 
 - (void)paste:(id)sender;
 

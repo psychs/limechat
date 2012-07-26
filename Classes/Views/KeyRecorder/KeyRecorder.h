@@ -7,7 +7,7 @@
 
 @interface KeyRecorder : NSControl
 {
-    id delegate;
+    __weak id delegate;
     int keyCode;
     NSUInteger modifierFlags;
     
@@ -16,7 +16,7 @@
     BOOL eraseButtonHighlighted;
 }
 
-@property (nonatomic, assign) IBOutlet id delegate;
+@property (nonatomic, weak) IBOutlet id delegate;
 @property (nonatomic, assign) int keyCode;
 @property (nonatomic, assign) NSUInteger modifierFlags;
 @property (nonatomic, readonly) BOOL valid;

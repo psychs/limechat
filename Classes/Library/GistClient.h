@@ -12,7 +12,7 @@ typedef enum {
 
 @interface GistClient : NSObject
 {
-    id delegate;
+    __weak id delegate;
     
     GistClientStage stage;
     NSString* text;
@@ -24,7 +24,7 @@ typedef enum {
     NSString* destUrl;
 }
 
-@property (nonatomic, assign) id delegate;
+@property (nonatomic, weak) id delegate;
 
 - (void)cancel;
 - (void)send:(NSString*)text fileType:(NSString*)fileType private:(BOOL)isPrivate;

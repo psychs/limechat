@@ -16,7 +16,7 @@
 
 @interface IRCChannel : IRCTreeItem
 {
-    IRCClient* client;
+    __weak IRCClient* client;
     IRCChannelConfig* config;
     
     IRCChannelMode* mode;
@@ -37,9 +37,9 @@
     ChannelDialog* propertyDialog;
 }
 
-@property (nonatomic, assign) IRCClient* client;
+@property (nonatomic, weak) IRCClient* client;
 @property (nonatomic, readonly) IRCChannelConfig* config;
-@property (nonatomic, assign) NSString* name;
+@property (nonatomic, retain) NSString* name;
 @property (nonatomic, readonly) NSString* password;
 @property (nonatomic, readonly) IRCChannelMode* mode;
 @property (nonatomic, readonly) NSMutableArray* members;

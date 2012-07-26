@@ -7,7 +7,7 @@
 
 @interface ListDialog : NSWindowController
 {
-    id delegate;
+    __weak id delegate;
     NSMutableArray* list;
     NSMutableArray* filteredList;
     int sortKey;
@@ -18,7 +18,7 @@
     IBOutlet NSButton* updateButton;
 }
 
-@property (nonatomic, assign) id delegate;
+@property (nonatomic, weak) id delegate;
 @property (nonatomic, readonly) int sortKey;
 @property (nonatomic, readonly) NSComparisonResult sortOrder;
 

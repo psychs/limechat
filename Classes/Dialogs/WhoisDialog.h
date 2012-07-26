@@ -6,7 +6,7 @@
 
 @interface WhoisDialog : NSWindowController
 {
-    id delegate;
+    __weak id delegate;
     NSString* nick;
     BOOL isOperator;
     
@@ -24,7 +24,7 @@
     IBOutlet NSButton* closeButton;
 }
 
-@property (nonatomic, assign) id delegate;
+@property (nonatomic, weak) id delegate;
 @property (nonatomic, assign) BOOL isOperator;
 @property (nonatomic, retain) NSString* nick;
 

@@ -6,12 +6,12 @@
 
 @interface ListView : NSTableView
 {
-    id keyDelegate;
-    id textDelegate;
+    __weak id keyDelegate;
+    __weak id textDelegate;
 }
 
-@property (nonatomic, assign) id keyDelegate;
-@property (nonatomic, assign) id textDelegate;
+@property (nonatomic, weak) id keyDelegate;
+@property (nonatomic, weak) id textDelegate;
 
 - (int)countSelectedRows;
 - (void)selectItemAtIndex:(int)index;

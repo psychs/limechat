@@ -8,7 +8,7 @@
 
 @interface IRCConnection : NSObject
 {
-    id delegate;
+    __weak id delegate;
     
     NSString* host;
     int port;
@@ -31,7 +31,7 @@
     BOOL loggedIn;
 }
 
-@property (nonatomic, assign) id delegate;
+@property (nonatomic, weak) id delegate;
 @property (nonatomic, retain) NSString* host;
 @property (nonatomic, assign) int port;
 @property (nonatomic, assign) BOOL useSSL;

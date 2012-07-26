@@ -8,7 +8,7 @@
 
 @interface DCCReceiver : NSObject
 {
-    id delegate;
+    __weak id delegate;
     int uid;
     NSString* peerNick;
     NSString* host;
@@ -29,7 +29,7 @@
     double currentRecord;
 }
 
-@property (nonatomic, assign) id delegate;
+@property (nonatomic, weak) id delegate;
 @property (nonatomic, assign) int uid;
 @property (nonatomic, retain) NSString* peerNick;
 @property (nonatomic, retain) NSString* host;

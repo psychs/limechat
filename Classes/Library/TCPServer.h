@@ -7,7 +7,7 @@
 
 @interface TCPServer : NSObject
 {
-    id delegate;
+    __weak id delegate;
     
     AsyncSocket* conn;
     NSMutableArray* clients;
@@ -15,7 +15,7 @@
     int port;
 }
 
-@property (nonatomic, assign) id delegate;
+@property (nonatomic, weak) id delegate;
 @property (nonatomic, readonly) NSArray* clients;
 @property (nonatomic, readonly) BOOL isActive;
 @property (nonatomic, assign) int port;
