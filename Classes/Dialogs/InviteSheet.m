@@ -40,7 +40,7 @@
         target = [NSString stringWithFormat:@"%@ and %@", first, second];
     }
     else {
-        target = [NSString stringWithFormat:@"%d users", nicks.count];
+        target = [NSString stringWithFormat:@"%lu users", nicks.count];
     }
     titleLabel.stringValue = [NSString stringWithFormat:@"Invite %@ to:", target];
     

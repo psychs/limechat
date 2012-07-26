@@ -298,7 +298,7 @@
     [transcriptFolderButton selectItem:[transcriptFolderButton itemAtIndex:0]];
     
     if (returnCode == NSOKButton) {
-        NSString* path = [[panel filenames] objectAtIndex:0];
+        NSString* path = [[[panel URLs] objectAtIndex:0] path];
         
         // create directory
         NSFileManager* fm = [NSFileManager defaultManager];
@@ -329,7 +329,12 @@
     [d setResolvesAliases:YES];
     [d setAllowsMultipleSelection:NO];
     [d setCanCreateDirectories:YES];
-    [d beginForDirectory:parentPath file:nil types:nil modelessDelegate:self didEndSelector:@selector(transcriptFolderPanelDidEnd:returnCode:contextInfo:) contextInfo:nil];
+    d.directoryURL = [NSURL fileURLWithPath:parentPath isDirectory:YES];
+    
+    __block PreferencesController* blockSelf = self;
+    [d beginWithCompletionHandler:^(NSInteger result) {
+        [blockSelf transcriptFolderPanelDidEnd:d returnCode:result contextInfo:NULL];
+    }];
     
     [transcriptFolderOpenPanel release];
     transcriptFolderOpenPanel = [d retain];

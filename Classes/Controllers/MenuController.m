@@ -1187,7 +1187,12 @@
     [d setResolvesAliases:YES];
     [d setAllowsMultipleSelection:YES];
     [d setCanCreateDirectories:NO];
-    [d beginForDirectory:@"~/Desktop" file:nil types:nil modelessDelegate:self didEndSelector:@selector(fileSendPanelDidEnd:returnCode:contextInfo:) contextInfo:nil];
+    d.directoryURL = [NSURL fileURLWithPath:@"~/Desktop" isDirectory:YES];
+
+    __block MenuController* blockSelf = self;
+    [d beginWithCompletionHandler:^(NSInteger result) {
+        [blockSelf fileSendPanelDidEnd:d returnCode:result contextInfo:NULL];
+    }];
     
     [fileSendPanel release];
     fileSendPanel = [d retain];
@@ -1196,10 +1201,11 @@
 - (void)fileSendPanelDidEnd:(NSOpenPanel *)panel returnCode:(int)returnCode contextInfo:(void  *)contextInfo
 {
     if (returnCode == NSOKButton) {
-        NSArray* files = [panel filenames];
+        NSArray* files = [panel URLs];
         
         for (IRCUser* m in fileSendTargets) {
-            for (NSString* fname in files) {
+            for (NSURL* fileUrl in files) {
+                NSString* fname = [fileUrl path];
                 [world.dcc addSenderWithUID:fileSendUID nick:m.nick fileName:fname autoOpen:YES];
             }
         }

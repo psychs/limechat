@@ -1804,7 +1804,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LIMECHAT_BUNDLE_IDENTIFIER = "net.limechat.LimeChat-debug";
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -1813,7 +1813,7 @@
 					AppKit,
 				);
 				PRODUCT_NAME = LimeChat;
-				SDKROOT = macosx10.6;
+				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Debug;
@@ -1839,7 +1839,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INSTALL_PATH = /Applications;
 				LIMECHAT_BUNDLE_IDENTIFIER = net.limechat.LimeChat;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_LDFLAGS = (
 					"-framework",
 					Foundation,
@@ -1847,7 +1847,7 @@
 					AppKit,
 				);
 				PRODUCT_NAME = LimeChat;
-				SDKROOT = macosx10.6;
+				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Release;
