@@ -10,8 +10,8 @@
     NSRange range;
 }
 
-@property (nonatomic, retain) NSString* text;
-@property (nonatomic, assign) NSRange range;
+@property (nonatomic, strong) NSString* text;
+@property (nonatomic) NSRange range;
 
 - (void)clear;
 

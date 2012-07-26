@@ -15,7 +15,7 @@
     CustomJSFile* js;
 }
 
-@property (nonatomic, retain) NSString* name;
+@property (nonatomic, strong) NSString* name;
 @property (nonatomic, readonly) LogTheme* log;
 @property (nonatomic, readonly) OtherTheme* other;
 @property (nonatomic, readonly) CustomJSFile* js;

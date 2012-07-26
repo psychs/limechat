@@ -65,8 +65,8 @@
 
 @property (nonatomic, weak) id delegate;
 @property (nonatomic, weak) NSWindow* parentWindow;
-@property (nonatomic, assign) int uid;
-@property (nonatomic, retain) IRCClientConfig* config;
+@property (nonatomic) int uid;
+@property (nonatomic, strong) IRCClientConfig* config;
 
 - (void)startWithIgnoreTab:(BOOL)ignoreTab;
 - (void)show;

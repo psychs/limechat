@@ -30,9 +30,9 @@
 @property (nonatomic, weak) id delegate;
 @property (nonatomic, readonly) NSWindow* window;
 @property (nonatomic, weak) NSWindow* parentWindow;
-@property (nonatomic, assign) int uid;
-@property (nonatomic, assign) int cid;
-@property (nonatomic, retain) IRCChannelConfig* config;
+@property (nonatomic) int uid;
+@property (nonatomic) int cid;
+@property (nonatomic, strong) IRCChannelConfig* config;
 
 - (void)start;
 - (void)startSheet;

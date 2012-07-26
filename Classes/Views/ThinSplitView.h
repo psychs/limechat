@@ -13,9 +13,9 @@
     BOOL hidden;
 }
 
-@property (nonatomic, assign) int fixedViewIndex;
-@property (nonatomic, assign) int position;
-@property (nonatomic, assign) BOOL inverted;
-@property (nonatomic, assign) BOOL hidden;
+@property (nonatomic) int fixedViewIndex;
+@property (nonatomic) int position;
+@property (nonatomic) BOOL inverted;
+@property (nonatomic) BOOL hidden;
 
 @end

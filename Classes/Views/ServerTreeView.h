@@ -18,7 +18,7 @@
 }
 
 @property (nonatomic, weak) id responderDelegate;
-@property (nonatomic, retain) OtherTheme* theme;
+@property (nonatomic, strong) OtherTheme* theme;
 
 - (void)themeChanged;
 

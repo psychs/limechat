@@ -58,10 +58,10 @@
 @property (nonatomic, weak) ServerTreeView* tree;
 @property (nonatomic, weak) MemberListView* memberList;
 
-@property (nonatomic, retain) NSString* pointedUrl;
-@property (nonatomic, retain) NSString* pointedAddress;
-@property (nonatomic, retain) NSString* pointedNick;
-@property (nonatomic, retain) NSString* pointedChannelName;
+@property (nonatomic, strong) NSString* pointedUrl;
+@property (nonatomic, strong) NSString* pointedAddress;
+@property (nonatomic, strong) NSString* pointedNick;
+@property (nonatomic, strong) NSString* pointedChannelName;
 
 - (void)setUp;
 - (void)terminate;

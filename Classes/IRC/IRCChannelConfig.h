@@ -27,17 +27,17 @@ typedef enum {
     NSMutableArray* autoOp;
 }
 
-@property (nonatomic, assign) ChannelType type;
+@property (nonatomic) ChannelType type;
 
-@property (nonatomic, retain) NSString* name;
-@property (nonatomic, retain) NSString* password;
+@property (nonatomic, strong) NSString* name;
+@property (nonatomic, strong) NSString* password;
 
-@property (nonatomic, assign) BOOL autoJoin;
-@property (nonatomic, assign) BOOL logToConsole;
-@property (nonatomic, assign) BOOL growl;
+@property (nonatomic) BOOL autoJoin;
+@property (nonatomic) BOOL logToConsole;
+@property (nonatomic) BOOL growl;
 
-@property (nonatomic, retain) NSString* mode;
-@property (nonatomic, retain) NSString* topic;
+@property (nonatomic, strong) NSString* mode;
+@property (nonatomic, strong) NSString* topic;
 
 @property (nonatomic, readonly) NSMutableArray* autoOp;
 

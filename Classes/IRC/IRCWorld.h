@@ -87,7 +87,7 @@
 @property (nonatomic, weak) LogController* consoleLog;
 
 @property (nonatomic, readonly) NSMutableArray* clients;
-@property (nonatomic, retain) IRCTreeItem* selected;
+@property (nonatomic, strong) IRCTreeItem* selected;
 @property (nonatomic, readonly) IRCClient* selectedClient;
 @property (nonatomic, readonly) IRCChannel* selectedChannel;
 

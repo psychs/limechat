@@ -20,11 +20,11 @@
 }
 
 @property (nonatomic, weak) id delegate;
-@property (nonatomic, retain) NSString* url;
-@property (nonatomic, assign) int uid;
-@property (nonatomic, assign) int cid;
-@property (nonatomic, assign) int lineNumber;
-@property (nonatomic, assign) int imageIndex;
+@property (nonatomic, strong) NSString* url;
+@property (nonatomic) int uid;
+@property (nonatomic) int cid;
+@property (nonatomic) int lineNumber;
+@property (nonatomic) int imageIndex;
 
 - (void)cancel;
 - (void)checkSize;

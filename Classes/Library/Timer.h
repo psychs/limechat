@@ -13,8 +13,8 @@
 }
 
 @property (nonatomic, weak) id delegate;
-@property (nonatomic, assign) BOOL reqeat;
-@property (nonatomic, assign) SEL selector;
+@property (nonatomic) BOOL reqeat;
+@property (nonatomic) SEL selector;
 @property (nonatomic, readonly) BOOL isActive;
 
 - (void)start:(NSTimeInterval)interval;

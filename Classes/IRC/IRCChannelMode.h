@@ -21,18 +21,18 @@
     NSString* k;
 }
 
-@property (nonatomic, retain) IRCISupportInfo* isupport;
-@property (nonatomic, assign) BOOL a;
-@property (nonatomic, assign) BOOL i;
-@property (nonatomic, assign) BOOL m;
-@property (nonatomic, assign) BOOL n;
-@property (nonatomic, assign) BOOL p;
-@property (nonatomic, assign) BOOL q;
-@property (nonatomic, assign) BOOL r;
-@property (nonatomic, assign) BOOL s;
-@property (nonatomic, assign) BOOL t;
-@property (nonatomic, assign) int l;
-@property (nonatomic, retain) NSString* k;
+@property (nonatomic, strong) IRCISupportInfo* isupport;
+@property (nonatomic) BOOL a;
+@property (nonatomic) BOOL i;
+@property (nonatomic) BOOL m;
+@property (nonatomic) BOOL n;
+@property (nonatomic) BOOL p;
+@property (nonatomic) BOOL q;
+@property (nonatomic) BOOL r;
+@property (nonatomic) BOOL s;
+@property (nonatomic) BOOL t;
+@property (nonatomic) int l;
+@property (nonatomic, strong) NSString* k;
 
 - (void)clear;
 - (NSArray*)update:(NSString*)str;

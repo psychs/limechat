@@ -17,8 +17,8 @@
 }
 
 @property (nonatomic, weak) IBOutlet id delegate;
-@property (nonatomic, assign) int keyCode;
-@property (nonatomic, assign) NSUInteger modifierFlags;
+@property (nonatomic) int keyCode;
+@property (nonatomic) NSUInteger modifierFlags;
 @property (nonatomic, readonly) BOOL valid;
 
 @end

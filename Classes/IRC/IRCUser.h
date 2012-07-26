@@ -24,16 +24,16 @@
     CFAbsoluteTime lastFadedWeights;
 }
 
-@property (nonatomic, retain) NSString* nick;
+@property (nonatomic, strong) NSString* nick;
 @property (nonatomic, readonly) NSString* canonicalNick;
-@property (nonatomic, retain) NSString* username;
-@property (nonatomic, retain) NSString* address;
-@property (nonatomic, assign) BOOL q;
-@property (nonatomic, assign) BOOL a;
-@property (nonatomic, assign) BOOL o;
-@property (nonatomic, assign) BOOL h;
-@property (nonatomic, assign) BOOL v;
-@property (nonatomic, assign) BOOL isMyself;
+@property (nonatomic, strong) NSString* username;
+@property (nonatomic, strong) NSString* address;
+@property (nonatomic) BOOL q;
+@property (nonatomic) BOOL a;
+@property (nonatomic) BOOL o;
+@property (nonatomic) BOOL h;
+@property (nonatomic) BOOL v;
+@property (nonatomic) BOOL isMyself;
 @property (nonatomic, readonly) char mark;
 @property (nonatomic, readonly) BOOL isOp;
 @property (nonatomic, readonly) int colorNumber;

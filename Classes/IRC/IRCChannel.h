@@ -39,22 +39,22 @@
 
 @property (nonatomic, weak) IRCClient* client;
 @property (nonatomic, readonly) IRCChannelConfig* config;
-@property (nonatomic, retain) NSString* name;
+@property (nonatomic, strong) NSString* name;
 @property (nonatomic, readonly) NSString* password;
 @property (nonatomic, readonly) IRCChannelMode* mode;
 @property (nonatomic, readonly) NSMutableArray* members;
 @property (nonatomic, readonly) NSString* channelTypeString;
-@property (nonatomic, retain) NSString* topic;
-@property (nonatomic, retain) NSString* storedTopic;
-@property (nonatomic, assign) BOOL isActive;
-@property (nonatomic, assign) BOOL isOp;
-@property (nonatomic, assign) BOOL isModeInit;
-@property (nonatomic, assign) BOOL isNamesInit;
-@property (nonatomic, assign) BOOL isWhoInit;
+@property (nonatomic, strong) NSString* topic;
+@property (nonatomic, strong) NSString* storedTopic;
+@property (nonatomic) BOOL isActive;
+@property (nonatomic) BOOL isOp;
+@property (nonatomic) BOOL isModeInit;
+@property (nonatomic) BOOL isNamesInit;
+@property (nonatomic) BOOL isWhoInit;
 @property (nonatomic, readonly) BOOL isChannel;
 @property (nonatomic, readonly) BOOL isTalk;
 
-@property (nonatomic, retain) ChannelDialog* propertyDialog;
+@property (nonatomic, strong) ChannelDialog* propertyDialog;
 
 - (void)setup:(IRCChannelConfig*)seed;
 - (void)updateConfig:(IRCChannelConfig*)seed;

@@ -18,7 +18,7 @@
 @property (nonatomic, weak) id delegate;
 @property (nonatomic, readonly) NSArray* clients;
 @property (nonatomic, readonly) BOOL isActive;
-@property (nonatomic, assign) int port;
+@property (nonatomic) int port;
 
 - (BOOL)open;
 - (void)close;

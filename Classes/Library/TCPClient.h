@@ -31,17 +31,17 @@
 }
 
 @property (nonatomic, weak) id delegate;
-@property (nonatomic, retain) NSString* host;
-@property (nonatomic, assign) int port;
-@property (nonatomic, assign) BOOL useSSL;
+@property (nonatomic, strong) NSString* host;
+@property (nonatomic) int port;
+@property (nonatomic) BOOL useSSL;
 
-@property (nonatomic, assign) BOOL useSystemSocks;
-@property (nonatomic, assign) BOOL useSocks;
-@property (nonatomic, assign) int socksVersion;
-@property (nonatomic, retain) NSString* proxyHost;
-@property (nonatomic, assign) int proxyPort;
-@property (nonatomic, retain) NSString* proxyUser;
-@property (nonatomic, retain) NSString* proxyPassword;
+@property (nonatomic) BOOL useSystemSocks;
+@property (nonatomic) BOOL useSocks;
+@property (nonatomic) int socksVersion;
+@property (nonatomic, strong) NSString* proxyHost;
+@property (nonatomic) int proxyPort;
+@property (nonatomic, strong) NSString* proxyUser;
+@property (nonatomic, strong) NSString* proxyPassword;
 @property (nonatomic, readonly) int sendQueueSize;
 
 @property (nonatomic, readonly) BOOL active;

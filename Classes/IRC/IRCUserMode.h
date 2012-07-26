@@ -15,13 +15,13 @@
     BOOL O;
 }
 
-@property (nonatomic, assign) BOOL a;
-@property (nonatomic, assign) BOOL i;
-@property (nonatomic, assign) BOOL r;
-@property (nonatomic, assign) BOOL s;
-@property (nonatomic, assign) BOOL w;
-@property (nonatomic, assign) BOOL o;
-@property (nonatomic, assign) BOOL O;
+@property (nonatomic) BOOL a;
+@property (nonatomic) BOOL i;
+@property (nonatomic) BOOL r;
+@property (nonatomic) BOOL s;
+@property (nonatomic) BOOL w;
+@property (nonatomic) BOOL o;
+@property (nonatomic) BOOL O;
 
 - (void)clear;
 - (void)update:(NSString*)str;

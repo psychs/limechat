@@ -14,8 +14,8 @@
     IBOutlet NSPopUpButton* channelPopup;
 }
 
-@property (nonatomic, retain) NSArray* nicks;
-@property (nonatomic, assign) int uid;
+@property (nonatomic, strong) NSArray* nicks;
+@property (nonatomic) int uid;
 
 - (void)startWithChannels:(NSArray*)channels;
 

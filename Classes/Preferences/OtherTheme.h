@@ -45,7 +45,7 @@
     NSColor* memberListSelBottomColor;
 }
 
-@property (nonatomic, retain) NSString* fileName;
+@property (nonatomic, strong) NSString* fileName;
 
 @property (nonatomic, readonly) NSString* logNickFormat;
 @property (nonatomic, readonly) NSColor* logScrollerMarkColor;

@@ -23,8 +23,8 @@
     NSMutableArray* channels;
 }
 
-@property (nonatomic, retain) IgnoreItem* ignore;
-@property (nonatomic, assign) BOOL newItem;
+@property (nonatomic, strong) IgnoreItem* ignore;
+@property (nonatomic) BOOL newItem;
 
 - (void)start;
 

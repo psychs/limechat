@@ -29,10 +29,10 @@
 }
 
 @property (nonatomic, weak) id delegate;
-@property (nonatomic, retain) NSString* fontDisplayName;
-@property (nonatomic, assign) CGFloat fontPointSize;
-@property (nonatomic, retain) NSString* inputFontDisplayName;
-@property (nonatomic, assign) CGFloat inputFontPointSize;
+@property (nonatomic, strong) NSString* fontDisplayName;
+@property (nonatomic) CGFloat fontPointSize;
+@property (nonatomic, strong) NSString* inputFontDisplayName;
+@property (nonatomic) CGFloat inputFontPointSize;
 @property (nonatomic, readonly) NSArray* availableSounds;
 @property (nonatomic, readonly) NSMutableArray* sounds;
 

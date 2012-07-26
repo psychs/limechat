@@ -13,8 +13,8 @@
     IBOutlet NSTextField* text;
 }
 
-@property (nonatomic, assign) int uid;
-@property (nonatomic, assign) int cid;
+@property (nonatomic) int uid;
+@property (nonatomic) int cid;
 
 - (void)start:(NSString*)topic;
 

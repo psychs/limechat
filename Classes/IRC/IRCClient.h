@@ -93,8 +93,8 @@ typedef enum {
 @property (nonatomic, readonly) BOOL isLoggedIn;
 @property (nonatomic, readonly) NSString* myNick;
 @property (nonatomic, readonly) NSString* myAddress;
-@property (nonatomic, retain) IRCChannel* lastSelectedChannel;
-@property (nonatomic, retain) ServerDialog* propertyDialog;
+@property (nonatomic, strong) IRCChannel* lastSelectedChannel;
+@property (nonatomic, strong) ServerDialog* propertyDialog;
 
 - (void)setup:(IRCClientConfig*)seed;
 - (void)updateConfig:(IRCClientConfig*)seed;

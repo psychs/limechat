@@ -11,7 +11,7 @@
     IRCUser* member;
 }
 
-@property (nonatomic, retain) IRCUser* member;
+@property (nonatomic, strong) IRCUser* member;
 
 - (void)setup:(OtherTheme*)theme;
 - (void)themeChanged;

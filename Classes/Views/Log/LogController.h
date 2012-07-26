@@ -58,15 +58,15 @@
 @property (nonatomic, weak) IRCWorld* world;
 @property (nonatomic, weak) IRCClient* client;
 @property (nonatomic, weak) IRCChannel* channel;
-@property (nonatomic, retain) NSMenu* menu;
-@property (nonatomic, retain) NSMenu* urlMenu;
-@property (nonatomic, retain) NSMenu* addrMenu;
-@property (nonatomic, retain) NSMenu* chanMenu;
-@property (nonatomic, retain) NSMenu* memberMenu;
-@property (nonatomic, retain) ViewTheme* theme;
-@property (nonatomic, assign) BOOL console;
-@property (nonatomic, retain) NSColor* initialBackgroundColor;
-@property (nonatomic, assign) int maxLines;
+@property (nonatomic, strong) NSMenu* menu;
+@property (nonatomic, strong) NSMenu* urlMenu;
+@property (nonatomic, strong) NSMenu* addrMenu;
+@property (nonatomic, strong) NSMenu* chanMenu;
+@property (nonatomic, strong) NSMenu* memberMenu;
+@property (nonatomic, strong) ViewTheme* theme;
+@property (nonatomic) BOOL console;
+@property (nonatomic, strong) NSColor* initialBackgroundColor;
+@property (nonatomic) int maxLines;
 @property (nonatomic, readonly) BOOL viewingBottom;
 
 - (void)setUp;

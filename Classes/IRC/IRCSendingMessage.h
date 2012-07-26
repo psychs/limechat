@@ -15,8 +15,8 @@
 
 @property (nonatomic, readonly) NSString* command;
 @property (nonatomic, readonly) NSMutableArray* params;
-@property (nonatomic, assign) int penalty;
-@property (nonatomic, assign) BOOL completeColon;
+@property (nonatomic) int penalty;
+@property (nonatomic) BOOL completeColon;
 @property (nonatomic, readonly) NSString* string;
 
 - (id)initWithCommand:(NSString*)aCommand;

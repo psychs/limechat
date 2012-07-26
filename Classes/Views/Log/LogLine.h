@@ -51,19 +51,19 @@ typedef enum {
     BOOL useAvatar;
 }
 
-@property (nonatomic, retain) NSString* time;
-@property (nonatomic, retain) NSString* place;
-@property (nonatomic, retain) NSString* nick;
-@property (nonatomic, retain) NSString* body;
-@property (nonatomic, assign) LogLineType lineType;
-@property (nonatomic, assign) LogMemberType memberType;
-@property (nonatomic, retain) NSString* nickInfo;
-@property (nonatomic, retain) NSString* clickInfo;
-@property (nonatomic, assign) BOOL identified;
-@property (nonatomic, assign) int nickColorNumber;
-@property (nonatomic, retain) NSArray* keywords;
-@property (nonatomic, retain) NSArray* excludeWords;
-@property (nonatomic, assign) BOOL useAvatar;
+@property (nonatomic, strong) NSString* time;
+@property (nonatomic, strong) NSString* place;
+@property (nonatomic, strong) NSString* nick;
+@property (nonatomic, strong) NSString* body;
+@property (nonatomic) LogLineType lineType;
+@property (nonatomic) LogMemberType memberType;
+@property (nonatomic, strong) NSString* nickInfo;
+@property (nonatomic, strong) NSString* clickInfo;
+@property (nonatomic) BOOL identified;
+@property (nonatomic) int nickColorNumber;
+@property (nonatomic, strong) NSArray* keywords;
+@property (nonatomic, strong) NSArray* excludeWords;
+@property (nonatomic) BOOL useAvatar;
 
 + (NSString*)lineTypeString:(LogLineType)type;
 + (NSString*)memberTypeString:(LogMemberType)type;

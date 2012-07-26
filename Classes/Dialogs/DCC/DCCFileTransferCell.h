@@ -31,15 +31,15 @@ typedef enum {
     BOOL sendingItem;
 }
 
-@property (nonatomic, retain) NSString* peerNick;
-@property (nonatomic, assign) long long processedSize;
-@property (nonatomic, assign) long long size;
-@property (nonatomic, assign) long long speed;
-@property (nonatomic, assign) long long timeRemaining;
-@property (nonatomic, assign) DCCFileTransferStatus status;
-@property (nonatomic, retain) NSString* error;
-@property (nonatomic, retain) NSProgressIndicator* progressBar;
-@property (nonatomic, retain) NSImage* icon;
-@property (nonatomic, assign) BOOL sendingItem;
+@property (nonatomic, strong) NSString* peerNick;
+@property (nonatomic) long long processedSize;
+@property (nonatomic) long long size;
+@property (nonatomic) long long speed;
+@property (nonatomic) long long timeRemaining;
+@property (nonatomic) DCCFileTransferStatus status;
+@property (nonatomic, strong) NSString* error;
+@property (nonatomic, strong) NSProgressIndicator* progressBar;
+@property (nonatomic, strong) NSImage* icon;
+@property (nonatomic) BOOL sendingItem;
 
 @end

@@ -19,6 +19,6 @@
 }
 
 @property (nonatomic, weak) id owner;
-@property (nonatomic, retain) LogPolicy* policy;
+@property (nonatomic, strong) LogPolicy* policy;
 
 @end

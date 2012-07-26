@@ -13,5 +13,5 @@
     MarkedScroller* scroller;
 }
 @property (nonatomic, weak) WebFrameView* webFrame;
-@property (nonatomic, retain) MarkedScroller* scroller;
+@property (nonatomic, strong) MarkedScroller* scroller;
 @end

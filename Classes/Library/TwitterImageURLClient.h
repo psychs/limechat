@@ -15,7 +15,7 @@
 }
 
 @property (nonatomic, weak) id delegate;
-@property (nonatomic, retain) NSString* screenName;
+@property (nonatomic, strong) NSString* screenName;
 
 - (void)cancel;
 - (void)getImageURL;

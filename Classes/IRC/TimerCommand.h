@@ -11,8 +11,8 @@
     NSString* input;
 }
 
-@property (nonatomic, assign) CFAbsoluteTime time;
-@property (nonatomic, assign) int cid;
+@property (nonatomic) CFAbsoluteTime time;
+@property (nonatomic) int cid;
 @property (nonatomic, copy) NSString* input;
 
 @end

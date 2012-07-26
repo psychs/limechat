@@ -13,7 +13,7 @@
     IBOutlet NSTextField* newText;
 }
 
-@property (nonatomic, assign) int uid;
+@property (nonatomic) int uid;
 
 - (void)start:(NSString*)nick;
 

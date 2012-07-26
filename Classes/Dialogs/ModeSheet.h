@@ -27,10 +27,10 @@
     IBOutlet NSTextField* lText;
 }
 
-@property (nonatomic, retain) IRCChannelMode* mode;
-@property (nonatomic, retain) NSString* channelName;
-@property (nonatomic, assign) int uid;
-@property (nonatomic, assign) int cid;
+@property (nonatomic, strong) IRCChannelMode* mode;
+@property (nonatomic, strong) NSString* channelName;
+@property (nonatomic) int uid;
+@property (nonatomic) int cid;
 
 - (void)start;
 

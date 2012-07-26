@@ -25,8 +25,8 @@
 }
 
 @property (nonatomic, weak) id delegate;
-@property (nonatomic, assign) BOOL isOperator;
-@property (nonatomic, retain) NSString* nick;
+@property (nonatomic) BOOL isOperator;
+@property (nonatomic, strong) NSString* nick;
 
 - (void)show;
 - (void)close;

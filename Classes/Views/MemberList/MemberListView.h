@@ -18,7 +18,7 @@
 }
 
 @property (nonatomic, weak) id dropDelegate;
-@property (nonatomic, retain) OtherTheme* theme;
+@property (nonatomic, strong) OtherTheme* theme;
 
 - (void)themeChanged;
 

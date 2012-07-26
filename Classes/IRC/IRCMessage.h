@@ -14,11 +14,11 @@
     NSMutableArray* params;
 }
 
-@property (nonatomic, assign) time_t receivedAt;
-@property (nonatomic, retain) IRCPrefix* sender;
-@property (nonatomic, retain) NSString* command;
-@property (nonatomic, assign) int numericReply;
-@property (nonatomic, retain) NSMutableArray* params;
+@property (nonatomic) time_t receivedAt;
+@property (nonatomic, strong) IRCPrefix* sender;
+@property (nonatomic, strong) NSString* command;
+@property (nonatomic) int numericReply;
+@property (nonatomic, strong) NSMutableArray* params;
 
 - (id)initWithLine:(NSString*)line;
 

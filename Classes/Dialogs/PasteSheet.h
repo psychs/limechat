@@ -29,14 +29,14 @@
     IBOutlet NSTextField* errorLabel;
 }
 
-@property (nonatomic, retain) NSString* nick;
-@property (nonatomic, assign) int uid;
-@property (nonatomic, assign) int cid;
-@property (nonatomic, retain) NSString* originalText;
-@property (nonatomic, retain) NSString* syntax;
-@property (nonatomic, retain) NSString* command;
-@property (nonatomic, assign) NSSize size;
-@property (nonatomic, assign) BOOL editMode;
+@property (nonatomic, strong) NSString* nick;
+@property (nonatomic) int uid;
+@property (nonatomic) int cid;
+@property (nonatomic, strong) NSString* originalText;
+@property (nonatomic, strong) NSString* syntax;
+@property (nonatomic, strong) NSString* command;
+@property (nonatomic) NSSize size;
+@property (nonatomic) BOOL editMode;
 @property (nonatomic, readonly) BOOL isShortText;
 
 - (void)start;

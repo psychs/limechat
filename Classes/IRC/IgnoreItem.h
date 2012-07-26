@@ -17,11 +17,11 @@
     OnigRegexp* textRegex;
 }
 
-@property (nonatomic, retain) NSString* nick;
-@property (nonatomic, retain) NSString* text;
-@property (nonatomic, assign) BOOL useRegexForNick;
-@property (nonatomic, assign) BOOL useRegexForText;
-@property (nonatomic, retain) NSArray* channels;
+@property (nonatomic, strong) NSString* nick;
+@property (nonatomic, strong) NSString* text;
+@property (nonatomic) BOOL useRegexForNick;
+@property (nonatomic) BOOL useRegexForText;
+@property (nonatomic, strong) NSArray* channels;
 
 @property (nonatomic, readonly) BOOL isValid;
 @property (nonatomic, readonly) NSString* displayNick;
