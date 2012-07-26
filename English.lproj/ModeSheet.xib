@@ -524,7 +524,7 @@
 							<object class="NSButtonCell" key="NSCell" id="167127400">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">0</int>
-								<string key="NSContents">+t topic set only by opeators</string>
+								<string key="NSContents">+t topic set only by operators</string>
 								<reference key="NSSupport" ref="848671991"/>
 								<reference key="NSControlView" ref="441107544"/>
 								<int key="NSButtonFlags">1211912703</int>
