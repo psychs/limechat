@@ -362,6 +362,7 @@ static unsigned OTHERS_TABLE[] = {
 
 
 @implementation UnicodeHelper
+
 + (BOOL)isPrivate:(UniChar)c
 {
     /*

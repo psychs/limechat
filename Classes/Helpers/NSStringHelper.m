@@ -165,31 +165,16 @@
     return YES;
 }
 
-BOOL isSurrogate(UniChar c)
-{
-    return 0xd800 <= c && c <= 0xdfff;
-}
-
-BOOL isHighSurrogate(UniChar c)
-{
-    return 0xd800 <= c && c <= 0xdbff;
-}
-
-BOOL isLowSurrogate(UniChar c)
-{
-    return 0xdc00 <= c && c <= 0xdfff;
-}
-
 - (int)firstCharCodePoint
 {
     int len = self.length;
     if (len == 0) return -1;
     
     int c = [self characterAtIndex:0];
-    if (isHighSurrogate(c)) {
+    if (CFStringIsSurrogateHighCharacter(c)) {
         if (len <= 1) return c;
         int d = [self characterAtIndex:1];
-        if (isLowSurrogate(d)) {
+        if (CFStringIsSurrogateLowCharacter(d)) {
             return (c - 0xd800) * 0x400 + (d - 0xdc00) + 0x10000;
         }
         else {
@@ -205,10 +190,10 @@ BOOL isLowSurrogate(UniChar c)
     if (len == 0) return -1;
     
     int c = [self characterAtIndex:len-1];
-    if (isLowSurrogate(c)) {
+    if (CFStringIsSurrogateLowCharacter(c)) {
         if (len <= 1) return c;
         int d = [self characterAtIndex:len-2];
-        if (isHighSurrogate(d)) {
+        if (CFStringIsSurrogateHighCharacter(d)) {
             return (d - 0xd800) * 0x400 + (c - 0xdc00) + 0x10000;
         }
         else {
@@ -218,7 +203,7 @@ BOOL isLowSurrogate(UniChar c)
     return c;
 }
 
-int ctoi(unsigned char c)
+static int ctoi(unsigned char c)
 {
     if ('0' <= c && c <= '9') {
         return c - '0';
@@ -234,7 +219,7 @@ int ctoi(unsigned char c)
     }
 }
 
-BOOL isUnicharDigit(unichar c)
+static BOOL isUnicharDigit(unichar c)
 {
     return '0' <= c && c <= '9';
 }
