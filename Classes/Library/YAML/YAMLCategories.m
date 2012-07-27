@@ -34,8 +34,10 @@ static BOOL yamlClass(id object)
 - (id)initWrapperWithData:(id)d tag:(Class)cn
 {
     self = [super init];
-    data = [d retain];
-    tag = cn;
+    if (self) {
+        data = [d retain];
+        tag = cn;
+    }
     return self;
 }
 
@@ -96,14 +98,11 @@ static BOOL yamlClass(id object)
     int					i = [self length]-1;
     NSMutableString		*indented = [NSMutableString stringWithString:self];
     
-    NSString			*stringIndent;
-    char				*strIndent = malloc(indent+1);
-    
+    char strIndent[indent+1];
     memset(strIndent, ' ', indent);
     strIndent[indent] = 0;
-    
-    stringIndent = [NSString stringWithUTF8String:strIndent];
-    
+    NSString *stringIndent = [NSString stringWithUTF8String:strIndent];
+
     while(i > 0)
     {
         lineRange = [indented lineRangeForRange:NSMakeRange(i,0)];
@@ -113,8 +112,6 @@ static BOOL yamlClass(id object)
         i = lineRange.location - 1;
     }
 
-    free(strIndent);
-    
     return indented;
 }
 
@@ -178,7 +175,7 @@ static BOOL yamlClass(id object)
         return @"[]";
     }
 
-    char *strIndent = malloc(indent+1);
+    char strIndent[indent+1];
     memset(strIndent, ' ', indent);
     strIndent[indent] = 0;
     
@@ -196,8 +193,6 @@ static BOOL yamlClass(id object)
         [description appendFormat:@"%s- %@%@%s", strIndent, tag,
          [anObject yamlDescriptionWithIndent:indent+2], anObject == last? "" : "\n"];
     }
-    
-    free(strIndent);
     
     return description;
 }
@@ -278,9 +273,9 @@ static BOOL yamlClass(id object)
     //NSString* last;
     
     NSMutableString		*description = [NSMutableString stringWithString:@"\n"];
-    char				strIndent[indent+1];
     //int					keyLength = 0;
     
+    char strIndent[indent+1];
     memset(strIndent, ' ', indent);
     strIndent[indent] = 0;
     
