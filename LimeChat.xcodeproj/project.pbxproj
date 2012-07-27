@@ -319,6 +319,8 @@
 		78A8C21011737F660044E7A1 /* TextFieldWithDisabledState.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C1A111737F660044E7A1 /* TextFieldWithDisabledState.m */; };
 		78A8C21111737F660044E7A1 /* ThinSplitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C1A311737F660044E7A1 /* ThinSplitView.m */; };
 		78A8C21211737F660044E7A1 /* TreeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C1A511737F660044E7A1 /* TreeView.m */; };
+		78AB172715C33374008CD998 /* NumericTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AB172615C33374008CD998 /* NumericTextField.m */; };
+		78AB172815C33374008CD998 /* NumericTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AB172615C33374008CD998 /* NumericTextField.m */; };
 		78AD78E40C61B8F8001E77F4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 78AD78E20C61B8F8001E77F4 /* Localizable.strings */; };
 		78B2DF210D0417160092EBDA /* application.icns in Resources */ = {isa = PBXBuildFile; fileRef = 78B2DF1F0D0417160092EBDA /* application.icns */; };
 		78B9B84113F1E677005E1BC8 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78B9B84013F1E677005E1BC8 /* Growl.framework */; };
@@ -663,6 +665,8 @@
 		78A8C1A311737F660044E7A1 /* ThinSplitView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThinSplitView.m; sourceTree = "<group>"; };
 		78A8C1A411737F660044E7A1 /* TreeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TreeView.h; sourceTree = "<group>"; };
 		78A8C1A511737F660044E7A1 /* TreeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TreeView.m; sourceTree = "<group>"; };
+		78AB172515C33374008CD998 /* NumericTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NumericTextField.h; sourceTree = "<group>"; };
+		78AB172615C33374008CD998 /* NumericTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NumericTextField.m; sourceTree = "<group>"; };
 		78AD78E30C61B8F8001E77F4 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
 		78B2DF1F0D0417160092EBDA /* application.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = application.icns; path = ../icon/application.icns; sourceTree = "<group>"; };
 		78B9B84013F1E677005E1BC8 /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = Frameworks/Growl.framework; sourceTree = "<group>"; };
@@ -1145,6 +1149,8 @@
 				78A8C19F11737F660044E7A1 /* TextField.m */,
 				78A8C1A011737F660044E7A1 /* TextFieldWithDisabledState.h */,
 				78A8C1A111737F660044E7A1 /* TextFieldWithDisabledState.m */,
+				78AB172515C33374008CD998 /* NumericTextField.h */,
+				78AB172615C33374008CD998 /* NumericTextField.m */,
 				78A8C1A211737F660044E7A1 /* ThinSplitView.h */,
 				78A8C1A311737F660044E7A1 /* ThinSplitView.m */,
 				78A8C1A411737F660044E7A1 /* TreeView.h */,
@@ -1471,6 +1477,7 @@
 				780844F7134CD45E003BB84C /* ImageSizeCheckClient.m in Sources */,
 				787F49431589809F003AADE2 /* TwitterAvatarURLManager.m in Sources */,
 				787F494815898166003AADE2 /* TwitterImageURLClient.m in Sources */,
+				78AB172815C33374008CD998 /* NumericTextField.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1608,6 +1615,7 @@
 				780844F6134CD45E003BB84C /* ImageSizeCheckClient.m in Sources */,
 				787F49421589809F003AADE2 /* TwitterAvatarURLManager.m in Sources */,
 				787F494715898166003AADE2 /* TwitterImageURLClient.m in Sources */,
+				78AB172715C33374008CD998 /* NumericTextField.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
