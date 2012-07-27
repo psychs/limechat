@@ -220,7 +220,7 @@
     
     while (right - left > LINEAR_SEARCH_THRESHOLD) {
         int i = (left + right) / 2;
-        IRCUser* t = [members objectAtIndex:i];
+        IRCUser* t = members[i];
         if ([t compare:item] == NSOrderedAscending) {
             left = i + 1;
         }
@@ -230,7 +230,7 @@
     }
     
     for (int i=left; i<right; ++i) {
-        IRCUser* t = [members objectAtIndex:i];
+        IRCUser* t = members[i];
         if ([t compare:item] == NSOrderedDescending) {
             [members insertObject:item atIndex:i];
             return;
@@ -249,7 +249,7 @@
 {
     int n = [self indexOfMember:user.nick];
     if (n >= 0) {
-        [[[members objectAtIndex:n] retain] autorelease];
+        [[members[n] retain] autorelease];
         [members removeObjectAtIndex:n];
     }
     
@@ -267,7 +267,7 @@
 {
     int n = [self indexOfMember:nick];
     if (n >= 0) {
-        [[[members objectAtIndex:n] retain] autorelease];
+        [[members[n] retain] autorelease];
         [members removeObjectAtIndex:n];
     }
     
@@ -281,7 +281,7 @@
     int n = [self indexOfMember:fromNick];
     if (n < 0) return;
     
-    IRCUser* m = [members objectAtIndex:n];
+    IRCUser* m = members[n];
     [[m retain] autorelease];
     if (![fromNick isEqualNoCase:toNick]) {
         [self removeMember:toNick reload:NO];
@@ -289,7 +289,7 @@
     
     m.nick = toNick;
     
-    [[[members objectAtIndex:n] retain] autorelease];
+    [[members[n] retain] autorelease];
     [members removeObjectAtIndex:n];
     [self sortedInsert:m];
     
@@ -304,7 +304,7 @@
 {
     int n = [self indexOfMember:user.nick];
     if (n >= 0) {
-        [[[members objectAtIndex:n] retain] autorelease];
+        [[members[n] retain] autorelease];
         [members removeObjectAtIndex:n];
     }
     
@@ -316,7 +316,7 @@
     int n = [self indexOfMember:nick];
     if (n < 0) return;
     
-    IRCUser* m = [members objectAtIndex:n];
+    IRCUser* m = members[n];
     
     switch (modeChar) {
         case 'q': m.q = value; break;
@@ -326,7 +326,7 @@
         case 'v': m.v = value; break;
     }
     
-    [[[members objectAtIndex:n] retain] autorelease];
+    [[members[n] retain] autorelease];
     [members removeObjectAtIndex:n];
     
     [self sortedInsert:m];
@@ -356,14 +356,14 @@
 
 - (IRCUser*)memberAtIndex:(int)index
 {
-    return [members objectAtIndex:index];
+    return members[index];
 }
 
 - (IRCUser*)findMember:(NSString*)nick
 {
     int n = [self indexOfMember:nick];
     if (n < 0) return nil;
-    return [members objectAtIndex:n];
+    return members[n];
 }
 
 - (int)numberOfMembers
@@ -428,7 +428,7 @@
 
 - (void)tableView:(NSTableView *)sender willDisplayCell:(MemberListViewCell*)cell forTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
-    cell.member = [members objectAtIndex:row];
+    cell.member = members[row];
 }
 
 @end

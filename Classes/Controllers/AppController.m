@@ -471,7 +471,7 @@
         int y = [dic intForKey:@"y"];
         int w = [dic intForKey:@"w"];
         int h = [dic intForKey:@"h"];
-        id spellCheckingValue = [dic objectForKey:@"spell_checking"];
+        id spellCheckingValue = dic[@"spell_checking"];
         
         [window setFrame:NSMakeRect(x, y, w, h) display:YES];
         rootSplitter.position = [dic intForKey:@"root"];
@@ -629,18 +629,15 @@
     CGFloat firstUserWeight = 0;
     
     if (commandMode) {
-        choices = [NSArray arrayWithObjects:
-                   @"action", @"away", @"ban", @"clear", @"close",
-                   @"ctcp", @"ctcpreply", @"cycle", @"dehalfop", @"deop",
-                   @"devoice", @"halfop", @"hop", @"ignore", @"invite",
-                   @"ison", @"join", @"kick", @"leave", @"list",
-                   @"me", @"mode", @"msg", @"nick", @"notice",
-                   @"op", @"part", @"pong", @"privmsg", @"query",
-                   @"quit", @"quote", @"raw", @"rejoin", @"timer",
-                   @"topic", @"umode", @"unban", @"unignore", @"voice",
-                   @"weights", @"who", @"whois", @"whowas",
-                   nil];
-        lowerChoices = choices;
+        lowerChoices = @[@"action", @"away", @"ban", @"clear", @"close",
+                            @"ctcp", @"ctcpreply", @"cycle", @"dehalfop", @"deop",
+                            @"devoice", @"halfop", @"hop", @"ignore", @"invite",
+                            @"ison", @"join", @"kick", @"leave", @"list",
+                            @"me", @"mode", @"msg", @"nick", @"notice",
+                            @"op", @"part", @"pong", @"privmsg", @"query",
+                            @"quit", @"quote", @"raw", @"rejoin", @"timer",
+                            @"topic", @"umode", @"unban", @"unignore", @"voice",
+                            @"weights", @"who", @"whois", @"whowas"];
     }
     else {
         NSMutableArray* users = [[channel.members mutableCopy] autorelease];
@@ -671,7 +668,7 @@
     int i = 0;
     for (NSString* s in lowerChoices) {
         if ([s hasPrefix:lowerPre]) {
-            [currentChoices addObject:[choices objectAtIndex:i]];
+            [currentChoices addObject:choices[i]];
             [currentLowerChoices addObject:s];
         }
         ++i;
@@ -683,7 +680,7 @@
     if (!currentChoices.count) {
         if (current.length) return;
         if (!commandMode && !twitterMode && firstUserWeight > 0) {
-            NSString* firstChoice = [choices objectAtIndex:0];
+            NSString* firstChoice = choices[0];
             [currentChoices addObject:firstChoice];
             [currentLowerChoices addObject:[firstChoice lowercaseString]];
         }
@@ -710,10 +707,10 @@
                 --index;
             }
         }
-        t = [currentChoices objectAtIndex:index];
+        t = currentChoices[index];
     }
     else {
-        t = [currentChoices objectAtIndex:0];
+        t = currentChoices[0];
     }
     
     // add suffix
@@ -878,7 +875,7 @@ typedef enum {
             
             if (n == start) break;
             
-            client = [world.clients objectAtIndex:n];
+            client = world.clients[n];
             if (client) {
                 if (target == MOVE_ACTIVE) {
                     if (client.isLoggedIn) {
@@ -1095,7 +1092,7 @@ typedef enum {
 
 - (void)welcomeDialog:(WelcomeDialog*)sender onOK:(NSDictionary*)config
 {
-    NSString* host = [config objectForKey:@"host"];
+    NSString* host = config[@"host"];
     NSString* name = host;
 
     NSString* hostPattern = @"^[^\\s]+\\s+\\(([^()]+)\\)";
@@ -1105,29 +1102,29 @@ typedef enum {
         name = [host substringWithRange:[result rangeAtIndex:1]];
     }
 
-    NSString* nick = [config objectForKey:@"nick"];
+    NSString* nick = config[@"nick"];
     NSString* user = [[nick lowercaseString] safeUsername];
     NSString* realName = nick;
     
     NSMutableArray* channels = [NSMutableArray array];
-    for (NSString* s in [config objectForKey:@"channels"]) {
-        [channels addObject:[NSDictionary dictionaryWithObjectsAndKeys:
-                             s, @"name",
-                             [NSNumber numberWithBool:YES], @"auto_join",
-                             [NSNumber numberWithBool:YES], @"console",
-                             [NSNumber numberWithBool:YES], @"growl",
-                             @"+sn", @"mode",
-                             nil]];
+    for (NSString* s in config[@"channels"]) {
+        [channels addObject:@{
+            @"name": s,
+            @"auto_join": @YES,
+            @"console": @YES,
+            @"growl": @YES,
+            @"mode": @"+sn",
+        }];
     }
     
     NSMutableDictionary* dic = [NSMutableDictionary dictionary];
-    [dic setObject:host forKey:@"host"];
-    [dic setObject:name forKey:@"name"];
-    [dic setObject:nick forKey:@"nick"];
-    [dic setObject:user forKey:@"username"];
-    [dic setObject:realName forKey:@"realname"];
-    [dic setObject:channels forKey:@"channels"];
-    [dic setObject:[config objectForKey:@"autoConnect"] forKey:@"auto_connect"];
+    dic[@"host"] = host;
+    dic[@"name"] = name;
+    dic[@"nick"] = nick;
+    dic[@"username"] = user;
+    dic[@"realname"] = realName;
+    dic[@"channels"] = channels;
+    dic[@"auto_connect"] = config[@"autoConnect"];
     
     if ([NSLocale prefersJapaneseLanguage]) {
         NSString* net = [host lowercaseString];
@@ -1136,10 +1133,10 @@ typedef enum {
             || [net contains:@"quakenet"]
             || [net contains:@"mozilla"]
             || [net contains:@"ustream"]) {
-            [dic setObject:[NSNumber numberWithLong:NSUTF8StringEncoding] forKey:@"encoding"];
+            dic[@"encoding"] = [NSNumber numberWithLong:NSUTF8StringEncoding];
         }
         else {
-            [dic setObject:[NSNumber numberWithLong:NSISO2022JPStringEncoding] forKey:@"encoding"];
+            dic[@"encoding"] = [NSNumber numberWithLong:NSISO2022JPStringEncoding];
         }
     }
     

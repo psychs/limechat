@@ -215,7 +215,7 @@
 {
     static NSArray* ary;
     if (!ary) {
-        ary = [[NSArray arrayWithObjects:@"-", @"Beep", @"Basso", @"Blow", @"Bottle", @"Frog", @"Funk", @"Glass", @"Hero", @"Morse", @"Ping", @"Pop", @"Purr", @"Sosumi", @"Submarine", @"Tink", nil] retain];
+        ary = [@[@"-", @"Beep", @"Basso", @"Blow", @"Bottle", @"Frog", @"Funk", @"Glass", @"Hero", @"Morse", @"Ping", @"Pop", @"Purr", @"Sosumi", @"Submarine", @"Tink"] retain];
     }
     return ary;
 }
@@ -354,7 +354,7 @@
     [[themeButton itemAtIndex:0] setTag:0];
     
     NSFileManager* fm = [NSFileManager defaultManager];
-    NSArray* ary = [NSArray arrayWithObjects:[ViewTheme resourceBasePath], [ViewTheme userBasePath], nil];
+    NSArray* ary = @[[ViewTheme resourceBasePath], [ViewTheme userBasePath]];
     int tag = 0;
     
     for (NSString* path in ary) {
@@ -396,8 +396,8 @@
         return;
     }
     
-    NSString* kind = [kindAndName objectAtIndex:0];
-    NSString* name = [kindAndName objectAtIndex:1];
+    NSString* kind = kindAndName[0];
+    NSString* name = kindAndName[1];
     
     int targetTag = 0;
     if (![kind isEqualToString:@"resource"]) {

@@ -80,17 +80,17 @@
     
     [dic setInt:type forKey:@"type"];
     
-    if (name) [dic setObject:name forKey:@"name"];
-    if (password) [dic setObject:password forKey:@"password"];
+    if (name) dic[@"name"] = name;
+    if (password) dic[@"password"] = password;
+
+    dic[@"auto_join"] = [NSNumber numberWithBool:autoJoin];
+    dic[@"console"] = [NSNumber numberWithBool:logToConsole];
+    dic[@"growl"] = [NSNumber numberWithBool:growl];
     
-    [dic setBool:autoJoin forKey:@"auto_join"];
-    [dic setBool:logToConsole forKey:@"console"];
-    [dic setBool:growl forKey:@"growl"];
+    if (mode) dic[@"mode"] = mode;
+    if (topic) dic[@"topic"] = topic;
     
-    if (mode) [dic setObject:mode forKey:@"mode"];
-    if (topic) [dic setObject:topic forKey:@"topic"];
-    
-    if (autoOp) [dic setObject:autoOp forKey:@"autoop"];
+    if (autoOp) dic[@"autoop"] = autoOp;
     
     return dic;
 }

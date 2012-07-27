@@ -52,8 +52,8 @@
     if (![self.window isVisible]) {
         NSDictionary* dic = [Preferences loadWindowStateWithName:@"channel_list_window"];
         if (dic) {
-            NSDictionary* win = [dic objectForKey:@"window"];
-            NSArray* cols = [dic objectForKey:@"tablecols"];
+            NSDictionary* win = dic[@"window"];
+            NSArray* cols = dic[@"tablecols"];
             
             double x = [win doubleForKey:@"x"];
             double y = [win doubleForKey:@"y"];
@@ -91,7 +91,7 @@
 
 - (void)addChannel:(NSString*)channel count:(int)count topic:(NSString*)topic
 {
-    NSArray* item = [NSArray arrayWithObjects:channel, [NSNumber numberWithInt:count], topic, nil];
+    NSArray* item = @[channel, [NSNumber numberWithInt:count], topic];
     
     NSString* filter = [filterText stringValue];
     if (filter.length) {
@@ -120,7 +120,7 @@ static NSInteger compareItems(NSArray* self, NSArray* other, void* context)
     int key = dialog.sortKey;
     NSComparisonResult order = dialog.sortOrder;
     
-    NSString* mine = [self objectAtIndex:key];
+    NSString* mine = self[key];
     NSString* others = [other objectAtIndex:key];
     
     NSComparisonResult result;
@@ -152,7 +152,7 @@ static NSInteger compareItems(NSArray* self, NSArray* other, void* context)
     
     while (right - left > THRESHOLD) {
         int pivot = (left + right) / 2;
-        if (compareItems([ary objectAtIndex:pivot], item, self) == NSOrderedDescending) {
+        if (compareItems(ary[pivot], item, self) == NSOrderedDescending) {
             right = pivot;
         }
         else {
@@ -161,7 +161,7 @@ static NSInteger compareItems(NSArray* self, NSArray* other, void* context)
     }
     
     for (int i=left; i<right; ++i) {
-        if (compareItems([ary objectAtIndex:i], item, self) == NSOrderedDescending) {
+        if (compareItems(ary[i], item, self) == NSOrderedDescending) {
             [ary insertObject:item atIndex:i];
             return;
         }
@@ -195,9 +195,9 @@ static NSInteger compareItems(NSArray* self, NSArray* other, void* context)
     
     NSIndexSet* indexes = [table selectedRowIndexes];
     for (NSUInteger i=[indexes firstIndex]; i!=NSNotFound; i=[indexes indexGreaterThanIndex:i]) {
-        NSArray* item = [ary objectAtIndex:i];
+        NSArray* item = ary[i];
         if ([delegate respondsToSelector:@selector(listDialogOnJoin:channel:)]) {
-            [delegate listDialogOnJoin:self channel:[item objectAtIndex:0]];
+            [delegate listDialogOnJoin:self channel:item[0]];
         }
     }
 }
@@ -211,8 +211,8 @@ static NSInteger compareItems(NSArray* self, NSArray* other, void* context)
     if (filter.length) {
         NSMutableArray* ary = [NSMutableArray new];
         for (NSArray* item in list) {
-            NSString* channel = [item objectAtIndex:0];
-            NSString* topic = [item objectAtIndex:2];
+            NSString* channel = item[0];
+            NSString* topic = item[2];
             if ([channel rangeOfString:filter options:NSCaseInsensitiveSearch].location != NSNotFound
                 || [topic rangeOfString:filter options:NSCaseInsensitiveSearch].location != NSNotFound) {
                 [ary addObject:item];
@@ -229,8 +229,8 @@ static NSInteger compareItems(NSArray* self, NSArray* other, void* context)
     NSDictionary* dic = [Preferences loadWindowStateWithName:@"channel_list_window"];
     if (!dic) return NO;
     
-    NSDictionary* win = [dic objectForKey:@"window"];
-    NSArray* cols = [dic objectForKey:@"tablecols"];
+    NSDictionary* win = dic[@"window"];
+    NSArray* cols = dic[@"tablecols"];
     
     double x = [win doubleForKey:@"x"];
     double y = [win doubleForKey:@"y"];
@@ -261,7 +261,7 @@ static NSInteger compareItems(NSArray* self, NSArray* other, void* context)
         [cols addObject:[NSNumber numberWithDouble:col.width]];
     }
     
-    NSDictionary* dic = [NSDictionary dictionaryWithObjectsAndKeys:win, @"window", cols, @"tablecols", nil];
+    NSDictionary* dic = @{@"window": win, @"tablecols": cols};
     [Preferences saveWindowState:dic name:@"channel_list_window"];
 }
 
@@ -279,17 +279,17 @@ static NSInteger compareItems(NSArray* self, NSArray* other, void* context)
 - (id)tableView:(NSTableView *)sender objectValueForTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
     NSArray* ary = filteredList ?: list;
-    NSArray* item = [ary objectAtIndex:row];
+    NSArray* item = ary[row];
     NSString* col = [column identifier];
     
     if ([col isEqualToString:@"chname"]) {
-        return [item objectAtIndex:0];
+        return item[0];
     }
     else if ([col isEqualToString:@"count"]) {
-        return [item objectAtIndex:1];
+        return item[1];
     }
     else {
-        return [item objectAtIndex:2];
+        return item[2];
     }
 }
 

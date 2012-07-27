@@ -229,7 +229,7 @@ static NSImage* eraseButtonPushedImage;
                 return NO;
             default:
             {
-                NSString* s = [specialKeyMap objectForKey:NUM(k)];
+                NSString* s = specialKeyMap[NUM(k)];
                 if (!s) {
                     return YES;
                 }
@@ -287,7 +287,7 @@ static NSImage* eraseButtonPushedImage;
 
 - (NSString*)transformKeyCodeToString:(unsigned int)k
 {
-    NSString* name = [specialKeyMap objectForKey:NUM(k)];
+    NSString* name = specialKeyMap[NUM(k)];
     if (name) return name;
     
     NSString* s = [[KeyCodeTranslator sharedInstance] translateKeyCode:k];
@@ -411,83 +411,80 @@ static NSImage* eraseButtonPushedImage;
     if (self != [KeyRecorder class]) return;
     
     NSAutoreleasePool* pool = [NSAutoreleasePool new];
-    
-    specialKeyMap = [NSDictionary dictionaryWithObjectsAndKeys:
-                     @"↩", NUM(36),
-                     @"⇥", NUM(48),
-                     @"Space", NUM(49),
-                     @"⌫", NUM(51),
-                     @"⎋", NUM(53),
-                     @"F17", NUM(64),
-                     @"Clear", NUM(71),
-                     @"⌅", NUM(76),
-                     @"F18", NUM(79),
-                     @"F19", NUM(80),
-                     @"F5", NUM(96),
-                     @"F6", NUM(97),
-                     @"F7", NUM(98),
-                     @"F3", NUM(99),
-                     @"F8", NUM(100),
-                     @"F9", NUM(101),
-                     @"F11", NUM(103),
-                     @"F13", NUM(105),
-                     @"F16", NUM(106),
-                     @"F14", NUM(107),
-                     @"F10", NUM(109),
-                     @"F12", NUM(111),
-                     @"F15", NUM(113),
-                     @"Help", NUM(114),
-                     @"↖", NUM(115),
-                     @"⇞", NUM(116),
-                     @"⌦", NUM(117),
-                     @"F4", NUM(118),
-                     @"↘", NUM(119),
-                     @"F2", NUM(120),
-                     @"⇟", NUM(121),
-                     @"F1", NUM(122),
-                     @"←", NUM(123),
-                     @"→", NUM(124),
-                     @"↓", NUM(125),
-                     @"↑", NUM(126),
-                     nil
-                     ];
+
+    specialKeyMap = @{
+        @36: @"↩",
+        @48: @"⇥",
+        @49: @"Space",
+        @51: @"⌫",
+        @53: @"⎋",
+        @64: @"F17",
+        @71: @"Clear",
+        @76: @"⌅",
+        @79: @"F18",
+        @80: @"F19",
+        @96: @"F5",
+        @97: @"F6",
+        @98: @"F7",
+        @99: @"F3",
+        @100: @"F8",
+        @101: @"F9",
+        @103: @"F11",
+        @105: @"F13",
+        @106: @"F16",
+        @107: @"F14",
+        @109: @"F10",
+        @111: @"F12",
+        @113: @"F15",
+        @114: @"Help",
+        @115: @"↖",
+        @116: @"⇞",
+        @117: @"⌦",
+        @118: @"F4",
+        @119: @"↘",
+        @120: @"F2",
+        @121: @"⇟",
+        @122: @"F1",
+        @123: @"←",
+        @124: @"→",
+        @125: @"↓",
+        @126: @"↑",
+    };
     [specialKeyMap retain];
     
-    padKeyArray = [NSArray arrayWithObjects:
-                   NUM(65), // ,
-                   NUM(67), // *
-                   NUM(69), // +
-                   NUM(75), // /
-                   NUM(78), // -
-                   NUM(81), // =
-                   NUM(82), // 0
-                   NUM(83), // 1
-                   NUM(84), // 2
-                   NUM(85), // 3
-                   NUM(86), // 4
-                   NUM(87), // 5
-                   NUM(88), // 6
-                   NUM(89), // 7
-                   NUM(91), // 8
-                   NUM(92), // 9
-                   nil
+    padKeyArray = @[@65, // ,
+                    @67, // *
+                    @69, // +
+                    @75, // /
+                    @78, // -
+                    @81, // =
+                    @82, // 0
+                    @83, // 1
+                    @84, // 2
+                    @85, // 3
+                    @86, // 4
+                    @87, // 5
+                    @88, // 6
+                    @89, // 7
+                    @91, // 8
+                    @92, // 9
                    ];
     [padKeyArray retain];
     
     NSMutableParagraphStyle* ps = [[NSMutableParagraphStyle new] autorelease];
     [ps setAlignment:NSCenterTextAlignment];
-    placeholderAttribute = [NSDictionary dictionaryWithObjectsAndKeys:
-                            [NSFont systemFontOfSize:12], NSFontAttributeName,
-                            [NSColor colorWithCalibratedWhite:0.4 alpha:1], NSForegroundColorAttributeName,
-                            ps, NSParagraphStyleAttributeName,
-                            nil];
+    placeholderAttribute = @{
+        NSFontAttributeName: [NSFont systemFontOfSize:12],
+        NSForegroundColorAttributeName: [NSColor colorWithCalibratedWhite:0.4 alpha:1],
+        NSParagraphStyleAttributeName: ps,
+    };
     [placeholderAttribute retain];
     
-    normalAttribute = [NSDictionary dictionaryWithObjectsAndKeys:
-                       [NSFont systemFontOfSize:12], NSFontAttributeName,
-                       [NSColor blackColor], NSForegroundColorAttributeName,
-                       ps, NSParagraphStyleAttributeName,
-                       nil];
+    normalAttribute = @{
+        NSFontAttributeName: [NSFont systemFontOfSize:12],
+        NSForegroundColorAttributeName: [NSColor blackColor],
+        NSParagraphStyleAttributeName: ps,
+    };
     [normalAttribute retain];
     
     eraseButtonImage = [[NSImage imageNamed:@"keyrecorder_erase.png"] retain];

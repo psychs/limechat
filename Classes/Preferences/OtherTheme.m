@@ -288,9 +288,9 @@
     va_list args;
     va_start(args, key);
     
-    NSDictionary* dic = [content objectForKey:key];
+    NSDictionary* dic = content[key];
     while ([dic isKindOfClass:[NSDictionary class]] && (key = va_arg(args, id))) {
-        dic = [dic objectForKey:key];
+        dic = dic[key];
     }
     
     va_end(args);
@@ -303,9 +303,9 @@
     va_list args;
     va_start(args, key);
     
-    NSDictionary* dic = [content objectForKey:key];
+    NSDictionary* dic = content[key];
     while ([dic isKindOfClass:[NSDictionary class]] && (key = va_arg(args, id))) {
-        dic = [dic objectForKey:key];
+        dic = dic[key];
     }
     
     va_end(args);
@@ -316,14 +316,14 @@
 
 - (NSFont*)loadFont:(NSString*)key
 {
-    NSDictionary* dic = [content objectForKey:key];
+    NSDictionary* dic = content[key];
     
     if (![dic isKindOfClass:[NSDictionary class]]) return nil;
     
-    NSString* family = [dic objectForKey:@"font-family"];
-    NSNumber* sizeNum = [dic objectForKey:@"font-size"];
-    NSString* weight = [dic objectForKey:@"font-weight"];
-    NSString* style = [dic objectForKey:@"font-style"];
+    NSString* family = dic[@"font-family"];
+    NSNumber* sizeNum = dic[@"font-size"];
+    NSString* weight = dic[@"font-weight"];
+    NSString* style = dic[@"font-style"];
     
     CGFloat size = 0;
     if (sizeNum) {

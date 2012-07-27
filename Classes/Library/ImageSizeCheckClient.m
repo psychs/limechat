@@ -81,7 +81,7 @@
     
     if (200 <= statusCode && statusCode < 300) {
         NSDictionary* header = [response allHeaderFields];
-        NSNumber* contentLengthNum = [header objectForKey:@"Content-Length"];
+        NSNumber* contentLengthNum = header[@"Content-Length"];
         if ([contentLengthNum respondsToSelector:@selector(longLongValue)]) {
             contentLength = [contentLengthNum longLongValue];
         }

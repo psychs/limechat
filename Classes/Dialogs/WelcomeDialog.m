@@ -69,19 +69,19 @@
 - (void)onOK:(id)sender
 {
     [self.window endEditingFor:nil];
-    
+
     /*
-     NSText* fieldEditor = [self.window fieldEditor:NO forObject:channelTable];
-     if (fieldEditor) {
-     [[channelTable cell] endEditing:fieldEditor];
-     NSInteger n = [channelTable editedRow];
-     if (n != NSNotFound) {
-     NSString* s = [[[fieldEditor string] copy] autorelease];
-     if (n < channels.count) {
-     [channels replaceObjectAtIndex:n withObject:s];
-     }
-     }
-     }
+    NSText* fieldEditor = [self.window fieldEditor:NO forObject:channelTable];
+    if (fieldEditor) {
+        [[channelTable cell] endEditing:fieldEditor];
+        NSInteger n = [channelTable editedRow];
+        if (n != NSNotFound) {
+            NSString* s = [[[fieldEditor string] copy] autorelease];
+            if (n < channels.count) {
+                channels[n] = s;
+            }
+        }
+    }
      */
     
     NSMutableSet* set = [NSMutableSet set];
@@ -101,10 +101,10 @@
     }
     
     NSMutableDictionary* dic = [NSMutableDictionary dictionary];
-    [dic setObject:nickText.stringValue forKey:@"nick"];
-    [dic setObject:hostCombo.stringValue forKey:@"host"];
-    [dic setObject:chans forKey:@"channels"];
-    [dic setObject:[NSNumber numberWithBool:autoConnectCheck.state] forKey:@"autoConnect"];
+    dic[@"nick"] = nickText.stringValue;
+    dic[@"host"] = hostCombo.stringValue;
+    dic[@"channels"] = chans;
+    dic[@"autoConnect"] = [NSNumber numberWithBool:autoConnectCheck.state];
     
     if ([delegate respondsToSelector:@selector(welcomeDialog:onOK:)]) {
         [delegate welcomeDialog:self onOK:dic];
@@ -167,7 +167,7 @@
     NSInteger n = [channelTable editedRow];
     if (n >= 0) {
         NSString* s = [[[[[note object] textStorage] string] copy] autorelease];
-        [channels replaceObjectAtIndex:n withObject:s];
+        channels[n] = s;
         [channelTable reloadData];
         [channelTable selectItemAtIndex:n];
         [self tableViewSelectionIsChanging:nil];
@@ -181,7 +181,7 @@
 
 - (id)tableView:(NSTableView *)sender objectValueForTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
-    return [channels objectAtIndex:row];
+    return channels[row];
 }
 
 - (void)tableViewSelectionIsChanging:(NSNotification *)note

@@ -11,7 +11,7 @@
 #define IGNORE_TAB_INDEX    3
 
 #define TABLE_ROW_TYPE      @"row"
-#define TABLE_ROW_TYPES     [NSArray arrayWithObject:TABLE_ROW_TYPE]
+#define TABLE_ROW_TYPES     @[TABLE_ROW_TYPE]
 
 
 @interface ServerDialog (Private)
@@ -234,7 +234,7 @@
     // remove invalid ignores
     NSMutableArray* ignores = config.ignores;
     for (int i=ignores.count-1; i>=0; --i) {
-        IgnoreItem* g = [ignores objectAtIndex:i];
+        IgnoreItem* g = ignores[i];
         if (!g.isValid) {
             [ignores removeObjectAtIndex:i];
         }
@@ -290,7 +290,7 @@
         conf = [[IRCChannelConfig new] autorelease];
     }
     else {
-        IRCChannelConfig* c = [config.channels objectAtIndex:sel];
+        IRCChannelConfig* c = config.channels[sel];
         conf = [[c mutableCopy] autorelease];
         conf.name = @"";
     }
@@ -309,7 +309,7 @@
 {
     NSInteger sel = [channelTable selectedRow];
     if (sel < 0) return;
-    IRCChannelConfig* c = [[[config.channels objectAtIndex:sel] mutableCopy] autorelease];
+    IRCChannelConfig* c = [[config.channels[sel] mutableCopy] autorelease];
     
     [channelSheet release];
     channelSheet = [ChannelDialog new];
@@ -340,7 +340,7 @@
         [config.channels addObject:conf];
     }
     else {
-        [config.channels replaceObjectAtIndex:n withObject:conf];
+        config.channels[n] = conf;
     }
     
     [self reloadChannelTable];
@@ -395,7 +395,7 @@
     ignoreSheet = [IgnoreItemSheet new];
     ignoreSheet.delegate = self;
     ignoreSheet.window = self.window;
-    ignoreSheet.ignore = [config.ignores objectAtIndex:sel];
+    ignoreSheet.ignore = config.ignores[sel];
     [ignoreSheet start];
 }
 
@@ -450,7 +450,7 @@
 - (id)tableView:(NSTableView *)sender objectValueForTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
     if (sender == channelTable) {
-        IRCChannelConfig* c = [config.channels objectAtIndex:row];
+        IRCChannelConfig* c = config.channels[row];
         NSString* columnId = [column identifier];
         
         if ([columnId isEqualToString:@"name"]) {
@@ -464,7 +464,7 @@
         }
     }
     else {
-        IgnoreItem* g = [config.ignores objectAtIndex:row];
+        IgnoreItem* g = config.ignores[row];
         NSString* columnId = [column identifier];
         
         if ([columnId isEqualToString:@"nick"]) {
@@ -481,7 +481,7 @@
 - (void)tableView:(NSTableView *)sender setObjectValue:(id)obj forTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
     if (sender == channelTable) {
-        IRCChannelConfig* c = [config.channels objectAtIndex:row];
+        IRCChannelConfig* c = config.channels[row];
         NSString* columnId = [column identifier];
         
         if ([columnId isEqualToString:@"join"]) {
@@ -518,7 +518,7 @@
 - (BOOL)tableView:(NSTableView *)sender writeRowsWithIndexes:(NSIndexSet *)rows toPasteboard:(NSPasteboard *)pboard
 {
     if (sender == channelTable) {
-        NSArray* ary = [NSArray arrayWithObject:[NSNumber numberWithInt:[rows firstIndex]]];
+        NSArray* ary = @[[NSNumber numberWithInt:[rows firstIndex]]];
         [pboard declareTypes:TABLE_ROW_TYPES owner:self];
         [pboard setPropertyList:ary forType:TABLE_ROW_TYPE];
     }
@@ -550,10 +550,10 @@
         NSPasteboard* pboard = [info draggingPasteboard];
         if (op == NSTableViewDropAbove && [pboard availableTypeFromArray:TABLE_ROW_TYPES]) {
             NSArray* selectedRows = [pboard propertyListForType:TABLE_ROW_TYPE];
-            int sel = [[selectedRows objectAtIndex:0] intValue];
+            int sel = [selectedRows[0] intValue];
             
             NSMutableArray* ary = config.channels;
-            IRCChannelConfig* target = [ary objectAtIndex:sel];
+            IRCChannelConfig* target = ary[sel];
             [[target retain] autorelease];
             
             NSMutableArray* low = [[[ary subarrayWithRange:NSMakeRange(0, row)] mutableCopy] autorelease];

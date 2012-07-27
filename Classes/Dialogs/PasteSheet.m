@@ -35,33 +35,32 @@ static NSDictionary* SYNTAX_EXT_MAP;
         [NSBundle loadNibNamed:@"PasteSheet" owner:self];
         
         if (!SYNTAXES) {
-            SYNTAXES = [[NSArray arrayWithObjects:
-                         @"privmsg", @"notice", @"c", @"css", @"diff", @"html",
-                         @"java", @"javascript", @"php", @"plain text", @"python",
-                         @"ruby", @"sql", @"shell script", @"perl", @"haskell",
-                         @"scheme", @"objective-c",
-                         nil] retain];
+            SYNTAXES = [@[@"privmsg", @"notice", @"c", @"css", @"diff", @"html",
+                          @"java", @"javascript", @"php", @"plain text", @"python",
+                          @"ruby", @"sql", @"shell script", @"perl", @"haskell",
+                          @"scheme", @"objective-c"] retain];
         }
         
         if (!SYNTAX_EXT_MAP) {
-            SYNTAX_EXT_MAP = [[NSDictionary dictionaryWithObjectsAndKeys:
-                               @".c", @"c",
-                               @".css", @"css",
-                               @".diff", @"diff",
-                               @".hs", @"haskell",
-                               @".html", @"html",
-                               @".java", @"java",
-                               @".js", @"javascript",
-                               @".m", @"objective-c",
-                               @".pl", @"perl",
-                               @".aw", @"php",
-                               @".txt", @"plain_text",
-                               @".py", @"python",
-                               @".rb", @"ruby",
-                               @".scm", @"scheme",
-                               @".sh", @"shell script",
-                               @".sql", @"sql",
-                               nil, nil] retain];
+            SYNTAX_EXT_MAP = @{
+                @"c": @".c",
+                @"css": @".css",
+                @"diff": @".diff",
+                @"haskell": @".hs",
+                @"html": @".html",
+                @"java": @".java",
+                @"javascript": @".js",
+                @"objective-c": @".m",
+                @"perl": @".pl",
+                @"php": @".aw",
+                @"plain_text": @".txt",
+                @"python": @".py",
+                @"ruby": @".rb",
+                @"scheme": @".scm",
+                @"shell_script": @".sh",
+                @"sql": @".sql",
+            };
+            [SYNTAX_EXT_MAP retain];
         }
     }
     return self;
@@ -110,7 +109,7 @@ static NSDictionary* SYNTAX_EXT_MAP;
     }
     
     NSString* s = bodyText.string;
-    NSString* fileType = [SYNTAX_EXT_MAP objectForKey:[self syntaxFromTag:syntaxPopup.selectedTag]];
+    NSString* fileType = SYNTAX_EXT_MAP[[self syntaxFromTag:syntaxPopup.selectedTag]];
     if (!fileType) {
         fileType = @".txt";
     }
@@ -182,7 +181,7 @@ static NSDictionary* SYNTAX_EXT_MAP;
 - (NSString*)syntaxFromTag:(int)tag
 {
     if (0 <= tag && tag < SYNTAXES.count) {
-        return [SYNTAXES objectAtIndex:tag];
+        return SYNTAXES[tag];
     }
     return nil;
 }

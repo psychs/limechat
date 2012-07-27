@@ -65,13 +65,13 @@
         int count = [params count];
         if (count > 0) {
             for (int i=0; i<count-1; ++i) {
-                NSString* s = [params objectAtIndex:i];
+                NSString* s = params[i];
                 [d appendString:@" "];
                 [d appendString:s];
             }
             
             [d appendString:@" "];
-            NSString* s = [params objectAtIndex:count-1];
+            NSString* s = params[count-1];
             int len = s.length;
             BOOL firstColonOrSpace = NO;
             if (len > 0) {

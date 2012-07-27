@@ -44,8 +44,8 @@ static NSMutableParagraphStyle* nickStyle;
 {
     markWidth = 0;
     
-    NSDictionary* style = [NSDictionary dictionaryWithObject:self.font forKey:NSFontAttributeName];
-    NSArray* marks = [NSArray arrayWithObjects:@"~", @"&", @"@", @"%", @"+", nil];
+    NSDictionary* style = @{NSFontAttributeName: self.font};
+    NSArray* marks = @[@"~", @"&", @"@", @"%", @"+"];
     
     for (NSString* s in marks) {
         NSSize size = [s sizeWithAttributes:style];
@@ -99,10 +99,10 @@ static NSMutableParagraphStyle* nickStyle;
     }
     
     NSMutableDictionary* style = [NSMutableDictionary dictionary];
-    [style setObject:markStyle forKey:NSParagraphStyleAttributeName];
-    [style setObject:self.font forKey:NSFontAttributeName];
-    [style setObject:color forKey:NSForegroundColorAttributeName];
-    
+    style[NSParagraphStyleAttributeName] = markStyle;
+    style[NSFontAttributeName] = self.font;
+    style[NSForegroundColorAttributeName] = color;
+
     NSRect rect = frame;
     rect.origin.x += LEFT_MARGIN;
     rect.size.width = markWidth;
@@ -113,8 +113,8 @@ static NSMutableParagraphStyle* nickStyle;
         [markStr drawInRect:rect withAttributes:style];
     }
     
-    [style setObject:nickStyle forKey:NSParagraphStyleAttributeName];
-    
+    style[NSParagraphStyleAttributeName] = nickStyle;
+
     int offset = LEFT_MARGIN + markWidth + MARK_RIGHT_MARGIN;
     
     rect = frame;

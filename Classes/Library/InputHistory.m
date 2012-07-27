@@ -43,7 +43,7 @@
     if (s && s.length > 0) {
         NSString* cur = nil;
         if (0 <= pos && pos < buf.count) {
-            cur = [buf objectAtIndex:pos];
+            cur = buf[pos];
         }
         
         if (!cur || ![cur isEqualToString:s]) {
@@ -62,7 +62,7 @@
         return nil;
     }
     else if (0 <= pos && pos < buf.count) {
-        return [buf objectAtIndex:pos];
+        return buf[pos];
     }
     else {
         return @"";
@@ -78,7 +78,7 @@
     
     NSString* cur = nil;
     if (0 <= pos && pos < buf.count) {
-        cur = [buf objectAtIndex:pos];
+        cur = buf[pos];
     }
     
     if (!cur || ![cur isEqualToString:s]) {
@@ -89,7 +89,7 @@
     else {
         ++pos;
         if (0 <= pos && pos < buf.count) {
-            return [buf objectAtIndex:pos];
+            return buf[pos];
         }
         return @"";
     }

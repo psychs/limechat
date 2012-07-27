@@ -317,20 +317,20 @@
         if ([self isNickMenu:sender]) {
             IRCUser* m = [[IRCUser new] autorelease];
             m.nick = pointedNick;
-            return [NSArray arrayWithObject:m];
+            return @[m];
         }
         else {
-            return [NSArray array];
+            return @[];
         }
     }
     else {
         if ([self isNickMenu:sender]) {
             IRCUser* m = [c findMember:pointedNick];
             if (m) {
-                return [NSArray arrayWithObject:m];
+                return @[m];
             }
             else {
-                return [NSArray array];
+                return @[];
             }
         }
         else {
@@ -482,10 +482,7 @@
 - (void)pasteSheetWillClose:(PasteSheet*)sender
 {
     NSSize size = pasteSheet.size;
-    NSDictionary* dic = [NSDictionary dictionaryWithObjectsAndKeys:
-                         [NSNumber numberWithInt:size.width], @"w",
-                         [NSNumber numberWithInt:size.height], @"h",
-                         nil];
+    NSDictionary* dic = @{@"w": [NSNumber numberWithInt:size.width], @"h": [NSNumber numberWithInt:size.height]};
     [Preferences saveWindowState:dic name:@"paste_sheet"];
     
     if (!pasteSheet.isShortText) {
@@ -517,7 +514,7 @@
             multiLine = YES;
         }
         else if (lines.count == 2) {
-            NSString* lastLine = [lines objectAtIndex:1];
+            NSString* lastLine = lines[1];
             multiLine = lastLine.length > 0;
         }
         IRCChannel* c = world.selectedChannel;
@@ -579,7 +576,7 @@
     }
     else if ([t respondsToSelector:@selector(writeSelectionToPasteboard:type:)]) {
         NSPasteboard* pb = [NSPasteboard pasteboardWithName:NSFindPboard];
-        [pb declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:nil];
+        [pb declareTypes:@[NSStringPboardType] owner:nil];
         [t writeSelectionToPasteboard:pb type:NSStringPboardType];
     }
 }

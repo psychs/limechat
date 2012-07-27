@@ -165,7 +165,7 @@
     if (sending) return;
     if (penalty > PENALTY_THREASHOLD) return;
     
-    NSString* s = [sendQueue objectAtIndex:0];
+    NSString* s = sendQueue[0];
     s = [s stringByAppendingString:@"\r\n"];
     [sendQueue removeObjectAtIndex:0];
     

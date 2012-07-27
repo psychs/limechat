@@ -13,7 +13,7 @@
 #define RECONNECT_AFTER_WAKE_UP_DELAY   8
 
 #define TREE_DRAG_ITEM_TYPE             @"tree"
-#define TREE_DRAG_ITEM_TYPES            [NSArray arrayWithObject:TREE_DRAG_ITEM_TYPE]
+#define TREE_DRAG_ITEM_TYPES            @[TREE_DRAG_ITEM_TYPE]
 
 
 @interface IRCWorld (Private)
@@ -140,8 +140,8 @@
     for (IRCClient* u in clients) {
         [ary addObject:[u dictionaryValue]];
     }
-    
-    [dic setObject:ary forKey:@"clients"];
+
+    dic[@"clients"] = ary;
     return dic;
 }
 
@@ -532,7 +532,7 @@
     else {
         --n;
         if (0 <= n && n < c.channels.count) {
-            IRCChannel* e = [c.channels objectAtIndex:n];
+            IRCChannel* e = c.channels[n];
             [self select:e];
         }
     }
@@ -541,7 +541,7 @@
 - (void)selectClientAt:(int)n
 {
     if (0 <= n && n < clients.count) {
-        IRCClient* c = [clients objectAtIndex:n];
+        IRCClient* c = clients[n];
         IRCChannel* e = c.lastSelectedChannel;
         if (e) {
             [self select:e];
@@ -720,7 +720,7 @@
         i = [clients indexOfObjectIdenticalTo:target];
         int n = i + 1;
         if (0 <= n && n < clients.count) {
-            sel = [clients objectAtIndex:n];
+            sel = clients[n];
         }
         i = [tree rowForItem:target];
     }
@@ -858,10 +858,10 @@
 {
     NSArray* ary = [s componentsSeparatedByString:@" "];
     if (ary.count) {
-        NSString* kind = [ary objectAtIndex:0];
+        NSString* kind = ary[0];
         if ([kind isEqualToString:@"client"]) {
             if (ary.count >= 2) {
-                int uid = [[ary objectAtIndex:1] intValue];
+                int uid = [ary[1] intValue];
                 IRCClient* u = [self findClientById:uid];
                 if (u) {
                     [self select:u];
@@ -870,8 +870,8 @@
         }
         else if ([kind isEqualToString:@"channel"]) {
             if (ary.count >= 3) {
-                int uid = [[ary objectAtIndex:1] intValue];
-                int cid = [[ary objectAtIndex:2] intValue];
+                int uid = [ary[1] intValue];
+                int cid = [ary[2] intValue];
                 IRCChannel* c = [self findChannelByClientId:uid channelId:cid];
                 if (c) {
                     [self select:c];
@@ -932,7 +932,7 @@
 
 - (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(IRCTreeItem*)item
 {
-    if (!item) return [clients objectAtIndex:index];
+    if (!item) return clients[index];
     return [item childAtIndex:index];
 }
 
@@ -1039,7 +1039,7 @@
     if (!items.count) return NO;
     
     NSString* s;
-    IRCTreeItem* i = [items objectAtIndex:0];
+    IRCTreeItem* i = items[0];
     if (i.isClient) {
         IRCClient* u = (IRCClient*)i;
         s = [NSString stringWithFormat:@"%d", u.uid];
@@ -1058,8 +1058,8 @@
 {
     if ([s contains:@"-"]) {
         NSArray* ary = [s componentsSeparatedByString:@"-"];
-        int uid = [[ary objectAtIndex:0] intValue];
-        int cid = [[ary objectAtIndex:1] intValue];
+        int uid = [ary[0] intValue];
+        int cid = [ary[1] intValue];
         return [self findChannelByClientId:uid channelId:cid];
     }
     else {
@@ -1104,7 +1104,7 @@
         else {
             // do not allow drop talk between channels
             if (high.count) {
-                IRCChannel* next = [high objectAtIndex:0];
+                IRCChannel* next = high[0];
                 if (next.isChannel) return NSDragOperationNone;
             }
         }
@@ -1183,7 +1183,7 @@
     IRCChannel* c = self.selectedChannel;
     if (!u || !c) return;
     
-    IRCUser* m = [c.members objectAtIndex:[row intValue]];
+    IRCUser* m = c.members[[row intValue]];
     if (m) {
         for (NSString* s in files) {
             [dcc addSenderWithUID:u.uid nick:m.nick fileName:s autoOpen:YES];

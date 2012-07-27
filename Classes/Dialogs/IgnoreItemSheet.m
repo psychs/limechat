@@ -175,12 +175,12 @@
 
 - (id)tableView:(NSTableView *)sender objectValueForTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
-    return [channels objectAtIndex:row];
+    return channels[row];
 }
 
 - (void)tableView:(NSTableView *)sender setObjectValue:(id)obj forTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
-    [channels replaceObjectAtIndex:row withObject:obj];
+    channels[row] = obj;
 }
 
 - (void)tableViewSelectionDidChange:(NSNotification *)note

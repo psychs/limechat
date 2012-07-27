@@ -38,7 +38,7 @@
 
 - (NSString*)imageURLForTwitterScreenName:(NSString*)screenName
 {
-    return [imageUrls objectForKey:screenName];
+    return imageUrls[screenName];
 }
 
 - (BOOL)fetchImageURLForTwitterScreenName:(NSString*)screenName
@@ -47,19 +47,19 @@
         return NO;
     }
     
-    NSString* url = [imageUrls objectForKey:screenName];
+    NSString* url = imageUrls[screenName];
     if (url) {
         return NO;
     }
     
-    if ([connections objectForKey:screenName]) {
+    if (connections[screenName]) {
         return NO;
     }
     
     TwitterImageURLClient *client = [[TwitterImageURLClient new] autorelease];
     client.delegate = self;
     client.screenName = screenName;
-    [connections setObject:client forKey:screenName];
+    connections[screenName] = client;
     [client getImageURL];
     
     return YES;
@@ -76,7 +76,7 @@
     
     NSString* screenName = sender.screenName;
     if (screenName.length && imageUrl.length) {
-        [imageUrls setObject:imageUrl forKey:screenName];
+        imageUrls[screenName] = imageUrl;
         [[NSNotificationCenter defaultCenter] postNotificationName:TwitterAvatarURLManagerDidGetImageURLNotification object:screenName];
     }
 }

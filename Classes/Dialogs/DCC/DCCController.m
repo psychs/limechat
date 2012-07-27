@@ -157,7 +157,7 @@
     NSFileManager* fm = [NSFileManager defaultManager];
     NSDictionary* attr = [fm attributesOfItemAtPath:fileName error:NULL];
     if (!attr) return;
-    NSNumber* sizeNum = [attr objectForKey:NSFileSize];
+    NSNumber* sizeNum = attr[NSFileSize];
     long long size = [sizeNum longLongValue];
     
     if (!size) return;
@@ -222,7 +222,7 @@
     BOOL enabled = NO;
     
     for (int i=receivers.count-1; i>=0; --i) {
-        DCCReceiver* e = [receivers objectAtIndex:i];
+        DCCReceiver* e = receivers[i];
         if (e.status == DCC_ERROR || e.status == DCC_COMPLETE || e.status == DCC_STOP) {
             enabled = YES;
             break;
@@ -231,7 +231,7 @@
     
     if (!enabled) {
         for (int i=senders.count-1; i>=0; --i) {
-            DCCSender* e = [senders objectAtIndex:i];
+            DCCSender* e = senders[i];
             if (e.status == DCC_ERROR || e.status == DCC_COMPLETE || e.status == DCC_STOP) {
                 enabled = YES;
                 break;
@@ -278,7 +278,7 @@
 
 - (void)destroyReceiverAtIndex:(int)i
 {
-    DCCReceiver* e = [receivers objectAtIndex:i];
+    DCCReceiver* e = receivers[i];
     e.delegate = nil;
     [e close];
 
@@ -292,7 +292,7 @@
 
 - (void)destroySenderAtIndex:(int)i
 {
-    DCCSender* e = [senders objectAtIndex:i];
+    DCCSender* e = senders[i];
     e.delegate = nil;
     [e close];
     
@@ -317,7 +317,7 @@
         NSMutableArray* sel = [NSMutableArray array];
         NSIndexSet* indexes = [receiverTable selectedRowIndexes];
         for (NSUInteger i=[indexes firstIndex]; i!=NSNotFound; i=[indexes indexGreaterThanIndex:i]) {
-            [sel addObject:[receivers objectAtIndex:i]];
+            [sel addObject:receivers[i]];
         }
         
         switch (tag) {
@@ -361,7 +361,7 @@
         NSMutableArray* sel = [NSMutableArray array];
         NSIndexSet* indexes = [senderTable selectedRowIndexes];
         for (NSUInteger i=[indexes firstIndex]; i!=NSNotFound; i=[indexes indexGreaterThanIndex:i]) {
-            [sel addObject:[senders objectAtIndex:i]];
+            [sel addObject:senders[i]];
         }
         
         switch (tag) {
@@ -390,14 +390,14 @@
 - (void)clear:(id)sender
 {
     for (int i=receivers.count-1; i>=0; --i) {
-        DCCReceiver* e = [receivers objectAtIndex:i];
+        DCCReceiver* e = receivers[i];
         if (e.status == DCC_ERROR || e.status == DCC_COMPLETE || e.status == DCC_STOP) {
             [self destroyReceiverAtIndex:i];
         }
     }
     
     for (int i=senders.count-1; i>=0; --i) {
-        DCCSender* e = [senders objectAtIndex:i];
+        DCCSender* e = senders[i];
         if (e.status == DCC_ERROR || e.status == DCC_COMPLETE || e.status == DCC_STOP) {
             [self destroySenderAtIndex:i];
         }
@@ -411,7 +411,7 @@
 {
     NSIndexSet* indexes = [receiverTable selectedRowIndexes];
     for (NSUInteger i=[indexes firstIndex]; i!=NSNotFound; i=[indexes indexGreaterThanIndex:i]) {
-        DCCReceiver* e = [receivers objectAtIndex:i];
+        DCCReceiver* e = receivers[i];
         [e open];
     }
     
@@ -423,7 +423,7 @@
 {
     NSIndexSet* indexes = [receiverTable selectedRowIndexes];
     for (NSUInteger i=[indexes firstIndex]; i!=NSNotFound; i=[indexes indexGreaterThanIndex:i]) {
-        DCCReceiver* e = [receivers objectAtIndex:i];
+        DCCReceiver* e = receivers[i];
         [e close];
     }
     
@@ -448,7 +448,7 @@
     
     NSIndexSet* indexes = [receiverTable selectedRowIndexes];
     for (NSUInteger i=[indexes firstIndex]; i!=NSNotFound; i=[indexes indexGreaterThanIndex:i]) {
-        DCCReceiver* e = [receivers objectAtIndex:i];
+        DCCReceiver* e = receivers[i];
         [ws openFile:e.downloadFileName];
     }
     
@@ -462,7 +462,7 @@
     
     NSIndexSet* indexes = [receiverTable selectedRowIndexes];
     for (NSUInteger i=[indexes firstIndex]; i!=NSNotFound; i=[indexes indexGreaterThanIndex:i]) {
-        DCCReceiver* e = [receivers objectAtIndex:i];
+        DCCReceiver* e = receivers[i];
         [ws selectFile:e.downloadFileName inFileViewerRootedAtPath:nil];
     }
     
@@ -474,7 +474,7 @@
 {
     NSIndexSet* indexes = [senderTable selectedRowIndexes];
     for (NSUInteger i=[indexes firstIndex]; i!=NSNotFound; i=[indexes indexGreaterThanIndex:i]) {
-        DCCSender* e = [senders objectAtIndex:i];
+        DCCSender* e = senders[i];
         [e open];
     }
     
@@ -486,7 +486,7 @@
 {
     NSIndexSet* indexes = [senderTable selectedRowIndexes];
     for (NSUInteger i=[indexes firstIndex]; i!=NSNotFound; i=[indexes indexGreaterThanIndex:i]) {
-        DCCSender* e = [senders objectAtIndex:i];
+        DCCSender* e = senders[i];
         [e close];
     }
     
@@ -665,7 +665,7 @@
     if (sender == senderTable) {
         if (row < 0 || senders.count <= row) return;
         
-        DCCSender* e = [senders objectAtIndex:row];
+        DCCSender* e = senders[row];
         double speed = e.speed;
         
         c.sendingItem = YES;
@@ -683,7 +683,7 @@
     else {
         if (row < 0 || receivers.count <= row) return;
         
-        DCCReceiver* e = [receivers objectAtIndex:row];
+        DCCReceiver* e = receivers[row];
         double speed = e.speed;
         
         c.sendingItem = NO;

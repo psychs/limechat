@@ -113,7 +113,7 @@
         return ary;
     }
     else {
-        return [NSArray array];
+        return @[];
     }
 }
 
@@ -132,11 +132,11 @@
 
 - (void)webView:(WebView *)webView decidePolicyForNavigationAction:(NSDictionary *)actionInformation request:(NSURLRequest *)request frame:(WebFrame *)frame decisionListener:(id < WebPolicyDecisionListener >)listener
 {
-    int action = [[actionInformation objectForKey:WebActionNavigationTypeKey] intValue];
+    int action = [actionInformation[WebActionNavigationTypeKey] intValue];
     switch (action) {
         case WebNavigationTypeLinkClicked:
             [listener ignore];
-            [URLOpener open:[actionInformation objectForKey:WebActionOriginalURLKey]];
+            [URLOpener open:actionInformation[WebActionOriginalURLKey]];
             break;
         case WebNavigationTypeOther:
             [listener use];

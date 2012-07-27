@@ -31,7 +31,7 @@
     NSAutoreleasePool* pool = [NSAutoreleasePool new];
     
     NSHost* host = [NSHost hostWithName:hostname];
-    NSArray* info = [NSArray arrayWithObjects:hostname, host, nil];
+    NSArray* info = @[hostname, host];
     [self performSelectorOnMainThread:@selector(hostResolved:) withObject:info waitUntilDone:YES];
     
     [pool release];
@@ -44,13 +44,13 @@
     if (!delegate) return;
     
     if ([info count] == 2) {
-        NSHost* host = [info objectAtIndex:1];
+        NSHost* host = info[1];
         if ([delegate respondsToSelector:@selector(hostResolver:didResolve:)]) {
             [delegate hostResolver:self didResolve:host];
         }
     }
     else {
-        NSString* hostname = [info objectAtIndex:0];
+        NSString* hostname = info[0];
         if ([delegate respondsToSelector:@selector(hostResolver:didNotResolve:)]) {
             [delegate hostResolver:self didNotResolve:hostname];
         }

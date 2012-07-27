@@ -52,10 +52,10 @@
     for (IRCClientConfig* e in clients) {
         [clientAry addObject:[e dictionaryValue]];
     }
-    [dic setObject:clientAry forKey:@"clients"];
+    dic[@"clients"] = clientAry;
     
-    [dic setObject:autoOp forKey:@"autoop"];
-    
+    dic[@"autoop"] = autoOp;
+
     return dic;
 }
 

@@ -9,7 +9,7 @@
 - (id)safeObjectAtIndex:(int)n
 {
     if (0 <= n && n < self.count) {
-        return [self objectAtIndex:n];
+        return self[n];
     }
     return nil;
 }

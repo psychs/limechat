@@ -8,7 +8,7 @@
 
 - (BOOL)hasStringContent
 {
-    return [self availableTypeFromArray:[NSArray arrayWithObject:NSStringPboardType]] != nil;
+    return [self availableTypeFromArray:@[NSStringPboardType]] != nil;
 }
 
 - (NSString*)stringContent
@@ -18,7 +18,7 @@
 
 - (void)setStringContent:(NSString*)s
 {
-    [self declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:nil];
+    [self declareTypes:@[NSStringPboardType] owner:nil];
     [self setString:s forType:NSStringPboardType];
 }
 

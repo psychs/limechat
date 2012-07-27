@@ -15,7 +15,7 @@
 
 - (void)awakeFromNib
 {
-    [self registerForDraggedTypes:[NSArray arrayWithObject:NSStringPboardType]];
+    [self registerForDraggedTypes:@[NSStringPboardType]];
 }
 
 - (NSString*)draggedString:(id <NSDraggingInfo>)sender

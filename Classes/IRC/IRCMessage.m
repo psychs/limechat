@@ -119,7 +119,7 @@
 - (NSString*)paramAt:(int)index
 {
     if (index < params.count) {
-        return [params objectAtIndex:index];
+        return params[index];
     }
     else {
         return @"";
@@ -137,7 +137,7 @@
     
     int count = params.count;
     for (int i=index; i<count; i++) {
-        NSString* e = [params objectAtIndex:i];
+        NSString* e = params[i];
         if (i != index) [s appendString:@" "];
         [s appendString:e];
     }

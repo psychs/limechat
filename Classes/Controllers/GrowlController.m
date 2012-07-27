@@ -141,15 +141,13 @@
 - (NSDictionary*)registrationDictionaryForGrowl
 {
 	NSMutableDictionary* dic = [NSMutableDictionary dictionary];
-	NSArray* all = [NSArray arrayWithObjects:
-					GROWL_MSG_LOGIN, GROWL_MSG_DISCONNECT, GROWL_MSG_HIGHLIGHT,
-					GROWL_MSG_NEW_TALK, GROWL_MSG_CHANNEL_MSG, GROWL_MSG_CHANNEL_NOTICE,
-					GROWL_MSG_TALK_MSG, GROWL_MSG_TALK_NOTICE, GROWL_MSG_KICKED, 
-					GROWL_MSG_INVITED, GROWL_MSG_FILE_RECEIVE_REQUEST, GROWL_MSG_FILE_RECEIVE_SUCCEEDED,
-					GROWL_MSG_FILE_RECEIVE_FAILED, GROWL_MSG_FILE_SEND_SUCCEEDED, GROWL_NSG_FILE_SEND_FAILED,
-					nil];
-	[dic setObject:all forKey:GROWL_NOTIFICATIONS_ALL];
-	[dic setObject:all forKey:GROWL_NOTIFICATIONS_DEFAULT];
+	NSArray* all = @[GROWL_MSG_LOGIN, GROWL_MSG_DISCONNECT, GROWL_MSG_HIGHLIGHT,
+                        GROWL_MSG_NEW_TALK, GROWL_MSG_CHANNEL_MSG, GROWL_MSG_CHANNEL_NOTICE,
+                        GROWL_MSG_TALK_MSG, GROWL_MSG_TALK_NOTICE, GROWL_MSG_KICKED, 
+                        GROWL_MSG_INVITED, GROWL_MSG_FILE_RECEIVE_REQUEST, GROWL_MSG_FILE_RECEIVE_SUCCEEDED,
+                        GROWL_MSG_FILE_RECEIVE_FAILED, GROWL_MSG_FILE_SEND_SUCCEEDED, GROWL_NSG_FILE_SEND_FAILED];
+    dic[GROWL_NOTIFICATIONS_ALL] = all;
+    dic[GROWL_NOTIFICATIONS_DEFAULT] = all;
 	return dic;
 }
 
@@ -177,8 +175,8 @@
 		NSString* s = context;
 		NSArray* ary = [s componentsSeparatedByString:@" "];
 		if (ary.count >= 2) {
-			int uid = [[ary objectAtIndex:0] intValue];
-			int cid = [[ary objectAtIndex:1] intValue];
+			int uid = [ary[0] intValue];
+			int cid = [ary[1] intValue];
 			
 			IRCClient* u = [owner findClientById:uid];
 			IRCChannel* c = [owner findChannelByClientId:uid channelId:cid];
@@ -190,7 +188,7 @@
 			}
 		}
 		else if (ary.count == 1) {
-			int uid = [[ary objectAtIndex:0] intValue];
+			int uid = [ary[0] intValue];
 			
 			IRCClient* u = [owner findClientById:uid];
 			if (u) {

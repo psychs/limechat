@@ -32,11 +32,11 @@
 {
     NSString* target;
     if (nicks.count == 1) {
-        target = [nicks objectAtIndex:0];
+        target = nicks[0];
     }
     else if (nicks.count == 2) {
-        NSString* first = [nicks objectAtIndex:0];
-        NSString* second = [nicks objectAtIndex:1];
+        NSString* first = nicks[0];
+        NSString* second = nicks[1];
         target = [NSString stringWithFormat:@"%@ and %@", first, second];
     }
     else {

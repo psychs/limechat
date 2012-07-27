@@ -45,7 +45,7 @@
 
 - (void)awakeFromNib
 {
-    [self registerForDraggedTypes:[NSArray arrayWithObject:NSFilenamesPboardType]];
+    [self registerForDraggedTypes:@[NSFilenamesPboardType]];
 }
 
 - (void)keyDown:(NSEvent *)e

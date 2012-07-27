@@ -288,8 +288,8 @@ static NSDateFormatter* dateTimeFormatter;
             [ary addObject:[c dictionaryValue]];
         }
     }
-    
-    [dic setObject:ary forKey:@"channels"];
+
+    dic[@"channels"] = ary;
     return dic;
 }
 
@@ -1315,7 +1315,7 @@ static NSDateFormatter* dateTimeFormatter;
             else {
                 NSMutableArray* ignores = config.ignores;
                 for (int i=ignores.count-1; i>=0; --i) {
-                    IgnoreItem* e = [ignores objectAtIndex:i];
+                    IgnoreItem* e = ignores[i];
                     if ([g isEqual:e]) {
                         [ignores removeObjectAtIndex:i];
                         [world save];
@@ -1672,7 +1672,7 @@ static NSDateFormatter* dateTimeFormatter;
     
     int count = ary.count;
     for (int i=0; i<count; i++) {
-        NSString* e = [ary objectAtIndex:i];
+        NSString* e = ary[i];
         [s appendString:@" "];
         if (i == count-1 && (e.length == 0 || [e hasPrefix:@":"] || [e contains:@" "])) {
             [s appendString:@":"];
@@ -1714,7 +1714,7 @@ static NSDateFormatter* dateTimeFormatter;
     CFAbsoluteTime now = CFAbsoluteTimeGetCurrent();
     
     while (commandQueue.count) {
-        TimerCommand* m = [commandQueue objectAtIndex:0];
+        TimerCommand* m = commandQueue[0];
         if (m.time <= now) {
             NSString* target = nil;
             IRCChannel* c = [world findChannelByClientId:uid channelId:m.cid];
@@ -1732,7 +1732,7 @@ static NSDateFormatter* dateTimeFormatter;
     }
     
     if (commandQueue.count) {
-        TimerCommand* m = [commandQueue objectAtIndex:0];
+        TimerCommand* m = commandQueue[0];
         CFAbsoluteTime delta = m.time - CFAbsoluteTimeGetCurrent();
         [commandQueueTimer start:delta];
     }
@@ -2307,7 +2307,7 @@ static NSDateFormatter* dateTimeFormatter;
 
 - (id)childAtIndex:(int)index
 {
-    return [channels objectAtIndex:index];
+    return channels[index];
 }
 
 - (NSString*)label
@@ -2374,7 +2374,7 @@ static NSDateFormatter* dateTimeFormatter;
 {
     NSArray* addresses = [host addresses];
     if (addresses.count) {
-        NSString* address = [addresses objectAtIndex:0];
+        NSString* address = addresses[0];
         [myAddress release];
         myAddress = [address retain];
     }
@@ -2614,8 +2614,8 @@ static NSDateFormatter* dateTimeFormatter;
         }
         else if ([command isEqualToString:VERSION]) {
             NSDictionary* info = [[NSBundle mainBundle] infoDictionary];
-            NSString* name = [info objectForKey:@"LCApplicationName"];
-            NSString* ver = [info objectForKey:@"CFBundleShortVersionString"];
+            NSString* name = info[@"LCApplicationName"];
+            NSString* ver = info[@"CFBundleShortVersionString"];
             NSString* text = [NSString stringWithFormat:@"%@ %@", name, ver];
             [self sendCTCPReply:nick command:command text:text];
         }
@@ -3617,7 +3617,7 @@ static NSDateFormatter* dateTimeFormatter;
         NSArray* altNicks = config.altNicks;
         
         if (tryingNickNumber < altNicks.count) {
-            NSString* nick = [altNicks objectAtIndex:tryingNickNumber];
+            NSString* nick = altNicks[tryingNickNumber];
             [self send:NICK, nick, nil];
         }
         else {

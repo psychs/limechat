@@ -99,12 +99,12 @@ static NSMutableParagraphStyle* statusStyle;
         fnameColor = [NSColor blackColor];
     }
     
-    NSDictionary* fnameAttrs = [NSDictionary dictionaryWithObjectsAndKeys:
-                                fileNameStyle, NSParagraphStyleAttributeName,
-                                [NSFont systemFontOfSize:12], NSFontAttributeName,
-                                fnameColor, NSForegroundColorAttributeName,
-                                nil];
-    
+    NSDictionary* fnameAttrs = @{
+        NSParagraphStyleAttributeName: fileNameStyle,
+        NSFontAttributeName: [NSFont systemFontOfSize:12],
+        NSForegroundColorAttributeName: fnameColor,
+    };
+
     [fname drawInRect:fnameRect withAttributes:fnameAttrs];
     
     if (progressBar) {
@@ -136,12 +136,12 @@ static NSMutableParagraphStyle* statusStyle;
         statusColor = [NSColor grayColor];
     }
     
-    NSDictionary* statusAttrs = [NSDictionary dictionaryWithObjectsAndKeys:
-                                 statusStyle, NSParagraphStyleAttributeName,
-                                 [NSFont systemFontOfSize:11], NSFontAttributeName,
-                                 statusColor, NSForegroundColorAttributeName,
-                                 nil];
-    
+    NSDictionary* statusAttrs = @{
+        NSParagraphStyleAttributeName: statusStyle,
+        NSFontAttributeName: [NSFont systemFontOfSize:11],
+        NSForegroundColorAttributeName: statusColor,
+    };
+
     NSMutableString* statusStr = [NSMutableString string];
     
     if (sendingItem) {

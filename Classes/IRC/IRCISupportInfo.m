@@ -190,7 +190,7 @@
     
     int count = ary.count;
     for (int i=0; i<count; i++) {
-        NSString* s = [ary objectAtIndex:i];
+        NSString* s = ary[i];
         int len = s.length;
         for (int j=0; j<len; j++) {
             UniChar c = [s characterAtIndex:j];

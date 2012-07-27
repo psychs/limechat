@@ -56,8 +56,8 @@ static NSString* userBasePath;
     if (name) {
         NSArray* kindAndName = [ViewTheme extractFileName:[Preferences themeName]];
         if (kindAndName) {
-            NSString* kind = [kindAndName objectAtIndex:0];
-            NSString* fname = [kindAndName objectAtIndex:1];
+            NSString* kind = kindAndName[0];
+            NSString* fname = kindAndName[1];
             NSString* fullName = nil;
             if ([kind isEqualToString:@"resource"]) {
                 fullName = [[ViewTheme resourceBasePath] stringByAppendingPathComponent:fname];

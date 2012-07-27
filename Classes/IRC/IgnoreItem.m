@@ -36,11 +36,11 @@
 {
     self = [self init];
     if (self) {
-        nick = [[dic objectForKey:@"nick"] retain];
-        text = [[dic objectForKey:@"text"] retain];
+        nick = [dic[@"nick"] retain];
+        text = [dic[@"text"] retain];
         useRegexForNick = [dic boolForKey:@"useRegexForNick"];
         useRegexForText = [dic boolForKey:@"useRegexForText"];
-        channels = [[dic objectForKey:@"channels"] retain];
+        channels = [dic[@"channels"] retain];
     }
     return self;
 }
@@ -49,13 +49,13 @@
 {
     NSMutableDictionary* dic = [NSMutableDictionary dictionary];
     
-    if (nick) [dic setObject:nick forKey:@"nick"];
-    if (text) [dic setObject:text forKey:@"text"];
+    if (nick) dic[@"nick"] = nick;
+    if (text) dic[@"text"] = text;
+
+    dic[@"useRegexForNick"] = [NSNumber numberWithBool:useRegexForNick];
+    dic[@"useRegexForText"] = [NSNumber numberWithBool:useRegexForText];
     
-    [dic setBool:useRegexForNick forKey:@"useRegexForNick"];
-    [dic setBool:useRegexForText forKey:@"useRegexForText"];
-    
-    if (channels) [dic setObject:channels forKey:@"channels"];
+    if (channels) dic[@"channels"] = channels;
     
     return dic;
 }

@@ -65,7 +65,7 @@
         NSFileManager* fm = [NSFileManager defaultManager];
         NSDictionary* attr = [fm attributesOfItemAtPath:fullFileName error:NULL];
         if (attr) {
-            NSNumber* sizeNum = [attr objectForKey:NSFileSize];
+            NSNumber* sizeNum = attr[NSFileSize];
             size = [sizeNum longLongValue];
         }
         else {
