@@ -18,7 +18,6 @@ Evan Phoenix               # Inline images support
 Fujimoto Hisa              # RubyCocoa creator
 Josh Goebel                # CocoaSheet, many improvements of code and UIs, Pastie creator
 Jun Morimoto               # Bug fixes
-K.Kosako                   # Oniguruma
 Keiji Yoshimi              # A patch for GrowlNotifier and around hot key
 Kevin Ballard              # Patches around theme support
 Laurent Sansonetti         # RubyCocoa developer, many requests and suggestions
