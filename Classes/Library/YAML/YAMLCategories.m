@@ -9,7 +9,7 @@
 #import "YAMLCategories.h"
 #import "GTMBase64.h"
 
-BOOL yamlClass(id object)
+static BOOL yamlClass(id object)
 {
     if([object isKindOfClass:[NSArray class]])
         return YES;
@@ -79,7 +79,7 @@ BOOL yamlClass(id object)
     return [str autorelease];
 }
 
--(int) yamlIndent
+- (int)yamlIndent
 {
     int i;
     //calculate the indent
@@ -90,7 +90,7 @@ BOOL yamlClass(id object)
     return i;
 }
 
--(NSString*) yamlIndented:(int)indent
+- (NSString*)yamlIndented:(int)indent
 {
     NSRange				lineRange;
     int					i = [self length]-1;
@@ -118,7 +118,7 @@ BOOL yamlClass(id object)
     return indented;
 }
 
--(NSString*)yamlDescriptionWithIndent:(int)indent
+- (NSString*)yamlDescriptionWithIndent:(int)indent
 {
     NSRange		lineRange;
     
@@ -140,7 +140,7 @@ BOOL yamlClass(id object)
 
 @implementation NSArray (YAMLAdditions)
 
--(NSArray*) yamlData
+- (NSArray*)yamlData
 {
     NSEnumerator		*enumerator;
     NSString			*object;
@@ -167,7 +167,7 @@ BOOL yamlClass(id object)
     return [self yamlCollectWithSelector:@selector(yamlParse)];
 }
 
--(NSString*) yamlDescriptionWithIndent:(int)indent
+- (NSString*)yamlDescriptionWithIndent:(int)indent
 {
     indent -= 2;
     NSEnumerator		*enumerator = [self objectEnumerator];
@@ -237,7 +237,7 @@ BOOL yamlClass(id object)
 
 @implementation NSDictionary (YAMLAdditions)
 
--(NSDictionary*) yamlData
+- (NSDictionary*)yamlData
 {
     NSEnumerator		*enumerator;
     NSArray				*allKeys = [self allKeys];
@@ -267,7 +267,7 @@ BOOL yamlClass(id object)
     return [self yamlCollectWithSelector:@selector(yamlParse)];
 }
 
--(NSString*) yamlDescriptionWithIndent:(int)indent
+- (NSString*)yamlDescriptionWithIndent:(int)indent
 {
     if([self count] == 0)
         return @"{}";
@@ -367,7 +367,7 @@ BOOL yamlClass(id object)
 
 @implementation NSObject (YAMLAdditions)
 
--(NSString*) yamlDescriptionWithIndent:(int)indent
+- (NSString*)yamlDescriptionWithIndent:(int)indent
 {
     return [self toYAML];
 }
@@ -383,7 +383,7 @@ BOOL yamlClass(id object)
     [self yamlPerformSelector:sel withEachObjectInArray:[set allObjects]];
 }
 
--(NSString*) yamlDescription
+-( NSString*)yamlDescription
 {
     return [self yamlDescriptionWithIndent:0];
 }
@@ -393,7 +393,7 @@ BOOL yamlClass(id object)
     return self;
 }
 
--(id) yamlData
+- (id)yamlData
 {
     if(!yamlClass(self))
         return [YAMLWrapper wrapperWithData:[self toYAML] tag:[self class]];
@@ -401,7 +401,7 @@ BOOL yamlClass(id object)
         return [self toYAML];
 }
 
--(id) toYAML
+- (id)toYAML
 {
     return [self description];
 }
@@ -409,13 +409,15 @@ BOOL yamlClass(id object)
 @end
 
 @implementation NSData (YAMLAdditions) 
--(id) yamlDescriptionWithIndent:(int)indent
+
+- (id)yamlDescriptionWithIndent:(int)indent
 {
     return [[@"!binary |\n" stringByAppendingString:[GTMBase64 stringByEncodingData:self]] yamlIndented:indent];
 }
 
--(id) toYAML
+- (id)toYAML
 {
     return self;
 }
+
 @end

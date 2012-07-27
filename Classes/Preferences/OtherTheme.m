@@ -187,9 +187,8 @@
     NSData* data = [NSData dataWithContentsOfFile:fileName];
     NSDictionary* dic = yaml_parse_raw_utf8(data.bytes, data.length);
     
-    //if (![dic isKindOfClass:[NSDictionary class]]) return;
-    
     content = [dic retain];
+
     
     logNickFormat = [self loadString:@"log-view", @"nickname-format", nil] ?: @"%n: ";
     [logNickFormat retain];
@@ -278,7 +277,7 @@
     
     memberListSelBottomColor = [self loadColor:@"member-list", @"selected", @"background", @"bottom-color", nil];
     [memberListSelBottomColor retain];
-    
+
     
     [content release];
     content = nil;

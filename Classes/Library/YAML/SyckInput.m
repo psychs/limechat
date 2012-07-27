@@ -1,13 +1,13 @@
-#import "YAML.h"
 #import <syck.h>
+#import "YAML.h"
 #import "GTMBase64.h"
 
-void cocoa_syck_error_handler( SyckParser *p, const char *msg )
+static void cocoa_syck_error_handler( SyckParser *p, const char *msg )
 {
     NSLog(@"syck error:%s position:(%d, %lu)", msg, p->linect, p->cursor - p->lineptr);
 }
 
-SYMID cocoa_syck_parse_handler(SyckParser *p, SyckNode *n)
+static SYMID cocoa_syck_parse_handler(SyckParser *p, SyckNode *n)
 {
     SYMID oid;
     id o2, o3;
@@ -250,10 +250,4 @@ id yaml_parse_raw_utf8(const char *str, long len)
     
     syck_free_parser( parser );
     return obj;    
-}
-
-id yaml_parse(NSString *str)
-{
-    const char *yamlstr = [str UTF8String];
-    return yaml_parse_raw_utf8(yamlstr, strlen(yamlstr));
 }

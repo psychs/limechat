@@ -48,6 +48,6 @@
 @end
 
 @interface NSData (YAMLAdditions) 
--(id) yamlDescriptionWithIndent:(int)indent;
--(id) toYAML;
+- (id)yamlDescriptionWithIndent:(int)indent;
+- (id)toYAML;
 @end
