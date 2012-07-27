@@ -1031,7 +1031,13 @@
 - (NSURLRequest *)webView:(WebView *)sender resource:(id)identifier willSendRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)redirectResponse fromDataSource:(WebDataSource *)dataSource;
 {
     if ([[[request URL] host] hasSuffix:@"pixiv.net"]) {
-        NSMutableURLRequest *req = [[request mutableCopy] autorelease];
+        NSMutableURLRequest *req = nil;
+        if ([request isKindOfClass:[NSMutableURLRequest class]]) {
+            req = (NSMutableURLRequest*)request;
+        }
+        else {
+            req = [[request mutableCopy] autorelease];
+        }
         [req setValue:@"http://www.pixiv.net" forHTTPHeaderField:@"Referer"];
         return req;
     }
