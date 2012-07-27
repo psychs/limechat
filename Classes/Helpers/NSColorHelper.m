@@ -2,7 +2,6 @@
 // You can redistribute it and/or modify it under the terms of the GPL version 2 (see the file GPL.txt).
 
 #import "NSColorHelper.h"
-#import "OnigRegexp.h"
 
 
 @implementation NSColor (NSColorHelper)
@@ -28,33 +27,33 @@
             return [NSColor colorWithDeviceRed:r/15.0 green:g/15.0 blue:b/15.0 alpha:1];
         }
     }
-    else {
-        static OnigRegexp* rgba = nil;
+    else if (s) {
+        static NSRegularExpression* rgba = nil;
         if (!rgba) {
             NSString* pattern = @"rgba\\(\\s*(\\d+)\\s*,\\s*(\\d+)\\s*,\\s*(\\d+)\\s*,\\s*(\\d*(?:\\.\\d+))\\s*\\)";
-            rgba = [[OnigRegexp compile:pattern] retain];
+            rgba = [[NSRegularExpression alloc] initWithPattern:pattern options:NSRegularExpressionCaseInsensitive error:NULL];
         }
         
-        OnigResult* result = [rgba match:s];
-        if (result) {
-            int r = [[s substringWithRange:[result rangeAt:1]] intValue];
-            int g = [[s substringWithRange:[result rangeAt:2]] intValue];
-            int b = [[s substringWithRange:[result rangeAt:3]] intValue];
-            float a = [[s substringWithRange:[result rangeAt:4]] floatValue];
+        NSTextCheckingResult* result = [rgba firstMatchInString:s options:0 range:NSMakeRange(0, s.length)];
+        if (result && result.numberOfRanges > 4) {
+            int r = [[s substringWithRange:[result rangeAtIndex:1]] intValue];
+            int g = [[s substringWithRange:[result rangeAtIndex:2]] intValue];
+            int b = [[s substringWithRange:[result rangeAtIndex:3]] intValue];
+            float a = [[s substringWithRange:[result rangeAtIndex:4]] floatValue];
             return DEVICE_RGBA(r, g, b, a);
         }
         
-        static OnigRegexp* rgb = nil;
+        static NSRegularExpression* rgb = nil;
         if (!rgb) {
             NSString* pattern = @"rgb\\(\\s*(\\d+)\\s*,\\s*(\\d+)\\s*,\\s*(\\d+)\\s*\\)";
-            rgb = [[OnigRegexp compile:pattern] retain];
+            rgb = [[NSRegularExpression alloc] initWithPattern:pattern options:NSRegularExpressionCaseInsensitive error:NULL];
         }
         
-        result = [rgb match:s];
-        if (result) {
-            int r = [[s substringWithRange:[result rangeAt:1]] intValue];
-            int g = [[s substringWithRange:[result rangeAt:2]] intValue];
-            int b = [[s substringWithRange:[result rangeAt:3]] intValue];
+        result = [rgb firstMatchInString:s options:0 range:NSMakeRange(0, s.length)];
+        if (result && result.numberOfRanges > 3) {
+            int r = [[s substringWithRange:[result rangeAtIndex:1]] intValue];
+            int g = [[s substringWithRange:[result rangeAtIndex:2]] intValue];
+            int b = [[s substringWithRange:[result rangeAtIndex:3]] intValue];
             return DEVICE_RGB(r, g, b);
         }
     }

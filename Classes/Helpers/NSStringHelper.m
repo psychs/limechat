@@ -3,7 +3,6 @@
 
 #import "NSStringHelper.h"
 #import "UnicodeHelper.h"
-#import "OnigRegexp.h"
 
 
 #define LF  0xa
@@ -342,34 +341,37 @@ static BOOL isUnicharDigit(unichar c)
 
 - (NSRange)rangeOfUrlStart:(int)start
 {
-    if (self.length <= start) return NSMakeRange(NSNotFound, 0);
-    
-    static OnigRegexp* regex = nil;
-    if (!regex) {
-        NSString* pattern = @"(?<![a-z0-9_])(https?|ftp|itms|afp)://([^\\s!\"#$\\&'()*+,/;<=>?\\[\\\\\\]\\^_`{|}　、，。．・…]+)(/[^\\s\"`<>　、，。．・…]*)?";
-        regex = [[OnigRegexp compileIgnorecase:pattern] retain];
+    if (self.length <= start) {
+        return NSMakeRange(NSNotFound, 0);
     }
     
-    OnigResult* result = [regex search:self start:start];
-    if (!result) return NSMakeRange(NSNotFound, 0);
+    static NSRegularExpression* regex = nil;
+    if (!regex) {
+        NSString* pattern = @"(?<![a-z0-9_])(https?|ftp|itms|afp)://([^\\s!\"#$\\&'()*+,/;<=>?\\[\\\\\\]\\^_`{|}　、，。．・…]+)(/[^\\s\"`<>　、，。．・…]*)?";
+        regex = [[NSRegularExpression alloc] initWithPattern:pattern options:NSRegularExpressionCaseInsensitive error:NULL];
+    }
+
+    NSTextCheckingResult* result = [regex firstMatchInString:self options:0 range:NSMakeRange(start, self.length - start)];
+    if (!result || result.numberOfRanges < 4) {
+        return NSMakeRange(NSNotFound, 0);
+    }
     
-    NSRange r = result.bodyRange;
+    NSRange r = [result rangeAtIndex:0];
     
     // exclude non ASCII characters from URLs except for wikipedia
-    NSString* host = [[self substringWithRange:[result rangeAt:2]] lowercaseString];
+    NSString* host = [[self substringWithRange:[result rangeAtIndex:2]] lowercaseString];
     if (![host hasSuffix:@"wikipedia.org"]) {
-        NSRange pathRange = [result rangeAt:3];
-        NSString* path = [self substringWithRange:pathRange];
-        if (path.length) {
-            static OnigRegexp* pathRegex = nil;
+        NSRange pathRange = [result rangeAtIndex:3];
+        if (pathRange.length) {
+            static NSRegularExpression* pathRegex = nil;
             if (!pathRegex) {
                 NSString* pathPattern = @"^/[a-zA-Z0-9\\-._~!#$%&'()*+,-./:;=?@\\[\\]]*";
-                pathRegex = [[OnigRegexp compile:pathPattern] retain];
+                pathRegex = [[NSRegularExpression alloc] initWithPattern:pathPattern options:0 error:NULL];
             }
-            
-            OnigResult* pathResult = [pathRegex search:path];
-            if (pathResult) {
-                NSRange newPathRange = pathResult.bodyRange;
+
+            NSString* path = [self substringWithRange:pathRange];
+            NSRange newPathRange = [pathRegex rangeOfFirstMatchInString:path options:0 range:NSMakeRange(0, path.length)];
+            if (newPathRange.location != NSNotFound) {
                 int delta = pathRange.length - newPathRange.length;
                 if (delta > 0) {
                     r.length -= delta;
@@ -377,12 +379,14 @@ static BOOL isUnicharDigit(unichar c)
             }
         }
     }
-    
+
     NSString* url = [self substringWithRange:r];
-    
+
     int len = url.length;
     const UniChar* buf = [self getCharactersBuffer];
-    if (!buf) return NSMakeRange(NSNotFound, 0);
+    if (!buf) {
+        return NSMakeRange(NSNotFound, 0);
+    }
     
     int paren = 0;
     
@@ -437,18 +441,20 @@ static BOOL isUnicharDigit(unichar c)
 - (NSRange)rangeOfAddressStart:(int)start
 {
     int len = self.length;
-    if (len <= start) return NSMakeRange(NSNotFound, 0);
-    
-    static OnigRegexp* regex = nil;
-    if (!regex) {
-        NSString* pattern = @"([a-zA-Z0-9]([-a-zA-Z0-9]*[a-zA-Z0-9])?\\.)([a-zA-Z0-9]([-a-zA-Z0-9]*[a-zA-Z0-9])?\\.)+[a-zA-Z]{2,6}|([a-f0-9]{0,4}:){7}[a-f0-9]{0,4}|([0-9]{1,3}\\.){3}[0-9]{1,3}";
-        regex = [[OnigRegexp compile:pattern] retain];
+    if (len <= start) {
+        return NSMakeRange(NSNotFound, 0);
     }
     
-    OnigResult* result = [regex search:self start:start];
-    if (!result) return NSMakeRange(NSNotFound, 0);
-    
-    NSRange r = result.bodyRange;
+    static NSRegularExpression* regex = nil;
+    if (!regex) {
+        NSString* pattern = @"([a-zA-Z0-9]([-a-zA-Z0-9]*[a-zA-Z0-9])?\\.)([a-zA-Z0-9]([-a-zA-Z0-9]*[a-zA-Z0-9])?\\.)+[a-zA-Z]{2,6}|([a-f0-9]{0,4}:){7}[a-f0-9]{0,4}|([0-9]{1,3}\\.){3}[0-9]{1,3}";
+        regex = [[NSRegularExpression alloc] initWithPattern:pattern options:0 error:NULL];
+    }
+
+    NSRange r = [regex rangeOfFirstMatchInString:self options:0 range:NSMakeRange(start, self.length - start)];
+    if (r.location == NSNotFound) {
+        return NSMakeRange(NSNotFound, 0);
+    }
     
     int prev = r.location - 1;
     if (0 <= prev && prev < len) {
@@ -479,19 +485,21 @@ static BOOL isUnicharDigit(unichar c)
 - (NSRange)rangeOfChannelNameStart:(int)start
 {
     int len = self.length;
-    if (len <= start) return NSMakeRange(NSNotFound, 0);
-    
-    static OnigRegexp* regex = nil;
-    if (!regex) {
-        NSString* pattern = @"(?<![a-zA-Z0-9_])[#\\&][^ \\t,　]+";
-        regex = [[OnigRegexp compile:pattern] retain];
+    if (len <= start) {
+        return NSMakeRange(NSNotFound, 0);
     }
     
-    OnigResult* result = [regex search:self start:start];
-    if (!result) return NSMakeRange(NSNotFound, 0);
-    
-    NSRange r = result.bodyRange;
-    
+    static NSRegularExpression* regex = nil;
+    if (!regex) {
+        NSString* pattern = @"(?<![a-zA-Z0-9_])[#\\&][^ \\t,　]+";
+        regex = [[NSRegularExpression alloc] initWithPattern:pattern options:0 error:NULL];
+    }
+
+    NSRange r = [regex rangeOfFirstMatchInString:self options:0 range:NSMakeRange(start, self.length - start)];
+    if (r.location == NSNotFound) {
+        return NSMakeRange(NSNotFound, 0);
+    }
+
     int prev = r.location - 1;
     if (0 <= prev && prev < len) {
         // check previous character

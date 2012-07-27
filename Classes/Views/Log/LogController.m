@@ -7,7 +7,6 @@
 #import "IRCWorld.h"
 #import "IRCClient.h"
 #import "IRCChannel.h"
-#import "OnigRegexp.h"
 #import "NSLocaleHelper.h"
 #import "ImageURLParser.h"
 #import "ImageDownloadManager.h"
