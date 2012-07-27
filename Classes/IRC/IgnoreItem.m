@@ -34,7 +34,8 @@
 
 - (id)initWithDictionary:(NSDictionary*)dic
 {
-    if ([self init]) {
+    self = [self init];
+    if (self) {
         nick = [[dic objectForKey:@"nick"] retain];
         text = [[dic objectForKey:@"text"] retain];
         useRegexForNick = [dic boolForKey:@"useRegexForNick"];

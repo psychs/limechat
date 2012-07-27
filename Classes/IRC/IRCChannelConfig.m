@@ -42,22 +42,22 @@
 
 - (id)initWithDictionary:(NSDictionary*)dic
 {
-    [self init];
-    
-    type = [dic intForKey:@"type"];
-    
-    name = [[dic stringForKey:@"name"] retain] ?: @"";
-    password = [[dic stringForKey:@"password"] retain] ?: @"";
-    
-    autoJoin = [dic boolForKey:@"auto_join"];
-    logToConsole = [dic boolForKey:@"console"];
-    growl = [dic boolForKey:@"growl"];
-    
-    mode = [[dic stringForKey:@"mode"] retain] ?: @"";
-    topic = [[dic stringForKey:@"topic"] retain] ?: @"";
-    
-    [autoOp addObjectsFromArray:[dic arrayForKey:@"autoop"]];
-    
+    self = [self init];
+    if (self) {
+        type = [dic intForKey:@"type"];
+        
+        name = [[dic stringForKey:@"name"] retain] ?: @"";
+        password = [[dic stringForKey:@"password"] retain] ?: @"";
+        
+        autoJoin = [dic boolForKey:@"auto_join"];
+        logToConsole = [dic boolForKey:@"console"];
+        growl = [dic boolForKey:@"growl"];
+        
+        mode = [[dic stringForKey:@"mode"] retain] ?: @"";
+        topic = [[dic stringForKey:@"topic"] retain] ?: @"";
+        
+        [autoOp addObjectsFromArray:[dic arrayForKey:@"autoop"]];
+    }
     return self;
 }
 

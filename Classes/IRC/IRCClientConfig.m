@@ -81,49 +81,49 @@
 
 - (id)initWithDictionary:(NSDictionary*)dic
 {
-    [self init];
-    
-    name = [[dic stringForKey:@"name"] retain] ?: @"";
-    
-    host = [[dic stringForKey:@"host"] retain] ?: @"";
-    port = [dic intForKey:@"port"] ?: 6667;
-    password = [[dic stringForKey:@"password"] retain] ?: @"";
-    useSSL = [dic boolForKey:@"ssl"];
-    
-    nick = [[dic stringForKey:@"nick"] retain] ?: @"";
-    username = [[dic stringForKey:@"username"] retain] ?: @"";
-    realName = [[dic stringForKey:@"realname"] retain] ?: @"";
-    nickPassword = [[dic stringForKey:@"nickPassword"] retain] ?: @"";
-    useSASL = [dic boolForKey:@"useSASL"];
-    [altNicks addObjectsFromArray:[dic arrayForKey:@"alt_nicks"]];
-    
-    proxyType = [dic intForKey:@"proxy"];
-    proxyHost = [[dic stringForKey:@"proxy_host"] retain] ?: @"";
-    proxyPort = [dic intForKey:@"proxy_port"] ?: 1080;
-    proxyUser = [[dic stringForKey:@"proxy_user"] retain] ?: @"";
-    proxyPassword = [[dic stringForKey:@"proxy_password"] retain] ?: @"";
-    
-    autoConnect = [dic boolForKey:@"auto_connect"];
-    encoding = [dic intForKey:@"encoding"] ?: NSUTF8StringEncoding;
-    fallbackEncoding = [dic intForKey:@"fallback_encoding"] ?: NSISOLatin1StringEncoding;
-    leavingComment = [[dic stringForKey:@"leaving_comment"] retain] ?: @"";
-    userInfo = [[dic stringForKey:@"userinfo"] retain] ?: @"";
-    invisibleMode = [dic boolForKey:@"invisible"];
-    
-    [loginCommands addObjectsFromArray:[dic arrayForKey:@"login_commands"]];
-    
-    for (NSDictionary* e in [dic arrayForKey:@"channels"]) {
-        IRCChannelConfig* c = [[[IRCChannelConfig alloc] initWithDictionary:e] autorelease];
-        [channels addObject:c];
+    self = [self init];
+    if (self) {
+        name = [[dic stringForKey:@"name"] retain] ?: @"";
+
+        host = [[dic stringForKey:@"host"] retain] ?: @"";
+        port = [dic intForKey:@"port"] ?: 6667;
+        password = [[dic stringForKey:@"password"] retain] ?: @"";
+        useSSL = [dic boolForKey:@"ssl"];
+
+        nick = [[dic stringForKey:@"nick"] retain] ?: @"";
+        username = [[dic stringForKey:@"username"] retain] ?: @"";
+        realName = [[dic stringForKey:@"realname"] retain] ?: @"";
+        nickPassword = [[dic stringForKey:@"nickPassword"] retain] ?: @"";
+        useSASL = [dic boolForKey:@"useSASL"];
+        [altNicks addObjectsFromArray:[dic arrayForKey:@"alt_nicks"]];
+
+        proxyType = [dic intForKey:@"proxy"];
+        proxyHost = [[dic stringForKey:@"proxy_host"] retain] ?: @"";
+        proxyPort = [dic intForKey:@"proxy_port"] ?: 1080;
+        proxyUser = [[dic stringForKey:@"proxy_user"] retain] ?: @"";
+        proxyPassword = [[dic stringForKey:@"proxy_password"] retain] ?: @"";
+
+        autoConnect = [dic boolForKey:@"auto_connect"];
+        encoding = [dic intForKey:@"encoding"] ?: NSUTF8StringEncoding;
+        fallbackEncoding = [dic intForKey:@"fallback_encoding"] ?: NSISOLatin1StringEncoding;
+        leavingComment = [[dic stringForKey:@"leaving_comment"] retain] ?: @"";
+        userInfo = [[dic stringForKey:@"userinfo"] retain] ?: @"";
+        invisibleMode = [dic boolForKey:@"invisible"];
+
+        [loginCommands addObjectsFromArray:[dic arrayForKey:@"login_commands"]];
+
+        for (NSDictionary* e in [dic arrayForKey:@"channels"]) {
+            IRCChannelConfig* c = [[[IRCChannelConfig alloc] initWithDictionary:e] autorelease];
+            [channels addObject:c];
+        }
+
+        [autoOp addObjectsFromArray:[dic arrayForKey:@"autoop"]];
+
+        for (NSDictionary* e in [dic arrayForKey:@"ignores"]) {
+            IgnoreItem* ignore = [[[IgnoreItem alloc] initWithDictionary:e] autorelease];
+            [ignores addObject:ignore];
+        }
     }
-    
-    [autoOp addObjectsFromArray:[dic arrayForKey:@"autoop"]];
-    
-    for (NSDictionary* e in [dic arrayForKey:@"ignores"]) {
-        IgnoreItem* ignore = [[[IgnoreItem alloc] initWithDictionary:e] autorelease];
-        [ignores addObject:ignore];
-    }
-    
     return self;
 }
 

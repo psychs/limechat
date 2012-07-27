@@ -30,21 +30,21 @@
 
 - (id)initWithChannelMode:(IRCChannelMode*)other
 {
-    [self init];
-    
-    isupport = [other.isupport retain];
-    a = other.a;
-    i = other.i;
-    m = other.m;
-    n = other.n;
-    p = other.p;
-    q = other.q;
-    r = other.r;
-    s = other.s;
-    t = other.t;
-    l = other.l;
-    k = [other.k retain];
-    
+    self = [self init];
+    if (self) {
+        isupport = [other.isupport retain];
+        a = other.a;
+        i = other.i;
+        m = other.m;
+        n = other.n;
+        p = other.p;
+        q = other.q;
+        r = other.r;
+        s = other.s;
+        t = other.t;
+        l = other.l;
+        k = [other.k retain];
+    }
     return self;
 }
 

@@ -23,17 +23,17 @@
 
 - (id)initWithDictionary:(NSDictionary*)dic
 {
-    [self init];
-    
-    NSArray* ary = [dic arrayForKey:@"clients"] ?: [dic arrayForKey:@"units"];
-    
-    for (NSDictionary* e in ary) {
-        IRCClientConfig* c = [[[IRCClientConfig alloc] initWithDictionary:e] autorelease];
-        [clients addObject:c];
+    self = [self init];
+    if (self) {
+        NSArray* ary = [dic arrayForKey:@"clients"] ?: [dic arrayForKey:@"units"];
+        
+        for (NSDictionary* e in ary) {
+            IRCClientConfig* c = [[[IRCClientConfig alloc] initWithDictionary:e] autorelease];
+            [clients addObject:c];
+        }
+        
+        [autoOp addObjectsFromArray:[dic arrayForKey:@"autoop"]];
     }
-    
-    [autoOp addObjectsFromArray:[dic arrayForKey:@"autoop"]];
-    
     return self;
 }
 

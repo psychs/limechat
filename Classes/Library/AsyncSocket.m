@@ -1067,7 +1067,9 @@ static void MyCFWriteStreamCallback(CFWriteStreamRef stream, CFStreamEventType t
         UInt16 chosenPort = [self localPortFromCFSocket4:theSocket4];
         
         struct sockaddr_in6 *pSockAddr6 = (struct sockaddr_in6 *)[address6 bytes];
-        pSockAddr6->sin6_port = htons(chosenPort);
+        if (pSockAddr6) {
+            pSockAddr6->sin6_port = htons(chosenPort);
+        }
     }
     
     if (theSocket6)

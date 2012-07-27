@@ -45,14 +45,14 @@
 
 - (id)initWithExistingConnection:(AsyncSocket*)socket
 {
-    [self init];
-    
-    conn = [socket retain];
-    conn.delegate = self;
-    [conn setUserData:tag];
-    active = connecting = YES;
-    sendQueueSize = 0;
-    
+    self = [self init];
+    if (self) {
+        conn = [socket retain];
+        conn.delegate = self;
+        [conn setUserData:tag];
+        active = connecting = YES;
+        sendQueueSize = 0;
+    }
     return self;
 }
 
