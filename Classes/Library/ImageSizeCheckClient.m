@@ -45,9 +45,14 @@
 {
     [self cancel];
     
-    NSMutableURLRequest* req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url] cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:IMAGE_SIZE_CHECK_TIMEOUT];
+    NSURL *u = [NSURL URLWithString:url];
+    NSMutableURLRequest* req = [NSMutableURLRequest requestWithURL:u cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:IMAGE_SIZE_CHECK_TIMEOUT];
     [req setHTTPMethod:@"HEAD"];
     
+    if ([[u host] hasSuffix:@"pixiv.net"]) {
+        [req setValue:@"http://www.pixiv.net" forHTTPHeaderField:@"Referer"];
+    }
+
     conn = [[NSURLConnection alloc] initWithRequest:req delegate:self];
 }
 
