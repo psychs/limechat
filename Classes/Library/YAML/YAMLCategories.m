@@ -112,6 +112,8 @@ BOOL yamlClass(id object)
         
         i = lineRange.location - 1;
     }
+
+    free(strIndent);
     
     return indented;
 }
@@ -171,11 +173,12 @@ BOOL yamlClass(id object)
     NSEnumerator		*enumerator = [self objectEnumerator];
     id					anObject, last = [self lastObject];
     NSMutableString		*description = [NSMutableString stringWithString:@"\n"];
-    char				*strIndent = malloc(indent+1);
-    
-    if([self count] == 0)
+
+    if ([self count] == 0) {
         return @"[]";
-    
+    }
+
+    char *strIndent = malloc(indent+1);
     memset(strIndent, ' ', indent);
     strIndent[indent] = 0;
     

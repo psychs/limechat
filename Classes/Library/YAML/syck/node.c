@@ -30,18 +30,20 @@ syck_alloc_node( enum syck_kind_tag type )
 void
 syck_free_node( SyckNode *n )
 {
-    syck_free_members( n );
-    if ( n->type_id != NULL )
-    {
-        S_FREE( n->type_id );
-        n->type_id = NULL;
+    if (n) {
+        syck_free_members( n );
+        if ( n->type_id != NULL )
+        {
+            S_FREE( n->type_id );
+            n->type_id = NULL;
+        }
+        if ( n->anchor != NULL )
+        {
+            S_FREE( n->anchor );
+            n->anchor = NULL;
+        }
+        S_FREE( n );
     }
-    if ( n->anchor != NULL )
-    {
-        S_FREE( n->anchor );
-        n->anchor = NULL;
-    }
-    S_FREE( n );
 }
 
 SyckNode *
