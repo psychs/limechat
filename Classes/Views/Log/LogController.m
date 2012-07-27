@@ -1029,6 +1029,20 @@
     }
 }
 
+- (NSURLRequest *)webView:(WebView *)sender
+                 resource:(id)identifier
+          willSendRequest:(NSURLRequest *)request
+         redirectResponse:(NSURLResponse *)redirectResponse
+           fromDataSource:(WebDataSource *)dataSource;
+{
+    if ([[[request URL] host] hasSuffix:@"pixiv.net"]) {
+        NSMutableURLRequest *req = [request mutableCopy];
+        [req setValue:@"http://www.pixiv.net" forHTTPHeaderField:@"Referer"];
+        return req;
+    }
+    return request;
+}
+
 #pragma mark -
 #pragma mark LogView Delegate
 
