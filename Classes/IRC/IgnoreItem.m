@@ -147,12 +147,12 @@
     if (inputNick.length > 0 && nick.length > 0) {
         if (useRegexForNick) {
             if (!nickRegex) {
-                nickRegex = [[OnigRegexp compileIgnorecase:nick] retain];
+                nickRegex = [[NSRegularExpression alloc] initWithPattern:nick options:NSRegularExpressionCaseInsensitive error:NULL];
             }
             
             if (nickRegex) {
-                OnigResult* result = [nickRegex search:inputNick];
-                if (!result) {
+                NSRange range = [nickRegex rangeOfFirstMatchInString:inputNick options:0 range:NSMakeRange(0, inputNick.length)];
+                if (!(range.location == 0 && range.length == inputNick.length)) {
                     return NO;
                 }
             }
@@ -172,12 +172,12 @@
     if (inputText && text.length > 0) {
         if (useRegexForText) {
             if (!textRegex) {
-                textRegex = [[OnigRegexp compileIgnorecase:text] retain];
+                textRegex = [[NSRegularExpression alloc] initWithPattern:text options:NSRegularExpressionCaseInsensitive error:NULL];
             }
             
             if (textRegex) {
-                OnigResult* result = [textRegex search:inputText];
-                if (!result) {
+                NSRange range = [textRegex rangeOfFirstMatchInString:inputNick options:0 range:NSMakeRange(0, inputText.length)];
+                if (!(range.location == 0 && range.length == inputText.length)) {
                     return NO;
                 }
             }

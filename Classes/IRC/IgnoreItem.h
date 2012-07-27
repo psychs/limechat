@@ -2,7 +2,6 @@
 // You can redistribute it and/or modify it under the terms of the GPL version 2 (see the file GPL.txt).
 
 #import <Foundation/Foundation.h>
-#import "OnigRegexp.h"
 
 
 @interface IgnoreItem : NSObject
@@ -13,8 +12,8 @@
     BOOL useRegexForText;
     NSArray* channels;
     
-    OnigRegexp* nickRegex;
-    OnigRegexp* textRegex;
+    NSRegularExpression* nickRegex;
+    NSRegularExpression* textRegex;
 }
 
 @property (nonatomic, strong) NSString* nick;

@@ -11,7 +11,6 @@
 #import "ViewTheme.h"
 #import "MemberListViewCell.h"
 #import "ImageDownloadManager.h"
-#import "OnigRegexp.h"
 #import "NSPasteboardHelper.h"
 #import "NSStringHelper.h"
 #import "NSDictionaryHelper.h"
@@ -392,14 +391,14 @@
     IRCClient* client = world.selectedClient;
     IRCChannel* channel = world.selectedChannel;
     if (channel) {
-        static OnigRegexp* regex = nil;
+        static NSRegularExpression* regex = nil;
         if (!regex) {
             NSString* pattern = @"(\r\n|\r|\n)[^\r\n]";
-            regex = [[OnigRegexp compile:pattern] retain];
+            regex = [[NSRegularExpression alloc] initWithPattern:pattern options:0 error:NULL];
         }
-        
-        OnigResult* result = [regex search:s];
-        if (result) {
+
+        NSRange range = [regex rangeOfFirstMatchInString:s options:0 range:NSMakeRange(0, s.length)];
+        if (range.location != NSNotFound) {
             // multi line
             [menu startPasteSheetWithContent:s nick:client.myNick uid:client.uid cid:channel.uid editMode:YES];
             return YES;
@@ -1098,13 +1097,14 @@ typedef enum {
 {
     NSString* host = [config objectForKey:@"host"];
     NSString* name = host;
-    
-    OnigRegexp* hostRegex = [OnigRegexp compile:@"^[^\\s]+\\s+\\(([^()]+)\\)"];
-    OnigResult* result = [hostRegex search:host];
-    if (result) {
-        name = [host substringWithRange:[result rangeAt:1]];
+
+    NSString* hostPattern = @"^[^\\s]+\\s+\\(([^()]+)\\)";
+    NSRegularExpression* hostRegex = [[[NSRegularExpression alloc] initWithPattern:hostPattern options:0 error:NULL] autorelease];
+    NSTextCheckingResult* result = [hostRegex firstMatchInString:host options:0 range:NSMakeRange(0, host.length)];
+    if (result && result.numberOfRanges > 0) {
+        name = [host substringWithRange:[result rangeAtIndex:1]];
     }
-    
+
     NSString* nick = [config objectForKey:@"nick"];
     NSString* user = [[nick lowercaseString] safeUsername];
     NSString* realName = nick;
