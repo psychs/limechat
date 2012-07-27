@@ -6,14 +6,29 @@
 
 @implementation NumericTextField
 
-- (void)setIntValue:(int)value
+- (id)initWithFrame:(NSRect)frame
 {
-    [self setStringValue:[NSString stringWithFormat:@"%d", value]];
+    self = [super initWithFrame:frame];
+    if (self) {
+        [self setUpNumberFormatter];
+    }
+    return self;
 }
 
-- (void)setIntegerValue:(NSInteger)value
+- (id)initWithCoder:(NSCoder *)coder
 {
-    [self setStringValue:[NSString stringWithFormat:@"%ld", value]];
+    self = [super initWithCoder:coder];
+    if (self) {
+        [self setUpNumberFormatter];
+    }
+    return self;
+}
+
+- (void)setUpNumberFormatter
+{
+    NSNumberFormatter *numberFormatter = [[NSNumberFormatter new] autorelease];
+    [numberFormatter setNumberStyle:NSNumberFormatterNoStyle];
+    [[self cell] setFormatter:numberFormatter];
 }
 
 @end
