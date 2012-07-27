@@ -17,11 +17,6 @@
     || [lowerUrl hasSuffix:@".svg"];
 }
 
-+ (BOOL)isImageURL:(NSString*)url
-{
-    return [self isImageURL:url] || [self serviceImageURLForURL:url] != nil;
-}
-
 + (NSString*)serviceImageURLForURL:(NSString*)url
 {
     NSString* encodedUrl = [url encodeURIFragment];
