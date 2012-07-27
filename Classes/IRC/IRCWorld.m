@@ -593,6 +593,11 @@
         inputFont = theme.inputTextFont;
     }
     [chatBox setInputTextFont:inputFont];
+
+    if ([window firstResponder] == [window fieldEditor:NO forObject:text]) {
+        [window makeFirstResponder:dummyLog.view];
+        [window performSelector:@selector(makeFirstResponder:) withObject:text afterDelay:0.001];
+    }
 }
 
 - (void)changeTreeTheme
