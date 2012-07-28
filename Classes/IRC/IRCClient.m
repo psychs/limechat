@@ -1815,14 +1815,16 @@ static NSDateFormatter* dateTimeFormatter;
     
     NSString* title = chname;
     NSString* desc = [NSString stringWithFormat:@"<%@> %@", nick, text];
-    NSString* context;
+
+    NSMutableDictionary* context = [NSMutableDictionary dictionary];
+    context[USER_NOTIFICATION_CLIENT_ID_KEY] = [NSNumber numberWithInt:uid];
     if (channel) {
-        context = [NSString stringWithFormat:@"%d %d", uid, channel.uid];
+        context[USER_NOTIFICATION_CHANNEL_ID_KEY] = [NSNumber numberWithInt:channel.uid];
     }
-    else {
-        context = [NSString stringWithFormat:@"%d", uid];
+    if (type == USER_NOTIFICATION_INVITED && text) {
+        context[USER_NOTIFICATION_INVITED_CHANNEL_NAME_KEY] = text;
     }
-    
+
     [world sendUserNotification:type title:title desc:desc context:context];
 }
 
@@ -1867,15 +1869,16 @@ static NSDateFormatter* dateTimeFormatter;
         default:
             return;
     }
-    
-    NSString* context;
+
+    NSMutableDictionary* context = [NSMutableDictionary dictionary];
+    context[USER_NOTIFICATION_CLIENT_ID_KEY] = [NSNumber numberWithInt:uid];
     if (channel) {
-        context = [NSString stringWithFormat:@"%d %d", uid, channel.uid];
+        context[USER_NOTIFICATION_CHANNEL_ID_KEY] = [NSNumber numberWithInt:channel.uid];
     }
-    else {
-        context = [NSString stringWithFormat:@"%d", uid];
+    if (type == USER_NOTIFICATION_INVITED && text) {
+        context[USER_NOTIFICATION_INVITED_CHANNEL_NAME_KEY] = text;
     }
-    
+
     [world sendUserNotification:type title:title desc:desc context:context];
 }
 

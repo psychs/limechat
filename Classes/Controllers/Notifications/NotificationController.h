@@ -24,8 +24,14 @@ typedef enum {
 } UserNotificationType;
 
 
+#define USER_NOTIFICATION_DCC_KEY                   @"dcc"
+#define USER_NOTIFICATION_CLIENT_ID_KEY             @"clientId"
+#define USER_NOTIFICATION_CHANNEL_ID_KEY            @"channelId"
+#define USER_NOTIFICATION_INVITED_CHANNEL_NAME_KEY  @"invitedChannelName"
+
+
 @protocol NotificationControllerDelegate <NSObject>
-- (void)notificationControllerDidActivateNotification:(id)context;
+- (void)notificationControllerDidActivateNotification:(id)context actionButtonClicked:(BOOL)actionButtonClicked;
 @end
 
 

@@ -4,6 +4,9 @@
 #import "UserNotificationController.h"
 
 
+#define USER_NOTIFICATION_CONTEXT_KEY   @"context"
+
+
 @implementation UserNotificationController
 {
     __weak id<NotificationControllerDelegate> delegate;
@@ -55,27 +58,27 @@
         case USER_NOTIFICATION_FILE_RECEIVE_REQUEST:
             desc = [NSString stringWithFormat:@"From %@\n%@", title, desc];
             title = @"File receive request";
-            context = @"dcc";
+            context = @{USER_NOTIFICATION_DCC_KEY: @YES};
             break;
         case USER_NOTIFICATION_FILE_RECEIVE_SUCCESS:
             desc = [NSString stringWithFormat:@"From %@\n%@", title, desc];
             title = @"File receive succeeded";
-            context = @"dcc";
+            context = @{USER_NOTIFICATION_DCC_KEY: @YES};
             break;
         case USER_NOTIFICATION_FILE_RECEIVE_ERROR:
             desc = [NSString stringWithFormat:@"From %@\n%@", title, desc];
             title = @"File receive failed";
-            context = @"dcc";
+            context = @{USER_NOTIFICATION_DCC_KEY: @YES};
             break;
         case USER_NOTIFICATION_FILE_SEND_SUCCESS:
             desc = [NSString stringWithFormat:@"To %@\n%@", title, desc];
             title = @"File send succeeded";
-            context = @"dcc";
+            context = @{USER_NOTIFICATION_DCC_KEY: @YES};
             break;
         case USER_NOTIFICATION_FILE_SEND_ERROR:
             desc = [NSString stringWithFormat:@"To %@\n%@", title, desc];
             title = @"File send failed";
-            context = @"dcc";
+            context = @{USER_NOTIFICATION_DCC_KEY: @YES};
             break;
         default:
             break;
@@ -85,16 +88,24 @@
     note.title = title;
     note.subtitle = desc;
     if (context) {
-        note.userInfo = @{@"context": context};
+        note.userInfo = @{USER_NOTIFICATION_CONTEXT_KEY: context};
     }
-    
+
+    /*
+    if (type == USER_NOTIFICATION_INVITED) {
+        note.hasActionButton = YES;
+        note.actionButtonTitle = @"Join";
+    }
+     */
+
     NSUserNotificationCenter* center = [NSUserNotificationCenter defaultUserNotificationCenter];
     [center deliverNotification:note];
 }
 
 - (void)userNotificationCenter:(NSUserNotificationCenter*)sender didActivateNotification:(NSUserNotification*)note
 {
-    [delegate notificationControllerDidActivateNotification:note.userInfo[@"context"]];
+    BOOL actionButtonClicked = note.activationType == NSUserNotificationActivationTypeActionButtonClicked;
+    [delegate notificationControllerDidActivateNotification:note.userInfo[USER_NOTIFICATION_CONTEXT_KEY] actionButtonClicked:actionButtonClicked];
 }
 
 @end

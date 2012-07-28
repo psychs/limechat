@@ -5,6 +5,7 @@
 #import "IRCClient.h"
 #import "IRCChannel.h"
 #import "IRCClientConfig.h"
+#import "IRC.h"
 #import "Preferences.h"
 #import "NSStringHelper.h"
 
@@ -352,24 +353,32 @@
     [notifier notify:type title:title desc:desc context:context];
 }
 
-- (void)notificationControllerDidActivateNotification:(id)context
+- (void)notificationControllerDidActivateNotification:(id)context actionButtonClicked:(BOOL)actionButtonClicked
 {
     [window makeKeyAndOrderFront:nil];
 	[NSApp activateIgnoringOtherApps:YES];
 
-	if ([context isKindOfClass:[NSString class]]) {
-        if ([context isEqualToString:@"dcc"]) {
+    LOG(@"Notification clicked: %@", context);
+
+	if ([context isKindOfClass:[NSDictionary class]]) {
+        NSDictionary *dic = (NSDictionary*)context;
+        if (dic[USER_NOTIFICATION_DCC_KEY]) {
             [self.dcc show:YES];
         }
         else {
-            NSString* s = context;
-            NSArray* ary = [s componentsSeparatedByString:@" "];
-            if (ary.count >= 2) {
-                int uid = [ary[0] intValue];
-                int cid = [ary[1] intValue];
+            NSNumber* clientId = dic[USER_NOTIFICATION_CLIENT_ID_KEY];
+            NSNumber* channelId = dic[USER_NOTIFICATION_CHANNEL_ID_KEY];
+            NSString* invitedChannelName = dic[USER_NOTIFICATION_INVITED_CHANNEL_NAME_KEY];
 
-                IRCClient* u = [self findClientById:uid];
-                IRCChannel* c = [self findChannelByClientId:uid channelId:cid];
+            if (invitedChannelName && clientId) {
+                IRCClient* u = [self findClientById:clientId.intValue];
+                if (u) {
+                    [u send:JOIN, invitedChannelName, nil];
+                }
+            }
+            else if (clientId && channelId) {
+                IRCClient* u = [self findClientById:clientId.intValue];
+                IRCChannel* c = [self findChannelByClientId:clientId.intValue channelId:channelId.intValue];
                 if (c) {
                     [self select:c];
                 }
@@ -377,10 +386,8 @@
                     [self select:u];
                 }
             }
-            else if (ary.count == 1) {
-                int uid = [ary[0] intValue];
-
-                IRCClient* u = [self findClientById:uid];
+            else if (clientId) {
+                IRCClient* u = [self findClientById:clientId.intValue];
                 if (u) {
                     [self select:u];
                 }

@@ -100,31 +100,31 @@
             kind = GROWL_MSG_FILE_RECEIVE_REQUEST;
             desc = [NSString stringWithFormat:@"From %@\n%@", title, desc];
             title = @"File receive request";
-            context = @"dcc";
+            context = @{USER_NOTIFICATION_DCC_KEY: @YES};
             break;
         case USER_NOTIFICATION_FILE_RECEIVE_SUCCESS:
             kind = GROWL_MSG_FILE_RECEIVE_SUCCEEDED;
             desc = [NSString stringWithFormat:@"From %@\n%@", title, desc];
             title = @"File receive succeeded";
-            context = @"dcc";
+            context = @{USER_NOTIFICATION_DCC_KEY: @YES};
             break;
         case USER_NOTIFICATION_FILE_RECEIVE_ERROR:
             kind = GROWL_MSG_FILE_RECEIVE_FAILED;
             desc = [NSString stringWithFormat:@"From %@\n%@", title, desc];
             title = @"File receive failed";
-            context = @"dcc";
+            context = @{USER_NOTIFICATION_DCC_KEY: @YES};
             break;
         case USER_NOTIFICATION_FILE_SEND_SUCCESS:
             kind = GROWL_MSG_FILE_SEND_SUCCEEDED;
             desc = [NSString stringWithFormat:@"To %@\n%@", title, desc];
             title = @"File send succeeded";
-            context = @"dcc";
+            context = @{USER_NOTIFICATION_DCC_KEY: @YES};
             break;
         case USER_NOTIFICATION_FILE_SEND_ERROR:
             kind = GROWL_NSG_FILE_SEND_FAILED;
             desc = [NSString stringWithFormat:@"To %@\n%@", title, desc];
             title = @"File send failed";
-            context = @"dcc";
+            context = @{USER_NOTIFICATION_DCC_KEY: @YES};
             break;
         default:
             break;
@@ -160,7 +160,7 @@
     [lastClickedContext release];
     lastClickedContext = [context retain];
     
-    [delegate notificationControllerDidActivateNotification:lastClickedContext];
+    [delegate notificationControllerDidActivateNotification:lastClickedContext actionButtonClicked:NO];
 }
 
 @end
