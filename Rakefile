@@ -25,7 +25,7 @@ task :clean do |t|
 end
 
 task :build do |t|
-  sdk = "10.6"
+  sdk = "10.8"
   sh "xcodebuild -project #{APP_SHORT_NAME}.xcodeproj -target #{APP_SHORT_NAME} -configuration Release -sdk macosx#{sdk} build"
 end
 
