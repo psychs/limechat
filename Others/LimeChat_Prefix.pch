@@ -7,7 +7,7 @@
     #import <Carbon/Carbon.h>
 #endif
 
-#ifdef DEBUG
+#ifdef DEBUG_BUILD
     #define LOG(...) NSLog(__VA_ARGS__);
     #define LOG_METHOD NSLog(@"%s", __func__);
     #define APPLOG(...) NSLog(__VA_ARGS__);

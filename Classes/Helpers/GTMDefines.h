@@ -92,7 +92,7 @@
 // We only define the simple macros if nothing else has defined this.
 #ifndef _GTMDevLog
 
-#ifdef DEBUG
+#ifdef DEBUG_BUILD
   #define _GTMDevLog(...) NSLog(__VA_ARGS__)
 #else
   #define _GTMDevLog(...) do { } while (0)
