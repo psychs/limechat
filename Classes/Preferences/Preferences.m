@@ -367,38 +367,38 @@
 #pragma mark -
 #pragma mark Events
 
-+ (NSString*)titleForEvent:(GrowlNotificationType)event
++ (NSString*)titleForEvent:(UserNotificationType)event
 {
     switch (event) {
-        case GROWL_HIGHLIGHT:
+        case USER_NOTIFICATION_HIGHLIGHT:
             return @"Highlight";
-        case GROWL_NEW_TALK:
+        case USER_NOTIFICATION_NEW_TALK:
             return @"New private message";
-        case GROWL_CHANNEL_MSG:
+        case USER_NOTIFICATION_CHANNEL_MSG:
             return @"Channel message";
-        case GROWL_CHANNEL_NOTICE:
+        case USER_NOTIFICATION_CHANNEL_NOTICE:
             return @"Channel notice";
-        case GROWL_TALK_MSG:
+        case USER_NOTIFICATION_TALK_MSG:
             return @"Private message";
-        case GROWL_TALK_NOTICE:
+        case USER_NOTIFICATION_TALK_NOTICE:
             return @"Private notice";
-        case GROWL_KICKED:
+        case USER_NOTIFICATION_KICKED:
             return @"Kicked";
-        case GROWL_INVITED:
+        case USER_NOTIFICATION_INVITED:
             return @"Invited";
-        case GROWL_LOGIN:
+        case USER_NOTIFICATION_LOGIN:
             return @"Logged in";
-        case GROWL_DISCONNECT:
+        case USER_NOTIFICATION_DISCONNECT:
             return @"Disconnected";
-        case GROWL_FILE_RECEIVE_REQUEST:
+        case USER_NOTIFICATION_FILE_RECEIVE_REQUEST:
             return @"DCC file receive request";
-        case GROWL_FILE_RECEIVE_SUCCESS:
+        case USER_NOTIFICATION_FILE_RECEIVE_SUCCESS:
             return @"DCC file receive success";
-        case GROWL_FILE_RECEIVE_ERROR:
+        case USER_NOTIFICATION_FILE_RECEIVE_ERROR:
             return @"DCC file receive failure";
-        case GROWL_FILE_SEND_SUCCESS:
+        case USER_NOTIFICATION_FILE_SEND_SUCCESS:
             return @"DCC file send success";
-        case GROWL_FILE_SEND_ERROR:
+        case USER_NOTIFICATION_FILE_SEND_ERROR:
             return @"DCC file send failure";
         default:
             break;
@@ -407,38 +407,38 @@
     return nil;
 }
 
-+ (NSString*)oldKeyForEvent:(GrowlNotificationType)event
++ (NSString*)oldKeyForEvent:(UserNotificationType)event
 {
     switch (event) {
-        case GROWL_HIGHLIGHT:
+        case USER_NOTIFICATION_HIGHLIGHT:
             return @"Preferences.Sound.highlight";
-        case GROWL_NEW_TALK:
+        case USER_NOTIFICATION_NEW_TALK:
             return @"Preferences.Sound.newtalk";
-        case GROWL_CHANNEL_MSG:
+        case USER_NOTIFICATION_CHANNEL_MSG:
             return @"Preferences.Sound.channeltext";
-        case GROWL_CHANNEL_NOTICE:
+        case USER_NOTIFICATION_CHANNEL_NOTICE:
             return @"channelNoticeSound";
-        case GROWL_TALK_MSG:
+        case USER_NOTIFICATION_TALK_MSG:
             return @"Preferences.Sound.talktext";
-        case GROWL_TALK_NOTICE:
+        case USER_NOTIFICATION_TALK_NOTICE:
             return @"talkNoticeSound";
-        case GROWL_KICKED:
+        case USER_NOTIFICATION_KICKED:
             return @"Preferences.Sound.kicked";
-        case GROWL_INVITED:
+        case USER_NOTIFICATION_INVITED:
             return @"Preferences.Sound.invited";
-        case GROWL_LOGIN:
+        case USER_NOTIFICATION_LOGIN:
             return @"Preferences.Sound.login";
-        case GROWL_DISCONNECT:
+        case USER_NOTIFICATION_DISCONNECT:
             return @"Preferences.Sound.disconnect";
-        case GROWL_FILE_RECEIVE_REQUEST:
+        case USER_NOTIFICATION_FILE_RECEIVE_REQUEST:
             return @"Preferences.Sound.file_receive_request";
-        case GROWL_FILE_RECEIVE_SUCCESS:
+        case USER_NOTIFICATION_FILE_RECEIVE_SUCCESS:
             return @"Preferences.Sound.file_receive_success";
-        case GROWL_FILE_RECEIVE_ERROR:
+        case USER_NOTIFICATION_FILE_RECEIVE_ERROR:
             return @"Preferences.Sound.file_receive_failure";
-        case GROWL_FILE_SEND_SUCCESS:
+        case USER_NOTIFICATION_FILE_SEND_SUCCESS:
             return @"Preferences.Sound.file_send_success";
-        case GROWL_FILE_SEND_ERROR:
+        case USER_NOTIFICATION_FILE_SEND_ERROR:
             return @"Preferences.Sound.file_send_failure";
         default:
             break;
@@ -447,38 +447,38 @@
     return nil;
 }
 
-+ (NSString*)keyForEvent:(GrowlNotificationType)event
++ (NSString*)keyForEvent:(UserNotificationType)event
 {
     switch (event) {
-        case GROWL_HIGHLIGHT:
+        case USER_NOTIFICATION_HIGHLIGHT:
             return @"eventHighlight";
-        case GROWL_NEW_TALK:
+        case USER_NOTIFICATION_NEW_TALK:
             return @"eventNewtalk";
-        case GROWL_CHANNEL_MSG:
+        case USER_NOTIFICATION_CHANNEL_MSG:
             return @"eventChannelText";
-        case GROWL_CHANNEL_NOTICE:
+        case USER_NOTIFICATION_CHANNEL_NOTICE:
             return @"eventChannelNotice";
-        case GROWL_TALK_MSG:
+        case USER_NOTIFICATION_TALK_MSG:
             return @"eventTalkText";
-        case GROWL_TALK_NOTICE:
+        case USER_NOTIFICATION_TALK_NOTICE:
             return @"eventTalkNotice";
-        case GROWL_KICKED:
+        case USER_NOTIFICATION_KICKED:
             return @"eventKicked";
-        case GROWL_INVITED:
+        case USER_NOTIFICATION_INVITED:
             return @"eventInvited";
-        case GROWL_LOGIN:
+        case USER_NOTIFICATION_LOGIN:
             return @"eventLogin";
-        case GROWL_DISCONNECT:
+        case USER_NOTIFICATION_DISCONNECT:
             return @"eventDisconnect";
-        case GROWL_FILE_RECEIVE_REQUEST:
+        case USER_NOTIFICATION_FILE_RECEIVE_REQUEST:
             return @"eventFileReceiveRequest";
-        case GROWL_FILE_RECEIVE_SUCCESS:
+        case USER_NOTIFICATION_FILE_RECEIVE_SUCCESS:
             return @"eventFileReceiveSuccess";
-        case GROWL_FILE_RECEIVE_ERROR:
+        case USER_NOTIFICATION_FILE_RECEIVE_ERROR:
             return @"eventFileReceiveFailure";
-        case GROWL_FILE_SEND_SUCCESS:
+        case USER_NOTIFICATION_FILE_SEND_SUCCESS:
             return @"eventFileSendSuccess";
-        case GROWL_FILE_SEND_ERROR:
+        case USER_NOTIFICATION_FILE_SEND_ERROR:
             return @"eventFileSendFailure";
         default:
             break;
@@ -487,42 +487,42 @@
     return nil;
 }
 
-+ (NSString*)soundForEvent:(GrowlNotificationType)event
++ (NSString*)soundForEvent:(UserNotificationType)event
 {
     NSString* key = [[self keyForEvent:event] stringByAppendingString:@"Sound"];
     NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
     return [ud objectForKey:key];
 }
 
-+ (void)setSound:(NSString*)value forEvent:(GrowlNotificationType)event
++ (void)setSound:(NSString*)value forEvent:(UserNotificationType)event
 {
     NSString* key = [[self keyForEvent:event] stringByAppendingString:@"Sound"];
     NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
     [ud setObject:value forKey:key];
 }
 
-+ (BOOL)growlEnabledForEvent:(GrowlNotificationType)event
++ (BOOL)growlEnabledForEvent:(UserNotificationType)event
 {
     NSString* key = [[self keyForEvent:event] stringByAppendingString:@"Growl"];
     NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
     return [ud boolForKey:key];
 }
 
-+ (void)setGrowlEnabled:(BOOL)value forEvent:(GrowlNotificationType)event
++ (void)setGrowlEnabled:(BOOL)value forEvent:(UserNotificationType)event
 {
     NSString* key = [[self keyForEvent:event] stringByAppendingString:@"Growl"];
     NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
     [ud setBool:value forKey:key];
 }
 
-+ (BOOL)growlStickyForEvent:(GrowlNotificationType)event
++ (BOOL)growlStickyForEvent:(UserNotificationType)event
 {
     NSString* key = [[self keyForEvent:event] stringByAppendingString:@"GrowlSticky"];
     NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
     return [ud boolForKey:key];
 }
 
-+ (void)setGrowlSticky:(BOOL)value forEvent:(GrowlNotificationType)event
++ (void)setGrowlSticky:(BOOL)value forEvent:(UserNotificationType)event
 {
     NSString* key = [[self keyForEvent:event] stringByAppendingString:@"GrowlSticky"];
     NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
@@ -924,7 +924,7 @@ static NSMutableArray* excludeWords;
         
         NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
         
-        for (int i=0; i<GROWL_COUNT; ++i) {
+        for (int i=0; i<USER_NOTIFICATION_COUNT; ++i) {
             NSString* oldKey = [Preferences oldKeyForEvent:i];
             NSString* s = [ud objectForKey:oldKey];
             if (s.length) {

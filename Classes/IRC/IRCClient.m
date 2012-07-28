@@ -81,9 +81,9 @@ static NSDateFormatter* dateTimeFormatter;
 - (void)printErrorReply:(IRCMessage*)m channel:(IRCChannel*)channel;
 - (void)printError:(NSString*)error;
 
-- (void)notifyText:(GrowlNotificationType)type target:(id)target nick:(NSString*)nick text:(NSString*)text;
-- (void)notifyEvent:(GrowlNotificationType)type;
-- (void)notifyEvent:(GrowlNotificationType)type target:(id)target nick:(NSString*)nick text:(NSString*)text;
+- (void)notifyText:(UserNotificationType)type target:(id)target nick:(NSString*)nick text:(NSString*)text;
+- (void)notifyEvent:(UserNotificationType)type;
+- (void)notifyEvent:(UserNotificationType)type target:(id)target nick:(NSString*)nick text:(NSString*)text;
 
 - (WhoisDialog*)createWhoisDialogWithNick:(NSString*)nick username:(NSString*)username address:(NSString*)address realname:(NSString*)realname;
 - (WhoisDialog*)findWhoisDialog:(NSString*)nick;
@@ -1790,7 +1790,7 @@ static NSDateFormatter* dateTimeFormatter;
 #pragma mark -
 #pragma mark Growl
 
-- (void)notifyText:(GrowlNotificationType)type target:(id)target nick:(NSString*)nick text:(NSString*)text
+- (void)notifyText:(UserNotificationType)type target:(id)target nick:(NSString*)nick text:(NSString*)text
 {
     if ([Preferences stopGrowlOnActive] && [NSApp isActive]) return;
     if (![Preferences growlEnabledForEvent:type]) return;
@@ -1823,15 +1823,15 @@ static NSDateFormatter* dateTimeFormatter;
         context = [NSString stringWithFormat:@"%d", uid];
     }
     
-    [world notifyOnGrowl:type title:title desc:desc context:context];
+    [world sendUserNotification:type title:title desc:desc context:context];
 }
 
-- (void)notifyEvent:(GrowlNotificationType)type
+- (void)notifyEvent:(UserNotificationType)type
 {
     [self notifyEvent:type target:nil nick:@"" text:@""];
 }
 
-- (void)notifyEvent:(GrowlNotificationType)type target:(id)target nick:(NSString*)nick text:(NSString*)text
+- (void)notifyEvent:(UserNotificationType)type target:(id)target nick:(NSString*)nick text:(NSString*)text
 {
     if ([Preferences stopGrowlOnActive] && [NSApp isActive]) return;
     if (![Preferences growlEnabledForEvent:type]) return;
@@ -1850,17 +1850,17 @@ static NSDateFormatter* dateTimeFormatter;
     NSString* desc = @"";
     
     switch (type) {
-        case GROWL_LOGIN:
+        case USER_NOTIFICATION_LOGIN:
             title = self.name;
             break;
-        case GROWL_DISCONNECT:
+        case USER_NOTIFICATION_DISCONNECT:
             title = self.name;
             break;
-        case GROWL_KICKED:
+        case USER_NOTIFICATION_KICKED:
             title = channel.name;
             desc = [NSString stringWithFormat:@"%@ has kicked out you : %@", nick, text];
             break;
-        case GROWL_INVITED:
+        case USER_NOTIFICATION_INVITED:
             title = self.name;
             desc = [NSString stringWithFormat:@"%@ has invited you to %@", nick, text];
             break;
@@ -1876,7 +1876,7 @@ static NSDateFormatter* dateTimeFormatter;
         context = [NSString stringWithFormat:@"%d", uid];
     }
     
-    [world notifyOnGrowl:type title:title desc:desc context:context];
+    [world sendUserNotification:type title:title desc:desc context:context];
 }
 
 #pragma mark -
@@ -2456,15 +2456,15 @@ static NSDateFormatter* dateTimeFormatter;
         BOOL keyword = [self printBoth:(c ?: (id)target) type:type nick:nick text:text identified:identified receivedAt:m.receivedAt];
         
         if (type == LINE_TYPE_NOTICE) {
-            [self notifyText:GROWL_CHANNEL_NOTICE target:(c ?: (id)target) nick:nick text:text];
-            [SoundPlayer play:[Preferences soundForEvent:GROWL_CHANNEL_NOTICE]];
+            [self notifyText:USER_NOTIFICATION_CHANNEL_NOTICE target:(c ?: (id)target) nick:nick text:text];
+            [SoundPlayer play:[Preferences soundForEvent:USER_NOTIFICATION_CHANNEL_NOTICE]];
         }
         else {
             id t = c ?: (id)self;
             [self setUnreadState:t];
             if (keyword) [self setKeywordState:t];
             
-            GrowlNotificationType kind = keyword ? GROWL_HIGHLIGHT : GROWL_CHANNEL_MSG;
+            UserNotificationType kind = keyword ? USER_NOTIFICATION_HIGHLIGHT : USER_NOTIFICATION_CHANNEL_MSG;
             [self notifyText:kind target:(c ?: (id)target) nick:nick text:text];
             [SoundPlayer play:[Preferences soundForEvent:kind]];
             
@@ -2525,8 +2525,8 @@ static NSDateFormatter* dateTimeFormatter;
                     }
                 }
                 
-                [self notifyText:GROWL_TALK_NOTICE target:(c ?: (id)target) nick:nick text:text];
-                [SoundPlayer play:[Preferences soundForEvent:GROWL_TALK_NOTICE]];
+                [self notifyText:USER_NOTIFICATION_TALK_NOTICE target:(c ?: (id)target) nick:nick text:text];
+                [SoundPlayer play:[Preferences soundForEvent:USER_NOTIFICATION_TALK_NOTICE]];
             }
             else {
                 id t = c ?: (id)self;
@@ -2534,7 +2534,7 @@ static NSDateFormatter* dateTimeFormatter;
                 if (keyword) [self setKeywordState:t];
                 if (newTalk || moreTalk) [self setNewTalkState:t];
                 
-                GrowlNotificationType kind = keyword ? GROWL_HIGHLIGHT : newTalk ? GROWL_NEW_TALK : GROWL_TALK_MSG;
+                UserNotificationType kind = keyword ? USER_NOTIFICATION_HIGHLIGHT : newTalk ? USER_NOTIFICATION_NEW_TALK : USER_NOTIFICATION_TALK_MSG;
                 [self notifyText:kind target:(c ?: (id)target) nick:nick text:text];
                 [SoundPlayer play:[Preferences soundForEvent:kind]];
             }
@@ -2690,8 +2690,8 @@ static NSDateFormatter* dateTimeFormatter;
             
             [world.dcc addReceiverWithUID:uid nick:nick host:host port:port path:path fileName:fileName size:size];
             
-            [self notifyEvent:GROWL_FILE_RECEIVE_REQUEST target:nil nick:nick text:fileName];
-            [SoundPlayer play:[Preferences soundForEvent:GROWL_FILE_RECEIVE_REQUEST]];
+            [self notifyEvent:USER_NOTIFICATION_FILE_RECEIVE_REQUEST target:nil nick:nick text:fileName];
+            [SoundPlayer play:[Preferences soundForEvent:USER_NOTIFICATION_FILE_RECEIVE_REQUEST]];
             
             if (![NSApp isActive]) {
                 [NSApp requestUserAttention:NSInformationalRequest];
@@ -2814,8 +2814,8 @@ static NSDateFormatter* dateTimeFormatter;
             [self reloadTree];
             [self printSystemBoth:c text:@"You have been kicked out from the channel" receivedAt:m.receivedAt];
             
-            [self notifyEvent:GROWL_KICKED target:c nick:nick text:comment];
-            [SoundPlayer play:[Preferences soundForEvent:GROWL_KICKED]];
+            [self notifyEvent:USER_NOTIFICATION_KICKED target:c nick:nick text:comment];
+            [SoundPlayer play:[Preferences soundForEvent:USER_NOTIFICATION_KICKED]];
         }
         
         [c removeMember:target];
@@ -3036,8 +3036,8 @@ static NSDateFormatter* dateTimeFormatter;
         }
     }
     
-    [self notifyEvent:GROWL_INVITED target:nil nick:nick text:chname];
-    [SoundPlayer play:[Preferences soundForEvent:GROWL_INVITED]];
+    [self notifyEvent:USER_NOTIFICATION_INVITED target:nil nick:nick text:chname];
+    [SoundPlayer play:[Preferences soundForEvent:USER_NOTIFICATION_INVITED]];
 }
 
 - (void)receiveError:(IRCMessage*)m
@@ -3111,8 +3111,8 @@ static NSDateFormatter* dateTimeFormatter;
     
     [self printSystem:self text:@"Logged in" receivedAt:m.receivedAt];
     
-    [self notifyEvent:GROWL_LOGIN];
-    [SoundPlayer play:[Preferences soundForEvent:GROWL_LOGIN]];
+    [self notifyEvent:USER_NOTIFICATION_LOGIN];
+    [SoundPlayer play:[Preferences soundForEvent:USER_NOTIFICATION_LOGIN]];
     
     if (!isRegisteredWithSASL && config.nickPassword.length) {
         registeringToNickServ = YES;
@@ -3710,8 +3710,8 @@ static NSDateFormatter* dateTimeFormatter;
     [self reloadTree];
     
     if (prevConnected) {
-        [self notifyEvent:GROWL_DISCONNECT];
-        [SoundPlayer play:[Preferences soundForEvent:GROWL_DISCONNECT]];
+        [self notifyEvent:USER_NOTIFICATION_DISCONNECT];
+        [SoundPlayer play:[Preferences soundForEvent:USER_NOTIFICATION_DISCONNECT]];
     }
 }
 

@@ -15,6 +15,8 @@
 #import "NSStringHelper.h"
 #import "NSDictionaryHelper.h"
 #import "NSLocaleHelper.h"
+#import "GrowlNotificationController.h"
+#import "UserNotificationController.h"
 
 
 #define KInternetEventClass     1196773964
@@ -47,7 +49,7 @@
 - (void)dealloc
 {
     [welcomeDialog release];
-    [growl release];
+    [notifier release];
     [dcc release];
     [fieldEditor release];
     [world release];
@@ -62,16 +64,9 @@
 
 - (void)awakeFromNib
 {
-    SInt32 version = 0;
-    Gestalt(gestaltSystemVersion, &version);
-    if (version >= 0x1070) {
-        if ([window respondsToSelector:@selector(setCollectionBehavior:)]) {
-            const int LCNSWindowCollectionBehaviorFullScreenPrimary = 1 << 7;
-            NSWindowCollectionBehavior behavior = [window collectionBehavior];
-            behavior |= LCNSWindowCollectionBehaviorFullScreenPrimary;
-            [window setCollectionBehavior:behavior];
-        }
-    }
+    NSWindowCollectionBehavior behavior = [window collectionBehavior];
+    behavior |= NSWindowCollectionBehaviorFullScreenPrimary;
+    [window setCollectionBehavior:behavior];
     
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(themeDidChange:) name:ThemeDidChangeNotification object:nil];
@@ -138,7 +133,7 @@
     world = [IRCWorld new];
     world.app = self;
     world.window = window;
-    world.growl = growl;
+    world.notifier = notifier;
     world.tree = tree;
     world.text = text;
     world.logBase = logBase;
@@ -182,11 +177,18 @@
     dcc.world = world;
     dcc.mainWindow = window;
     world.dcc = dcc;
-    
-    growl = [GrowlController new];
-    growl.owner = world;
-    world.growl = growl;
-    
+
+    SInt32 version = 0;
+    Gestalt(gestaltSystemVersion, &version);
+    if (version >= 0x1080) {
+        notifier = [UserNotificationController new];
+    }
+    else {
+        notifier = [GrowlNotificationController new];
+    }
+    notifier.delegate = world;
+    world.notifier = notifier;
+
     inputHistory = [InputHistory new];
     
     [ImageDownloadManager instance].world = world;

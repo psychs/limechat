@@ -2,7 +2,7 @@
 // You can redistribute it and/or modify it under the terms of the GPL version 2 (see the file GPL.txt).
 
 #import <Cocoa/Cocoa.h>
-#import "GrowlController.h"
+#import "NotificationController.h"
 
 
 #define EMPTY_SOUND     @"-"
@@ -10,7 +10,7 @@
 
 @interface SoundWrapper : NSObject
 {
-    GrowlNotificationType eventType;
+    UserNotificationType eventType;
 }
 
 @property (nonatomic, readonly) NSString* displayName;
@@ -18,6 +18,6 @@
 @property (nonatomic) BOOL growl;
 @property (nonatomic) BOOL growlSticky;
 
-+ (SoundWrapper*)soundWrapperWithEventType:(GrowlNotificationType)eventType;
++ (SoundWrapper*)soundWrapperWithEventType:(UserNotificationType)eventType;
 
 @end

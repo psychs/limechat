@@ -226,49 +226,49 @@
         NSMutableArray* ary = [NSMutableArray new];
         SoundWrapper* e;
         
-        e = [SoundWrapper soundWrapperWithEventType:GROWL_LOGIN];
+        e = [SoundWrapper soundWrapperWithEventType:USER_NOTIFICATION_LOGIN];
         [ary addObject:e];
         
-        e = [SoundWrapper soundWrapperWithEventType:GROWL_DISCONNECT];
+        e = [SoundWrapper soundWrapperWithEventType:USER_NOTIFICATION_DISCONNECT];
         [ary addObject:e];
         
-        e = [SoundWrapper soundWrapperWithEventType:GROWL_HIGHLIGHT];
+        e = [SoundWrapper soundWrapperWithEventType:USER_NOTIFICATION_HIGHLIGHT];
         [ary addObject:e];
         
-        e = [SoundWrapper soundWrapperWithEventType:GROWL_NEW_TALK];
+        e = [SoundWrapper soundWrapperWithEventType:USER_NOTIFICATION_NEW_TALK];
         [ary addObject:e];
         
-        e = [SoundWrapper soundWrapperWithEventType:GROWL_KICKED];
+        e = [SoundWrapper soundWrapperWithEventType:USER_NOTIFICATION_KICKED];
         [ary addObject:e];
         
-        e = [SoundWrapper soundWrapperWithEventType:GROWL_INVITED];
+        e = [SoundWrapper soundWrapperWithEventType:USER_NOTIFICATION_INVITED];
         [ary addObject:e];
         
-        e = [SoundWrapper soundWrapperWithEventType:GROWL_CHANNEL_MSG];
+        e = [SoundWrapper soundWrapperWithEventType:USER_NOTIFICATION_CHANNEL_MSG];
         [ary addObject:e];
         
-        e = [SoundWrapper soundWrapperWithEventType:GROWL_CHANNEL_NOTICE];
+        e = [SoundWrapper soundWrapperWithEventType:USER_NOTIFICATION_CHANNEL_NOTICE];
         [ary addObject:e];
         
-        e = [SoundWrapper soundWrapperWithEventType:GROWL_TALK_MSG];
+        e = [SoundWrapper soundWrapperWithEventType:USER_NOTIFICATION_TALK_MSG];
         [ary addObject:e];
         
-        e = [SoundWrapper soundWrapperWithEventType:GROWL_TALK_NOTICE];
+        e = [SoundWrapper soundWrapperWithEventType:USER_NOTIFICATION_TALK_NOTICE];
         [ary addObject:e];
         
-        e = [SoundWrapper soundWrapperWithEventType:GROWL_FILE_RECEIVE_REQUEST];
+        e = [SoundWrapper soundWrapperWithEventType:USER_NOTIFICATION_FILE_RECEIVE_REQUEST];
         [ary addObject:e];
         
-        e = [SoundWrapper soundWrapperWithEventType:GROWL_FILE_RECEIVE_SUCCESS];
+        e = [SoundWrapper soundWrapperWithEventType:USER_NOTIFICATION_FILE_RECEIVE_SUCCESS];
         [ary addObject:e];
         
-        e = [SoundWrapper soundWrapperWithEventType:GROWL_FILE_RECEIVE_ERROR];
+        e = [SoundWrapper soundWrapperWithEventType:USER_NOTIFICATION_FILE_RECEIVE_ERROR];
         [ary addObject:e];
         
-        e = [SoundWrapper soundWrapperWithEventType:GROWL_FILE_SEND_SUCCESS];
+        e = [SoundWrapper soundWrapperWithEventType:USER_NOTIFICATION_FILE_SEND_SUCCESS];
         [ary addObject:e];
         
-        e = [SoundWrapper soundWrapperWithEventType:GROWL_FILE_SEND_ERROR];
+        e = [SoundWrapper soundWrapperWithEventType:USER_NOTIFICATION_FILE_SEND_ERROR];
         [ary addObject:e];
         
         sounds = ary;

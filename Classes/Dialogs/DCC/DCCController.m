@@ -551,8 +551,8 @@
     [self reloadReceiverTable];
     [self updateTimer];
     
-    [world notifyOnGrowl:GROWL_FILE_RECEIVE_ERROR title:sender.peerNick desc:sender.fileName context:nil];
-    [SoundPlayer play:[Preferences soundForEvent:GROWL_FILE_RECEIVE_ERROR]];
+    [world sendUserNotification:USER_NOTIFICATION_FILE_RECEIVE_ERROR title:sender.peerNick desc:sender.fileName context:nil];
+    [SoundPlayer play:[Preferences soundForEvent:USER_NOTIFICATION_FILE_RECEIVE_ERROR]];
 }
 
 - (void)dccReceiveOnComplete:(DCCReceiver*)sender
@@ -563,8 +563,8 @@
     [self reloadReceiverTable];
     [self updateTimer];
     
-    [world notifyOnGrowl:GROWL_FILE_RECEIVE_SUCCESS title:sender.peerNick desc:sender.fileName context:nil];
-    [SoundPlayer play:[Preferences soundForEvent:GROWL_FILE_RECEIVE_SUCCESS]];
+    [world sendUserNotification:USER_NOTIFICATION_FILE_RECEIVE_SUCCESS title:sender.peerNick desc:sender.fileName context:nil];
+    [SoundPlayer play:[Preferences soundForEvent:USER_NOTIFICATION_FILE_RECEIVE_SUCCESS]];
 }
 
 #pragma mark -
@@ -626,8 +626,8 @@
     [self reloadSenderTable];
     [self updateTimer];
     
-    [world notifyOnGrowl:GROWL_FILE_SEND_ERROR title:sender.peerNick desc:sender.fileName context:nil];
-    [SoundPlayer play:[Preferences soundForEvent:GROWL_FILE_SEND_ERROR]];
+    [world sendUserNotification:USER_NOTIFICATION_FILE_SEND_ERROR title:sender.peerNick desc:sender.fileName context:nil];
+    [SoundPlayer play:[Preferences soundForEvent:USER_NOTIFICATION_FILE_SEND_ERROR]];
 }
 
 - (void)dccSenderOnComplete:(DCCSender*)sender
@@ -638,8 +638,8 @@
     [self reloadSenderTable];
     [self updateTimer];
     
-    [world notifyOnGrowl:GROWL_FILE_SEND_SUCCESS title:sender.peerNick desc:sender.fileName context:nil];
-    [SoundPlayer play:[Preferences soundForEvent:GROWL_FILE_SEND_SUCCESS]];
+    [world sendUserNotification:USER_NOTIFICATION_FILE_SEND_SUCCESS title:sender.peerNick desc:sender.fileName context:nil];
+    [SoundPlayer play:[Preferences soundForEvent:USER_NOTIFICATION_FILE_SEND_SUCCESS]];
 }
 
 #pragma mark -

@@ -8,7 +8,7 @@
 
 @implementation SoundWrapper
 
-- (id)initWithEventType:(GrowlNotificationType)aEventType
+- (id)initWithEventType:(UserNotificationType)aEventType
 {
     self = [super init];
     if (self) {
@@ -17,7 +17,7 @@
     return self;
 }
 
-+ (SoundWrapper*)soundWrapperWithEventType:(GrowlNotificationType)eventType
++ (SoundWrapper*)soundWrapperWithEventType:(UserNotificationType)eventType
 {
     return [[[SoundWrapper alloc] initWithEventType:eventType] autorelease];
 }

@@ -29,7 +29,7 @@
 
 @synthesize app;
 @synthesize window;
-@synthesize growl;
+@synthesize notifier;
 @synthesize tree;
 @synthesize text;
 @synthesize logBase;
@@ -341,12 +341,54 @@
     }
 }
 
-- (void)notifyOnGrowl:(GrowlNotificationType)type title:(NSString*)title desc:(NSString*)desc context:(id)context
+#pragma mark -
+#pragma mark User Notification
+
+- (void)sendUserNotification:(UserNotificationType)type title:(NSString*)title desc:(NSString*)desc context:(id)context
 {
     if ([Preferences stopGrowlOnActive] && [NSApp isActive]) return;
     if (![Preferences growlEnabledForEvent:type]) return;
     
-    [growl notify:type title:title desc:desc context:context];
+    [notifier notify:type title:title desc:desc context:context];
+}
+
+- (void)notificationControllerDidActivateNotification:(id)context
+{
+    LOG(@"### clicked: %@", context);
+
+    [window makeKeyAndOrderFront:nil];
+	[NSApp activateIgnoringOtherApps:YES];
+
+	if ([context isKindOfClass:[NSString class]]) {
+        if ([context isEqualToString:@"dcc"]) {
+            [self.dcc show:YES];
+        }
+        else {
+            NSString* s = context;
+            NSArray* ary = [s componentsSeparatedByString:@" "];
+            if (ary.count >= 2) {
+                int uid = [ary[0] intValue];
+                int cid = [ary[1] intValue];
+
+                IRCClient* u = [self findClientById:uid];
+                IRCChannel* c = [self findChannelByClientId:uid channelId:cid];
+                if (c) {
+                    [self select:c];
+                }
+                else if (u) {
+                    [self select:u];
+                }
+            }
+            else if (ary.count == 1) {
+                int uid = [ary[0] intValue];
+
+                IRCClient* u = [self findClientById:uid];
+                if (u) {
+                    [self select:u];
+                }
+            }
+        }
+	}
 }
 
 #pragma mark -

@@ -2,7 +2,7 @@
 // You can redistribute it and/or modify it under the terms of the GPL version 2 (see the file GPL.txt).
 
 #import <Cocoa/Cocoa.h>
-#import "GrowlController.h"
+#import "NotificationController.h"
 
 
 typedef enum {
@@ -101,13 +101,13 @@ typedef enum {
 + (NSString*)transcriptFolder;
 + (void)setTranscriptFolder:(NSString*)value;
 
-+ (NSString*)titleForEvent:(GrowlNotificationType)event;
-+ (NSString*)soundForEvent:(GrowlNotificationType)event;
-+ (void)setSound:(NSString*)value forEvent:(GrowlNotificationType)event;
-+ (BOOL)growlEnabledForEvent:(GrowlNotificationType)event;
-+ (void)setGrowlEnabled:(BOOL)value forEvent:(GrowlNotificationType)event;
-+ (BOOL)growlStickyForEvent:(GrowlNotificationType)event;
-+ (void)setGrowlSticky:(BOOL)value forEvent:(GrowlNotificationType)event;
++ (NSString*)titleForEvent:(UserNotificationType)event;
++ (NSString*)soundForEvent:(UserNotificationType)event;
++ (void)setSound:(NSString*)value forEvent:(UserNotificationType)event;
++ (BOOL)growlEnabledForEvent:(UserNotificationType)event;
++ (void)setGrowlEnabled:(BOOL)value forEvent:(UserNotificationType)event;
++ (BOOL)growlStickyForEvent:(UserNotificationType)event;
++ (void)setGrowlSticky:(BOOL)value forEvent:(UserNotificationType)event;
 
 + (BOOL)spellCheckEnabled;
 + (void)setSpellCheckEnabled:(BOOL)value;

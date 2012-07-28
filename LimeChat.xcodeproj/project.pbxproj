@@ -183,6 +183,8 @@
 		789ED3F31193EF4400CFC0B2 /* IgnoreItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 789ED3F21193EF4400CFC0B2 /* IgnoreItem.m */; };
 		789ED4841193F9EB00CFC0B2 /* IgnoreItemSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 789ED4831193F9EB00CFC0B2 /* IgnoreItemSheet.m */; };
 		789ED4B31193FA9E00CFC0B2 /* IgnoreItemSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 789ED4B11193FA9E00CFC0B2 /* IgnoreItemSheet.xib */; };
+		78A3004E15C38FB2003263AA /* UserNotificationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A3004D15C38FB2003263AA /* UserNotificationController.m */; };
+		78A3004F15C38FB2003263AA /* UserNotificationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A3004D15C38FB2003263AA /* UserNotificationController.m */; };
 		78A7B4F61174427C006B324A /* NSData+Kana.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A7B4F51174427C006B324A /* NSData+Kana.m */; };
 		78A7B58711744F12006B324A /* InviteSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A7B58611744F12006B324A /* InviteSheet.m */; };
 		78A7B5DA11745616006B324A /* InviteSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78A7B5D811745616006B324A /* InviteSheet.xib */; };
@@ -291,8 +293,8 @@
 		78A8C21211737F660044E7A1 /* TreeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C1A511737F660044E7A1 /* TreeView.m */; };
 		78AB172715C33374008CD998 /* NumericTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AB172615C33374008CD998 /* NumericTextField.m */; };
 		78AB172815C33374008CD998 /* NumericTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AB172615C33374008CD998 /* NumericTextField.m */; };
-		78AB173315C37287008CD998 /* GrowlController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AB173215C37287008CD998 /* GrowlController.m */; };
-		78AB173415C37287008CD998 /* GrowlController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AB173215C37287008CD998 /* GrowlController.m */; };
+		78AB173315C37287008CD998 /* GrowlNotificationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AB173215C37287008CD998 /* GrowlNotificationController.m */; };
+		78AB173415C37287008CD998 /* GrowlNotificationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AB173215C37287008CD998 /* GrowlNotificationController.m */; };
 		78AD78E40C61B8F8001E77F4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 78AD78E20C61B8F8001E77F4 /* Localizable.strings */; };
 		78B2DF210D0417160092EBDA /* application.icns in Resources */ = {isa = PBXBuildFile; fileRef = 78B2DF1F0D0417160092EBDA /* application.icns */; };
 		78B9B84113F1E677005E1BC8 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78B9B84013F1E677005E1BC8 /* Growl.framework */; };
@@ -407,6 +409,8 @@
 		789ED4821193F9EB00CFC0B2 /* IgnoreItemSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IgnoreItemSheet.h; sourceTree = "<group>"; };
 		789ED4831193F9EB00CFC0B2 /* IgnoreItemSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IgnoreItemSheet.m; sourceTree = "<group>"; };
 		789ED4B21193FA9E00CFC0B2 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/IgnoreItemSheet.xib; sourceTree = "<group>"; };
+		78A3004C15C38FB2003263AA /* UserNotificationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserNotificationController.h; sourceTree = "<group>"; };
+		78A3004D15C38FB2003263AA /* UserNotificationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserNotificationController.m; sourceTree = "<group>"; };
 		78A7B4F41174427C006B324A /* NSData+Kana.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Kana.h"; sourceTree = "<group>"; };
 		78A7B4F51174427C006B324A /* NSData+Kana.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Kana.m"; sourceTree = "<group>"; };
 		78A7B58511744F12006B324A /* InviteSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InviteSheet.h; sourceTree = "<group>"; };
@@ -616,8 +620,8 @@
 		78A8C1A511737F660044E7A1 /* TreeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TreeView.m; sourceTree = "<group>"; };
 		78AB172515C33374008CD998 /* NumericTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NumericTextField.h; sourceTree = "<group>"; };
 		78AB172615C33374008CD998 /* NumericTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NumericTextField.m; sourceTree = "<group>"; };
-		78AB173115C37287008CD998 /* GrowlController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GrowlController.h; sourceTree = "<group>"; };
-		78AB173215C37287008CD998 /* GrowlController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GrowlController.m; sourceTree = "<group>"; };
+		78AB173115C37287008CD998 /* GrowlNotificationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GrowlNotificationController.h; sourceTree = "<group>"; };
+		78AB173215C37287008CD998 /* GrowlNotificationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GrowlNotificationController.m; sourceTree = "<group>"; };
 		78AB173515C373D1008CD998 /* NotificationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationController.h; sourceTree = "<group>"; };
 		78AD78E30C61B8F8001E77F4 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
 		78B2DF1F0D0417160092EBDA /* application.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = application.icns; path = ../icon/application.icns; sourceTree = "<group>"; };
@@ -1117,8 +1121,10 @@
 			isa = PBXGroup;
 			children = (
 				78AB173515C373D1008CD998 /* NotificationController.h */,
-				78AB173115C37287008CD998 /* GrowlController.h */,
-				78AB173215C37287008CD998 /* GrowlController.m */,
+				78A3004C15C38FB2003263AA /* UserNotificationController.h */,
+				78A3004D15C38FB2003263AA /* UserNotificationController.m */,
+				78AB173115C37287008CD998 /* GrowlNotificationController.h */,
+				78AB173215C37287008CD998 /* GrowlNotificationController.m */,
 			);
 			path = Notifications;
 			sourceTree = "<group>";
@@ -1379,7 +1385,8 @@
 				787F49431589809F003AADE2 /* TwitterAvatarURLManager.m in Sources */,
 				787F494815898166003AADE2 /* TwitterImageURLClient.m in Sources */,
 				78AB172815C33374008CD998 /* NumericTextField.m in Sources */,
-				78AB173415C37287008CD998 /* GrowlController.m in Sources */,
+				78AB173415C37287008CD998 /* GrowlNotificationController.m in Sources */,
+				78A3004F15C38FB2003263AA /* UserNotificationController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1503,7 +1510,8 @@
 				787F49421589809F003AADE2 /* TwitterAvatarURLManager.m in Sources */,
 				787F494715898166003AADE2 /* TwitterImageURLClient.m in Sources */,
 				78AB172715C33374008CD998 /* NumericTextField.m in Sources */,
-				78AB173315C37287008CD998 /* GrowlController.m in Sources */,
+				78AB173315C37287008CD998 /* GrowlNotificationController.m in Sources */,
+				78A3004E15C38FB2003263AA /* UserNotificationController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

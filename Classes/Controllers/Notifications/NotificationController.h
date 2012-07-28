@@ -5,29 +5,31 @@
 
 
 typedef enum {
-	GROWL_HIGHLIGHT,
-	GROWL_NEW_TALK,
-	GROWL_CHANNEL_MSG,
-	GROWL_CHANNEL_NOTICE,
-	GROWL_TALK_MSG,
-	GROWL_TALK_NOTICE,
-	GROWL_KICKED,
-	GROWL_INVITED,
-	GROWL_LOGIN,
-	GROWL_DISCONNECT,
-	GROWL_FILE_RECEIVE_REQUEST,
-	GROWL_FILE_RECEIVE_SUCCESS,
-	GROWL_FILE_RECEIVE_ERROR,
-	GROWL_FILE_SEND_SUCCESS,
-	GROWL_FILE_SEND_ERROR,
-	GROWL_COUNT,
-} GrowlNotificationType;
+	USER_NOTIFICATION_HIGHLIGHT,
+	USER_NOTIFICATION_NEW_TALK,
+	USER_NOTIFICATION_CHANNEL_MSG,
+	USER_NOTIFICATION_CHANNEL_NOTICE,
+	USER_NOTIFICATION_TALK_MSG,
+	USER_NOTIFICATION_TALK_NOTICE,
+	USER_NOTIFICATION_KICKED,
+	USER_NOTIFICATION_INVITED,
+	USER_NOTIFICATION_LOGIN,
+	USER_NOTIFICATION_DISCONNECT,
+	USER_NOTIFICATION_FILE_RECEIVE_REQUEST,
+	USER_NOTIFICATION_FILE_RECEIVE_SUCCESS,
+	USER_NOTIFICATION_FILE_RECEIVE_ERROR,
+	USER_NOTIFICATION_FILE_SEND_SUCCESS,
+	USER_NOTIFICATION_FILE_SEND_ERROR,
+	USER_NOTIFICATION_COUNT,
+} UserNotificationType;
+
+
+@protocol NotificationControllerDelegate <NSObject>
+- (void)notificationControllerDidActivateNotification:(id)context;
+@end
 
 
 @protocol NotificationController <NSObject>
-
-@property (nonatomic, weak) id delegate;
-
-- (void)notify:(GrowlNotificationType)type title:(NSString*)title desc:(NSString*)desc context:(id)context;
-
+@property (nonatomic, weak) id<NotificationControllerDelegate> delegate;
+- (void)notify:(UserNotificationType)type title:(NSString*)title desc:(NSString*)desc context:(id)context;
 @end

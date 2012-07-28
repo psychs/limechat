@@ -15,7 +15,7 @@
 #import "ViewTheme.h"
 #import "NickCompletinStatus.h"
 #import "DCCController.h"
-#import "GrowlController.h"
+#import "NotificationController.h"
 #import "WelcomeDialog.h"
 
 
@@ -47,7 +47,7 @@
     IBOutlet NSMenu* chanMenu;
     
     WelcomeDialog* welcomeDialog;
-    GrowlController* growl;
+    id<NotificationController> notifier;
     DCCController* dcc;
     FieldEditorTextView* fieldEditor;
     IRCWorld* world;

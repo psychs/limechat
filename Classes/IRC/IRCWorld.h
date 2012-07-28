@@ -17,18 +17,18 @@
 #import "ViewTheme.h"
 #import "IRCTreeItem.h"
 #import "DCCController.h"
-#import "GrowlController.h"
+#import "NotificationController.h"
 #import "IconController.h"
 
 
 @class AppController;
 
 
-@interface IRCWorld : NSObject <NSOutlineViewDataSource, NSOutlineViewDelegate>
+@interface IRCWorld : NSObject <NSOutlineViewDataSource, NSOutlineViewDelegate, NotificationControllerDelegate>
 {
     __weak AppController* app;
     __weak MainWindow* window;
-    __weak GrowlController* growl;
+    __weak id<NotificationController> notifier;
     IconController* icon;
     __weak ServerTreeView* tree;
     __weak InputTextField* text;
@@ -66,7 +66,7 @@
 
 @property (nonatomic, weak) AppController* app;
 @property (nonatomic, weak) MainWindow* window;
-@property (nonatomic, weak) GrowlController* growl;
+@property (nonatomic, weak) id<NotificationController> notifier;
 @property (nonatomic, weak) ServerTreeView* tree;
 @property (nonatomic, weak) InputTextField* text;
 @property (nonatomic, weak) NSBox* logBase;
@@ -128,7 +128,7 @@
 - (void)updateClientTitle:(IRCClient*)client;
 - (void)updateChannelTitle:(IRCChannel*)channel;
 
-- (void)notifyOnGrowl:(GrowlNotificationType)type title:(NSString*)title desc:(NSString*)desc context:(id)context;
+- (void)sendUserNotification:(UserNotificationType)type title:(NSString*)title desc:(NSString*)desc context:(id)context;
 
 - (void)preferencesChanged;
 - (void)reloadTheme;
