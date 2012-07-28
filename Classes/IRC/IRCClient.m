@@ -27,9 +27,6 @@
 #define CTCP_MIN_INTERVAL   5
 
 
-static NSDateFormatter* dateTimeFormatter;
-
-
 @interface IRCClient (Private)
 - (void)startPongTimer;
 - (void)stopPongTimer;
@@ -94,6 +91,8 @@ static NSDateFormatter* dateTimeFormatter;
 
 - (void)addCommandToCommandQueue:(TimerCommand*)m;
 - (void)clearCommandQueue;
+
++ (NSDateFormatter*)dateTimeFormatter;
 @end
 
 
@@ -3330,7 +3329,7 @@ static NSDateFormatter* dateTimeFormatter;
             long long signOnTime = [signOnStr longLongValue];
             if (signOnTime > 0) {
                 NSDate* date = [NSDate dateWithTimeIntervalSince1970:signOnTime];
-                signOn = [dateTimeFormatter stringFromDate:date];
+                signOn = [[IRCClient dateTimeFormatter] stringFromDate:date];
             }
             
             if (inWhois) {
@@ -3413,7 +3412,7 @@ static NSDateFormatter* dateTimeFormatter;
             long long timeNum = [timeStr longLongValue];
             
             IRCChannel* c = [self findChannel:chname];
-            NSString* text = [NSString stringWithFormat:@"Created at: %@", [dateTimeFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:timeNum]]];
+            NSString* text = [NSString stringWithFormat:@"Created at: %@", [[IRCClient dateTimeFormatter] stringFromDate:[NSDate dateWithTimeIntervalSince1970:timeNum]]];
             [self printBoth:(c ?: (id)chname) type:LINE_TYPE_REPLY text:text receivedAt:m.receivedAt];
             break;
         }
@@ -3463,7 +3462,7 @@ static NSDateFormatter* dateTimeFormatter;
             }
             
             IRCChannel* c = [self findChannel:chname];
-            NSString* text = [NSString stringWithFormat:@"%@ set the topic at: %@", setter, [dateTimeFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:timeNum]]];
+            NSString* text = [NSString stringWithFormat:@"%@ set the topic at: %@", setter, [[IRCClient dateTimeFormatter] stringFromDate:[NSDate dateWithTimeIntervalSince1970:timeNum]]];
             [self printBoth:(c ?: (id)chname) type:LINE_TYPE_REPLY text:text receivedAt:m.receivedAt];
             break;
         }
@@ -3863,19 +3862,18 @@ static NSDateFormatter* dateTimeFormatter;
 }
 
 #pragma mark -
-#pragma mark Init
+#pragma mark Class Method
 
-+ (void)load
++ (NSDateFormatter*)dateTimeFormatter
 {
-    if (self != [IRCClient class]) return;
-    
-    NSAutoreleasePool* pool = [NSAutoreleasePool new];
-    
-    dateTimeFormatter = [NSDateFormatter new];
-    [dateTimeFormatter setDateStyle:NSDateFormatterMediumStyle];
-    [dateTimeFormatter setTimeStyle:NSDateFormatterShortStyle];
-    
-    [pool drain];
+    static NSDateFormatter* dateTimeFormatter = nil;
+
+    if (!dateTimeFormatter) {
+        dateTimeFormatter = [NSDateFormatter new];
+        [dateTimeFormatter setDateStyle:NSDateFormatterMediumStyle];
+        [dateTimeFormatter setTimeStyle:NSDateFormatterShortStyle];
+    }
+    return dateTimeFormatter;
 }
 
 @end

@@ -13,10 +13,6 @@
 #define ICON_SIZE               NSMakeSize(32, 32)
 
 
-static NSMutableParagraphStyle* fileNameStyle;
-static NSMutableParagraphStyle* statusStyle;
-
-
 @interface DCCFileTransferCell (Private)
 - (NSString*)formatSize:(long long)bytes;
 - (NSString*)formatTime:(long long)sec;
@@ -100,7 +96,7 @@ static NSMutableParagraphStyle* statusStyle;
     }
     
     NSDictionary* fnameAttrs = @{
-        NSParagraphStyleAttributeName: fileNameStyle,
+        NSParagraphStyleAttributeName: [DCCFileTransferCell fileNameStyle],
         NSFontAttributeName: [NSFont systemFontOfSize:12],
         NSForegroundColorAttributeName: fnameColor,
     };
@@ -137,7 +133,7 @@ static NSMutableParagraphStyle* statusStyle;
     }
     
     NSDictionary* statusAttrs = @{
-        NSParagraphStyleAttributeName: statusStyle,
+        NSParagraphStyleAttributeName: [DCCFileTransferCell statusStyle],
         NSFontAttributeName: [NSFont systemFontOfSize:11],
         NSForegroundColorAttributeName: statusColor,
     };
@@ -217,21 +213,26 @@ static char* UNITS[] = { "bytes", "KB", "MB", "GB", "TB" };
     }
 }
 
-+ (void)load
++ (NSParagraphStyle*)fileNameStyle
 {
-    if (self != [DCCFileTransferCell class]) return;
-    
-    NSAutoreleasePool* pool = [NSAutoreleasePool new];
-    
-    fileNameStyle = [NSMutableParagraphStyle new];
-    [fileNameStyle setAlignment:NSLeftTextAlignment];
-    [fileNameStyle setLineBreakMode:NSLineBreakByTruncatingMiddle];
-    
-    statusStyle = [NSMutableParagraphStyle new];
-    [statusStyle setAlignment:NSLeftTextAlignment];
-    [statusStyle setLineBreakMode:NSLineBreakByTruncatingTail];
-    
-    [pool drain];
+    static NSMutableParagraphStyle* fileNameStyle = nil;
+    if (!fileNameStyle) {
+        fileNameStyle = [NSMutableParagraphStyle new];
+        [fileNameStyle setAlignment:NSLeftTextAlignment];
+        [fileNameStyle setLineBreakMode:NSLineBreakByTruncatingMiddle];
+    }
+    return fileNameStyle;
+}
+
++ (NSParagraphStyle*)statusStyle
+{
+    static NSMutableParagraphStyle* statusStyle = nil;
+    if (!statusStyle) {
+        statusStyle = [NSMutableParagraphStyle new];
+        [statusStyle setAlignment:NSLeftTextAlignment];
+        [statusStyle setLineBreakMode:NSLineBreakByTruncatingTail];
+    }
+    return statusStyle;
 }
 
 @end

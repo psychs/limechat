@@ -5,23 +5,12 @@
 #import "KeyCodeTranslator.h"
 
 
-#define BUTTON_SIZE     14
-#define NUM(n)          [NSNumber numberWithInt:n]
+#define BUTTON_SIZE 14
 
-
-static NSString* COMMAND = @"⌘";
-static NSString* SHIFT   = @"⇧";
-static NSString* ALT     = @"⌥";
-static NSString* CTRL    = @"⌃";
-
-static NSDictionary* specialKeyMap;
-static NSArray* padKeyArray;
-
-static NSDictionary* placeholderAttribute;
-static NSDictionary* normalAttribute;
-
-static NSImage* eraseButtonImage;
-static NSImage* eraseButtonPushedImage;
+#define COMMAND     @"⌘"
+#define SHIFT       @"⇧"
+#define ALT         @"⌥"
+#define CTRL        @"⌃"
 
 
 @interface KeyRecorder (Private)
@@ -229,7 +218,7 @@ static NSImage* eraseButtonPushedImage;
                 return NO;
             default:
             {
-                NSString* s = specialKeyMap[NUM(k)];
+                NSString* s = [KeyRecorder specialKeyMap][[NSNumber numberWithInt:k]];
                 if (!s) {
                     return YES;
                 }
@@ -239,7 +228,7 @@ static NSImage* eraseButtonPushedImage;
     }
     else if (!ctrl && !shift && !alt && cmd) {
         // cmd
-        if (![padKeyArray containsObject:NUM(k)]) {
+        if (![[KeyRecorder padKeyArray] containsObject:[NSNumber numberWithInt:k]]) {
             return NO;
         }
     }
@@ -287,13 +276,13 @@ static NSImage* eraseButtonPushedImage;
 
 - (NSString*)transformKeyCodeToString:(unsigned int)k
 {
-    NSString* name = specialKeyMap[NUM(k)];
+    NSString* name = [KeyRecorder specialKeyMap][[NSNumber numberWithInt:k]];
     if (name) return name;
     
     NSString* s = [[KeyCodeTranslator sharedInstance] translateKeyCode:k];
     if (!s) return nil;
     
-    BOOL isPadKey = [padKeyArray containsObject:NUM(k)];
+    BOOL isPadKey = [[KeyRecorder padKeyArray] containsObject:[NSNumber numberWithInt:k]];
     NSString* keyString = [s uppercaseString];
     if (isPadKey) {
         keyString = [NSString stringWithFormat:@"#%@", keyString];
@@ -372,19 +361,19 @@ static NSImage* eraseButtonPushedImage;
     
     if (recording) {
         s = @"Type shortcut...";
-        attr = placeholderAttribute;
+        attr = [KeyRecorder placeholderAttribute];
     }
     else if (keyCode) {
         s = [self stringForCurrentKey];
-        attr = normalAttribute;
+        attr = [KeyRecorder normalAttribute];
     }
     
     if (!s) {
         s = @"Click to set shortcut";
-        attr = placeholderAttribute;
+        attr = [KeyRecorder placeholderAttribute];
     }
     if (keyCode && !recording) {
-        button = eraseButtonHighlighted ? eraseButtonPushedImage : eraseButtonImage;
+        button = eraseButtonHighlighted ? [NSImage imageNamed:@"keyrecorder_erase_pushed"] : [NSImage imageNamed:@"keyrecorder_erase"];
     }
     
     NSAttributedString* as = [[[NSAttributedString alloc] initWithString:s attributes:attr] autorelease];
@@ -404,93 +393,112 @@ static NSImage* eraseButtonPushedImage;
     [super drawRect:dirtyRect];
 }
 
-
-
-+ (void)load
++ (NSDictionary*)placeholderAttribute
 {
-    if (self != [KeyRecorder class]) return;
-    
-    NSAutoreleasePool* pool = [NSAutoreleasePool new];
+    static NSDictionary* placeholderAttribute = nil;
+    if (!placeholderAttribute) {
+        NSMutableParagraphStyle* ps = [[NSMutableParagraphStyle new] autorelease];
+        [ps setAlignment:NSCenterTextAlignment];
 
-    specialKeyMap = @{
-        @36: @"↩",
-        @48: @"⇥",
-        @49: @"Space",
-        @51: @"⌫",
-        @53: @"⎋",
-        @64: @"F17",
-        @71: @"Clear",
-        @76: @"⌅",
-        @79: @"F18",
-        @80: @"F19",
-        @96: @"F5",
-        @97: @"F6",
-        @98: @"F7",
-        @99: @"F3",
-        @100: @"F8",
-        @101: @"F9",
-        @103: @"F11",
-        @105: @"F13",
-        @106: @"F16",
-        @107: @"F14",
-        @109: @"F10",
-        @111: @"F12",
-        @113: @"F15",
-        @114: @"Help",
-        @115: @"↖",
-        @116: @"⇞",
-        @117: @"⌦",
-        @118: @"F4",
-        @119: @"↘",
-        @120: @"F2",
-        @121: @"⇟",
-        @122: @"F1",
-        @123: @"←",
-        @124: @"→",
-        @125: @"↓",
-        @126: @"↑",
-    };
-    [specialKeyMap retain];
-    
-    padKeyArray = @[@65, // ,
-                    @67, // *
-                    @69, // +
-                    @75, // /
-                    @78, // -
-                    @81, // =
-                    @82, // 0
-                    @83, // 1
-                    @84, // 2
-                    @85, // 3
-                    @86, // 4
-                    @87, // 5
-                    @88, // 6
-                    @89, // 7
-                    @91, // 8
-                    @92, // 9
-                   ];
-    [padKeyArray retain];
-    
-    NSMutableParagraphStyle* ps = [[NSMutableParagraphStyle new] autorelease];
-    [ps setAlignment:NSCenterTextAlignment];
-    placeholderAttribute = @{
-        NSFontAttributeName: [NSFont systemFontOfSize:12],
-        NSForegroundColorAttributeName: [NSColor colorWithCalibratedWhite:0.4 alpha:1],
-        NSParagraphStyleAttributeName: ps,
-    };
-    [placeholderAttribute retain];
-    
-    normalAttribute = @{
-        NSFontAttributeName: [NSFont systemFontOfSize:12],
-        NSForegroundColorAttributeName: [NSColor blackColor],
-        NSParagraphStyleAttributeName: ps,
-    };
-    [normalAttribute retain];
-    
-    eraseButtonImage = [[NSImage imageNamed:@"keyrecorder_erase.png"] retain];
-    eraseButtonPushedImage = [[NSImage imageNamed:@"keyrecorder_erase_pushed.png"] retain];
-    
-    [pool release];
+        placeholderAttribute = @{
+            NSFontAttributeName: [NSFont systemFontOfSize:12],
+            NSForegroundColorAttributeName: [NSColor colorWithCalibratedWhite:0.4 alpha:1],
+            NSParagraphStyleAttributeName: ps,
+        };
+        [placeholderAttribute retain];
+    }
+    return placeholderAttribute;
+}
+
++ (NSDictionary*)normalAttribute
+{
+    static NSDictionary* normalAttribute = nil;
+    if (!normalAttribute) {
+        NSMutableParagraphStyle* ps = [[NSMutableParagraphStyle new] autorelease];
+        [ps setAlignment:NSCenterTextAlignment];
+
+        normalAttribute = @{
+    NSFontAttributeName: [NSFont systemFontOfSize:12],
+    NSForegroundColorAttributeName: [NSColor blackColor],
+    NSParagraphStyleAttributeName: ps,
+        };
+        [normalAttribute retain];
+    }
+    return normalAttribute;
+}
+
++ (NSDictionary*)specialKeyMap
+{
+    static NSDictionary* specialKeyMap = nil;
+    if (!specialKeyMap) {
+        specialKeyMap = @{
+            @36: @"↩",
+            @48: @"⇥",
+            @49: @"Space",
+            @51: @"⌫",
+            @53: @"⎋",
+            @64: @"F17",
+            @71: @"Clear",
+            @76: @"⌅",
+            @79: @"F18",
+            @80: @"F19",
+            @96: @"F5",
+            @97: @"F6",
+            @98: @"F7",
+            @99: @"F3",
+            @100: @"F8",
+            @101: @"F9",
+            @103: @"F11",
+            @105: @"F13",
+            @106: @"F16",
+            @107: @"F14",
+            @109: @"F10",
+            @111: @"F12",
+            @113: @"F15",
+            @114: @"Help",
+            @115: @"↖",
+            @116: @"⇞",
+            @117: @"⌦",
+            @118: @"F4",
+            @119: @"↘",
+            @120: @"F2",
+            @121: @"⇟",
+            @122: @"F1",
+            @123: @"←",
+            @124: @"→",
+            @125: @"↓",
+            @126: @"↑",
+        };
+        [specialKeyMap retain];
+    }
+    return specialKeyMap;
+}
+
++ (NSArray*)padKeyArray
+{
+    static NSArray* padKeyArray = nil;
+    if (!padKeyArray) {
+        padKeyArray = @[
+            @65, // ,
+            @67, // *
+            @69, // +
+            @75, // /
+            @78, // -
+            @81, // =
+            @82, // 0
+            @83, // 1
+            @84, // 2
+            @85, // 3
+            @86, // 4
+            @87, // 5
+            @88, // 6
+            @89, // 7
+            @91, // 8
+            @92, // 9
+        ];
+        [padKeyArray retain];
+    }
+    return padKeyArray;
 }
 
 @end
