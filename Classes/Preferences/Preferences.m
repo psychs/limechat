@@ -807,10 +807,7 @@ static NSMutableArray* excludeWords;
 #pragma mark -
 #pragma mark KVO
 
-+ (void)observeValueForKeyPath:(NSString*)key
-                      ofObject:(id)object
-                        change:(NSDictionary *)change
-                       context:(void *)context
++ (void)observeValueForKeyPath:(NSString*)key ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if ([key isEqualToString:@"keywords"]) {
         [self loadKeywords];
@@ -843,6 +840,7 @@ static NSMutableArray* excludeWords;
     [d setBool:YES forKey:@"Preferences.General.bounceIconOnEveryPrivateMessage"];
     [d setBool:YES forKey:@"eventHighlightGrowl"];
     [d setBool:YES forKey:@"eventNewtalkGrowl"];
+    [d setBool:YES forKey:@"eventInvited"];
     [d setInt:TAB_COMPLETE_NICK forKey:@"Preferences.General.tab_action"];
     [d setBool:NO forKey:@"Preferences.General.use_hotkey"];
     [d setBool:YES forKey:@"Preferences.Keyword.current_nick"];
