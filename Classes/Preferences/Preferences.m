@@ -840,7 +840,7 @@ static NSMutableArray* excludeWords;
     [d setBool:YES forKey:@"Preferences.General.bounceIconOnEveryPrivateMessage"];
     [d setBool:YES forKey:@"eventHighlightGrowl"];
     [d setBool:YES forKey:@"eventNewtalkGrowl"];
-    [d setBool:YES forKey:@"eventInvited"];
+    [d setBool:YES forKey:@"eventInvitedGrowl"];
     [d setInt:TAB_COMPLETE_NICK forKey:@"Preferences.General.tab_action"];
     [d setBool:NO forKey:@"Preferences.General.use_hotkey"];
     [d setBool:YES forKey:@"Preferences.Keyword.current_nick"];
