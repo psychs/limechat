@@ -1695,7 +1695,6 @@
 		78E570D40C1C306500BDF7EC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = LimeChat.entitlements;
 				CODE_SIGN_IDENTITY = "Developer ID Application: Satoshi Nakagawa";
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = Others/Normal/Info.plist;
@@ -1706,7 +1705,6 @@
 		78E570D50C1C306500BDF7EC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = LimeChat.entitlements;
 				CODE_SIGN_IDENTITY = "Developer ID Application: Satoshi Nakagawa";
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = Others/Normal/Info.plist;
