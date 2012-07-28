@@ -20,6 +20,7 @@
     IBOutlet NSArrayController* excludeWordsArrayController;
     IBOutlet NSPopUpButton* transcriptFolderButton;
     IBOutlet NSPopUpButton* themeButton;
+    IBOutlet NSTableView* soundsTable;
     
     NSMutableArray* sounds;
     NSOpenPanel* transcriptFolderOpenPanel;

@@ -1099,7 +1099,7 @@
 												<int key="NSvFlags">256</int>
 												<string key="NSFrame">{{135, 208}, {230, 26}}</string>
 												<reference key="NSSuperview" ref="706443587"/>
-												<reference key="NSNextKeyView"/>
+												<reference key="NSNextKeyView" ref="460984590"/>
 												<bool key="NSEnabled">YES</bool>
 												<object class="NSPopUpButtonCell" key="NSCell" id="564762133">
 													<int key="NSCellFlags">-2076180416</int>
@@ -1754,7 +1754,7 @@
 												<int key="NSvFlags">268</int>
 												<string key="NSFrame">{{217, 32}, {134, 21}}</string>
 												<reference key="NSSuperview" ref="891492072"/>
-												<reference key="NSNextKeyView"/>
+												<reference key="NSNextKeyView" ref="460984590"/>
 												<bool key="NSEnabled">YES</bool>
 												<object class="NSSliderCell" key="NSCell" id="1069927312">
 													<int key="NSCellFlags">-2080374784</int>
@@ -1904,7 +1904,7 @@
 																		<object class="NSTableHeaderCell" key="NSHeaderCell">
 																			<int key="NSCellFlags">75497536</int>
 																			<int key="NSCellFlags2">2048</int>
-																			<string key="NSContents">Event</string>
+																			<string key="NSContents">Notification</string>
 																			<reference key="NSSupport" ref="26"/>
 																			<object class="NSColor" key="NSBackgroundColor">
 																				<int key="NSColorSpace">3</int>
@@ -1926,13 +1926,13 @@
 																		<reference key="NSTableView" ref="687623475"/>
 																	</object>
 																	<object class="NSTableColumn" id="207865623">
-																		<double key="NSWidth">42</double>
+																		<double key="NSWidth">48</double>
 																		<double key="NSMinWidth">10</double>
 																		<double key="NSMaxWidth">3.4028234663852886e+38</double>
 																		<object class="NSTableHeaderCell" key="NSHeaderCell">
 																			<int key="NSCellFlags">75497536</int>
 																			<int key="NSCellFlags2">134219776</int>
-																			<string key="NSContents">Growl</string>
+																			<string key="NSContents">Enable</string>
 																			<reference key="NSSupport" ref="26"/>
 																			<object class="NSColor" key="NSBackgroundColor" id="846125632">
 																				<int key="NSColorSpace">6</int>
@@ -1996,7 +1996,7 @@
 																	</object>
 																	<object class="NSTableColumn" id="611833304">
 																		<string key="NSIdentifier">sound</string>
-																		<double key="NSWidth">100.2578125</double>
+																		<double key="NSWidth">94.2578125</double>
 																		<double key="NSMinWidth">41.2578125</double>
 																		<double key="NSMaxWidth">1000</double>
 																		<object class="NSTableHeaderCell" key="NSHeaderCell">
@@ -2076,14 +2076,14 @@
 														<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 														<reference key="NSTarget" ref="945477186"/>
 														<string key="NSAction">_doScroller:</string>
-														<double key="NSPercent">0.91228070175438591</double>
+														<double key="NSPercent">0.9157303370786517</double>
 													</object>
 													<object class="NSScroller" id="255446444">
 														<reference key="NSNextResponder" ref="945477186"/>
 														<int key="NSvFlags">-2147483392</int>
 														<string key="NSFrame">{{1, 173}, {403, 15}}</string>
 														<reference key="NSSuperview" ref="945477186"/>
-														<reference key="NSNextKeyView"/>
+														<reference key="NSNextKeyView" ref="460984590"/>
 														<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 														<int key="NSsFlags">1</int>
 														<reference key="NSTarget" ref="945477186"/>
@@ -2123,14 +2123,14 @@
 											<object class="NSButton" id="693983636">
 												<reference key="NSNextResponder" ref="528046259"/>
 												<int key="NSvFlags">268</int>
-												<string key="NSFrame">{{15, 261}, {416, 18}}</string>
+												<string key="NSFrame">{{15, 231}, {409, 18}}</string>
 												<reference key="NSSuperview" ref="528046259"/>
 												<reference key="NSNextKeyView" ref="919145732"/>
 												<bool key="NSEnabled">YES</bool>
 												<object class="NSButtonCell" key="NSCell" id="978918802">
 													<int key="NSCellFlags">-2080374784</int>
 													<int key="NSCellFlags2">0</int>
-													<string key="NSContents">Don't show Growl notifications when the application is active</string>
+													<string key="NSContents">Don't show notifications when the application is active</string>
 													<reference key="NSSupport" ref="325354301"/>
 													<reference key="NSControlView" ref="693983636"/>
 													<int key="NSButtonFlags">1211912448</int>
@@ -2195,7 +2195,7 @@
 											<object class="NSButton" id="919145732">
 												<reference key="NSNextResponder" ref="528046259"/>
 												<int key="NSvFlags">268</int>
-												<string key="NSFrame">{{15, 231}, {345, 18}}</string>
+												<string key="NSFrame">{{15, 261}, {409, 18}}</string>
 												<reference key="NSSuperview" ref="528046259"/>
 												<reference key="NSNextKeyView" ref="945477186"/>
 												<string key="NSReuseIdentifierKey">_NS:771</string>
@@ -2657,7 +2657,6 @@
 												<int key="NSvFlags">268</int>
 												<string key="NSFrame">{{296, 100}, {129, 17}}</string>
 												<reference key="NSSuperview" ref="139671347"/>
-												<reference key="NSNextKeyView"/>
 												<bool key="NSEnabled">YES</bool>
 												<object class="NSTextFieldCell" key="NSCell" id="113361837">
 													<int key="NSCellFlags">68157504</int>
@@ -2898,6 +2897,14 @@
 						<reference key="destination" ref="230708756"/>
 					</object>
 					<int key="connectionID">4445</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">soundsTable</string>
+						<reference key="source" ref="523994250"/>
+						<reference key="destination" ref="687623475"/>
+					</object>
+					<int key="connectionID">4488</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -4488,8 +4495,8 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="976558301"/>
 							<reference ref="945477186"/>
-							<reference ref="693983636"/>
 							<reference ref="623140117"/>
+							<reference ref="693983636"/>
 							<reference ref="919145732"/>
 						</object>
 						<reference key="parent" ref="937542876"/>
@@ -6016,7 +6023,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">4487</int>
+			<int key="maxID">4488</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -6068,6 +6075,7 @@
 							<string>hotKey</string>
 							<string>keywordsArrayController</string>
 							<string>keywordsTable</string>
+							<string>soundsTable</string>
 							<string>themeButton</string>
 							<string>transcriptFolderButton</string>
 						</object>
@@ -6077,6 +6085,7 @@
 							<string>NSTableView</string>
 							<string>KeyRecorder</string>
 							<string>NSArrayController</string>
+							<string>NSTableView</string>
 							<string>NSTableView</string>
 							<string>NSPopUpButton</string>
 							<string>NSPopUpButton</string>
@@ -6091,6 +6100,7 @@
 							<string>hotKey</string>
 							<string>keywordsArrayController</string>
 							<string>keywordsTable</string>
+							<string>soundsTable</string>
 							<string>themeButton</string>
 							<string>transcriptFolderButton</string>
 						</object>
@@ -6114,6 +6124,10 @@
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">keywordsTable</string>
+								<string key="candidateClassName">NSTableView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">soundsTable</string>
 								<string key="candidateClassName">NSTableView</string>
 							</object>
 							<object class="IBToOneOutletInfo">
