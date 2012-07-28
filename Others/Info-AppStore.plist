@@ -38,8 +38,6 @@
 	<string>2.30</string>
 	<key>LCApplicationName</key>
 	<string>LimeChat for Mac</string>
-	<key>LSApplicationCategoryType</key>
-	<string>public.app-category.social-networking</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>10.7.0</string>
 	<key>NSHumanReadableCopyright</key>
@@ -48,5 +46,9 @@
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>LimeChatApplication</string>
+	<key>NSHighResolutionCapable</key>
+	<true/>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.social-networking</string>
 </dict>
 </plist>
