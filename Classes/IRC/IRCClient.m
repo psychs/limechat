@@ -184,6 +184,7 @@ static NSDateFormatter* dateTimeFormatter;
     [nameResolver autorelease];
     [joinMyAddress release];
     [myAddress release];
+    [joiningChannelName release];
     
     [pongTimer stop];
     [pongTimer release];
@@ -1102,6 +1103,17 @@ static NSDateFormatter* dateTimeFormatter;
 - (NSString*)expandVariables:(NSString*)s
 {
     return [s stringByReplacingOccurrencesOfString:@"$nick" withString:myNick];
+}
+
+- (void)sendJoinAndSelect:(NSString*)channelName
+{
+    if (joiningChannelName != channelName) {
+        [joiningChannelName release];
+        joiningChannelName = [channelName retain];
+    }
+
+    joinSentTime = CFAbsoluteTimeGetCurrent();
+    [self send:JOIN, joiningChannelName, nil];
 }
 
 - (BOOL)sendCommand:(NSString*)s
@@ -2739,6 +2751,21 @@ static NSDateFormatter* dateTimeFormatter;
                 }
             }
         }
+
+        if (joiningChannelName) {
+            CFAbsoluteTime now = CFAbsoluteTimeGetCurrent();
+            if (now - joinSentTime < 30) {
+                if ([joiningChannelName isEqualNoCase:chname]) {
+                    [world select:c];
+                    [joiningChannelName release];
+                    joiningChannelName = nil;
+                }
+            }
+            else {
+                [joiningChannelName release];
+                joiningChannelName = nil;
+            }
+        }
     }
     
     if (c) {
@@ -3696,6 +3723,9 @@ static NSDateFormatter* dateTimeFormatter;
     tryingNickNumber = -1;
     [joinMyAddress release];
     joinMyAddress = nil;
+    joinSentTime = 0;
+    [joiningChannelName release];
+    joiningChannelName = nil;
     
     inWhois = NO;
     inList = NO;

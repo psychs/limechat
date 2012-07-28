@@ -65,6 +65,8 @@ typedef enum {
     NSString* myAddress;
     CFAbsoluteTime lastCTCPTime;
     int pongInterval;
+    CFAbsoluteTime joinSentTime;
+    NSString* joiningChannelName;
     
     Timer* pongTimer;
     Timer* quitTimer;
@@ -128,6 +130,7 @@ typedef enum {
 
 - (BOOL)inputText:(NSString*)s command:(NSString*)command;
 - (void)sendText:(NSString*)s command:(NSString*)command channel:(IRCChannel*)channel;
+- (void)sendJoinAndSelect:(NSString*)channelName;
 - (BOOL)sendCommand:(NSString*)s;
 - (BOOL)sendCommand:(NSString*)s completeTarget:(BOOL)completeTarget target:(NSString*)target;
 

@@ -373,7 +373,7 @@
             if (invitedChannelName && clientId) {
                 IRCClient* u = [self findClientById:clientId.intValue];
                 if (u) {
-                    [u send:JOIN, invitedChannelName, nil];
+                    [u sendJoinAndSelect:invitedChannelName];
                 }
             }
             else if (clientId && channelId) {
