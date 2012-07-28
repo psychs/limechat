@@ -23,18 +23,6 @@
 #define KAEGetURL               1196773964
 
 
-@interface NSTextView (NSTextViewCompatibility)
-- (void)setAutomaticSpellingCorrectionEnabled:(BOOL)v;
-- (BOOL)isAutomaticSpellingCorrectionEnabled;
-- (void)setAutomaticDashSubstitutionEnabled:(BOOL)v;
-- (BOOL)isAutomaticDashSubstitutionEnabled;
-- (void)setAutomaticDataDetectionEnabled:(BOOL)v;
-- (BOOL)isAutomaticDataDetectionEnabled;
-- (void)setAutomaticTextReplacementEnabled:(BOOL)v;
-- (BOOL)isAutomaticTextReplacementEnabled;
-@end
-
-
 @implementation AppController
 {
     WelcomeDialog* welcomeDialog;
@@ -105,18 +93,10 @@
     [fieldEditor setSmartInsertDeleteEnabled:[Preferences smartInsertDeleteEnabled]];
     [fieldEditor setAutomaticQuoteSubstitutionEnabled:[Preferences quoteSubstitutionEnabled]];
     [fieldEditor setAutomaticLinkDetectionEnabled:[Preferences linkDetectionEnabled]];
-    if ([fieldEditor respondsToSelector:@selector(setAutomaticSpellingCorrectionEnabled:)]) {
-        [fieldEditor setAutomaticSpellingCorrectionEnabled:[Preferences spellingCorrectionEnabled]];
-    }
-    if ([fieldEditor respondsToSelector:@selector(setAutomaticDashSubstitutionEnabled:)]) {
-        [fieldEditor setAutomaticDashSubstitutionEnabled:[Preferences dashSubstitutionEnabled]];
-    }
-    if ([fieldEditor respondsToSelector:@selector(setAutomaticDataDetectionEnabled:)]) {
-        [fieldEditor setAutomaticDataDetectionEnabled:[Preferences dataDetectionEnabled]];
-    }
-    if ([fieldEditor respondsToSelector:@selector(setAutomaticTextReplacementEnabled:)]) {
-        [fieldEditor setAutomaticTextReplacementEnabled:[Preferences textReplacementEnabled]];
-    }
+    [fieldEditor setAutomaticSpellingCorrectionEnabled:[Preferences spellingCorrectionEnabled]];
+    [fieldEditor setAutomaticDashSubstitutionEnabled:[Preferences dashSubstitutionEnabled]];
+    [fieldEditor setAutomaticDataDetectionEnabled:[Preferences dataDetectionEnabled]];
+    [fieldEditor setAutomaticTextReplacementEnabled:[Preferences textReplacementEnabled]];
     
     [text setFocusRingType:NSFocusRingTypeNone];
     
@@ -307,20 +287,11 @@
     [Preferences setSmartInsertDeleteEnabled:[fieldEditor smartInsertDeleteEnabled]];
     [Preferences setQuoteSubstitutionEnabled:[fieldEditor isAutomaticQuoteSubstitutionEnabled]];
     [Preferences setLinkDetectionEnabled:[fieldEditor isAutomaticLinkDetectionEnabled]];
-    
-    if ([fieldEditor respondsToSelector:@selector(isAutomaticSpellingCorrectionEnabled)]) {
-        [Preferences setSpellingCorrectionEnabled:[fieldEditor isAutomaticSpellingCorrectionEnabled]];
-    }
-    if ([fieldEditor respondsToSelector:@selector(isAutomaticDashSubstitutionEnabled)]) {
-        [Preferences setDashSubstitutionEnabled:[fieldEditor isAutomaticDashSubstitutionEnabled]];
-    }
-    if ([fieldEditor respondsToSelector:@selector(isAutomaticDataDetectionEnabled)]) {
-        [Preferences setDataDetectionEnabled:[fieldEditor isAutomaticDataDetectionEnabled]];
-    }
-    if ([fieldEditor respondsToSelector:@selector(isAutomaticSpellingCorrectionEnabled)]) {
-        [Preferences setTextReplacementEnabled:[fieldEditor isAutomaticTextReplacementEnabled]];
-    }
-    
+    [Preferences setSpellingCorrectionEnabled:[fieldEditor isAutomaticSpellingCorrectionEnabled]];
+    [Preferences setDashSubstitutionEnabled:[fieldEditor isAutomaticDashSubstitutionEnabled]];
+    [Preferences setDataDetectionEnabled:[fieldEditor isAutomaticDataDetectionEnabled]];
+    [Preferences setTextReplacementEnabled:[fieldEditor isAutomaticTextReplacementEnabled]];
+
     [dcc terminate];
     [world terminate];
     [menu terminate];

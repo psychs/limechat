@@ -17,7 +17,7 @@
 #define INLINE_IMAGE_MAX_SIZE   (1024 * 1024)
 
 
-@interface NSScrollView (Private)
+@interface NSScrollView (NSScrollViewCompatibility)
 - (void)setAllowsHorizontalScrolling:(BOOL)value;
 @end
 
