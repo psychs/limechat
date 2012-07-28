@@ -12,11 +12,13 @@ Satoshi Nakagawa <psychs@limechat.net>
 Allan Odgaard              # WebViewAutoScroll and TextMate icon for Limelight theme
 Atsuhisa Shimazawa         # Badges
 Dustin Voss                # AsyncSocket
-Eloy Duran                 # RubyCocoa developer, a patch for bundling RubyCocoa.framework,
-                           # SACrashReporter, GrowlNotifier and refactoring around preferences
+Eloy Duran                 # RubyCocoa developer, a patch for bundling
+                           # RubyCocoa.framework, SACrashReporter, GrowlNotifier
+                           # and refactoring around preferences
 Evan Phoenix               # Inline images support
 Fujimoto Hisa              # RubyCocoa creator
-Josh Goebel                # CocoaSheet, many improvements of code and UIs, Pastie creator
+Josh Goebel                # CocoaSheet, many improvements of code and UIs,
+                           # Pastie creator
 Jun Morimoto               # Bug fixes
 Keiji Yoshimi              # A patch for GrowlNotifier and around hot key
 Kevin Ballard              # Patches around theme support
