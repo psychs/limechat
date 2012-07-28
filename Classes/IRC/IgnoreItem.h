@@ -5,16 +5,6 @@
 
 
 @interface IgnoreItem : NSObject
-{
-    NSString* nick;
-    NSString* text;
-    BOOL useRegexForNick;
-    BOOL useRegexForText;
-    NSArray* channels;
-    
-    NSRegularExpression* nickRegex;
-    NSRegularExpression* textRegex;
-}
 
 @property (nonatomic, strong) NSString* nick;
 @property (nonatomic, strong) NSString* text;

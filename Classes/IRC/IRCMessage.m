@@ -5,12 +5,14 @@
 #import "NSStringHelper.h"
 
 
-@interface IRCMessage (Private)
-- (void)parseLine:(NSString*)line;
-@end
-
-
 @implementation IRCMessage
+{
+    time_t receivedAt;
+    IRCPrefix* sender;
+    NSString* command;
+    int numericReply;
+    NSMutableArray* params;
+}
 
 @synthesize receivedAt;
 @synthesize sender;

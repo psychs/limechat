@@ -20,6 +20,11 @@
 
 
 @implementation IRCISupportInfo
+{
+    unsigned char modes[MODES_SIZE];
+    int nickLen;
+    int modesCount;
+}
 
 @synthesize nickLen;
 @synthesize modesCount;
@@ -228,6 +233,13 @@
 
 
 @implementation IRCModeInfo
+{
+    unsigned char mode;
+    BOOL plus;
+    BOOL op;
+    BOOL simpleMode;
+    NSString* param;
+}
 
 @synthesize mode;
 @synthesize plus;

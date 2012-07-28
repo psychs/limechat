@@ -6,6 +6,13 @@
 
 
 @implementation IRCSendingMessage
+{
+    NSString* command;
+    NSMutableArray* params;
+    int penalty;
+    BOOL completeColon;
+    NSString* string;
+}
 
 @synthesize command;
 @synthesize params;

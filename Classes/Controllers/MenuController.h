@@ -24,31 +24,6 @@
     IBOutlet NSMenuItem* closeWindowItem;
     IBOutlet NSMenuItem* closeCurrentPanelItem;
     IBOutlet NSMenuItem* checkForUpdateItem;
-    
-    __weak AppController* app;
-    __weak IRCWorld* world;
-    __weak MainWindow* window;
-    __weak InputTextField* text;
-    __weak ServerTreeView* tree;
-    __weak MemberListView* memberList;
-    
-    NSString* pointedUrl;
-    NSString* pointedAddress;
-    NSString* pointedNick;
-    NSString* pointedChannelName;
-    
-    id sparkleUpdater;
-    PreferencesController* preferencesController;
-    NSMutableArray* serverDialogs;
-    NSMutableArray* channelDialogs;
-    NickSheet* nickSheet;
-    ModeSheet* modeSheet;
-    TopicSheet* topicSheet;
-    PasteSheet* pasteSheet;
-    InviteSheet* inviteSheet;
-    NSOpenPanel* fileSendPanel;
-    NSArray* fileSendTargets;
-    int fileSendUID;
 }
 
 @property (nonatomic, weak) AppController* app;

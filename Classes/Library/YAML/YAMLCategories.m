@@ -25,6 +25,10 @@ static BOOL yamlClass(id object)
 }
 
 @implementation YAMLWrapper
+{
+    Class tag;
+    id data;
+}
 
 + (id)wrapperWithData:(id)d tag:(Class)cn
 {

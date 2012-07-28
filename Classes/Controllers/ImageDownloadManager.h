@@ -7,10 +7,6 @@
 
 
 @interface ImageDownloadManager : NSObject
-{
-    __weak IRCWorld* world;
-    NSMutableSet* checkers;
-}
 
 @property (nonatomic, weak) IRCWorld* world;
 

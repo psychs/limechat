@@ -7,6 +7,16 @@
 
 
 @implementation IgnoreItem
+{
+    NSString* nick;
+    NSString* text;
+    BOOL useRegexForNick;
+    BOOL useRegexForText;
+    NSArray* channels;
+
+    NSRegularExpression* nickRegex;
+    NSRegularExpression* textRegex;
+}
 
 @synthesize nick;
 @synthesize text;

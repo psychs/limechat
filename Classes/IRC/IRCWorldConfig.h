@@ -5,10 +5,6 @@
 
 
 @interface IRCWorldConfig : NSObject <NSMutableCopying>
-{
-    NSMutableArray* clients;
-    NSMutableArray* autoOp;
-}
 
 @property (nonatomic, readonly) NSMutableArray* clients;
 @property (nonatomic, readonly) NSMutableArray* autoOp;

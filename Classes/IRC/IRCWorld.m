@@ -17,16 +17,45 @@
 #define TREE_DRAG_ITEM_TYPES            @[TREE_DRAG_ITEM_TYPE]
 
 
-@interface IRCWorld (Private)
-- (void)storePreviousSelection;
-- (void)changeInputTextTheme;
-- (void)changeTreeTheme;
-- (void)changeMemberListTheme;
-- (LogController*)createLogWithClient:(IRCClient*)client channel:(IRCChannel*)channel console:(BOOL)console;
-@end
-
-
 @implementation IRCWorld
+{
+    __weak AppController* app;
+    __weak MainWindow* window;
+    __weak id<NotificationController> notifier;
+    IconController* icon;
+    __weak ServerTreeView* tree;
+    __weak InputTextField* text;
+    __weak NSBox* logBase;
+    __weak NSBox* consoleBase;
+    __weak ChatBox* chatBox;
+    __weak FieldEditorTextView* fieldEditor;
+    __weak MemberListView* memberList;
+    __weak MenuController* menuController;
+    __weak DCCController* dcc;
+    __weak ViewTheme* viewTheme;
+    __weak NSMenu* serverMenu;
+    __weak NSMenu* channelMenu;
+    __weak NSMenu* treeMenu;
+    __weak NSMenu* logMenu;
+    __weak NSMenu* consoleMenu;
+    __weak NSMenu* urlMenu;
+    __weak NSMenu* addrMenu;
+    __weak NSMenu* chanMenu;
+    __weak NSMenu* memberMenu;
+
+    LogController* consoleLog;
+    LogController* dummyLog;
+
+    IRCWorldConfig* config;
+    NSMutableArray* clients;
+
+    int itemId;
+    BOOL reloadingTree;
+    IRCTreeItem* selected;
+
+    int previousSelectedClientId;
+    int previousSelectedChannelId;
+}
 
 @synthesize app;
 @synthesize window;

@@ -5,6 +5,13 @@
 
 
 @implementation IRCTreeItem
+{
+    int uid;
+    LogController* log;
+    BOOL isKeyword;
+    BOOL isUnread;
+    BOOL isNewTalk;
+}
 
 @synthesize uid;
 @synthesize log;

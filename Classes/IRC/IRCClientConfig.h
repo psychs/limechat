@@ -13,45 +13,6 @@ typedef enum {
 
 
 @interface IRCClientConfig : NSObject <NSMutableCopying>
-{
-    NSString* name;
-    
-    // connection
-    NSString* host;
-    int port;
-    BOOL useSSL;
-    
-    // user
-    NSString* nick;
-    NSString* password;
-    NSString* username;
-    NSString* realName;
-    NSString* nickPassword;
-    BOOL useSASL;
-    NSMutableArray* altNicks;
-    
-    // proxy
-    ProxyType proxyType;
-    NSString* proxyHost;
-    int proxyPort;
-    NSString* proxyUser;
-    NSString* proxyPassword;
-    
-    // others
-    BOOL autoConnect;
-    NSStringEncoding encoding;
-    NSStringEncoding fallbackEncoding;
-    NSString* leavingComment;
-    NSString* userInfo;
-    BOOL invisibleMode;
-    NSMutableArray* loginCommands;
-    NSMutableArray* channels;
-    NSMutableArray* autoOp;
-    NSMutableArray* ignores;
-    
-    // internal
-    int uid;
-}
 
 @property (nonatomic, strong) NSString* name;
 

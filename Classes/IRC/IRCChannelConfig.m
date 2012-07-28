@@ -6,6 +6,21 @@
 
 
 @implementation IRCChannelConfig
+{
+    ChannelType type;
+
+    NSString* name;
+    NSString* password;
+
+    BOOL autoJoin;
+    BOOL logToConsole;
+    BOOL growl;
+
+    NSString* mode;
+    NSString* topic;
+
+    NSMutableArray* autoOp;
+}
 
 @synthesize type;
 

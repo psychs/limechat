@@ -7,6 +7,10 @@
 
 
 @implementation IRCWorldConfig
+{
+    NSMutableArray* clients;
+    NSMutableArray* autoOp;
+}
 
 @synthesize clients;
 @synthesize autoOp;

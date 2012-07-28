@@ -5,6 +5,11 @@
 
 
 @implementation TimerCommand
+{
+    CFAbsoluteTime time;
+    int cid;
+    NSString* input;
+}
 
 @synthesize time;
 @synthesize cid;

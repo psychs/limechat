@@ -9,12 +9,28 @@
 #import "NSStringHelper.h"
 
 
-@interface IRCChannel (Private)
-- (void)closeLogFile;
-@end
-
-
 @implementation IRCChannel
+{
+    __weak IRCClient* client;
+    IRCChannelConfig* config;
+
+    IRCChannelMode* mode;
+    NSMutableArray* members;
+    NSString* topic;
+    NSString* storedTopic;
+    BOOL isActive;
+    BOOL isOp;
+    BOOL isModeInit;
+    BOOL isNamesInit;
+    BOOL isWhoInit;
+
+    BOOL terminating;
+
+    FileLogger* logFile;
+    NSDateComponents* logDate;
+
+    ChannelDialog* propertyDialog;
+}
 
 @synthesize client;
 @synthesize config;
@@ -135,7 +151,7 @@
 
 - (void)preferencesChanged
 {
-    log.maxLines = [Preferences maxLogLines];
+    self.log.maxLines = [Preferences maxLogLines];
     
     if (logFile) {
         if ([Preferences logTranscript]) {
@@ -170,7 +186,7 @@
 
 - (BOOL)print:(LogLine*)line
 {
-    BOOL result = [log print:line];
+    BOOL result = [self.log print:line];
     
     // log
     if (!terminating) {

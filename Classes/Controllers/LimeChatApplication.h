@@ -6,9 +6,6 @@
 
 
 @interface LimeChatApplication : NSApplication
-{
-    HotKeyManager* hotkey;
-}
 
 - (void)registerHotKey:(int)keyCode modifierFlags:(NSUInteger)modFlags;
 - (void)unregisterHotKey;

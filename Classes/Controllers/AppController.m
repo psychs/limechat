@@ -35,16 +35,20 @@
 @end
 
 
-@interface AppController (Private)
-- (void)set3columnLayout:(BOOL)value;
-- (void)loadWindowState;
-- (void)saveWindowState;
-- (void)registerKeyHandlers;
-- (void)prelude;
-@end
-
-
 @implementation AppController
+{
+    WelcomeDialog* welcomeDialog;
+    id<NotificationController> notifier;
+    DCCController* dcc;
+    FieldEditorTextView* fieldEditor;
+    IRCWorld* world;
+    ViewTheme* viewTheme;
+    InputHistory* inputHistory;
+    NickCompletinStatus* completionStatus;
+
+    BOOL threeColumns;
+    BOOL terminating;
+}
 
 - (void)dealloc
 {

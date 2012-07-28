@@ -10,6 +10,10 @@ static ImageDownloadManager* instance;
 
 
 @implementation ImageDownloadManager
+{
+    __weak IRCWorld* world;
+    NSMutableSet* checkers;
+}
 
 @synthesize world;
 

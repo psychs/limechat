@@ -45,18 +45,6 @@
     IBOutlet NSMenu* urlMenu;
     IBOutlet NSMenu* addrMenu;
     IBOutlet NSMenu* chanMenu;
-    
-    WelcomeDialog* welcomeDialog;
-    id<NotificationController> notifier;
-    DCCController* dcc;
-    FieldEditorTextView* fieldEditor;
-    IRCWorld* world;
-    ViewTheme* viewTheme;
-    InputHistory* inputHistory;
-    NickCompletinStatus* completionStatus;
-    
-    BOOL threeColumns;
-    BOOL terminating;
 }
 
 @end

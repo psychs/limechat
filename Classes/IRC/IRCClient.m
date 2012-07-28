@@ -27,76 +27,62 @@
 #define CTCP_MIN_INTERVAL   5
 
 
-@interface IRCClient (Private)
-- (void)startPongTimer;
-- (void)stopPongTimer;
-
-- (void)setKeywordState:(id)target;
-- (void)setNewTalkState:(id)target;
-- (void)setUnreadState:(id)target;
-
-- (void)receivePrivmsgAndNotice:(IRCMessage*)message;
-- (void)receiveJoin:(IRCMessage*)message;
-- (void)receivePart:(IRCMessage*)message;
-- (void)receiveKick:(IRCMessage*)message;
-- (void)receiveQuit:(IRCMessage*)message;
-- (void)receiveKill:(IRCMessage*)message;
-- (void)receiveNick:(IRCMessage*)message;
-- (void)receiveMode:(IRCMessage*)message;
-- (void)receiveTopic:(IRCMessage*)message;
-- (void)receiveInvite:(IRCMessage*)message;
-- (void)receiveError:(IRCMessage*)message;
-- (void)receivePing:(IRCMessage*)message;
-- (void)receiveNumericReply:(IRCMessage*)message;
-
-- (void)receiveInit:(IRCMessage*)message;
-- (void)receiveText:(IRCMessage*)m command:(NSString*)cmd text:(NSString*)text identified:(BOOL)identified;
-- (void)receiveCTCPQuery:(IRCMessage*)message text:(NSString*)text;
-- (void)receiveCTCPReply:(IRCMessage*)message text:(NSString*)text;
-- (void)receiveDCCSend:(IRCMessage*)m fileName:(NSString*)fileName address:(NSString*)address port:(int)port fileSize:(long long)size;
-- (void)receiveErrorNumericReply:(IRCMessage*)message;
-- (void)receiveNickCollisionError:(IRCMessage*)message;
-- (void)tryAnotherNick;
-
-- (NSString*)formatTimestamp:(time_t)global;
-- (void)changeStateOff;
-- (BOOL)printBoth:(id)chan type:(LogLineType)type text:(NSString*)text;
-- (BOOL)printBoth:(id)chan type:(LogLineType)type text:(NSString*)text receivedAt:(time_t)receivedAt;
-- (BOOL)printBoth:(id)chan type:(LogLineType)type nick:(NSString*)nick text:(NSString*)text identified:(BOOL)identified;
-- (BOOL)printBoth:(id)chan type:(LogLineType)type nick:(NSString*)nick text:(NSString*)text identified:(BOOL)identified receivedAt:(time_t)receivedAt;
-- (void)printConsole:(id)chan type:(LogLineType)type text:(NSString*)text receivedAt:(time_t)receivedAt;
-- (void)printConsole:(id)chan type:(LogLineType)type nick:(NSString*)nick text:(NSString*)text identified:(BOOL)identified receivedAt:(time_t)receivedAt;
-- (BOOL)printChannel:(IRCChannel*)channel type:(LogLineType)type text:(NSString*)text receivedAt:(time_t)receivedAt;
-- (BOOL)printChannel:(IRCChannel*)channel type:(LogLineType)type nick:(NSString*)nick text:(NSString*)text identified:(BOOL)identified receivedAt:(time_t)receivedAt;
-- (void)printSystem:(id)channel text:(NSString*)text;
-- (void)printSystem:(id)channel text:(NSString*)text receivedAt:(time_t)receivedAt;
-- (void)printSystemBoth:(id)channel text:(NSString*)text;
-- (void)printSystemBoth:(id)channel text:(NSString*)text receivedAt:(time_t)receivedAt;
-- (void)printReply:(IRCMessage*)m;
-- (void)printUnknownReply:(IRCMessage*)m;
-- (void)printErrorReply:(IRCMessage*)m;
-- (void)printErrorReply:(IRCMessage*)m channel:(IRCChannel*)channel;
-- (void)printError:(NSString*)error;
-
-- (void)notifyText:(UserNotificationType)type target:(id)target nick:(NSString*)nick text:(NSString*)text;
-- (void)notifyEvent:(UserNotificationType)type;
-- (void)notifyEvent:(UserNotificationType)type target:(id)target nick:(NSString*)nick text:(NSString*)text;
-
-- (WhoisDialog*)createWhoisDialogWithNick:(NSString*)nick username:(NSString*)username address:(NSString*)address realname:(NSString*)realname;
-- (WhoisDialog*)findWhoisDialog:(NSString*)nick;
-
-- (void)performAutoJoin;
-- (void)joinChannels:(NSArray*)chans;
-- (void)checkRejoin:(IRCChannel*)c;
-
-- (void)addCommandToCommandQueue:(TimerCommand*)m;
-- (void)clearCommandQueue;
-
-+ (NSDateFormatter*)dateTimeFormatter;
-@end
-
-
 @implementation IRCClient
+{
+    __weak IRCWorld* world;
+    IRCClientConfig* config;
+
+    NSMutableArray* channels;
+    IRCISupportInfo* isupport;
+    IRCUserMode* myMode;
+
+    IRCConnection* conn;
+    int connectDelay;
+    BOOL reconnectEnabled;
+    BOOL retryEnabled;
+
+    BOOL isConnecting;
+    BOOL isConnected;
+    BOOL isLoggedIn;
+    BOOL isQuitting;
+    NSStringEncoding encoding;
+
+    NSString* inputNick;
+    NSString* sentNick;
+    NSString* myNick;
+    int tryingNickNumber;
+
+    NSString* serverHostname;
+    BOOL isRegisteredWithSASL;
+    BOOL registeringToNickServ;
+    BOOL inWhois;
+    BOOL inList;
+    BOOL identifyMsg;
+    BOOL identifyCTCP;
+
+    AddressDetectionType addressDetectionMethod;
+    HostResolver* nameResolver;
+    NSString* joinMyAddress;
+    NSString* myAddress;
+    CFAbsoluteTime lastCTCPTime;
+    int pongInterval;
+    CFAbsoluteTime joinSentTime;
+    NSString* joiningChannelName;
+
+    Timer* pongTimer;
+    Timer* quitTimer;
+    Timer* reconnectTimer;
+    Timer* retryTimer;
+    Timer* autoJoinTimer;
+    Timer* commandQueueTimer;
+    NSMutableArray* commandQueue;
+
+    IRCChannel* lastSelectedChannel;
+
+    NSMutableArray* whoisDialogs;
+    ListDialog* channelListDialog;
+    ServerDialog* propertyDialog;
+}
 
 @synthesize world;
 
@@ -266,7 +252,7 @@
 - (IRCClientConfig*)storedConfig
 {
     IRCClientConfig* u = [[config mutableCopy] autorelease];
-    u.uid = uid;
+    u.uid = self.uid;
     [u.channels removeAllObjects];
     
     for (IRCChannel* c in channels) {
@@ -347,7 +333,7 @@
 
 - (void)preferencesChanged
 {
-    log.maxLines = [Preferences maxLogLines];
+    self.log.maxLines = [Preferences maxLogLines];
     
     if (addressDetectionMethod != [Preferences dccAddressDetectionMethod]) {
         addressDetectionMethod = [Preferences dccAddressDetectionMethod];
@@ -1234,16 +1220,16 @@
         opMsg = YES;
         cmd = NOTICE;
     }
-    else if ([cmd isEqualToString:MSG] || [cmd isEqualToString:M]) {
+    else if ([cmd isEqualToString:MSG] || [cmd isEqualToString:CMD_M]) {
         cmd = PRIVMSG;
     }
     else if ([cmd isEqualToString:LEAVE]) {
         cmd = PART;
     }
-    else if ([cmd isEqualToString:J]) {
+    else if ([cmd isEqualToString:CMD_J]) {
         cmd = JOIN;
     }
-    else if ([cmd isEqualToString:T]) {
+    else if ([cmd isEqualToString:CMD_T]) {
         cmd = TOPIC;
     }
     else if ([cmd isEqualToString:IGNORE] || [cmd isEqualToString:UNIGNORE]) {
@@ -1728,7 +1714,7 @@
         TimerCommand* m = commandQueue[0];
         if (m.time <= now) {
             NSString* target = nil;
-            IRCChannel* c = [world findChannelByClientId:uid channelId:m.cid];
+            IRCChannel* c = [world findChannelByClientId:self.uid channelId:m.cid];
             if (c) {
                 target = c.name;
             }
@@ -1828,7 +1814,7 @@
     NSString* desc = [NSString stringWithFormat:@"<%@> %@", nick, text];
 
     NSMutableDictionary* context = [NSMutableDictionary dictionary];
-    context[USER_NOTIFICATION_CLIENT_ID_KEY] = [NSNumber numberWithInt:uid];
+    context[USER_NOTIFICATION_CLIENT_ID_KEY] = [NSNumber numberWithInt:self.uid];
     if (channel) {
         context[USER_NOTIFICATION_CHANNEL_ID_KEY] = [NSNumber numberWithInt:channel.uid];
     }
@@ -1882,7 +1868,7 @@
     }
 
     NSMutableDictionary* context = [NSMutableDictionary dictionary];
-    context[USER_NOTIFICATION_CLIENT_ID_KEY] = [NSNumber numberWithInt:uid];
+    context[USER_NOTIFICATION_CLIENT_ID_KEY] = [NSNumber numberWithInt:self.uid];
     if (channel) {
         context[USER_NOTIFICATION_CHANNEL_ID_KEY] = [NSNumber numberWithInt:channel.uid];
     }
@@ -2120,10 +2106,10 @@
     }
     
     if (channel) {
-        clickContext = [NSString stringWithFormat:@"channel %d %d", uid, channel.uid];
+        clickContext = [NSString stringWithFormat:@"channel %d %d", self.uid, channel.uid];
     }
     else {
-        clickContext = [NSString stringWithFormat:@"client %d", uid];
+        clickContext = [NSString stringWithFormat:@"client %d", self.uid];
     }
     
     if (type == LINE_TYPE_PRIVMSG || type == LINE_TYPE_ACTION) {
@@ -2235,7 +2221,7 @@
         return [channel print:c];
     }
     else {
-        return [log print:c];
+        return [self.log print:c];
     }
 }
 
@@ -2702,7 +2688,7 @@
                 path = @"~/Desktop";
             }
             
-            [world.dcc addReceiverWithUID:uid nick:nick host:host port:port path:path fileName:fileName size:size];
+            [world.dcc addReceiverWithUID:self.uid nick:nick host:host port:port path:path fileName:fileName size:size];
             
             [self notifyEvent:USER_NOTIFICATION_FILE_RECEIVE_REQUEST target:nil nick:nick text:fileName];
             [SoundPlayer play:[Preferences soundForEvent:USER_NOTIFICATION_FILE_RECEIVE_REQUEST]];

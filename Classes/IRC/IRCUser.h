@@ -5,24 +5,6 @@
 
 
 @interface IRCUser : NSObject
-{
-    NSString* nick;
-    NSString* canonicalNick;
-    NSString* username;
-    NSString* address;
-    BOOL q;
-    BOOL a;
-    BOOL o;
-    BOOL h;
-    BOOL v;
-    
-    BOOL isMyself;
-    int colorNumber;
-    
-    CGFloat incomingWeight;
-    CGFloat outgoingWeight;
-    CFAbsoluteTime lastFadedWeights;
-}
 
 @property (nonatomic, strong) NSString* nick;
 @property (nonatomic, readonly) NSString* canonicalNick;

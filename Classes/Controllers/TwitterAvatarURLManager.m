@@ -6,6 +6,10 @@
 
 
 @implementation TwitterAvatarURLManager
+{
+    NSMutableDictionary* connections;
+    NSMutableDictionary* imageUrls;
+}
 
 - (id)init
 {

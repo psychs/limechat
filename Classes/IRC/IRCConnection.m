@@ -11,13 +11,30 @@
 #define PENALTY_THREASHOLD  5
 
 
-@interface IRCConnection (Private)
-- (void)updateTimer;
-- (void)tryToSend;
-@end
-
-
 @implementation IRCConnection
+{
+    __weak id delegate;
+
+    NSString* host;
+    int port;
+    BOOL useSSL;
+    NSStringEncoding encoding;
+
+    BOOL useSystemSocks;
+    BOOL useSocks;
+    int socksVersion;
+    NSString* proxyHost;
+    int proxyPort;
+    NSString* proxyUser;
+    NSString* proxyPassword;
+
+    TCPClient* conn;
+    NSMutableArray* sendQueue;
+    Timer* timer;
+    BOOL sending;
+    int penalty;
+    BOOL loggedIn;
+}
 
 @synthesize delegate;
 

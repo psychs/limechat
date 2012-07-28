@@ -8,12 +8,25 @@
 #define COLOR_NUMBER_MAX    16
 
 
-@interface IRCUser (Private)
-- (void)decayConversation;
-@end
-
-
 @implementation IRCUser
+{
+    NSString* nick;
+    NSString* canonicalNick;
+    NSString* username;
+    NSString* address;
+    BOOL q;
+    BOOL a;
+    BOOL o;
+    BOOL h;
+    BOOL v;
+
+    BOOL isMyself;
+    int colorNumber;
+
+    CGFloat incomingWeight;
+    CGFloat outgoingWeight;
+    CFAbsoluteTime lastFadedWeights;
+}
 
 @synthesize nick;
 @synthesize canonicalNick;

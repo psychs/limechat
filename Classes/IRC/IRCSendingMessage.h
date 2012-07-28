@@ -5,13 +5,6 @@
 
 
 @interface IRCSendingMessage : NSObject
-{
-    NSString* command;
-    NSMutableArray* params;
-    int penalty;
-    BOOL completeColon;
-    NSString* string;
-}
 
 @property (nonatomic, readonly) NSString* command;
 @property (nonatomic, readonly) NSMutableArray* params;
