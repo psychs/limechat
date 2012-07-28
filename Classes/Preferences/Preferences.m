@@ -6,6 +6,10 @@
 #import "NSDictionaryHelper.h"
 
 
+static NSMutableArray* keywords;
+static NSMutableArray* excludeWords;
+
+
 @implementation Preferences
 
 + (DCCActionType)dccAction
@@ -716,9 +720,6 @@
 
 #pragma mark -
 #pragma mark Keywords
-
-static NSMutableArray* keywords;
-static NSMutableArray* excludeWords;
 
 + (void)loadKeywords
 {
