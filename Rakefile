@@ -22,6 +22,7 @@ task :default => :build
 
 task :clean do |t|
   sh "rm -rf build"
+  sh "xcodebuild clean"
 end
 
 task :build do |t|
