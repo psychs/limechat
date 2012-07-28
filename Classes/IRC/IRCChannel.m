@@ -289,7 +289,6 @@
     
     m.nick = toNick;
     
-    [[members[n] retain] autorelease];
     [members removeObjectAtIndex:n];
     [self sortedInsert:m];
     
