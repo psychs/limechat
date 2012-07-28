@@ -910,6 +910,7 @@
 		78A8C10C11737F660044E7A1 /* IRC */ = {
 			isa = PBXGroup;
 			children = (
+				78A8C10D11737F660044E7A1 /* IRC.h */,
 				78A8C12811737F660044E7A1 /* IRCWorld.h */,
 				78A8C12911737F660044E7A1 /* IRCWorld.m */,
 				78A8C11411737F660044E7A1 /* IRCClient.h */,
@@ -944,7 +945,6 @@
 				789ED3F21193EF4400CFC0B2 /* IgnoreItem.m */,
 				78A8C12C11737F660044E7A1 /* TimerCommand.h */,
 				78A8C12D11737F660044E7A1 /* TimerCommand.m */,
-				78A8C10D11737F660044E7A1 /* IRC.h */,
 			);
 			name = IRC;
 			path = Classes/IRC;
