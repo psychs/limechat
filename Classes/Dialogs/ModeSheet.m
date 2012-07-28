@@ -4,12 +4,13 @@
 #import "ModeSheet.h"
 
 
-@interface ModeSheet (Private)
-- (void)updateTextFields;
-@end
-
-
 @implementation ModeSheet
+{
+    IRCChannelMode* mode;
+    NSString* channelName;
+    int uid;
+    int cid;
+}
 
 @synthesize mode;
 @synthesize channelName;
@@ -112,8 +113,8 @@
         mode.l = 0;
     }
     
-    if ([delegate respondsToSelector:@selector(modeSheetOnOK:)]) {
-        [delegate modeSheetOnOK:self];
+    if ([self.delegate respondsToSelector:@selector(modeSheetOnOK:)]) {
+        [self.delegate modeSheetOnOK:self];
     }
     
     [super ok:sender];
@@ -124,8 +125,8 @@
 
 - (void)windowWillClose:(NSNotification*)note
 {
-    if ([delegate respondsToSelector:@selector(modeSheetWillClose:)]) {
-        [delegate modeSheetWillClose:self];
+    if ([self.delegate respondsToSelector:@selector(modeSheetWillClose:)]) {
+        [self.delegate modeSheetWillClose:self];
     }
 }
 

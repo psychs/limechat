@@ -7,8 +7,6 @@
 
 @interface NickSheet : SheetBase
 {
-    int uid;
-    
     IBOutlet NSTextField* currentText;
     IBOutlet NSTextField* newText;
 }

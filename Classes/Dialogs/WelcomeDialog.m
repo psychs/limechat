@@ -6,13 +6,11 @@
 #import "NSStringHelper.h"
 
 
-@interface WelcomeDialog (Private)
-- (void)updateOKButton;
-- (void)tableViewSelectionIsChanging:(NSNotification *)note;
-@end
-
-
 @implementation WelcomeDialog
+{
+    __weak id delegate;
+    NSMutableArray* channels;
+}
 
 @synthesize delegate;
 

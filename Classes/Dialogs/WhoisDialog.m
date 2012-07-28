@@ -12,13 +12,12 @@
 static int windowPlace;
 
 
-@interface WhoisDialog (Private)
-- (void)updateNick;
-- (void)updateChannels;
-@end
-
-
 @implementation WhoisDialog
+{
+    __weak id delegate;
+    NSString* nick;
+    BOOL isOperator;
+}
 
 @synthesize delegate;
 @synthesize isOperator;

@@ -6,10 +6,6 @@
 
 @interface WhoisDialog : NSWindowController
 {
-    __weak id delegate;
-    NSString* nick;
-    BOOL isOperator;
-    
     IBOutlet NSTextField* nickText;
     IBOutlet NSTextField* logInText;
     IBOutlet NSTextField* realnameText;

@@ -6,9 +6,6 @@
 
 
 @interface MainWindow : NSWindow
-{
-    KeyEventHandler* keyHandler;
-}
 
 - (void)setKeyHandlerTarget:(id)target;
 - (void)registerKeyHandler:(SEL)selector key:(int)code modifiers:(NSUInteger)mods;

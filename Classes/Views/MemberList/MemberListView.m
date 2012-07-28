@@ -6,6 +6,15 @@
 
 
 @implementation MemberListView
+{
+    __weak id dropDelegate;
+    OtherTheme* theme;
+
+    NSColor* bgColor;
+    NSColor* topLineColor;
+    NSColor* bottomLineColor;
+    NSGradient* gradient;
+}
 
 @synthesize dropDelegate;
 @synthesize theme;
@@ -50,7 +59,7 @@
 
 - (void)keyDown:(NSEvent *)e
 {
-    if (keyDelegate) {
+    if (self.keyDelegate) {
         int k = [e keyCode];
         NSUInteger m = [e modifierFlags];
         BOOL ctrl = (m & NSControlKeyMask) != 0;
@@ -64,8 +73,8 @@
                 case KEY_LEFT ... KEY_UP:	// cursor keys
                     break;
                 default:
-                    if ([keyDelegate respondsToSelector:@selector(memberListViewKeyDown:)]) {
-                        [keyDelegate memberListViewKeyDown:e];
+                    if ([self.keyDelegate respondsToSelector:@selector(memberListViewKeyDown:)]) {
+                        [self.keyDelegate memberListViewKeyDown:e];
                     }
                     return;
             }

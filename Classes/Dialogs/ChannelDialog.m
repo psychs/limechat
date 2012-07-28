@@ -6,14 +6,16 @@
 #import "NSStringHelper.h"
 
 
-@interface ChannelDialog (Private)
-- (void)load;
-- (void)save;
-- (void)update;
-@end
-
-
 @implementation ChannelDialog
+{
+    __weak id delegate;
+    __weak NSWindow* parentWindow;
+    int uid;
+    int cid;
+    IRCChannelConfig* config;
+
+    BOOL isSheet;
+}
 
 @synthesize delegate;
 @synthesize window;

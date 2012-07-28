@@ -9,25 +9,6 @@
 
 
 @interface PreferencesController : NSWindowController
-{
-    __weak id delegate;
-    
-    IBOutlet KeyRecorder* hotKey;
-    
-    IBOutlet NSTableView* keywordsTable;
-    IBOutlet NSTableView* excludeWordsTable;
-    IBOutlet NSArrayController* keywordsArrayController;
-    IBOutlet NSArrayController* excludeWordsArrayController;
-    IBOutlet NSPopUpButton* transcriptFolderButton;
-    IBOutlet NSPopUpButton* themeButton;
-    IBOutlet NSTableView* soundsTable;
-    
-    NSMutableArray* sounds;
-    NSOpenPanel* transcriptFolderOpenPanel;
-    NSFont* logFont;
-    NSFont* inputFont;
-    BOOL changingLogFont;
-}
 
 @property (nonatomic, weak) id delegate;
 @property (nonatomic, strong) NSString* fontDisplayName;

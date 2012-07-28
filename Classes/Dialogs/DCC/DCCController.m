@@ -16,17 +16,23 @@
 #define TIMER_INTERVAL  1
 
 
-@interface DCCController (Private)
-- (void)reloadReceiverTable;
-- (void)reloadSenderTable;
-- (void)updateClearButton;
-- (void)loadWindowState;
-- (void)saveWindowState;
-- (void)updateTimer;
-@end
-
-
 @implementation DCCController
+{
+    __weak id delegate;
+    __weak IRCWorld* world;
+    __weak NSWindow* mainWindow;
+
+    BOOL loaded;
+    NSMutableArray* receivers;
+    NSMutableArray* senders;
+
+    Timer* timer;
+
+    IBOutlet ListView* receiverTable;
+    IBOutlet ListView* senderTable;
+    IBOutlet ThinSplitView* splitter;
+    IBOutlet NSButton* clearButton;
+}
 
 @synthesize delegate;
 @synthesize world;

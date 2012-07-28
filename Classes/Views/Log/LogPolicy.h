@@ -8,18 +8,6 @@
 
 
 @interface LogPolicy : NSObject
-{
-    __weak MenuController* menuController;
-    NSMenu* menu;
-    NSMenu* urlMenu;
-    NSMenu* addrMenu;
-    NSMenu* memberMenu;
-    NSMenu* chanMenu;
-    NSString* url;
-    NSString* addr;
-    NSString* nick;
-    NSString* chan;
-}
 
 @property (nonatomic, weak) id menuController;
 @property (nonatomic, strong) NSMenu* menu;

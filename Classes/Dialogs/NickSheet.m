@@ -5,6 +5,9 @@
 
 
 @implementation NickSheet
+{
+    int uid;
+}
 
 @synthesize uid;
 
@@ -33,8 +36,8 @@
 
 - (void)ok:(id)sender
 {
-    if ([delegate respondsToSelector:@selector(nickSheet:didInputNick:)]) {
-        [delegate nickSheet:self didInputNick:newText.stringValue];
+    if ([self.delegate respondsToSelector:@selector(nickSheet:didInputNick:)]) {
+        [self.delegate nickSheet:self didInputNick:newText.stringValue];
     }
     
     [super ok:sender];
@@ -45,8 +48,8 @@
 
 - (void)windowWillClose:(NSNotification*)note
 {
-    if ([delegate respondsToSelector:@selector(nickSheetWillClose:)]) {
-        [delegate nickSheetWillClose:self];
+    if ([self.delegate respondsToSelector:@selector(nickSheetWillClose:)]) {
+        [self.delegate nickSheetWillClose:self];
     }
 }
 

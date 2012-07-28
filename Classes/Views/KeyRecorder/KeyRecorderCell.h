@@ -5,6 +5,4 @@
 
 
 @interface KeyRecorderCell : NSCell
-{
-}
 @end

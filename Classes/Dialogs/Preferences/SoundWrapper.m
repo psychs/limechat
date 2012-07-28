@@ -7,6 +7,9 @@
 
 
 @implementation SoundWrapper
+{
+    UserNotificationType eventType;
+}
 
 - (id)initWithEventType:(UserNotificationType)aEventType
 {

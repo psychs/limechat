@@ -14,18 +14,16 @@
 #define TABLE_ROW_TYPES     @[TABLE_ROW_TYPE]
 
 
-@interface ServerDialog (Private)
-- (void)load;
-- (void)save;
-- (void)updateConnectionPage;
-- (void)updateChannelsPage;
-- (void)reloadChannelTable;
-- (void)updateIgnoresPage;
-- (void)reloadIgnoreTable;
-@end
-
-
 @implementation ServerDialog
+{
+    __weak id delegate;
+    __weak NSWindow* parentWindow;
+    int uid;
+    IRCClientConfig* config;
+
+    ChannelDialog* channelSheet;
+    IgnoreItemSheet* ignoreSheet;
+}
 
 @synthesize delegate;
 @synthesize parentWindow;

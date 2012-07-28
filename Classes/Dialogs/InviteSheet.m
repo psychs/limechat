@@ -4,11 +4,11 @@
 #import "InviteSheet.h"
 
 
-@interface InviteSheet (Private)
-@end
-
-
 @implementation InviteSheet
+{
+    NSArray* nicks;
+    int uid;
+}
 
 @synthesize nicks;
 @synthesize uid;
@@ -55,8 +55,8 @@
 {
     NSString* channelName = [[channelPopup selectedItem] title];
     
-    if ([delegate respondsToSelector:@selector(inviteSheet:onSelectChannel:)]) {
-        [delegate inviteSheet:self onSelectChannel:channelName];
+    if ([self.delegate respondsToSelector:@selector(inviteSheet:onSelectChannel:)]) {
+        [self.delegate inviteSheet:self onSelectChannel:channelName];
     }
     
     [self endSheet];
@@ -67,8 +67,8 @@
 
 - (void)windowWillClose:(NSNotification*)note
 {
-    if ([delegate respondsToSelector:@selector(inviteSheetWillClose:)]) {
-        [delegate inviteSheetWillClose:self];
+    if ([self.delegate respondsToSelector:@selector(inviteSheetWillClose:)]) {
+        [self.delegate inviteSheetWillClose:self];
     }
 }
 

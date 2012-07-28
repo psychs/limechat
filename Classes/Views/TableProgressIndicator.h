@@ -5,6 +5,4 @@
 
 
 @interface TableProgressIndicator : NSProgressIndicator
-{
-}
 @end

@@ -5,6 +5,4 @@
 
 
 @interface TextFieldWithDisabledState : NSTextField
-{
-}
 @end

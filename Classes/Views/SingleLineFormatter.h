@@ -5,6 +5,4 @@
 
 
 @interface SingleLineFormatter : NSFormatter
-{
-}
 @end

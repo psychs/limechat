@@ -10,11 +10,6 @@
 
 @interface ServerDialog : NSWindowController
 {
-    __weak id delegate;
-    __weak NSWindow* parentWindow;
-    int uid;
-    IRCClientConfig* config;
-    
     IBOutlet NSTabView* tab;
     
     IBOutlet NSTextField* nameText;
@@ -58,9 +53,6 @@
     IBOutlet NSButton* deleteIgnoreButton;
     
     IBOutlet NSButton* okButton;
-    
-    ChannelDialog* channelSheet;
-    IgnoreItemSheet* ignoreSheet;
 }
 
 @property (nonatomic, weak) id delegate;

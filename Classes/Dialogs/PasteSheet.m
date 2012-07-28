@@ -9,14 +9,20 @@ static NSArray* SYNTAXES;
 static NSDictionary* SYNTAX_EXT_MAP;
 
 
-@interface PasteSheet (Private)
-- (void)setRequesting:(BOOL)value;
-- (int)tagFromSyntax:(NSString*)s;
-- (NSString*)syntaxFromTag:(int)tag;
-@end
-
-
 @implementation PasteSheet
+{
+    NSString* nick;
+    int uid;
+    int cid;
+    NSString* originalText;
+    NSString* syntax;
+    NSString* command;
+    NSSize size;
+    BOOL editMode;
+    BOOL isShortText;
+
+    GistClient* gist;
+}
 
 @synthesize nick;
 @synthesize uid;
@@ -126,8 +132,8 @@ static NSDictionary* SYNTAX_EXT_MAP;
     
     NSString* s = bodyText.string;
     
-    if ([delegate respondsToSelector:@selector(pasteSheet:onPasteText:)]) {
-        [delegate pasteSheet:self onPasteText:s];
+    if ([self.delegate respondsToSelector:@selector(pasteSheet:onPasteText:)]) {
+        [self.delegate pasteSheet:self onPasteText:s];
     }
     
     [self endSheet];
@@ -135,8 +141,8 @@ static NSDictionary* SYNTAX_EXT_MAP;
 
 - (void)cancel:(id)sender
 {
-    if ([delegate respondsToSelector:@selector(pasteSheetOnCancel:)]) {
-        [delegate pasteSheetOnCancel:self];
+    if ([self.delegate respondsToSelector:@selector(pasteSheetOnCancel:)]) {
+        [self.delegate pasteSheetOnCancel:self];
     }
     
     [super cancel:nil];
@@ -199,8 +205,8 @@ static NSDictionary* SYNTAX_EXT_MAP;
     if (url.length) {
         [errorLabel setStringValue:@""];
         
-        if ([delegate respondsToSelector:@selector(pasteSheet:onPasteURL:)]) {
-            [delegate pasteSheet:self onPasteURL:url];
+        if ([self.delegate respondsToSelector:@selector(pasteSheet:onPasteURL:)]) {
+            [self.delegate pasteSheet:self onPasteURL:url];
         }
         
         [self endSheet];
@@ -232,8 +238,8 @@ static NSDictionary* SYNTAX_EXT_MAP;
     NSView* contentView = [sheet contentView];
     size = contentView.frame.size;
     
-    if ([delegate respondsToSelector:@selector(pasteSheetWillClose:)]) {
-        [delegate pasteSheetWillClose:self];
+    if ([self.delegate respondsToSelector:@selector(pasteSheetWillClose:)]) {
+        [self.delegate pasteSheetWillClose:self];
     }
 }
 

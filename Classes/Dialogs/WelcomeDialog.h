@@ -7,9 +7,6 @@
 
 @interface WelcomeDialog : NSWindowController
 {
-    __weak id delegate;
-    NSMutableArray* channels;
-    
     IBOutlet NSTextField* nickText;
     IBOutlet NSComboBox* hostCombo;
     IBOutlet ListView* channelTable;

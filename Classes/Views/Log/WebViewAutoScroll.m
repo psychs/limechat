@@ -5,6 +5,15 @@
 
 
 @implementation WebViewAutoScroll
+{
+    __weak WebFrameView* webFrame;
+    NSRect lastFrame, lastVisibleRect;
+    MarkedScroller* scroller;
+}
+
+@synthesize webFrame;
+@synthesize scroller;
+
 - (void)scrollViewToBottom:(NSView*)aView
 {
     NSRect visibleRect = [aView visibleRect];
@@ -14,7 +23,7 @@
 
 - (void)dealloc
 {
-    self.webFrame = nil;
+    [webFrame release];
     [super dealloc];
 }
 
@@ -85,6 +94,4 @@
     [scroller updateScroller];
 }
 
-@synthesize webFrame;
-@synthesize scroller;
 @end

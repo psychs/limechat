@@ -13,13 +13,23 @@
 #define ICON_SIZE               NSMakeSize(32, 32)
 
 
-@interface DCCFileTransferCell (Private)
-- (NSString*)formatSize:(long long)bytes;
-- (NSString*)formatTime:(long long)sec;
-@end
+static char* UNITS[] = { "bytes", "KB", "MB", "GB", "TB" };
 
 
 @implementation DCCFileTransferCell
+{
+    NSString* peerNick;
+    long long processedSize;
+    long long size;
+    long long speed;
+    long long timeRemaining;
+    DCCFileTransferStatus status;
+    NSString* error;
+
+    NSProgressIndicator* progressBar;
+    NSImage* icon;
+    BOOL sendingItem;
+}
 
 @synthesize peerNick;
 @synthesize processedSize;
@@ -177,8 +187,6 @@
     
     [statusStr drawInRect:statusRect withAttributes:statusAttrs];
 }
-
-static char* UNITS[] = { "bytes", "KB", "MB", "GB", "TB" };
 
 - (NSString*)formatSize:(long long)bytes
 {

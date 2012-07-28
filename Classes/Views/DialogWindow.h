@@ -5,6 +5,4 @@
 
 
 @interface DialogWindow : NSWindow
-{
-}
 @end

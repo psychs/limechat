@@ -9,12 +9,13 @@ static NSString* resourceBasePath;
 static NSString* userBasePath;
 
 
-@interface ViewTheme (Private)
-- (void)load;
-@end
-
-
 @implementation ViewTheme
+{
+    NSString* name;
+    LogTheme* log;
+    OtherTheme* other;
+    CustomJSFile* js;
+}
 
 @synthesize name;
 @synthesize log;

@@ -7,13 +7,19 @@
 #import "MenuController.h"
 
 
-@interface LogPolicy (Private)
-- (void)modifyMemberMenu:(NSMenu*)menu;
-- (void)modifyMemberMenuItem:(NSMenuItem*)item;
-@end
-
-
 @implementation LogPolicy
+{
+    __weak MenuController* menuController;
+    NSMenu* menu;
+    NSMenu* urlMenu;
+    NSMenu* addrMenu;
+    NSMenu* memberMenu;
+    NSMenu* chanMenu;
+    NSString* url;
+    NSString* addr;
+    NSString* nick;
+    NSString* chan;
+}
 
 @synthesize menuController;
 @synthesize menu;

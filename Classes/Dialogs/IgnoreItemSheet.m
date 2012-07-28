@@ -4,13 +4,12 @@
 #import "IgnoreItemSheet.h"
 
 
-@interface IgnoreItemSheet (Private)
-- (void)updateButtons;
-- (void)reloadChannelTable;
-@end
-
-
 @implementation IgnoreItemSheet
+{
+    IgnoreItem* ignore;
+    BOOL newItem;
+    NSMutableArray* channels;
+}
 
 @synthesize ignore;
 @synthesize newItem;
@@ -148,8 +147,8 @@
     // call delegate
     //
     
-    if ([delegate respondsToSelector:@selector(ignoreItemSheetOnOK:)]) {
-        [delegate ignoreItemSheetOnOK:self];
+    if ([self.delegate respondsToSelector:@selector(ignoreItemSheetOnOK:)]) {
+        [self.delegate ignoreItemSheetOnOK:self];
     }
     
     [super ok:sender];
@@ -160,8 +159,8 @@
 
 - (void)windowWillClose:(NSNotification*)note
 {
-    if ([delegate respondsToSelector:@selector(ignoreItemSheetWillClose:)]) {
-        [delegate ignoreItemSheetWillClose:self];
+    if ([self.delegate respondsToSelector:@selector(ignoreItemSheetWillClose:)]) {
+        [self.delegate ignoreItemSheetWillClose:self];
     }
 }
 

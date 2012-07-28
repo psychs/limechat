@@ -4,12 +4,17 @@
 #import "MarkedScroller.h"
 
 
+const static int INSET = 3;
+
+
 @implementation MarkedScroller
+{
+    __weak id dataSource;
+    NSArray* markData;
+}
 
 @synthesize dataSource;
 @synthesize markData;
-
-const static int INSET = 3;
 
 + (BOOL)isCompatibleWithOverlayScrollers
 {

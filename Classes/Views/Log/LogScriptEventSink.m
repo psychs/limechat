@@ -10,12 +10,15 @@
 #define DOUBLE_CLICK_RADIUS     3
 
 
-@interface NSEvent (SnowLeopardCompatibility)
-+ (NSTimeInterval)doubleClickInterval;
-@end
-
-
 @implementation LogScriptEventSink
+{
+    __weak LogController* owner;
+    LogPolicy* policy;
+
+    int x;
+    int y;
+    CFAbsoluteTime lastClickTime;
+}
 
 @synthesize owner;
 @synthesize policy;
@@ -81,21 +84,7 @@
     int cy = [[e valueForKey:@"clientY"] intValue];
     
     BOOL res = NO;
-    
-    CFAbsoluteTime doubleClickThreshold = 0;
-    if ([NSEvent respondsToSelector:@selector(doubleClickInterval)]) {
-        doubleClickThreshold = [NSEvent doubleClickInterval];
-    }
-    else {
-        doubleClickThreshold = 0.5;
-    }
-    
-    /*
-     #ifndef TARGET_APP_STORE
-     doubleClickThreshold = GetDblTime() / 60.0;
-     #endif
-     */
-    
+    CFAbsoluteTime doubleClickThreshold = [NSEvent doubleClickInterval];
     CFAbsoluteTime now = CFAbsoluteTimeGetCurrent();
     if (x-d <= cx && cx <= x+d && y-d <= cy && cy <= y+d) {
         if (now < lastClickTime + doubleClickThreshold) {

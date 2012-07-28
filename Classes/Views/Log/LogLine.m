@@ -5,6 +5,21 @@
 
 
 @implementation LogLine
+{
+    NSString* time;
+    NSString* place;
+    NSString* nick;
+    NSString* body;
+    LogLineType lineType;
+    LogMemberType memberType;
+    NSString* nickInfo;
+    NSString* clickInfo;
+    BOOL identified;
+    int nickColorNumber;
+    NSArray* keywords;
+    NSArray* excludeWords;
+    BOOL useAvatar;
+}
 
 @synthesize time;
 @synthesize place;

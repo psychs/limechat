@@ -22,18 +22,43 @@
 @end
 
 
-@interface LogController (Private)
-- (void)savePosition;
-- (void)restorePosition;
-- (void)setNeedsLimitNumberOfLines;
-- (NSArray*)buildBody:(LogLine*)line;
-- (void)writeLine:(NSString*)str attributes:(NSDictionary*)attrs;
-- (NSString*)initialDocument;
-- (NSString*)defaultCSS;
-@end
-
-
 @implementation LogController
+{
+    LogView* view;
+    LogPolicy* policy;
+    LogScriptEventSink* sink;
+    MarkedScroller* scroller;
+    WebViewAutoScroll* autoScroller;
+
+    __weak IRCWorld* world;
+    __weak IRCClient* client;
+    __weak IRCChannel* channel;
+    NSMenu* menu;
+    NSMenu* urlMenu;
+    NSMenu* addrMenu;
+    NSMenu* chanMenu;
+    NSMenu* memberMenu;
+    ViewTheme* theme;
+    int maxLines;
+    BOOL console;
+    NSColor* initialBackgroundColor;
+
+    BOOL becameVisible;
+    BOOL bottom;
+    BOOL movingToBottom;
+    NSMutableArray* lines;
+    int lineNumber;
+    int count;
+    BOOL needsLimitNumberOfLines;
+    BOOL loaded;
+    NSMutableArray* highlightedLineNumbers;
+    int loadingImages;
+    NSString* prevNickInfo;
+    NSString* html;
+    BOOL scrollBottom;
+    int scrollTop;
+    NSMutableSet *fetchingAvatarScreenNames;
+}
 
 @synthesize view;
 @synthesize world;

@@ -8,11 +8,6 @@
 
 @interface ModeSheet : SheetBase
 {
-    IRCChannelMode* mode;
-    NSString* channelName;
-    int uid;
-    int cid;
-    
     IBOutlet NSButton* sCheck;
     IBOutlet NSButton* pCheck;
     IBOutlet NSButton* nCheck;

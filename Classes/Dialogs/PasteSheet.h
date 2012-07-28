@@ -8,18 +8,6 @@
 
 @interface PasteSheet : SheetBase
 {
-    NSString* nick;
-    int uid;
-    int cid;
-    NSString* originalText;
-    NSString* syntax;
-    NSString* command;
-    NSSize size;
-    BOOL editMode;
-    BOOL isShortText;
-    
-    GistClient* gist;
-    
     IBOutlet NSTextView* bodyText;
     IBOutlet NSButton* pasteOnlineButton;
     IBOutlet NSButton* sendInChannelButton;

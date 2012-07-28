@@ -6,15 +6,14 @@
 #import "NSDictionaryHelper.h"
 
 
-@interface ListDialog (Private)
-- (void)sortedInsert:(NSArray*)item inArray:(NSMutableArray*)ary;
-- (void)reloadTable;
-- (BOOL)loadWindowState;
-- (void)saveWindowState;
-@end
-
-
 @implementation ListDialog
+{
+    __weak id delegate;
+    NSMutableArray* list;
+    NSMutableArray* filteredList;
+    int sortKey;
+    NSComparisonResult sortOrder;
+}
 
 @synthesize delegate;
 @synthesize sortKey;

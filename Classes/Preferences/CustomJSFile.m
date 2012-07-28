@@ -5,6 +5,10 @@
 
 
 @implementation CustomJSFile
+{
+    NSString* fileName;
+    NSString* content;
+}
 
 @synthesize fileName;
 @synthesize content;

@@ -4,11 +4,11 @@
 #import "TopicSheet.h"
 
 
-@interface TopicSheet (Private)
-@end
-
-
 @implementation TopicSheet
+{
+    int uid;
+    int cid;
+}
 
 @synthesize uid;
 @synthesize cid;
@@ -35,8 +35,8 @@
 
 - (void)ok:(id)sender
 {
-    if ([delegate respondsToSelector:@selector(topicSheet:onOK:)]) {
-        [delegate topicSheet:self onOK:[text stringValue]];
+    if ([self.delegate respondsToSelector:@selector(topicSheet:onOK:)]) {
+        [self.delegate topicSheet:self onOK:[text stringValue]];
     }
     
     [super ok:nil];
@@ -47,8 +47,8 @@
 
 - (void)windowWillClose:(NSNotification*)note
 {
-    if ([delegate respondsToSelector:@selector(topicSheetWillClose:)]) {
-        [delegate topicSheetWillClose:self];
+    if ([self.delegate respondsToSelector:@selector(topicSheetWillClose:)]) {
+        [self.delegate topicSheetWillClose:self];
     }
 }
 

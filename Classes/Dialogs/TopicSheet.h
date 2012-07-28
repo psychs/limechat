@@ -7,9 +7,6 @@
 
 @interface TopicSheet : SheetBase
 {
-    int uid;
-    int cid;
-    
     IBOutlet NSTextField* text;
 }
 

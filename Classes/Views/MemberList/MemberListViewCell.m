@@ -15,6 +15,9 @@ static NSMutableParagraphStyle* nickStyle;
 
 
 @implementation MemberListViewCell
+{
+    IRCUser* member;
+}
 
 @synthesize member;
 

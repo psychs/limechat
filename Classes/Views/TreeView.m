@@ -5,6 +5,9 @@
 
 
 @implementation TreeView
+{
+    __weak id keyDelegate;
+}
 
 @synthesize keyDelegate;
 

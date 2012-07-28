@@ -7,12 +7,6 @@
 
 @interface ChannelDialog : NSObject
 {
-    __weak id delegate;
-    __weak NSWindow* parentWindow;
-    int uid;
-    int cid;
-    IRCChannelConfig* config;
-    
     IBOutlet NSWindow* window;
     
     IBOutlet NSTextField* nameText;
@@ -23,8 +17,6 @@
     IBOutlet NSButton* consoleCheck;
     IBOutlet NSButton* growlCheck;
     IBOutlet NSButton* okButton;
-    
-    BOOL isSheet;
 }
 
 @property (nonatomic, weak) id delegate;

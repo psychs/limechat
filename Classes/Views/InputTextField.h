@@ -6,6 +6,4 @@
 
 
 @interface InputTextField : TextField
-{
-}
 @end

@@ -7,9 +7,6 @@
 
 @interface InviteSheet : SheetBase
 {
-    NSArray* nicks;
-    int uid;
-    
     IBOutlet NSTextField* titleLabel;
     IBOutlet NSPopUpButton* channelPopup;
 }

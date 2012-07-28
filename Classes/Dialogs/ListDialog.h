@@ -7,12 +7,6 @@
 
 @interface ListDialog : NSWindowController
 {
-    __weak id delegate;
-    NSMutableArray* list;
-    NSMutableArray* filteredList;
-    int sortKey;
-    NSComparisonResult sortOrder;
-    
     IBOutlet ListView* table;
     IBOutlet NSSearchField* filterText;
     IBOutlet NSButton* updateButton;

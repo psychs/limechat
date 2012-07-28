@@ -5,8 +5,6 @@
 
 
 @interface TextField : NSTextField
-{
-}
 
 - (void)focus;
 

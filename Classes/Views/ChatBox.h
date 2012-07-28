@@ -5,8 +5,6 @@
 
 
 @interface ChatBox : NSBox
-{
-}
 
 - (void)setInputTextFont:(NSFont*)font;
 

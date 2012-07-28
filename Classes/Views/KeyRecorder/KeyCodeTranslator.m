@@ -8,6 +8,10 @@
 
 
 @implementation KeyCodeTranslator
+{
+    TISInputSourceRef layout;
+    const UCKeyboardLayout* layoutData;
+}
 
 - (id)initWithKeyboardLayout:(TISInputSourceRef)aLayout
 {

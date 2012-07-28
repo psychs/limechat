@@ -13,17 +13,16 @@
 #define CTRL        @"⌃"
 
 
-@interface KeyRecorder (Private)
-- (void)clearKey;
-- (void)stopRecording;
-- (NSString*)transformKeyCodeToString:(unsigned int)k;
-- (NSString*)stringForCurrentKey;
-- (NSBezierPath*)borderPath;
-- (NSRect)eraseButtonFrame;
-@end
-
-
 @implementation KeyRecorder
+{
+    __weak id delegate;
+    int keyCode;
+    NSUInteger modifierFlags;
+
+    BOOL recording;
+    BOOL eraseButtonPushed;
+    BOOL eraseButtonHighlighted;
+}
 
 @synthesize delegate, keyCode, modifierFlags;
 

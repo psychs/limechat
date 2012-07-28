@@ -6,9 +6,6 @@
 
 @interface SheetBase : NSObject
 {
-    __weak id delegate;
-    __weak NSWindow* window;
-    
     IBOutlet NSWindow* sheet;
     IBOutlet NSButton* okButton;
     IBOutlet NSButton* cancelButton;
