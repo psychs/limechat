@@ -3037,6 +3037,8 @@ static NSDateFormatter* dateTimeFormatter;
             [world save];
             [self joinChannel:c];
         }
+    } else {
+        [self setKeywordState:self];
     }
     
     [self notifyEvent:USER_NOTIFICATION_INVITED target:nil nick:nick text:chname];
