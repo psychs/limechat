@@ -11,7 +11,7 @@
 	<key>CFBundleIconFile</key>
 	<string>application.icns</string>
 	<key>CFBundleIdentifier</key>
-	<string>${LIMECHAT_BUNDLE_IDENTIFIER}</string>
+	<string>net.limechat.${LIMECHAT_BUNDLE_IDENTIFIER}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -38,14 +38,14 @@
 	<string>2.30</string>
 	<key>LCApplicationName</key>
 	<string>LimeChat for Mac</string>
-	<key>LSMinimumSystemVersion</key>
-	<string>${MACOSX_DEPLOYMENT_TARGET}</string>
-	<key>NSHumanReadableCopyright</key>
-	<string>Copyright 2007-2012 Satoshi Nakagawa</string>
-	<key>NSHighResolutionCapable</key>
-	<true/>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.social-networking</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>${MACOSX_DEPLOYMENT_TARGET}</string>
+	<key>NSHighResolutionCapable</key>
+	<true/>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright 2007-2012 Satoshi Nakagawa</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
