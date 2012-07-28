@@ -357,7 +357,6 @@
     //
     NSString* s = nil;
     NSDictionary* attr = nil;
-    NSImage* button = nil;
     
     if (recording) {
         s = @"Type shortcut...";
@@ -372,19 +371,31 @@
         s = @"Click to set shortcut";
         attr = [KeyRecorder placeholderAttribute];
     }
-    if (keyCode && !recording) {
-        button = eraseButtonHighlighted ? [NSImage imageNamed:@"keyrecorder_erase_pushed"] : [NSImage imageNamed:@"keyrecorder_erase"];
-    }
     
     NSAttributedString* as = [[[NSAttributedString alloc] initWithString:s attributes:attr] autorelease];
     r = NSInsetRect(r, 10, 1);
     r.origin.y -= 2;
     [as drawInRect:r];
-    
-    if (button) {
-        NSRect buttonRect = [self eraseButtonFrame];
-        NSRect sourceRect = NSMakeRect(0, 0, BUTTON_SIZE, BUTTON_SIZE);
-        [button drawInRect:buttonRect fromRect:sourceRect operation:NSCompositeSourceOver fraction:1];
+
+    if (keyCode && !recording) {
+        NSRect circleRect = [self eraseButtonFrame];
+        NSRect xRect = NSInsetRect(circleRect, 4.1, 4.1);
+
+        NSColor* circleColor = eraseButtonHighlighted ? [NSColor grayColor] : [NSColor lightGrayColor];
+        [circleColor set];
+        NSBezierPath* circlePath = [NSBezierPath bezierPath];
+        [circlePath appendBezierPathWithOvalInRect:circleRect];
+        [circlePath fill];
+
+        [[NSColor whiteColor] set];
+        NSBezierPath* linesPath = [NSBezierPath bezierPath];
+        [linesPath setLineCapStyle:NSRoundLineCapStyle];
+        [linesPath setLineWidth:1.5];
+        [linesPath moveToPoint:NSMakePoint(xRect.origin.x, xRect.origin.y)];
+        [linesPath lineToPoint:NSMakePoint(xRect.origin.x + xRect.size.width, xRect.origin.y + xRect.size.height)];
+        [linesPath moveToPoint:NSMakePoint(xRect.origin.x + xRect.size.width, xRect.origin.y)];
+        [linesPath lineToPoint:NSMakePoint(xRect.origin.x, xRect.origin.y + xRect.size.height)];
+        [linesPath stroke];
     }
     
     //

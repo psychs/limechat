@@ -18,8 +18,6 @@
 		782DA85A12DB5A3800C07861 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 78AD78E20C61B8F8001E77F4 /* Localizable.strings */; };
 		782DA85B12DB5A3800C07861 /* application.icns in Resources */ = {isa = PBXBuildFile; fileRef = 78B2DF1F0D0417160092EBDA /* application.icns */; };
 		782DA85C12DB5A3800C07861 /* bluestar.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 784BBE901085BC950080898B /* bluestar.tiff */; };
-		782DA85D12DB5A3800C07861 /* keyrecorder_erase.png in Resources */ = {isa = PBXBuildFile; fileRef = 784BBE911085BC950080898B /* keyrecorder_erase.png */; };
-		782DA85E12DB5A3800C07861 /* keyrecorder_erase_pushed.png in Resources */ = {isa = PBXBuildFile; fileRef = 784BBE921085BC950080898B /* keyrecorder_erase_pushed.png */; };
 		782DA85F12DB5A3800C07861 /* redstar.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 784BBE931085BC950080898B /* redstar.tiff */; };
 		782DA86012DB5A3800C07861 /* AutoOpDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78347EB91158D4B00073E2F0 /* AutoOpDialog.xib */; };
 		782DA86112DB5A3800C07861 /* ChannelDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78347EBB1158D4B00073E2F0 /* ChannelDialog.xib */; };
@@ -172,8 +170,6 @@
 		7835FB921177341D005DC0B4 /* ListDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 7835FB911177341D005DC0B4 /* ListDialog.m */; };
 		783E6ADB1173802100261552 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 783E6AD91173802100261552 /* main.m */; };
 		784BBE941085BC950080898B /* bluestar.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 784BBE901085BC950080898B /* bluestar.tiff */; };
-		784BBE951085BC950080898B /* keyrecorder_erase.png in Resources */ = {isa = PBXBuildFile; fileRef = 784BBE911085BC950080898B /* keyrecorder_erase.png */; };
-		784BBE961085BC950080898B /* keyrecorder_erase_pushed.png in Resources */ = {isa = PBXBuildFile; fileRef = 784BBE921085BC950080898B /* keyrecorder_erase_pushed.png */; };
 		784BBE971085BC950080898B /* redstar.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 784BBE931085BC950080898B /* redstar.tiff */; };
 		787F49421589809F003AADE2 /* TwitterAvatarURLManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 787F49411589809F003AADE2 /* TwitterAvatarURLManager.m */; };
 		787F49431589809F003AADE2 /* TwitterAvatarURLManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 787F49411589809F003AADE2 /* TwitterAvatarURLManager.m */; };
@@ -394,8 +390,6 @@
 		783E6AD61173802100261552 /* LimeChat_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LimeChat_Prefix.pch; sourceTree = "<group>"; };
 		783E6AD91173802100261552 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		784BBE901085BC950080898B /* bluestar.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = bluestar.tiff; sourceTree = "<group>"; };
-		784BBE911085BC950080898B /* keyrecorder_erase.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = keyrecorder_erase.png; sourceTree = "<group>"; };
-		784BBE921085BC950080898B /* keyrecorder_erase_pushed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = keyrecorder_erase_pushed.png; sourceTree = "<group>"; };
 		784BBE931085BC950080898B /* redstar.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = redstar.tiff; sourceTree = "<group>"; };
 		787F49401589809F003AADE2 /* TwitterAvatarURLManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterAvatarURLManager.h; sourceTree = "<group>"; };
 		787F49411589809F003AADE2 /* TwitterAvatarURLManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwitterAvatarURLManager.m; sourceTree = "<group>"; };
@@ -759,8 +753,6 @@
 				78B2DF1F0D0417160092EBDA /* application.icns */,
 				784BBE901085BC950080898B /* bluestar.tiff */,
 				784BBE931085BC950080898B /* redstar.tiff */,
-				784BBE911085BC950080898B /* keyrecorder_erase.png */,
-				784BBE921085BC950080898B /* keyrecorder_erase_pushed.png */,
 			);
 			name = images;
 			path = Resources/images;
@@ -1206,8 +1198,6 @@
 				782DA85A12DB5A3800C07861 /* Localizable.strings in Resources */,
 				782DA85B12DB5A3800C07861 /* application.icns in Resources */,
 				782DA85C12DB5A3800C07861 /* bluestar.tiff in Resources */,
-				782DA85D12DB5A3800C07861 /* keyrecorder_erase.png in Resources */,
-				782DA85E12DB5A3800C07861 /* keyrecorder_erase_pushed.png in Resources */,
 				782DA85F12DB5A3800C07861 /* redstar.tiff in Resources */,
 				782DA86012DB5A3800C07861 /* AutoOpDialog.xib in Resources */,
 				782DA86112DB5A3800C07861 /* ChannelDialog.xib in Resources */,
@@ -1237,8 +1227,6 @@
 				78AD78E40C61B8F8001E77F4 /* Localizable.strings in Resources */,
 				78B2DF210D0417160092EBDA /* application.icns in Resources */,
 				784BBE941085BC950080898B /* bluestar.tiff in Resources */,
-				784BBE951085BC950080898B /* keyrecorder_erase.png in Resources */,
-				784BBE961085BC950080898B /* keyrecorder_erase_pushed.png in Resources */,
 				784BBE971085BC950080898B /* redstar.tiff in Resources */,
 				78347ED31158D4B00073E2F0 /* AutoOpDialog.xib in Resources */,
 				78347ED41158D4B00073E2F0 /* ChannelDialog.xib in Resources */,
