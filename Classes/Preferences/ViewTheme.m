@@ -5,10 +5,6 @@
 #import "Preferences.h"
 
 
-static NSString* resourceBasePath;
-static NSString* userBasePath;
-
-
 @implementation ViewTheme
 {
     NSString* name;
@@ -131,6 +127,7 @@ static NSString* userBasePath;
 
 + (NSString*)resourceBasePath
 {
+    static NSString* resourceBasePath = nil;
     if (!resourceBasePath) {
         resourceBasePath = [[[[[NSBundle mainBundle] resourcePath] stringByDeletingLastPathComponent] stringByAppendingPathComponent:@"Themes"] retain];
     }
@@ -139,6 +136,7 @@ static NSString* userBasePath;
 
 + (NSString*)userBasePath
 {
+    static NSString* userBasePath = nil;
     if (!userBasePath) {
         NSString* applicationSupportPath = NSHomeDirectory();
         NSArray* ary = [[NSFileManager defaultManager] URLsForDirectory:NSApplicationSupportDirectory inDomains:NSUserDomainMask];
