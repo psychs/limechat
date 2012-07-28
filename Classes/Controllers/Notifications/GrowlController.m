@@ -26,6 +26,11 @@
 
 
 @implementation GrowlController
+{
+	__weak IRCWorld* owner;
+	id lastClickedContext;
+	CFAbsoluteTime lastClickedTime;
+}
 
 @synthesize owner;
 

@@ -39,7 +39,6 @@
 		782DA87012DB5A3800C07861 /* InviteSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78A7B5D811745616006B324A /* InviteSheet.xib */; };
 		782DA87112DB5A3800C07861 /* IgnoreItemSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 789ED4B11193FA9E00CFC0B2 /* IgnoreItemSheet.xib */; };
 		782DA87312DB5A3800C07861 /* AppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0C311737F660044E7A1 /* AppController.m */; };
-		782DA87412DB5A3800C07861 /* GrowlController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0C511737F660044E7A1 /* GrowlController.m */; };
 		782DA87512DB5A3800C07861 /* MenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0C711737F660044E7A1 /* MenuController.m */; };
 		782DA87612DB5A3800C07861 /* NickCompletinStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0C911737F660044E7A1 /* NickCompletinStatus.m */; };
 		782DA87712DB5A3800C07861 /* ChannelDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0CC11737F660044E7A1 /* ChannelDialog.m */; };
@@ -188,7 +187,6 @@
 		78A7B58711744F12006B324A /* InviteSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A7B58611744F12006B324A /* InviteSheet.m */; };
 		78A7B5DA11745616006B324A /* InviteSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78A7B5D811745616006B324A /* InviteSheet.xib */; };
 		78A8C1A611737F660044E7A1 /* AppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0C311737F660044E7A1 /* AppController.m */; };
-		78A8C1A711737F660044E7A1 /* GrowlController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0C511737F660044E7A1 /* GrowlController.m */; };
 		78A8C1A811737F660044E7A1 /* MenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0C711737F660044E7A1 /* MenuController.m */; };
 		78A8C1A911737F660044E7A1 /* NickCompletinStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0C911737F660044E7A1 /* NickCompletinStatus.m */; };
 		78A8C1AA11737F660044E7A1 /* ChannelDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0CC11737F660044E7A1 /* ChannelDialog.m */; };
@@ -293,6 +291,8 @@
 		78A8C21211737F660044E7A1 /* TreeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C1A511737F660044E7A1 /* TreeView.m */; };
 		78AB172715C33374008CD998 /* NumericTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AB172615C33374008CD998 /* NumericTextField.m */; };
 		78AB172815C33374008CD998 /* NumericTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AB172615C33374008CD998 /* NumericTextField.m */; };
+		78AB173315C37287008CD998 /* GrowlController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AB173215C37287008CD998 /* GrowlController.m */; };
+		78AB173415C37287008CD998 /* GrowlController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AB173215C37287008CD998 /* GrowlController.m */; };
 		78AD78E40C61B8F8001E77F4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 78AD78E20C61B8F8001E77F4 /* Localizable.strings */; };
 		78B2DF210D0417160092EBDA /* application.icns in Resources */ = {isa = PBXBuildFile; fileRef = 78B2DF1F0D0417160092EBDA /* application.icns */; };
 		78B9B84113F1E677005E1BC8 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78B9B84013F1E677005E1BC8 /* Growl.framework */; };
@@ -414,8 +414,6 @@
 		78A7B5D911745616006B324A /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/InviteSheet.xib; sourceTree = "<group>"; };
 		78A8C0C211737F660044E7A1 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		78A8C0C311737F660044E7A1 /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppController.m; sourceTree = "<group>"; };
-		78A8C0C411737F660044E7A1 /* GrowlController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GrowlController.h; sourceTree = "<group>"; };
-		78A8C0C511737F660044E7A1 /* GrowlController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GrowlController.m; sourceTree = "<group>"; };
 		78A8C0C611737F660044E7A1 /* MenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuController.h; sourceTree = "<group>"; };
 		78A8C0C711737F660044E7A1 /* MenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuController.m; sourceTree = "<group>"; };
 		78A8C0C811737F660044E7A1 /* NickCompletinStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NickCompletinStatus.h; sourceTree = "<group>"; };
@@ -618,6 +616,9 @@
 		78A8C1A511737F660044E7A1 /* TreeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TreeView.m; sourceTree = "<group>"; };
 		78AB172515C33374008CD998 /* NumericTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NumericTextField.h; sourceTree = "<group>"; };
 		78AB172615C33374008CD998 /* NumericTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NumericTextField.m; sourceTree = "<group>"; };
+		78AB173115C37287008CD998 /* GrowlController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GrowlController.h; sourceTree = "<group>"; };
+		78AB173215C37287008CD998 /* GrowlController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GrowlController.m; sourceTree = "<group>"; };
+		78AB173515C373D1008CD998 /* NotificationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationController.h; sourceTree = "<group>"; };
 		78AD78E30C61B8F8001E77F4 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
 		78B2DF1F0D0417160092EBDA /* application.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = application.icns; path = ../icon/application.icns; sourceTree = "<group>"; };
 		78B9B84013F1E677005E1BC8 /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = Frameworks/Growl.framework; sourceTree = "<group>"; };
@@ -764,14 +765,13 @@
 		78A8C0C111737F660044E7A1 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				78AB173015C37287008CD998 /* Notifications */,
 				782FCF871173824C007BE697 /* LimeChatApplication.h */,
 				782FCF881173824C007BE697 /* LimeChatApplication.m */,
 				78A8C0C211737F660044E7A1 /* AppController.h */,
 				78A8C0C311737F660044E7A1 /* AppController.m */,
 				78A8C0C611737F660044E7A1 /* MenuController.h */,
 				78A8C0C711737F660044E7A1 /* MenuController.m */,
-				78A8C0C411737F660044E7A1 /* GrowlController.h */,
-				78A8C0C511737F660044E7A1 /* GrowlController.m */,
 				780844D0134CD34B003BB84C /* ImageDownloadManager.h */,
 				780844D1134CD34B003BB84C /* ImageDownloadManager.m */,
 				78A8C0C811737F660044E7A1 /* NickCompletinStatus.h */,
@@ -1113,6 +1113,16 @@
 			path = MemberList;
 			sourceTree = "<group>";
 		};
+		78AB173015C37287008CD998 /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				78AB173515C373D1008CD998 /* NotificationController.h */,
+				78AB173115C37287008CD998 /* GrowlController.h */,
+				78AB173215C37287008CD998 /* GrowlController.m */,
+			);
+			path = Notifications;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1254,7 +1264,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				782DA87312DB5A3800C07861 /* AppController.m in Sources */,
-				782DA87412DB5A3800C07861 /* GrowlController.m in Sources */,
 				782DA87512DB5A3800C07861 /* MenuController.m in Sources */,
 				782DA87612DB5A3800C07861 /* NickCompletinStatus.m in Sources */,
 				782DA87712DB5A3800C07861 /* ChannelDialog.m in Sources */,
@@ -1370,6 +1379,7 @@
 				787F49431589809F003AADE2 /* TwitterAvatarURLManager.m in Sources */,
 				787F494815898166003AADE2 /* TwitterImageURLClient.m in Sources */,
 				78AB172815C33374008CD998 /* NumericTextField.m in Sources */,
+				78AB173415C37287008CD998 /* GrowlController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1378,7 +1388,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				78A8C1A611737F660044E7A1 /* AppController.m in Sources */,
-				78A8C1A711737F660044E7A1 /* GrowlController.m in Sources */,
 				78A8C1A811737F660044E7A1 /* MenuController.m in Sources */,
 				78A8C1A911737F660044E7A1 /* NickCompletinStatus.m in Sources */,
 				78A8C1AA11737F660044E7A1 /* ChannelDialog.m in Sources */,
@@ -1494,6 +1503,7 @@
 				787F49421589809F003AADE2 /* TwitterAvatarURLManager.m in Sources */,
 				787F494715898166003AADE2 /* TwitterImageURLClient.m in Sources */,
 				78AB172715C33374008CD998 /* NumericTextField.m in Sources */,
+				78AB173315C37287008CD998 /* GrowlController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
