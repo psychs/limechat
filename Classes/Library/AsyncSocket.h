@@ -17,7 +17,7 @@
 extern NSString *const AsyncSocketException;
 extern NSString *const AsyncSocketErrorDomain;
 
-enum AsyncSocketError
+typedef enum AsyncSocketError
 {
     AsyncSocketCFSocketError = kCFSocketError,	// From CFSocketError enum.
     AsyncSocketNoError = 0,						// Never used.
@@ -26,8 +26,7 @@ enum AsyncSocketError
     AsyncSocketReadMaxedOutError,               // Reached set maxLength without completing
     AsyncSocketReadTimeoutError,
     AsyncSocketWriteTimeoutError
-};
-typedef enum AsyncSocketError AsyncSocketError;
+} AsyncSocketError;
 
 @interface NSObject (AsyncSocketDelegate)
 
@@ -151,38 +150,6 @@ typedef enum AsyncSocketError AsyncSocketError;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @interface AsyncSocket : NSObject
-{
-    CFSocketNativeHandle theNativeSocket4;
-    CFSocketNativeHandle theNativeSocket6;
-    
-    CFSocketRef theSocket4;            // IPv4 accept or connect socket
-    CFSocketRef theSocket6;            // IPv6 accept or connect socket
-    
-    CFReadStreamRef theReadStream;
-    CFWriteStreamRef theWriteStream;
-    
-    CFRunLoopSourceRef theSource4;     // For theSocket4
-    CFRunLoopSourceRef theSource6;     // For theSocket6
-    CFRunLoopRef theRunLoop;
-    CFSocketContext theContext;
-    NSArray *theRunLoopModes;
-    
-    NSTimer *theConnectTimer;
-    
-    NSMutableArray *theReadQueue;
-    AsyncReadPacket *theCurrentRead;
-    NSTimer *theReadTimer;
-    NSMutableData *partialReadBuffer;
-    
-    NSMutableArray *theWriteQueue;
-    AsyncWritePacket *theCurrentWrite;
-    NSTimer *theWriteTimer;
-    
-    __weak id theDelegate;
-    UInt16 theFlags;
-    
-    long theUserData;
-}
 
 - (id)init;
 - (id)initWithDelegate:(id)delegate;
@@ -204,9 +171,11 @@ typedef enum AsyncSocketError AsyncSocketError;
 - (void)setUserData:(long)userData;
 
 /* Don't use these to read or write. And don't close them either! */
+/*
 - (CFSocketRef)getCFSocket;
 - (CFReadStreamRef)getCFReadStream;
 - (CFWriteStreamRef)getCFWriteStream;
+*/
 
 // Once one of the accept or connect methods are called, the AsyncSocket instance is locked in
 // and the other accept/connect methods can't be called without disconnecting the socket first.
