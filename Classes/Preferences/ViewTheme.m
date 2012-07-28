@@ -140,12 +140,16 @@ static NSString* userBasePath;
 + (NSString*)userBasePath
 {
     if (!userBasePath) {
-#ifdef TARGET_APP_STORE
-        NSString* bundleId = [[NSBundle mainBundle] bundleIdentifier];
-        userBasePath = [[[NSString stringWithFormat:@"~/Library/Application Support/%@/Themes", bundleId] stringByExpandingTildeInPath] retain];
-#else
-        userBasePath = [[@"~/Library/Application Support/LimeChat/Themes" stringByExpandingTildeInPath] retain];
-#endif
+        NSString* applicationSupportPath = NSHomeDirectory();
+        NSArray* ary = [[NSFileManager defaultManager] URLsForDirectory:NSApplicationSupportDirectory inDomains:NSUserDomainMask];
+        if (ary.count) {
+            applicationSupportPath = [ary[0] path];
+        }
+
+        NSString* path = applicationSupportPath;
+        path = [path stringByAppendingPathComponent:@"LimeChat"];
+        path = [path stringByAppendingPathComponent:@"Themes"];
+        userBasePath = [path retain];
     }
     return userBasePath;
 }

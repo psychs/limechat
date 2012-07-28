@@ -39,7 +39,7 @@
 	<key>LCApplicationName</key>
 	<string>LimeChat for Mac</string>
 	<key>LSMinimumSystemVersion</key>
-	<string>10.7.0</string>
+	<string>${MACOSX_DEPLOYMENT_TARGET}</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright 2007-2012 Satoshi Nakagawa</string>
 	<key>NSMainNibFile</key>

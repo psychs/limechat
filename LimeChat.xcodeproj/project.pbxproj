@@ -171,11 +171,14 @@
 		783E6ADB1173802100261552 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 783E6AD91173802100261552 /* main.m */; };
 		784BBE941085BC950080898B /* bluestar.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 784BBE901085BC950080898B /* bluestar.tiff */; };
 		784BBE971085BC950080898B /* redstar.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 784BBE931085BC950080898B /* redstar.tiff */; };
+		785B006A15C411D7009A2E36 /* container-migration.plist in Resources */ = {isa = PBXBuildFile; fileRef = 785B006915C411D7009A2E36 /* container-migration.plist */; };
+		785B006D15C411E1009A2E36 /* container-migration.plist in Resources */ = {isa = PBXBuildFile; fileRef = 785B006C15C411E1009A2E36 /* container-migration.plist */; };
 		787F49421589809F003AADE2 /* TwitterAvatarURLManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 787F49411589809F003AADE2 /* TwitterAvatarURLManager.m */; };
 		787F49431589809F003AADE2 /* TwitterAvatarURLManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 787F49411589809F003AADE2 /* TwitterAvatarURLManager.m */; };
 		787F494715898166003AADE2 /* TwitterImageURLClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 787F494615898166003AADE2 /* TwitterImageURLClient.m */; };
 		787F494815898166003AADE2 /* TwitterImageURLClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 787F494615898166003AADE2 /* TwitterImageURLClient.m */; };
 		78835406109FEA7F00CD2FFF /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78835405109FEA7F00CD2FFF /* SystemConfiguration.framework */; };
+		788B9A3915C3F0FA00457ADD /* Growl Registration Ticket.growlRegDict in Resources */ = {isa = PBXBuildFile; fileRef = 78B9B86213F1E6EF005E1BC8 /* Growl Registration Ticket.growlRegDict */; };
 		789ED3F31193EF4400CFC0B2 /* IgnoreItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 789ED3F21193EF4400CFC0B2 /* IgnoreItem.m */; };
 		789ED4841193F9EB00CFC0B2 /* IgnoreItemSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 789ED4831193F9EB00CFC0B2 /* IgnoreItemSheet.m */; };
 		789ED4B31193FA9E00CFC0B2 /* IgnoreItemSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 789ED4B11193FA9E00CFC0B2 /* IgnoreItemSheet.xib */; };
@@ -298,7 +301,6 @@
 		78B9B85D13F1E698005E1BC8 /* Growl.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 78B9B84013F1E677005E1BC8 /* Growl.framework */; };
 		78B9B85E13F1E69B005E1BC8 /* Growl.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 78B9B84013F1E677005E1BC8 /* Growl.framework */; };
 		78B9B86313F1E6EF005E1BC8 /* Growl Registration Ticket.growlRegDict in Resources */ = {isa = PBXBuildFile; fileRef = 78B9B86213F1E6EF005E1BC8 /* Growl Registration Ticket.growlRegDict */; };
-		78B9B86413F1E6EF005E1BC8 /* Growl Registration Ticket.growlRegDict in Resources */ = {isa = PBXBuildFile; fileRef = 78B9B86213F1E6EF005E1BC8 /* Growl Registration Ticket.growlRegDict */; };
 		78C2D609115A428C00705817 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 78C2D608115A428C00705817 /* dsa_pub.pem */; };
 		78E572390C1C30BA00BDF7EC /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		78E5723B0C1C30BA00BDF7EC /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 788D56F00BB6872B00DDBF69 /* WebKit.framework */; };
@@ -369,7 +371,7 @@
 		780FF69E11813BC3003C7648 /* CustomJSFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomJSFile.m; sourceTree = "<group>"; };
 		78287EA90D742DAA008D5656 /* Themes */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Themes; path = Resources/Themes; sourceTree = "<group>"; };
 		782DA90012DB5A3800C07861 /* LimeChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LimeChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		782DA90212DB5A3800C07861 /* Info-AppStore.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Info-AppStore.plist"; path = "Others/Info-AppStore.plist"; sourceTree = "<group>"; };
+		782DA90212DB5A3800C07861 /* Info-AppStore.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-AppStore.plist"; sourceTree = "<group>"; };
 		782FCF871173824C007BE697 /* LimeChatApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LimeChatApplication.h; sourceTree = "<group>"; };
 		782FCF881173824C007BE697 /* LimeChatApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LimeChatApplication.m; sourceTree = "<group>"; };
 		78347EBA1158D4B00073E2F0 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/AutoOpDialog.xib; sourceTree = "<group>"; };
@@ -391,6 +393,8 @@
 		783E6AD91173802100261552 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		784BBE901085BC950080898B /* bluestar.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = bluestar.tiff; sourceTree = "<group>"; };
 		784BBE931085BC950080898B /* redstar.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = redstar.tiff; sourceTree = "<group>"; };
+		785B006915C411D7009A2E36 /* container-migration.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "container-migration.plist"; sourceTree = "<group>"; };
+		785B006C15C411E1009A2E36 /* container-migration.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "container-migration.plist"; sourceTree = "<group>"; };
 		787F49401589809F003AADE2 /* TwitterAvatarURLManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterAvatarURLManager.h; sourceTree = "<group>"; };
 		787F49411589809F003AADE2 /* TwitterAvatarURLManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwitterAvatarURLManager.m; sourceTree = "<group>"; };
 		787F494515898166003AADE2 /* TwitterImageURLClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterImageURLClient.h; sourceTree = "<group>"; };
@@ -621,9 +625,10 @@
 		78B2DF1F0D0417160092EBDA /* application.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = application.icns; path = ../icon/application.icns; sourceTree = "<group>"; };
 		78B9B84013F1E677005E1BC8 /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = Frameworks/Growl.framework; sourceTree = "<group>"; };
 		78B9B86213F1E6EF005E1BC8 /* Growl Registration Ticket.growlRegDict */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "Growl Registration Ticket.growlRegDict"; path = "Others/Growl Registration Ticket.growlRegDict"; sourceTree = "<group>"; };
-		78C2D608115A428C00705817 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = dsa_pub.pem; path = etc/dsa_pub.pem; sourceTree = "<group>"; };
-		78C8911B1173806A002EED61 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Others/Info.plist; sourceTree = "<group>"; };
+		78C2D608115A428C00705817 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = dsa_pub.pem; path = ../../etc/dsa_pub.pem; sourceTree = "<group>"; };
+		78C8911B1173806A002EED61 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		78E570D00C1C306500BDF7EC /* LimeChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LimeChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		78F786AD15C3F30D00B7937A /* LimeChat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = LimeChat.entitlements; sourceTree = "<group>"; };
 		78FA9F641085AA1400001F13 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = Frameworks/Sparkle.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -696,9 +701,10 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				785B006B15C411E1009A2E36 /* Normal */,
+				785B006815C411D7009A2E36 /* AppStore */,
 				784BBE8F1085BC950080898B /* images */,
-				78C8911B1173806A002EED61 /* Info.plist */,
-				782DA90212DB5A3800C07861 /* Info-AppStore.plist */,
+				78F786AD15C3F30D00B7937A /* LimeChat.entitlements */,
 				78347EC31158D4B00073E2F0 /* MainMenu.xib */,
 				78347ECB1158D4B00073E2F0 /* Preferences.xib */,
 				78347EC71158D4B00073E2F0 /* NickSheet.xib */,
@@ -715,7 +721,6 @@
 				78347EC11158D4B00073E2F0 /* ListDialog.xib */,
 				78347EB91158D4B00073E2F0 /* AutoOpDialog.xib */,
 				78AD78E20C61B8F8001E77F4 /* Localizable.strings */,
-				78C2D608115A428C00705817 /* dsa_pub.pem */,
 				78B9B86213F1E6EF005E1BC8 /* Growl Registration Ticket.growlRegDict */,
 				78287EA90D742DAA008D5656 /* Themes */,
 			);
@@ -725,9 +730,9 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
 				29B97325FDCFA39411CA2CEA /* Foundation.framework */,
 				29B97324FDCFA39411CA2CEA /* AppKit.framework */,
+				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
 				787FD46C0BFE960100F2F22D /* Carbon.framework */,
 				780253C20C09525900C170D4 /* CoreServices.framework */,
 				788D56F00BB6872B00DDBF69 /* WebKit.framework */,
@@ -756,6 +761,27 @@
 			);
 			name = images;
 			path = Resources/images;
+			sourceTree = "<group>";
+		};
+		785B006815C411D7009A2E36 /* AppStore */ = {
+			isa = PBXGroup;
+			children = (
+				782DA90212DB5A3800C07861 /* Info-AppStore.plist */,
+				785B006915C411D7009A2E36 /* container-migration.plist */,
+			);
+			name = AppStore;
+			path = Others/AppStore;
+			sourceTree = "<group>";
+		};
+		785B006B15C411E1009A2E36 /* Normal */ = {
+			isa = PBXGroup;
+			children = (
+				78C8911B1173806A002EED61 /* Info.plist */,
+				785B006C15C411E1009A2E36 /* container-migration.plist */,
+				78C2D608115A428C00705817 /* dsa_pub.pem */,
+			);
+			name = Normal;
+			path = Others/Normal;
 			sourceTree = "<group>";
 		};
 		78A8C0C111737F660044E7A1 /* Controllers */ = {
@@ -1216,7 +1242,8 @@
 				782DA86F12DB5A3800C07861 /* COPYING in Resources */,
 				782DA87012DB5A3800C07861 /* InviteSheet.xib in Resources */,
 				782DA87112DB5A3800C07861 /* IgnoreItemSheet.xib in Resources */,
-				78B9B86413F1E6EF005E1BC8 /* Growl Registration Ticket.growlRegDict in Resources */,
+				788B9A3915C3F0FA00457ADD /* Growl Registration Ticket.growlRegDict in Resources */,
+				785B006A15C411D7009A2E36 /* container-migration.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1247,6 +1274,7 @@
 				78A7B5DA11745616006B324A /* InviteSheet.xib in Resources */,
 				789ED4B31193FA9E00CFC0B2 /* IgnoreItemSheet.xib in Resources */,
 				78B9B86313F1E6EF005E1BC8 /* Growl Registration Ticket.growlRegDict in Resources */,
+				785B006D15C411E1009A2E36 /* container-migration.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1640,23 +1668,26 @@
 		782DA8FE12DB5A3800C07861 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_ENTITLEMENTS = LimeChat.entitlements;
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Satoshi Nakagawa";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					TARGET_APP_STORE,
 					DEBUG_BUILD,
 				);
-				INFOPLIST_FILE = "Others/Info-AppStore.plist";
+				INFOPLIST_FILE = "Others/AppStore/Info-AppStore.plist";
+				PROVISIONING_PROFILE = "CCD0E816-CAFB-4747-9F7C-06852556940C";
 			};
 			name = Debug;
 		};
 		782DA8FF12DB5A3800C07861 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = LimeChat.entitlements;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Satoshi Nakagawa";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = TARGET_APP_STORE;
-				INFOPLIST_FILE = "Others/Info-AppStore.plist";
+				INFOPLIST_FILE = "Others/AppStore/Info-AppStore.plist";
 				PROVISIONING_PROFILE = "CCD0E816-CAFB-4747-9F7C-06852556940C";
 			};
 			name = Release;
@@ -1664,18 +1695,21 @@
 		78E570D40C1C306500BDF7EC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_ENTITLEMENTS = LimeChat.entitlements;
+				CODE_SIGN_IDENTITY = "Developer ID Application: Satoshi Nakagawa";
 				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = Others/Info.plist;
+				INFOPLIST_FILE = Others/Normal/Info.plist;
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
 		78E570D50C1C306500BDF7EC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = LimeChat.entitlements;
 				CODE_SIGN_IDENTITY = "Developer ID Application: Satoshi Nakagawa";
 				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = Others/Info.plist;
+				INFOPLIST_FILE = Others/Normal/Info.plist;
 				PROVISIONING_PROFILE = "";
 			};
 			name = Release;

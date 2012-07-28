@@ -22,7 +22,7 @@ enum {
     if (self) {
 #ifndef TARGET_APP_STORE
         // migrate from the old .plist
-        CFPreferencesAddSuitePreferencesToApp(kCFPreferencesCurrentApplication, CFSTR("LimeChat"));
+        //CFPreferencesAddSuitePreferencesToApp(kCFPreferencesCurrentApplication, CFSTR("LimeChat"));
 #endif
         
         [Preferences migrate];

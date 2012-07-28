@@ -39,15 +39,17 @@
 	<key>LCApplicationName</key>
 	<string>LimeChat for Mac</string>
 	<key>LSMinimumSystemVersion</key>
-	<string>10.7.0</string>
+	<string>${MACOSX_DEPLOYMENT_TARGET}</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright 2007-2012 Satoshi Nakagawa</string>
+	<key>NSHighResolutionCapable</key>
+	<true/>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.social-networking</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>LimeChatApplication</string>
-	<key>NSHighResolutionCapable</key>
-	<true/>
 	<key>SUEnableAutomaticChecks</key>
 	<true/>
 	<key>SUFeedURL</key>
