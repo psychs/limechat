@@ -58,12 +58,12 @@
 
 - (BOOL)growl
 {
-    return [Preferences growlEnabledForEvent:eventType];
+    return [Preferences userNotificationEnabledForEvent:eventType];
 }
 
 - (void)setGrowl:(BOOL)value
 {
-    [Preferences setGrowlEnabled:value forEvent:eventType];
+    [Preferences setUserNotificationEnabled:value forEvent:eventType];
 }
 
 - (BOOL)growlSticky

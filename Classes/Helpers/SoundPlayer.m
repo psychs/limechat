@@ -8,7 +8,9 @@
 
 + (void)play:(NSString*)name
 {
-    if (!name || !name.length) return;
+    if (!name.length) {
+        return;
+    }
     
     if ([name isEqualToString:@"Beep"]) {
         NSBeep();

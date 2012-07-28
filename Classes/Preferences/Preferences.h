@@ -104,8 +104,8 @@ typedef enum {
 + (NSString*)titleForEvent:(UserNotificationType)event;
 + (NSString*)soundForEvent:(UserNotificationType)event;
 + (void)setSound:(NSString*)value forEvent:(UserNotificationType)event;
-+ (BOOL)growlEnabledForEvent:(UserNotificationType)event;
-+ (void)setGrowlEnabled:(BOOL)value forEvent:(UserNotificationType)event;
++ (BOOL)userNotificationEnabledForEvent:(UserNotificationType)event;
++ (void)setUserNotificationEnabled:(BOOL)value forEvent:(UserNotificationType)event;
 + (BOOL)growlStickyForEvent:(UserNotificationType)event;
 + (void)setGrowlSticky:(BOOL)value forEvent:(UserNotificationType)event;
 

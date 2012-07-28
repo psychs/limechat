@@ -1793,7 +1793,7 @@ static NSDateFormatter* dateTimeFormatter;
 - (void)notifyText:(UserNotificationType)type target:(id)target nick:(NSString*)nick text:(NSString*)text
 {
     if ([Preferences stopGrowlOnActive] && [NSApp isActive]) return;
-    if (![Preferences growlEnabledForEvent:type]) return;
+    if (![Preferences userNotificationEnabledForEvent:type]) return;
     
     IRCChannel* channel = nil;
     NSString* chname = nil;
@@ -1834,7 +1834,7 @@ static NSDateFormatter* dateTimeFormatter;
 - (void)notifyEvent:(UserNotificationType)type target:(id)target nick:(NSString*)nick text:(NSString*)text
 {
     if ([Preferences stopGrowlOnActive] && [NSApp isActive]) return;
-    if (![Preferences growlEnabledForEvent:type]) return;
+    if (![Preferences userNotificationEnabledForEvent:type]) return;
     
     IRCChannel* channel = nil;
     if (target) {

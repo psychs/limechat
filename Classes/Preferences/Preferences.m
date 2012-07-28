@@ -501,14 +501,14 @@
     [ud setObject:value forKey:key];
 }
 
-+ (BOOL)growlEnabledForEvent:(UserNotificationType)event
++ (BOOL)userNotificationEnabledForEvent:(UserNotificationType)event
 {
     NSString* key = [[self keyForEvent:event] stringByAppendingString:@"Growl"];
     NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
     return [ud boolForKey:key];
 }
 
-+ (void)setGrowlEnabled:(BOOL)value forEvent:(UserNotificationType)event
++ (void)setUserNotificationEnabled:(BOOL)value forEvent:(UserNotificationType)event
 {
     NSString* key = [[self keyForEvent:event] stringByAppendingString:@"Growl"];
     NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];

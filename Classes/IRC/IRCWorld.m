@@ -347,15 +347,13 @@
 - (void)sendUserNotification:(UserNotificationType)type title:(NSString*)title desc:(NSString*)desc context:(id)context
 {
     if ([Preferences stopGrowlOnActive] && [NSApp isActive]) return;
-    if (![Preferences growlEnabledForEvent:type]) return;
+    if (![Preferences userNotificationEnabledForEvent:type]) return;
     
     [notifier notify:type title:title desc:desc context:context];
 }
 
 - (void)notificationControllerDidActivateNotification:(id)context
 {
-    LOG(@"### clicked: %@", context);
-
     [window makeKeyAndOrderFront:nil];
 	[NSApp activateIgnoringOtherApps:YES];
 
