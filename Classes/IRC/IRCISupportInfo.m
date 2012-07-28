@@ -10,15 +10,6 @@
 #define OP_VALUE        100
 
 
-@interface IRCISupportInfo (Private)
-- (void)setValue:(int)value forMode:(unsigned char)m;
-- (int)valueForMode:(unsigned char)m;
-- (BOOL)hasParamForMode:(unsigned char)m plus:(BOOL)plus;
-- (void)parsePrefix:(NSString*)s;
-- (void)parseChanmodes:(NSString*)s;
-@end
-
-
 @implementation IRCISupportInfo
 {
     unsigned char modes[MODES_SIZE];

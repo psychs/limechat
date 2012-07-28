@@ -891,7 +891,7 @@
     
     [scrollView setHasHorizontalScroller:NO];
     if ([scrollView respondsToSelector:@selector(setAllowsHorizontalScrolling:)]) {
-        [(id)scrollView setAllowsHorizontalScrolling:NO];
+        [scrollView setAllowsHorizontalScrolling:NO];
     }
     [[view windowScriptObject] evaluateWebScript:@"document.body.style.overflowX='hidden';"];
     
