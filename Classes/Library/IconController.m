@@ -8,22 +8,23 @@
 
 - (void)setHighlight:(BOOL)aHighlight newTalk:(BOOL)aNewTalk
 {
-    if (highlight == aHighlight && newTalk == aNewTalk) return;
+    if (highlight == aHighlight && newTalk == aNewTalk) {
+        return;
+    }
+    
     highlight = aHighlight;
     newTalk = aNewTalk;
     
     NSImage* icon = [NSImage imageNamed:@"NSApplicationIcon"];
+    
     if (highlight || newTalk) {
         icon = [[icon copy] autorelease];
+
+        NSSize iconSize = icon.size;
         [icon lockFocus];
         
         if (highlight) {
-            static NSImage* highlightBadge = nil;
-            if (!highlightBadge) {
-                highlightBadge = [[NSImage imageNamed:@"redstar"] retain];
-            }
-            
-            NSSize iconSize = icon.size;
+            NSImage* highlightBadge = [NSImage imageNamed:@"redstar"];
             NSSize size = highlightBadge.size;
             int w = size.width;
             int h = size.height;
@@ -32,12 +33,7 @@
             [highlightBadge compositeToPoint:NSMakePoint(x, y) operation:NSCompositeSourceOver];
         }
         else if (newTalk) {
-            static NSImage* newTalkBadge = nil;
-            if (!newTalkBadge) {
-                newTalkBadge = [[NSImage imageNamed:@"bluestar"] retain];
-            }
-            
-            NSSize iconSize = icon.size;
+            NSImage* newTalkBadge = [NSImage imageNamed:@"bluestar"];
             NSSize size = newTalkBadge.size;
             int w = size.width;
             int h = size.height;
