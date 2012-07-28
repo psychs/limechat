@@ -283,13 +283,13 @@
     
     IRCUser* m = members[n];
     [[m retain] autorelease];
+    [members removeObjectAtIndex:n];
+
+    m.nick = toNick;
+
     if (![fromNick isEqualNoCase:toNick]) {
         [self removeMember:toNick reload:NO];
     }
-    
-    m.nick = toNick;
-    
-    [members removeObjectAtIndex:n];
     [self sortedInsert:m];
     
     [self reloadMemberList];
