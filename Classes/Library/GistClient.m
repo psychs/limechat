@@ -10,11 +10,19 @@
 #define TIMEOUT         10
 
 
-@interface GistClient (Private)
-@end
-
-
 @implementation GistClient
+{
+    __weak id delegate;
+
+    GistClientStage stage;
+    NSString* text;
+    NSString* fileType;
+    BOOL isPrivate;
+
+    NSURLConnection* conn;
+    NSMutableData* buf;
+    NSString* destUrl;
+}
 
 @synthesize delegate;
 

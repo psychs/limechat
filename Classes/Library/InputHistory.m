@@ -8,6 +8,10 @@
 
 
 @implementation InputHistory
+{
+    NSMutableArray* buf;
+    int pos;
+}
 
 - (id)init
 {

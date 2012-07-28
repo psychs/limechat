@@ -5,9 +5,6 @@
 
 
 @interface HostResolver : NSObject
-{
-    __weak id delegate;
-}
 
 @property (nonatomic, weak) id delegate;
 

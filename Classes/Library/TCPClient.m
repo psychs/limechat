@@ -8,13 +8,30 @@
 #define CR  0xd
 
 
-@interface TCPClient (Private)
-- (BOOL)checkTag:(AsyncSocket*)sock;
-- (void)waitRead;
-@end
-
-
 @implementation TCPClient
+{
+    __weak id delegate;
+
+    NSString* host;
+    int port;
+    BOOL useSSL;
+
+    BOOL useSystemSocks;
+    BOOL useSocks;
+    int socksVersion;
+    NSString* proxyHost;
+    int proxyPort;
+    NSString* proxyUser;
+    NSString* proxyPassword;
+
+    int sendQueueSize;
+
+    AsyncSocket* conn;
+    NSMutableData* buffer;
+    int tag;
+    BOOL active;
+    BOOL connecting;
+}
 
 @synthesize delegate;
 

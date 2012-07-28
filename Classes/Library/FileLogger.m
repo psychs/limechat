@@ -8,12 +8,14 @@
 #import "NSStringHelper.h"
 
 
-@interface FileLogger (Private)
-- (NSString*)buildFileName;
-@end
-
-
 @implementation FileLogger
+{
+    __weak IRCClient* client;
+    __weak IRCChannel* channel;
+
+    NSString* fileName;
+    NSFileHandle* file;
+}
 
 @synthesize client;
 @synthesize channel;

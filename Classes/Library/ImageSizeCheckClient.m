@@ -8,6 +8,17 @@
 
 
 @implementation ImageSizeCheckClient
+{
+    __weak id delegate;
+    NSString* url;
+    int uid;
+    int cid;
+    int lineNumber;
+    int imageIndex;
+
+    NSURLConnection* conn;
+    NSHTTPURLResponse* response;
+}
 
 @synthesize delegate;
 @synthesize url;

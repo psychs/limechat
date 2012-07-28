@@ -5,6 +5,10 @@
 
 
 @implementation IconController
+{
+    BOOL highlight;
+    BOOL newTalk;
+}
 
 - (void)setHighlight:(BOOL)aHighlight newTalk:(BOOL)aNewTalk
 {
@@ -44,7 +48,8 @@
         
         [icon unlockFocus];
     }
-    
+
     [NSApp setApplicationIconImage:icon];
 }
+
 @end

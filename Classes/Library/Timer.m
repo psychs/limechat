@@ -5,6 +5,12 @@
 
 
 @implementation Timer
+{
+    __weak id delegate;
+    BOOL reqeat;
+    SEL selector;
+    NSTimer* timer;
+}
 
 @synthesize delegate;
 @synthesize reqeat;

@@ -8,7 +8,7 @@
 #define TWITTER_IMAGE_URL_CLIENT_TIMEOUT    30
 
 
-@interface TwitterImageURLClient (Private)
+@interface TwitterImageURLClient ()
 - (void)getResultCode;
 @end
 
@@ -44,6 +44,14 @@ static CFStringRef CFClientDescribeCopy(void* obj)
 
 
 @implementation TwitterImageURLClient
+{
+    __weak id delegate;
+    NSString* screenName;
+
+    CFReadStreamRef stream;
+    CFStreamClientContext context;
+    NSTimer* timeoutTimer;
+}
 
 @synthesize delegate;
 @synthesize screenName;

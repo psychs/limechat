@@ -5,6 +5,9 @@
 
 
 @implementation HostResolver
+{
+    __weak id delegate;
+}
 
 @synthesize delegate;
 

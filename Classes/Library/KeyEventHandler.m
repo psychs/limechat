@@ -5,6 +5,11 @@
 
 
 @implementation KeyEventHandler
+{
+    __weak id target;
+    NSMutableDictionary* codeHandlerMap;
+    NSMutableDictionary* characterHandlerMap;
+}
 
 @synthesize target;
 

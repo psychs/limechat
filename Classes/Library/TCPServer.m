@@ -5,11 +5,15 @@
 #import "AsyncSocket.h"
 
 
-@interface TCPServer (Private)
-@end
-
-
 @implementation TCPServer
+{
+    __weak id delegate;
+
+    AsyncSocket* conn;
+    NSMutableArray* clients;
+    BOOL isActive;
+    int port;
+}
 
 @synthesize delegate;
 @synthesize isActive;
