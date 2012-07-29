@@ -22,8 +22,6 @@
     NSImage* icon = [NSImage imageNamed:@"NSApplicationIcon"];
     
     if (highlight || newTalk) {
-        icon = [[icon copy] autorelease];
-
         NSSize iconSize = icon.size;
         NSImage* badge = highlight ? [NSImage imageNamed:@"redstar"] : [NSImage imageNamed:@"bluestar"];
         if (badge) {
@@ -36,6 +34,7 @@
             NSRect sourceRect = NSMakeRect(0, 0, size.width, size.height);
             NSDictionary* hints = @{NSImageHintInterpolation:[NSNumber numberWithInt:NSImageInterpolationHigh]};
 
+            icon = [[icon copy] autorelease];
             [icon lockFocus];
             [badge drawInRect:rect fromRect:sourceRect operation:NSCompositeSourceOver fraction:1 respectFlipped:YES hints:hints];
             [icon unlockFocus];
