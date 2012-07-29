@@ -78,13 +78,12 @@ static char* UNITS[] = { "bytes", "KB", "MB", "GB", "TB" };
 - (void)drawInteriorWithFrame:(NSRect)frame inView:(NSView*)view
 {
     if (icon) {
-        int margin = (frame.size.height - ICON_SIZE.height) / 2;
-        NSPoint p = frame.origin;
-        p.x += margin;
-        p.y += margin;
-        if (view.isFlipped) p.y += ICON_SIZE.height;
-        [icon setSize:ICON_SIZE];
-        [icon compositeToPoint:p operation:NSCompositeSourceOver];
+        CGFloat margin = (frame.size.height - ICON_SIZE.height) / 2;
+        CGFloat x = frame.origin.x + margin;
+        CGFloat y = frame.origin.y + margin;
+        NSRect iconFrame = NSMakeRect(x, y, ICON_SIZE.width, ICON_SIZE.height);
+        NSRect sourceRect = NSMakeRect(0, 0, icon.size.width, icon.size.height);
+        [icon drawInRect:iconFrame fromRect:sourceRect operation:NSCompositeSourceOver fraction:1 respectFlipped:YES hints:nil];
     }
     
     int offset = progressBar ? 0 : (PROGRESS_BAR_HEIGHT / 3);

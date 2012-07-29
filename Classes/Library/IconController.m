@@ -25,28 +25,21 @@
         icon = [[icon copy] autorelease];
 
         NSSize iconSize = icon.size;
-        [icon lockFocus];
-        
-        if (highlight) {
-            NSImage* highlightBadge = [NSImage imageNamed:@"redstar"];
-            NSSize size = highlightBadge.size;
+        NSImage* badge = highlight ? [NSImage imageNamed:@"redstar"] : [NSImage imageNamed:@"bluestar"];
+        if (badge) {
+            NSSize size = badge.size;
             int w = size.width;
             int h = size.height;
             int x = iconSize.width - w;
             int y = iconSize.height - h;
-            [highlightBadge compositeToPoint:NSMakePoint(x, y) operation:NSCompositeSourceOver];
+            NSRect rect = NSMakeRect(x, y, w, h);
+            NSRect sourceRect = NSMakeRect(0, 0, size.width, size.height);
+            NSDictionary* hints = @{NSImageHintInterpolation:[NSNumber numberWithInt:NSImageInterpolationHigh]};
+
+            [icon lockFocus];
+            [badge drawInRect:rect fromRect:sourceRect operation:NSCompositeSourceOver fraction:1 respectFlipped:YES hints:hints];
+            [icon unlockFocus];
         }
-        else if (newTalk) {
-            NSImage* newTalkBadge = [NSImage imageNamed:@"bluestar"];
-            NSSize size = newTalkBadge.size;
-            int w = size.width;
-            int h = size.height;
-            int x = iconSize.width - w;
-            int y = iconSize.height - h;
-            [newTalkBadge compositeToPoint:NSMakePoint(x, y) operation:NSCompositeSourceOver];
-        }
-        
-        [icon unlockFocus];
     }
 
     [NSApp setApplicationIconImage:icon];
