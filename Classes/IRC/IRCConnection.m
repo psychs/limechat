@@ -12,29 +12,6 @@
 
 
 @implementation IRCConnection
-{
-    __weak id delegate;
-
-    NSString* host;
-    int port;
-    BOOL useSSL;
-    NSStringEncoding encoding;
-
-    BOOL useSystemSocks;
-    BOOL useSocks;
-    int socksVersion;
-    NSString* proxyHost;
-    int proxyPort;
-    NSString* proxyUser;
-    NSString* proxyPassword;
-
-    TCPClient* conn;
-    NSMutableArray* sendQueue;
-    Timer* timer;
-    BOOL sending;
-    int penalty;
-    BOOL loggedIn;
-}
 
 @synthesize delegate;
 
@@ -182,7 +159,7 @@
     if (sending) return;
     if (penalty > PENALTY_THREASHOLD) return;
     
-    NSString* s = sendQueue[0];
+    NSString* s = [sendQueue objectAtIndex:0];
     s = [s stringByAppendingString:@"\r\n"];
     [sendQueue removeObjectAtIndex:0];
     

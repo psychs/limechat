@@ -9,6 +9,9 @@
     IBOutlet NSWindow* sheet;
     IBOutlet NSButton* okButton;
     IBOutlet NSButton* cancelButton;
+
+    __weak id delegate;
+    __weak NSWindow* window;
 }
 
 @property (nonatomic, weak) id delegate;

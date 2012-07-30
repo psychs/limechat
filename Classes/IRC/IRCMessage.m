@@ -6,13 +6,6 @@
 
 
 @implementation IRCMessage
-{
-    time_t receivedAt;
-    IRCPrefix* sender;
-    NSString* command;
-    int numericReply;
-    NSMutableArray* params;
-}
 
 @synthesize receivedAt;
 @synthesize sender;
@@ -121,7 +114,7 @@
 - (NSString*)paramAt:(int)index
 {
     if (index < params.count) {
-        return params[index];
+        return [params objectAtIndex:index];
     }
     else {
         return @"";
@@ -139,7 +132,7 @@
     
     int count = params.count;
     for (int i=index; i<count; i++) {
-        NSString* e = params[i];
+        NSString* e = [params objectAtIndex:i];
         if (i != index) [s appendString:@" "];
         [s appendString:e];
     }

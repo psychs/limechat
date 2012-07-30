@@ -5,10 +5,6 @@
 
 
 @implementation LogView
-{
-    __weak id keyDelegate;
-    __weak id resizeDelegate;
-}
 
 @synthesize keyDelegate;
 @synthesize resizeDelegate;

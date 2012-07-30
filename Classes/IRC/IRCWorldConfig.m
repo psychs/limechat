@@ -7,10 +7,6 @@
 
 
 @implementation IRCWorldConfig
-{
-    NSMutableArray* clients;
-    NSMutableArray* autoOp;
-}
 
 @synthesize clients;
 @synthesize autoOp;
@@ -56,10 +52,10 @@
     for (IRCClientConfig* e in clients) {
         [clientAry addObject:[e dictionaryValue]];
     }
-    dic[@"clients"] = clientAry;
+    [dic setObject:clientAry forKey:@"clients"];
     
-    dic[@"autoop"] = autoOp;
-
+    [dic setObject:autoOp forKey:@"autoop"];
+    
     return dic;
 }
 

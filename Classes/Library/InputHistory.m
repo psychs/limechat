@@ -8,10 +8,6 @@
 
 
 @implementation InputHistory
-{
-    NSMutableArray* buf;
-    int pos;
-}
 
 - (id)init
 {
@@ -47,7 +43,7 @@
     if (s && s.length > 0) {
         NSString* cur = nil;
         if (0 <= pos && pos < buf.count) {
-            cur = buf[pos];
+            cur = [buf objectAtIndex:pos];
         }
         
         if (!cur || ![cur isEqualToString:s]) {
@@ -66,7 +62,7 @@
         return nil;
     }
     else if (0 <= pos && pos < buf.count) {
-        return buf[pos];
+        return [buf objectAtIndex:pos];
     }
     else {
         return @"";
@@ -82,7 +78,7 @@
     
     NSString* cur = nil;
     if (0 <= pos && pos < buf.count) {
-        cur = buf[pos];
+        cur = [buf objectAtIndex:pos];
     }
     
     if (!cur || ![cur isEqualToString:s]) {
@@ -93,7 +89,7 @@
     else {
         ++pos;
         if (0 <= pos && pos < buf.count) {
-            return buf[pos];
+            return [buf objectAtIndex:pos];
         }
         return @"";
     }

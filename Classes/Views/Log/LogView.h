@@ -6,6 +6,10 @@
 
 
 @interface LogView : WebView
+{
+    __weak id keyDelegate;
+    __weak id resizeDelegate;
+}
 
 @property (nonatomic, weak) id keyDelegate;
 @property (nonatomic, weak) id resizeDelegate;

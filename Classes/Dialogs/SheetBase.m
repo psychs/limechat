@@ -5,10 +5,6 @@
 
 
 @implementation SheetBase
-{
-    __weak id delegate;
-    __weak NSWindow* window;
-}
 
 @synthesize delegate;
 @synthesize window;

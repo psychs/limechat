@@ -6,6 +6,11 @@
 
 
 @interface GrowlNotificationController : NSObject <NotificationController, GrowlApplicationBridgeDelegate>
+{
+    __weak id<NotificationControllerDelegate> delegate;
+    id lastClickedContext;
+    CFAbsoluteTime lastClickedTime;
+}
 
 @property (nonatomic, weak) id<NotificationControllerDelegate> delegate;
 

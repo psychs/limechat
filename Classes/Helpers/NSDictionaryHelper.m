@@ -8,7 +8,7 @@
 
 - (BOOL)boolForKey:(NSString*)key
 {
-    id obj = self[key];
+    id obj = [self objectForKey:key];
     if ([obj respondsToSelector:@selector(boolValue)]) {
         return [obj boolValue];
     }
@@ -17,7 +17,7 @@
 
 - (int)intForKey:(NSString*)key
 {
-    id obj = self[key];
+    id obj = [self objectForKey:key];
     if ([obj respondsToSelector:@selector(intValue)]) {
         return [obj intValue];
     }
@@ -26,7 +26,7 @@
 
 - (long long)longLongForKey:(NSString*)key
 {
-    id obj = self[key];
+    id obj = [self objectForKey:key];
     if ([obj respondsToSelector:@selector(longLongValue)]) {
         return [obj longLongValue];
     }
@@ -35,7 +35,7 @@
 
 - (double)doubleForKey:(NSString*)key
 {
-    id obj = self[key];
+    id obj = [self objectForKey:key];
     if ([obj respondsToSelector:@selector(doubleValue)]) {
         return [obj doubleValue];
     }
@@ -44,7 +44,7 @@
 
 - (NSString*)stringForKey:(NSString*)key
 {
-    id obj = self[key];
+    id obj = [self objectForKey:key];
     if ([obj isKindOfClass:[NSString class]]) {
         return obj;
     }
@@ -53,7 +53,7 @@
 
 - (NSDictionary*)dictionaryForKey:(NSString*)key
 {
-    id obj = self[key];
+    id obj = [self objectForKey:key];
     if ([obj isKindOfClass:[NSDictionary class]]) {
         return obj;
     }
@@ -62,7 +62,7 @@
 
 - (NSArray*)arrayForKey:(NSString*)key
 {
-    id obj = self[key];
+    id obj = [self objectForKey:key];
     if ([obj isKindOfClass:[NSArray class]]) {
         return obj;
     }
@@ -76,22 +76,22 @@
 
 - (void)setBool:(BOOL)value forKey:(NSString*)key
 {
-    self[key] = [NSNumber numberWithBool:value];
+    [self setObject:[NSNumber numberWithBool:value] forKey:key];
 }
 
 - (void)setInt:(int)value forKey:(NSString*)key
 {
-    self[key] = [NSNumber numberWithInt:value];
+    [self setObject:[NSNumber numberWithInt:value] forKey:key];
 }
 
 - (void)setLongLong:(long long)value forKey:(NSString*)key
 {
-    self[key] = [NSNumber numberWithLongLong:value];
+    [self setObject:[NSNumber numberWithLongLong:value] forKey:key];
 }
 
 - (void)setDouble:(double)value forKey:(NSString*)key
 {
-    self[key] = [NSNumber numberWithDouble:value];
+    [self setObject:[NSNumber numberWithDouble:value] forKey:key];
 }
 
 @end

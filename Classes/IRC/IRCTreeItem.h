@@ -9,6 +9,13 @@
 
 
 @interface IRCTreeItem : NSObject <NSTableViewDataSource, NSTableViewDelegate>
+{
+    int uid;
+    LogController* log;
+    BOOL isKeyword;
+    BOOL isUnread;
+    BOOL isNewTalk;
+}
 
 @property (nonatomic) int uid;
 @property (nonatomic, strong) LogController* log;

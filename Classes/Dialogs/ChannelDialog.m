@@ -7,15 +7,6 @@
 
 
 @implementation ChannelDialog
-{
-    __weak id delegate;
-    __weak NSWindow* parentWindow;
-    int uid;
-    int cid;
-    IRCChannelConfig* config;
-
-    BOOL isSheet;
-}
 
 @synthesize delegate;
 @synthesize window;

@@ -10,6 +10,12 @@
     IBOutlet ListView* table;
     IBOutlet NSSearchField* filterText;
     IBOutlet NSButton* updateButton;
+
+    __weak id delegate;
+    NSMutableArray* list;
+    NSMutableArray* filteredList;
+    int sortKey;
+    NSComparisonResult sortOrder;
 }
 
 @property (nonatomic, weak) id delegate;

@@ -44,14 +44,6 @@ static CFStringRef CFClientDescribeCopy(void* obj)
 
 
 @implementation TwitterImageURLClient
-{
-    __weak id delegate;
-    NSString* screenName;
-
-    CFReadStreamRef stream;
-    CFStreamClientContext context;
-    NSTimer* timeoutTimer;
-}
 
 @synthesize delegate;
 @synthesize screenName;

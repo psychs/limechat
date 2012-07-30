@@ -5,6 +5,11 @@
 
 
 @interface TimerCommand : NSObject
+{
+    CFAbsoluteTime time;
+    int cid;
+    NSString* input;
+}
 
 @property (nonatomic) CFAbsoluteTime time;
 @property (nonatomic) int cid;

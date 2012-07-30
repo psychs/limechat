@@ -14,6 +14,9 @@
     IBOutlet NSButton* addChannelButton;
     IBOutlet NSButton* deleteChannelButton;
     IBOutlet NSButton* okButton;
+    
+    __weak id delegate;
+    NSMutableArray* channels;
 }
 
 @property (nonatomic, weak) id delegate;

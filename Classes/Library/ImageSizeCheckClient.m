@@ -8,17 +8,6 @@
 
 
 @implementation ImageSizeCheckClient
-{
-    __weak id delegate;
-    NSString* url;
-    int uid;
-    int cid;
-    int lineNumber;
-    int imageIndex;
-
-    NSURLConnection* conn;
-    NSHTTPURLResponse* response;
-}
 
 @synthesize delegate;
 @synthesize url;
@@ -92,7 +81,7 @@
     
     if (200 <= statusCode && statusCode < 300) {
         NSDictionary* header = [response allHeaderFields];
-        NSNumber* contentLengthNum = header[@"Content-Length"];
+        NSNumber* contentLengthNum = [header objectForKey:@"Content-Length"];
         if ([contentLengthNum respondsToSelector:@selector(longLongValue)]) {
             contentLength = [contentLengthNum longLongValue];
         }

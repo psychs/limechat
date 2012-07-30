@@ -5,6 +5,10 @@
 
 
 @interface CustomJSFile : NSObject
+{
+    NSString* fileName;
+    NSString* content;
+}
 
 @property (nonatomic, strong) NSString* fileName;
 @property (nonatomic, readonly) NSString* content;

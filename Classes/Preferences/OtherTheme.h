@@ -5,6 +5,45 @@
 
 
 @interface OtherTheme : NSObject
+{
+    NSString* fileName;
+    NSDictionary* content;
+
+    NSString* logNickFormat;
+    NSColor* logScrollerMarkColor;
+
+    NSFont* inputTextFont;
+    NSColor* inputTextBgColor;
+    NSColor* inputTextColor;
+    NSColor* inputTextSelColor;
+
+    NSFont* treeFont;
+    NSColor* treeBgColor;
+    NSColor* treeHighlightColor;
+    NSColor* treeNewTalkColor;
+    NSColor* treeUnreadColor;
+
+    NSColor* treeActiveColor;
+    NSColor* treeInactiveColor;
+
+    NSColor* treeSelActiveColor;
+    NSColor* treeSelInactiveColor;
+    NSColor* treeSelTopLineColor;
+    NSColor* treeSelBottomLineColor;
+    NSColor* treeSelTopColor;
+    NSColor* treeSelBottomColor;
+
+    NSFont* memberListFont;
+    NSColor* memberListBgColor;
+    NSColor* memberListColor;
+    NSColor* memberListOpColor;
+
+    NSColor* memberListSelColor;
+    NSColor* memberListSelTopLineColor;
+    NSColor* memberListSelBottomLineColor;
+    NSColor* memberListSelTopColor;
+    NSColor* memberListSelBottomColor;
+}
 
 @property (nonatomic, strong) NSString* fileName;
 

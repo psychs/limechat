@@ -25,10 +25,6 @@ static BOOL yamlClass(id object)
 }
 
 @implementation YAMLWrapper
-{
-    Class tag;
-    id data;
-}
 
 + (id)wrapperWithData:(id)d tag:(Class)cn
 {
@@ -214,7 +210,7 @@ static BOOL yamlClass(id object)
     for (i=0; i<c; i++)
     {
         [array addObject:
-         [self[i] performSelector:aSelector withObject:anObject]];
+         [[self objectAtIndex:i] performSelector:aSelector withObject:anObject]];
     }
     return array;
 }
@@ -227,7 +223,7 @@ static BOOL yamlClass(id object)
     for (i=0; i<c; i++)
     {
         [array addObject:
-         [self[i] performSelector:aSelector]];
+         [[self objectAtIndex:i] performSelector:aSelector]];
     }
     return array;
 }
@@ -248,14 +244,14 @@ static BOOL yamlClass(id object)
     enumerator = [allKeys objectEnumerator];
     while (key = [enumerator nextObject])
     {
-        id object = self[key];
+        id object = [self objectForKey:key];
         
         /*if(!yamlClass(object))
          {
          [dict setObject:[YAMLWrapper wrapperWithData:[object yamlData] tag:[object class]] forKey:key];
          }
          else*/
-        dict[key] = [object yamlData];
+        [dict setObject:[object yamlData] forKey:key];
     }
     
     return dict;
@@ -301,7 +297,7 @@ static BOOL yamlClass(id object)
     enumerator = [allKeys objectEnumerator];
     while (key = [enumerator nextObject])
     {
-        id object = self[key];
+        id object = [self objectForKey:key];
         NSString	*tag;
         
         if(yamlClass(object))
@@ -340,8 +336,9 @@ static BOOL yamlClass(id object)
     
     for (i=0; i<c; i++)
     {
-        id key = allKeys[i];
-        dict[key] = [self[key] performSelector:aSelector withObject:anObject];
+        id key = [allKeys objectAtIndex:i];
+        [dict setObject: [[self objectForKey:key] performSelector:aSelector withObject:anObject]
+                 forKey: key];
     }
     return dict;
 }
@@ -354,8 +351,9 @@ static BOOL yamlClass(id object)
     
     for (i=0; i<c; i++)
     {
-        id key = allKeys[i];
-        dict[key] = [self[key] performSelector:aSelector];
+        id key = [allKeys objectAtIndex:i];
+        [dict setObject: [[self objectForKey:key] performSelector:aSelector]
+                 forKey: key];
     }
     return dict;
 }
@@ -372,7 +370,7 @@ static BOOL yamlClass(id object)
 - (void)yamlPerformSelector:(SEL)sel withEachObjectInArray:(NSArray *)array {
     unsigned i, c = [array count];
     for (i=0; i<c; i++) {
-        [self performSelector:sel withObject:array[i]];
+        [self performSelector:sel withObject:[array objectAtIndex:i]];
     }
 }
 

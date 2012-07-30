@@ -5,6 +5,9 @@
 
 
 @interface TreeView : NSOutlineView
+{
+    __weak id keyDelegate;
+}
 
 @property (nonatomic, weak) id keyDelegate;
 

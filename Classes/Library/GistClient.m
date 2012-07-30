@@ -11,18 +11,6 @@
 
 
 @implementation GistClient
-{
-    __weak id delegate;
-
-    GistClientStage stage;
-    NSString* text;
-    NSString* fileType;
-    BOOL isPrivate;
-
-    NSURLConnection* conn;
-    NSMutableData* buf;
-    NSString* destUrl;
-}
 
 @synthesize delegate;
 
@@ -58,7 +46,7 @@
     
     NSMutableArray* ary = [NSMutableArray array];
     for (NSString* key in params) {
-        [ary addObject:[NSString stringWithFormat:@"%@=%@", key, [params[key] gtm_stringByEscapingForURLArgument]]];
+        [ary addObject:[NSString stringWithFormat:@"%@=%@", key, [[params objectForKey:key] gtm_stringByEscapingForURLArgument]]];
     }
     return [ary componentsJoinedByString:@"&"];
 }
@@ -86,15 +74,15 @@
     stage = kGistClientPost;
     
     NSMutableDictionary* params = [NSMutableDictionary dictionary];
-    params[@"description"] = @"";
-    params[@"file_name[gistfile1]"] = @"";
-    params[@"file_contents[gistfile1]"] = text;
-    params[@"file_ext[gistfile1]"] = fileType;
+    [params setObject:@"" forKey:@"description"];
+    [params setObject:@"" forKey:@"file_name[gistfile1]"];
+    [params setObject:text forKey:@"file_contents[gistfile1]"];
+    [params setObject:fileType forKey:@"file_ext[gistfile1]"];
     if (isPrivate) {
-        params[@"action_button"] = @"private";
+        [params setObject:@"private" forKey:@"action_button"];
     }
     if (authToken) {
-        params[@"authenticity_token"] = authToken;
+        [params setObject:authToken forKey:@"authenticity_token"];
     }
     
     NSData* body = [[self formatParameters:params] dataUsingEncoding:NSUTF8StringEncoding];

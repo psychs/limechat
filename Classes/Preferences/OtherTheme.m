@@ -7,45 +7,6 @@
 
 
 @implementation OtherTheme
-{
-    NSString* fileName;
-    NSDictionary* content;
-
-    NSString* logNickFormat;
-    NSColor* logScrollerMarkColor;
-
-    NSFont* inputTextFont;
-    NSColor* inputTextBgColor;
-    NSColor* inputTextColor;
-    NSColor* inputTextSelColor;
-
-    NSFont* treeFont;
-    NSColor* treeBgColor;
-    NSColor* treeHighlightColor;
-    NSColor* treeNewTalkColor;
-    NSColor* treeUnreadColor;
-
-    NSColor* treeActiveColor;
-    NSColor* treeInactiveColor;
-
-    NSColor* treeSelActiveColor;
-    NSColor* treeSelInactiveColor;
-    NSColor* treeSelTopLineColor;
-    NSColor* treeSelBottomLineColor;
-    NSColor* treeSelTopColor;
-    NSColor* treeSelBottomColor;
-
-    NSFont* memberListFont;
-    NSColor* memberListBgColor;
-    NSColor* memberListColor;
-    NSColor* memberListOpColor;
-
-    NSColor* memberListSelColor;
-    NSColor* memberListSelTopLineColor;
-    NSColor* memberListSelBottomLineColor;
-    NSColor* memberListSelTopColor;
-    NSColor* memberListSelBottomColor;
-}
 
 @synthesize fileName;
 
@@ -320,9 +281,9 @@
     va_list args;
     va_start(args, key);
     
-    NSDictionary* dic = content[key];
+    NSDictionary* dic = [content objectForKey:key];
     while ([dic isKindOfClass:[NSDictionary class]] && (key = va_arg(args, id))) {
-        dic = dic[key];
+        dic = [dic objectForKey:key];
     }
     
     va_end(args);
@@ -335,9 +296,9 @@
     va_list args;
     va_start(args, key);
     
-    NSDictionary* dic = content[key];
+    NSDictionary* dic = [content objectForKey:key];
     while ([dic isKindOfClass:[NSDictionary class]] && (key = va_arg(args, id))) {
-        dic = dic[key];
+        dic = [dic objectForKey:key];
     }
     
     va_end(args);
@@ -348,14 +309,14 @@
 
 - (NSFont*)loadFont:(NSString*)key
 {
-    NSDictionary* dic = content[key];
+    NSDictionary* dic = [content objectForKey:key];
     
     if (![dic isKindOfClass:[NSDictionary class]]) return nil;
     
-    NSString* family = dic[@"font-family"];
-    NSNumber* sizeNum = dic[@"font-size"];
-    NSString* weight = dic[@"font-weight"];
-    NSString* style = dic[@"font-style"];
+    NSString* family = [dic objectForKey:@"font-family"];
+    NSNumber* sizeNum = [dic objectForKey:@"font-size"];
+    NSString* weight = [dic objectForKey:@"font-weight"];
+    NSString* style = [dic objectForKey:@"font-style"];
     
     CGFloat size = 0;
     if (sizeNum) {

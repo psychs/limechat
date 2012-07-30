@@ -6,10 +6,6 @@
 
 
 @implementation TwitterAvatarURLManager
-{
-    NSMutableDictionary* connections;
-    NSMutableDictionary* imageUrls;
-}
 
 - (id)init
 {
@@ -42,7 +38,7 @@
 
 - (NSString*)imageURLForTwitterScreenName:(NSString*)screenName
 {
-    return imageUrls[screenName];
+    return [imageUrls objectForKey:screenName];
 }
 
 - (BOOL)fetchImageURLForTwitterScreenName:(NSString*)screenName
@@ -51,19 +47,19 @@
         return NO;
     }
     
-    NSString* url = imageUrls[screenName];
+    NSString* url = [imageUrls objectForKey:screenName];
     if (url) {
         return NO;
     }
     
-    if (connections[screenName]) {
+    if ([connections objectForKey:screenName]) {
         return NO;
     }
     
     TwitterImageURLClient *client = [[TwitterImageURLClient new] autorelease];
     client.delegate = self;
     client.screenName = screenName;
-    connections[screenName] = client;
+    [connections setObject:client forKey:screenName];
     [client getImageURL];
     
     return YES;
@@ -80,7 +76,7 @@
     
     NSString* screenName = sender.screenName;
     if (screenName.length && imageUrl.length) {
-        imageUrls[screenName] = imageUrl;
+        [imageUrls setObject:imageUrl forKey:screenName];
         [[NSNotificationCenter defaultCenter] postNotificationName:TwitterAvatarURLManagerDidGetImageURLNotification object:screenName];
     }
 }

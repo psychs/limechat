@@ -8,6 +8,10 @@
 
 
 @interface TwitterAvatarURLManager : NSObject
+{
+    NSMutableDictionary* connections;
+    NSMutableDictionary* imageUrls;
+}
 
 + (TwitterAvatarURLManager*)instance;
 

@@ -56,8 +56,8 @@
     else if ([host hasSuffix:@"f.hatena.ne.jp"]) {
         NSArray* ary = [path componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"/"]];
         if (ary.count >= 3) {
-            NSString* userId = ary[1];
-            NSString* photoId = ary[2];
+            NSString* userId = [ary objectAtIndex:1];
+            NSString* photoId = [ary objectAtIndex:2];
             if (userId.length && photoId.length > 8 && [photoId isNumericOnly]) {
                 NSString* userIdHead = [userId substringToIndex:1];
                 NSString* photoIdHead = [photoId substringToIndex:8];
@@ -219,8 +219,8 @@
                     for (NSString* e in queries) {
                         NSArray* ary = [e componentsSeparatedByCharactersInSet:equal];
                         if (ary.count >= 2) {
-                            NSString* key = ary[0];
-                            NSString* value = ary[1];
+                            NSString* key = [ary objectAtIndex:0];
+                            NSString* value = [ary objectAtIndex:1];
                             if ([key isEqualToString:@"v"]) {
                                 vid = value;
                                 break;

@@ -6,6 +6,14 @@
 
 
 @interface TCPServer : NSObject
+{
+    __weak id delegate;
+
+    AsyncSocket* conn;
+    NSMutableArray* clients;
+    BOOL isActive;
+    int port;
+}
 
 @property (nonatomic, weak) id delegate;
 @property (nonatomic, readonly) NSArray* clients;

@@ -5,13 +5,6 @@
 
 
 @implementation ThinSplitView
-{
-    int fixedViewIndex;
-    int myDividerThickness;
-    int position;
-    BOOL inverted;
-    BOOL hidden;
-}
 
 @synthesize fixedViewIndex;
 @synthesize position;

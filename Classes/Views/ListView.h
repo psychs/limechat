@@ -5,6 +5,10 @@
 
 
 @interface ListView : NSTableView
+{
+    __weak id keyDelegate;
+    __weak id textDelegate;
+}
 
 @property (nonatomic, weak) id keyDelegate;
 @property (nonatomic, weak) id textDelegate;

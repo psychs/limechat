@@ -17,6 +17,10 @@
     IBOutlet NSTextField* messageText;
     IBOutlet ListView* channelTable;
     IBOutlet NSButton* deleteChannelButton;
+
+    IgnoreItem* ignore;
+    BOOL newItem;
+    NSMutableArray* channels;
 }
 
 @property (nonatomic, strong) IgnoreItem* ignore;

@@ -5,6 +5,11 @@
 
 
 @interface LogTheme : NSObject
+{
+    NSString* fileName;
+    NSURL* baseUrl;
+    NSString* content;
+}
 
 @property (nonatomic, strong) NSString* fileName;
 @property (nonatomic, readonly) NSURL* baseUrl;

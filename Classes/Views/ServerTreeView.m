@@ -5,15 +5,6 @@
 
 
 @implementation ServerTreeView
-{
-    __weak id responderDelegate;
-    OtherTheme* theme;
-
-    NSColor* bgColor;
-    NSColor* topLineColor;
-    NSColor* bottomLineColor;
-    NSGradient* gradient;
-}
 
 @synthesize responderDelegate;
 @synthesize theme;

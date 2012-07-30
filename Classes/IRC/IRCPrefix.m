@@ -5,13 +5,6 @@
 
 
 @implementation IRCPrefix
-{
-    NSString* raw;
-    NSString* nick;
-    NSString* user;
-    NSString* address;
-    BOOL isServer;
-}
 
 @synthesize raw;
 @synthesize nick;

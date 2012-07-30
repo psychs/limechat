@@ -22,6 +22,11 @@
 
 
 @interface KeyEventHandler : NSObject
+{
+    __weak id target;
+    NSMutableDictionary* codeHandlerMap;
+    NSMutableDictionary* characterHandlerMap;
+}
 
 @property (nonatomic, weak) id target;
 

@@ -8,9 +8,6 @@
 
 
 @implementation UserNotificationController
-{
-    __weak id<NotificationControllerDelegate> delegate;
-}
 
 @synthesize delegate;
 
@@ -105,7 +102,7 @@
 - (void)userNotificationCenter:(NSUserNotificationCenter*)sender didActivateNotification:(NSUserNotification*)note
 {
     BOOL actionButtonClicked = note.activationType == NSUserNotificationActivationTypeActionButtonClicked;
-    [delegate notificationControllerDidActivateNotification:note.userInfo[USER_NOTIFICATION_CONTEXT_KEY] actionButtonClicked:actionButtonClicked];
+    [delegate notificationControllerDidActivateNotification:[note.userInfo objectForKey:USER_NOTIFICATION_CONTEXT_KEY] actionButtonClicked:actionButtonClicked];
 }
 
 @end

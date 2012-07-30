@@ -717,7 +717,7 @@ static NSMutableArray* excludeWords;
     NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
     NSArray* ary = [ud objectForKey:@"keywords"];
     for (NSDictionary* e in ary) {
-        NSString* s = e[@"string"];
+        NSString* s = [e objectForKey:@"string"];
         if (s) [keywords addObject:s];
     }
 }
@@ -734,7 +734,7 @@ static NSMutableArray* excludeWords;
     NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
     NSArray* ary = [ud objectForKey:@"excludeWords"];
     for (NSDictionary* e in ary) {
-        NSString* s = e[@"string"];
+        NSString* s = [e objectForKey:@"string"];
         if (s) [excludeWords addObject:s];
     }
 }
@@ -749,7 +749,7 @@ static NSMutableArray* excludeWords;
     
     NSMutableArray* ary = [NSMutableArray array];
     for (NSDictionary* e in src) {
-        NSString* s = e[@"string"];
+        NSString* s = [e objectForKey:@"string"];
         if (s.length) {
             [ary addObject:s];
         }

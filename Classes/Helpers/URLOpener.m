@@ -12,7 +12,7 @@
     NSWorkspace* ws = [NSWorkspace sharedWorkspace];
     
     if ([Preferences openBrowserInBackground]) {
-        [ws openURLs:@[url] withAppBundleIdentifier:nil options:NSWorkspaceLaunchWithoutActivation additionalEventParamDescriptor:nil launchIdentifiers:nil];
+        [ws openURLs:[NSArray arrayWithObject:url] withAppBundleIdentifier:nil options:NSWorkspaceLaunchWithoutActivation additionalEventParamDescriptor:nil launchIdentifiers:nil];
     }
     else {
         [ws openURL:url];

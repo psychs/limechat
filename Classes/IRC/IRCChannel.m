@@ -10,27 +10,6 @@
 
 
 @implementation IRCChannel
-{
-    __weak IRCClient* client;
-    IRCChannelConfig* config;
-
-    IRCChannelMode* mode;
-    NSMutableArray* members;
-    NSString* topic;
-    NSString* storedTopic;
-    BOOL isActive;
-    BOOL isOp;
-    BOOL isModeInit;
-    BOOL isNamesInit;
-    BOOL isWhoInit;
-
-    BOOL terminating;
-
-    FileLogger* logFile;
-    NSDateComponents* logDate;
-
-    ChannelDialog* propertyDialog;
-}
 
 @synthesize client;
 @synthesize config;
@@ -236,7 +215,7 @@
     
     while (right - left > LINEAR_SEARCH_THRESHOLD) {
         int i = (left + right) / 2;
-        IRCUser* t = members[i];
+        IRCUser* t = [members objectAtIndex:i];
         if ([t compare:item] == NSOrderedAscending) {
             left = i + 1;
         }
@@ -246,7 +225,7 @@
     }
     
     for (int i=left; i<right; ++i) {
-        IRCUser* t = members[i];
+        IRCUser* t = [members objectAtIndex:i];
         if ([t compare:item] == NSOrderedDescending) {
             [members insertObject:item atIndex:i];
             return;
@@ -265,7 +244,7 @@
 {
     int n = [self indexOfMember:user.nick];
     if (n >= 0) {
-        [[members[n] retain] autorelease];
+        [[[members objectAtIndex:n] retain] autorelease];
         [members removeObjectAtIndex:n];
     }
     
@@ -283,7 +262,7 @@
 {
     int n = [self indexOfMember:nick];
     if (n >= 0) {
-        [[members[n] retain] autorelease];
+        [[[members objectAtIndex:n] retain] autorelease];
         [members removeObjectAtIndex:n];
     }
     
@@ -297,7 +276,7 @@
     int n = [self indexOfMember:fromNick];
     if (n < 0) return;
     
-    IRCUser* m = members[n];
+    IRCUser* m = [members objectAtIndex:n];
     [[m retain] autorelease];
     [members removeObjectAtIndex:n];
 
@@ -319,7 +298,7 @@
 {
     int n = [self indexOfMember:user.nick];
     if (n >= 0) {
-        [[members[n] retain] autorelease];
+        [[[members objectAtIndex:n] retain] autorelease];
         [members removeObjectAtIndex:n];
     }
     
@@ -331,7 +310,7 @@
     int n = [self indexOfMember:nick];
     if (n < 0) return;
     
-    IRCUser* m = members[n];
+    IRCUser* m = [members objectAtIndex:n];
     
     switch (modeChar) {
         case 'q': m.q = value; break;
@@ -341,7 +320,7 @@
         case 'v': m.v = value; break;
     }
     
-    [[members[n] retain] autorelease];
+    [[[members objectAtIndex:n] retain] autorelease];
     [members removeObjectAtIndex:n];
     
     [self sortedInsert:m];
@@ -371,14 +350,14 @@
 
 - (IRCUser*)memberAtIndex:(int)index
 {
-    return members[index];
+    return [members objectAtIndex:index];
 }
 
 - (IRCUser*)findMember:(NSString*)nick
 {
     int n = [self indexOfMember:nick];
     if (n < 0) return nil;
-    return members[n];
+    return [members objectAtIndex:n];
 }
 
 - (int)numberOfMembers
@@ -443,7 +422,7 @@
 
 - (void)tableView:(NSTableView *)sender willDisplayCell:(MemberListViewCell*)cell forTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
-    cell.member = members[row];
+    cell.member = [members objectAtIndex:row];
 }
 
 @end

@@ -4,7 +4,7 @@
 
 static void cocoa_syck_error_handler( SyckParser *p, const char *msg )
 {
-    NSLog(@"syck error:%s position:(%d, %lu)", msg, p->linect, p->cursor - p->lineptr);
+    NSLog(@"syck error:%s position:(%d, %d)", msg, p->linect, (int)(p->cursor - p->lineptr));
 }
 
 static SYMID cocoa_syck_parse_handler(SyckParser *p, SyckNode *n)
@@ -45,11 +45,11 @@ static SYMID cocoa_syck_parse_handler(SyckParser *p, SyckNode *n)
             }
             else if ( strcmp( type_id, "bool#yes" ) == 0 )
             {
-                v = @YES;
+                v = [NSNumber numberWithBool:YES];
             }
             else if ( strcmp( type_id, "bool#no" ) == 0 )
             {
-                v = @NO;
+                v = [NSNumber numberWithBool:NO];
             }
             else if ( strcmp( type_id, "int#hex" ) == 0 )
             {
@@ -204,7 +204,7 @@ static SYMID cocoa_syck_parse_handler(SyckParser *p, SyckNode *n)
                         [v yamlPerformSelector:@selector(addEntriesFromDictionary:) withEachObjectInArray:o3];
                 }
                 else
-                    v[o2] = o3;
+                    [v setObject:o3 forKey:o2];
             }
             if ( type_id == NULL || strcmp( type_id, "map" ) == 0 )
             {

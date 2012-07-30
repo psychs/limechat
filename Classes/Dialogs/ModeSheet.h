@@ -20,6 +20,11 @@
     IBOutlet NSButton* lCheck;
     IBOutlet NSTextField* kText;
     IBOutlet NSTextField* lText;
+    
+    IRCChannelMode* mode;
+    NSString* channelName;
+    int uid;
+    int cid;
 }
 
 @property (nonatomic, strong) IRCChannelMode* mode;

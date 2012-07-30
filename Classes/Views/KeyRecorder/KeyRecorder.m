@@ -14,18 +14,8 @@
 
 
 @implementation KeyRecorder
-{
-    __weak id delegate;
-    int keyCode;
-    NSUInteger modifierFlags;
-
-    BOOL recording;
-    BOOL eraseButtonPushed;
-    BOOL eraseButtonHighlighted;
-}
 
 @synthesize delegate, keyCode, modifierFlags;
-
 
 + (Class)cellClass
 {
@@ -217,7 +207,7 @@
                 return NO;
             default:
             {
-                NSString* s = [KeyRecorder specialKeyMap][[NSNumber numberWithInt:k]];
+                NSString* s = [[KeyRecorder specialKeyMap] objectForKey:[NSNumber numberWithInt:k]];
                 if (!s) {
                     return YES;
                 }
@@ -275,7 +265,7 @@
 
 - (NSString*)transformKeyCodeToString:(unsigned int)k
 {
-    NSString* name = [KeyRecorder specialKeyMap][[NSNumber numberWithInt:k]];
+    NSString* name = [[KeyRecorder specialKeyMap] objectForKey:[NSNumber numberWithInt:k]];
     if (name) return name;
     
     NSString* s = [[KeyCodeTranslator sharedInstance] translateKeyCode:k];

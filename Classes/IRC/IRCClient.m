@@ -28,61 +28,6 @@
 
 
 @implementation IRCClient
-{
-    __weak IRCWorld* world;
-    IRCClientConfig* config;
-
-    NSMutableArray* channels;
-    IRCISupportInfo* isupport;
-    IRCUserMode* myMode;
-
-    IRCConnection* conn;
-    int connectDelay;
-    BOOL reconnectEnabled;
-    BOOL retryEnabled;
-
-    BOOL isConnecting;
-    BOOL isConnected;
-    BOOL isLoggedIn;
-    BOOL isQuitting;
-    NSStringEncoding encoding;
-
-    NSString* inputNick;
-    NSString* sentNick;
-    NSString* myNick;
-    int tryingNickNumber;
-
-    NSString* serverHostname;
-    BOOL isRegisteredWithSASL;
-    BOOL registeringToNickServ;
-    BOOL inWhois;
-    BOOL inList;
-    BOOL identifyMsg;
-    BOOL identifyCTCP;
-
-    AddressDetectionType addressDetectionMethod;
-    HostResolver* nameResolver;
-    NSString* joinMyAddress;
-    NSString* myAddress;
-    CFAbsoluteTime lastCTCPTime;
-    int pongInterval;
-    CFAbsoluteTime joinSentTime;
-    NSString* joiningChannelName;
-
-    Timer* pongTimer;
-    Timer* quitTimer;
-    Timer* reconnectTimer;
-    Timer* retryTimer;
-    Timer* autoJoinTimer;
-    Timer* commandQueueTimer;
-    NSMutableArray* commandQueue;
-
-    IRCChannel* lastSelectedChannel;
-
-    NSMutableArray* whoisDialogs;
-    ListDialog* channelListDialog;
-    ServerDialog* propertyDialog;
-}
 
 @synthesize world;
 
@@ -274,8 +219,8 @@
             [ary addObject:[c dictionaryValue]];
         }
     }
-
-    dic[@"channels"] = ary;
+    
+    [dic setObject:ary forKey:@"channels"];
     return dic;
 }
 
@@ -1312,7 +1257,7 @@
             else {
                 NSMutableArray* ignores = config.ignores;
                 for (int i=ignores.count-1; i>=0; --i) {
-                    IgnoreItem* e = ignores[i];
+                    IgnoreItem* e = [ignores objectAtIndex:i];
                     if ([g isEqual:e]) {
                         [ignores removeObjectAtIndex:i];
                         [world save];
@@ -1669,7 +1614,7 @@
     
     int count = ary.count;
     for (int i=0; i<count; i++) {
-        NSString* e = ary[i];
+        NSString* e = [ary objectAtIndex:i];
         [s appendString:@" "];
         if (i == count-1 && (e.length == 0 || [e hasPrefix:@":"] || [e contains:@" "])) {
             [s appendString:@":"];
@@ -1711,7 +1656,7 @@
     CFAbsoluteTime now = CFAbsoluteTimeGetCurrent();
     
     while (commandQueue.count) {
-        TimerCommand* m = commandQueue[0];
+        TimerCommand* m = [commandQueue objectAtIndex:0];
         if (m.time <= now) {
             NSString* target = nil;
             IRCChannel* c = [world findChannelByClientId:self.uid channelId:m.cid];
@@ -1729,7 +1674,7 @@
     }
     
     if (commandQueue.count) {
-        TimerCommand* m = commandQueue[0];
+        TimerCommand* m = [commandQueue objectAtIndex:0];
         CFAbsoluteTime delta = m.time - CFAbsoluteTimeGetCurrent();
         [commandQueueTimer start:delta];
     }
@@ -1814,12 +1759,12 @@
     NSString* desc = [NSString stringWithFormat:@"<%@> %@", nick, text];
 
     NSMutableDictionary* context = [NSMutableDictionary dictionary];
-    context[USER_NOTIFICATION_CLIENT_ID_KEY] = [NSNumber numberWithInt:self.uid];
+    [context setObject:[NSNumber numberWithInt:self.uid] forKey:USER_NOTIFICATION_CLIENT_ID_KEY];
     if (channel) {
-        context[USER_NOTIFICATION_CHANNEL_ID_KEY] = [NSNumber numberWithInt:channel.uid];
+        [context setObject:[NSNumber numberWithInt:channel.uid] forKey:USER_NOTIFICATION_CHANNEL_ID_KEY];
     }
     if (type == USER_NOTIFICATION_INVITED && text) {
-        context[USER_NOTIFICATION_INVITED_CHANNEL_NAME_KEY] = text;
+        [context setObject:text forKey:USER_NOTIFICATION_INVITED_CHANNEL_NAME_KEY];
     }
 
     [world sendUserNotification:type title:title desc:desc context:context];
@@ -1868,12 +1813,12 @@
     }
 
     NSMutableDictionary* context = [NSMutableDictionary dictionary];
-    context[USER_NOTIFICATION_CLIENT_ID_KEY] = [NSNumber numberWithInt:self.uid];
+    [context setObject:[NSNumber numberWithInt:self.uid] forKey:USER_NOTIFICATION_CLIENT_ID_KEY];
     if (channel) {
-        context[USER_NOTIFICATION_CHANNEL_ID_KEY] = [NSNumber numberWithInt:channel.uid];
+        [context setObject:[NSNumber numberWithInt:channel.uid] forKey:USER_NOTIFICATION_CHANNEL_ID_KEY];
     }
     if (type == USER_NOTIFICATION_INVITED && text) {
-        context[USER_NOTIFICATION_INVITED_CHANNEL_NAME_KEY] = text;
+        [context setObject:text forKey:USER_NOTIFICATION_INVITED_CHANNEL_NAME_KEY];
     }
 
     [world sendUserNotification:type title:title desc:desc context:context];
@@ -2307,7 +2252,7 @@
 
 - (id)childAtIndex:(int)index
 {
-    return channels[index];
+    return [channels objectAtIndex:index];
 }
 
 - (NSString*)label
@@ -2374,7 +2319,7 @@
 {
     NSArray* addresses = [host addresses];
     if (addresses.count) {
-        NSString* address = addresses[0];
+        NSString* address = [addresses objectAtIndex:0];
         [myAddress release];
         myAddress = [address retain];
     }
@@ -2614,8 +2559,8 @@
         }
         else if ([command isEqualToString:VERSION]) {
             NSDictionary* info = [[NSBundle mainBundle] infoDictionary];
-            NSString* name = info[@"LCApplicationName"];
-            NSString* ver = info[@"CFBundleShortVersionString"];
+            NSString* name = [info objectForKey:@"LCApplicationName"];
+            NSString* ver = [info objectForKey:@"CFBundleShortVersionString"];
             NSString* text = [NSString stringWithFormat:@"%@ %@", name, ver];
             [self sendCTCPReply:nick command:command text:text];
         }
@@ -3634,7 +3579,7 @@
         NSArray* altNicks = config.altNicks;
         
         if (tryingNickNumber < altNicks.count) {
-            NSString* nick = altNicks[tryingNickNumber];
+            NSString* nick = [altNicks objectAtIndex:tryingNickNumber];
             [self send:NICK, nick, nil];
         }
         else {

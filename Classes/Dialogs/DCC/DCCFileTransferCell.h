@@ -17,6 +17,19 @@ typedef enum {
 
 
 @interface DCCFileTransferCell : NSCell
+{
+    NSString* peerNick;
+    long long processedSize;
+    long long size;
+    long long speed;
+    long long timeRemaining;
+    DCCFileTransferStatus status;
+    NSString* error;
+
+    NSProgressIndicator* progressBar;
+    NSImage* icon;
+    BOOL sendingItem;
+}
 
 @property (nonatomic, strong) NSString* peerNick;
 @property (nonatomic) long long processedSize;

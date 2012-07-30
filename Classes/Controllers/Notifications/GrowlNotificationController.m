@@ -25,11 +25,6 @@
 
 
 @implementation GrowlNotificationController
-{
-    __weak id<NotificationControllerDelegate> delegate;
-    id lastClickedContext;
-    CFAbsoluteTime lastClickedTime;
-}
 
 @synthesize delegate;
 
@@ -142,8 +137,8 @@
     GROWL_MSG_FILE_RECEIVE_FAILED, GROWL_MSG_FILE_SEND_SUCCEEDED, GROWL_NSG_FILE_SEND_FAILED];
     
     NSMutableDictionary* dic = [NSMutableDictionary dictionary];
-    dic[GROWL_NOTIFICATIONS_ALL] = all;
-    dic[GROWL_NOTIFICATIONS_DEFAULT] = all;
+    [dic setObject:all forKey:GROWL_NOTIFICATIONS_ALL];
+    [dic setObject:all forKey:GROWL_NOTIFICATIONS_DEFAULT];
     return dic;
 }
 

@@ -12,6 +12,22 @@
 
 
 @interface DCCController : NSWindowController
+{
+    __weak id delegate;
+    __weak IRCWorld* world;
+    __weak NSWindow* mainWindow;
+
+    BOOL loaded;
+    NSMutableArray* receivers;
+    NSMutableArray* senders;
+
+    Timer* timer;
+
+    IBOutlet ListView* receiverTable;
+    IBOutlet ListView* senderTable;
+    IBOutlet ThinSplitView* splitter;
+    IBOutlet NSButton* clearButton;
+}
 
 @property (nonatomic, weak) id delegate;
 @property (nonatomic, weak) IRCWorld* world;

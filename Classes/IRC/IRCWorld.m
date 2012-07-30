@@ -14,48 +14,10 @@
 #define RECONNECT_AFTER_WAKE_UP_DELAY   8
 
 #define TREE_DRAG_ITEM_TYPE             @"tree"
-#define TREE_DRAG_ITEM_TYPES            @[TREE_DRAG_ITEM_TYPE]
+#define TREE_DRAG_ITEM_TYPES            [NSArray arrayWithObject:TREE_DRAG_ITEM_TYPE]
 
 
 @implementation IRCWorld
-{
-    __weak AppController* app;
-    __weak MainWindow* window;
-    __weak id<NotificationController> notifier;
-    IconController* icon;
-    __weak ServerTreeView* tree;
-    __weak InputTextField* text;
-    __weak NSBox* logBase;
-    __weak NSBox* consoleBase;
-    __weak ChatBox* chatBox;
-    __weak FieldEditorTextView* fieldEditor;
-    __weak MemberListView* memberList;
-    __weak MenuController* menuController;
-    __weak DCCController* dcc;
-    __weak ViewTheme* viewTheme;
-    __weak NSMenu* serverMenu;
-    __weak NSMenu* channelMenu;
-    __weak NSMenu* treeMenu;
-    __weak NSMenu* logMenu;
-    __weak NSMenu* consoleMenu;
-    __weak NSMenu* urlMenu;
-    __weak NSMenu* addrMenu;
-    __weak NSMenu* chanMenu;
-    __weak NSMenu* memberMenu;
-
-    LogController* consoleLog;
-    LogController* dummyLog;
-
-    IRCWorldConfig* config;
-    NSMutableArray* clients;
-
-    int itemId;
-    BOOL reloadingTree;
-    IRCTreeItem* selected;
-
-    int previousSelectedClientId;
-    int previousSelectedChannelId;
-}
 
 @synthesize app;
 @synthesize window;
@@ -170,8 +132,8 @@
     for (IRCClient* u in clients) {
         [ary addObject:[u dictionaryValue]];
     }
-
-    dic[@"clients"] = ary;
+    
+    [dic setObject:ary forKey:@"clients"];
     return dic;
 }
 
@@ -391,13 +353,13 @@
 
 	if ([context isKindOfClass:[NSDictionary class]]) {
         NSDictionary *dic = (NSDictionary*)context;
-        if (dic[USER_NOTIFICATION_DCC_KEY]) {
+        if ([dic objectForKey:USER_NOTIFICATION_DCC_KEY]) {
             [self.dcc show:YES];
         }
         else {
-            NSNumber* clientId = dic[USER_NOTIFICATION_CLIENT_ID_KEY];
-            NSNumber* channelId = dic[USER_NOTIFICATION_CHANNEL_ID_KEY];
-            NSString* invitedChannelName = dic[USER_NOTIFICATION_INVITED_CHANNEL_NAME_KEY];
+            NSNumber* clientId = [dic objectForKey:USER_NOTIFICATION_CLIENT_ID_KEY];
+            NSNumber* channelId = [dic objectForKey:USER_NOTIFICATION_CHANNEL_ID_KEY];
+            NSString* invitedChannelName = [dic objectForKey:USER_NOTIFICATION_INVITED_CHANNEL_NAME_KEY];
 
             if (invitedChannelName && clientId) {
                 IRCClient* u = [self findClientById:clientId.intValue];
@@ -608,7 +570,7 @@
     else {
         --n;
         if (0 <= n && n < c.channels.count) {
-            IRCChannel* e = c.channels[n];
+            IRCChannel* e = [c.channels objectAtIndex:n];
             [self select:e];
         }
     }
@@ -617,7 +579,7 @@
 - (void)selectClientAt:(int)n
 {
     if (0 <= n && n < clients.count) {
-        IRCClient* c = clients[n];
+        IRCClient* c = [clients objectAtIndex:n];
         IRCChannel* e = c.lastSelectedChannel;
         if (e) {
             [self select:e];
@@ -796,7 +758,7 @@
         i = [clients indexOfObjectIdenticalTo:target];
         int n = i + 1;
         if (0 <= n && n < clients.count) {
-            sel = clients[n];
+            sel = [clients objectAtIndex:n];
         }
         i = [tree rowForItem:target];
     }
@@ -934,10 +896,10 @@
 {
     NSArray* ary = [s componentsSeparatedByString:@" "];
     if (ary.count) {
-        NSString* kind = ary[0];
+        NSString* kind = [ary objectAtIndex:0];
         if ([kind isEqualToString:@"client"]) {
             if (ary.count >= 2) {
-                int uid = [ary[1] intValue];
+                int uid = [[ary objectAtIndex:1] intValue];
                 IRCClient* u = [self findClientById:uid];
                 if (u) {
                     [self select:u];
@@ -946,8 +908,8 @@
         }
         else if ([kind isEqualToString:@"channel"]) {
             if (ary.count >= 3) {
-                int uid = [ary[1] intValue];
-                int cid = [ary[2] intValue];
+                int uid = [[ary objectAtIndex:1] intValue];
+                int cid = [[ary objectAtIndex:2] intValue];
                 IRCChannel* c = [self findChannelByClientId:uid channelId:cid];
                 if (c) {
                     [self select:c];
@@ -1008,7 +970,7 @@
 
 - (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(IRCTreeItem*)item
 {
-    if (!item) return clients[index];
+    if (!item) return [clients objectAtIndex:index];
     return [item childAtIndex:index];
 }
 
@@ -1115,7 +1077,7 @@
     if (!items.count) return NO;
     
     NSString* s;
-    IRCTreeItem* i = items[0];
+    IRCTreeItem* i = [items objectAtIndex:0];
     if (i.isClient) {
         IRCClient* u = (IRCClient*)i;
         s = [NSString stringWithFormat:@"%d", u.uid];
@@ -1134,8 +1096,8 @@
 {
     if ([s contains:@"-"]) {
         NSArray* ary = [s componentsSeparatedByString:@"-"];
-        int uid = [ary[0] intValue];
-        int cid = [ary[1] intValue];
+        int uid = [[ary objectAtIndex:0] intValue];
+        int cid = [[ary objectAtIndex:1] intValue];
         return [self findChannelByClientId:uid channelId:cid];
     }
     else {
@@ -1180,7 +1142,7 @@
         else {
             // do not allow drop talk between channels
             if (high.count) {
-                IRCChannel* next = high[0];
+                IRCChannel* next = [high objectAtIndex:0];
                 if (next.isChannel) return NSDragOperationNone;
             }
         }
@@ -1259,7 +1221,7 @@
     IRCChannel* c = self.selectedChannel;
     if (!u || !c) return;
     
-    IRCUser* m = c.members[[row intValue]];
+    IRCUser* m = [c.members objectAtIndex:[row intValue]];
     if (m) {
         for (NSString* s in files) {
             [dcc addSenderWithUID:u.uid nick:m.nick fileName:s autoOpen:YES];

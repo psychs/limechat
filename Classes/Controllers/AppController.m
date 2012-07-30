@@ -24,19 +24,6 @@
 
 
 @implementation AppController
-{
-    WelcomeDialog* welcomeDialog;
-    id<NotificationController> notifier;
-    DCCController* dcc;
-    FieldEditorTextView* fieldEditor;
-    IRCWorld* world;
-    ViewTheme* viewTheme;
-    InputHistory* inputHistory;
-    NickCompletinStatus* completionStatus;
-
-    BOOL threeColumns;
-    BOOL terminating;
-}
 
 - (void)dealloc
 {
@@ -448,7 +435,7 @@
         int y = [dic intForKey:@"y"];
         int w = [dic intForKey:@"w"];
         int h = [dic intForKey:@"h"];
-        id spellCheckingValue = dic[@"spell_checking"];
+        id spellCheckingValue = [dic objectForKey:@"spell_checking"];
         
         [window setFrame:NSMakeRect(x, y, w, h) display:YES];
         rootSplitter.position = [dic intForKey:@"root"];
@@ -606,15 +593,18 @@
     CGFloat firstUserWeight = 0;
     
     if (commandMode) {
-        lowerChoices = @[@"action", @"away", @"ban", @"clear", @"close",
-                            @"ctcp", @"ctcpreply", @"cycle", @"dehalfop", @"deop",
-                            @"devoice", @"halfop", @"hop", @"ignore", @"invite",
-                            @"ison", @"join", @"kick", @"leave", @"list",
-                            @"me", @"mode", @"msg", @"nick", @"notice",
-                            @"op", @"part", @"pong", @"privmsg", @"query",
-                            @"quit", @"quote", @"raw", @"rejoin", @"timer",
-                            @"topic", @"umode", @"unban", @"unignore", @"voice",
-                            @"weights", @"who", @"whois", @"whowas"];
+        choices = [NSArray arrayWithObjects:
+                   @"action", @"away", @"ban", @"clear", @"close",
+                   @"ctcp", @"ctcpreply", @"cycle", @"dehalfop", @"deop",
+                   @"devoice", @"halfop", @"hop", @"ignore", @"invite",
+                   @"ison", @"join", @"kick", @"leave", @"list",
+                   @"me", @"mode", @"msg", @"nick", @"notice",
+                   @"op", @"part", @"pong", @"privmsg", @"query",
+                   @"quit", @"quote", @"raw", @"rejoin", @"timer",
+                   @"topic", @"umode", @"unban", @"unignore", @"voice",
+                   @"weights", @"who", @"whois", @"whowas",
+                   nil];
+        lowerChoices = choices;
     }
     else {
         NSMutableArray* users = [[channel.members mutableCopy] autorelease];
@@ -645,7 +635,7 @@
     int i = 0;
     for (NSString* s in lowerChoices) {
         if ([s hasPrefix:lowerPre]) {
-            [currentChoices addObject:choices[i]];
+            [currentChoices addObject:[choices objectAtIndex:i]];
             [currentLowerChoices addObject:s];
         }
         ++i;
@@ -657,7 +647,7 @@
     if (!currentChoices.count) {
         if (current.length) return;
         if (!commandMode && !twitterMode && firstUserWeight > 0) {
-            NSString* firstChoice = choices[0];
+            NSString* firstChoice = [choices objectAtIndex:0];
             [currentChoices addObject:firstChoice];
             [currentLowerChoices addObject:[firstChoice lowercaseString]];
         }
@@ -684,10 +674,10 @@
                 --index;
             }
         }
-        t = currentChoices[index];
+        t = [currentChoices objectAtIndex:index];
     }
     else {
-        t = currentChoices[0];
+        t = [currentChoices objectAtIndex:0];
     }
     
     // add suffix
@@ -852,7 +842,7 @@ typedef enum {
             
             if (n == start) break;
             
-            client = world.clients[n];
+            client = [world.clients objectAtIndex:n];
             if (client) {
                 if (target == MOVE_ACTIVE) {
                     if (client.isLoggedIn) {
@@ -1069,7 +1059,7 @@ typedef enum {
 
 - (void)welcomeDialog:(WelcomeDialog*)sender onOK:(NSDictionary*)config
 {
-    NSString* host = config[@"host"];
+    NSString* host = [config objectForKey:@"host"];
     NSString* name = host;
 
     NSString* hostPattern = @"^[^\\s]+\\s+\\(([^()]+)\\)";
@@ -1079,29 +1069,29 @@ typedef enum {
         name = [host substringWithRange:[result rangeAtIndex:1]];
     }
 
-    NSString* nick = config[@"nick"];
+    NSString* nick = [config objectForKey:@"nick"];
     NSString* user = [[nick lowercaseString] safeUsername];
     NSString* realName = nick;
     
     NSMutableArray* channels = [NSMutableArray array];
-    for (NSString* s in config[@"channels"]) {
-        [channels addObject:@{
-            @"name": s,
-            @"auto_join": @YES,
-            @"console": @YES,
-            @"growl": @YES,
-            @"mode": @"+sn",
-        }];
+    for (NSString* s in [config objectForKey:@"channels"]) {
+        [channels addObject:[NSDictionary dictionaryWithObjectsAndKeys:
+                             s, @"name",
+                             [NSNumber numberWithBool:YES], @"auto_join",
+                             [NSNumber numberWithBool:YES], @"console",
+                             [NSNumber numberWithBool:YES], @"growl",
+                             @"+sn", @"mode",
+                             nil]];
     }
     
     NSMutableDictionary* dic = [NSMutableDictionary dictionary];
-    dic[@"host"] = host;
-    dic[@"name"] = name;
-    dic[@"nick"] = nick;
-    dic[@"username"] = user;
-    dic[@"realname"] = realName;
-    dic[@"channels"] = channels;
-    dic[@"auto_connect"] = config[@"autoConnect"];
+    [dic setObject:host forKey:@"host"];
+    [dic setObject:name forKey:@"name"];
+    [dic setObject:nick forKey:@"nick"];
+    [dic setObject:user forKey:@"username"];
+    [dic setObject:realName forKey:@"realname"];
+    [dic setObject:channels forKey:@"channels"];
+    [dic setObject:[config objectForKey:@"autoConnect"] forKey:@"auto_connect"];
     
     if ([NSLocale prefersJapaneseLanguage]) {
         NSString* net = [host lowercaseString];
@@ -1110,10 +1100,10 @@ typedef enum {
             || [net contains:@"quakenet"]
             || [net contains:@"mozilla"]
             || [net contains:@"ustream"]) {
-            dic[@"encoding"] = [NSNumber numberWithLong:NSUTF8StringEncoding];
+            [dic setObject:[NSNumber numberWithLong:NSUTF8StringEncoding] forKey:@"encoding"];
         }
         else {
-            dic[@"encoding"] = [NSNumber numberWithLong:NSISO2022JPStringEncoding];
+            [dic setObject:[NSNumber numberWithLong:NSISO2022JPStringEncoding] forKey:@"encoding"];
         }
     }
     

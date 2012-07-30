@@ -27,6 +27,61 @@ typedef enum {
 
 
 @interface IRCClient : IRCTreeItem
+{
+    __weak IRCWorld* world;
+    IRCClientConfig* config;
+
+    NSMutableArray* channels;
+    IRCISupportInfo* isupport;
+    IRCUserMode* myMode;
+
+    IRCConnection* conn;
+    int connectDelay;
+    BOOL reconnectEnabled;
+    BOOL retryEnabled;
+
+    BOOL isConnecting;
+    BOOL isConnected;
+    BOOL isLoggedIn;
+    BOOL isQuitting;
+    NSStringEncoding encoding;
+
+    NSString* inputNick;
+    NSString* sentNick;
+    NSString* myNick;
+    int tryingNickNumber;
+
+    NSString* serverHostname;
+    BOOL isRegisteredWithSASL;
+    BOOL registeringToNickServ;
+    BOOL inWhois;
+    BOOL inList;
+    BOOL identifyMsg;
+    BOOL identifyCTCP;
+
+    AddressDetectionType addressDetectionMethod;
+    HostResolver* nameResolver;
+    NSString* joinMyAddress;
+    NSString* myAddress;
+    CFAbsoluteTime lastCTCPTime;
+    int pongInterval;
+    CFAbsoluteTime joinSentTime;
+    NSString* joiningChannelName;
+
+    Timer* pongTimer;
+    Timer* quitTimer;
+    Timer* reconnectTimer;
+    Timer* retryTimer;
+    Timer* autoJoinTimer;
+    Timer* commandQueueTimer;
+    NSMutableArray* commandQueue;
+
+    IRCChannel* lastSelectedChannel;
+
+    NSMutableArray* whoisDialogs;
+    ListDialog* channelListDialog;
+    ServerDialog* propertyDialog;
+}
 
 @property (nonatomic, weak) IRCWorld* world;
 @property (nonatomic, readonly) NSString* name;

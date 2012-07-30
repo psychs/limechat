@@ -5,11 +5,6 @@
 
 
 @implementation WebViewAutoScroll
-{
-    __weak WebFrameView* webFrame;
-    NSRect lastFrame, lastVisibleRect;
-    MarkedScroller* scroller;
-}
 
 @synthesize webFrame;
 @synthesize scroller;

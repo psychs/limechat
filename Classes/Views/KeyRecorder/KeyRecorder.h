@@ -6,6 +6,15 @@
 
 
 @interface KeyRecorder : NSControl
+{
+    __weak id delegate;
+    int keyCode;
+    NSUInteger modifierFlags;
+
+    BOOL recording;
+    BOOL eraseButtonPushed;
+    BOOL eraseButtonHighlighted;
+}
 
 @property (nonatomic, weak) IBOutlet id delegate;
 @property (nonatomic) int keyCode;

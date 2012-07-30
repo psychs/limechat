@@ -8,6 +8,11 @@
 
 
 @interface IRCISupportInfo : NSObject
+{
+    unsigned char modes[MODES_SIZE];
+    int nickLen;
+    int modesCount;
+}
 
 @property (nonatomic, readonly) int nickLen;
 @property (nonatomic, readonly) int modesCount;
@@ -20,6 +25,13 @@
 
 
 @interface IRCModeInfo : NSObject
+{
+    unsigned char mode;
+    BOOL plus;
+    BOOL op;
+    BOOL simpleMode;
+    NSString* param;
+}
 
 @property (nonatomic) unsigned char mode;
 @property (nonatomic) BOOL plus;

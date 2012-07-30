@@ -23,42 +23,6 @@
 
 
 @implementation LogController
-{
-    LogView* view;
-    LogPolicy* policy;
-    LogScriptEventSink* sink;
-    MarkedScroller* scroller;
-    WebViewAutoScroll* autoScroller;
-
-    __weak IRCWorld* world;
-    __weak IRCClient* client;
-    __weak IRCChannel* channel;
-    NSMenu* menu;
-    NSMenu* urlMenu;
-    NSMenu* addrMenu;
-    NSMenu* chanMenu;
-    NSMenu* memberMenu;
-    ViewTheme* theme;
-    int maxLines;
-    BOOL console;
-    NSColor* initialBackgroundColor;
-
-    BOOL becameVisible;
-    BOOL bottom;
-    BOOL movingToBottom;
-    NSMutableArray* lines;
-    int lineNumber;
-    int count;
-    BOOL needsLimitNumberOfLines;
-    BOOL loaded;
-    NSMutableArray* highlightedLineNumbers;
-    int loadingImages;
-    NSString* prevNickInfo;
-    NSString* html;
-    BOOL scrollBottom;
-    int scrollTop;
-    NSMutableSet *fetchingAvatarScreenNames;
-}
 
 @synthesize view;
 @synthesize world;
@@ -185,7 +149,7 @@
     DOMHTMLDocument* doc = (DOMHTMLDocument*)[[view mainFrame] DOMDocument];
     if (!doc) return;
     DOMHTMLElement* body = [doc body];
-    [body setValue:@0 forKey:@"scrollTop"];
+    [body setValue:[NSNumber numberWithInt:0] forKey:@"scrollTop"];
 }
 
 - (void)moveToBottom
@@ -507,7 +471,7 @@
                     NSString* lineNumStr = [lineId substringFromIndex:4];	// 4 is length of "line"
                     int lineNum = [lineNumStr intValue];
                     while (highlightedLineNumbers.count) {
-                        int i = [highlightedLineNumbers[0] intValue];
+                        int i = [[highlightedLineNumbers objectAtIndex:0] intValue];
                         if (lineNum <= i) break;
                         [highlightedLineNumbers removeObjectAtIndex:0];
                     }
@@ -641,16 +605,16 @@
     NSString* klass = isText ? @"line text" : @"line event";
     
     NSMutableDictionary* attrs = [NSMutableDictionary dictionary];
-    attrs[@"alternate"] = (lineNumber % 2 == 0 ? @"even" : @"odd");
-    attrs[@"class"] = klass;
-    attrs[@"type"] = [LogLine lineTypeString:type];
-    attrs[@"highlight"] = (key ? @"true" : @"false");
+    [attrs setObject:(lineNumber % 2 == 0 ? @"even" : @"odd") forKey:@"alternate"];
+    [attrs setObject:klass forKey:@"class"];
+    [attrs setObject:[LogLine lineTypeString:type] forKey:@"type"];
+    [attrs setObject:(key ? @"true" : @"false") forKey:@"highlight"];
     if (line.nickInfo) {
-        attrs[@"nick"] = line.nickInfo;
+        [attrs setObject:line.nickInfo forKey:@"nick"];
     }
     if (console && line.clickInfo) {
-        attrs[@"clickinfo"] = line.clickInfo;
-        attrs[@"ondblclick"] = @"on_dblclick()";
+        [attrs setObject:line.clickInfo forKey:@"clickinfo"];
+        [attrs setObject:@"on_dblclick()" forKey:@"ondblclick"];
     }
     
     [self writeLine:s attributes:attrs];
@@ -679,7 +643,7 @@
     [div setInnerHTML:aHtml];
     
     for (NSString* key in attrs) {
-        NSString* value = attrs[key];
+        NSString* value = [attrs objectForKey:key];
         [div setAttribute:key value:value];
     }
     [div setAttribute:@"id" value:[NSString stringWithFormat:@"line%d", currentLineNumber]];
@@ -689,7 +653,7 @@
         [self setNeedsLimitNumberOfLines];
     }
     
-    if ([attrs[@"highlight"] isEqualToString:@"true"]) {
+    if ([[attrs objectForKey:@"highlight"] isEqualToString:@"true"]) {
         [highlightedLineNumbers addObject:[NSNumber numberWithInt:currentLineNumber]];
     }
     

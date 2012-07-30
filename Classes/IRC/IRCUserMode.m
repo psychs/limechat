@@ -5,15 +5,6 @@
 
 
 @implementation IRCUserMode
-{
-    BOOL a;
-    BOOL i;
-    BOOL r;
-    BOOL s;
-    BOOL w;
-    BOOL o;
-    BOOL O;
-}
 
 @synthesize a;
 @synthesize i;

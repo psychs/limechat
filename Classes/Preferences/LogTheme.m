@@ -5,11 +5,6 @@
 
 
 @implementation LogTheme
-{
-    NSString* fileName;
-    NSURL* baseUrl;
-    NSString* content;
-}
 
 @synthesize fileName;
 @synthesize baseUrl;

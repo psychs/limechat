@@ -5,10 +5,6 @@
 
 
 @implementation FieldEditorTextView
-{
-    __weak id pasteDelegate;
-    KeyEventHandler* keyHandler;
-}
 
 @synthesize pasteDelegate;
 

@@ -5,9 +5,6 @@
 
 
 @implementation MainWindow
-{
-    KeyEventHandler* keyHandler;
-}
 
 - (id)initWithContentRect:(NSRect)contentRect styleMask:(NSUInteger)windowStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)deferCreation
 {

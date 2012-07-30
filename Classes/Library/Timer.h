@@ -5,6 +5,12 @@
 
 
 @interface Timer : NSObject
+{
+    __weak id delegate;
+    BOOL reqeat;
+    SEL selector;
+    NSTimer* timer;
+}
 
 @property (nonatomic, weak) id delegate;
 @property (nonatomic) BOOL reqeat;

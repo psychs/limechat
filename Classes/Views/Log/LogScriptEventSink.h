@@ -9,6 +9,14 @@
 
 
 @interface LogScriptEventSink : NSObject
+{
+    __weak LogController* owner;
+    LogPolicy* policy;
+
+    int x;
+    int y;
+    CFAbsoluteTime lastClickTime;
+}
 
 @property (nonatomic, weak) id owner;
 @property (nonatomic, strong) LogPolicy* policy;

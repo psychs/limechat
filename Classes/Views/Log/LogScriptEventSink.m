@@ -11,14 +11,6 @@
 
 
 @implementation LogScriptEventSink
-{
-    __weak LogController* owner;
-    LogPolicy* policy;
-
-    int x;
-    int y;
-    CFAbsoluteTime lastClickTime;
-}
 
 @synthesize owner;
 @synthesize policy;

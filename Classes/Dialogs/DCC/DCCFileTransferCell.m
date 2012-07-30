@@ -17,19 +17,6 @@ static char* UNITS[] = { "bytes", "KB", "MB", "GB", "TB" };
 
 
 @implementation DCCFileTransferCell
-{
-    NSString* peerNick;
-    long long processedSize;
-    long long size;
-    long long speed;
-    long long timeRemaining;
-    DCCFileTransferStatus status;
-    NSString* error;
-
-    NSProgressIndicator* progressBar;
-    NSImage* icon;
-    BOOL sendingItem;
-}
 
 @synthesize peerNick;
 @synthesize processedSize;
@@ -104,12 +91,12 @@ static char* UNITS[] = { "bytes", "KB", "MB", "GB", "TB" };
         fnameColor = [NSColor blackColor];
     }
     
-    NSDictionary* fnameAttrs = @{
-        NSParagraphStyleAttributeName: [DCCFileTransferCell fileNameStyle],
-        NSFontAttributeName: [NSFont systemFontOfSize:12],
-        NSForegroundColorAttributeName: fnameColor,
-    };
-
+    NSDictionary* fnameAttrs = [NSDictionary dictionaryWithObjectsAndKeys:
+                                [[self class] fileNameStyle], NSParagraphStyleAttributeName,
+                                [NSFont systemFontOfSize:12], NSFontAttributeName,
+                                fnameColor, NSForegroundColorAttributeName,
+                                nil];
+    
     [fname drawInRect:fnameRect withAttributes:fnameAttrs];
     
     if (progressBar) {
@@ -141,12 +128,12 @@ static char* UNITS[] = { "bytes", "KB", "MB", "GB", "TB" };
         statusColor = [NSColor grayColor];
     }
     
-    NSDictionary* statusAttrs = @{
-        NSParagraphStyleAttributeName: [DCCFileTransferCell statusStyle],
-        NSFontAttributeName: [NSFont systemFontOfSize:11],
-        NSForegroundColorAttributeName: statusColor,
-    };
-
+    NSDictionary* statusAttrs = [NSDictionary dictionaryWithObjectsAndKeys:
+                                 [[self class] statusStyle], NSParagraphStyleAttributeName,
+                                 [NSFont systemFontOfSize:11], NSFontAttributeName,
+                                 statusColor, NSForegroundColorAttributeName,
+                                 nil];
+    
     NSMutableString* statusStr = [NSMutableString string];
     
     if (sendingItem) {

@@ -12,26 +12,6 @@
 
 
 @implementation DCCSender
-{
-    __weak id delegate;
-    int uid;
-    NSString* peerNick;
-    int port;
-    NSString* fileName;
-    NSString* fullFileName;
-    long long size;
-    long long processedSize;
-    DCCFileTransferStatus status;
-    NSString* error;
-    NSImage* icon;
-    NSProgressIndicator* progressBar;
-
-    TCPServer* sock;
-    TCPClient* client;
-    NSFileHandle* file;
-    NSMutableArray* speedRecords;
-    double currentRecord;
-}
 
 @synthesize delegate;
 @synthesize uid;
@@ -77,7 +57,7 @@
         NSFileManager* fm = [NSFileManager defaultManager];
         NSDictionary* attr = [fm attributesOfItemAtPath:fullFileName error:NULL];
         if (attr) {
-            NSNumber* sizeNum = attr[NSFileSize];
+            NSNumber* sizeNum = [attr objectForKey:NSFileSize];
             size = [sizeNum longLongValue];
         }
         else {

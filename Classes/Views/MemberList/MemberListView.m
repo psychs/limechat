@@ -6,15 +6,6 @@
 
 
 @implementation MemberListView
-{
-    __weak id dropDelegate;
-    OtherTheme* theme;
-
-    NSColor* bgColor;
-    NSColor* topLineColor;
-    NSColor* bottomLineColor;
-    NSGradient* gradient;
-}
 
 @synthesize dropDelegate;
 @synthesize theme;
@@ -54,7 +45,7 @@
 
 - (void)awakeFromNib
 {
-    [self registerForDraggedTypes:@[NSFilenamesPboardType]];
+    [self registerForDraggedTypes:[NSArray arrayWithObject:NSFilenamesPboardType]];
 }
 
 - (void)keyDown:(NSEvent *)e

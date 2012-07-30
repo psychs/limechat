@@ -5,9 +5,6 @@
 
 
 @implementation NickSheet
-{
-    int uid;
-}
 
 @synthesize uid;
 

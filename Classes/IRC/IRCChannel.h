@@ -15,6 +15,27 @@
 
 
 @interface IRCChannel : IRCTreeItem
+{
+    __weak IRCClient* client;
+    IRCChannelConfig* config;
+
+    IRCChannelMode* mode;
+    NSMutableArray* members;
+    NSString* topic;
+    NSString* storedTopic;
+    BOOL isActive;
+    BOOL isOp;
+    BOOL isModeInit;
+    BOOL isNamesInit;
+    BOOL isWhoInit;
+
+    BOOL terminating;
+
+    FileLogger* logFile;
+    NSDateComponents* logDate;
+
+    ChannelDialog* propertyDialog;
+}
 
 @property (nonatomic, weak) IRCClient* client;
 @property (nonatomic, readonly) IRCChannelConfig* config;

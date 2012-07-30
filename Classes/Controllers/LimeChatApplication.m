@@ -12,9 +12,6 @@ enum {
 
 
 @implementation LimeChatApplication
-{
-    HotKeyManager* hotkey;
-}
 
 - (id)init
 {

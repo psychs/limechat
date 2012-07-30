@@ -7,6 +7,17 @@
 
 
 @interface ImageSizeCheckClient : NSObject
+{
+    __weak id delegate;
+    NSString* url;
+    int uid;
+    int cid;
+    int lineNumber;
+    int imageIndex;
+
+    NSURLConnection* conn;
+    NSHTTPURLResponse* response;
+}
 
 @property (nonatomic, weak) id delegate;
 @property (nonatomic, strong) NSString* url;

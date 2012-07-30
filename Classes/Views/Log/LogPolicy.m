@@ -8,18 +8,6 @@
 
 
 @implementation LogPolicy
-{
-    __weak MenuController* menuController;
-    NSMenu* menu;
-    NSMenu* urlMenu;
-    NSMenu* addrMenu;
-    NSMenu* memberMenu;
-    NSMenu* chanMenu;
-    NSString* url;
-    NSString* addr;
-    NSString* nick;
-    NSString* chan;
-}
 
 @synthesize menuController;
 @synthesize menu;
@@ -119,7 +107,7 @@
         return ary;
     }
     else {
-        return @[];
+        return [NSArray array];
     }
 }
 
@@ -138,11 +126,11 @@
 
 - (void)webView:(WebView *)webView decidePolicyForNavigationAction:(NSDictionary *)actionInformation request:(NSURLRequest *)request frame:(WebFrame *)frame decisionListener:(id < WebPolicyDecisionListener >)listener
 {
-    int action = [actionInformation[WebActionNavigationTypeKey] intValue];
+    int action = [[actionInformation objectForKey:WebActionNavigationTypeKey] intValue];
     switch (action) {
         case WebNavigationTypeLinkClicked:
             [listener ignore];
-            [URLOpener open:actionInformation[WebActionOriginalURLKey]];
+            [URLOpener open:[actionInformation objectForKey:WebActionOriginalURLKey]];
             break;
         case WebNavigationTypeOther:
             [listener use];

@@ -5,6 +5,15 @@
 
 
 @interface IRCUserMode : NSObject
+{
+    BOOL a;
+    BOOL i;
+    BOOL r;
+    BOOL s;
+    BOOL w;
+    BOOL o;
+    BOOL O;
+}
 
 @property (nonatomic) BOOL a;
 @property (nonatomic) BOOL i;

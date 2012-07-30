@@ -93,7 +93,7 @@
     int len = self.length;
     const UniChar* buf = [self getCharactersBuffer];
     if (!buf) {
-        return @[];
+        return [NSArray array];
     }
     
     NSMutableArray* lines = [NSMutableArray array];

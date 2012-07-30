@@ -60,29 +60,28 @@
     
     static NSDictionary* nameMap = nil;
     if (!nameMap) {
-        nameMap = @{
-            @"black": DEVICE_RGB(0, 0, 0),
-            @"silver": DEVICE_RGB(0xC0, 0xC0, 0xC0),
-            @"gray": DEVICE_RGB(0x80, 0x80, 0x80),
-            @"white": DEVICE_RGB(0xFF, 0xFF, 0xFF),
-            @"maroon": DEVICE_RGB(0x80, 0, 0),
-            @"red": DEVICE_RGB(0xFF, 0, 0),
-            @"purple": DEVICE_RGB(0x80, 0, 0x80),
-            @"fuchsia": DEVICE_RGB(0xFF, 0, 0xFF),
-            @"green": DEVICE_RGB(0, 0x80, 0),
-            @"lime": DEVICE_RGB(0, 0xFF, 0),
-            @"olive": DEVICE_RGB(0x80, 0x80, 0),
-            @"yellow": DEVICE_RGB(0xFF, 0xFF, 0),
-            @"navy": DEVICE_RGB(0, 0, 0x80),
-            @"blue": DEVICE_RGB(0, 0, 0xFF),
-            @"teal": DEVICE_RGB(0, 0x80, 0x80),
-            @"aqua": DEVICE_RGB(0, 0xFF, 0xFF),
-            @"transparent": DEVICE_RGBA(0, 0, 0, 0),
-        };
-        [nameMap retain];
+        nameMap = [[NSDictionary dictionaryWithObjectsAndKeys:
+                    DEVICE_RGB(0, 0, 0), @"black",
+                    DEVICE_RGB(0xC0, 0xC0, 0xC0), @"silver",
+                    DEVICE_RGB(0x80, 0x80, 0x80), @"gray",
+                    DEVICE_RGB(0xFF, 0xFF, 0xFF), @"white",
+                    DEVICE_RGB(0x80, 0, 0), @"maroon",
+                    DEVICE_RGB(0xFF, 0, 0), @"red",
+                    DEVICE_RGB(0x80, 0, 0x80), @"purple",
+                    DEVICE_RGB(0xFF, 0, 0xFF), @"fuchsia",
+                    DEVICE_RGB(0, 0x80, 0), @"green",
+                    DEVICE_RGB(0, 0xFF, 0), @"lime",
+                    DEVICE_RGB(0x80, 0x80, 0), @"olive",
+                    DEVICE_RGB(0xFF, 0xFF, 0), @"yellow",
+                    DEVICE_RGB(0, 0, 0x80), @"navy",
+                    DEVICE_RGB(0, 0, 0xFF), @"blue",
+                    DEVICE_RGB(0, 0x80, 0x80), @"teal",
+                    DEVICE_RGB(0, 0xFF, 0xFF), @"aqua",
+                    DEVICE_RGBA(0, 0, 0, 0), @"transparent",
+                    nil] retain];
     }
     
-    return nameMap[[s lowercaseString]];
+    return [nameMap objectForKey:[s lowercaseString]];
 }
 
 @end

@@ -5,6 +5,13 @@
 
 
 @interface ThinSplitView : NSSplitView
+{
+    int fixedViewIndex;
+    int myDividerThickness;
+    int position;
+    BOOL inverted;
+    BOOL hidden;
+}
 
 @property (nonatomic) int fixedViewIndex;
 @property (nonatomic) int position;

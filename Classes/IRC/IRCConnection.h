@@ -7,6 +7,29 @@
 
 
 @interface IRCConnection : NSObject
+{
+    __weak id delegate;
+
+    NSString* host;
+    int port;
+    BOOL useSSL;
+    NSStringEncoding encoding;
+
+    BOOL useSystemSocks;
+    BOOL useSocks;
+    int socksVersion;
+    NSString* proxyHost;
+    int proxyPort;
+    NSString* proxyUser;
+    NSString* proxyPassword;
+
+    TCPClient* conn;
+    NSMutableArray* sendQueue;
+    Timer* timer;
+    BOOL sending;
+    int penalty;
+    BOOL loggedIn;
+}
 
 @property (nonatomic, weak) id delegate;
 @property (nonatomic, strong) NSString* host;

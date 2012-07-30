@@ -11,6 +11,21 @@ typedef enum {
 
 
 @interface IRCChannelConfig : NSObject <NSMutableCopying>
+{
+    ChannelType type;
+
+    NSString* name;
+    NSString* password;
+
+    BOOL autoJoin;
+    BOOL logToConsole;
+    BOOL growl;
+
+    NSString* mode;
+    NSString* topic;
+
+    NSMutableArray* autoOp;
+}
 
 @property (nonatomic) ChannelType type;
 

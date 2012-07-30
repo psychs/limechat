@@ -8,10 +8,6 @@ const static int INSET = 3;
 
 
 @implementation MarkedScroller
-{
-    __weak id dataSource;
-    NSArray* markData;
-}
 
 @synthesize dataSource;
 @synthesize markData;

@@ -17,6 +17,14 @@
     IBOutlet NSButton* consoleCheck;
     IBOutlet NSButton* growlCheck;
     IBOutlet NSButton* okButton;
+    
+    __weak id delegate;
+    __weak NSWindow* parentWindow;
+    int uid;
+    int cid;
+    IRCChannelConfig* config;
+
+    BOOL isSheet;
 }
 
 @property (nonatomic, weak) id delegate;

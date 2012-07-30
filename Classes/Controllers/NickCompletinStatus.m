@@ -5,10 +5,6 @@
 
 
 @implementation NickCompletinStatus
-{
-    NSString* text;
-    NSRange range;
-}
 
 @synthesize text;
 @synthesize range;

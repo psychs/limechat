@@ -5,11 +5,6 @@
 
 
 @implementation IgnoreItemSheet
-{
-    IgnoreItem* ignore;
-    BOOL newItem;
-    NSMutableArray* channels;
-}
 
 @synthesize ignore;
 @synthesize newItem;
@@ -174,12 +169,12 @@
 
 - (id)tableView:(NSTableView *)sender objectValueForTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
-    return channels[row];
+    return [channels objectAtIndex:row];
 }
 
 - (void)tableView:(NSTableView *)sender setObjectValue:(id)obj forTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
-    channels[row] = obj;
+    [channels replaceObjectAtIndex:row withObject:obj];
 }
 
 - (void)tableViewSelectionDidChange:(NSNotification *)note

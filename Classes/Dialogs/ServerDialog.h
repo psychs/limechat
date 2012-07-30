@@ -53,6 +53,14 @@
     IBOutlet NSButton* deleteIgnoreButton;
     
     IBOutlet NSButton* okButton;
+
+    __weak id delegate;
+    __weak NSWindow* parentWindow;
+    int uid;
+    IRCClientConfig* config;
+
+    ChannelDialog* channelSheet;
+    IgnoreItemSheet* ignoreSheet;
 }
 
 @property (nonatomic, weak) id delegate;

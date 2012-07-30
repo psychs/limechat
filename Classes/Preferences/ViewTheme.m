@@ -6,12 +6,6 @@
 
 
 @implementation ViewTheme
-{
-    NSString* name;
-    LogTheme* log;
-    OtherTheme* other;
-    CustomJSFile* js;
-}
 
 @synthesize name;
 @synthesize log;
@@ -53,8 +47,8 @@
     if (name) {
         NSArray* kindAndName = [ViewTheme extractFileName:[Preferences themeName]];
         if (kindAndName) {
-            NSString* kind = kindAndName[0];
-            NSString* fname = kindAndName[1];
+            NSString* kind = [kindAndName objectAtIndex:0];
+            NSString* fname = [kindAndName objectAtIndex:1];
             NSString* fullName = nil;
             if ([kind isEqualToString:@"resource"]) {
                 fullName = [[ViewTheme resourceBasePath] stringByAppendingPathComponent:fname];
@@ -141,7 +135,7 @@
         NSString* applicationSupportPath = NSHomeDirectory();
         NSArray* ary = [[NSFileManager defaultManager] URLsForDirectory:NSApplicationSupportDirectory inDomains:NSUserDomainMask];
         if (ary.count) {
-            applicationSupportPath = [ary[0] path];
+            applicationSupportPath = [[ary objectAtIndex:0] path];
         }
 
         NSString* path = applicationSupportPath;

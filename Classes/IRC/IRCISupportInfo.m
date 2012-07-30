@@ -11,11 +11,6 @@
 
 
 @implementation IRCISupportInfo
-{
-    unsigned char modes[MODES_SIZE];
-    int nickLen;
-    int modesCount;
-}
 
 @synthesize nickLen;
 @synthesize modesCount;
@@ -186,7 +181,7 @@
     
     int count = ary.count;
     for (int i=0; i<count; i++) {
-        NSString* s = ary[i];
+        NSString* s = [ary objectAtIndex:i];
         int len = s.length;
         for (int j=0; j<len; j++) {
             UniChar c = [s characterAtIndex:j];
@@ -224,13 +219,6 @@
 
 
 @implementation IRCModeInfo
-{
-    unsigned char mode;
-    BOOL plus;
-    BOOL op;
-    BOOL simpleMode;
-    NSString* param;
-}
 
 @synthesize mode;
 @synthesize plus;

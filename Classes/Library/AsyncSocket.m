@@ -517,38 +517,6 @@ static void MyCFWriteStreamCallback(CFWriteStreamRef stream, CFStreamEventType t
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @implementation AsyncSocket
-{
-    CFSocketNativeHandle theNativeSocket4;
-    CFSocketNativeHandle theNativeSocket6;
-
-    CFSocketRef theSocket4;            // IPv4 accept or connect socket
-    CFSocketRef theSocket6;            // IPv6 accept or connect socket
-
-    CFReadStreamRef theReadStream;
-    CFWriteStreamRef theWriteStream;
-
-    CFRunLoopSourceRef theSource4;     // For theSocket4
-    CFRunLoopSourceRef theSource6;     // For theSocket6
-    CFRunLoopRef theRunLoop;
-    CFSocketContext theContext;
-    NSArray *theRunLoopModes;
-
-    NSTimer *theConnectTimer;
-
-    NSMutableArray *theReadQueue;
-    AsyncReadPacket *theCurrentRead;
-    NSTimer *theReadTimer;
-    NSMutableData *partialReadBuffer;
-
-    NSMutableArray *theWriteQueue;
-    AsyncWritePacket *theCurrentWrite;
-    NSTimer *theWriteTimer;
-
-    __weak id theDelegate;
-    UInt16 theFlags;
-
-    long theUserData;
-}
 
 - (id)init
 {
@@ -603,7 +571,7 @@ static void MyCFWriteStreamCallback(CFWriteStreamRef stream, CFStreamEventType t
         theContext.copyDescription = nil;
         
         // Default run loop modes
-        theRunLoopModes = [@[NSDefaultRunLoopMode] retain];
+        theRunLoopModes = [[NSArray arrayWithObject:NSDefaultRunLoopMode] retain];
     }
     return self;
 }
@@ -719,7 +687,7 @@ static void MyCFWriteStreamCallback(CFWriteStreamRef stream, CFStreamEventType t
     NSUInteger i, count = [theRunLoopModes count];
     for(i = 0; i < count; i++)
     {
-        CFStringRef runLoopMode = (CFStringRef)theRunLoopModes[i];
+        CFStringRef runLoopMode = (CFStringRef)[theRunLoopModes objectAtIndex:i];
         CFRunLoopAddSource(theRunLoop, source, runLoopMode);
     }
 }
@@ -729,7 +697,7 @@ static void MyCFWriteStreamCallback(CFWriteStreamRef stream, CFStreamEventType t
     NSUInteger i, count = [theRunLoopModes count];
     for(i = 0; i < count; i++)
     {
-        CFStringRef runLoopMode = (CFStringRef)theRunLoopModes[i];
+        CFStringRef runLoopMode = (CFStringRef)[theRunLoopModes objectAtIndex:i];
         CFRunLoopRemoveSource(theRunLoop, source, runLoopMode);
     }
 }
@@ -739,7 +707,7 @@ static void MyCFWriteStreamCallback(CFWriteStreamRef stream, CFStreamEventType t
     NSUInteger i, count = [theRunLoopModes count];
     for(i = 0; i < count; i++)
     {
-        CFStringRef runLoopMode = (CFStringRef)theRunLoopModes[i];
+        CFStringRef runLoopMode = (CFStringRef)[theRunLoopModes objectAtIndex:i];
         CFRunLoopAddTimer(theRunLoop, (CFRunLoopTimerRef)timer, runLoopMode);
     }
 }
@@ -749,7 +717,7 @@ static void MyCFWriteStreamCallback(CFWriteStreamRef stream, CFStreamEventType t
     NSUInteger i, count = [theRunLoopModes count];
     for(i = 0; i < count; i++)		
     {
-        CFStringRef runLoopMode = (CFStringRef)theRunLoopModes[i];
+        CFStringRef runLoopMode = (CFStringRef)[theRunLoopModes objectAtIndex:i];
         CFRunLoopRemoveTimer(theRunLoop, (CFRunLoopTimerRef)timer, runLoopMode);
     }
 }
@@ -759,7 +727,7 @@ static void MyCFWriteStreamCallback(CFWriteStreamRef stream, CFStreamEventType t
     NSUInteger i, count = [theRunLoopModes count];
     for(i = 0; i < count; i++)
     {
-        CFStringRef runLoopMode = (CFStringRef)theRunLoopModes[i];
+        CFStringRef runLoopMode = (CFStringRef)[theRunLoopModes objectAtIndex:i];
         CFReadStreamUnscheduleFromRunLoop(theReadStream, theRunLoop, runLoopMode);
     }
     CFReadStreamSetClient(theReadStream, kCFStreamEventNone, NULL, NULL);
@@ -770,7 +738,7 @@ static void MyCFWriteStreamCallback(CFWriteStreamRef stream, CFStreamEventType t
     NSUInteger i, count = [theRunLoopModes count];
     for(i = 0; i < count; i++)
     {
-        CFStringRef runLoopMode = (CFStringRef)theRunLoopModes[i];
+        CFStringRef runLoopMode = (CFStringRef)[theRunLoopModes objectAtIndex:i];
         CFWriteStreamUnscheduleFromRunLoop(theWriteStream, theRunLoop, runLoopMode);
     }
     CFWriteStreamSetClient(theWriteStream, kCFStreamEventNone, NULL, NULL);
@@ -1024,8 +992,8 @@ static void MyCFWriteStreamCallback(CFWriteStreamRef stream, CFStreamEventType t
                 if(errPtr)
                 {
                     NSString *errMsg = [NSString stringWithCString:gai_strerror(error) encoding:NSASCIIStringEncoding];
-                    NSDictionary *info = @{NSLocalizedDescriptionKey: errMsg};
-
+                    NSDictionary *info = [NSDictionary dictionaryWithObject:errMsg forKey:NSLocalizedDescriptionKey];
+                    
                     *errPtr = [NSError errorWithDomain:@"kCFStreamErrorDomainNetDB" code:error userInfo:info];
                 }
             }
@@ -1605,7 +1573,7 @@ Failed:
     NSUInteger i, count = [theRunLoopModes count];
     for(i = 0; i < count; i++)
     {
-        CFStringRef runLoopMode = (CFStringRef)theRunLoopModes[i];
+        CFStringRef runLoopMode = (CFStringRef)[theRunLoopModes objectAtIndex:i];
         CFReadStreamScheduleWithRunLoop(theReadStream, theRunLoop, runLoopMode);
         CFWriteStreamScheduleWithRunLoop(theWriteStream, theRunLoop, runLoopMode);
     }
@@ -2033,8 +2001,8 @@ Failed:
 - (NSError *)getErrnoError
 {
     NSString *errorMsg = [NSString stringWithUTF8String:strerror(errno)];
-    NSDictionary *userInfo = @{NSLocalizedDescriptionKey: errorMsg};
-
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObject:errorMsg forKey:NSLocalizedDescriptionKey];
+    
     return [NSError errorWithDomain:NSPOSIXErrorDomain code:errno userInfo:userInfo];
 }
 
@@ -2048,8 +2016,8 @@ Failed:
                                                          @"AsyncSocket", [NSBundle mainBundle],
                                                          @"General CFSocket error", nil);
     
-    NSDictionary *info = @{NSLocalizedDescriptionKey: errMsg};
-
+    NSDictionary *info = [NSDictionary dictionaryWithObject:errMsg forKey:NSLocalizedDescriptionKey];
+    
     return [NSError errorWithDomain:AsyncSocketErrorDomain code:AsyncSocketCFSocketError userInfo:info];
 }
 
@@ -2080,8 +2048,8 @@ Failed:
                                                          @"AsyncSocket", [NSBundle mainBundle],
                                                          @"Connection canceled", nil);
     
-    NSDictionary *info = @{NSLocalizedDescriptionKey: errMsg};
-
+    NSDictionary *info = [NSDictionary dictionaryWithObject:errMsg forKey:NSLocalizedDescriptionKey];
+    
     return [NSError errorWithDomain:AsyncSocketErrorDomain code:AsyncSocketCanceledError userInfo:info];
 }
 
@@ -2094,8 +2062,8 @@ Failed:
                                                          @"AsyncSocket", [NSBundle mainBundle],
                                                          @"Attempt to connect to host timed out", nil);
     
-    NSDictionary *info = @{NSLocalizedDescriptionKey: errMsg};
-
+    NSDictionary *info = [NSDictionary dictionaryWithObject:errMsg forKey:NSLocalizedDescriptionKey];
+    
     return [NSError errorWithDomain:AsyncSocketErrorDomain code:AsyncSocketConnectTimeoutError userInfo:info];
 }
 
@@ -2108,8 +2076,8 @@ Failed:
                                                          @"AsyncSocket", [NSBundle mainBundle],
                                                          @"Read operation reached set maximum length", nil);
     
-    NSDictionary *info = @{NSLocalizedDescriptionKey: errMsg};
-
+    NSDictionary *info = [NSDictionary dictionaryWithObject:errMsg forKey:NSLocalizedDescriptionKey];
+    
     return [NSError errorWithDomain:AsyncSocketErrorDomain code:AsyncSocketReadMaxedOutError userInfo:info];
 }
 
@@ -2122,8 +2090,8 @@ Failed:
                                                          @"AsyncSocket", [NSBundle mainBundle],
                                                          @"Read operation timed out", nil);
     
-    NSDictionary *info = @{NSLocalizedDescriptionKey: errMsg};
-
+    NSDictionary *info = [NSDictionary dictionaryWithObject:errMsg forKey:NSLocalizedDescriptionKey];
+    
     return [NSError errorWithDomain:AsyncSocketErrorDomain code:AsyncSocketReadTimeoutError userInfo:info];
 }
 
@@ -2136,8 +2104,8 @@ Failed:
                                                          @"AsyncSocket", [NSBundle mainBundle],
                                                          @"Write operation timed out", nil);
     
-    NSDictionary *info = @{NSLocalizedDescriptionKey: errMsg};
-
+    NSDictionary *info = [NSDictionary dictionaryWithObject:errMsg forKey:NSLocalizedDescriptionKey];
+    
     return [NSError errorWithDomain:AsyncSocketErrorDomain code:AsyncSocketWriteTimeoutError userInfo:info];
 }
 
@@ -2179,7 +2147,7 @@ Failed:
     NSDictionary *info = nil;
     if(message != nil)
     {
-        info = @{NSLocalizedDescriptionKey: message};
+        info = [NSDictionary dictionaryWithObject:message forKey:NSLocalizedDescriptionKey];
     }
     return [NSError errorWithDomain:domain code:err.error userInfo:info];
 }
@@ -2993,7 +2961,7 @@ Failed:
         if([theReadQueue count] > 0)
         {
             // Dequeue the next object in the write queue
-            theCurrentRead = [theReadQueue[0] retain];
+            theCurrentRead = [[theReadQueue objectAtIndex:0] retain];
             [theReadQueue removeObjectAtIndex:0];
             
             if([theCurrentRead isKindOfClass:[AsyncSpecialPacket class]])
@@ -3427,7 +3395,7 @@ Failed:
         if([theWriteQueue count] > 0)
         {
             // Dequeue the next object in the write queue
-            theCurrentWrite = [theWriteQueue[0] retain];
+            theCurrentWrite = [[theWriteQueue objectAtIndex:0] retain];
             [theWriteQueue removeObjectAtIndex:0];
             
             if([theCurrentWrite isKindOfClass:[AsyncSpecialPacket class]])
@@ -3783,14 +3751,14 @@ Failed:
 
 - (void)useSSL
 {
-    NSDictionary* settings = @{
-        (id)kCFStreamSSLLevel: (id)kCFStreamSocketSecurityLevelNegotiatedSSL,
-        (id)kCFStreamSSLAllowsAnyRoot: (id)kCFBooleanTrue,
-        (id)kCFStreamSSLValidatesCertificateChain: (id)kCFBooleanFalse,
-        (id)kCFStreamSSLPeerName: (id)kCFNull,
-        (id)kCFStreamSSLIsServer: (id)kCFBooleanFalse,
-    };
-
+    NSDictionary* settings = [NSDictionary dictionaryWithObjectsAndKeys:
+                              (NSString*)kCFStreamSocketSecurityLevelNegotiatedSSL, kCFStreamSSLLevel,
+                              kCFBooleanTrue, kCFStreamSSLAllowsAnyRoot,
+                              kCFBooleanFalse, kCFStreamSSLValidatesCertificateChain,
+                              kCFNull, kCFStreamSSLPeerName,
+                              kCFBooleanFalse, kCFStreamSSLIsServer,
+                              nil];
+    
     CFReadStreamSetProperty(theReadStream, kCFStreamPropertySSLSettings, settings);
     CFWriteStreamSetProperty(theWriteStream, kCFStreamPropertySSLSettings, settings);
 }
@@ -3808,21 +3776,17 @@ Failed:
     NSMutableDictionary* settings = [NSMutableDictionary dictionary];
     
     if (version == 4) {
-        settings[(NSString*)kCFStreamPropertySOCKSVersion] = (NSString*)kCFStreamSocketSOCKSVersion4;
+        [settings setObject:(NSString*)kCFStreamSocketSOCKSVersion4 forKey:(NSString*)kCFStreamPropertySOCKSVersion];
     }
     else {
-        settings[(NSString*)kCFStreamPropertySOCKSVersion] = (NSString*)kCFStreamSocketSOCKSVersion5;
+        [settings setObject:(NSString*)kCFStreamSocketSOCKSVersion5 forKey:(NSString*)kCFStreamPropertySOCKSVersion];
     }
-
-    settings[(NSString*)kCFStreamPropertySOCKSProxyHost] = host;
-    settings[(NSString*)kCFStreamPropertySOCKSProxyPort] = [NSNumber numberWithInt:port];
     
-    if ([user length]) {
-        settings[(NSString*)kCFStreamPropertySOCKSUser] = user;
-    }
-    if ([password length]) {
-        settings[(NSString*)kCFStreamPropertySOCKSPassword] = password;
-    }
+    [settings setObject:host forKey:(NSString*)kCFStreamPropertySOCKSProxyHost];
+    [settings setObject:[NSNumber numberWithInt:port] forKey:(NSString*)kCFStreamPropertySOCKSProxyPort];
+    
+    if ([user length]) [settings setObject:user forKey:(NSString*)kCFStreamPropertySOCKSUser];
+    if ([password length]) [settings setObject:password forKey:(NSString*)kCFStreamPropertySOCKSPassword];
     
     CFReadStreamSetProperty(theReadStream, kCFStreamPropertySOCKSProxy, settings);
     CFWriteStreamSetProperty(theWriteStream, kCFStreamPropertySOCKSProxy, settings);

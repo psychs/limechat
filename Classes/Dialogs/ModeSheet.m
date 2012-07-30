@@ -5,12 +5,6 @@
 
 
 @implementation ModeSheet
-{
-    IRCChannelMode* mode;
-    NSString* channelName;
-    int uid;
-    int cid;
-}
 
 @synthesize mode;
 @synthesize channelName;

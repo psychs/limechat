@@ -5,9 +5,6 @@
 
 
 @implementation HotKeyManager
-{
-    EventHotKeyRef handle;
-}
 
 @synthesize handle;
 

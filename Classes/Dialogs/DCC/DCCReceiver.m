@@ -9,27 +9,6 @@
 
 
 @implementation DCCReceiver
-{
-    __weak id delegate;
-    int uid;
-    NSString* peerNick;
-    NSString* host;
-    int port;
-    long long size;
-    long long processedSize;
-    DCCFileTransferStatus status;
-    NSString* error;
-    NSString* path;
-    NSString* fileName;
-    NSString* downloadFileName;
-    NSImage* icon;
-    NSProgressIndicator* progressBar;
-
-    TCPClient* sock;
-    NSFileHandle* file;
-    NSMutableArray* speedRecords;
-    double currentRecord;
-}
 
 @synthesize delegate;
 @synthesize uid;

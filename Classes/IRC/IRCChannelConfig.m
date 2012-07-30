@@ -6,21 +6,6 @@
 
 
 @implementation IRCChannelConfig
-{
-    ChannelType type;
-
-    NSString* name;
-    NSString* password;
-
-    BOOL autoJoin;
-    BOOL logToConsole;
-    BOOL growl;
-
-    NSString* mode;
-    NSString* topic;
-
-    NSMutableArray* autoOp;
-}
 
 @synthesize type;
 
@@ -95,17 +80,17 @@
     
     [dic setInt:type forKey:@"type"];
     
-    if (name) dic[@"name"] = name;
-    if (password) dic[@"password"] = password;
-
-    dic[@"auto_join"] = [NSNumber numberWithBool:autoJoin];
-    dic[@"console"] = [NSNumber numberWithBool:logToConsole];
-    dic[@"growl"] = [NSNumber numberWithBool:growl];
+    if (name) [dic setObject:name forKey:@"name"];
+    if (password) [dic setObject:password forKey:@"password"];
     
-    if (mode) dic[@"mode"] = mode;
-    if (topic) dic[@"topic"] = topic;
+    [dic setBool:autoJoin forKey:@"auto_join"];
+    [dic setBool:logToConsole forKey:@"console"];
+    [dic setBool:growl forKey:@"growl"];
     
-    if (autoOp) dic[@"autoop"] = autoOp;
+    if (mode) [dic setObject:mode forKey:@"mode"];
+    if (topic) [dic setObject:topic forKey:@"topic"];
+    
+    if (autoOp) [dic setObject:autoOp forKey:@"autoop"];
     
     return dic;
 }

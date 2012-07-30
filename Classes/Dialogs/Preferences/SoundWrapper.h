@@ -9,6 +9,9 @@
 
 
 @interface SoundWrapper : NSObject
+{
+    UserNotificationType eventType;
+}
 
 @property (nonatomic, readonly) NSString* displayName;
 @property (nonatomic, strong) NSString* sound;

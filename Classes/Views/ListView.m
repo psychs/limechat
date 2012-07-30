@@ -5,10 +5,6 @@
 
 
 @implementation ListView
-{
-    __weak id keyDelegate;
-    __weak id textDelegate;
-}
 
 @synthesize keyDelegate;
 @synthesize textDelegate;

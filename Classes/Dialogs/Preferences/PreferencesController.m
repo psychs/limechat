@@ -15,25 +15,6 @@
 
 
 @implementation PreferencesController
-{
-    __weak id delegate;
-
-    IBOutlet KeyRecorder* hotKey;
-
-    IBOutlet NSTableView* keywordsTable;
-    IBOutlet NSTableView* excludeWordsTable;
-    IBOutlet NSArrayController* keywordsArrayController;
-    IBOutlet NSArrayController* excludeWordsArrayController;
-    IBOutlet NSPopUpButton* transcriptFolderButton;
-    IBOutlet NSPopUpButton* themeButton;
-    IBOutlet NSTableView* soundsTable;
-
-    NSMutableArray* sounds;
-    NSOpenPanel* transcriptFolderOpenPanel;
-    NSFont* logFont;
-    NSFont* inputFont;
-    BOOL changingLogFont;
-}
 
 @synthesize delegate;
 
@@ -65,7 +46,7 @@
     if (version >= 0x1080) {
         NSArray* columns = [soundsTable tableColumns];
         if (columns.count > 3) {
-            [soundsTable removeTableColumn:columns[2]];
+            [soundsTable removeTableColumn:[columns objectAtIndex:2]];
         }
     }
 }
@@ -239,7 +220,7 @@
 {
     static NSArray* ary;
     if (!ary) {
-        ary = [@[@"-", @"Beep", @"Basso", @"Blow", @"Bottle", @"Frog", @"Funk", @"Glass", @"Hero", @"Morse", @"Ping", @"Pop", @"Purr", @"Sosumi", @"Submarine", @"Tink"] retain];
+        ary = [[NSArray arrayWithObjects:@"-", @"Beep", @"Basso", @"Blow", @"Bottle", @"Frog", @"Funk", @"Glass", @"Hero", @"Morse", @"Ping", @"Pop", @"Purr", @"Sosumi", @"Submarine", @"Tink", nil] retain];
     }
     return ary;
 }
@@ -378,7 +359,7 @@
     [[themeButton itemAtIndex:0] setTag:0];
     
     NSFileManager* fm = [NSFileManager defaultManager];
-    NSArray* ary = @[[ViewTheme resourceBasePath], [ViewTheme userBasePath]];
+    NSArray* ary = [NSArray arrayWithObjects:[ViewTheme resourceBasePath], [ViewTheme userBasePath], nil];
     int tag = 0;
     
     for (NSString* path in ary) {
@@ -420,8 +401,8 @@
         return;
     }
     
-    NSString* kind = kindAndName[0];
-    NSString* name = kindAndName[1];
+    NSString* kind = [kindAndName objectAtIndex:0];
+    NSString* name = [kindAndName objectAtIndex:1];
     
     int targetTag = 0;
     if (![kind isEqualToString:@"resource"]) {

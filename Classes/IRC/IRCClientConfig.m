@@ -9,45 +9,6 @@
 
 
 @implementation IRCClientConfig
-{
-    NSString* name;
-
-    // connection
-    NSString* host;
-    int port;
-    BOOL useSSL;
-
-    // user
-    NSString* nick;
-    NSString* password;
-    NSString* username;
-    NSString* realName;
-    NSString* nickPassword;
-    BOOL useSASL;
-    NSMutableArray* altNicks;
-
-    // proxy
-    ProxyType proxyType;
-    NSString* proxyHost;
-    int proxyPort;
-    NSString* proxyUser;
-    NSString* proxyPassword;
-
-    // others
-    BOOL autoConnect;
-    NSStringEncoding encoding;
-    NSStringEncoding fallbackEncoding;
-    NSString* leavingComment;
-    NSString* userInfo;
-    BOOL invisibleMode;
-    NSMutableArray* loginCommands;
-    NSMutableArray* channels;
-    NSMutableArray* autoOp;
-    NSMutableArray* ignores;
-
-    // internal
-    int uid;
-}
 
 @synthesize name;
 
@@ -197,51 +158,51 @@
 {
     NSMutableDictionary* dic = [NSMutableDictionary dictionary];
     
-    if (name) dic[@"name"] = name;
+    if (name) [dic setObject:name forKey:@"name"];
     
-    if (host) dic[@"host"] = host;
+    if (host) [dic setObject:host forKey:@"host"];
     [dic setInt:port forKey:@"port"];
     [dic setBool:useSSL forKey:@"ssl"];
     
-    if (nick) dic[@"nick"] = nick;
-    if (password) dic[@"password"] = password;
-    if (username) dic[@"username"] = username;
-    if (realName) dic[@"realname"] = realName;
-    if (nickPassword) dic[@"nickPassword"] = nickPassword;
+    if (nick) [dic setObject:nick forKey:@"nick"];
+    if (password) [dic setObject:password forKey:@"password"];
+    if (username) [dic setObject:username forKey:@"username"];
+    if (realName) [dic setObject:realName forKey:@"realname"];
+    if (nickPassword) [dic setObject:nickPassword forKey:@"nickPassword"];
     [dic setBool:useSASL forKey:@"useSASL"];
-    if (altNicks) dic[@"alt_nicks"] = altNicks;
+    if (altNicks) [dic setObject:altNicks forKey:@"alt_nicks"];
     
     [dic setInt:proxyType forKey:@"proxy"];
-    if (proxyHost) dic[@"proxy_host"] = proxyHost;
+    if (proxyHost) [dic setObject:proxyHost forKey:@"proxy_host"];
     [dic setInt:proxyPort forKey:@"proxy_port"];
-    if (proxyUser) dic[@"proxy_user"] = proxyUser;
-    if (proxyPassword) dic[@"proxy_password"] = proxyPassword;
+    if (proxyUser) [dic setObject:proxyUser forKey:@"proxy_user"];
+    if (proxyPassword) [dic setObject:proxyPassword forKey:@"proxy_password"];
     
     [dic setBool:autoConnect forKey:@"auto_connect"];
     [dic setInt:encoding forKey:@"encoding"];
     [dic setInt:fallbackEncoding forKey:@"fallback_encoding"];
-    if (leavingComment) dic[@"leaving_comment"] = leavingComment;
-    if (userInfo) dic[@"userinfo"] = userInfo;
+    if (leavingComment) [dic setObject:leavingComment forKey:@"leaving_comment"];
+    if (userInfo) [dic setObject:userInfo forKey:@"userinfo"];
     [dic setBool:invisibleMode forKey:@"invisible"];
     
-    if (loginCommands) dic[@"login_commands"] = loginCommands;
+    if (altNicks) [dic setObject:loginCommands forKey:@"login_commands"];
     
     NSMutableArray* channelAry = [NSMutableArray array];
     for (IRCChannelConfig* e in channels) {
         [channelAry addObject:[e dictionaryValue]];
     }
-    dic[@"channels"] = channelAry;
-
-    dic[@"autoop"] = autoOp;
-
+    [dic setObject:channelAry forKey:@"channels"];
+    
+    [dic setObject:autoOp forKey:@"autoop"];
+    
     NSMutableArray* ignoreAry = [NSMutableArray array];
     for (IgnoreItem* e in ignores) {
         if (e.isValid) {
             [ignoreAry addObject:[e dictionaryValue]];
         }
     }
-    dic[@"ignores"] = ignoreAry;
-
+    [dic setObject:ignoreAry forKey:@"ignores"];
+    
     return dic;
 }
 

@@ -5,10 +5,6 @@
 
 
 @implementation TopicSheet
-{
-    int uid;
-    int cid;
-}
 
 @synthesize uid;
 @synthesize cid;

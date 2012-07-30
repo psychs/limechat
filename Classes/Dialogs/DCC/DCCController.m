@@ -17,22 +17,6 @@
 
 
 @implementation DCCController
-{
-    __weak id delegate;
-    __weak IRCWorld* world;
-    __weak NSWindow* mainWindow;
-
-    BOOL loaded;
-    NSMutableArray* receivers;
-    NSMutableArray* senders;
-
-    Timer* timer;
-
-    IBOutlet ListView* receiverTable;
-    IBOutlet ListView* senderTable;
-    IBOutlet ThinSplitView* splitter;
-    IBOutlet NSButton* clearButton;
-}
 
 @synthesize delegate;
 @synthesize world;
@@ -163,7 +147,7 @@
     NSFileManager* fm = [NSFileManager defaultManager];
     NSDictionary* attr = [fm attributesOfItemAtPath:fileName error:NULL];
     if (!attr) return;
-    NSNumber* sizeNum = attr[NSFileSize];
+    NSNumber* sizeNum = [attr objectForKey:NSFileSize];
     long long size = [sizeNum longLongValue];
     
     if (!size) return;
@@ -228,7 +212,7 @@
     BOOL enabled = NO;
     
     for (int i=receivers.count-1; i>=0; --i) {
-        DCCReceiver* e = receivers[i];
+        DCCReceiver* e = [receivers objectAtIndex:i];
         if (e.status == DCC_ERROR || e.status == DCC_COMPLETE || e.status == DCC_STOP) {
             enabled = YES;
             break;
@@ -237,7 +221,7 @@
     
     if (!enabled) {
         for (int i=senders.count-1; i>=0; --i) {
-            DCCSender* e = senders[i];
+            DCCSender* e = [senders objectAtIndex:i];
             if (e.status == DCC_ERROR || e.status == DCC_COMPLETE || e.status == DCC_STOP) {
                 enabled = YES;
                 break;
@@ -284,7 +268,7 @@
 
 - (void)destroyReceiverAtIndex:(int)i
 {
-    DCCReceiver* e = receivers[i];
+    DCCReceiver* e = [receivers objectAtIndex:i];
     e.delegate = nil;
     [e close];
 
@@ -298,7 +282,7 @@
 
 - (void)destroySenderAtIndex:(int)i
 {
-    DCCSender* e = senders[i];
+    DCCSender* e = [senders objectAtIndex:i];
     e.delegate = nil;
     [e close];
     
@@ -323,7 +307,7 @@
         NSMutableArray* sel = [NSMutableArray array];
         NSIndexSet* indexes = [receiverTable selectedRowIndexes];
         for (NSUInteger i=[indexes firstIndex]; i!=NSNotFound; i=[indexes indexGreaterThanIndex:i]) {
-            [sel addObject:receivers[i]];
+            [sel addObject:[receivers objectAtIndex:i]];
         }
         
         switch (tag) {
@@ -367,7 +351,7 @@
         NSMutableArray* sel = [NSMutableArray array];
         NSIndexSet* indexes = [senderTable selectedRowIndexes];
         for (NSUInteger i=[indexes firstIndex]; i!=NSNotFound; i=[indexes indexGreaterThanIndex:i]) {
-            [sel addObject:senders[i]];
+            [sel addObject:[senders objectAtIndex:i]];
         }
         
         switch (tag) {
@@ -396,14 +380,14 @@
 - (void)clear:(id)sender
 {
     for (int i=receivers.count-1; i>=0; --i) {
-        DCCReceiver* e = receivers[i];
+        DCCReceiver* e = [receivers objectAtIndex:i];
         if (e.status == DCC_ERROR || e.status == DCC_COMPLETE || e.status == DCC_STOP) {
             [self destroyReceiverAtIndex:i];
         }
     }
     
     for (int i=senders.count-1; i>=0; --i) {
-        DCCSender* e = senders[i];
+        DCCSender* e = [senders objectAtIndex:i];
         if (e.status == DCC_ERROR || e.status == DCC_COMPLETE || e.status == DCC_STOP) {
             [self destroySenderAtIndex:i];
         }
@@ -417,7 +401,7 @@
 {
     NSIndexSet* indexes = [receiverTable selectedRowIndexes];
     for (NSUInteger i=[indexes firstIndex]; i!=NSNotFound; i=[indexes indexGreaterThanIndex:i]) {
-        DCCReceiver* e = receivers[i];
+        DCCReceiver* e = [receivers objectAtIndex:i];
         [e open];
     }
     
@@ -429,7 +413,7 @@
 {
     NSIndexSet* indexes = [receiverTable selectedRowIndexes];
     for (NSUInteger i=[indexes firstIndex]; i!=NSNotFound; i=[indexes indexGreaterThanIndex:i]) {
-        DCCReceiver* e = receivers[i];
+        DCCReceiver* e = [receivers objectAtIndex:i];
         [e close];
     }
     
@@ -454,7 +438,7 @@
     
     NSIndexSet* indexes = [receiverTable selectedRowIndexes];
     for (NSUInteger i=[indexes firstIndex]; i!=NSNotFound; i=[indexes indexGreaterThanIndex:i]) {
-        DCCReceiver* e = receivers[i];
+        DCCReceiver* e = [receivers objectAtIndex:i];
         [ws openFile:e.downloadFileName];
     }
     
@@ -468,7 +452,7 @@
     
     NSIndexSet* indexes = [receiverTable selectedRowIndexes];
     for (NSUInteger i=[indexes firstIndex]; i!=NSNotFound; i=[indexes indexGreaterThanIndex:i]) {
-        DCCReceiver* e = receivers[i];
+        DCCReceiver* e = [receivers objectAtIndex:i];
         [ws selectFile:e.downloadFileName inFileViewerRootedAtPath:nil];
     }
     
@@ -480,7 +464,7 @@
 {
     NSIndexSet* indexes = [senderTable selectedRowIndexes];
     for (NSUInteger i=[indexes firstIndex]; i!=NSNotFound; i=[indexes indexGreaterThanIndex:i]) {
-        DCCSender* e = senders[i];
+        DCCSender* e = [senders objectAtIndex:i];
         [e open];
     }
     
@@ -492,7 +476,7 @@
 {
     NSIndexSet* indexes = [senderTable selectedRowIndexes];
     for (NSUInteger i=[indexes firstIndex]; i!=NSNotFound; i=[indexes indexGreaterThanIndex:i]) {
-        DCCSender* e = senders[i];
+        DCCSender* e = [senders objectAtIndex:i];
         [e close];
     }
     
@@ -671,7 +655,7 @@
     if (sender == senderTable) {
         if (row < 0 || senders.count <= row) return;
         
-        DCCSender* e = senders[row];
+        DCCSender* e = [senders objectAtIndex:row];
         double speed = e.speed;
         
         c.sendingItem = YES;
@@ -689,7 +673,7 @@
     else {
         if (row < 0 || receivers.count <= row) return;
         
-        DCCReceiver* e = receivers[row];
+        DCCReceiver* e = [receivers objectAtIndex:row];
         double speed = e.speed;
         
         c.sendingItem = NO;

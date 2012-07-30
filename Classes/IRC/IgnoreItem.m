@@ -7,16 +7,6 @@
 
 
 @implementation IgnoreItem
-{
-    NSString* nick;
-    NSString* text;
-    BOOL useRegexForNick;
-    BOOL useRegexForText;
-    NSArray* channels;
-
-    NSRegularExpression* nickRegex;
-    NSRegularExpression* textRegex;
-}
 
 @synthesize nick;
 @synthesize text;
@@ -46,11 +36,11 @@
 {
     self = [self init];
     if (self) {
-        nick = [dic[@"nick"] retain];
-        text = [dic[@"text"] retain];
+        nick = [[dic objectForKey:@"nick"] retain];
+        text = [[dic objectForKey:@"text"] retain];
         useRegexForNick = [dic boolForKey:@"useRegexForNick"];
         useRegexForText = [dic boolForKey:@"useRegexForText"];
-        channels = [dic[@"channels"] retain];
+        channels = [[dic objectForKey:@"channels"] retain];
     }
     return self;
 }
@@ -59,13 +49,13 @@
 {
     NSMutableDictionary* dic = [NSMutableDictionary dictionary];
     
-    if (nick) dic[@"nick"] = nick;
-    if (text) dic[@"text"] = text;
-
-    dic[@"useRegexForNick"] = [NSNumber numberWithBool:useRegexForNick];
-    dic[@"useRegexForText"] = [NSNumber numberWithBool:useRegexForText];
+    if (nick) [dic setObject:nick forKey:@"nick"];
+    if (text) [dic setObject:text forKey:@"text"];
     
-    if (channels) dic[@"channels"] = channels;
+    [dic setBool:useRegexForNick forKey:@"useRegexForNick"];
+    [dic setBool:useRegexForText forKey:@"useRegexForText"];
+    
+    if (channels) [dic setObject:channels forKey:@"channels"];
     
     return dic;
 }

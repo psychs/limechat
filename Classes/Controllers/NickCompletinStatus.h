@@ -5,6 +5,10 @@
 
 
 @interface NickCompletinStatus : NSObject
+{
+    NSString* text;
+    NSRange range;
+}
 
 @property (nonatomic, strong) NSString* text;
 @property (nonatomic) NSRange range;

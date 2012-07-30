@@ -8,6 +8,9 @@
 @interface TopicSheet : SheetBase
 {
     IBOutlet NSTextField* text;
+
+    int uid;
+    int cid;
 }
 
 @property (nonatomic) int uid;
