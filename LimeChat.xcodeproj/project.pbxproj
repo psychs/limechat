@@ -176,8 +176,6 @@
 		78347EDF1158D4B00073E2F0 /* WhoisDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78347ED11158D4B00073E2F0 /* WhoisDialog.xib */; };
 		7835FB921177341D005DC0B4 /* ListDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 7835FB911177341D005DC0B4 /* ListDialog.m */; };
 		783E6ADB1173802100261552 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 783E6AD91173802100261552 /* main.m */; };
-		785B006A15C411D7009A2E36 /* container-migration.plist in Resources */ = {isa = PBXBuildFile; fileRef = 785B006915C411D7009A2E36 /* container-migration.plist */; };
-		785B006D15C411E1009A2E36 /* container-migration.plist in Resources */ = {isa = PBXBuildFile; fileRef = 785B006C15C411E1009A2E36 /* container-migration.plist */; };
 		787F49421589809F003AADE2 /* TwitterAvatarURLManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 787F49411589809F003AADE2 /* TwitterAvatarURLManager.m */; };
 		787F49431589809F003AADE2 /* TwitterAvatarURLManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 787F49411589809F003AADE2 /* TwitterAvatarURLManager.m */; };
 		787F494715898166003AADE2 /* TwitterImageURLClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 787F494615898166003AADE2 /* TwitterImageURLClient.m */; };
@@ -400,8 +398,6 @@
 		7835FB911177341D005DC0B4 /* ListDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListDialog.m; sourceTree = "<group>"; };
 		783E6AD61173802100261552 /* LimeChat_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LimeChat_Prefix.pch; sourceTree = "<group>"; };
 		783E6AD91173802100261552 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		785B006915C411D7009A2E36 /* container-migration.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "container-migration.plist"; sourceTree = "<group>"; };
-		785B006C15C411E1009A2E36 /* container-migration.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "container-migration.plist"; sourceTree = "<group>"; };
 		787F49401589809F003AADE2 /* TwitterAvatarURLManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterAvatarURLManager.h; sourceTree = "<group>"; };
 		787F49411589809F003AADE2 /* TwitterAvatarURLManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwitterAvatarURLManager.m; sourceTree = "<group>"; };
 		787F494515898166003AADE2 /* TwitterImageURLClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterImageURLClient.h; sourceTree = "<group>"; };
@@ -775,7 +771,6 @@
 			isa = PBXGroup;
 			children = (
 				782DA90212DB5A3800C07861 /* Info-AppStore.plist */,
-				785B006915C411D7009A2E36 /* container-migration.plist */,
 			);
 			name = AppStore;
 			path = Others/AppStore;
@@ -785,7 +780,6 @@
 			isa = PBXGroup;
 			children = (
 				78C8911B1173806A002EED61 /* Info.plist */,
-				785B006C15C411E1009A2E36 /* container-migration.plist */,
 				78C2D608115A428C00705817 /* dsa_pub.pem */,
 			);
 			name = Normal;
@@ -1248,7 +1242,6 @@
 				782DA87012DB5A3800C07861 /* InviteSheet.xib in Resources */,
 				782DA87112DB5A3800C07861 /* IgnoreItemSheet.xib in Resources */,
 				788B9A3915C3F0FA00457ADD /* Growl Registration Ticket.growlRegDict in Resources */,
-				785B006A15C411D7009A2E36 /* container-migration.plist in Resources */,
 				7812D7F415C6010700C3B48B /* application.iconset in Resources */,
 				7810066015C626D40059FAC8 /* bluebadge.png in Resources */,
 				7810066215C626D40059FAC8 /* bluebadge@2x.png in Resources */,
@@ -1281,7 +1274,6 @@
 				78A7B5DA11745616006B324A /* InviteSheet.xib in Resources */,
 				789ED4B31193FA9E00CFC0B2 /* IgnoreItemSheet.xib in Resources */,
 				78B9B86313F1E6EF005E1BC8 /* Growl Registration Ticket.growlRegDict in Resources */,
-				785B006D15C411E1009A2E36 /* container-migration.plist in Resources */,
 				7812D7F315C6010700C3B48B /* application.iconset in Resources */,
 				7810065F15C626D40059FAC8 /* bluebadge.png in Resources */,
 				7810066115C626D40059FAC8 /* bluebadge@2x.png in Resources */,
