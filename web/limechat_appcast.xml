@@ -7,6 +7,45 @@
     <language>en</language>
     
     <item>
+      <title>LimeChat 2.31</title>
+      <description><![CDATA[
+        <html>
+        <body>
+        <style>
+          body {
+            font-size: medium;
+          }
+          h1 {
+            font-size: large;
+          }
+          li {
+            margin: 0.2em 0;
+          }
+        </style>
+        <h1>LimeChat 2.31</h1>
+        <ul>
+          <li>User Notification Center support on Mountain Lion.</li>
+          <li>Retina Display support.</li>
+          <li>Highlight connection item in server tree when automatic join on invite settings is off.</li>
+          <li>Join invited channel when clicked on invitation notification.</li>
+          <li>Use Twitter API to get Twitter profile image URLs.</li>
+          <li>Fix a missing people bug in user list.</li>
+          <li>Fix a bug where settings in numeric text fields could not be saved correctly on Mountain Lion.</li>
+          <li>Fix a crashing bug when removing DCC connection.</li>
+          <li>Fix typo in preferences dialog.</li>
+          <li>Fix memory leaks.</li>
+        </ul>
+        </body>
+        </html>
+      ]]></description>
+      <pubDate>Sun, 29 Jul 2012 22:20:24 -0700</pubDate>
+  	  <sparkle:minimumSystemVersion>10.7.0</sparkle:minimumSystemVersion>
+      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/LimeChat_2.31.tbz"
+                  sparkle:version="2.31" length="2424475" type="application/octet-stream"
+                  sparkle:dsaSignature="MCwCFEdZoWKjpEJL3uIAZQK+lu1Xhdt+AhRp/jrs8ypy2PY+qWPgjZlPoFEyig=="/>
+    </item>
+    
+    <item>
       <title>LimeChat 2.30</title>
       <description><![CDATA[
         <html>
