@@ -84,7 +84,7 @@ task :appcast do |t|
 end
 
 task :web do |t|
-  rss_templates = ['rss.rxml', 'rss_ja.rxml']
+  rss_templates = ['rss.rxml']
   html_templates = []
   
   change_log = ''
@@ -92,7 +92,7 @@ task :web do |t|
   pubdate = ''
   
   s = File.open(APPCAST_PATH).read
-  if m = %r!<ul>.+</ul>!m.match(s)
+  if m = %r!<ul>.+?</ul>!m.match(s)
     change_log = m[0]
   end
   if m = %r!sparkle:version="([^"]+)"!m.match(s)
