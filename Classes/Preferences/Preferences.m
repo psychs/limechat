@@ -647,21 +647,6 @@ static NSMutableArray* excludeWords;
 }
 
 #pragma mark -
-#pragma mark Growl
-
-+ (BOOL)registeredToGrowl
-{
-    NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-    return [ud boolForKey:@"registeredToGrowl"];
-}
-
-+ (void)setRegisteredToGrowl:(BOOL)value
-{
-    NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-    [ud setBool:value forKey:@"registeredToGrowl"];
-}
-
-#pragma mark -
 #pragma mark World
 
 + (NSDictionary*)loadWorld

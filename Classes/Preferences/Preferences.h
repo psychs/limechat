@@ -128,9 +128,6 @@ typedef enum {
 + (BOOL)textReplacementEnabled;
 + (void)setTextReplacementEnabled:(BOOL)value;
 
-+ (BOOL)registeredToGrowl;
-+ (void)setRegisteredToGrowl:(BOOL)value;
-
 + (NSDictionary*)loadWorld;
 + (void)saveWorld:(NSDictionary*)value;
 
