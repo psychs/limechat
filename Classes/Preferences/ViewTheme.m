@@ -145,7 +145,12 @@
         }
 
         NSString* path = applicationSupportPath;
+#ifdef TARGET_APP_STORE
+        NSString* bundleId = [[NSBundle mainBundle] bundleIdentifier];
+        path = [path stringByAppendingPathComponent:bundleId];
+#else
         path = [path stringByAppendingPathComponent:@"LimeChat"];
+#endif
         path = [path stringByAppendingPathComponent:@"Themes"];
         userBasePath = [path retain];
     }

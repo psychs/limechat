@@ -1680,7 +1680,6 @@
 		782DA8FE12DB5A3800C07861 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = LimeChat.entitlements;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Satoshi Nakagawa";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					TARGET_APP_STORE,
@@ -1694,7 +1693,6 @@
 		782DA8FF12DB5A3800C07861 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = LimeChat.entitlements;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Satoshi Nakagawa";
 				GCC_PREPROCESSOR_DEFINITIONS = TARGET_APP_STORE;
 				INFOPLIST_FILE = "Others/AppStore/Info-AppStore.plist";
