@@ -1672,23 +1672,23 @@
 		782DA8FE12DB5A3800C07861 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Satoshi Nakagawa";
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					TARGET_APP_STORE,
 					DEBUG_BUILD,
 				);
 				INFOPLIST_FILE = "Others/AppStore/Info-AppStore.plist";
-				PROVISIONING_PROFILE = "CCD0E816-CAFB-4747-9F7C-06852556940C";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
 		782DA8FF12DB5A3800C07861 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Satoshi Nakagawa";
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				GCC_PREPROCESSOR_DEFINITIONS = TARGET_APP_STORE;
 				INFOPLIST_FILE = "Others/AppStore/Info-AppStore.plist";
-				PROVISIONING_PROFILE = "CCD0E816-CAFB-4747-9F7C-06852556940C";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
