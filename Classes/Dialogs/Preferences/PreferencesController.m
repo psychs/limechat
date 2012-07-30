@@ -539,7 +539,7 @@
     [self.window endEditingFor:nil];
     
     [Preferences cleanUpWords];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [Preferences sync];
     
     if ([delegate respondsToSelector:@selector(preferencesDialogWillClose:)]) {
         [delegate preferencesDialogWillClose:self];

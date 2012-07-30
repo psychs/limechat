@@ -335,7 +335,6 @@ static NSMutableArray* excludeWords;
 {
     NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
     [ud setInteger:value forKey:@"Preferences.Advanced.pongInterval"];
-    [ud synchronize];
 }
 
 #pragma mark -
