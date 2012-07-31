@@ -7,21 +7,12 @@
     <language>en-us</language>
 
     <item>
-      <title>2.31</title>
-      <link>http://limechat.net/mac/#v2.31</link>
-      <pubDate>Sun, 29 Jul 2012 22:20:24 -0700</pubDate>
+      <title>2.32</title>
+      <link>http://limechat.net/mac/#v2.32</link>
+      <pubDate>Mon, 30 Jul 2012 19:56:13 -0700</pubDate>
       <content:encoded><![CDATA[
   			<ul>
-          <li>User Notification Center support on Mountain Lion.</li>
-          <li>Retina Display support.</li>
-          <li>Highlight connection item in server tree when automatic join on invite settings is off.</li>
-          <li>Join invited channel when clicked on invitation notification.</li>
-          <li>Use Twitter API to get Twitter profile image URLs.</li>
-          <li>Fix a missing people bug in user list.</li>
-          <li>Fix a bug where settings in numeric text fields could not be saved correctly on Mountain Lion.</li>
-          <li>Fix a crashing bug when removing DCC connection.</li>
-          <li>Fix typo in preferences dialog.</li>
-          <li>Fix memory leaks.</li>
+          <li>Fix crash when deleting channel or private message</li>
         </ul>
       ]]></content:encoded>
     </item>
