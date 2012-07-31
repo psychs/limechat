@@ -18,7 +18,7 @@
 
 - (void)dealloc
 {
-    [webFrame release];
+    self.webFrame = nil;
     [super dealloc];
 }
 
