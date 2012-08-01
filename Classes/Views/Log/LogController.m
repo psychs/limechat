@@ -362,7 +362,17 @@
             [self savePosition];
             
             DOMHTMLElement* imageAnchorTag = (DOMHTMLElement*)[doc createElement:@"a"];
-            [imageAnchorTag setAttribute:@"href" value:url];
+            NSURL *u = [NSURL URLWithString:url];
+            if ([[u host] hasSuffix:@"pixiv.net"])
+            {
+                NSScanner *sc = [NSScanner scannerWithString:[u lastPathComponent]];
+                NSInteger illustId = 0;
+                [sc scanInteger:&illustId];
+                NSString *str = [NSString stringWithFormat:@"http://www.pixiv.net/member_illust.php?mode=medium&illust_id=%ld", illustId];
+                [imageAnchorTag setAttribute:@"href" value:str];
+            }
+            else
+                [imageAnchorTag setAttribute:@"href" value:url];
             [imageAnchorTag setAttribute:@"imageindex" value:[NSString stringWithFormat:@"%d", imageIndex]];
             
             NSString* imageAnchorTagContent = [NSString stringWithFormat:@"<img src=\"%@\" class=\"inlineimage\"/>", url];
@@ -571,8 +581,15 @@
             
             BOOL isFileURL = NO;
             BOOL checkingSize = NO;
-            
-            if ([ImageURLParser isImageFileURL:url]) {
+            BOOL isPixiv = NO;
+
+            if ((isPixiv = [ImageURLParser isPixivURL:url])) {
+                NSString *newUrl = [ImageURLParser serviceImageURLForURL:url];
+                if (newUrl)
+                    url = newUrl;
+            }
+
+            if ([ImageURLParser isImageFileURL:url] || isPixiv) {
                 isFileURL = YES;
                 if (![url hasPrefix:@"http://gyazo.com/"]) {
                     checkingSize = YES;
