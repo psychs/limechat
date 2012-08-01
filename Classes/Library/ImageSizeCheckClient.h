@@ -15,6 +15,7 @@
     int lineNumber;
     int imageIndex;
 
+    NSMutableURLRequest* req;
     NSURLConnection* conn;
     NSHTTPURLResponse* response;
 }

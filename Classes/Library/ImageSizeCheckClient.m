@@ -2,6 +2,7 @@
 // You can redistribute it and/or modify it under the terms of the GPL version 2 (see the file GPL.txt).
 
 #import "ImageSizeCheckClient.h"
+#import "PixivSchemaManager.h"
 
 
 #define IMAGE_SIZE_CHECK_TIMEOUT    30
@@ -27,7 +28,6 @@
 - (void)dealloc
 {
     [self cancel];
-    [url release];
     [super dealloc];
 }
 
@@ -36,6 +36,9 @@
     [conn cancel];
     [conn release];
     conn = nil;
+
+    [req release];
+    req = nil;
     
     [response release];
     response = nil;
@@ -46,14 +49,33 @@
     [self cancel];
     
     NSURL *u = [NSURL URLWithString:url];
-    NSMutableURLRequest* req = [NSMutableURLRequest requestWithURL:u cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:IMAGE_SIZE_CHECK_TIMEOUT];
+    req = [NSMutableURLRequest requestWithURL:u cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:IMAGE_SIZE_CHECK_TIMEOUT];
     [req setHTTPMethod:@"HEAD"];
+    [req retain];
     
     if ([[u host] hasSuffix:@"pixiv.net"]) {
         [req setValue:@"http://www.pixiv.net" forHTTPHeaderField:@"Referer"];
     }
 
+    if ([[u scheme] isEqualToString:@"pixiv"])
+    {
+        [[PixivSchemaManager instance] beginGetImageURL:[u resourceSpecifier] forClient:self];
+    }
+    else
+        [self run];
+}
+
+- (void)run
+{
     conn = [[NSURLConnection alloc] initWithRequest:req delegate:self];
+}
+
+- (void)pixivImageURLObtained:(NSURL *)newUrl
+{
+    url = [newUrl absoluteString];
+    [req setURL:newUrl];
+    [req setValue:@"http://www.pixiv.net" forHTTPHeaderField:@"Referer"];
+    [self run];
 }
 
 #pragma mark -

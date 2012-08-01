@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2BB3DA0E15C8D23B000EAE51 /* PixivSchemaManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BB3DA0D15C8D23B000EAE51 /* PixivSchemaManager.m */; };
+		2BB3DA1115C8D33C000EAE51 /* PixivIllustClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BB3DA1015C8D33C000EAE51 /* PixivIllustClient.m */; };
 		780844D2134CD34B003BB84C /* ImageDownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 780844D1134CD34B003BB84C /* ImageDownloadManager.m */; };
 		780844D3134CD34B003BB84C /* ImageDownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 780844D1134CD34B003BB84C /* ImageDownloadManager.m */; };
 		780844F6134CD45E003BB84C /* ImageSizeCheckClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 780844F5134CD45E003BB84C /* ImageSizeCheckClient.m */; };
@@ -360,6 +362,10 @@
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		2BB3DA0C15C8D23B000EAE51 /* PixivSchemaManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PixivSchemaManager.h; sourceTree = "<group>"; };
+		2BB3DA0D15C8D23B000EAE51 /* PixivSchemaManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PixivSchemaManager.m; sourceTree = "<group>"; };
+		2BB3DA0F15C8D33C000EAE51 /* PixivIllustClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PixivIllustClient.h; sourceTree = "<group>"; };
+		2BB3DA1015C8D33C000EAE51 /* PixivIllustClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PixivIllustClient.m; sourceTree = "<group>"; };
 		780253C20C09525900C170D4 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
 		780844D0134CD34B003BB84C /* ImageDownloadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageDownloadManager.h; sourceTree = "<group>"; };
 		780844D1134CD34B003BB84C /* ImageDownloadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageDownloadManager.m; sourceTree = "<group>"; };
@@ -802,6 +808,8 @@
 				78A8C0C911737F660044E7A1 /* NickCompletinStatus.m */,
 				787F49401589809F003AADE2 /* TwitterAvatarURLManager.h */,
 				787F49411589809F003AADE2 /* TwitterAvatarURLManager.m */,
+				2BB3DA0C15C8D23B000EAE51 /* PixivSchemaManager.h */,
+				2BB3DA0D15C8D23B000EAE51 /* PixivSchemaManager.m */,
 			);
 			name = Controllers;
 			path = Classes/Controllers;
@@ -982,6 +990,8 @@
 				78A8C14411737F660044E7A1 /* TCPServer.m */,
 				78A8C14511737F660044E7A1 /* Timer.h */,
 				78A8C14611737F660044E7A1 /* Timer.m */,
+				2BB3DA0F15C8D33C000EAE51 /* PixivIllustClient.h */,
+				2BB3DA1015C8D33C000EAE51 /* PixivIllustClient.m */,
 			);
 			name = Library;
 			path = Classes/Library;
@@ -1532,6 +1542,8 @@
 				78AB172715C33374008CD998 /* NumericTextField.m in Sources */,
 				78AB173315C37287008CD998 /* GrowlNotificationController.m in Sources */,
 				78A3004E15C38FB2003263AA /* UserNotificationController.m in Sources */,
+				2BB3DA0E15C8D23B000EAE51 /* PixivSchemaManager.m in Sources */,
+				2BB3DA1115C8D33C000EAE51 /* PixivIllustClient.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

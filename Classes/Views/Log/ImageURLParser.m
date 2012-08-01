@@ -17,6 +17,16 @@
     || [lowerUrl hasSuffix:@".svg"];
 }
 
++ (BOOL)isPixivURL:(NSString*)url
+{
+    NSURL* u = [NSURL URLWithString:url];
+
+    if ([[u host] hasSuffix:@"pixiv.net"] || [[u host] hasSuffix:@"pixiv.com"])
+        if ([[u path] hasPrefix:@"/member_illust.php"] || [[u path] hasPrefix:@"/works/"])
+            return YES;
+    return NO;
+}
+
 + (NSString*)serviceImageURLForURL:(NSString*)url
 {
     NSString* encodedUrl = [url encodeURIFragment];
@@ -154,6 +164,34 @@
     else if ([host hasSuffix:@"plixi.com"]) {
         if ([path hasPrefix:@"/p/"]) {
             return [NSString stringWithFormat:@"http://api.plixi.com/api/TPAPI.svc/imagefromurl?size=thumbnail&url=%@", [url encodeURIComponent]];
+        }
+    }
+    else if ([host hasSuffix:@"pixiv.net"] || [host hasSuffix:@"pixiv.com"]) {
+        NSString *id_str = nil;
+
+        if ([path hasPrefix:@"/member_illust.php"]) {
+            NSString *query = [u query];
+            NSRange id_pos = [query rangeOfString:@"illust_id="];
+            NSRange amp_pos = [query rangeOfString:@"&"];
+            if (amp_pos.location > id_pos.location) {
+                NSRange id_rng = {
+                    .location = id_pos.location + id_pos.length,
+                    .length = amp_pos.location - (id_pos.location + id_pos.length)
+                };
+                id_str = [query substringWithRange:id_rng];
+            } else {
+                id_str = [query substringFromIndex:(id_pos.location + id_pos.length)];
+            }
+        }
+        else if ([path hasPrefix:@"/works/"]) {
+            NSArray *items = [path split:@"/"];
+            if (items && [items count] > 2)
+                id_str = [items objectAtIndex:2];
+        }
+
+        if (id_str) {
+            // This is a flag value for further processing
+            return [NSString stringWithFormat:@"pixiv:%@", id_str];
         }
     }
     else if ([host hasSuffix:@"puu.sh"]) {
