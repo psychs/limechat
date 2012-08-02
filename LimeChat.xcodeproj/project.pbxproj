@@ -64,7 +64,6 @@
 		782DA88612DB5A3800C07861 /* GTMBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0ED11737F660044E7A1 /* GTMBase64.m */; };
 		782DA88712DB5A3800C07861 /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0F111737F660044E7A1 /* GTMNSString+HTML.m */; };
 		782DA88812DB5A3800C07861 /* GTMNSString+URLArguments.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0F311737F660044E7A1 /* GTMNSString+URLArguments.m */; };
-		782DA88912DB5A3800C07861 /* NSArrayHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0F511737F660044E7A1 /* NSArrayHelper.m */; };
 		782DA88A12DB5A3800C07861 /* NSColorHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0F711737F660044E7A1 /* NSColorHelper.m */; };
 		782DA88B12DB5A3800C07861 /* NSDataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0F911737F660044E7A1 /* NSDataHelper.m */; };
 		782DA88C12DB5A3800C07861 /* NSDictionaryHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0FB11737F660044E7A1 /* NSDictionaryHelper.m */; };
@@ -211,7 +210,6 @@
 		78A8C1B911737F660044E7A1 /* GTMBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0ED11737F660044E7A1 /* GTMBase64.m */; };
 		78A8C1BA11737F660044E7A1 /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0F111737F660044E7A1 /* GTMNSString+HTML.m */; };
 		78A8C1BB11737F660044E7A1 /* GTMNSString+URLArguments.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0F311737F660044E7A1 /* GTMNSString+URLArguments.m */; };
-		78A8C1BC11737F660044E7A1 /* NSArrayHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0F511737F660044E7A1 /* NSArrayHelper.m */; };
 		78A8C1BD11737F660044E7A1 /* NSColorHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0F711737F660044E7A1 /* NSColorHelper.m */; };
 		78A8C1BE11737F660044E7A1 /* NSDataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0F911737F660044E7A1 /* NSDataHelper.m */; };
 		78A8C1BF11737F660044E7A1 /* NSDictionaryHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C0FB11737F660044E7A1 /* NSDictionaryHelper.m */; };
@@ -461,8 +459,6 @@
 		78A8C0F111737F660044E7A1 /* GTMNSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GTMNSString+HTML.m"; sourceTree = "<group>"; };
 		78A8C0F211737F660044E7A1 /* GTMNSString+URLArguments.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GTMNSString+URLArguments.h"; sourceTree = "<group>"; };
 		78A8C0F311737F660044E7A1 /* GTMNSString+URLArguments.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GTMNSString+URLArguments.m"; sourceTree = "<group>"; };
-		78A8C0F411737F660044E7A1 /* NSArrayHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSArrayHelper.h; sourceTree = "<group>"; };
-		78A8C0F511737F660044E7A1 /* NSArrayHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSArrayHelper.m; sourceTree = "<group>"; };
 		78A8C0F611737F660044E7A1 /* NSColorHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSColorHelper.h; sourceTree = "<group>"; };
 		78A8C0F711737F660044E7A1 /* NSColorHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSColorHelper.m; sourceTree = "<group>"; };
 		78A8C0F811737F660044E7A1 /* NSDataHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDataHelper.h; sourceTree = "<group>"; };
@@ -874,8 +870,6 @@
 				78A8C10311737F660044E7A1 /* NSStringHelper.m */,
 				78A8C0FA11737F660044E7A1 /* NSDictionaryHelper.h */,
 				78A8C0FB11737F660044E7A1 /* NSDictionaryHelper.m */,
-				78A8C0F411737F660044E7A1 /* NSArrayHelper.h */,
-				78A8C0F511737F660044E7A1 /* NSArrayHelper.m */,
 				78A8C0F811737F660044E7A1 /* NSDataHelper.h */,
 				78A8C0F911737F660044E7A1 /* NSDataHelper.m */,
 				78A7B4F41174427C006B324A /* NSData+Kana.h */,
@@ -1310,7 +1304,6 @@
 				782DA88612DB5A3800C07861 /* GTMBase64.m in Sources */,
 				782DA88712DB5A3800C07861 /* GTMNSString+HTML.m in Sources */,
 				782DA88812DB5A3800C07861 /* GTMNSString+URLArguments.m in Sources */,
-				782DA88912DB5A3800C07861 /* NSArrayHelper.m in Sources */,
 				782DA88A12DB5A3800C07861 /* NSColorHelper.m in Sources */,
 				782DA88B12DB5A3800C07861 /* NSDataHelper.m in Sources */,
 				782DA88C12DB5A3800C07861 /* NSDictionaryHelper.m in Sources */,
@@ -1435,7 +1428,6 @@
 				78A8C1B911737F660044E7A1 /* GTMBase64.m in Sources */,
 				78A8C1BA11737F660044E7A1 /* GTMNSString+HTML.m in Sources */,
 				78A8C1BB11737F660044E7A1 /* GTMNSString+URLArguments.m in Sources */,
-				78A8C1BC11737F660044E7A1 /* NSArrayHelper.m in Sources */,
 				78A8C1BD11737F660044E7A1 /* NSColorHelper.m in Sources */,
 				78A8C1BE11737F660044E7A1 /* NSDataHelper.m in Sources */,
 				78A8C1BF11737F660044E7A1 /* NSDictionaryHelper.m in Sources */,

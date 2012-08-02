@@ -2351,7 +2351,7 @@
         // CTCP
         //
         text = [text substringFromIndex:1];
-        int n = [text findString:@"\x01"];
+        int n = [text findCharacter:0x1];
         if (n >= 0) {
             text = [text substringToIndex:n];
         }

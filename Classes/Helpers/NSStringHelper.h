@@ -19,7 +19,6 @@
 - (BOOL)containsIgnoringCase:(NSString*)str;
 - (int)findCharacter:(UniChar)c;
 - (int)findCharacter:(UniChar)c start:(int)start;
-- (int)findString:(NSString*)str;
 - (NSArray*)split:(NSString*)delimiter;
 - (NSArray*)splitIntoLines;
 - (NSString*)trim;
@@ -27,13 +26,10 @@
 - (BOOL)isAlphaNumOnly;
 - (BOOL)isNumericOnly;
 
-- (int)firstCharCodePoint;
-- (int)lastCharCodePoint;
-
 - (NSString*)safeUsername;
 - (NSString*)safeFileName;
 
-- (NSString*)stripEffects;
+- (NSString*)stripMIRCEffects;
 
 - (NSRange)rangeOfUrl;
 - (NSRange)rangeOfUrlStart:(int)start;
@@ -50,8 +46,6 @@
 - (BOOL)isChannelName;
 - (BOOL)isModeChannelName;
 - (NSString*)canonicalName;
-
-+ (NSString*)bundleString:(NSString*)key;
 
 @end
 

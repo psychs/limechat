@@ -58,17 +58,6 @@
     }
 }
 
-- (int)findString:(NSString*)str
-{
-    NSRange r = [self rangeOfString:str];
-    if (r.location != NSNotFound) {
-        return r.location;
-    }
-    else {
-        return -1;
-    }
-}
-
 - (NSArray*)split:(NSString*)delimiter
 {
     NSMutableArray* ary = [NSMutableArray array];
@@ -164,44 +153,6 @@
     return YES;
 }
 
-- (int)firstCharCodePoint
-{
-    int len = self.length;
-    if (len == 0) return -1;
-    
-    int c = [self characterAtIndex:0];
-    if (CFStringIsSurrogateHighCharacter(c)) {
-        if (len <= 1) return c;
-        int d = [self characterAtIndex:1];
-        if (CFStringIsSurrogateLowCharacter(d)) {
-            return (c - 0xd800) * 0x400 + (d - 0xdc00) + 0x10000;
-        }
-        else {
-            return -1;
-        }
-    }
-    return c;
-}
-
-- (int)lastCharCodePoint
-{
-    int len = self.length;
-    if (len == 0) return -1;
-    
-    int c = [self characterAtIndex:len-1];
-    if (CFStringIsSurrogateLowCharacter(c)) {
-        if (len <= 1) return c;
-        int d = [self characterAtIndex:len-2];
-        if (CFStringIsSurrogateHighCharacter(d)) {
-            return (d - 0xd800) * 0x400 + (c - 0xdc00) + 0x10000;
-        }
-        else {
-            return -1;
-        }
-    }
-    return c;
-}
-
 static int ctoi(unsigned char c)
 {
     if ('0' <= c && c <= '9') {
@@ -250,7 +201,7 @@ static BOOL isUnicharDigit(unichar c)
     return [s stringByReplacingOccurrencesOfString:@":" withString:@"_"];
 }
 
-- (NSString*)stripEffects
+- (NSString*)stripMIRCEffects
 {
     int len = self.length;
     if (len == 0) return self;
@@ -589,11 +540,6 @@ static BOOL isUnicharDigit(unichar c)
     }
     
     return [[[NSString alloc] initWithBytes:buf length:dest - buf encoding:NSASCIIStringEncoding] autorelease];
-}
-
-+ (NSString*)bundleString:(NSString*)key
-{
-    return [[[NSBundle mainBundle] infoDictionary] objectForKey:key];
 }
 
 @end
