@@ -45,7 +45,7 @@
 {
     [self cancel];
     
-    NSURL *u = [NSURL URLWithString:url];
+    NSURL* u = [NSURL URLWithString:url];
     NSMutableURLRequest* req = [NSMutableURLRequest requestWithURL:u cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:IMAGE_SIZE_CHECK_TIMEOUT];
     [req setHTTPMethod:@"HEAD"];
     

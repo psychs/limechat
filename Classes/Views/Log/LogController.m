@@ -1020,7 +1020,7 @@
 - (NSURLRequest *)webView:(WebView *)sender resource:(id)identifier willSendRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)redirectResponse fromDataSource:(WebDataSource *)dataSource;
 {
     if ([[[request URL] host] hasSuffix:@"pixiv.net"]) {
-        NSMutableURLRequest *req = nil;
+        NSMutableURLRequest* req = nil;
         if ([request isKindOfClass:[NSMutableURLRequest class]]) {
             req = (NSMutableURLRequest*)request;
         }
