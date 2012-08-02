@@ -332,9 +332,8 @@ static BOOL isUnicharDigit(unichar c)
     }
 
     NSString* url = [self substringWithRange:r];
-
     int len = url.length;
-    const UniChar* buf = [self getCharactersBuffer];
+    const UniChar* buf = [url getCharactersBuffer];
     if (!buf) {
         return NSMakeRange(NSNotFound, 0);
     }
