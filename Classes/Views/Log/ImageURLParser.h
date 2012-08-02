@@ -7,6 +7,7 @@
 @interface ImageURLParser : NSObject
 
 + (BOOL)isImageFileURL:(NSString*)url;
++ (BOOL)isPixivURL:(NSString*)url;
 + (NSString*)serviceImageURLForURL:(NSString*)url;
 
 @end
