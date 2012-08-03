@@ -25,6 +25,7 @@
     IRCChannelConfig* config;
 
     BOOL isSheet;
+    BOOL isEndedSheet;
 }
 
 @property (nonatomic, weak) id delegate;

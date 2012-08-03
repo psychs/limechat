@@ -34,6 +34,7 @@
 - (void)start
 {
     isSheet = NO;
+    isEndedSheet = NO;
     [self load];
     [self update];
     [self show];
@@ -42,6 +43,7 @@
 - (void)startSheet
 {
     isSheet = YES;
+    isEndedSheet = NO;
     [self load];
     [self update];
     [NSApp beginSheet:window modalForWindow:parentWindow modalDelegate:self didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:) contextInfo:nil];
@@ -63,6 +65,7 @@
 
 - (void)sheetDidEnd:(NSWindow*)sender returnCode:(NSInteger)returnCode contextInfo:(void*)contextInfo
 {
+    isEndedSheet = YES;
     [window close];
 }
 
@@ -144,6 +147,10 @@
 
 - (void)windowWillClose:(NSNotification*)note
 {
+    if (isSheet && !isEndedSheet) {
+        [NSApp endSheet:window];
+    }
+
     if ([delegate respondsToSelector:@selector(channelDialogWillClose:)]) {
         [delegate channelDialogWillClose:self];
     }
