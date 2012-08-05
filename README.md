@@ -6,7 +6,7 @@ LimeChat is an IRC client for Mac OS X.
 * Rich keyboard shortcuts for your comfortable operations.
 * Fast and stable.
 
-## The Author
+## Author
 
 * Satoshi Nakagawa http://github.com/psychs
 * ##limechat on chat.freenode.net
