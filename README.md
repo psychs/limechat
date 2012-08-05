@@ -13,29 +13,29 @@ LimeChat is an IRC client for Mac OS X.
 
 ## Thanks To
 
-* Allan Odgaard
-* Atsuhisa Shimazawa
-* Dustin Voss
-* Eloy Duran
-* Evan Phoenix
-* Fujimoto Hisa
-* Josh Goebel
-* Jun Morimoto
-* Keiji Yoshimi
-* Kevin Ballard
-* Laurent Sansonetti
-* Peter Haza
-* Python Software Foundation
-* Rails team
-* Shingo Morita
-* Stanley Rost
-* Stefan Rusterholz
-* Takashi Tsugo
-* The Growl Project
-* why the lucky stiff
-* William Thimbleby
-* Yohei Endo
-* Yukihiro Matsumoto
+* Allan Odgaard  (WebViewAutoScroll and TextMate logo)
+* Atsuhisa Shimazawa  (Badge images)
+* Dustin Voss  (AsyncSocket)
+* Eloy Duran  (RubyCocoa, crash reporter, Growl notifier, preferences patches)
+* Evan Phoenix  (Inline images support)
+* Fujimoto Hisa  (RubyCocoa)
+* Josh Goebel  (CocoaSheet, many improvements on code and UIs)
+* Jun Morimoto  (Bug fixes)
+* Keiji Yoshimi  (Growl notifier patches, hot key patches)
+* Kevin Ballard  (Theme support patches)
+* Laurent Sansonetti  (RubyCocoa, many requests and suggestions)
+* Peter Haza  (Channel name context menu patch)
+* Python Software Foundation  (Python logo)
+* Rails team  (Ruby on Rails logo)
+* Shingo Morita  (Badge images)
+* Stanley Rost  (Limelight theme)
+* Stefan Rusterholz  (Many suggestions and patches)
+* Takashi Tsugo  (Deep Ocean theme)
+* The Growl Project  (Growl framework and logo)
+* why the lucky stiff  (Syck)
+* William Thimbleby  (Syck Cocoa)
+* Yohei Endo  (Application icons)
+* Yukihiro Matsumoto  (Ruby logo)
 
 ## License
 
