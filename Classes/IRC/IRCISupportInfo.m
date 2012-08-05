@@ -63,7 +63,12 @@
     [self setValue:4 forMode:'q'];
     [self setValue:4 forMode:'r'];
 
-    [self parsePrefix:@"(ohv)@%+"];
+    [markMap setObject:[NSNumber numberWithInt:'o'] forKey:[NSNumber numberWithInt:'@']];
+    [markMap setObject:[NSNumber numberWithInt:'h'] forKey:[NSNumber numberWithInt:'%']];
+    [markMap setObject:[NSNumber numberWithInt:'v'] forKey:[NSNumber numberWithInt:'+']];
+    [modeMap setObject:[NSNumber numberWithInt:'@'] forKey:[NSNumber numberWithInt:'o']];
+    [modeMap setObject:[NSNumber numberWithInt:'%'] forKey:[NSNumber numberWithInt:'h']];
+    [modeMap setObject:[NSNumber numberWithInt:'+'] forKey:[NSNumber numberWithInt:'v']];
 }
 
 - (void)update:(NSString*)str
