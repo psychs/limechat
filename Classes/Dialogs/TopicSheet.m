@@ -34,7 +34,7 @@
     if ([self.delegate respondsToSelector:@selector(topicSheet:onOK:)]) {
         [self.delegate topicSheet:self onOK:[text stringValue]];
     }
-    
+
     [super ok:nil];
 }
 

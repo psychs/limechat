@@ -29,7 +29,7 @@ static void setFlag(attr_t* attrBuf, attr_t flag, int start, int len)
 {
     attr_t* target = attrBuf + start;
     attr_t* end = target + len;
-    
+
     while (target < end) {
         *target |= flag;
         ++target;
@@ -40,26 +40,26 @@ static BOOL isClear(attr_t* attrBuf, attr_t flag, int start, int len)
 {
     attr_t* target = attrBuf + start;
     attr_t* end = target + len;
-    
+
     while (target < end) {
         if (*target & flag) return NO;
         ++target;
     }
-    
+
     return YES;
 }
 
 static int getNextAttributeRange(attr_t* attrBuf, int start, int len)
 {
     attr_t target = attrBuf[start];
-    
+
     for (int i=start; i<len; ++i) {
         attr_t t = attrBuf[i];
         if (t != target) {
             return i - start;
         }
     }
-    
+
     return len - start;
 }
 
@@ -77,7 +77,7 @@ NSString* tagEscape(NSString* s)
 static NSString* renderRange(NSString* body, attr_t attr, int start, int len)
 {
     NSString* content = [body substringWithRange:NSMakeRange(start, len)];
-    
+
     if (attr & URL_ATTR) {
         // URL
         NSString* link = content;
@@ -143,19 +143,19 @@ static NSString* renderRange(NSString* body, attr_t attr, int start, int len)
     int len = body.length;
     attr_t attrBuf[len];
     memset(attrBuf, 0, len * sizeof(attr_t));
-    
+
     int start;
-    
+
     //
     // effects
     //
     const UniChar* source = [body getCharactersBuffer];
     if (!source) return body;
-    
+
     attr_t currentAttr = 0;
     UniChar dest[len];
     int n = 0;
-    
+
     for (int i=0; i<len; i++) {
         UniChar c = source[i];
         if (c < 0x20) {
@@ -172,7 +172,7 @@ static NSString* renderRange(NSString* body, attr_t attr, int start, int len)
                 {
                     int textColor = -1;
                     int backgroundColor = -1;
-                    
+
                     // text color
                     if (i+1 < len) {
                         c = source[i+1];
@@ -189,7 +189,7 @@ static NSString* renderRange(NSString* body, attr_t attr, int start, int len)
                                     c = source[i+1];
                                     if (c == ',') {
                                         ++i;
-                                        
+
                                         // background color
                                         if (i+1 < len) {
                                             c = source[i+1];
@@ -209,9 +209,9 @@ static NSString* renderRange(NSString* body, attr_t attr, int start, int len)
                                 }
                             }
                         }
-                        
+
                         currentAttr &= ~(TEXT_COLOR_ATTR | BACKGROUND_COLOR_ATTR | 0xFF);
-                        
+
                         if (backgroundColor >= 0) {
                             backgroundColor %= 16;
                             currentAttr |= BACKGROUND_COLOR_ATTR;
@@ -220,7 +220,7 @@ static NSString* renderRange(NSString* body, attr_t attr, int start, int len)
                         else {
                             currentAttr &= ~(BACKGROUND_COLOR_ATTR | BACKGROUND_COLOR_MASK);
                         }
-                        
+
                         if (textColor >= 0) {
                             textColor %= 16;
                             currentAttr |= TEXT_COLOR_ATTR;
@@ -253,35 +253,35 @@ static NSString* renderRange(NSString* body, attr_t attr, int start, int len)
                     continue;
             }
         }
-        
+
         attrBuf[n] = currentAttr;
         dest[n++] = c;
     }
-    
+
     body = [[[NSString alloc] initWithCharacters:dest length:n] autorelease];
     len = n;
-    
+
     //
     // URL
     //
     NSMutableArray* urlAry = [NSMutableArray array];
     start = 0;
-    
+
     while (start < len) {
         NSRange r = [body rangeOfUrlStart:start];
         if (r.location == NSNotFound) {
             break;
         }
-        
+
         setFlag(attrBuf, URL_ATTR, r.location, r.length);
         [urlAry addObject:[NSValue valueWithRange:r]];
         start = NSMaxRange(r) + 1;
     }
-    
+
     if (urlAry.count) {
         *urlRanges = urlAry;
     }
-    
+
     //
     // keywords
     //
@@ -300,7 +300,7 @@ static NSString* renderRange(NSString* body, attr_t attr, int start, int len)
             }
         }
     }
-    
+
     for (NSString* keyword in keywords) {
         start = 0;
         while (start < len) {
@@ -308,7 +308,7 @@ static NSString* renderRange(NSString* body, attr_t attr, int start, int len)
             if (r.location == NSNotFound) {
                 break;
             }
-            
+
             BOOL enabled = YES;
             for (NSValue* e in excludeRanges) {
                 if (NSIntersectionRange(r, [e rangeValue]).length > 0) {
@@ -316,7 +316,7 @@ static NSString* renderRange(NSString* body, attr_t attr, int start, int len)
                     break;
                 }
             }
-            
+
             if (exactWordMatch) {
                 if (enabled) {
                     // check head character
@@ -332,7 +332,7 @@ static NSString* renderRange(NSString* body, attr_t attr, int start, int len)
                         }
                     }
                 }
-                
+
                 if (enabled) {
                     // check tail character
                     UniChar c = [body characterAtIndex:NSMaxRange(r)-1];
@@ -348,7 +348,7 @@ static NSString* renderRange(NSString* body, attr_t attr, int start, int len)
                     }
                 }
             }
-            
+
             if (enabled) {
                 if (isClear(attrBuf, URL_ATTR, r.location, r.length)) {
                     foundKeyword = YES;
@@ -361,13 +361,13 @@ static NSString* renderRange(NSString* body, attr_t attr, int start, int len)
                     }
                 }
             }
-            
+
             start = NSMaxRange(r) + 1;
         }
-        
+
         if (highlightWholeLine && foundKeyword) break;
     }
-    
+
     //
     // address
     //
@@ -377,14 +377,14 @@ static NSString* renderRange(NSString* body, attr_t attr, int start, int len)
         if (r.location == NSNotFound) {
             break;
         }
-        
+
         if (isClear(attrBuf, URL_ATTR, r.location, r.length)) {
             setFlag(attrBuf, ADDRESS_ATTR, r.location, r.length);
         }
-        
+
         start = NSMaxRange(r) + 1;
     }
-    
+
     //
     // channel name
     //
@@ -394,31 +394,31 @@ static NSString* renderRange(NSString* body, attr_t attr, int start, int len)
         if (r.location == NSNotFound) {
             break;
         }
-        
+
         if (isClear(attrBuf, URL_ATTR, r.location, r.length)) {
             setFlag(attrBuf, CHANNEL_NAME_ATTR, r.location, r.length);
         }
-        
+
         start = NSMaxRange(r) + 1;
     }
-    
+
     //
     // render
     //
     NSMutableString* result = [NSMutableString string];
-    
+
     start = 0;
     while (start < len) {
         int n = getNextAttributeRange(attrBuf, start, len);
         if (n <= 0) break;
-        
+
         attr_t t = attrBuf[start];
         NSString* s = renderRange(body, t, start, n);
         [result appendString:s];
-        
+
         start += n;
     }
-    
+
     *highlighted = foundKeyword;
     return result;
 }

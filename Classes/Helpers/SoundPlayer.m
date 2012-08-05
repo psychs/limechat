@@ -11,7 +11,7 @@
     if (!name.length) {
         return;
     }
-    
+
     if ([name isEqualToString:@"Beep"]) {
         NSBeep();
     }

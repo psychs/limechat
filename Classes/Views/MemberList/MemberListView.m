@@ -56,7 +56,7 @@
         BOOL ctrl = (m & NSControlKeyMask) != 0;
         BOOL alt = (m & NSAlternateKeyMask) != 0;
         BOOL cmd = (m & NSCommandKeyMask) != 0;
-        
+
         if (!(ctrl || alt || cmd)) {
             switch (k) {
                 case KEY_PAGE_UP:			// page up
@@ -71,7 +71,7 @@
             }
         }
     }
-    
+
     [super keyDown:e];
 }
 
@@ -81,11 +81,11 @@
     [topLineColor release];
     [bottomLineColor release];
     [gradient release];
-    
+
     bgColor = [theme.memberListBgColor retain];
     topLineColor = [theme.memberListSelTopLineColor retain];
     bottomLineColor = [theme.memberListSelBottomLineColor retain];
-    
+
     NSColor* start = theme.memberListSelTopColor;
     NSColor* end = theme.memberListSelBottomColor;
     if (start && end) {
@@ -104,18 +104,18 @@
 - (void)_highlightRow:(int)row clipRect:(NSRect)clipRect
 {
     NSRect frame = [self rectOfRow:row];
-    
+
     if (topLineColor && bottomLineColor && gradient) {
         NSRect rect = frame;
         rect.origin.y += 1;
         rect.size.height -= 2;
         [gradient drawInRect:rect angle:90];
-        
+
         [topLineColor set];
         rect = frame;
         rect.size.height = 1;
         NSRectFill(rect);
-        
+
         [bottomLineColor set];
         rect = frame;
         rect.origin.y += rect.size.height - 1;

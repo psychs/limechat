@@ -71,9 +71,9 @@
 - (void)mouseDown:(NSEvent*)e
 {
     [self.window makeFirstResponder:self];
-    
+
     NSPoint pt = [self convertPoint:[e locationInWindow] fromView:nil];
-    
+
     if (!recording && NSPointInRect(pt, [self eraseButtonFrame])) {
         eraseButtonPushed = YES;
         eraseButtonHighlighted = YES;
@@ -81,7 +81,7 @@
     else {
         recording = !recording;
     }
-    
+
     [self setNeedsDisplay];
 }
 
@@ -102,7 +102,7 @@
             [self clearKey];
         }
     }
-    
+
     eraseButtonPushed = NO;
     eraseButtonHighlighted = NO;
     [self setNeedsDisplay];
@@ -135,15 +135,15 @@
 - (void)keyDown:(NSEvent*)e
 {
     if (!recording || self.window.firstResponder != self) return;
-    
+
     int k = [e keyCode];
     NSUInteger m = [e modifierFlags];
     BOOL ctrl  = (m & NSControlKeyMask) != 0;
     BOOL alt   = (m & NSAlternateKeyMask) != 0;
     BOOL cmd   = (m & NSCommandKeyMask) != 0;
-    
+
     //LOG(@"keyDown: %d %d", k, m);
-    
+
     // all keys
     switch (k) {
         case 51:	// backspace
@@ -151,7 +151,7 @@
             [self clearKey];
             return;
     }
-    
+
     if (!ctrl && !alt && !cmd) {
         // no mods or shift
         switch (k) {
@@ -177,16 +177,16 @@
 - (BOOL)performKeyEquivalent:(NSEvent*)e
 {
     if (!recording || self.window.firstResponder != self) return NO;
-    
+
     int k = [e keyCode];
     NSUInteger m = [e modifierFlags];
     BOOL ctrl = (m & NSControlKeyMask) != 0;
     BOOL shift = (m & NSShiftKeyMask) != 0;
     BOOL alt = (m & NSAlternateKeyMask) != 0;
     BOOL cmd = (m & NSCommandKeyMask) != 0;
-    
+
     //LOG(@"performKeyEquivalent: %d %d", k, m);
-    
+
     // all keys
     switch (k) {
         case 51:	// backspace
@@ -194,7 +194,7 @@
             [self clearKey];
             return YES;
     }
-    
+
     if (!ctrl && !alt && !cmd) {
         // no mods or shift
         switch (k) {
@@ -221,21 +221,21 @@
             return NO;
         }
     }
-    
+
     int prevKeyCode = keyCode;
     NSUInteger prevModifierFlags = modifierFlags;
-    
+
     recording = NO;
     keyCode = k;
     modifierFlags = m;
     [self setNeedsDisplay];
-    
+
     if (keyCode != prevKeyCode || modifierFlags != prevModifierFlags) {
         if ([delegate respondsToSelector:@selector(keyRecorderDidChangeKey:)]) {
             [delegate keyRecorderDidChangeKey:self];
         }
     }
-    
+
     return YES;
 }
 
@@ -244,12 +244,12 @@
 {
     int prevKeyCode = keyCode;
     NSUInteger prevModifierFlags = modifierFlags;
-    
+
     recording = NO;
     keyCode = 0;
     modifierFlags = 0;
     [self setNeedsDisplay];
-    
+
     if (keyCode != prevKeyCode && modifierFlags != prevModifierFlags) {
         if ([delegate respondsToSelector:@selector(keyRecorderDidChangeKey:)]) {
             [delegate keyRecorderDidChangeKey:self];
@@ -267,10 +267,10 @@
 {
     NSString* name = [[KeyRecorder specialKeyMap] objectForKey:[NSNumber numberWithInt:k]];
     if (name) return name;
-    
+
     NSString* s = [[KeyCodeTranslator sharedInstance] translateKeyCode:k];
     if (!s) return nil;
-    
+
     BOOL isPadKey = [[KeyRecorder padKeyArray] containsObject:[NSNumber numberWithInt:k]];
     NSString* keyString = [s uppercaseString];
     if (isPadKey) {
@@ -282,26 +282,26 @@
 - (NSString*)stringForCurrentKey
 {
     if (keyCode == 0) return nil;
-    
+
     NSString* keyName = [self transformKeyCodeToString:keyCode];
     if (!keyName) {
         return nil;
     }
-    
+
     NSMutableString* s = [NSMutableString string];
-    
+
     BOOL ctrl  = (modifierFlags & NSControlKeyMask) != 0;
     BOOL alt   = (modifierFlags & NSAlternateKeyMask) != 0;
     BOOL shift = (modifierFlags & NSShiftKeyMask) != 0;
     BOOL cmd   = (modifierFlags & NSCommandKeyMask) != 0;
-    
+
     if (ctrl)  [s appendString:CTRL];
     if (alt)   [s appendString:ALT];
     if (shift) [s appendString:SHIFT];
     if (cmd)   [s appendString:COMMAND];
-    
+
     [s appendString:keyName];
-    
+
     return s;
 }
 
@@ -316,21 +316,21 @@
 - (NSRect)eraseButtonFrame
 {
     NSRect r = self.bounds;
-    
+
     CGFloat deltaY = r.size.height - BUTTON_SIZE;
-    
+
     r.origin.x += r.size.width - BUTTON_SIZE - 4;
     r.origin.y += deltaY/2;
     r.size.width = BUTTON_SIZE;
     r.size.height = BUTTON_SIZE;
-    
+
     return r;
 }
 
 - (void)drawRect:(NSRect)dirtyRect
 {
     NSRect r = self.bounds;
-    
+
     //
     // border
     //
@@ -340,13 +340,13 @@
     [path fill];
     [[NSColor colorWithCalibratedWhite:0.6 alpha:1] set];
     [path stroke];
-    
+
     //
     // content
     //
     NSString* s = nil;
     NSDictionary* attr = nil;
-    
+
     if (recording) {
         s = @"Type shortcut...";
         attr = [KeyRecorder placeholderAttribute];
@@ -355,12 +355,12 @@
         s = [self stringForCurrentKey];
         attr = [KeyRecorder normalAttribute];
     }
-    
+
     if (!s) {
         s = @"Click to set shortcut";
         attr = [KeyRecorder placeholderAttribute];
     }
-    
+
     NSAttributedString* as = [[[NSAttributedString alloc] initWithString:s attributes:attr] autorelease];
     r = NSInsetRect(r, 10, 1);
     r.origin.y -= 2;
@@ -386,7 +386,7 @@
         [linesPath lineToPoint:NSMakePoint(xRect.origin.x, xRect.origin.y + xRect.size.height)];
         [linesPath stroke];
     }
-    
+
     //
     // focus ring
     //
@@ -401,9 +401,9 @@
         [ps setAlignment:NSCenterTextAlignment];
 
         placeholderAttribute = @{
-            NSFontAttributeName: [NSFont systemFontOfSize:12],
-            NSForegroundColorAttributeName: [NSColor colorWithCalibratedWhite:0.4 alpha:1],
-            NSParagraphStyleAttributeName: ps,
+    NSFontAttributeName: [NSFont systemFontOfSize:12],
+    NSForegroundColorAttributeName: [NSColor colorWithCalibratedWhite:0.4 alpha:1],
+    NSParagraphStyleAttributeName: ps,
         };
         [placeholderAttribute retain];
     }
@@ -432,42 +432,42 @@
     static NSDictionary* specialKeyMap = nil;
     if (!specialKeyMap) {
         specialKeyMap = @{
-            @36: @"↩",
-            @48: @"⇥",
-            @49: @"Space",
-            @51: @"⌫",
-            @53: @"⎋",
-            @64: @"F17",
-            @71: @"Clear",
-            @76: @"⌅",
-            @79: @"F18",
-            @80: @"F19",
-            @96: @"F5",
-            @97: @"F6",
-            @98: @"F7",
-            @99: @"F3",
-            @100: @"F8",
-            @101: @"F9",
-            @103: @"F11",
-            @105: @"F13",
-            @106: @"F16",
-            @107: @"F14",
-            @109: @"F10",
-            @111: @"F12",
-            @113: @"F15",
-            @114: @"Help",
-            @115: @"↖",
-            @116: @"⇞",
-            @117: @"⌦",
-            @118: @"F4",
-            @119: @"↘",
-            @120: @"F2",
-            @121: @"⇟",
-            @122: @"F1",
-            @123: @"←",
-            @124: @"→",
-            @125: @"↓",
-            @126: @"↑",
+        @36: @"↩",
+        @48: @"⇥",
+        @49: @"Space",
+        @51: @"⌫",
+        @53: @"⎋",
+        @64: @"F17",
+        @71: @"Clear",
+        @76: @"⌅",
+        @79: @"F18",
+        @80: @"F19",
+        @96: @"F5",
+        @97: @"F6",
+        @98: @"F7",
+        @99: @"F3",
+        @100: @"F8",
+        @101: @"F9",
+        @103: @"F11",
+        @105: @"F13",
+        @106: @"F16",
+        @107: @"F14",
+        @109: @"F10",
+        @111: @"F12",
+        @113: @"F15",
+        @114: @"Help",
+        @115: @"↖",
+        @116: @"⇞",
+        @117: @"⌦",
+        @118: @"F4",
+        @119: @"↘",
+        @120: @"F2",
+        @121: @"⇟",
+        @122: @"F1",
+        @123: @"←",
+        @124: @"→",
+        @125: @"↓",
+        @126: @"↑",
         };
         [specialKeyMap retain];
     }
@@ -479,22 +479,22 @@
     static NSArray* padKeyArray = nil;
     if (!padKeyArray) {
         padKeyArray = @[
-            @65, // ,
-            @67, // *
-            @69, // +
-            @75, // /
-            @78, // -
-            @81, // =
-            @82, // 0
-            @83, // 1
-            @84, // 2
-            @85, // 3
-            @86, // 4
-            @87, // 5
-            @88, // 6
-            @89, // 7
-            @91, // 8
-            @92, // 9
+        @65, // ,
+        @67, // *
+        @69, // +
+        @75, // /
+        @78, // -
+        @81, // =
+        @82, // 0
+        @83, // 1
+        @84, // 2
+        @85, // 3
+        @86, // 4
+        @87, // 5
+        @88, // 6
+        @89, // 7
+        @91, // 8
+        @92, // 9
         ];
         [padKeyArray retain];
     }

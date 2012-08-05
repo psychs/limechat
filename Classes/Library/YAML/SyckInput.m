@@ -15,12 +15,12 @@ static SYMID cocoa_syck_parse_handler(SyckParser *p, SyckNode *n)
     long i = 0;
     char *type_id = n->type_id;
     int transferred = 0;
-    
+
     if ( type_id != NULL && strncmp( type_id, "tag:yaml.org,2002:", 18 ) == 0 )
     {
         type_id += 18;
     }
-    
+
     switch ( n->kind )
     {
         case syck_str_kind:
@@ -36,9 +36,9 @@ static SYMID cocoa_syck_parse_handler(SyckParser *p, SyckNode *n)
             else if ( strcmp( type_id, "binary" ) == 0 )
             {
                 v = [GTMBase64 decodeString:[NSString yamlStringWithUTF8String:n->data.str->ptr length:n->data.str->len]];
-                
+
                 NSString *string = [NSString yamlStringWithUTF8String:[v bytes] length:[v length]];
-                if(string) 
+                if(string)
                 {
                     v = string;
                 }
@@ -80,7 +80,7 @@ static SYMID cocoa_syck_parse_handler(SyckParser *p, SyckNode *n)
                         colon--;
                     }
                     if ( *colon == ':' ) *colon = '\0';
-                    
+
                     bnum = strtol( colon + 1, NULL, 10 );
                     total += bnum * sixty;
                     sixty *= 60;
@@ -110,7 +110,7 @@ static SYMID cocoa_syck_parse_handler(SyckParser *p, SyckNode *n)
                         colon--;
                     }
                     if ( *colon == ':' ) *colon = '\0';
-                    
+
                     bnum = strtod( colon + 1, NULL );
                     total += bnum * sixty;
                     sixty *= 60;
@@ -167,7 +167,7 @@ static SYMID cocoa_syck_parse_handler(SyckParser *p, SyckNode *n)
                 transferred = 0;
             }
             break;
-            
+
         case syck_seq_kind:
             v = [NSMutableArray array];
             for ( i = 0; i < n->data.list->idx; i++ )
@@ -186,7 +186,7 @@ static SYMID cocoa_syck_parse_handler(SyckParser *p, SyckNode *n)
                 transferred = 1;
             }
             break;
-            
+
         case syck_map_kind:
             v = [NSMutableDictionary dictionary];
             for ( i = 0; i < n->data.pairs->idx; i++ )
@@ -195,7 +195,7 @@ static SYMID cocoa_syck_parse_handler(SyckParser *p, SyckNode *n)
                 syck_lookup_sym( p, oid, (char **)&o2 );
                 oid = syck_map_read( n, map_value, i );
                 syck_lookup_sym( p, oid, (char **)&o3 );
-                
+
                 if(o2 == @"MERGE")
                 {
                     if([o3 isKindOfClass:[NSDictionary class]])
@@ -212,7 +212,7 @@ static SYMID cocoa_syck_parse_handler(SyckParser *p, SyckNode *n)
             }
             break;
     }
-    
+
     // types
     if(!transferred && type_id != NULL)
     {
@@ -223,31 +223,31 @@ static SYMID cocoa_syck_parse_handler(SyckParser *p, SyckNode *n)
             //if(myClass) v = [myClass objectWithYAML:v];
         }
     }
-    
+
     //make sure any bad creations don't kill whole parse
     if(!v)
         v = [NSNull null];
-    
+
     oid = syck_add_sym( p, (char*)v );
     return oid;
 }
 
-id yaml_parse_raw_utf8(const char *str, long len) 
+id yaml_parse_raw_utf8(const char *str, long len)
 {
     id obj = NULL;
     SYMID v;
     SyckParser *parser = syck_new_parser();
-    
+
     syck_parser_str( parser, str, len, NULL );
     syck_parser_handler( parser, cocoa_syck_parse_handler );
     syck_parser_error_handler( parser, cocoa_syck_error_handler);
     syck_parser_implicit_typing( parser, 1 );
     syck_parser_taguri_expansion( parser, 1 );
-    
+
     v = syck_parse( parser );
     if(v)
         syck_lookup_sym( parser, v, (char **)&obj );
-    
+
     syck_free_parser( parser );
-    return obj;    
+    return obj;
 }

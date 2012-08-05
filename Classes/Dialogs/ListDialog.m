@@ -17,7 +17,7 @@
     self = [super init];
     if (self) {
         [NSBundle loadNibNamed:@"ListDialog" owner:self];
-        
+
         list = [NSMutableArray new];
         sortKey = 1;
         sortOrder = NSOrderedDescending;
@@ -35,7 +35,7 @@
 - (void)start
 {
     [table setDoubleAction:@selector(onJoin:)];
-    
+
     [self show];
 }
 
@@ -46,13 +46,13 @@
         if (dic) {
             NSDictionary* win = [dic objectForKey:@"window"];
             NSArray* cols = [dic objectForKey:@"tablecols"];
-            
+
             double x = [win doubleForKey:@"x"];
             double y = [win doubleForKey:@"y"];
             double w = [win doubleForKey:@"w"];
             double h = [win doubleForKey:@"h"];
             [self.window setFrame:NSMakeRect(x, y, w, h) display:NO];
-            
+
             int i = 0;
             for (NSNumber* n in cols) {
                 [[[table tableColumns] objectAtIndex:i] setWidth:[n doubleValue]];
@@ -63,7 +63,7 @@
             [self.window center];
         }
     }
-    
+
     [self.window makeKeyAndOrderFront:nil];
 }
 
@@ -77,26 +77,26 @@
     [list removeAllObjects];
     [filteredList release];
     filteredList = nil;
-    
+
     [self reloadTable];
 }
 
 - (void)addChannel:(NSString*)channel count:(int)count topic:(NSString*)topic
 {
     NSArray* item = [NSArray arrayWithObjects:channel, [NSNumber numberWithInt:count], topic, nil];
-    
+
     NSString* filter = [filterText stringValue];
     if (filter.length) {
         if (!filteredList) {
             filteredList = [NSMutableArray new];
         }
-        
+
         if ([channel rangeOfString:filter options:NSCaseInsensitiveSearch].location != NSNotFound
             || [topic rangeOfString:filter options:NSCaseInsensitiveSearch].location != NSNotFound) {
             [self sortedInsert:item inArray:filteredList];
         }
     }
-    
+
     [self sortedInsert:item inArray:list];
     [self reloadTable];
 }
@@ -111,10 +111,10 @@ static NSInteger compareItems(NSArray* self, NSArray* other, void* context)
     ListDialog* dialog = (ListDialog*)context;
     int key = dialog.sortKey;
     NSComparisonResult order = dialog.sortOrder;
-    
+
     NSString* mine = [self objectAtIndex:key];
     NSString* others = [other objectAtIndex:key];
-    
+
     NSComparisonResult result;
     if (key == 1) {
         result = [mine compare:others];
@@ -122,7 +122,7 @@ static NSInteger compareItems(NSArray* self, NSArray* other, void* context)
     else {
         result = [mine caseInsensitiveCompare:others];
     }
-    
+
     if (order == NSOrderedDescending) {
         return - result;
     }
@@ -141,7 +141,7 @@ static NSInteger compareItems(NSArray* self, NSArray* other, void* context)
     const int THRESHOLD = 5;
     int left = 0;
     int right = ary.count;
-    
+
     while (right - left > THRESHOLD) {
         int pivot = (left + right) / 2;
         if (compareItems([ary objectAtIndex:pivot], item, self) == NSOrderedDescending) {
@@ -151,14 +151,14 @@ static NSInteger compareItems(NSArray* self, NSArray* other, void* context)
             left = pivot;
         }
     }
-    
+
     for (int i=left; i<right; ++i) {
         if (compareItems([ary objectAtIndex:i], item, self) == NSOrderedDescending) {
             [ary insertObject:item atIndex:i];
             return;
         }
     }
-    
+
     [ary insertObject:item atIndex:right];
 }
 
@@ -184,7 +184,7 @@ static NSInteger compareItems(NSArray* self, NSArray* other, void* context)
     if (filter.length) {
         ary = filteredList;
     }
-    
+
     NSIndexSet* indexes = [table selectedRowIndexes];
     for (NSUInteger i=[indexes firstIndex]; i!=NSNotFound; i=[indexes indexGreaterThanIndex:i]) {
         NSArray* item = [ary objectAtIndex:i];
@@ -198,7 +198,7 @@ static NSInteger compareItems(NSArray* self, NSArray* other, void* context)
 {
     [filteredList release];
     filteredList = nil;
-    
+
     NSString* filter = [filterText stringValue];
     if (filter.length) {
         NSMutableArray* ary = [NSMutableArray new];
@@ -212,7 +212,7 @@ static NSInteger compareItems(NSArray* self, NSArray* other, void* context)
         }
         filteredList = ary;
     }
-    
+
     [self reloadTable];
 }
 
@@ -220,22 +220,22 @@ static NSInteger compareItems(NSArray* self, NSArray* other, void* context)
 {
     NSDictionary* dic = [Preferences loadWindowStateWithName:@"channel_list_window"];
     if (!dic) return NO;
-    
+
     NSDictionary* win = [dic objectForKey:@"window"];
     NSArray* cols = [dic objectForKey:@"tablecols"];
-    
+
     double x = [win doubleForKey:@"x"];
     double y = [win doubleForKey:@"y"];
     double w = [win doubleForKey:@"w"];
     double h = [win doubleForKey:@"h"];
     [self.window setFrame:NSMakeRect(x, y, w, h) display:NO];
-    
+
     int i = 0;
     for (NSNumber* n in cols) {
         [[[table tableColumns] objectAtIndex:i] setWidth:[n doubleValue]];
         ++i;
     }
-    
+
     return YES;
 }
 
@@ -247,12 +247,12 @@ static NSInteger compareItems(NSArray* self, NSArray* other, void* context)
     [win setDouble:rect.origin.y forKey:@"y"];
     [win setDouble:rect.size.width forKey:@"w"];
     [win setDouble:rect.size.height forKey:@"h"];
-    
+
     NSMutableArray* cols = [NSMutableArray array];
     for (NSTableColumn* col in [table tableColumns]) {
         [cols addObject:[NSNumber numberWithDouble:col.width]];
     }
-    
+
     NSDictionary* dic = [NSDictionary dictionaryWithObjectsAndKeys:win, @"window", cols, @"tablecols", nil];
     [Preferences saveWindowState:dic name:@"channel_list_window"];
 }
@@ -273,7 +273,7 @@ static NSInteger compareItems(NSArray* self, NSArray* other, void* context)
     NSArray* ary = filteredList ?: list;
     NSArray* item = [ary objectAtIndex:row];
     NSString* col = [column identifier];
-    
+
     if ([col isEqualToString:@"chname"]) {
         return [item objectAtIndex:0];
     }
@@ -298,7 +298,7 @@ static NSInteger compareItems(NSArray* self, NSArray* other, void* context)
     else {
         i = 2;
     }
-    
+
     if (sortKey == i) {
         sortOrder = - sortOrder;
     }
@@ -306,13 +306,13 @@ static NSInteger compareItems(NSArray* self, NSArray* other, void* context)
         sortKey = i;
         sortOrder = (sortKey == 1) ? NSOrderedDescending : NSOrderedAscending;
     }
-    
+
     [self sort];
-    
+
     if (filteredList) {
         [self onSearchFieldChange:nil];
     }
-    
+
     [self reloadTable];
 }
 
@@ -322,7 +322,7 @@ static NSInteger compareItems(NSArray* self, NSArray* other, void* context)
 - (void)windowWillClose:(NSNotification*)note
 {
     [self saveWindowState];
-    
+
     if ([delegate respondsToSelector:@selector(listDialogWillClose:)]) {
         [delegate listDialogWillClose:self];
     }

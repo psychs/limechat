@@ -48,34 +48,34 @@
     [proxyHost release];
     [proxyUser release];
     [proxyPassword release];
-    
+
     [conn close];
     [conn autorelease];
-    
+
     [sendQueue release];
     [timer stop];
     [timer release];
-    
+
     [super dealloc];
 }
 
 - (void)open
 {
     [self close];
-    
+
     conn = [TCPClient new];
     conn.delegate = self;
     conn.host = host;
     conn.port = port;
     conn.useSSL = useSSL;
-    
+
     if (useSystemSocks) {
         // check if system socks proxy is enabled
         CFDictionaryRef proxyDic = SCDynamicStoreCopyProxies(NULL);
         NSNumber* num = (NSNumber*)CFDictionaryGetValue(proxyDic, kSCPropNetProxiesSOCKSEnable);
         BOOL systemSocksEnabled = [num intValue] != 0;
         CFRelease(proxyDic);
-        
+
         conn.useSocks = systemSocksEnabled;
         conn.useSystemSocks = systemSocksEnabled;
     }
@@ -83,11 +83,11 @@
         conn.useSocks = useSocks;
         conn.socksVersion = socksVersion;
     }
-    
+
     conn.proxyHost = proxyHost;
     conn.proxyPort = proxyPort;
     conn.proxyUser = proxyUser;
-    
+
     [conn open];
 }
 
@@ -143,13 +143,13 @@
             data = [s dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
         }
     }
-    
+
     if (encoding == NSISO2022JPStringEncoding) {
         if (data) {
             data = [data convertKanaFromISO2022ToNative];
         }
     }
-    
+
     return data;
 }
 
@@ -158,21 +158,21 @@
     if ([sendQueue count] == 0) return;
     if (sending) return;
     if (penalty > PENALTY_THREASHOLD) return;
-    
+
     NSString* s = [sendQueue objectAtIndex:0];
     s = [s stringByAppendingString:@"\r\n"];
     [sendQueue removeObjectAtIndex:0];
-    
+
     NSData* data = [self convertToCommonEncoding:s];
-    
+
     if (data) {
         sending = YES;
         if (loggedIn) {
             penalty += IRC_PENALTY_NORMAL;
         }
-        
+
         [conn write:data];
-        
+
         if ([delegate respondsToSelector:@selector(ircConnectionWillSend:)]) {
             [delegate ircConnectionWillSend:s];
         }
@@ -204,7 +204,7 @@
 - (void)tcpClientDidConnect:(TCPClient*)sender
 {
     [sendQueue removeAllObjects];
-    
+
     if ([delegate respondsToSelector:@selector(ircConnectionDidConnect:)]) {
         [delegate ircConnectionDidConnect:self];
     }
@@ -214,7 +214,7 @@
 {
     [timer stop];
     [sendQueue removeAllObjects];
-    
+
     if ([delegate respondsToSelector:@selector(ircConnectionDidError:)]) {
         [delegate ircConnectionDidError:error];
     }
@@ -224,7 +224,7 @@
 {
     [timer stop];
     [sendQueue removeAllObjects];
-    
+
     if ([delegate respondsToSelector:@selector(ircConnectionDidDisconnect:)]) {
         [delegate ircConnectionDidDisconnect:self];
     }
@@ -235,7 +235,7 @@
     while (1) {
         NSData* data = [conn readLine];
         if (!data) break;
-        
+
         if ([delegate respondsToSelector:@selector(ircConnectionDidReceive:)]) {
             [delegate ircConnectionDidReceive:data];
         }

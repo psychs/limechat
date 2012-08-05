@@ -36,7 +36,7 @@
 {
     int len = str.length;
     BOOL plus = NO;
-    
+
     for (int index=0; index<len; ++index) {
         UniChar uc = [str characterAtIndex:index];
         switch (uc) {
@@ -74,7 +74,7 @@
 - (NSString*)string
 {
     NSMutableString* str = [NSMutableString string];
-    
+
     if (a) [str appendString:@"a"];
     if (i) [str appendString:@"i"];
     if (r) [str appendString:@"r"];
@@ -82,7 +82,7 @@
     if (w) [str appendString:@"w"];
     if (o) [str appendString:@"o"];
     if (O) [str appendString:@"O"];
-    
+
     if (str.length) [str insertString:@"+" atIndex:0];
     return str;
 }

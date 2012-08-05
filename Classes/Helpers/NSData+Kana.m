@@ -25,9 +25,9 @@ typedef enum {
     const unsigned char* src = [self bytes];
     unsigned char* buf = [dest mutableBytes];
     int n = 0;
-    
+
     KanaEncoding enc = ENC_OTHER;
-    
+
     for (int i=0; i<len; ++i) {
         unsigned char c = src[i];
         if (c == ESC) {
@@ -35,7 +35,7 @@ typedef enum {
             if (i+2 < len) {
                 unsigned char d = src[i+1];
                 unsigned char e = src[i+2];
-                
+
                 switch (d) {
                     case '$':
                         switch (e){
@@ -63,23 +63,23 @@ typedef enum {
                         }
                         break;
                 }
-                
+
                 if (seq) {
                     i += 2;
                     continue;
                 }
             }
         }
-        
+
         if (enc == ENC_JIS_ROMAN) {
             if (0x21 <= c && c <= 0x5F) {
                 c |= 0x80;
             }
         }
-        
+
         buf[n++] = c;
     }
-    
+
     [dest setLength:n];
     return dest;
 }
@@ -91,9 +91,9 @@ typedef enum {
     const unsigned char* src = [self bytes];
     unsigned char* buf = [dest mutableBytes];
     int n = 0;
-    
+
     KanaEncoding enc = ENC_OTHER;
-    
+
     for (int i=0; i<len; ++i) {
         unsigned char c = src[i];
         if (c == ESC) {
@@ -101,7 +101,7 @@ typedef enum {
             if (i+2 < len) {
                 unsigned char d = src[i+1];
                 unsigned char e = src[i+2];
-                
+
                 switch (d) {
                     case '$':
                         switch (e){
@@ -133,14 +133,14 @@ typedef enum {
                         }
                         break;
                 }
-                
+
                 if (seq) {
                     i += 2;
                     continue;
                 }
             }
         }
-        
+
         if (enc == ENC_JIS_ROMAN) {
             if (c == SO) {
                 enc = ENC_JIS_KANA;
@@ -153,16 +153,16 @@ typedef enum {
                 continue;
             }
         }
-        
+
         if (enc == ENC_JIS_ROMAN) {
             if (0xa1 <= c && c <= 0xDF) {
                 c &= 0x7F;
             }
         }
-        
+
         buf[n++] = c;
     }
-    
+
     [dest setLength:n];
     return dest;
 }

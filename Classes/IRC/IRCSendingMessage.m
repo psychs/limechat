@@ -40,7 +40,7 @@
 {
     if (!string) {
         BOOL forceCompleteColon = NO;
-        
+
         if ([command isEqualToString:PRIVMSG] ||[command isEqualToString:NOTICE]) {
             forceCompleteColon = YES;
         }
@@ -57,11 +57,11 @@
                  || [command isEqualToString:USER]) {
             completeColon = NO;
         }
-        
+
         NSMutableString* d = [NSMutableString new];
-        
+
         [d appendString:command];
-        
+
         int count = [params count];
         if (count > 0) {
             for (int i=0; i<count-1; ++i) {
@@ -69,7 +69,7 @@
                 [d appendString:@" "];
                 [d appendString:s];
             }
-            
+
             [d appendString:@" "];
             NSString* s = [params objectAtIndex:count-1];
             int len = s.length;
@@ -78,15 +78,15 @@
                 UniChar c = [s characterAtIndex:0];
                 firstColonOrSpace = (c == ' ' || c == ':');
             }
-            
+
             if (forceCompleteColon || (completeColon && (s.length == 0 || firstColonOrSpace))) {
                 [d appendString:@":"];
             }
             [d appendString:s];
         }
-        
+
         [d appendString:@"\r\n"];
-        
+
         string = d;
     }
     return string;

@@ -31,7 +31,7 @@
             return;
         }
     }
-    
+
     [super paste:sender];
 }
 
@@ -55,7 +55,7 @@
     if ([keyHandler processKeyEvent:e]) {
         return;
     }
-    
+
     [super keyDown:e];
 }
 

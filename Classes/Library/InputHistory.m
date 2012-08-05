@@ -29,9 +29,9 @@
     pos = buf.count;
     if (s.length == 0) return;
     if ([[buf lastObject] isEqualToString:s]) return;
-    
+
     [buf addObject:s];
-    
+
     if (buf.count > INPUT_HISTORY_MAX) {
         [buf removeObjectAtIndex:0];
     }
@@ -45,7 +45,7 @@
         if (0 <= pos && pos < buf.count) {
             cur = [buf objectAtIndex:pos];
         }
-        
+
         if (!cur || ![cur isEqualToString:s]) {
             // if the text was modified, add it
             [buf addObject:s];
@@ -55,7 +55,7 @@
             }
         }
     }
-    
+
     --pos;
     if (pos < 0) {
         pos = 0;
@@ -75,12 +75,12 @@
         pos = buf.count;
         return nil;
     }
-    
+
     NSString* cur = nil;
     if (0 <= pos && pos < buf.count) {
         cur = [buf objectAtIndex:pos];
     }
-    
+
     if (!cur || ![cur isEqualToString:s]) {
         // if the text was modified, add it
         [self add:s];

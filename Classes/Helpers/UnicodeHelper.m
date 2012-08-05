@@ -366,11 +366,11 @@ static unsigned OTHERS_TABLE[] = {
 + (BOOL)isAlphabeticalCodePoint:(int)c
 {
     unsigned* T = 0;
-    
+
     if (c <= 0x7f) {
         return (0x41 <= c && c <= 0x5a) || (0x61 <= c && c <= 0x7a);
     }
-    
+
     if (0xaa <= c && c <= 0x2ee) {
         T = TABLE1;
     }
@@ -392,20 +392,20 @@ static unsigned OTHERS_TABLE[] = {
     else if (0x10000 <= c && c <= 0x1d7cb) {
         T = OTHERS_TABLE;
     }
-    
+
     if (!T) return NO;
-    
+
     int count = *T;
     T++;
-    
+
     int left = 0;
     int right = count;
-    
+
     while (left < right) {
         int center = (left + right) / 2;
         int start = T[center*2];
         int end = T[center*2+1];
-        
+
         if (start <= c && c <= end) return YES;
         if (c < start) {
             right = center;
@@ -416,7 +416,7 @@ static unsigned OTHERS_TABLE[] = {
             continue;
         }
     }
-    
+
     return NO;
 }
 

@@ -44,40 +44,40 @@
     [sender release];
     [command release];
     [params release];
-    
+
     sender = [IRCPrefix new];
     command = @"";
     receivedAt = 0;
     params = [NSMutableArray new];
-    
+
     NSMutableString* s = [line mutableCopy];
-    
+
     while ([s hasPrefix:@"@"]) {
         NSString* t = [s getToken];
         t = [t substringFromIndex:1];
-        
+
         int i = [t findCharacter:'='];
         if (i < 0) {
             continue;
         }
-        
+
         NSString* key = [t substringToIndex:i];
         NSString* value = [t substringFromIndex:i+1];
-        
+
         if ([key isEqualToString:@"t"]) {
             receivedAt = [value longLongValue];
         }
     }
-    
+
     if (receivedAt == 0) {
         time(&receivedAt);
     }
-    
+
     if ([s hasPrefix:@":"]) {
         NSString* t = [s getToken];
         t = [t substringFromIndex:1];
         sender.raw = t;
-        
+
         int i = [t findCharacter:'!'];
         if (i < 0) {
             sender.nick = t;
@@ -86,7 +86,7 @@
         else {
             sender.nick = [t substringToIndex:i];
             t = [t substringFromIndex:i+1];
-            
+
             i = [t findCharacter:'@'];
             if (i >= 0) {
                 sender.user = [t substringToIndex:i];
@@ -94,10 +94,10 @@
             }
         }
     }
-    
+
     command = [[[s getToken] uppercaseString] retain];
     numericReply = [command intValue];
-    
+
     while (s.length) {
         if ([s hasPrefix:@":"]) {
             [params addObject:[s substringFromIndex:1]];
@@ -107,7 +107,7 @@
             [params addObject:[s getToken]];
         }
     }
-    
+
     [s release];
 }
 
@@ -129,14 +129,14 @@
 - (NSString*)sequence:(int)index
 {
     NSMutableString* s = [NSMutableString string];
-    
+
     int count = params.count;
     for (int i=index; i<count; i++) {
         NSString* e = [params objectAtIndex:i];
         if (i != index) [s appendString:@" "];
         [s appendString:e];
     }
-    
+
     return s;
 }
 

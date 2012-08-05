@@ -11,12 +11,12 @@
     if (highlight == aHighlight && newTalk == aNewTalk) {
         return;
     }
-    
+
     highlight = aHighlight;
     newTalk = aNewTalk;
-    
+
     NSImage* icon = [NSImage imageNamed:@"NSApplicationIcon"];
-    
+
     if (highlight || newTalk) {
         NSSize iconSize = icon.size;
         NSImage* badge = highlight ? [NSImage imageNamed:@"redbadge"] : [NSImage imageNamed:@"bluebadge"];

@@ -24,7 +24,7 @@
 {
     NSRange r = [str rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet]];
     if (r.location == NSNotFound) return YES;
-    
+
     str = [str stringByReplacingOccurrencesOfString:@"\r" withString:@" "];
     str = [str stringByReplacingOccurrencesOfString:@"\n" withString:@" "];
     *newString = str;

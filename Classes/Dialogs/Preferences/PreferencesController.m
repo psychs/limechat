@@ -56,17 +56,17 @@
     [self loadHotKey];
     [self updateTranscriptFolder];
     [self updateTheme];
-    
+
     [logFont release];
     logFont = [[NSFont fontWithName:[Preferences themeLogFontName] size:[Preferences themeLogFontSize]] retain];
-    
+
     [inputFont release];
     inputFont = [[NSFont fontWithName:[Preferences themeInputFontName] size:[Preferences themeInputFontSize]] retain];
-    
+
     if (![self.window isVisible]) {
         [self.window center];
     }
-    
+
     [self.window makeKeyAndOrderFront:nil];
 }
 
@@ -201,10 +201,10 @@
 {
     int code = hotKey.keyCode;
     NSUInteger mods = hotKey.modifierFlags;
-    
+
     [Preferences setHotKeyKeyCode:code];
     [Preferences setHotKeyModifierFlags:mods];
-    
+
     if (hotKey.keyCode) {
         [(LimeChatApplication*)NSApp registerHotKey:code modifierFlags:mods];
     }
@@ -230,52 +230,52 @@
     if (!sounds) {
         NSMutableArray* ary = [NSMutableArray new];
         SoundWrapper* e;
-        
+
         e = [SoundWrapper soundWrapperWithEventType:USER_NOTIFICATION_LOGIN];
         [ary addObject:e];
-        
+
         e = [SoundWrapper soundWrapperWithEventType:USER_NOTIFICATION_DISCONNECT];
         [ary addObject:e];
-        
+
         e = [SoundWrapper soundWrapperWithEventType:USER_NOTIFICATION_HIGHLIGHT];
         [ary addObject:e];
-        
+
         e = [SoundWrapper soundWrapperWithEventType:USER_NOTIFICATION_NEW_TALK];
         [ary addObject:e];
-        
+
         e = [SoundWrapper soundWrapperWithEventType:USER_NOTIFICATION_KICKED];
         [ary addObject:e];
-        
+
         e = [SoundWrapper soundWrapperWithEventType:USER_NOTIFICATION_INVITED];
         [ary addObject:e];
-        
+
         e = [SoundWrapper soundWrapperWithEventType:USER_NOTIFICATION_CHANNEL_MSG];
         [ary addObject:e];
-        
+
         e = [SoundWrapper soundWrapperWithEventType:USER_NOTIFICATION_CHANNEL_NOTICE];
         [ary addObject:e];
-        
+
         e = [SoundWrapper soundWrapperWithEventType:USER_NOTIFICATION_TALK_MSG];
         [ary addObject:e];
-        
+
         e = [SoundWrapper soundWrapperWithEventType:USER_NOTIFICATION_TALK_NOTICE];
         [ary addObject:e];
-        
+
         e = [SoundWrapper soundWrapperWithEventType:USER_NOTIFICATION_FILE_RECEIVE_REQUEST];
         [ary addObject:e];
-        
+
         e = [SoundWrapper soundWrapperWithEventType:USER_NOTIFICATION_FILE_RECEIVE_SUCCESS];
         [ary addObject:e];
-        
+
         e = [SoundWrapper soundWrapperWithEventType:USER_NOTIFICATION_FILE_RECEIVE_ERROR];
         [ary addObject:e];
-        
+
         e = [SoundWrapper soundWrapperWithEventType:USER_NOTIFICATION_FILE_SEND_SUCCESS];
         [ary addObject:e];
-        
+
         e = [SoundWrapper soundWrapperWithEventType:USER_NOTIFICATION_FILE_SEND_ERROR];
         [ary addObject:e];
-        
+
         sounds = ary;
     }
     return sounds;
@@ -289,10 +289,10 @@
     NSString* path = [Preferences transcriptFolder];
     path = [path stringByExpandingTildeInPath];
     NSString* dirName = [path lastPathComponent];
-    
+
     NSImage* icon = [[NSWorkspace sharedWorkspace] iconForFile:path];
     [icon setSize:NSMakeSize(16, 16)];
-    
+
     NSMenuItem* item = [transcriptFolderButton itemAtIndex:0];
     [item setTitle:dirName];
     [item setImage:icon];
@@ -301,21 +301,21 @@
 - (void)transcriptFolderPanelDidEnd:(NSOpenPanel *)panel returnCode:(int)returnCode contextInfo:(void  *)contextInfo
 {
     [transcriptFolderButton selectItem:[transcriptFolderButton itemAtIndex:0]];
-    
+
     if (returnCode == NSOKButton) {
         NSString* path = [[[panel URLs] objectAtIndex:0] path];
-        
+
         // create directory
         NSFileManager* fm = [NSFileManager defaultManager];
         BOOL isDir;
         if (![fm fileExistsAtPath:path isDirectory:&isDir]) {
             [fm createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:NULL];
         }
-        
+
         [Preferences setTranscriptFolder:[path stringByAbbreviatingWithTildeInPath]];
         [self updateTranscriptFolder];
     }
-    
+
     [transcriptFolderOpenPanel autorelease];
     transcriptFolderOpenPanel = nil;
 }
@@ -323,11 +323,11 @@
 - (void)onTranscriptFolderChanged:(id)sender
 {
     if ([transcriptFolderButton selectedTag] != 2) return;
-    
+
     NSString* path = [Preferences transcriptFolder];
     path = [path stringByExpandingTildeInPath];
     NSString* parentPath = [path stringByDeletingLastPathComponent];
-    
+
     NSOpenPanel* d = [NSOpenPanel openPanel];
     [d setCanChooseFiles:NO];
     [d setCanChooseDirectories:YES];
@@ -335,12 +335,12 @@
     [d setAllowsMultipleSelection:NO];
     [d setCanCreateDirectories:YES];
     d.directoryURL = [NSURL fileURLWithPath:parentPath isDirectory:YES];
-    
+
     __block PreferencesController* blockSelf = self;
     [d beginWithCompletionHandler:^(NSInteger result) {
         [blockSelf transcriptFolderPanelDidEnd:d returnCode:result contextInfo:NULL];
     }];
-    
+
     [transcriptFolderOpenPanel release];
     transcriptFolderOpenPanel = [d retain];
 }
@@ -353,15 +353,15 @@
     //
     // update menu
     //
-    
+
     [themeButton removeAllItems];
     [themeButton addItemWithTitle:@"Default"];
     [[themeButton itemAtIndex:0] setTag:0];
-    
+
     NSFileManager* fm = [NSFileManager defaultManager];
     NSArray* ary = [NSArray arrayWithObjects:[ViewTheme resourceBasePath], [ViewTheme userBasePath], nil];
     int tag = 0;
-    
+
     for (NSString* path in ary) {
         NSMutableSet* set = [NSMutableSet set];
         NSArray* files = [fm contentsOfDirectoryAtPath:path error:NULL];
@@ -374,11 +374,11 @@
                 [set addObject:baseName];
             }
         }
-        
+
         files = [[set allObjects] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
         if (files.count) {
             [themeButton.menu addItem:[NSMenuItem separatorItem]];
-            
+
             int i = 0;
             for (NSString* f in files) {
                 NSMenuItem* item = [[[NSMenuItem alloc] initWithTitle:f action:nil keyEquivalent:@""] autorelease];
@@ -387,28 +387,28 @@
                 ++i;
             }
         }
-        
+
         ++tag;
     }
-    
+
     //
     // select current one
     //
-    
+
     NSArray* kindAndName = [ViewTheme extractFileName:[Preferences themeName]];
     if (!kindAndName) {
         [themeButton selectItemAtIndex:0];
         return;
     }
-    
+
     NSString* kind = [kindAndName objectAtIndex:0];
     NSString* name = [kindAndName objectAtIndex:1];
-    
+
     int targetTag = 0;
     if (![kind isEqualToString:@"resource"]) {
         targetTag = 1;
     }
-    
+
     int count = [themeButton numberOfItems];
     for (int i=0; i<count; i++) {
         NSMenuItem* item = [themeButton itemAtIndex:i];
@@ -441,7 +441,7 @@
 - (void)onSelectFont:(id)sender
 {
     changingLogFont = YES;
-    
+
     NSFontManager* fm = [NSFontManager sharedFontManager];
     [fm setSelectedFont:logFont isMultiple:NO];
     [fm orderFrontFontPanel:self];
@@ -450,7 +450,7 @@
 - (void)onInputSelectFont:(id)sender
 {
     changingLogFont = NO;
-    
+
     NSFontManager* fm = [NSFontManager sharedFontManager];
     [fm setSelectedFont:inputFont isMultiple:NO];
     [fm orderFrontFontPanel:self];
@@ -470,7 +470,7 @@
         [self setValue:inputFont.fontName forKey:@"inputFontDisplayName"];
         [self setValue:[NSNumber numberWithDouble:inputFont.pointSize] forKey:@"inputFontPointSize"];
     }
-    
+
     [self onLayoutChanged:nil];
 }
 
@@ -518,10 +518,10 @@
 - (void)windowWillClose:(NSNotification *)note
 {
     [self.window endEditingFor:nil];
-    
+
     [Preferences cleanUpWords];
     [Preferences sync];
-    
+
     if ([delegate respondsToSelector:@selector(preferencesDialogWillClose:)]) {
         [delegate preferencesDialogWillClose:self];
     }

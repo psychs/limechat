@@ -35,7 +35,7 @@
 - (NSString*)sound
 {
     NSString* sound = [Preferences soundForEvent:eventType];
-    
+
     if (sound.length == 0) {
         return EMPTY_SOUND;
     }
@@ -49,7 +49,7 @@
     if ([value isEqualToString:EMPTY_SOUND]) {
         value = @"";
     }
-    
+
     if (value.length) {
         [SoundPlayer play:value];
     }

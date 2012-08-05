@@ -74,7 +74,7 @@
     int d = DOUBLE_CLICK_RADIUS;
     int cx = [[e valueForKey:@"clientX"] intValue];
     int cy = [[e valueForKey:@"clientY"] intValue];
-    
+
     BOOL res = NO;
     CFAbsoluteTime doubleClickThreshold = [NSEvent doubleClickInterval];
     CFAbsoluteTime now = CFAbsoluteTimeGetCurrent();
@@ -83,11 +83,11 @@
             res = YES;
         }
     }
-    
+
     lastClickTime = now;
     x = cx;
     y = cy;
-    
+
     return res;
 }
 

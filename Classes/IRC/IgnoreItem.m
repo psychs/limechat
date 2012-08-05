@@ -48,15 +48,15 @@
 - (NSDictionary*)dictionaryValue
 {
     NSMutableDictionary* dic = [NSMutableDictionary dictionary];
-    
+
     if (nick) [dic setObject:nick forKey:@"nick"];
     if (text) [dic setObject:text forKey:@"text"];
-    
+
     [dic setBool:useRegexForNick forKey:@"useRegexForNick"];
     [dic setBool:useRegexForText forKey:@"useRegexForText"];
-    
+
     if (channels) [dic setObject:channels forKey:@"channels"];
-    
+
     return dic;
 }
 
@@ -65,25 +65,25 @@
     if (![other isKindOfClass:[IgnoreItem class]]) {
         return NO;
     }
-    
+
     IgnoreItem* g = (IgnoreItem*)other;
-    
+
     if (useRegexForNick != g.useRegexForNick) {
         return NO;
     }
-    
+
     if (useRegexForText != g.useRegexForText) {
         return NO;
     }
-    
+
     if (nick && g.nick && ![nick isEqualNoCase:g.nick]) {
         return NO;
     }
-    
+
     if (text && g.text && ![text isEqualNoCase:g.text]) {
         return NO;
     }
-    
+
     if ((!channels || !channels.count) && (!g.channels || !g.channels.count)) {
         ;
     }
@@ -92,7 +92,7 @@
             return NO;
         }
     }
-    
+
     return YES;
 }
 
@@ -101,7 +101,7 @@
     if (![nick isEqualToString:value]) {
         [nick release];
         nick = [value retain];
-        
+
         [nickRegex release];
         nickRegex = nil;
     }
@@ -112,7 +112,7 @@
     if (![text isEqualToString:value]) {
         [text release];
         text = [value retain];
-        
+
         [textRegex release];
         textRegex = nil;
     }
@@ -143,13 +143,13 @@
     if (!inputNick && nick.length) {
         return NO;
     }
-    
+
     if (inputNick.length > 0 && nick.length > 0) {
         if (useRegexForNick) {
             if (!nickRegex) {
                 nickRegex = [[NSRegularExpression alloc] initWithPattern:nick options:NSRegularExpressionCaseInsensitive error:NULL];
             }
-            
+
             if (nickRegex) {
                 NSRange range = [nickRegex rangeOfFirstMatchInString:inputNick options:0 range:NSMakeRange(0, inputNick.length)];
                 if (!(range.location == 0 && range.length == inputNick.length)) {
@@ -163,18 +163,18 @@
             }
         }
     }
-    
+
     // check text
     if (!inputText && text.length) {
         return NO;
     }
-    
+
     if (inputText && text.length > 0) {
         if (useRegexForText) {
             if (!textRegex) {
                 textRegex = [[NSRegularExpression alloc] initWithPattern:text options:NSRegularExpressionCaseInsensitive error:NULL];
             }
-            
+
             if (textRegex) {
                 NSRange range = [textRegex rangeOfFirstMatchInString:inputNick options:0 range:NSMakeRange(0, inputText.length)];
                 if (!(range.location == 0 && range.length == inputText.length)) {
@@ -189,12 +189,12 @@
             }
         }
     }
-    
+
     // check channels
     if (!channel && channels.count) {
         return NO;
     }
-    
+
     if (channel && channels.count) {
         BOOL matched = NO;
         for (NSString* s in channels) {
@@ -206,12 +206,12 @@
                 break;
             }
         }
-        
+
         if (!matched) {
             return NO;
         }
     }
-    
+
     return YES;
 }
 

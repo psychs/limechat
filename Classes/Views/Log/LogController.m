@@ -54,13 +54,13 @@
 {
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    
+
     [view release];
     [policy release];
     [sink release];
     [scroller release];
     [autoScroller release];
-    
+
     [menu release];
     [urlMenu release];
     [addrMenu release];
@@ -68,15 +68,15 @@
     [memberMenu release];
     [theme release];
     [initialBackgroundColor release];
-    
+
     [lines release];
     [highlightedLineNumbers release];
-    
+
     [prevNickInfo release];
     [html release];
-    
+
     [fetchingAvatarScreenNames release];
-    
+
     [super dealloc];
 }
 
@@ -87,9 +87,9 @@
 {
     if (maxLines == value) return;
     maxLines = value;
-    
+
     if (!loaded) return;
-    
+
     if (maxLines > 0 && count > maxLines) {
         [self savePosition];
         [self setNeedsLimitNumberOfLines];
@@ -103,7 +103,7 @@
 - (void)setUp
 {
     loaded = NO;
-    
+
     policy = [LogPolicy new];
     policy.menuController = [world menuController];
     policy.menu = menu;
@@ -111,16 +111,16 @@
     policy.addrMenu = addrMenu;
     policy.chanMenu = chanMenu;
     policy.memberMenu = memberMenu;
-    
+
     sink = [LogScriptEventSink new];
     sink.owner = self;
     sink.policy = policy;
-    
+
     if (view) {
         [view removeFromSuperview];
         [view release];
     }
-    
+
     view = [[LogView alloc] initWithFrame:NSZeroRect];
     if ([view respondsToSelector:@selector(setBackgroundColor:)]) {
         [(id)view setBackgroundColor:initialBackgroundColor];
@@ -155,7 +155,7 @@
 - (void)moveToBottom
 {
     movingToBottom = NO;
-    
+
     if (!loaded) return;
     DOMHTMLDocument* doc = (DOMHTMLDocument*)[[view mainFrame] DOMDocument];
     if (!doc) return;
@@ -167,14 +167,14 @@
 {
     if (!loaded) return YES;
     if (movingToBottom) return YES;
-    
+
     DOMHTMLDocument* doc = (DOMHTMLDocument*)[[view mainFrame] DOMDocument];
     if (!doc) return YES;
     DOMHTMLElement* body = [doc body];
     int viewHeight = view.frame.size.height;
     int height = [[body valueForKey:@"scrollHeight"] intValue];
     int top = [[body valueForKey:@"scrollTop"] intValue];
-    
+
     if (viewHeight == 0) return YES;
     return top + viewHeight >= height - BOTTOM_EPSILON;
 }
@@ -210,10 +210,10 @@
 - (void)mark
 {
     if (!loaded) return;
-    
+
     [self savePosition];
     [self unmark];
-    
+
     DOMHTMLDocument* doc = (DOMHTMLDocument*)[[view mainFrame] DOMDocument];
     if (!doc) return;
     DOMHTMLElement* body = [doc body];
@@ -221,14 +221,14 @@
     [e setAttribute:@"id" value:@"mark"];
     [body appendChild:e];
     ++count;
-    
+
     [self restorePosition];
 }
 
 - (void)unmark
 {
     if (!loaded) return;
-    
+
     DOMHTMLDocument* doc = (DOMHTMLDocument*)[[view mainFrame] DOMDocument];
     if (!doc) return;
     DOMHTMLElement* e = (DOMHTMLElement*)[doc getElementById:@"mark"];
@@ -241,7 +241,7 @@
 - (void)goToMark
 {
     if (!loaded) return;
-    
+
     DOMHTMLDocument* doc = (DOMHTMLDocument*)[[view mainFrame] DOMDocument];
     if (!doc) return;
     DOMHTMLElement* e = (DOMHTMLElement*)[doc getElementById:@"mark"];
@@ -261,17 +261,17 @@
 - (void)reloadTheme
 {
     if (!loaded) return;
-    
+
     DOMHTMLDocument* doc = (DOMHTMLDocument*)[[view mainFrame] DOMDocument];
     if (!doc) return;
     DOMHTMLElement* body = [doc body];
     if (!body) return;
-    
+
     [html release];
     html = [[body innerHTML] retain];
     scrollBottom = [self viewingBottom];
     scrollTop = [[body valueForKey:@"scrollTop"] intValue];
-    
+
     [[view mainFrame] loadHTMLString:[self initialDocument] baseURL:theme.log.baseUrl];
     [scroller setNeedsDisplay];
 }
@@ -279,11 +279,11 @@
 - (void)clear
 {
     if (!loaded) return;
-    
+
     [html release];
     html = nil;
     loaded = NO;
-    
+
     [[view mainFrame] loadHTMLString:[self initialDocument] baseURL:theme.log.baseUrl];
     [scroller setNeedsDisplay];
 }
@@ -291,34 +291,34 @@
 - (void)changeTextSize:(BOOL)bigger
 {
     [self savePosition];
-    
+
     if (bigger) {
         [view makeTextLarger:nil];
     }
     else {
         [view makeTextSmaller:nil];
     }
-    
+
     [self restorePosition];
 }
 
 - (void)expandImage:(NSString*)url lineNumber:(int)aLineNumber imageIndex:(int)imageIndex contentLength:(long long)contentLength
 {
     if (!loaded) return;
-    
+
     if (contentLength > INLINE_IMAGE_MAX_SIZE) {
         LOG(@"Ignore too big image: %@ (%qi bytes)", url, contentLength);
         return;
     }
-    
+
     DOMHTMLDocument* doc = (DOMHTMLDocument*)[[view mainFrame] DOMDocument];
     if (!doc) return;
-    
+
     NSString* lineIdStr = [NSString stringWithFormat:@"line%d", aLineNumber];
     DOMHTMLElement* lineElement = (DOMHTMLElement*)[doc getElementById:lineIdStr];
     if (lineElement) {
         DOMHTMLElement* messageTag = nil;
-        
+
         DOMNodeList* nodeList = [lineElement childNodes];
         int nodeCount = [nodeList length];
         for (int i=0; i<nodeCount; ++i) {
@@ -331,10 +331,10 @@
                 }
             }
         }
-        
+
         if (messageTag) {
             DOMElement* beforeTag = nil;
-            
+
             DOMNodeList* nodeList = [messageTag childNodes];
             int nodeCount = [nodeList length];
             for (int i=0; i<nodeCount; ++i) {
@@ -352,22 +352,22 @@
                     }
                 }
             }
-            
+
             if (!beforeTag) {
                 DOMElement* brTag = [doc createElement:@"br"];
                 [messageTag appendChild:brTag];
                 beforeTag = brTag;
             }
-            
+
             [self savePosition];
-            
+
             DOMHTMLElement* imageAnchorTag = (DOMHTMLElement*)[doc createElement:@"a"];
             [imageAnchorTag setAttribute:@"href" value:url];
             [imageAnchorTag setAttribute:@"imageindex" value:[NSString stringWithFormat:@"%d", imageIndex]];
-            
+
             NSString* imageAnchorTagContent = [NSString stringWithFormat:@"<img src=\"%@\" class=\"inlineimage\"/>", url];
             [imageAnchorTag setInnerHTML:imageAnchorTagContent];
-            
+
             DOMElement* after = [beforeTag nextElementSibling];
             if (after) {
                 [messageTag insertBefore:imageAnchorTag refChild:after];
@@ -375,7 +375,7 @@
             else {
                 [messageTag appendChild:imageAnchorTag];
             }
-            
+
             [self restorePositionWithDelay];
         }
     }
@@ -384,16 +384,16 @@
 - (void)replaceAvatarPlaceholderWithScreenName:(NSString*)screenName imageURL:(NSString*)imageURL
 {
     if (!loaded || !screenName.length || !imageURL.length) return;
-    
+
     DOMHTMLDocument* doc = (DOMHTMLDocument*)[[view mainFrame] DOMDocument];
     if (!doc) return;
-    
+
     NSString* placeholderClassName = [NSString stringWithFormat:@"placeholder_%@", tagEscape(screenName)];
     DOMNodeList* placeholderNodes = (DOMNodeList*)[doc getElementsByClassName:placeholderClassName];
     if (!placeholderNodes) {
         return;
     }
-    
+
     int placeholderCount = placeholderNodes.length;
     for (int i=0; i<placeholderCount; i++) {
         DOMElement* placeholderElement = (DOMElement*)[placeholderNodes item:i];
@@ -410,24 +410,24 @@
 - (void)limitNumberOfLines
 {
     needsLimitNumberOfLines = NO;
-    
+
     int n = count - maxLines;
     if (!loaded || n <= 0 || count <= 0) return;
-    
+
     DOMHTMLDocument* doc = (DOMHTMLDocument*)[[view mainFrame] DOMDocument];
     if (!doc) return;
     DOMHTMLElement* body = [doc body];
     DOMNodeList* nodeList = [body childNodes];
-    
+
     BOOL viewingBottom = [self viewingBottom];
-    
+
     // calculate scroll delta
     int top = 0;
     int delta = 0;
     if (!viewingBottom) {
         // remeber scroll top
         top = [[body valueForKey:@"scrollTop"] intValue];
-        
+
         if (n < [nodeList length]) {
             DOMHTMLElement* firstNode = (DOMHTMLElement*)[nodeList item:0];
             DOMHTMLElement* node = (DOMHTMLElement*)[nodeList item:n];
@@ -442,7 +442,7 @@
             }
         }
     }
-    
+
     // remove lines
     //
     // note:
@@ -452,14 +452,14 @@
         DOMHTMLElement* node = (DOMHTMLElement*)[nodeList item:i];
         [body removeChild:node];
     }
-    
+
     if (!viewingBottom) {
         // scroll back by delta
         if (delta > 0) {
             [body setValue:[NSNumber numberWithInt:top - delta] forKey:@"scrollTop"];
         }
     }
-    
+
     // updating highlighted line numbers
     if (highlightedLineNumbers.count > 0) {
         DOMNodeList* nodeList = [body childNodes];
@@ -485,17 +485,17 @@
     else {
         [highlightedLineNumbers removeAllObjects];
     }
-    
+
     count -= n;
     if (count < 0) count = 0;
-    
+
     [scroller setNeedsDisplay];
 }
 
 - (void)setNeedsLimitNumberOfLines
 {
     if (needsLimitNumberOfLines) return;
-    
+
     needsLimitNumberOfLines = YES;
     [self performSelector:@selector(limitNumberOfLines) withObject:nil afterDelay:0];
 }
@@ -504,7 +504,7 @@
 {
     BOOL key = NO;
     NSArray* urlRanges = nil;
-    
+
     NSString* body = [LogRenderer renderBody:line.body
                                     keywords:line.keywords
                                 excludeWords:line.excludeWords
@@ -512,12 +512,12 @@
                               exactWordMatch:[Preferences keywordMatchingMethod] == KEYWORD_MATCH_EXACT
                                  highlighted:&key
                                    URLRanges:&urlRanges];
-    
+
     if (!loaded) {
         [lines addObject:line];
         return key;
     }
-    
+
     NSMutableString* s = [NSMutableString string];
     if (line.time) [s appendFormat:@"<span class=\"time\">%@</span>", logEscape(line.time)];
     if (line.place) [s appendFormat:@"<span class=\"place\">%@</span>", logEscape(line.place)];
@@ -537,7 +537,7 @@
                     [nc addObserver:self selector:@selector(twitterAvatarURLManagerDidGetImageURL:) name:TwitterAvatarURLManagerDidGetImageURLNotification object:screenName];
                 }
             }
-            
+
             NSString* escapedNick = tagEscape(line.nickInfo);
             if (avatarImageURL) {
                 [s appendFormat:@"<img class=\"avatar\" src=\"%@\"/>", tagEscape(avatarImageURL)];
@@ -553,11 +553,11 @@
         if (line.nickInfo) [s appendFormat:@" first=\"%@\"", [line.nickInfo isEqualToString:prevNickInfo] ? @"false" : @"true"];
         [s appendFormat:@">%@</span>", logEscape(line.nick)];
     }
-    
+
     LogLineType type = line.lineType;
     NSString* lineTypeString = [LogLine lineTypeString:type];
     BOOL isText = type == LINE_TYPE_PRIVMSG || type == LINE_TYPE_NOTICE || type == LINE_TYPE_ACTION;
-    
+
     [s appendFormat:@"<span class=\"message\" type=\"%@\">%@", lineTypeString, body];
     if (isText && !console && urlRanges.count && [Preferences showInlineImages]) {
         //
@@ -565,13 +565,13 @@
         //
         BOOL showInlineImage = NO;
         int imageIndex = 0;
-        
+
         for (NSValue* rangeValue in urlRanges) {
             NSString* url = [line.body substringWithRange:[rangeValue rangeValue]];
-            
+
             BOOL isFileURL = NO;
             BOOL checkingSize = NO;
-            
+
             if ([ImageURLParser isImageFileURL:url]) {
                 isFileURL = YES;
                 if (![url hasPrefix:@"http://gyazo.com/"]) {
@@ -579,7 +579,7 @@
                     [[ImageDownloadManager instance] checkImageSize:url client:client channel:channel lineNumber:lineNumber imageIndex:imageIndex];
                 }
             }
-            
+
             if (!checkingSize) {
                 NSString* imageUrl = nil;
                 if (isFileURL) {
@@ -588,7 +588,7 @@
                 else {
                     imageUrl = [ImageURLParser serviceImageURLForURL:url];
                 }
-                
+
                 if (imageUrl) {
                     if (!showInlineImage) {
                         [s appendString:@"<br/>"];
@@ -601,9 +601,9 @@
         }
     }
     [s appendString:@"</span>"];
-    
+
     NSString* klass = isText ? @"line text" : @"line event";
-    
+
     NSMutableDictionary* attrs = [NSMutableDictionary dictionary];
     [attrs setObject:(lineNumber % 2 == 0 ? @"even" : @"odd") forKey:@"alternate"];
     [attrs setObject:klass forKey:@"class"];
@@ -616,52 +616,52 @@
         [attrs setObject:line.clickInfo forKey:@"clickinfo"];
         [attrs setObject:@"on_dblclick()" forKey:@"ondblclick"];
     }
-    
+
     [self writeLine:s attributes:attrs];
-    
+
     //
     // remember nick info
     //
     [prevNickInfo autorelease];
     prevNickInfo = [line.nickInfo retain];
-    
+
     return key;
 }
 
 - (void)writeLine:(NSString*)aHtml attributes:(NSDictionary*)attrs
 {
     [self savePosition];
-    
+
     int currentLineNumber = lineNumber;
     ++lineNumber;
     ++count;
-    
+
     DOMHTMLDocument* doc = (DOMHTMLDocument*)[[view mainFrame] DOMDocument];
     if (!doc) return;
     DOMHTMLElement* body = [doc body];
     DOMHTMLElement* div = (DOMHTMLElement*)[doc createElement:@"div"];
     [div setInnerHTML:aHtml];
-    
+
     for (NSString* key in attrs) {
         NSString* value = [attrs objectForKey:key];
         [div setAttribute:key value:value];
     }
     [div setAttribute:@"id" value:[NSString stringWithFormat:@"line%d", currentLineNumber]];
     [body appendChild:div];
-    
+
     if (maxLines > 0 && count > maxLines) {
         [self setNeedsLimitNumberOfLines];
     }
-    
+
     if ([[attrs objectForKey:@"highlight"] isEqualToString:@"true"]) {
         [highlightedLineNumbers addObject:[NSNumber numberWithInt:currentLineNumber]];
     }
-    
+
     if (scroller) {
         [scroller updateScroller];
         [scroller setNeedsDisplay];
     }
-    
+
     [self restorePositionWithDelay];
 }
 
@@ -681,26 +681,26 @@
     else {
         [bodyAttrs appendString:@"type=\"server\""];
     }
-    
+
     NSString* style = [[theme log] content];
-    
+
     NSString* overrideStyle = nil;
-    
+
     if ([Preferences themeOverrideLogFont]) {
         NSString* name = [Preferences themeLogFontName];
         double size = [Preferences themeLogFontSize] * (72.0 / 96.0);
-        
+
         NSMutableString* s = [NSMutableString string];
         [s appendString:@"html, body, body[type], body.normal, body.console {"];
         [s appendFormat:@"font-family:'%@';", name];
         [s appendFormat:@"font-size:%fpt;", size];
         [s appendString:@"}"];
-        
+
         overrideStyle = s;
     }
-    
+
     NSMutableString* s = [NSMutableString string];
-    
+
     [s appendString:@"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">"];
     [s appendFormat:@"<html class=\"%@\" %@>", bodyClass, bodyAttrs];
     [s appendString:
@@ -715,7 +715,7 @@
     [s appendString:@"</head>"];
     [s appendFormat:@"<body class=\"%@\" %@></body>", bodyClass, bodyAttrs];
     [s appendString:@"</html>"];
-    
+
     return s;
 }
 
@@ -723,18 +723,18 @@
 {
     NSString* fontFamily = @"Courier";
     int fontSize = 9;
-    
+
     if ([NSLocale prefersJapaneseLanguage]) {
         fontFamily = @"Osaka-Mono";
         fontSize = 10;
     }
-    
+
     NSMutableString* s = [NSMutableString string];
-    
+
     [s appendString:@"html {"];
     [s appendFormat:@"font-family:'%@';", fontFamily];
     [s appendFormat:@"font-size:%dpt;", fontSize];
-    
+
     [s appendString:
      @"background-color:white;"
      @"color:black;"
@@ -742,7 +742,7 @@
      @"margin:0;"
      @"padding:3px 4px 10px 4px;"
      @"}"
-     
+
      @"body {margin:0;padding:0}"
      @"img {border:1px solid #aaa;vertical-align:top;}"
      @"object {vertical-align:top;}"
@@ -754,14 +754,14 @@
      @"content: '• ';"
      @"white-space: nowrap;"
      @"}"
-     
+
      @".inlineimage {"
      @"margin: 10px 0 15px 40px;"
      @"max-width: 200px;"
      @"max-height: 150px;"
      @"-webkit-box-shadow: 2px 2px 2px #888;"
      @"}"
-     
+
      @".avatar {"
      @"display: inline;"
      @"max-width: 24px;"
@@ -769,16 +769,16 @@
      @"margin-right: 3px;"
      @"vertical-align: middle;"
      @"}"
-     
+
      @".url { word-break: break-all; }"
      @".address { text-decoration: underline; word-break: break-all; }"
      @".highlight { color: #f0f; font-weight: bold; }"
      @".time { color: #048; }"
      @".place { color: #008; }"
-     
+
      @".sender[type=myself] { color: #66a; }"
      @".sender[type=normal] { color: #008; }"
-     
+
      @".message[type=system] { color: #080; }"
      @".message[type=error] { color: #f00; font-weight: bold; }"
      @".message[type=reply] { color: #088; }"
@@ -800,7 +800,7 @@
      @".message[type=wallops] { color: #080; }"
      @".message[type=debug_send] { color: #aaa; }"
      @".message[type=debug_receive] { color: #444; }"
-     
+
      @".effect[color-number='0'] { color: #fff; }"
      @".effect[color-number='1'] { color: #000; }"
      @".effect[color-number='2'] { color: #008; }"
@@ -832,9 +832,9 @@
      @".effect[bgcolor-number='12'] { background-color: #00f; }"
      @".effect[bgcolor-number='13'] { background-color: #f0f; }"
      @".effect[bgcolor-number='14'] { background-color: #888; }"
-     @".effect[bgcolor-number='15'] { background-color: #ccc; }"	
-     ];	
-    
+     @".effect[bgcolor-number='15'] { background-color: #ccc; }"
+     ];
+
     return s;
 }
 
@@ -842,7 +842,7 @@
 {
     WebFrameView* frame = [[view mainFrame] frameView];
     if (!frame) return;
-    
+
     NSScrollView* scrollView = nil;
     for (NSView* v in [frame subviews]) {
         if ([v isKindOfClass:[NSScrollView class]]) {
@@ -850,22 +850,22 @@
             break;
         }
     }
-    
+
     if (!scrollView) return;
-    
+
     [scrollView setHasHorizontalScroller:NO];
     if ([scrollView respondsToSelector:@selector(setAllowsHorizontalScrolling:)]) {
         [scrollView setAllowsHorizontalScrolling:NO];
     }
     [[view windowScriptObject] evaluateWebScript:@"document.body.style.overflowX='hidden';"];
-    
+
     NSScroller* old = [scrollView verticalScroller];
     if (old && ![old isKindOfClass:[MarkedScroller class]]) {
         if (scroller) {
             [scroller removeFromSuperview];
             [scroller release];
         }
-        
+
         scroller = [[MarkedScroller alloc] initWithFrame:NSMakeRect(-16, -64, 16, 64)];
         scroller.dataSource = self;
         [scroller setFloatValue:[old floatValue]];
@@ -887,13 +887,13 @@
     loaded = YES;
     loadingImages = 0;
     [self setUpScroller];
-    
+
     if (!autoScroller) {
         autoScroller = [WebViewAutoScroll new];
     }
     autoScroller.webFrame = view.mainFrame.frameView;
     autoScroller.scroller = scroller;
-    
+
     if (html) {
         DOMHTMLDocument* doc = (DOMHTMLDocument*)[[view mainFrame] DOMDocument];
         if (doc) {
@@ -901,7 +901,7 @@
             [body setInnerHTML:html];
             [html release];
             html = nil;
-            
+
             if (scrollBottom) {
                 [self moveToBottom];
             }
@@ -914,12 +914,12 @@
         [self moveToBottom];
         bottom = YES;
     }
-    
+
     for (LogLine* line in lines) {
         [self print:line];
     }
     [lines removeAllObjects];
-    
+
     DOMHTMLDocument* doc = (DOMHTMLDocument*)[[view mainFrame] DOMDocument];
     if (!doc) return;
     DOMHTMLElement* body = [doc body];
@@ -931,9 +931,9 @@
         }
         e = next;
     }
-    
+
     NSMutableString* s = [NSMutableString string];
-    
+
     if (console) {
         [s appendString:
          @"function on_dblclick() {"
@@ -983,9 +983,9 @@
          @"}"
          ];
     }
-    
+
     [[view windowScriptObject] evaluateWebScript:s];
-    
+
     // evaluate theme js
     if (theme.js.content.length) {
         [[view windowScriptObject] evaluateWebScript:theme.js.content];
@@ -1062,7 +1062,7 @@
 - (NSArray*)markedScrollerPositions:(MarkedScroller*)sender
 {
     NSMutableArray* result = [NSMutableArray array];
-    
+
     DOMHTMLDocument* doc = (DOMHTMLDocument*)[[view mainFrame] DOMDocument];
     if (doc) {
         for (NSNumber* n in highlightedLineNumbers) {
@@ -1074,7 +1074,7 @@
             }
         }
     }
-    
+
     return result;
 }
 
@@ -1092,9 +1092,9 @@
     if (screenName) {
         NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
         [nc removeObserver:self name:TwitterAvatarURLManagerDidGetImageURLNotification object:screenName];
-        
+
         [fetchingAvatarScreenNames removeObject:screenName];
-        
+
         NSString* imageURL = [[TwitterAvatarURLManager instance] imageURLForTwitterScreenName:screenName];
         if (imageURL) {
             [self replaceAvatarPlaceholderWithScreenName:screenName imageURL:imageURL];

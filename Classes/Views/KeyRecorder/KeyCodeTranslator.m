@@ -30,7 +30,7 @@
 {
     static KeyCodeTranslator* instance = nil;
     TISInputSourceRef currentLayout = TISCopyCurrentKeyboardLayoutInputSource();
-    
+
     if (!instance) {
         instance = [[KeyCodeTranslator alloc] initWithKeyboardLayout:currentLayout];
     }
@@ -51,7 +51,7 @@
     UniCharCount len;
     UniChar str[MAX_LEN];
     UInt32 deadKeyState;
-    
+
     UCKeyTranslate(layoutData, keyCode, kUCKeyActionDisplay, 0, LMGetKbdType(), kUCKeyTranslateNoDeadKeysBit, &deadKeyState, MAX_LEN, &len, str);
     return [NSString stringWithCharacters:str length:1];
 }

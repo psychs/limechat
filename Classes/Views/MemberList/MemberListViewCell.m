@@ -43,10 +43,10 @@ static NSMutableParagraphStyle* nickStyle;
 - (void)calculateMarkWidth
 {
     markWidth = 0;
-    
+
     NSDictionary* style = [NSDictionary dictionaryWithObject:self.font forKey:NSFontAttributeName];
     NSArray* marks = [NSArray arrayWithObjects:@"~", @"&", @"@", @"%", @"+", nil];
-    
+
     for (NSString* s in marks) {
         NSSize size = [s sizeWithAttributes:style];
         int width = ceil(size.width);
@@ -60,12 +60,12 @@ static NSMutableParagraphStyle* nickStyle;
 {
     [theme autorelease];
     theme = [aTheme retain];
-    
+
     if (!markStyle) {
         markStyle = [NSMutableParagraphStyle new];
         [markStyle setAlignment:NSCenterTextAlignment];
     }
-    
+
     if (!nickStyle) {
         nickStyle = [NSMutableParagraphStyle new];
         [nickStyle setAlignment:NSLeftTextAlignment];
@@ -82,7 +82,7 @@ static NSMutableParagraphStyle* nickStyle;
 {
     NSWindow* window = view.window;
     NSColor* color = nil;
-    
+
     if ([self isHighlighted]) {
         if (window && [window isMainWindow] && [window firstResponder] == view) {
             color = [theme memberListSelColor] ?: [NSColor alternateSelectedControlTextColor];
@@ -97,30 +97,30 @@ static NSMutableParagraphStyle* nickStyle;
     else {
         color = [theme memberListColor];
     }
-    
+
     NSMutableDictionary* style = [NSMutableDictionary dictionary];
     [style setObject:markStyle forKey:NSParagraphStyleAttributeName];
     [style setObject:self.font forKey:NSFontAttributeName];
     [style setObject:color forKey:NSForegroundColorAttributeName];
-    
+
     NSRect rect = frame;
     rect.origin.x += LEFT_MARGIN;
     rect.size.width = markWidth;
-    
+
     UniChar mark = [member mark];
     if (mark != INVALID_MARK_CHAR) {
         NSString* markStr = [NSString stringWithFormat:@"%C", mark];
         [markStr drawInRect:rect withAttributes:style];
     }
-    
+
     [style setObject:nickStyle forKey:NSParagraphStyleAttributeName];
-    
+
     int offset = LEFT_MARGIN + markWidth + MARK_RIGHT_MARGIN;
-    
+
     rect = frame;
     rect.origin.x += offset;
     rect.size.width -= offset;
-    
+
     NSString* nick = [member nick];
     [nick drawInRect:rect withAttributes:style];
 }

@@ -15,9 +15,9 @@
     self = [super init];
     if (self) {
         [NSBundle loadNibNamed:@"WelcomeDialog" owner:self];
-        
+
         channels = [NSMutableArray new];
-        
+
         NSArray* servers = [ServerDialog availableServers];
         for (NSString* s in servers) {
             [hostCombo addItemWithObjectValue:s];
@@ -38,10 +38,10 @@
 {
     [self tableViewSelectionIsChanging:nil];
     [self updateOKButton];
-    
+
     if (![self.window isVisible]) {
         [self.window center];
-        
+
         NSString* username = NSUserName();
         username = [username stringByReplacingOccurrencesOfString:@" " withString:@""];
 
@@ -50,7 +50,7 @@
             nickText.stringValue = [username substringWithRange:range];
         }
     }
-    
+
     [self.window makeKeyAndOrderFront:nil];
 }
 
@@ -63,7 +63,7 @@
 - (void)onOK:(id)sender
 {
     [self.window endEditingFor:nil];
-    
+
     /*
      NSText* fieldEditor = [self.window fieldEditor:NO forObject:channelTable];
      if (fieldEditor) {
@@ -77,33 +77,33 @@
      }
      }
      */
-    
+
     NSMutableSet* set = [NSMutableSet set];
     NSMutableArray* chans = [NSMutableArray array];
-    
+
     for (NSString* s in channels) {
         if (s.length > 0) {
             if (![s isChannelName]) {
                 s = [@"#" stringByAppendingString:s];
             }
-            
+
             if (![set containsObject:s]) {
                 [chans addObject:s];
                 [set addObject:s];
             }
         }
     }
-    
+
     NSMutableDictionary* dic = [NSMutableDictionary dictionary];
     [dic setObject:nickText.stringValue forKey:@"nick"];
     [dic setObject:hostCombo.stringValue forKey:@"host"];
     [dic setObject:chans forKey:@"channels"];
     [dic setObject:[NSNumber numberWithBool:autoConnectCheck.state] forKey:@"autoConnect"];
-    
+
     if ([delegate respondsToSelector:@selector(welcomeDialog:onOK:)]) {
         [delegate welcomeDialog:self onOK:dic];
     }
-    
+
     [self.window close];
 }
 

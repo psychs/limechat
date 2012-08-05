@@ -30,14 +30,14 @@
         [fileName release];
         fileName = [value retain];
     }
-    
+
     [self reload];
 }
 
 - (void)reload
 {
     [content release];
-    
+
     NSData* data = [NSData dataWithContentsOfFile:fileName];
     content = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 }

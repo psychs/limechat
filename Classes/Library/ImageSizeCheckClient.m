@@ -36,7 +36,7 @@
     [conn cancel];
     [conn release];
     conn = nil;
-    
+
     [response release];
     response = nil;
 }
@@ -44,11 +44,11 @@
 - (void)checkSize
 {
     [self cancel];
-    
+
     NSURL* u = [NSURL URLWithString:url];
     NSMutableURLRequest* req = [NSMutableURLRequest requestWithURL:u cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:IMAGE_SIZE_CHECK_TIMEOUT];
     [req setHTTPMethod:@"HEAD"];
-    
+
     if ([[u host] hasSuffix:@"pixiv.net"]) {
         [req setValue:@"http://www.pixiv.net" forHTTPHeaderField:@"Referer"];
     }
@@ -67,7 +67,7 @@
 - (void)connection:(NSURLConnection *)sender didReceiveResponse:(NSHTTPURLResponse *)aResponse
 {
     if (conn != sender) return;
-    
+
     [response autorelease];
     response = [aResponse retain];
 }
@@ -75,10 +75,10 @@
 - (void)connectionDidFinishLoading:(NSURLConnection *)sender
 {
     if (conn != sender) return;
-    
+
     long long contentLength = 0;
     int statusCode = [response statusCode];
-    
+
     if (200 <= statusCode && statusCode < 300) {
         NSDictionary* header = [response allHeaderFields];
         NSNumber* contentLengthNum = [header objectForKey:@"Content-Length"];
@@ -86,7 +86,7 @@
             contentLength = [contentLengthNum longLongValue];
         }
     }
-    
+
     if (contentLength) {
         if ([delegate respondsToSelector:@selector(imageSizeCheckClient:didReceiveContentLength:)]) {
             [delegate imageSizeCheckClient:self didReceiveContentLength:contentLength];
@@ -102,9 +102,9 @@
 - (void)connection:(NSURLConnection*)sender didFailWithError:(NSError*)error
 {
     if (conn != sender) return;
-    
+
     [self cancel];
-    
+
     if ([delegate respondsToSelector:@selector(imageSizeCheckClient:didFailWithError:statusCode:)]) {
         [delegate imageSizeCheckClient:self didFailWithError:error statusCode:0];
     }

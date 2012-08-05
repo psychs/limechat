@@ -43,7 +43,7 @@
             return;
         }
     }
-    
+
     [super sendEvent:e];
 }
 

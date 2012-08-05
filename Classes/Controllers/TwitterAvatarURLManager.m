@@ -46,22 +46,22 @@
     if (!screenName.length) {
         return NO;
     }
-    
+
     NSString* url = [imageUrls objectForKey:screenName];
     if (url) {
         return NO;
     }
-    
+
     if ([connections objectForKey:screenName]) {
         return NO;
     }
-    
+
     TwitterImageURLClient *client = [[TwitterImageURLClient new] autorelease];
     client.delegate = self;
     client.screenName = screenName;
     [connections setObject:client forKey:screenName];
     [client getImageURL];
-    
+
     return YES;
 }
 
@@ -73,7 +73,7 @@
 {
     [[sender retain] autorelease];
     [connections removeObjectForKey:sender];
-    
+
     NSString* screenName = sender.screenName;
     if (screenName.length && imageUrl.length) {
         [imageUrls setObject:imageUrl forKey:screenName];

@@ -30,7 +30,7 @@
     //
     // load
     //
-    
+
     if (ignore.nick.length) {
         nickCheck.state = NSOnState;
         [nickPopup selectItemWithTag:ignore.useRegexForNick ? 1 : 0];
@@ -39,7 +39,7 @@
     else {
         nickCheck.state = NSOffState;
     }
-    
+
     if (ignore.text.length) {
         messageCheck.state = NSOnState;
         [messagePopup selectItemWithTag:ignore.useRegexForText ? 1 : 0];
@@ -48,7 +48,7 @@
     else {
         messageCheck.state = NSOffState;
     }
-    
+
     [channels release];
     channels = [ignore.channels mutableCopy];
     if (!channels) {
@@ -56,7 +56,7 @@
     }
     [self reloadChannelTable];
     [self updateButtons];
-    
+
     [self startSheet];
 }
 
@@ -76,7 +76,7 @@
 {
     [channels addObject:@""];
     [self reloadChannelTable];
-    
+
     NSInteger row = [channelTable numberOfRows] - 1;
     [channelTable scrollRowToVisible:row];
     [channelTable editColumn:0 row:row withEvent:nil select:YES];
@@ -86,9 +86,9 @@
 {
     NSInteger i = [channelTable selectedRow];
     if (i < 0) return;
-    
+
     [channels removeObjectAtIndex:i];
-    
+
     int count = channels.count;
     if (count) {
         if (count <= i) {
@@ -98,7 +98,7 @@
             [channelTable selectItemAtIndex:i];
         }
     }
-    
+
     [self reloadChannelTable];
 }
 
@@ -107,10 +107,10 @@
     //
     // save
     //
-    
+
     NSString* nick = nickText.stringValue;
     NSString* message = messageText.stringValue;
-    
+
     if (nickCheck.state == NSOnState && nick.length) {
         ignore.nick = nick;
         ignore.useRegexForNick = nickPopup.selectedItem.tag == 1;
@@ -118,7 +118,7 @@
     else {
         ignore.nick = nil;
     }
-    
+
     if (messageCheck.state == NSOnState && message.length) {
         ignore.text = message;
         ignore.useRegexForText = messagePopup.selectedItem.tag == 1;
@@ -126,7 +126,7 @@
     else {
         ignore.text = nil;
     }
-    
+
     NSMutableSet* channelSet = [NSMutableSet set];
     NSMutableArray* channelAry = [NSMutableArray array];
     for (NSString* e in channels) {
@@ -137,15 +137,15 @@
     }
     [channelAry sortUsingSelector:@selector(caseInsensitiveCompare:)];
     ignore.channels = channelAry;
-    
+
     //
     // call delegate
     //
-    
+
     if ([self.delegate respondsToSelector:@selector(ignoreItemSheetOnOK:)]) {
         [self.delegate ignoreItemSheetOnOK:self];
     }
-    
+
     [super ok:sender];
 }
 

@@ -27,11 +27,11 @@ const static int INSET = 3;
     if (!dataSource) return;
     if (![dataSource respondsToSelector:@selector(markedScrollerPositions:)]) return;
     if (![dataSource respondsToSelector:@selector(markedScrollerColor:)]) return;
-    
+
     NSScrollView* scrollView = (NSScrollView*)[self superview];
     int contentHeight = [[scrollView contentView] documentRect].size.height;
     if (!markData || !markData.count) return;
-    
+
     //
     // prepare transform
     //
@@ -42,13 +42,13 @@ const static int INSET = 3;
     int indent = [self rectForPart:NSScrollerKnobSlot].origin.x + INSET;
     [transform scaleXBy:1 yBy:scale];
     [transform translateXBy:0 yBy:offset];
-    
+
     //
     // make lines
     //
     NSMutableArray* lines = [NSMutableArray array];
     NSPoint prev = NSMakePoint(-1, -1);
-    
+
     for (NSNumber* e in markData) {
         int i = [e intValue];
         NSPoint pt = NSMakePoint(indent, i);
@@ -63,13 +63,13 @@ const static int INSET = 3;
         [line relativeLineToPoint:NSMakePoint(width, 0)];
         [lines addObject:line];
     }
-    
+
     //
     // draw lines
     //
     NSColor* color = [dataSource markedScrollerColor:self];
     [color set];
-    
+
     for (NSBezierPath* e in lines) {
         [e stroke];
     }

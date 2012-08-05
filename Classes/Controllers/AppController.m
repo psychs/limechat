@@ -46,35 +46,35 @@
     NSWindowCollectionBehavior behavior = [window collectionBehavior];
     behavior |= NSWindowCollectionBehaviorFullScreenPrimary;
     [window setCollectionBehavior:behavior];
-    
+
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(themeDidChange:) name:ThemeDidChangeNotification object:nil];
-    
+
     NSNotificationCenter* wsnc = [[NSWorkspace sharedWorkspace] notificationCenter];
     [wsnc addObserver:self selector:@selector(computerWillSleep:) name:NSWorkspaceWillSleepNotification object:nil];
     [wsnc addObserver:self selector:@selector(computerDidWakeUp:) name:NSWorkspaceDidWakeNotification object:nil];
     [wsnc addObserver:self selector:@selector(computerWillPowerOff:) name:NSWorkspaceWillPowerOffNotification object:nil];
-    
+
     // URL handler
     NSAppleEventManager* em = [NSAppleEventManager sharedAppleEventManager];
     [em setEventHandler:self andSelector:@selector(handleURLEvent:withReplyEvent:) forEventClass:KInternetEventClass andEventID:KAEGetURL];
-    
+
     // hot key
     int keyCode = [Preferences hotKeyKeyCode];
     NSUInteger modifierFlags = [Preferences hotKeyModifierFlags];
     if (keyCode) {
         [(LimeChatApplication*)NSApp registerHotKey:keyCode modifierFlags:modifierFlags];
     }
-    
+
     rootSplitter.fixedViewIndex = 1;
     logSplitter.fixedViewIndex = 1;
     infoSplitter.fixedViewIndex = 1;
     treeSplitter.hidden = YES;
-    
+
     fieldEditor = [[FieldEditorTextView alloc] initWithFrame:NSZeroRect];
     [fieldEditor setFieldEditor:YES];
     fieldEditor.pasteDelegate = self;
-    
+
     [fieldEditor setContinuousSpellCheckingEnabled:[Preferences spellCheckEnabled]];
     [fieldEditor setGrammarCheckingEnabled:[Preferences grammarCheckEnabled]];
     [fieldEditor setSmartInsertDeleteEnabled:[Preferences smartInsertDeleteEnabled]];
@@ -84,9 +84,9 @@
     [fieldEditor setAutomaticDashSubstitutionEnabled:[Preferences dashSubstitutionEnabled]];
     [fieldEditor setAutomaticDataDetectionEnabled:[Preferences dataDetectionEnabled]];
     [fieldEditor setAutomaticTextReplacementEnabled:[Preferences textReplacementEnabled]];
-    
+
     [text setFocusRingType:NSFocusRingTypeNone];
-    
+
     viewTheme = [ViewTheme new];
     viewTheme.name = [Preferences themeName];
     tree.theme = viewTheme.other;
@@ -94,13 +94,13 @@
     MemberListViewCell* cell = [[MemberListViewCell new] autorelease];
     [cell setup:viewTheme.other];
     [[[memberList tableColumns] objectAtIndex:0] setDataCell:cell];
-    
+
     [self loadWindowState];
     [window setAlphaValue:[Preferences themeTransparency]];
     [self set3columnLayout:[Preferences mainWindowLayout] == MAIN_WINDOW_LAYOUT_3_COLUMN];
-    
+
     IRCWorldConfig* seed = [[[IRCWorldConfig alloc] initWithDictionary:[Preferences loadWorld]] autorelease];
-    
+
     world = [IRCWorld new];
     world.app = self;
     world.window = window;
@@ -124,13 +124,13 @@
     world.viewTheme = viewTheme;
     world.menuController = menu;
     [world setup:seed];
-    
+
     tree.dataSource = world;
     tree.delegate = world;
     tree.responderDelegate = world;
     [tree reloadData];
     [world setupTree];
-    
+
     menu.app = self;
     menu.world = world;
     menu.window = window;
@@ -138,12 +138,12 @@
     menu.memberList = memberList;
     menu.text = text;
     [menu setUp];
-    
+
     memberList.target = menu;
     [memberList setDoubleAction:@selector(memberListDoubleClicked:)];
     memberList.keyDelegate = world;
     memberList.dropDelegate = world;
-    
+
     dcc = [DCCController new];
     dcc.world = world;
     dcc.mainWindow = window;
@@ -161,16 +161,16 @@
     world.notifier = notifier;
 
     inputHistory = [InputHistory new];
-    
+
     [ImageDownloadManager instance].world = world;
-    
+
     [self registerKeyHandlers];
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)note
 {
     [ViewTheme createUserDirectory];
-    
+
     if (!world.clients.count) {
         welcomeDialog = [WelcomeDialog new];
         welcomeDialog.delegate = self;
@@ -190,7 +190,7 @@
         [sel resetState];
         [world updateIcon];
     }
-    
+
     [tree setNeedsDisplay];
 }
 
@@ -222,10 +222,10 @@
     if (terminating) {
         return YES;
     }
-    
+
     int receiving = [dcc countReceivingItems];
     int sending = [dcc countSendingItems];
-    
+
     if (receiving > 0 || sending > 0) {
         NSMutableString* msg = [NSMutableString stringWithString:@"Now you are "];
         if (receiving > 0) {
@@ -249,7 +249,7 @@
             return NO;
         }
     }
-    
+
     return YES;
 }
 
@@ -268,7 +268,7 @@
     // unregister URL handler
     NSAppleEventManager* em = [NSAppleEventManager sharedAppleEventManager];
     [em removeEventHandlerForEventClass:KInternetEventClass andEventID:KAEGetURL];
-    
+
     [Preferences setSpellCheckEnabled:[fieldEditor isContinuousSpellCheckingEnabled]];
     [Preferences setGrammarCheckEnabled:[fieldEditor isGrammarCheckingEnabled]];
     [Preferences setSmartInsertDeleteEnabled:[fieldEditor smartInsertDeleteEnabled]];
@@ -351,7 +351,7 @@
 {
     NSString* s = [[NSPasteboard generalPasteboard] stringContent];
     if (!s.length) return NO;
-    
+
     IRCClient* client = world.selectedClient;
     IRCChannel* channel = world.selectedChannel;
     if (channel) {
@@ -368,7 +368,7 @@
             return YES;
         }
     }
-    
+
     if (![[window firstResponder] isKindOfClass:[NSTextView class]]) {
         [world focusInputText];
     }
@@ -387,9 +387,9 @@
             [text setStringValue:@""];
         }
     }
-    
+
     [text focus];
-    
+
     if (completionStatus) {
         [completionStatus clear];
     }
@@ -404,7 +404,7 @@
 {
     if (value == threeColumns) return;
     threeColumns = value;
-    
+
     if (threeColumns) {
         infoSplitter.hidden = YES;
         infoSplitter.inverted = YES;
@@ -429,20 +429,20 @@
 - (void)loadWindowState
 {
     NSDictionary* dic = [Preferences loadWindowStateWithName:@"main_window"];
-    
+
     if (dic) {
         int x = [dic intForKey:@"x"];
         int y = [dic intForKey:@"y"];
         int w = [dic intForKey:@"w"];
         int h = [dic intForKey:@"h"];
         id spellCheckingValue = [dic objectForKey:@"spell_checking"];
-        
+
         [window setFrame:NSMakeRect(x, y, w, h) display:YES];
         rootSplitter.position = [dic intForKey:@"root"];
         logSplitter.position = [dic intForKey:@"log"];
         infoSplitter.position = [dic intForKey:@"info"];
         treeSplitter.position = [dic intForKey:@"tree"];
-        
+
         if (spellCheckingValue) {
             [fieldEditor setContinuousSpellCheckingEnabled:[spellCheckingValue boolValue]];
         }
@@ -457,7 +457,7 @@
             rect = NSMakeRect(p.x - w/2, p.y - h/2, w, h);
             [window setFrame:rect display:YES];
         }
-        
+
         rootSplitter.position = 130;
         logSplitter.position = 150;
         infoSplitter.position = 250;
@@ -468,7 +468,7 @@
 - (void)saveWindowState
 {
     NSMutableDictionary* dic = [NSMutableDictionary dictionary];
-    
+
     NSRect rect = window.frame;
     [dic setInt:rect.origin.x forKey:@"x"];
     [dic setInt:rect.origin.y forKey:@"y"];
@@ -479,7 +479,7 @@
     [dic setInt:infoSplitter.position forKey:@"info"];
     [dic setInt:treeSplitter.position forKey:@"tree"];
     [dic setBool:[fieldEditor isContinuousSpellCheckingEnabled] forKey:@"spell_checking"];
-    
+
     [Preferences saveWindowState:dic name:@"main_window"];
     [Preferences sync];
 }
@@ -499,38 +499,38 @@
     IRCClient* client = world.selectedClient;
     IRCChannel* channel = world.selectedChannel;
     if (!client || !channel) return;
-    
+
     if ([window firstResponder] != [window fieldEditor:NO forObject:text]) {
         [world focusInputText];
     }
-    
+
     NSText* fe = [window fieldEditor:YES forObject:text];
     if (!fe) return;
-    
+
     NSRange selectedRange = [fe selectedRange];
     if (selectedRange.location == NSNotFound) return;
-    
+
     if (!completionStatus) {
         completionStatus = [NickCompletinStatus new];
     }
-    
+
     NickCompletinStatus* status = completionStatus;
     NSString* s = text.stringValue;
-    
+
     if ([status.text isEqualToString:s]
         && status.range.location != NSNotFound
         && NSMaxRange(status.range) == selectedRange.location
         && selectedRange.length == 0) {
         selectedRange = status.range;
     }
-    
+
     // pre is the left part of the cursor
     // sel is the left part of the cursor
-    
+
     BOOL head = YES;
     NSString* pre = [s substringToIndex:selectedRange.location];
     NSString* sel = [s substringWithRange:selectedRange];
-    
+
     for (int i=pre.length-1; i>=0; --i) {
         UniChar c = [pre characterAtIndex:i];
         if (c != ' ') {
@@ -544,10 +544,10 @@
             break;
         }
     }
-    
+
     BOOL commandMode = NO;
     BOOL twitterMode = NO;
-    
+
     if (pre.length) {
         UniChar c = [pre characterAtIndex:0];
         if (head && c == '/') {
@@ -563,11 +563,11 @@
             if (!pre.length) return;
         }
     }
-    
+
     // prepare for matching
-    
+
     NSString* current = [pre stringByAppendingString:sel];
-    
+
     int len = current.length;
     for (int i=0; i<len; ++i) {
         UniChar c = [current characterAtIndex:i];
@@ -579,19 +579,19 @@
             break;
         }
     }
-    
+
     if (!current.length && (commandMode || twitterMode)) return;
-    
+
     // sort the choices
-    
+
     NSString* lowerPre = [pre lowercaseString];
     NSString* lowerCurrent = [current lowercaseString];
-    
+
     NSArray* lowerChoices;
     NSArray* choices;
-    
+
     CGFloat firstUserWeight = 0;
-    
+
     if (commandMode) {
         choices = [NSArray arrayWithObjects:
                    @"action", @"away", @"ban", @"clear", @"close",
@@ -609,10 +609,10 @@
     else {
         NSMutableArray* users = [[channel.members mutableCopy] autorelease];
         [users sortUsingSelector:@selector(compareUsingWeights:)];
-        
+
         NSMutableArray* nicks = [NSMutableArray array];
         NSMutableArray* lowerNicks = [NSMutableArray array];
-        
+
         BOOL seenFirstUser = NO;
         for (IRCUser* m in users) {
             if (!m.isMyself) {
@@ -624,14 +624,14 @@
                 [lowerNicks addObject:m.canonicalNick];
             }
         }
-        
+
         choices = nicks;
         lowerChoices = lowerNicks;
     }
-    
+
     NSMutableArray* currentChoices = [NSMutableArray array];
     NSMutableArray* currentLowerChoices = [NSMutableArray array];
-    
+
     int i = 0;
     for (NSString* s in lowerChoices) {
         if ([s hasPrefix:lowerPre]) {
@@ -640,7 +640,7 @@
         }
         ++i;
     }
-    
+
     // If we're trying to complete a half-entered string, and we can't find a
     // choice with a common prefix, there is nothing more to be done.
     // Otherwise, pick the user with the highest weight.
@@ -652,11 +652,11 @@
             [currentLowerChoices addObject:[firstChoice lowercaseString]];
         }
     }
-    
+
     if (!currentChoices.count) return;
-    
+
     // find the next choice
-    
+
     NSString* t;
     NSUInteger index = [currentLowerChoices indexOfObject:lowerCurrent];
     if (index != NSNotFound) {
@@ -679,9 +679,9 @@
     else {
         t = [currentChoices objectAtIndex:0];
     }
-    
+
     // add suffix
-    
+
     if (commandMode) {
         t = [t stringByAppendingString:@" "];
     }
@@ -693,9 +693,9 @@
             t = [t stringByAppendingString:@": "];
         }
     }
-    
+
     // set completed item to the input text field
-    
+
     NSRange r = selectedRange;
     r.location -= pre.length;
     r.length += pre.length;
@@ -704,7 +704,7 @@
     r.location += t.length;
     r.length = 0;
     fe.selectedRange = r;
-    
+
     if (currentChoices.count == 1) {
         [status clear];
     }
@@ -797,9 +797,9 @@ typedef enum {
                 ++n;
                 if (count <= n) n = 0;
             }
-            
+
             if (n == start) break;
-            
+
             id i = [tree itemAtRow:n];
             if (i) {
                 if (target == MOVE_ACTIVE) {
@@ -839,9 +839,9 @@ typedef enum {
                 ++n;
                 if (count <= n) n = 0;
             }
-            
+
             if (n == start) break;
-            
+
             client = [world.clients objectAtIndex:n];
             if (client) {
                 if (target == MOVE_ACTIVE) {
@@ -1012,7 +1012,7 @@ typedef enum {
 {
     [window setKeyHandlerTarget:self];
     [fieldEditor setKeyHandlerTarget:self];
-    
+
     [self handler:@selector(tab:) code:KEY_TAB mods:0];
     [self handler:@selector(shiftTab:) code:KEY_TAB mods:NSShiftKeyMask];
     [self handler:@selector(sendNotice:) code:KEY_ENTER mods:NSControlKeyMask];
@@ -1036,14 +1036,14 @@ typedef enum {
     [self handler:@selector(selectNextUnreadChannel:) code:KEY_SPACE mods:NSAlternateKeyMask];
     [self handler:@selector(selectPreviousUnreadChannel:) code:KEY_SPACE mods:NSAlternateKeyMask|NSShiftKeyMask];
     [self handler:@selector(selectPreviousSelection:) code:KEY_TAB mods:NSAlternateKeyMask];
-    
+
     for (int i=0; i<=9; ++i) {
         [self handler:@selector(selectChannelAtNumber:) char:'0'+i mods:NSCommandKeyMask];
     }
     for (int i=0; i<=9; ++i) {
         [self handler:@selector(selectServerAtNumber:) char:'0'+i mods:NSCommandKeyMask|NSControlKeyMask];
     }
-    
+
     [self inputHandler:@selector(inputScrollToTop:) code:KEY_HOME mods:0];
     [self inputHandler:@selector(inputScrollToBottom:) code:KEY_END mods:0];
     [self inputHandler:@selector(inputScrollPageUp:) code:KEY_PAGE_UP mods:0];
@@ -1072,7 +1072,7 @@ typedef enum {
     NSString* nick = [config objectForKey:@"nick"];
     NSString* user = [[nick lowercaseString] safeUsername];
     NSString* realName = nick;
-    
+
     NSMutableArray* channels = [NSMutableArray array];
     for (NSString* s in [config objectForKey:@"channels"]) {
         [channels addObject:[NSDictionary dictionaryWithObjectsAndKeys:
@@ -1083,7 +1083,7 @@ typedef enum {
                              @"+sn", @"mode",
                              nil]];
     }
-    
+
     NSMutableDictionary* dic = [NSMutableDictionary dictionary];
     [dic setObject:host forKey:@"host"];
     [dic setObject:name forKey:@"name"];
@@ -1092,7 +1092,7 @@ typedef enum {
     [dic setObject:realName forKey:@"realname"];
     [dic setObject:channels forKey:@"channels"];
     [dic setObject:[config objectForKey:@"autoConnect"] forKey:@"auto_connect"];
-    
+
     if ([NSLocale prefersJapaneseLanguage]) {
         NSString* net = [host lowercaseString];
         if ([net contains:@"freenode"]
@@ -1106,11 +1106,11 @@ typedef enum {
             [dic setObject:[NSNumber numberWithLong:NSISO2022JPStringEncoding] forKey:@"encoding"];
         }
     }
-    
+
     IRCClientConfig* c = [[[IRCClientConfig alloc] initWithDictionary:dic] autorelease];
     IRCClient* u = [world createClient:c reload:YES];
     [world save];
-    
+
     if (c.autoConnect) {
         [u connect];
     }
@@ -1120,7 +1120,7 @@ typedef enum {
 {
     [welcomeDialog autorelease];
     welcomeDialog = nil;
-    
+
     [window makeKeyAndOrderFront:nil];
 }
 

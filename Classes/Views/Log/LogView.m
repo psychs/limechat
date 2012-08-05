@@ -16,7 +16,7 @@
         BOOL ctrl = (m & NSControlKeyMask) != 0;
         BOOL alt = (m & NSAlternateKeyMask) != 0;
         BOOL cmd = (m & NSCommandKeyMask) != 0;
-        
+
         if (!(ctrl || alt || cmd)) {
             if ([keyDelegate respondsToSelector:@selector(logViewKeyDown:)]) {
                 [keyDelegate logViewKeyDown:e];
@@ -24,7 +24,7 @@
             return;
         }
     }
-    
+
     [super keyDown:e];
 }
 
@@ -33,9 +33,9 @@
     if (resizeDelegate && [resizeDelegate respondsToSelector:@selector(logViewWillResize)]) {
         [resizeDelegate logViewWillResize];
     }
-    
+
     [super setFrame:rect];
-    
+
     if (resizeDelegate && [resizeDelegate respondsToSelector:@selector(logViewDidResize)]) {
         [resizeDelegate logViewDidResize];
     }
@@ -74,19 +74,19 @@
     DOMRange* range = [self selectedDOMRange];
     if (!range) return nil;
     return [range toString];
-    
+
     /*
      DOMNode* sel = [[self selectedDOMRange] cloneContents];
      if (!sel) return nil;
-     
+
      NSMutableString* s = [NSMutableString string];
      DOMNodeIterator* iter = [[[self selectedFrame] DOMDocument] createNodeIterator:sel whatToShow:DOM_SHOW_TEXT filter:nil expandEntityReferences:YES];
      DOMNode* node;
-     
+
      while (node = [iter nextNode]) {
      [s appendString:[node nodeValue]];
      }
-     
+
      if (s.length == 0) return nil;
      return s;
      */

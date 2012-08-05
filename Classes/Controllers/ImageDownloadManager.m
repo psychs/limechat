@@ -63,11 +63,11 @@ static ImageDownloadManager* instance;
 {
     [[sender retain] autorelease];
     [checkers removeObject:sender];
-    
+
     int uid = sender.uid;
     int cid = sender.cid;
     LogController* log = nil;
-    
+
     if (cid) {
         IRCChannel* channel = [world findChannelByClientId:uid channelId:cid];
         if (channel) {
@@ -80,7 +80,7 @@ static ImageDownloadManager* instance;
             log = client.log;
         }
     }
-    
+
     if (log) {
         [log expandImage:sender.url lineNumber:sender.lineNumber imageIndex:sender.imageIndex contentLength:contentLength];
     }

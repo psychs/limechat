@@ -34,7 +34,7 @@
 - (void)start:(NSTimeInterval)interval
 {
     [self stop];
-    
+
     timer = [[NSTimer scheduledTimerWithTimeInterval:interval target:self selector:@selector(onTimer:) userInfo:nil repeats:reqeat] retain];
     [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSEventTrackingRunLoopMode];
 }
@@ -42,7 +42,7 @@
 - (void)stop
 {
     [[self retain] autorelease];
-    
+
     [timer invalidate];
     [timer release];
     timer = nil;
@@ -51,11 +51,11 @@
 - (void)onTimer:(id)sender
 {
     if (!self.isActive) return;
-    
+
     if (!reqeat) {
         [self stop];
     }
-    
+
     if ([delegate respondsToSelector:selector]) {
         [delegate performSelector:selector withObject:self];
     }

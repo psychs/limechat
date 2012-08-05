@@ -72,17 +72,17 @@ static char* UNITS[] = { "bytes", "KB", "MB", "GB", "TB" };
         NSRect sourceRect = NSMakeRect(0, 0, icon.size.width, icon.size.height);
         [icon drawInRect:iconFrame fromRect:sourceRect operation:NSCompositeSourceOver fraction:1 respectFlipped:YES hints:nil];
     }
-    
+
     int offset = progressBar ? 0 : (PROGRESS_BAR_HEIGHT / 3);
-    
+
     NSString* fname = self.stringValue;
-    
+
     NSRect fnameRect = frame;
     fnameRect.origin.x += fnameRect.size.height;
     fnameRect.origin.y += FILENAME_TOP_MARGIN + offset;
     fnameRect.size.width -= fnameRect.size.height + RIGHT_MARGIN;
     fnameRect.size.height = FILENAME_HEIGHT - FILENAME_TOP_MARGIN;
-    
+
     NSColor* fnameColor;
     if (self.isHighlighted && [view.window isMainWindow] && [view.window firstResponder] == view) {
         fnameColor = [NSColor whiteColor];
@@ -90,15 +90,15 @@ static char* UNITS[] = { "bytes", "KB", "MB", "GB", "TB" };
     else {
         fnameColor = [NSColor blackColor];
     }
-    
+
     NSDictionary* fnameAttrs = [NSDictionary dictionaryWithObjectsAndKeys:
                                 [[self class] fileNameStyle], NSParagraphStyleAttributeName,
                                 [NSFont systemFontOfSize:12], NSFontAttributeName,
                                 fnameColor, NSForegroundColorAttributeName,
                                 nil];
-    
+
     [fname drawInRect:fnameRect withAttributes:fnameAttrs];
-    
+
     if (progressBar) {
         NSRect progressRect = frame;
         progressRect.origin.x += progressRect.size.height;
@@ -107,13 +107,13 @@ static char* UNITS[] = { "bytes", "KB", "MB", "GB", "TB" };
         progressRect.size.height = PROGRESS_BAR_HEIGHT;
         progressBar.frame = progressRect;
     }
-    
+
     NSRect statusRect = frame;
     statusRect.origin.x += statusRect.size.height;
     statusRect.origin.y += FILENAME_HEIGHT + PROGRESS_BAR_HEIGHT + STATUS_TOP_MARGIN - offset;
     statusRect.size.width -= statusRect.size.height + RIGHT_MARGIN;
     statusRect.size.height = STATUS_HEIGHT - STATUS_TOP_MARGIN;
-    
+
     NSColor* statusColor;
     if (status == DCC_ERROR) {
         statusColor = [NSColor redColor];
@@ -127,22 +127,22 @@ static char* UNITS[] = { "bytes", "KB", "MB", "GB", "TB" };
     else {
         statusColor = [NSColor grayColor];
     }
-    
+
     NSDictionary* statusAttrs = [NSDictionary dictionaryWithObjectsAndKeys:
                                  [[self class] statusStyle], NSParagraphStyleAttributeName,
                                  [NSFont systemFontOfSize:11], NSFontAttributeName,
                                  statusColor, NSForegroundColorAttributeName,
                                  nil];
-    
+
     NSMutableString* statusStr = [NSMutableString string];
-    
+
     if (sendingItem) {
         [statusStr appendFormat:@"To %@    ", peerNick];
     }
     else {
         [statusStr appendFormat:@"From %@    ", peerNick];
     }
-    
+
     switch (status) {
         case DCC_INIT:
             [statusStr appendString:[self formatSize:size]];
@@ -170,7 +170,7 @@ static char* UNITS[] = { "bytes", "KB", "MB", "GB", "TB" };
             [statusStr appendFormat:@"%@  — Complete", [self formatSize:size]];
             break;
     }
-    
+
     [statusStr drawInRect:statusRect withAttributes:statusAttrs];
 }
 
@@ -178,13 +178,13 @@ static char* UNITS[] = { "bytes", "KB", "MB", "GB", "TB" };
 {
     int unit = 0;
     double data = 0;
-    
+
     if (bytes > 0) {
         unit = floor(log2(bytes) / log2(1024));
         if (unit > 4) unit = 4;
         data = bytes / pow(1024, unit);
     }
-    
+
     if (unit == 0 || data >= 10) {
         return [NSString stringWithFormat:@"%qi %s", (long long)data, UNITS[unit]];
     }

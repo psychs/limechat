@@ -135,7 +135,7 @@
     GROWL_MSG_TALK_MSG, GROWL_MSG_TALK_NOTICE, GROWL_MSG_KICKED,
     GROWL_MSG_INVITED, GROWL_MSG_FILE_RECEIVE_REQUEST, GROWL_MSG_FILE_RECEIVE_SUCCEEDED,
     GROWL_MSG_FILE_RECEIVE_FAILED, GROWL_MSG_FILE_SEND_SUCCEEDED, GROWL_NSG_FILE_SEND_FAILED];
-    
+
     NSMutableDictionary* dic = [NSMutableDictionary dictionary];
     [dic setObject:all forKey:GROWL_NOTIFICATIONS_ALL];
     [dic setObject:all forKey:GROWL_NOTIFICATIONS_DEFAULT];
@@ -150,11 +150,11 @@
             return;
         }
     }
-    
+
     lastClickedTime = now;
     [lastClickedContext release];
     lastClickedContext = [context retain];
-    
+
     [delegate notificationControllerDidActivateNotification:lastClickedContext actionButtonClicked:NO];
 }
 

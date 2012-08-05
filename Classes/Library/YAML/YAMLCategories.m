@@ -77,7 +77,7 @@ static BOOL yamlClass(id object)
 + (id)yamlStringWithUTF8String:(const char *)bytes length:(unsigned)length
 {
     NSString *str = [[NSString alloc] initWithBytes:bytes length:length encoding:NSUTF8StringEncoding];
-    
+
     return [str autorelease];
 }
 
@@ -88,7 +88,7 @@ static BOOL yamlClass(id object)
     i = 0;
     while(i < [self length] && [self characterAtIndex:i] == ' ')
         i = i+1;
-    
+
     return i;
 }
 
@@ -97,7 +97,7 @@ static BOOL yamlClass(id object)
     NSRange				lineRange;
     int					i = [self length]-1;
     NSMutableString		*indented = [NSMutableString stringWithString:self];
-    
+
     char strIndent[indent+1];
     memset(strIndent, ' ', indent);
     strIndent[indent] = 0;
@@ -106,9 +106,9 @@ static BOOL yamlClass(id object)
     while(i > 0)
     {
         lineRange = [indented lineRangeForRange:NSMakeRange(i,0)];
-        
+
         [indented insertString:stringIndent atIndex:lineRange.location];
-        
+
         i = lineRange.location - 1;
     }
 
@@ -118,13 +118,13 @@ static BOOL yamlClass(id object)
 - (NSString*)yamlDescriptionWithIndent:(int)indent
 {
     NSRange		lineRange;
-    
+
     lineRange = [self lineRangeForRange:NSMakeRange(0,0)];
-    
+
     //if no line breaks in string
     if(lineRange.length >= [self length])
         return [NSString stringWithFormat:@"\"%@\"", [self stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""]];
-    
+
     return [NSString stringWithFormat:@"|-\n%@", [self yamlIndented:indent]];
 }
 
@@ -141,9 +141,9 @@ static BOOL yamlClass(id object)
 {
     NSEnumerator		*enumerator;
     NSString			*object;
-    
+
     NSMutableArray		*array = [NSMutableArray array];
-    
+
     //output
     enumerator = [self objectEnumerator];
     while (object = [enumerator nextObject])
@@ -155,7 +155,7 @@ static BOOL yamlClass(id object)
          else*/
         [array addObject:[object yamlData]];
     }
-    
+
     return array;
 }
 
@@ -178,22 +178,22 @@ static BOOL yamlClass(id object)
     char strIndent[indent+1];
     memset(strIndent, ' ', indent);
     strIndent[indent] = 0;
-    
+
     while (anObject = [enumerator nextObject])
     {
         NSString	*tag;
-        
+
         if(yamlClass(anObject))
             tag = @"";
-        else 
+        else
             tag = [NSString stringWithFormat:@"!!%@ ", NSStringFromClass([anObject class])];
-        
+
         anObject = [anObject toYAML];
-        
+
         [description appendFormat:@"%s- %@%@%s", strIndent, tag,
          [anObject yamlDescriptionWithIndent:indent+2], anObject == last? "" : "\n"];
     }
-    
+
     return description;
 }
 
@@ -206,7 +206,7 @@ static BOOL yamlClass(id object)
 {
     NSMutableArray  *array = [NSMutableArray array];
     unsigned i, c = [self count];
-    
+
     for (i=0; i<c; i++)
     {
         [array addObject:
@@ -219,7 +219,7 @@ static BOOL yamlClass(id object)
 {
     NSMutableArray  *array = [NSMutableArray array];
     unsigned i, c = [self count];
-    
+
     for (i=0; i<c; i++)
     {
         [array addObject:
@@ -237,15 +237,15 @@ static BOOL yamlClass(id object)
     NSEnumerator		*enumerator;
     NSArray				*allKeys = [self allKeys];
     NSString			*key;
-    
+
     NSMutableDictionary	*dict = [NSMutableDictionary dictionary];
-    
+
     //output
     enumerator = [allKeys objectEnumerator];
     while (key = [enumerator nextObject])
     {
         id object = [self objectForKey:key];
-        
+
         /*if(!yamlClass(object))
          {
          [dict setObject:[YAMLWrapper wrapperWithData:[object yamlData] tag:[object class]] forKey:key];
@@ -253,7 +253,7 @@ static BOOL yamlClass(id object)
          else*/
         [dict setObject:[object yamlData] forKey:key];
     }
-    
+
     return dict;
 }
 
@@ -266,19 +266,19 @@ static BOOL yamlClass(id object)
 {
     if([self count] == 0)
         return @"{}";
-    
+
     NSEnumerator		*enumerator;
     NSArray				*allKeys = [self allKeys];
     NSString			*key;
     //NSString* last;
-    
+
     NSMutableString		*description = [NSMutableString stringWithString:@"\n"];
     //int					keyLength = 0;
-    
+
     char strIndent[indent+1];
     memset(strIndent, ' ', indent);
     strIndent[indent] = 0;
-    
+
     //get longest key length
     /*if([[allKeys objectAtIndex:0] respondsToSelector:@selector(caseInsensitiveCompare:)]) {
      allKeys = [allKeys sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
@@ -292,34 +292,34 @@ static BOOL yamlClass(id object)
      if([key length] > keyLength)
      keyLength = [key length];
      }*/
-    
+
     //output
     enumerator = [allKeys objectEnumerator];
     while (key = [enumerator nextObject])
     {
         id object = [self objectForKey:key];
         NSString	*tag;
-        
+
         if(yamlClass(object))
             tag = @"";
-        else 
+        else
             tag = [NSString stringWithFormat:@"!!%@ ", NSStringFromClass([object class])];
-        
+
         object = [object toYAML];
-        
-        /*[description appendFormat:@"%s%@: %@%@%s", strIndent, 
+
+        /*[description appendFormat:@"%s%@: %@%@%s", strIndent,
          [key stringByPaddingToLength:keyLength withString:@" " startingAtIndex:0],
          tag,
          [object yamlDescriptionWithIndent:indent+2]];*/
-        
-        [description appendFormat:@"%s%@: %@%@\n", 
-         strIndent, 
+
+        [description appendFormat:@"%s%@: %@%@\n",
+         strIndent,
          key,
          tag,
          [object yamlDescriptionWithIndent:indent+2]];
     }
     [description deleteCharactersInRange:NSMakeRange([description length] - 1, 1)];
-    
+
     return description;
 }
 
@@ -333,7 +333,7 @@ static BOOL yamlClass(id object)
     NSMutableDictionary  *dict = [NSMutableDictionary dictionary];
     NSArray *allKeys = [self allKeys];
     unsigned i, c = [allKeys count];
-    
+
     for (i=0; i<c; i++)
     {
         id key = [allKeys objectAtIndex:i];
@@ -348,7 +348,7 @@ static BOOL yamlClass(id object)
     NSMutableDictionary  *dict = [NSMutableDictionary dictionary];
     NSArray *allKeys = [self allKeys];
     unsigned i, c = [allKeys count];
-    
+
     for (i=0; i<c; i++)
     {
         id key = [allKeys objectAtIndex:i];
@@ -403,7 +403,7 @@ static BOOL yamlClass(id object)
 
 @end
 
-@implementation NSData (YAMLAdditions) 
+@implementation NSData (YAMLAdditions)
 
 - (id)yamlDescriptionWithIndent:(int)indent
 {

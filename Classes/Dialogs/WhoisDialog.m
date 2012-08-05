@@ -104,7 +104,7 @@ static int windowPlace;
             return;
         }
     }
-    
+
     [joinButton setEnabled:NO];
 }
 
@@ -120,14 +120,14 @@ static int windowPlace;
             p.x += OFFSET * (windowPlace - ROTATE_COUNT/2);
             p.y -= OFFSET * (windowPlace - ROTATE_COUNT/2);
             [self.window setFrameOrigin:p];
-            
+
             ++windowPlace;
             if (windowPlace >= ROTATE_COUNT) {
                 windowPlace = 0;
             }
         }
     }
-    
+
     [self.window makeKeyAndOrderFront:nil];
 }
 
@@ -164,7 +164,7 @@ static int windowPlace;
     if ([chname hasPrefix:@"@"] || [chname hasPrefix:@"+"]) {
         chname = [chname substringFromIndex:1];
     }
-    
+
     if ([delegate respondsToSelector:@selector(whoisDialogOnJoin:channel:)]) {
         [delegate whoisDialogOnJoin:self channel:chname];
     }

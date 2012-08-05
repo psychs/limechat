@@ -26,7 +26,7 @@ static NSDictionary* SYNTAX_EXT_MAP;
     self = [super init];
     if (self) {
         [NSBundle loadNibNamed:@"PasteSheet" owner:self];
-        
+
         if (!SYNTAXES) {
             SYNTAXES = [[NSArray arrayWithObjects:
                          @"privmsg", @"notice", @"c", @"css", @"diff", @"html",
@@ -35,7 +35,7 @@ static NSDictionary* SYNTAX_EXT_MAP;
                          @"scheme", @"objective-c",
                          nil] retain];
         }
-        
+
         if (!SYNTAX_EXT_MAP) {
             SYNTAX_EXT_MAP = [[NSDictionary dictionaryWithObjectsAndKeys:
                                @".c", @"c",
@@ -81,33 +81,33 @@ static NSDictionary* SYNTAX_EXT_MAP;
         }
         [sheet makeFirstResponder:bodyText];
     }
-    
+
     [syntaxPopup selectItemWithTag:[self tagFromSyntax:syntax]];
     [commandPopup selectItemWithTag:[self tagFromSyntax:command]];
     [bodyText setString:originalText];
-    
+
     if (!NSEqualSizes(size, NSZeroSize)) {
         [sheet setContentSize:size];
     }
-    
+
     [self startSheet];
 }
 
 - (void)pasteOnline:(id)sender
 {
     [self setRequesting:YES];
-    
+
     if (gist) {
         [gist cancel];
         [gist autorelease];
     }
-    
+
     NSString* s = bodyText.string;
     NSString* fileType = [SYNTAX_EXT_MAP objectForKey:[self syntaxFromTag:syntaxPopup.selectedTag]];
     if (!fileType) {
         fileType = @".txt";
     }
-    
+
     gist = [GistClient new];
     gist.delegate = self;
     [gist send:s fileType:fileType private:YES];
@@ -117,13 +117,13 @@ static NSDictionary* SYNTAX_EXT_MAP;
 {
     [command release];
     command = [[self syntaxFromTag:commandPopup.selectedTag] retain];
-    
+
     NSString* s = bodyText.string;
-    
+
     if ([self.delegate respondsToSelector:@selector(pasteSheet:onPasteText:)]) {
         [self.delegate pasteSheet:self onPasteText:s];
     }
-    
+
     [self endSheet];
 }
 
@@ -132,7 +132,7 @@ static NSDictionary* SYNTAX_EXT_MAP;
     if ([self.delegate respondsToSelector:@selector(pasteSheetOnCancel:)]) {
         [self.delegate pasteSheetOnCancel:self];
     }
-    
+
     [super cancel:nil];
 }
 
@@ -145,12 +145,12 @@ static NSDictionary* SYNTAX_EXT_MAP;
     else {
         [uploadIndicator stopAnimation:nil];
     }
-    
+
     [pasteOnlineButton setEnabled:!value];
     [sendInChannelButton setEnabled:!value];
     [syntaxPopup setEnabled:!value];
     [commandPopup setEnabled:!value];
-    
+
     if (value) {
         [bodyText setEditable:NO];
         [bodyText setTextColor:[NSColor disabledControlTextColor]];
@@ -187,16 +187,16 @@ static NSDictionary* SYNTAX_EXT_MAP;
 {
     [gist autorelease];
     gist = nil;
-    
+
     [self setRequesting:NO];
-    
+
     if (url.length) {
         [errorLabel setStringValue:@""];
-        
+
         if ([self.delegate respondsToSelector:@selector(pasteSheet:onPasteURL:)]) {
             [self.delegate pasteSheet:self onPasteURL:url];
         }
-        
+
         [self endSheet];
     }
     else {
@@ -208,7 +208,7 @@ static NSDictionary* SYNTAX_EXT_MAP;
 {
     [gist autorelease];
     gist = nil;
-    
+
     [self setRequesting:NO];
     [errorLabel setStringValue:[NSString stringWithFormat:@"Gist error: %@", error]];
 }
@@ -222,10 +222,10 @@ static NSDictionary* SYNTAX_EXT_MAP;
     [command release];
     syntax = [[self syntaxFromTag:syntaxPopup.selectedTag] retain];
     command = [[self syntaxFromTag:commandPopup.selectedTag] retain];
-    
+
     NSView* contentView = [sheet contentView];
     size = contentView.frame.size;
-    
+
     if ([self.delegate respondsToSelector:@selector(pasteSheetWillClose:)]) {
         [self.delegate pasteSheetWillClose:self];
     }

@@ -30,12 +30,12 @@
 - (void)drawInteriorWithFrame:(NSRect)rect inView:(NSView*)contentView
 {
     [NSGraphicsContext saveGraphicsState];
-    
+
     if ([self showsFirstResponder]) {
         NSSetFocusRingStyle(NSFocusRingOnly);
         [[self borderPathForBounds:rect] fill];
     }
-    
+
     [NSGraphicsContext restoreGraphicsState];
 }
 

@@ -34,7 +34,7 @@
     for (NSTableColumn* column in [self tableColumns]) {
         [[column dataCell] setFont:font];
     }
-    
+
     NSRect frame = self.frame;
     frame.size.height = 1e+37;
     CGFloat height = [[[[self tableColumns] objectAtIndex:0] dataCell] cellSizeForBounds:frame].height;
@@ -62,7 +62,7 @@
                 break;
         }
     }
-    
+
     [super keyDown:e];
 }
 

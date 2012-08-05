@@ -40,15 +40,15 @@
 - (void)writeLine:(NSString*)s
 {
     [self open];
-    
+
     if (file) {
         s = [s stringByAppendingString:@"\n"];
-        
+
         NSData* data = [s dataUsingEncoding:NSUTF8StringEncoding];
         if (!data) {
             data = [s dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
         }
-        
+
         if (data) {
             [file writeData:data];
         }
@@ -65,22 +65,22 @@
 - (void)open
 {
     [self close];
-    
+
     [fileName release];
     fileName = [[self buildFileName] retain];
-    
+
     NSString* dir = [fileName stringByDeletingLastPathComponent];
-    
+
     NSFileManager* fm = [NSFileManager defaultManager];
     BOOL isDir = NO;
     if (![fm fileExistsAtPath:dir isDirectory:&isDir]) {
         [fm createDirectoryAtPath:dir withIntermediateDirectories:YES attributes:nil error:NULL];
     }
-    
+
     if (![fm fileExistsAtPath:fileName]) {
         [fm createFileAtPath:fileName contents:[NSData data] attributes:nil];
     }
-    
+
     [file release];
     file = [[NSFileHandle fileHandleForUpdatingAtPath:fileName] retain];
     if (file) {
@@ -92,7 +92,7 @@
 {
     NSString* base = [Preferences transcriptFolder];
     base = [base stringByExpandingTildeInPath];
-    
+
     static NSDateFormatter* format = nil;
     if (!format) {
         format = [NSDateFormatter new];
@@ -102,7 +102,7 @@
     NSString* name = [[client name] safeFileName];
     NSString* pre = @"";
     NSString* c = @"";
-    
+
     if (!channel) {
         c = @"Console";
     }
@@ -113,7 +113,7 @@
     else {
         c = [[channel name] safeFileName];
     }
-    
+
     return [base stringByAppendingFormat:@"/%@/%@%@_%@.txt", c, pre, date, name];
 }
 

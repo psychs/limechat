@@ -56,24 +56,24 @@
     [proxyHost release];
     [proxyUser release];
     [proxyPassword release];
-    
+
     if (conn) {
         conn.delegate = nil;
         [conn disconnect];
         [conn autorelease];
     }
     [buffer release];
-    
+
     [super dealloc];
 }
 
 - (void)open
 {
     [self close];
-    
+
     [buffer setLength:0];
     ++tag;
-    
+
     conn = [[AsyncSocket alloc] initWithDelegate:self userData:tag];
     [conn connectToHost:host onPort:port error:NULL];
     active = connecting = YES;
@@ -83,13 +83,13 @@
 - (void)close
 {
     if (!conn) return;
-    
+
     ++tag;
-    
+
     [conn disconnect];
     [conn autorelease];
     conn = nil;
-    
+
     active = connecting = NO;
     sendQueueSize = 0;
 }
@@ -105,21 +105,21 @@
 {
     int len = [buffer length];
     if (!len) return nil;
-    
+
     const char* bytes = [buffer bytes];
     char* p = memchr(bytes, LF, len);
     if (!p) return nil;
     int n = p - bytes;
-    
+
     if (n > 0) {
         char prev = *(p - 1);
         if (prev == CR) {
             --n;
         }
     }
-    
+
     NSMutableData* result = [buffer autorelease];
-    
+
     ++p;
     if (p < bytes + len) {
         buffer = [[NSMutableData alloc] initWithBytes:p length:bytes + len - p];
@@ -127,7 +127,7 @@
     else {
         buffer = [NSMutableData new];
     }
-    
+
     [result setLength:n];
     return result;
 }
@@ -135,9 +135,9 @@
 - (void)write:(NSData*)data
 {
     if (![self connected]) return;
-    
+
     ++sendQueueSize;
-    
+
     [conn writeData:data withTimeout:-1 tag:0];
     [self waitRead];
 }
@@ -168,7 +168,7 @@
     if (![self checkTag:sender]) return;
     [self waitRead];
     connecting = NO;
-    
+
     if ([delegate respondsToSelector:@selector(tcpClientDidConnect:)]) {
         [delegate tcpClientDidConnect:self];
     }
@@ -178,11 +178,11 @@
 {
     if (![self checkTag:sender]) return;
     if (!error) return;
-    
+
     NSString* msg = nil;
     NSString* domain = error.domain;
     int code = error.code;
-    
+
     if ([domain isEqualToString:NSPOSIXErrorDomain]) {
         msg = [AsyncSocket posixErrorStringFromErrno:[error code]];
     }
@@ -191,11 +191,11 @@
             msg = @"Connection failed: SSL problem (possibly the server doesn't support SSL or uses a bad certificate)";
         }
     }
-    
+
     if (!msg) {
         msg = [error localizedDescription];
     }
-    
+
     if ([delegate respondsToSelector:@selector(tcpClient:error:)]) {
         [delegate tcpClient:self error:msg];
     }
@@ -204,9 +204,9 @@
 - (void)onSocketDidDisconnect:(AsyncSocket*)sender
 {
     if (![self checkTag:sender]) return;
-    
+
     [self close];
-    
+
     if ([delegate respondsToSelector:@selector(tcpClientDidDisconnect:)]) {
         [delegate tcpClientDidDisconnect:self];
     }
@@ -215,22 +215,22 @@
 - (void)onSocket:(AsyncSocket *)sender didReadData:(NSData *)data withTag:(long)aTag
 {
     if (![self checkTag:sender]) return;
-    
+
     [buffer appendData:data];
-    
+
     if ([delegate respondsToSelector:@selector(tcpClientDidReceiveData:)]) {
         [delegate tcpClientDidReceiveData:self];
     }
-    
+
     [self waitRead];
 }
 
 - (void)onSocket:(AsyncSocket*)sender didWriteDataWithTag:(long)aTag
 {
     if (![self checkTag:sender]) return;
-    
+
     --sendQueueSize;
-    
+
     if ([delegate respondsToSelector:@selector(tcpClientDidSendData:)]) {
         [delegate tcpClientDidSendData:self];
     }

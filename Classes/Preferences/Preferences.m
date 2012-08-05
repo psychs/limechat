@@ -412,7 +412,7 @@ static NSMutableArray* excludeWords;
         default:
             break;
     }
-    
+
     return nil;
 }
 
@@ -452,7 +452,7 @@ static NSMutableArray* excludeWords;
         default:
             break;
     }
-    
+
     return nil;
 }
 
@@ -492,7 +492,7 @@ static NSMutableArray* excludeWords;
         default:
             break;
     }
-    
+
     return nil;
 }
 
@@ -719,7 +719,7 @@ static NSMutableArray* excludeWords;
     else {
         keywords = [NSMutableArray new];
     }
-    
+
     NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
     NSArray* ary = [ud objectForKey:@"keywords"];
     for (NSDictionary* e in ary) {
@@ -736,7 +736,7 @@ static NSMutableArray* excludeWords;
     else {
         excludeWords = [NSMutableArray new];
     }
-    
+
     NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
     NSArray* ary = [ud objectForKey:@"excludeWords"];
     for (NSDictionary* e in ary) {
@@ -752,7 +752,7 @@ static NSMutableArray* excludeWords;
     //
     NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
     NSArray* src = [ud objectForKey:key];
-    
+
     NSMutableArray* ary = [NSMutableArray array];
     for (NSDictionary* e in src) {
         NSString* s = [e objectForKey:@"string"];
@@ -760,12 +760,12 @@ static NSMutableArray* excludeWords;
             [ary addObject:s];
         }
     }
-    
+
     //
     // sort
     //
     [ary sortUsingSelector:@selector(caseInsensitiveCompare:)];
-    
+
     //
     // save
     //
@@ -859,12 +859,12 @@ static NSMutableArray* excludeWords;
     [d setObject:@"~/Documents/LimeChat Transcripts" forKey:@"Preferences.General.transcript_folder"];
     [d setInt:0 forKey:@"Preferences.General.hotkey_key_code"];
     [d setInt:0 forKey:@"Preferences.General.hotkey_modifier_flags"];
-    
+
     NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
     [ud registerDefaults:d];
     [ud addObserver:(NSObject*)self forKeyPath:@"keywords" options:NSKeyValueObservingOptionNew context:NULL];
     [ud addObserver:(NSObject*)self forKeyPath:@"excludeWords" options:NSKeyValueObservingOptionNew context:NULL];
-    
+
     [self loadKeywords];
     [self loadExcludeWords];
 }
@@ -876,14 +876,14 @@ static NSMutableArray* excludeWords;
 {
     NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
     int version = [ud integerForKey:@"version"];
-    
+
     if (version == 0) {
         // migrate string arrays
-        
+
         NSString* oldKey;
         NSString* newKey;
         NSArray* ary;
-        
+
         oldKey = @"Preferences.Keyword.words";
         newKey = @"keywords";
         ary = [ud objectForKey:oldKey];
@@ -895,7 +895,7 @@ static NSMutableArray* excludeWords;
             [ud setObject:result forKey:newKey];
             [ud removeObjectForKey:oldKey];
         }
-        
+
         oldKey = @"Preferences.Keyword.dislike_words";
         newKey = @"excludeWords";
         ary = [ud objectForKey:oldKey];
@@ -908,12 +908,12 @@ static NSMutableArray* excludeWords;
             [ud removeObjectForKey:oldKey];
         }
     }
-    
+
     if (version <= 1) {
         // migrate sounds
-        
+
         NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-        
+
         for (int i=0; i<USER_NOTIFICATION_COUNT; ++i) {
             NSString* oldKey = [Preferences oldKeyForEvent:i];
             NSString* s = [ud objectForKey:oldKey];
@@ -922,17 +922,17 @@ static NSMutableArray* excludeWords;
             }
         }
     }
-    
+
     if (version <= 2) {
         // set double click action in user list
-        
+
         if ([NSLocale prefersJapaneseLanguage]) {
             [ud setInteger:DOUBLE_CLICK_USER_ACTION_WHOIS forKey:@"Preferences.General.doubleClickUser"];
         }
         else {
             [ud setInteger:DOUBLE_CLICK_USER_ACTION_TALK forKey:@"Preferences.General.doubleClickUser"];
         }
-        
+
         [ud setInteger:3 forKey:@"version"];
         [ud synchronize];
     }

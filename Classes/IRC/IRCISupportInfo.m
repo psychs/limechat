@@ -76,9 +76,9 @@
     if ([str hasSuffix:ISUPPORT_SUFFIX]) {
         str = [str substringToIndex:str.length - [ISUPPORT_SUFFIX length]];
     }
-    
+
     NSArray* ary = [str split:@" "];
-    
+
     for (NSString* s in ary) {
         NSRange r = [s rangeOfString:@"="];
         if (r.location != NSNotFound) {
@@ -105,16 +105,16 @@
     NSMutableArray* ary = [NSMutableArray array];
     NSMutableString* s = [[str mutableCopy] autorelease];
     BOOL plus = NO;
-    
+
     while (s.length) {
         NSString* token = [s getToken];
         if (!token.length) break;
         UniChar c = [token characterAtIndex:0];
-        
+
         if (c == '+' || c == '-') {
             plus = c == '+';
             token = [token substringFromIndex:1];
-            
+
             int len = token.length;
             for (int i=0; i<len; i++) {
                 c = [token characterAtIndex:i];
@@ -159,7 +159,7 @@
             }
         }
     }
-    
+
     return ary;
 }
 
@@ -207,7 +207,7 @@
 - (void)parseChanmodes:(NSString*)str
 {
     NSArray* ary = [str split:@","];
-    
+
     int count = ary.count;
     for (int i=0; i<count; i++) {
         NSString* s = [ary objectAtIndex:i];

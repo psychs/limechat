@@ -31,7 +31,7 @@
     for (NSNumber* n in indices) {
         [set addIndex:[n intValue]];
     }
-    
+
     [self selectRowIndexes:set byExtendingSelection:extend];
 }
 
@@ -44,7 +44,7 @@
             [self selectItemAtIndex:i];
         }
     }
-    
+
     [super rightMouseDown:e];
 }
 
@@ -53,7 +53,7 @@
     for (NSTableColumn* column in [self tableColumns]) {
         [[column dataCell] setFont:font];
     }
-    
+
     NSRect f = [self frame];
     f.size.height = 1e+37;
     CGFloat height = ceil([[[[self tableColumns] objectAtIndex:0] dataCell] cellSizeForBounds:f].height);
@@ -101,7 +101,7 @@
                 break;
         }
     }
-    
+
     [super keyDown:e];
 }
 

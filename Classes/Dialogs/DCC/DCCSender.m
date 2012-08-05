@@ -53,7 +53,7 @@
     if (fullFileName != value) {
         [fullFileName release];
         fullFileName = [value retain];
-        
+
         NSFileManager* fm = [NSFileManager defaultManager];
         NSDictionary* attr = [fm attributesOfItemAtPath:fullFileName error:NULL];
         if (attr) {
@@ -63,10 +63,10 @@
         else {
             size = 0;
         }
-        
+
         [fileName release];
         fileName = [[fullFileName lastPathComponent] retain];
-        
+
         [icon release];
         icon = [[[NSWorkspace sharedWorkspace] iconForFileType:[fileName pathExtension]] retain];
     }
@@ -75,7 +75,7 @@
 - (double)speed
 {
     if (!speedRecords.count) return 0;
-    
+
     double sum = 0;
     for (NSNumber* num in speedRecords) {
         sum += [num doubleValue];
@@ -86,19 +86,19 @@
 - (BOOL)open
 {
     port = [Preferences dccFirstPort];
-    
+
     while (![self doOpen]) {
         ++port;
         if ([Preferences dccLastPort] < port) {
             status = DCC_ERROR;
             [error release];
             error = @"No available ports";
-            
+
             [delegate dccSenderOnError:self];
             return NO;
         }
     }
-    
+
     return YES;
 }
 
@@ -107,30 +107,30 @@
     if (sock) {
         [client autorelease];
         client = nil;
-        
+
         [sock closeAllClients];
         [sock close];
         [sock autorelease];
         sock = nil;
     }
-    
+
     [self closeFile];
-    
+
     if (status != DCC_ERROR && status != DCC_COMPLETE) {
         status = DCC_STOP;
     }
-    
+
     [delegate dccSenderOnClose:self];
 }
 
 - (void)onTimer
 {
     if (status != DCC_SENDING) return;
-    
+
     [speedRecords addObject:[NSNumber numberWithDouble:currentRecord]];
     if (speedRecords.count > RECORDS_LEN) [speedRecords removeObjectAtIndex:0];
     currentRecord = 0;
-    
+
     [self send];
 }
 
@@ -147,22 +147,22 @@
     if (sock) {
         [self close];
     }
-    
+
     status = DCC_INIT;
     processedSize = 0;
     currentRecord = 0;
     [speedRecords removeAllObjects];
-    
+
     sock = [TCPServer new];
     sock.delegate = self;
     sock.port = port;
     BOOL res = [sock open];
     if (!res) return NO;
-    
+
     status = DCC_LISTENING;
     [self openFile];
     if (!file) return NO;
-    
+
     [delegate dccSenderOnListen:self];
     return YES;
 }
@@ -172,7 +172,7 @@
     if (file) {
         [self closeFile];
     }
-    
+
     file = [[NSFileHandle fileHandleForReadingAtPath:fullFileName] retain];
     if (!file) {
         status = DCC_ERROR;
@@ -186,7 +186,7 @@
 - (void)closeFile
 {
     if (!file) return;
-    
+
     [file closeFile];
     [file release];
     file = nil;
@@ -197,7 +197,7 @@
     if (status == DCC_COMPLETE) return;
     if (processedSize >= size) return;
     if (!client) return;
-    
+
     while (1) {
         if (currentRecord >= RATE_LIMIT) return;
         if (client.sendQueueSize >= MAX_QUEUE_SIZE) return;
@@ -205,12 +205,12 @@
             [self closeFile];
             return;
         }
-        
+
         NSData* data = [file readDataOfLength:BUF_SIZE];
         processedSize += data.length;
         currentRecord += data.length;
         [client write:data];
-        
+
         [progressBar setDoubleValue:processedSize];
         [progressBar setNeedsDisplay:YES];
     }
@@ -228,19 +228,19 @@
     if (sock) {
         [sock close];
     }
-    
+
     [client release];
     client = [aClient retain];
     status = DCC_SENDING;
     [delegate dccSenderOnConnect:self];
-    
+
     [self send];
 }
 
 - (void)tcpServer:(TCPServer*)sender client:(TCPClient*)aClient error:(NSString*)err
 {
     if (status == DCC_COMPLETE || status == DCC_ERROR) return;
-    
+
     status = DCC_ERROR;
     [error release];
     error = [err retain];
@@ -255,9 +255,9 @@
         [self close];
         return;
     }
-    
+
     if (status == DCC_COMPLETE || status == DCC_ERROR) return;
-    
+
     status = DCC_ERROR;
     [error release];
     error = @"Disconnected";

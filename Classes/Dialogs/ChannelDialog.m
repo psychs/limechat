@@ -75,7 +75,7 @@
     passwordText.stringValue = config.password;
     modeText.stringValue = config.mode;
     topicText.stringValue = config.topic;
-    
+
     autoJoinCheck.state = config.autoJoin;
     consoleCheck.state = config.logToConsole;
     growlCheck.state = config.growl;
@@ -87,11 +87,11 @@
     config.password = passwordText.stringValue;
     config.mode = modeText.stringValue;
     config.topic = topicText.stringValue;
-    
+
     config.autoJoin = autoJoinCheck.state;
     config.logToConsole = consoleCheck.state;
     config.growl = growlCheck.state;
-    
+
     if (![config.name isChannelName]) {
         config.name = [@"#" stringByAppendingString:config.name];
     }
@@ -108,7 +108,7 @@
         [nameText setBezeled:NO];
         [nameText setDrawsBackground:NO];
     }
-    
+
     NSString* s = nameText.stringValue;
     [okButton setEnabled:s.length > 0];
 }
@@ -124,11 +124,11 @@
 - (void)ok:(id)sender
 {
     [self save];
-    
+
     if ([delegate respondsToSelector:@selector(channelDialogOnOK:)]) {
         [delegate channelDialogOnOK:self];
     }
-    
+
     [self cancel:nil];
 }
 

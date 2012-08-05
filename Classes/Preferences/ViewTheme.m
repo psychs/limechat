@@ -38,7 +38,7 @@
         [name release];
         name = [value retain];
     }
-    
+
     [self load];
 }
 
@@ -56,14 +56,14 @@
             else {
                 fullName = [[ViewTheme userBasePath] stringByAppendingPathComponent:fname];
             }
-            
+
             log.fileName = [fullName stringByAppendingString:@".css"];
             other.fileName = [fullName stringByAppendingString:@".yaml"];
             js.fileName = [fullName stringByAppendingString:@".js"];
             return;
         }
     }
-    
+
     log.fileName = nil;
     other.fileName = nil;
     js.fileName = nil;
@@ -80,16 +80,16 @@
 {
     NSFileManager* fm = [NSFileManager defaultManager];
     NSString* userBase = [self userBasePath];
-    
+
     BOOL isDir = NO;
     BOOL res = [fm fileExistsAtPath:userBase isDirectory:&isDir];
     if (res) {
         return;
     }
-    
+
     // create directory
     [fm createDirectoryAtPath:userBase withIntermediateDirectories:YES attributes:nil error:NULL];
-    
+
     // copy themes from resource
     NSString* resourceBase = [self resourceBasePath];
     NSArray* resourceFiles = [fm contentsOfDirectoryAtPath:resourceBase error:NULL];

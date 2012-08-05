@@ -33,7 +33,7 @@
     if (conn) {
         [self close];
     }
-    
+
     conn = [[AsyncSocket alloc] initWithDelegate:self];
     isActive = [conn acceptOnPort:port error:NULL];
     if (!isActive) {
@@ -70,7 +70,7 @@
     TCPClient* c = [[[TCPClient alloc] initWithExistingConnection:newSocket] autorelease];
     c.delegate = self;
     [clients addObject:c];
-    
+
     if ([delegate respondsToSelector:@selector(tcpServer:didAccept:)]) {
         [delegate tcpServer:self didAccept:c];
     }

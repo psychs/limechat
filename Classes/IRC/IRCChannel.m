@@ -43,10 +43,10 @@
     [members release];
     [topic release];
     [storedTopic release];
-    
+
     [logFile release];
     [logDate release];
-    
+
     [propertyDialog release];
     [super dealloc];
 }
@@ -131,7 +131,7 @@
 - (void)preferencesChanged
 {
     self.log.maxLines = [Preferences maxLogLines];
-    
+
     if (logFile) {
         if ([Preferences logTranscript]) {
             [logFile reopenIfNeeded];
@@ -166,7 +166,7 @@
 - (BOOL)print:(LogLine*)line
 {
     BOOL result = [self.log print:line];
-    
+
     // log
     if (!terminating) {
         if ([Preferences logTranscript]) {
@@ -175,7 +175,7 @@
                 logFile.client = client;
                 logFile.channel = self;
             }
-            
+
             // check date
             NSCalendar* cal = [NSCalendar currentCalendar];
             NSDate* now = [NSDate date];
@@ -190,7 +190,7 @@
             else {
                 logDate = [comp retain];
             }
-            
+
             // write line to file
             NSString* nickStr = @"";
             if (line.nick) {
@@ -200,7 +200,7 @@
             [logFile writeLine:s];
         }
     }
-    
+
     return result;
 }
 
@@ -212,7 +212,7 @@
     const int LINEAR_SEARCH_THRESHOLD = 5;
     int left = 0;
     int right = members.count;
-    
+
     while (right - left > LINEAR_SEARCH_THRESHOLD) {
         int i = (left + right) / 2;
         IRCUser* t = [members objectAtIndex:i];
@@ -223,7 +223,7 @@
             right = i + 1;
         }
     }
-    
+
     for (int i=left; i<right; ++i) {
         IRCUser* t = [members objectAtIndex:i];
         if ([t compare:item] == NSOrderedDescending) {
@@ -231,7 +231,7 @@
             return;
         }
     }
-    
+
     [members addObject:item];
 }
 
@@ -247,9 +247,9 @@
         [[[members objectAtIndex:n] retain] autorelease];
         [members removeObjectAtIndex:n];
     }
-    
+
     [self sortedInsert:user];
-    
+
     if (reload) [self reloadMemberList];
 }
 
@@ -265,17 +265,17 @@
         [[[members objectAtIndex:n] retain] autorelease];
         [members removeObjectAtIndex:n];
     }
-    
+
     if (reload) [self reloadMemberList];
 }
 
 - (void)renameMember:(NSString*)fromNick to:(NSString*)toNick
 {
     if ([fromNick isEqualToString:toNick]) return;
-    
+
     int n = [self indexOfMember:fromNick];
     if (n < 0) return;
-    
+
     IRCUser* m = [members objectAtIndex:n];
     [[m retain] autorelease];
     [members removeObjectAtIndex:n];
@@ -286,9 +286,9 @@
         [self removeMember:toNick reload:NO];
     }
     [self sortedInsert:m];
-    
+
     [self reloadMemberList];
-    
+
     //
     // @@@ update op queue
     //
@@ -301,7 +301,7 @@
         [[[members objectAtIndex:n] retain] autorelease];
         [members removeObjectAtIndex:n];
     }
-    
+
     [self sortedInsert:user];
 }
 
@@ -309,9 +309,9 @@
 {
     int n = [self indexOfMember:nick];
     if (n < 0) return;
-    
+
     IRCUser* m = [members objectAtIndex:n];
-    
+
     switch (modeChar) {
         case 'q': m.q = value; break;
         case 'a': m.a = value; break;
@@ -319,10 +319,10 @@
         case 'h': m.h = value; break;
         case 'v': m.v = value; break;
     }
-    
+
     [[[members objectAtIndex:n] retain] autorelease];
     [members removeObjectAtIndex:n];
-    
+
     [self sortedInsert:m];
     [self reloadMemberList];
 }
@@ -336,7 +336,7 @@
 - (int)indexOfMember:(NSString*)nick
 {
     NSString* canonicalNick = [nick canonicalName];
-    
+
     int i = 0;
     for (IRCUser* m in members) {
         if ([m.canonicalNick isEqualToString:canonicalNick]) {
@@ -344,7 +344,7 @@
         }
         ++i;
     }
-    
+
     return -1;
 }
 

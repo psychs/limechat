@@ -77,24 +77,24 @@
 {
     if (inverted == value) return;
     inverted = value;
-    
+
     NSView* a = [[[[self subviews] objectAtIndex:0] retain] autorelease];
     NSView* b = [[[[self subviews] objectAtIndex:1] retain] autorelease];
-    
+
     [a removeFromSuperviewWithoutNeedingDisplay];
     [b removeFromSuperviewWithoutNeedingDisplay];
     [self addSubview:b];
     [self addSubview:a];
-    
+
     fixedViewIndex = fixedViewIndex ? 0 : 1;
-    
+
     [self adjustSubviews];
 }
 
 - (void)setVertical:(BOOL)value
 {
     [super setVertical:value];
-    
+
     myDividerThickness = value ? 1 : 5;
     [self adjustSubviews];
 }
@@ -109,7 +109,7 @@
 - (void)drawDividerInRect:(NSRect)rect
 {
     if (hidden) return;
-    
+
     if ([self isVertical]) {
         [[NSColor colorWithCalibratedWhite:0.65 alpha:1] set];
         NSRectFill(rect);
@@ -117,12 +117,12 @@
     else {
         [[NSColor colorWithCalibratedWhite:0.65 alpha:1] set];
         NSPoint left, right;
-        
+
         left = rect.origin;
         right = left;
         right.x += rect.size.width;
         [NSBezierPath strokeLineFromPoint:left toPoint:right];
-        
+
         left = rect.origin;
         left.y += rect.size.height;
         right = left;
@@ -148,17 +148,17 @@
         [super adjustSubviews];
         return;
     }
-    
+
     NSSize size = self.frame.size;
     int width = size.width;
     int height = size.height;
     int w = myDividerThickness;
-    
+
     NSView* fixedView = [[self subviews] objectAtIndex:fixedViewIndex];
     NSView* flyingView = [[self subviews] objectAtIndex:fixedViewIndex ? 0 : 1];
     NSRect fixedFrame = fixedView.frame;
     NSRect flyingFrame = flyingView.frame;
-    
+
     if (hidden) {
         if ([self isVertical]) {
             fixedFrame = NSMakeRect(0, 0, 0, height);
@@ -178,7 +178,7 @@
             flyingFrame.origin.x = fixedViewIndex ? 0 : position + w;
             flyingFrame.origin.y = 0;
             if (flyingFrame.size.width < 0) flyingFrame.size.width = 0;
-            
+
             fixedFrame.size.width = position;
             fixedFrame.size.height = height;
             fixedFrame.origin.x = fixedViewIndex ? flyingFrame.size.width + w : 0;
@@ -191,7 +191,7 @@
             flyingFrame.origin.x = 0;
             flyingFrame.origin.y = fixedViewIndex ? 0 : position + w;
             if (flyingFrame.size.height < 0) flyingFrame.size.height = 0;
-            
+
             fixedFrame.size.width = width;
             fixedFrame.size.height = position;
             fixedFrame.origin.x = 0;
@@ -199,7 +199,7 @@
             if (fixedFrame.size.height > height - w) fixedFrame.size.height = height - w;
         }
     }
-    
+
     [fixedView setFrame:fixedFrame];
     [flyingView setFrame:flyingFrame];
     [self setNeedsDisplay:YES];

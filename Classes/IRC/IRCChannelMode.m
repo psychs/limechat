@@ -121,7 +121,7 @@
 {
     NSMutableString* str = [NSMutableString string];
     NSMutableString* trail = [NSMutableString string];
-    
+
     if (a != mode.a) {
         [str appendString:a ? @"-a" : @"+a"];
     }
@@ -149,7 +149,7 @@
     if (t != mode.t) {
         [str appendString:t ? @"-t" : @"+t"];
     }
-    
+
     if (l != mode.l) {
         if (mode.l > 0) {
             [str appendString:@"+l"];
@@ -159,7 +159,7 @@
             [str appendString:@"-l"];
         }
     }
-    
+
     if (![k isEqualToString:mode.k]) {
         if (mode.k.length) {
             [str appendString:@"+k"];
@@ -170,7 +170,7 @@
             [trail appendFormat:@" %@", k];
         }
     }
-    
+
     return [str stringByAppendingString:trail];
 }
 
@@ -178,7 +178,7 @@
 {
     NSMutableString* str = [NSMutableString string];
     NSMutableString* trail = [NSMutableString string];
-    
+
     if (p) [str appendString:@"p"];
     if (s) [str appendString:@"s"];
     if (m) [str appendString:@"m"];
@@ -188,19 +188,19 @@
     if (a) [str appendString:@"a"];
     if (q) [str appendString:@"q"];
     if (r) [str appendString:@"r"];
-    
+
     if (str.length) [str insertString:@"+" atIndex:0];
-    
+
     if (l > 0) {
         [str appendString:@"+l"];
         [trail appendFormat:@" %d", l];
     }
-    
+
     if (k && k.length) {
         [str appendString:@"+k"];
         if (!maskK) [trail appendFormat:@" %@", k];
     }
-    
+
     [str appendString:trail];
     return str;
 }

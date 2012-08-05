@@ -27,22 +27,22 @@
 - (void)resolveInternal:(NSString*)hostname
 {
     [self retain];
-    
+
     NSAutoreleasePool* pool = [NSAutoreleasePool new];
-    
+
     NSHost* host = [NSHost hostWithName:hostname];
     NSArray* info = [NSArray arrayWithObjects:hostname, host, nil];
     [self performSelectorOnMainThread:@selector(hostResolved:) withObject:info waitUntilDone:YES];
-    
+
     [pool release];
-    
+
     [self release];
 }
 
 - (void)hostResolved:(NSArray*)info
 {
     if (!delegate) return;
-    
+
     if ([info count] == 2) {
         NSHost* host = [info objectAtIndex:1];
         if ([delegate respondsToSelector:@selector(hostResolver:didResolve:)]) {

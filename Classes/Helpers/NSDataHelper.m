@@ -10,14 +10,14 @@
 {
     int len = [self length];
     const unsigned char* bytes = [self bytes];
-    
+
     int rest = 0;
     int code = 0;
     NSRange range;
-    
+
     for (int i=0; i<len; i++) {
         unsigned char c = bytes[i];
-        
+
         if (rest <= 0) {
             if (0x1 <= c && c <= 0x7F) {
                 rest = 0;
@@ -53,7 +53,7 @@
             return NO;
         }
     }
-    
+
     return YES;
 }
 
@@ -66,17 +66,17 @@
 {
     int len = [self length];
     const unsigned char* bytes = [self bytes];
-    
+
     UniChar buf[len];
     int n = 0;
-    
+
     int rest = 0;
     int code = 0;
     NSRange range;
-    
+
     for (int i=0; i<len; i++) {
         unsigned char c = bytes[i];
-        
+
         if (rest <= 0) {
             if (0x1 <= c && c <= 0x7F) {
                 rest = 0;
@@ -115,7 +115,7 @@
             rest = 0;
         }
     }
-    
+
     return [[[NSString alloc] initWithCharacters:buf length:n] autorelease];
 }
 

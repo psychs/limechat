@@ -49,7 +49,7 @@
     if (nick != value) {
         [nick release];
         nick = [value retain];
-        
+
         [canonicalNick release];
         canonicalNick = [[nick canonicalName] retain];
     }
@@ -151,7 +151,7 @@
     // we half-life the conversation every minute
     CFAbsoluteTime now = CFAbsoluteTimeGetCurrent();
     CGFloat minutes = (now - lastFadedWeights) / 60;
-    
+
     if (minutes > 1) {
         lastFadedWeights = now;
         if (incomingWeight > 0) {
@@ -211,7 +211,7 @@
 {
     CGFloat mine = self.weight;
     CGFloat others = other.weight;
-    
+
     if (mine > others) return NSOrderedAscending;
     if (mine < others) return NSOrderedDescending;
     return [canonicalNick compare:other.canonicalNick];

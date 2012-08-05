@@ -10,7 +10,7 @@
 {
     if ([s hasPrefix:@"#"]) {
         s = [s substringFromIndex:1];
-        
+
         int len = s.length;
         if (len == 6) {
             long n = strtol([s UTF8String], NULL, 16);
@@ -33,7 +33,7 @@
             NSString* pattern = @"rgba\\(\\s*(\\d+)\\s*,\\s*(\\d+)\\s*,\\s*(\\d+)\\s*,\\s*(\\d*(?:\\.\\d+))\\s*\\)";
             rgba = [[NSRegularExpression alloc] initWithPattern:pattern options:NSRegularExpressionCaseInsensitive error:NULL];
         }
-        
+
         NSTextCheckingResult* result = [rgba firstMatchInString:s options:0 range:NSMakeRange(0, s.length)];
         if (result && result.numberOfRanges > 4) {
             int r = [[s substringWithRange:[result rangeAtIndex:1]] intValue];
@@ -42,13 +42,13 @@
             float a = [[s substringWithRange:[result rangeAtIndex:4]] floatValue];
             return DEVICE_RGBA(r, g, b, a);
         }
-        
+
         static NSRegularExpression* rgb = nil;
         if (!rgb) {
             NSString* pattern = @"rgb\\(\\s*(\\d+)\\s*,\\s*(\\d+)\\s*,\\s*(\\d+)\\s*\\)";
             rgb = [[NSRegularExpression alloc] initWithPattern:pattern options:NSRegularExpressionCaseInsensitive error:NULL];
         }
-        
+
         result = [rgb firstMatchInString:s options:0 range:NSMakeRange(0, s.length)];
         if (result && result.numberOfRanges > 3) {
             int r = [[s substringWithRange:[result rangeAtIndex:1]] intValue];
@@ -57,7 +57,7 @@
             return DEVICE_RGB(r, g, b);
         }
     }
-    
+
     static NSDictionary* nameMap = nil;
     if (!nameMap) {
         nameMap = [[NSDictionary dictionaryWithObjectsAndKeys:
@@ -80,7 +80,7 @@
                     DEVICE_RGBA(0, 0, 0, 0), @"transparent",
                     nil] retain];
     }
-    
+
     return [nameMap objectForKey:[s lowercaseString]];
 }
 

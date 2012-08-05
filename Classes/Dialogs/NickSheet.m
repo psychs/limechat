@@ -27,7 +27,7 @@
     [currentText setStringValue:nick];
     [newText setStringValue:nick];
     [sheet makeFirstResponder:newText];
-    
+
     [self startSheet];
 }
 
@@ -36,7 +36,7 @@
     if ([self.delegate respondsToSelector:@selector(nickSheet:didInputNick:)]) {
         [self.delegate nickSheet:self didInputNick:newText.stringValue];
     }
-    
+
     [super ok:sender];
 }
 

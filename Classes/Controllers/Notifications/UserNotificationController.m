@@ -80,7 +80,7 @@
         default:
             break;
     }
-    
+
     NSUserNotification* note = [[NSUserNotification new] autorelease];
     note.title = title;
     note.subtitle = desc;
@@ -89,10 +89,10 @@
     }
 
     /*
-    if (type == USER_NOTIFICATION_INVITED) {
-        note.hasActionButton = YES;
-        note.actionButtonTitle = @"Join";
-    }
+     if (type == USER_NOTIFICATION_INVITED) {
+     note.hasActionButton = YES;
+     note.actionButtonTitle = @"Join";
+     }
      */
 
     NSUserNotificationCenter* center = [NSUserNotificationCenter defaultUserNotificationCenter];
