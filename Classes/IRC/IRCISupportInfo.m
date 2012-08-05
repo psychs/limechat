@@ -63,12 +63,12 @@
     [self setValue:4 forMode:'q'];
     [self setValue:4 forMode:'r'];
 
-    [markMap setObject:[NSNumber numberWithInt:'o'] forKey:[NSNumber numberWithInt:'@']];
-    [markMap setObject:[NSNumber numberWithInt:'h'] forKey:[NSNumber numberWithInt:'%']];
-    [markMap setObject:[NSNumber numberWithInt:'v'] forKey:[NSNumber numberWithInt:'+']];
-    [modeMap setObject:[NSNumber numberWithInt:'@'] forKey:[NSNumber numberWithInt:'o']];
-    [modeMap setObject:[NSNumber numberWithInt:'%'] forKey:[NSNumber numberWithInt:'h']];
-    [modeMap setObject:[NSNumber numberWithInt:'+'] forKey:[NSNumber numberWithInt:'v']];
+    [markMap setObject:@'o' forKey:@'@'];
+    [markMap setObject:@'h' forKey:@'%'];
+    [markMap setObject:@'v' forKey:@'+'];
+    [modeMap setObject:@'@' forKey:@'o'];
+    [modeMap setObject:@'%' forKey:@'h'];
+    [modeMap setObject:@'+' forKey:@'v'];
 }
 
 - (void)update:(NSString*)str
