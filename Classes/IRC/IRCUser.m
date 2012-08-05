@@ -22,6 +22,7 @@
 @synthesize isMyself;
 @synthesize incomingWeight;
 @synthesize outgoingWeight;
+@synthesize isupport;
 
 - (id)init
 {
@@ -39,6 +40,7 @@
     [canonicalNick release];
     [username release];
     [address release];
+    [isupport release];
     [super dealloc];
 }
 
@@ -55,12 +57,33 @@
 
 - (char)mark
 {
-    if (q) return '~';
-    if (a) return '&';
-    if (o) return '@';
-    if (h) return '%';
-    if (v) return '+';
-    return ' ';
+    if (isupport) {
+        char mode = INVALID_MODE_CHAR;
+        if (q) {
+            mode = 'q';
+        }
+        else if (a) {
+            mode = 'a';
+        }
+        else if (o) {
+            mode = 'o';
+        }
+        else if (h) {
+            mode = 'h';
+        }
+        else if (v) {
+            mode = 'v';
+        }
+        return [isupport markForMode:mode];
+    }
+    else {
+        if (q) return '~';
+        if (a) return '&';
+        if (o) return '@';
+        if (h) return '%';
+        if (v) return '+';
+        return INVALID_MARK_CHAR;
+    }
 }
 
 - (BOOL)isOp

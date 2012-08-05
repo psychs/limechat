@@ -738,10 +738,12 @@
         
         IRCUser* m;
         m = [[IRCUser new] autorelease];
+        m.isupport = client.isupport;
         m.nick = client.myNick;
         [c addMember:m];
         
         m = [[IRCUser new] autorelease];
+        m.isupport = client.isupport;
         m.nick = c.name;
         [c addMember:m];
     }

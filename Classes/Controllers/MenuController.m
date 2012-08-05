@@ -307,6 +307,7 @@
     if (!c) {
         if ([self isNickMenu:sender]) {
             IRCUser* m = [[IRCUser new] autorelease];
+            m.isupport = c.client.isupport;
             m.nick = pointedNick;
             return [NSArray arrayWithObject:m];
         }

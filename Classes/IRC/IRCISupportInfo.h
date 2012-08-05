@@ -4,7 +4,9 @@
 #import <Foundation/Foundation.h>
 
 
-#define MODES_SIZE  52
+#define MODES_SIZE          52
+#define INVALID_MODE_CHAR   ' '
+#define INVALID_MARK_CHAR   ' '
 
 
 @interface IRCISupportInfo : NSObject
@@ -12,14 +14,20 @@
     unsigned char modes[MODES_SIZE];
     int nickLen;
     int modesCount;
+    NSMutableDictionary* markMap;
+    NSMutableDictionary* modeMap;
 }
 
 @property (nonatomic, readonly) int nickLen;
 @property (nonatomic, readonly) int modesCount;
+@property (nonatomic, readonly) NSMutableDictionary* markMap;
+@property (nonatomic, readonly) NSMutableDictionary* modeMap;
 
 - (void)reset;
 - (void)update:(NSString*)s;
 - (NSArray*)parseMode:(NSString*)s;
+- (char)modeForMark:(char)mark;
+- (char)markForMode:(char)mode;
 
 @end
 

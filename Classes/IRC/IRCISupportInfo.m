@@ -14,11 +14,15 @@
 
 @synthesize nickLen;
 @synthesize modesCount;
+@synthesize markMap;
+@synthesize modeMap;
 
 - (id)init
 {
     self = [super init];
     if (self) {
+        markMap = [NSMutableDictionary new];
+        modeMap = [NSMutableDictionary new];
         [self reset];
     }
     return self;
@@ -26,15 +30,20 @@
 
 - (void)dealloc
 {
+    [markMap release];
+    [modeMap release];
     [super dealloc];
 }
 
 - (void)reset
 {
+    [markMap removeAllObjects];
+    [modeMap removeAllObjects];
+
     memset(modes, 0, MODES_SIZE);
     nickLen = 9;
     modesCount = 3;
-    
+
     [self setValue:OP_VALUE forMode:'o'];
     [self setValue:OP_VALUE forMode:'h'];
     [self setValue:OP_VALUE forMode:'v'];
@@ -53,6 +62,8 @@
     [self setValue:4 forMode:'a'];
     [self setValue:4 forMode:'q'];
     [self setValue:4 forMode:'r'];
+
+    [self parsePrefix:@"(ohv)@%+"];
 }
 
 - (void)update:(NSString*)str
@@ -164,12 +175,25 @@
     if ([str hasPrefix:@"("]) {
         NSRange r = [str rangeOfString:@")"];
         if (r.location != NSNotFound) {
-            str = [str substringWithRange:NSMakeRange(1, r.location - 1)];
-            
-            int len = str.length;
-            for (int i=0; i<len; i++) {
-                UniChar c = [str characterAtIndex:i];
-                [self setValue:OP_VALUE forMode:c];
+            [markMap removeAllObjects];
+            [modeMap removeAllObjects];
+
+            NSString* modeStr = [str substringWithRange:NSMakeRange(1, r.location - 1)];
+            NSString* markStr = [str substringFromIndex:NSMaxRange(r)];
+
+            int modeLen = modeStr.length;
+            int markLen = markStr.length;
+            for (int i=0; i<modeLen; i++) {
+                UniChar modeChar = [modeStr characterAtIndex:i];
+                [self setValue:OP_VALUE forMode:modeChar];
+
+                if (i < markLen) {
+                    UniChar markChar = [markStr characterAtIndex:i];
+                    NSNumber* modeNumber = [NSNumber numberWithInt:modeChar];
+                    NSNumber* markNumber = [NSNumber numberWithInt:markChar];
+                    [markMap setObject:modeNumber forKey:markNumber];
+                    [modeMap setObject:markNumber forKey:modeNumber];
+                }
             }
         }
     }
@@ -213,6 +237,24 @@
         return modes[n];
     }
     return 0;
+}
+
+- (char)modeForMark:(char)mark
+{
+    NSNumber* mode = [markMap objectForKey:[NSNumber numberWithInt:mark]];
+    if (mode) {
+        return [mode intValue];
+    }
+    return INVALID_MODE_CHAR;
+}
+
+- (char)markForMode:(char)mode
+{
+    NSNumber* mark = [modeMap objectForKey:[NSNumber numberWithInt:mode]];
+    if (mark) {
+        return [mark intValue];
+    }
+    return INVALID_MARK_CHAR;
 }
 
 @end

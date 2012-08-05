@@ -2,6 +2,7 @@
 // You can redistribute it and/or modify it under the terms of the GPL version 2 (see the file GPL.txt).
 
 #import <Foundation/Foundation.h>
+#import "IRCISupportInfo.h"
 
 
 @interface IRCUser : NSObject
@@ -22,6 +23,8 @@
     CGFloat incomingWeight;
     CGFloat outgoingWeight;
     CFAbsoluteTime lastFadedWeights;
+
+    IRCISupportInfo* isupport;
 }
 
 @property (nonatomic, strong) NSString* nick;
@@ -40,6 +43,7 @@
 @property (nonatomic, readonly) CGFloat weight;
 @property (nonatomic, readonly) CGFloat incomingWeight;
 @property (nonatomic, readonly) CGFloat outgoingWeight;
+@property (nonatomic, strong) IRCISupportInfo* isupport;
 
 - (BOOL)hasMode:(char)mode;
 

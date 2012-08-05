@@ -1933,7 +1933,7 @@
     NSString* s = format;
     
     if ([s contains:@"%@"]) {
-        char mark = ' ';
+        char mark = INVALID_MARK_CHAR;
         if (channel && !channel.isClient && channel.isChannel) {
             IRCUser* m = [channel findMember:nick];
             if (m) {
@@ -2700,6 +2700,7 @@
     
     if (c) {
         IRCUser* u = [[IRCUser new] autorelease];
+        u.isupport = isupport;
         u.nick = nick;
         u.username = m.sender.user;
         u.address = m.sender.address;
@@ -2719,6 +2720,7 @@
     c = [self findChannel:nick];
     if (c) {
         IRCUser* u = [[IRCUser new] autorelease];
+        u.isupport = isupport;
         u.nick = nick;
         u.username = m.sender.user;
         u.address = m.sender.address;
@@ -3095,10 +3097,12 @@
             
             IRCUser* m;
             m = [[IRCUser new] autorelease];
+            m.isupport = isupport;
             m.nick = myNick;
             [c addMember:m];
             
             m = [[IRCUser new] autorelease];
+            m.isupport = isupport;
             m.nick = c.name;
             [c addMember:m];
         }
@@ -3416,20 +3420,20 @@
                 NSArray* ary = [trail componentsSeparatedByString:@" "];
                 for (NSString* nick in ary) {
                     if (!nick.length) continue;
-                    UniChar u = [nick characterAtIndex:0];
-                    char op = ' ';
-                    if (u == '@' || u == '~' || u == '&' || u == '%' || u == '+') {
-                        op = u;
+                    char opMark = [nick characterAtIndex:0];
+                    char mode = [isupport modeForMark:opMark];
+                    if (mode != INVALID_MODE_CHAR) {
                         nick = [nick substringFromIndex:1];
                     }
-                    
+
                     IRCUser* m = [[IRCUser new] autorelease];
+                    m.isupport = isupport;
                     m.nick = nick;
-                    m.q = op == '~';
-                    m.a = op == '&';
-                    m.o = op == '@' || m.q;
-                    m.h = op == '%';
-                    m.v = op == '+';
+                    m.q = (mode == 'q');
+                    m.a = (mode == 'a');
+                    m.o = (mode == 'o') || m.q;
+                    m.h = (mode == 'h');
+                    m.v = (mode == 'v');
                     m.isMyself = [nick isEqualNoCase:myNick];
                     [c addMember:m reload:NO];
                     if ([myNick isEqualNoCase:nick]) {

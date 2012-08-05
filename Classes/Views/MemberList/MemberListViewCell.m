@@ -108,7 +108,7 @@ static NSMutableParagraphStyle* nickStyle;
     rect.size.width = markWidth;
     
     UniChar mark = [member mark];
-    if (mark != ' ') {
+    if (mark != INVALID_MARK_CHAR) {
         NSString* markStr = [NSString stringWithFormat:@"%C", mark];
         [markStr drawInRect:rect withAttributes:style];
     }

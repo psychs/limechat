@@ -64,7 +64,7 @@ static BOOL yamlClass(id object)
 
 - (id)yamlParse
 {
-    NSLog(@"%@-%@",tag,data);
+    LOG(@"%@-%@",tag,data);
     return [tag performSelector:@selector(objectWithYAML:) withObject:data];
 }
 
