@@ -2847,16 +2847,20 @@
         [myNick release];
         myNick = [toNick retain];
         [self updateClientTitle];
-        
-        NSString* text = [NSString stringWithFormat:@"You are now known as %@", toNick];
-        [self printChannel:nil type:LINE_TYPE_NICK text:text receivedAt:m.receivedAt];
+
+        if ([Preferences showRename]) {
+            NSString* text = [NSString stringWithFormat:@"You are now known as %@", toNick];
+            [self printChannel:nil type:LINE_TYPE_NICK text:text receivedAt:m.receivedAt];
+        }
     }
     
     for (IRCChannel* c in channels) {
         if ([c findMember:nick]) {
             // rename channel member
-            NSString* text = [NSString stringWithFormat:@"%@ is now known as %@", nick, toNick];
-            [self printChannel:c type:LINE_TYPE_NICK text:text receivedAt:m.receivedAt];
+            if ([Preferences showRename]) {
+                NSString* text = [NSString stringWithFormat:@"%@ is now known as %@", nick, toNick];
+                [self printChannel:c type:LINE_TYPE_NICK text:text receivedAt:m.receivedAt];
+            }
             [c renameMember:nick to:toNick];
         }
     }
@@ -2885,9 +2889,11 @@
     
     // rename nick in dcc
     [world.dcc nickChanged:nick toNick:toNick client:self];
-    
-    NSString* text = [NSString stringWithFormat:@"%@ is now known as %@", nick, toNick];
-    [self printConsole:nil type:LINE_TYPE_NICK text:text receivedAt:m.receivedAt];
+
+    if ([Preferences showRename]) {
+        NSString* text = [NSString stringWithFormat:@"%@ is now known as %@", nick, toNick];
+        [self printConsole:nil type:LINE_TYPE_NICK text:text receivedAt:m.receivedAt];
+    }
 }
 
 - (void)receiveMode:(IRCMessage*)m
