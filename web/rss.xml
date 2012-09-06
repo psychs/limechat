@@ -7,12 +7,14 @@
     <language>en-us</language>
 
     <item>
-      <title>2.32</title>
-      <link>http://limechat.net/mac/#v2.32</link>
-      <pubDate>Mon, 30 Jul 2012 19:56:13 -0700</pubDate>
+      <title>2.33</title>
+      <link>http://limechat.net/mac/#v2.33</link>
+      <pubDate>Wed, 05 Sep 2012 20:16:44 -0700</pubDate>
       <content:encoded><![CDATA[
   			<ul>
-          <li>Fix crash when deleting channel or private message</li>
+          <li>Add show/hide rename event settings.</li>
+          <li>Fix URL extractor.</li>
+          <li>Support extended channel modes in some IRC server implementations.</li>
         </ul>
       ]]></content:encoded>
     </item>

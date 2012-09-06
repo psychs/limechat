@@ -7,7 +7,7 @@
     <language>en</language>
     
     <item>
-      <title>LimeChat 2.32</title>
+      <title>LimeChat 2.33</title>
       <description><![CDATA[
         <html>
         <body>
@@ -22,18 +22,20 @@
             margin: 0.2em 0;
           }
         </style>
-        <h1>LimeChat 2.32</h1>
+        <h1>LimeChat 2.33</h1>
         <ul>
-          <li>Fix crash when deleting channel or private message</li>
+          <li>Add show/hide rename event settings.</li>
+          <li>Fix URL extractor.</li>
+          <li>Support extended channel modes in some IRC server implementations.</li>
         </ul>
         </body>
         </html>
       ]]></description>
-      <pubDate>Mon, 30 Jul 2012 19:56:13 -0700</pubDate>
+      <pubDate>Wed, 05 Sep 2012 20:16:44 -0700</pubDate>
   	  <sparkle:minimumSystemVersion>10.7.0</sparkle:minimumSystemVersion>
-      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/LimeChat_2.32.tbz"
-                  sparkle:version="2.32" length="2424152" type="application/octet-stream"
-                  sparkle:dsaSignature="MC0CFA3CroNm9gPYW1pqsadxRFPNOjLgAhUAwg/rwyNddXXaS4Fg/iqGh3jzS9g="/>
+      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/LimeChat_2.33.tbz"
+                  sparkle:version="2.33" length="2404980" type="application/octet-stream"
+                  sparkle:dsaSignature="MC0CFQCF1pqSUtfEHce+4q6FlaYP+wsfDAIUDG078FvhENJsuoSnpBhpTgWsIng="/>
     </item>
     
     <item>
