@@ -33,7 +33,7 @@
       ]]></description>
       <pubDate>Wed, 05 Sep 2012 20:27:46 -0700</pubDate>
   	  <sparkle:minimumSystemVersion>10.7.0</sparkle:minimumSystemVersion>
-      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/LimeChat_2.33.tbz"
+      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/LimeChat_2.33a.tbz"
                   sparkle:version="2.33" length="2424344" type="application/octet-stream"
                   sparkle:dsaSignature="MCwCFBqls0KJNvKqjb1ycJzEto+ikqvbAhQRDpHepTQCRFt2y1i4PZ4o7rkrcQ=="/>
     </item>
