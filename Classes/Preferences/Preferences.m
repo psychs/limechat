@@ -126,6 +126,11 @@ static NSMutableArray* excludeWords;
     return [ud boolForKey:@"Preferences.General.auto_join_on_invited"];
 }
 
++ (NSString*)defaultChannelMode
+{
+    NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+    return [ud objectForKey:@"Preferences.General.default_channel_mode"];
+}
 
 + (TabActionType)tabAction
 {
