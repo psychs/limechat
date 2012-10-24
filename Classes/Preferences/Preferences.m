@@ -835,6 +835,7 @@ static NSMutableArray* excludeWords;
     [d setBool:YES forKey:@"Preferences.General.use_growl"];
     [d setBool:YES forKey:@"Preferences.General.stop_growl_on_active"];
     [d setBool:YES forKey:@"Preferences.General.bounceIconOnEveryPrivateMessage"];
+    [d setObject:@"+n" forKey:@"Preferences.General.default_channel_mode"];
     [d setBool:YES forKey:@"eventHighlightGrowl"];
     [d setBool:YES forKey:@"eventNewtalkGrowl"];
     [d setBool:YES forKey:@"eventInvitedGrowl"];
