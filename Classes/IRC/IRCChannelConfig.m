@@ -2,6 +2,7 @@
 // You can redistribute it and/or modify it under the terms of the GPL version 2 (see the file GPL.txt).
 
 #import "IRCChannelConfig.h"
+#import "Preferences.h"
 #import "NSDictionaryHelper.h"
 
 
@@ -34,7 +35,7 @@
 
         name = @"";
         password = @"";
-        mode = @"+sn";
+        mode = [[Preferences defaultChannelMode] retain] ?: @"+n";
         topic = @"";
     }
     return self;
