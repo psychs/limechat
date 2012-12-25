@@ -236,6 +236,12 @@
             return [NSString stringWithFormat:@"http://img.youtube.com/vi/%@/default.jpg", vid];
         }
     }
+    else if ([host hasSuffix:@"fxc.am"]) {
+        if (path.length > 3) {
+            NSString* shortId = [path substringFromIndex:3];
+            return [NSString stringWithFormat:@"http://fxc.am/p/%@/src/keep240", shortId];
+        }
+    }
     return nil;
 }
 
