@@ -2554,7 +2554,7 @@
             [self sendCTCPReply:nick command:command text:s];
         }
         else if ([command isEqualToString:TIME]) {
-            NSString* text = [[NSDate date] description];
+            NSString* text = [[NSDate date] descriptionWithLocale:[NSLocale currentLocale]];
             [self sendCTCPReply:nick command:command text:text];
         }
         else if ([command isEqualToString:VERSION]) {
