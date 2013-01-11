@@ -308,6 +308,8 @@
 		78E5723D0C1C30BA00BDF7EC /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 780253C20C09525900C170D4 /* CoreServices.framework */; };
 		78FA9F651085AA1400001F13 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78FA9F641085AA1400001F13 /* Sparkle.framework */; };
 		78FA9F6E1085AA1A00001F13 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 78FA9F641085AA1400001F13 /* Sparkle.framework */; };
+		BD50585316A0DC3B0059331A /* IRCExecCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = BD50585216A0DC3B0059331A /* IRCExecCommand.m */; };
+		BD50585416A0DC3B0059331A /* IRCExecCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = BD50585216A0DC3B0059331A /* IRCExecCommand.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -628,6 +630,8 @@
 		78E570D00C1C306500BDF7EC /* LimeChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LimeChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		78F786AD15C3F30D00B7937A /* LimeChat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = LimeChat.entitlements; sourceTree = "<group>"; };
 		78FA9F641085AA1400001F13 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = Frameworks/Sparkle.framework; sourceTree = "<group>"; };
+		BD50585116A0DC3B0059331A /* IRCExecCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCExecCommand.h; path = Commands/IRCExecCommand.h; sourceTree = "<group>"; };
+		BD50585216A0DC3B0059331A /* IRCExecCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCExecCommand.m; path = Commands/IRCExecCommand.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -906,6 +910,7 @@
 		78A8C10C11737F660044E7A1 /* IRC */ = {
 			isa = PBXGroup;
 			children = (
+				BD50584B16A0DBB10059331A /* Commands */,
 				78A8C10D11737F660044E7A1 /* IRC.h */,
 				78A8C12811737F660044E7A1 /* IRCWorld.h */,
 				78A8C12911737F660044E7A1 /* IRCWorld.m */,
@@ -1141,6 +1146,15 @@
 				78AB173215C37287008CD998 /* GrowlNotificationController.m */,
 			);
 			path = Notifications;
+			sourceTree = "<group>";
+		};
+		BD50584B16A0DBB10059331A /* Commands */ = {
+			isa = PBXGroup;
+			children = (
+				BD50585116A0DC3B0059331A /* IRCExecCommand.h */,
+				BD50585216A0DC3B0059331A /* IRCExecCommand.m */,
+			);
+			name = Commands;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1400,6 +1414,7 @@
 				78AB172815C33374008CD998 /* NumericTextField.m in Sources */,
 				78AB173415C37287008CD998 /* GrowlNotificationController.m in Sources */,
 				78A3004F15C38FB2003263AA /* UserNotificationController.m in Sources */,
+				BD50585416A0DC3B0059331A /* IRCExecCommand.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1524,6 +1539,7 @@
 				78AB172715C33374008CD998 /* NumericTextField.m in Sources */,
 				78AB173315C37287008CD998 /* GrowlNotificationController.m in Sources */,
 				78A3004E15C38FB2003263AA /* UserNotificationController.m in Sources */,
+				BD50585316A0DC3B0059331A /* IRCExecCommand.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1664,7 +1680,7 @@
 		782DA8FE12DB5A3800C07861 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					TARGET_APP_STORE,
 					DEBUG_BUILD,
@@ -1677,7 +1693,7 @@
 		782DA8FF12DB5A3800C07861 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				GCC_PREPROCESSOR_DEFINITIONS = TARGET_APP_STORE;
 				INFOPLIST_FILE = "Others/AppStore/Info-AppStore.plist";
 				PROVISIONING_PROFILE = "";
@@ -1687,7 +1703,7 @@
 		78E570D40C1C306500BDF7EC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Developer ID Application: Satoshi Nakagawa";
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				INFOPLIST_FILE = Others/Normal/Info.plist;
 				PROVISIONING_PROFILE = "";
 			};
@@ -1696,7 +1712,7 @@
 		78E570D50C1C306500BDF7EC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Developer ID Application: Satoshi Nakagawa";
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				INFOPLIST_FILE = Others/Normal/Info.plist;
 				PROVISIONING_PROFILE = "";
 			};
