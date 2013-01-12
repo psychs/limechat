@@ -1680,41 +1680,37 @@
 		782DA8FE12DB5A3800C07861 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Mac Developer";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					TARGET_APP_STORE,
 					DEBUG_BUILD,
 				);
 				INFOPLIST_FILE = "Others/AppStore/Info-AppStore.plist";
-				PROVISIONING_PROFILE = "";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 			};
 			name = Debug;
 		};
 		782DA8FF12DB5A3800C07861 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Mac Developer";
 				GCC_PREPROCESSOR_DEFINITIONS = TARGET_APP_STORE;
 				INFOPLIST_FILE = "Others/AppStore/Info-AppStore.plist";
-				PROVISIONING_PROFILE = "";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 			};
 			name = Release;
 		};
 		78E570D40C1C306500BDF7EC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Mac Developer";
 				INFOPLIST_FILE = Others/Normal/Info.plist;
-				PROVISIONING_PROFILE = "";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 			};
 			name = Debug;
 		};
 		78E570D50C1C306500BDF7EC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Mac Developer";
 				INFOPLIST_FILE = Others/Normal/Info.plist;
-				PROVISIONING_PROFILE = "";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 			};
 			name = Release;
 		};

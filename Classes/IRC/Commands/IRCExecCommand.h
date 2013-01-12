@@ -15,6 +15,11 @@
     __weak NSString *command;
     BOOL timedout;
     BOOL sendOutput;
+    
+    @private
+    __strong NSMutableArray *arguments;
+    __strong NSPipe *pipeout;
+    __strong NSPipe *pipeerr;
 }
 
 @property (nonatomic, readonly, strong) NSTask *task;

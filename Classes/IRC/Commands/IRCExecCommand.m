@@ -8,11 +8,7 @@
 
 #import "IRCExecCommand.h"
 
-@interface IRCExecCommand () {
-    __strong NSMutableArray *arguments;
-    __strong NSPipe *pipeout;
-    __strong NSPipe *pipeerr;
-}
+@interface IRCExecCommand ()
 
 @property (nonatomic, readwrite, strong) NSMutableArray *arguments;
 @property (nonatomic, readwrite) NSString *command;
