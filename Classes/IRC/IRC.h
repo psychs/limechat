@@ -40,6 +40,8 @@
 #define DCC             @"DCC"
 #define SEND            @"SEND"
 
+#define EXEC            @"EXEC"
+
 #define CLIENTINFO      @"CLIENTINFO"
 #define CTCP            @"CTCP"
 #define CTCPREPLY       @"CTCPREPLY"
@@ -76,7 +78,7 @@
 #define UNIGNORE        @"UNIGNORE"
 #define UMODE           @"UMODE"
 #define WEIGHTS         @"WEIGHTS"
-	
+
 #define IRC_PENALTY_NORMAL  2
 #define IRC_BODY_LEN        500
 #define IRC_ADDRESS_LEN     50
