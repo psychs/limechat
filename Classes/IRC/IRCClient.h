@@ -17,6 +17,7 @@
 
 
 @class IRCWorld;
+@class IRCExecCommand;
 
 
 typedef enum {
@@ -75,6 +76,8 @@ typedef enum {
     Timer* autoJoinTimer;
     Timer* commandQueueTimer;
     NSMutableArray* commandQueue;
+    
+    NSMutableArray *execCommandArr;
 
     IRCChannel* lastSelectedChannel;
 
@@ -142,4 +145,5 @@ typedef enum {
 
 - (void)createChannelListDialog;
 
+- (void)execCommandResult:(IRCExecCommand*)execCommand;
 @end

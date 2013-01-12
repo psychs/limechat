@@ -92,6 +92,8 @@
         
         commandQueue = [NSMutableArray new];
         
+        execCommandArr = [[NSMutableArray alloc] init];
+        
     }
     return self;
 }
@@ -130,6 +132,8 @@
     [commandQueueTimer stop];
     [commandQueueTimer release];
     [commandQueue release];
+    
+    [execCommandArr release];
     
     [lastSelectedChannel release];
     [whoisDialogs release];
@@ -1274,6 +1278,11 @@
         [self sendLine:s];
         return YES;
     }
+    else if ([cmd isEqualToString:EXEC]) {
+        IRCExecCommand *execCommand = [[[IRCExecCommand alloc] initWithCommandString:s andClient:self andChannel:selChannel] autorelease];
+        [execCommandArr addObject:execCommand];
+        return YES;
+    }
     
     //
     // get target if needed
@@ -1401,30 +1410,6 @@
         cmd = MODE;
         [s insertString:@" " atIndex:0];
         [s insertString:myNick atIndex:0];
-    }
-    
-    if ([cmd isEqualToString:EXEC]) {
-        IRCExecCommand *execCommand = [[IRCExecCommand alloc] initWithCommandString:s];
-        if ([[execCommand task] terminationStatus] == 0) {
-            if ([execCommand sendOutput] == YES) {
-                cmd = PRIVMSG;
-                s = [[[execCommand stringout] mutableCopy] autorelease];
-                if (!targetChannelName && selChannel) {
-                    targetChannelName = selChannel.name;
-                }
-            } else {
-                [self printBoth:selChannel type:LINE_TYPE_NOTICE text:[execCommand stringout]];
-                return YES;
-            }
-        } else {
-            if ([execCommand timedout]) {
-                [self printBoth:selChannel type:LINE_TYPE_ERROR text:[NSString stringWithFormat:@"Command \"%@\" timed out.", [execCommand command]]];
-            } else {
-                [self printBoth:selChannel type:LINE_TYPE_ERROR text:[execCommand stringerr]];
-            }
-            return YES;
-        }
-        [execCommand release];
     }
     
     //
@@ -3840,6 +3825,38 @@
         [dateTimeFormatter setTimeStyle:NSDateFormatterShortStyle];
     }
     return dateTimeFormatter;
+}
+
+- (void)execCommandResult:(IRCExecCommand*)execCommand {
+    if ([execCommand timedout]) {
+        [self printBoth:[execCommand channel] type:LINE_TYPE_ERROR text:[NSString stringWithFormat:@"Command \"%@\" timed out.", [execCommand command]]];
+    } else {
+        if ([[execCommand task] terminationStatus] == 0 && ![execCommand timedout]) {
+            if ([execCommand sendOutput] == YES) {
+                NSArray *a = [[execCommand stringout] componentsSeparatedByString:@"\n"];
+                for (NSString *s in a) {
+                    s = [s stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+                    if ([s length])
+                        [self sendCommand:[NSString stringWithFormat:@"msg %@ %@", [[execCommand channel] name], s] completeTarget:YES target:nil];
+                }
+            } else {
+                NSArray *a = [[execCommand stringout] componentsSeparatedByString:@"\n"];
+                for (NSString *s in a) {
+                    s = [s stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+                    if ([s length])
+                        [self printBoth:[execCommand channel] type:LINE_TYPE_NOTICE text:s];
+                }
+            }
+        } else {
+            NSArray *a = [[execCommand stringerr] componentsSeparatedByString:@"\n"];
+            for (NSString *s in a) {
+                s = [s stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+                if ([s length])
+                    [self printBoth:[execCommand channel] type:LINE_TYPE_ERROR text:s];
+            }
+        }
+    }
+    [execCommandArr removeObject:execCommand];
 }
 
 @end

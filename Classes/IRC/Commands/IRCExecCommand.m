@@ -10,12 +10,10 @@
 
 @interface IRCExecCommand ()
 
-@property (nonatomic, readwrite, strong) NSMutableArray *arguments;
-@property (nonatomic, readwrite) NSString *command;
-@property (nonatomic, readwrite) BOOL sendOutput;
-
 - (void)prepareArgs;
 - (void)runTask;
+- (void)onTimeout:(NSNotification*)notification;
+- (void)onFinish:(NSNotification*)notification;
 
 @end
 
@@ -28,13 +26,19 @@
 @synthesize arguments;
 @synthesize timedout;
 @synthesize sendOutput;
+@synthesize timeoutSecs;
+@synthesize client;
+@synthesize channel;
 
-- (id)initWithCommandString:(NSString *)command {
+- (id)initWithCommandString:(NSString *)cmd andClient:(IRCClient*)cli andChannel:(IRCChannel*)cha {
     self = [super init];
     if (self) {
         timedout = NO;
         sendOutput = NO;
-        [self setCommand:command];
+        timeoutSecs = 10.0;
+        command = [cmd retain];
+        client = cli;
+        channel = cha;
         [self runTask];
     }
     return self;
@@ -47,16 +51,29 @@
     [pipeerr release];
     [stringout release];
     [stringerr release];
+    [command release];
     [super dealloc];
 }
 
 - (void)prepareArgs {
     arguments = [[[self command] componentsSeparatedByString:@" "] mutableCopy];
-    NSString *bin = [arguments objectAtIndex:0];
-    if ([bin isEqualToString:@"-o"]) {
-        sendOutput = YES;
-        [arguments removeObjectAtIndex:0];
+    NSString *bin;
+    while (YES) {
         bin = [arguments objectAtIndex:0];
+        if ([bin isEqualToString:@"-o"]) {
+            sendOutput = YES;
+            [arguments removeObjectAtIndex:0];
+        } else if ([bin isEqualToString:@"-t"]) {
+            @try {
+                timeoutSecs = [[arguments objectAtIndex:1] doubleValue];
+                [arguments removeObjectsInRange:NSMakeRange(0, 2)];
+            }
+            @catch (NSError *exception) {
+                [arguments removeObjectAtIndex:0];
+            }
+        } else {
+            break;
+        }
     }
 
     if (![bin isAbsolutePath] || ![[bin lastPathComponent] isEqualToString:@"env"]) {
@@ -66,7 +83,6 @@
 
 - (void)runTask {
     [self prepareArgs];
-    NSDate *timeout = [[NSDate date] dateByAddingTimeInterval:10];
     
     pipeout = [[NSPipe alloc] init];
     pipeerr = [[NSPipe alloc] init];
@@ -77,27 +93,38 @@
     [task setStandardOutput:pipeout];
     [task setStandardError:pipeerr];
     
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+
+    [self performSelector:@selector(onTimeout:) withObject:nil afterDelay:timeoutSecs];
+    [nc addObserver:self selector:@selector(onFinish:) name:NSTaskDidTerminateNotification object:task];
+    
     [task launch];
-    
-    while (task != nil && [task isRunning]) {
-        if ([[NSDate date] compare:(id)timeout] == NSOrderedDescending) {
-            timedout = YES;
-            [task terminate];
-        }
+}
+
+- (void)onTimeout:(NSNotification *)notification {
+    if (task && [task isRunning]) {
+        [[NSNotificationCenter defaultCenter] removeObserver:self];
+        timedout = YES;
+        [task interrupt];
+        [task terminate];
+        [client execCommandResult:self];
     }
+}
+
+- (void)onFinish:(NSNotification *)notification {
+    [NSObject cancelPreviousPerformRequestsWithTarget:self];
+    NSFileHandle *read;
+    NSData *data;
+
+    read = [pipeout fileHandleForReading];
+    data = [read readDataToEndOfFile];
+    stringout = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+
+    read = [pipeerr fileHandleForReading];
+    data = [read readDataToEndOfFile];
+    stringerr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     
-    if (!timedout) {
-        NSFileHandle *read;
-        NSData *data;
-        
-        read = [pipeout fileHandleForReading];
-        data = [read readDataToEndOfFile];
-        stringout = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        
-        read = [pipeerr fileHandleForReading];
-        data = [read readDataToEndOfFile];
-        stringerr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    }
+    [client execCommandResult:self];
 }
 
 @end
