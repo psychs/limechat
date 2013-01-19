@@ -27,6 +27,12 @@ typedef enum {
 } DoubleClickUserActionType;
 
 typedef enum {
+    ICON_BOUNCE_NONE = 0,
+    ICON_BOUNCE_ONCE,
+    ICON_BOUNCE_UNTILFOCUS,
+} IconBounceType;
+
+typedef enum {
     KEYWORD_MATCH_PARTIAL = 0,
     KEYWORD_MATCH_EXACT,
 } KeywordMatchType;
@@ -57,6 +63,8 @@ typedef enum {
 + (BOOL)showJoinLeave;
 + (BOOL)showRename;
 + (BOOL)stopGrowlOnActive;
++ (IconBounceType)iconNotificationOnPrivateMessages;
++ (IconBounceType)iconNotificationOnHighlights;
 + (BOOL)bounceIconOnEveryPrivateMessage;
 + (BOOL)autoJoinOnInvited;
 + (TabActionType)tabAction;
