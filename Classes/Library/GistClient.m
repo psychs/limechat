@@ -74,12 +74,13 @@
     stage = kGistClientPost;
 
     NSMutableDictionary* params = [NSMutableDictionary dictionary];
-    [params setObject:@"" forKey:@"description"];
-    [params setObject:@"" forKey:@"file_name[gistfile1]"];
-    [params setObject:text forKey:@"file_contents[gistfile1]"];
-    [params setObject:fileType forKey:@"file_ext[gistfile1]"];
+    [params setObject:@"" forKey:@"gist[description]"];
+    [params setObject:@"" forKey:@"gist[files][][oid]"];
+    [params setObject:@"" forKey:@"gist[files][][name]"];
+    [params setObject:text forKey:@"gist[files][][content]"];
+    [params setObject:fileType forKey:@"gist[files][][language]"];
     if (isPrivate) {
-        [params setObject:@"private" forKey:@"action_button"];
+        [params setObject:@"0" forKey:@"gist[public]"];
     }
     if (authToken) {
         [params setObject:authToken forKey:@"authenticity_token"];

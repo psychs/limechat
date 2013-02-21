@@ -38,22 +38,22 @@ static NSDictionary* SYNTAX_EXT_MAP;
 
         if (!SYNTAX_EXT_MAP) {
             SYNTAX_EXT_MAP = [[NSDictionary dictionaryWithObjectsAndKeys:
-                               @".c", @"c",
-                               @".css", @"css",
-                               @".diff", @"diff",
-                               @".hs", @"haskell",
-                               @".html", @"html",
-                               @".java", @"java",
-                               @".js", @"javascript",
-                               @".m", @"objective-c",
-                               @".pl", @"perl",
-                               @".aw", @"php",
-                               @".txt", @"plain_text",
-                               @".py", @"python",
-                               @".rb", @"ruby",
-                               @".scm", @"scheme",
-                               @".sh", @"shell script",
-                               @".sql", @"sql",
+                               @"C", @"c",
+                               @"CSS", @"css",
+                               @"Diff", @"diff",
+                               @"Haskell", @"haskell",
+                               @"HTML", @"html",
+                               @"Java", @"java",
+                               @"JavaScript", @"javascript",
+                               @"Objective-C", @"objective-c",
+                               @"Perl", @"perl",
+                               @"PHP", @"php",
+                               @"Text", @"plain_text",
+                               @"Python", @"python",
+                               @"Ruby", @"ruby",
+                               @"Scheme", @"scheme",
+                               @"Shell", @"shell script",
+                               @"SQL", @"sql",
                                nil, nil] retain];
         }
     }
@@ -105,7 +105,7 @@ static NSDictionary* SYNTAX_EXT_MAP;
     NSString* s = bodyText.string;
     NSString* fileType = [SYNTAX_EXT_MAP objectForKey:[self syntaxFromTag:syntaxPopup.selectedTag]];
     if (!fileType) {
-        fileType = @".txt";
+        fileType = @"Text";
     }
 
     gist = [GistClient new];
