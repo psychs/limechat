@@ -77,6 +77,7 @@
     if (conn != sender) return;
 
     long long contentLength = 0;
+    NSString* contentType;
     int statusCode = [response statusCode];
 
     if (200 <= statusCode && statusCode < 300) {
@@ -85,11 +86,12 @@
         if ([contentLengthNum respondsToSelector:@selector(longLongValue)]) {
             contentLength = [contentLengthNum longLongValue];
         }
+        contentType = [header objectForKey:@"Content-Type"];
     }
 
     if (contentLength) {
-        if ([delegate respondsToSelector:@selector(imageSizeCheckClient:didReceiveContentLength:)]) {
-            [delegate imageSizeCheckClient:self didReceiveContentLength:contentLength];
+        if ([delegate respondsToSelector:@selector(imageSizeCheckClient:didReceiveContentLength:andType:)]) {
+            [delegate imageSizeCheckClient:self didReceiveContentLength:contentLength andType:contentType];
         }
     }
     else {

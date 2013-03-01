@@ -302,9 +302,14 @@
     [self restorePosition];
 }
 
-- (void)expandImage:(NSString*)url lineNumber:(int)aLineNumber imageIndex:(int)imageIndex contentLength:(long long)contentLength
+- (void)expandImage:(NSString*)url lineNumber:(int)aLineNumber imageIndex:(int)imageIndex contentLength:(long long)contentLength contentType:(NSString*)contentType
 {
     if (!loaded) return;
+    
+    if (![ImageURLParser isImageContent:contentType]) {
+        LOG(@"Ignore non-image image URL: %@ (%@)", url, contentType);
+        return;
+    }
 
     if (contentLength > INLINE_IMAGE_MAX_SIZE) {
         LOG(@"Ignore too big image: %@ (%qi bytes)", url, contentLength);
