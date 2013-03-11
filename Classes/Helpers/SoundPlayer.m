@@ -11,6 +11,11 @@
     if (!name.length) {
         return;
     }
+    
+    NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+    if([ud boolForKey:@"Preferences.General.muteSounds"]) {
+        return;
+    }
 
     if ([name isEqualToString:@"Beep"]) {
         NSBeep();
