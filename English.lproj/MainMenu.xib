@@ -2,13 +2,13 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1070</int>
-		<string key="IBDocument.SystemVersion">12A269</string>
-		<string key="IBDocument.InterfaceBuilderVersion">2549</string>
-		<string key="IBDocument.AppKitVersion">1187</string>
-		<string key="IBDocument.HIToolboxVersion">624.00</string>
+		<string key="IBDocument.SystemVersion">12C3012</string>
+		<string key="IBDocument.InterfaceBuilderVersion">3084</string>
+		<string key="IBDocument.AppKitVersion">1187.34</string>
+		<string key="IBDocument.HIToolboxVersion">625.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">2549</string>
+			<string key="NS.object.0">3084</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>NSBox</string>
@@ -285,7 +285,7 @@
 																	<string key="NSFrameSize">{177, 328}</string>
 																	<reference key="NSSuperview" ref="972199680"/>
 																	<reference key="NSWindow"/>
-																	<reference key="NSNextKeyView" ref="43410202"/>
+																	<reference key="NSNextKeyView" ref="966973983"/>
 																	<bool key="NSEnabled">YES</bool>
 																	<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 																	<bool key="NSControlAllowsExpansionToolTips">YES</bool>
@@ -404,7 +404,7 @@
 													<string key="NSFrameSize">{177, 328}</string>
 													<reference key="NSSuperview" ref="1006686548"/>
 													<reference key="NSWindow"/>
-													<reference key="NSNextKeyView" ref="972199680"/>
+													<reference key="NSNextKeyView" ref="43410202"/>
 													<int key="NSsFlags">133648</int>
 													<reference key="NSVScroller" ref="40277675"/>
 													<reference key="NSHScroller" ref="43410202"/>
@@ -436,7 +436,7 @@
 																					<string key="NSFrameSize">{177, 164}</string>
 																					<reference key="NSSuperview" ref="123026376"/>
 																					<reference key="NSWindow"/>
-																					<reference key="NSNextKeyView" ref="752818090"/>
+																					<reference key="NSNextKeyView" ref="896108245"/>
 																					<bool key="NSEnabled">YES</bool>
 																					<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 																					<bool key="NSControlAllowsExpansionToolTips">YES</bool>
@@ -534,7 +534,7 @@
 																	<string key="NSFrameSize">{177, 164}</string>
 																	<reference key="NSSuperview" ref="18418633"/>
 																	<reference key="NSWindow"/>
-																	<reference key="NSNextKeyView" ref="123026376"/>
+																	<reference key="NSNextKeyView" ref="752818090"/>
 																	<int key="NSsFlags">133648</int>
 																	<reference key="NSVScroller" ref="896108245"/>
 																	<reference key="NSHScroller" ref="752818090"/>
@@ -599,7 +599,7 @@
 					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="228709641"/>
 				</object>
-				<string key="NSScreenRect">{{0, 0}, {2560, 1418}}</string>
+				<string key="NSScreenRect">{{0, 0}, {1440, 878}}</string>
 				<string key="NSMinSize">{213, 129}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
 				<bool key="NSWindowIsRestorable">YES</bool>
@@ -660,6 +660,16 @@
 									<reference key="NSOnImage" ref="821023625"/>
 									<reference key="NSMixedImage" ref="353314363"/>
 									<int key="NSTag">102</int>
+								</object>
+								<object class="NSMenuItem" id="586527782">
+									<reference key="NSMenu" ref="211985183"/>
+									<string key="NSTitle">Mute sounds</string>
+									<string key="NSKeyEquiv">M</string>
+									<int key="NSKeyEquivModMask">1048576</int>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="821023625"/>
+									<reference key="NSMixedImage" ref="353314363"/>
+									<int key="NSTag">103</int>
 								</object>
 								<object class="NSMenuItem" id="1048542702">
 									<reference key="NSMenu" ref="211985183"/>
@@ -3157,6 +3167,22 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
+						<string key="label">toggleMuteSounds</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="586527782"/>
+					</object>
+					<int key="connectionID">1032</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">onMute:</string>
+						<reference key="source" ref="361464326"/>
+						<reference key="destination" ref="586527782"/>
+					</object>
+					<int key="connectionID">1033</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
 						<string key="label">delegate</string>
 						<reference key="source" ref="765356395"/>
 						<reference key="destination" ref="361464326"/>
@@ -3390,6 +3416,7 @@
 							<reference ref="703873414"/>
 							<reference ref="228935728"/>
 							<reference ref="916585514"/>
+							<reference ref="586527782"/>
 						</array>
 						<reference key="parent" ref="33257923"/>
 					</object>
@@ -4439,6 +4466,11 @@
 						<reference key="object" ref="371985104"/>
 						<reference key="parent" ref="272041888"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1031</int>
+						<reference key="object" ref="586527782"/>
+						<reference key="parent" ref="211985183"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -4450,6 +4482,7 @@
 				<string key="1003.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1010.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="103.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1031.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="106.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="111.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="129.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -4656,7 +4689,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1011</int>
+			<int key="maxID">1033</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -4843,10 +4876,22 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">MenuController</string>
 					<string key="superclassName">NSObject</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">onMute:</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">onMute:</string>
+						<object class="IBActionInfo" key="NS.object.0">
+							<string key="name">onMute:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</object>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="checkForUpdateItem">NSMenuItem</string>
 						<string key="closeCurrentPanelItem">NSMenuItem</string>
 						<string key="closeWindowItem">NSMenuItem</string>
+						<string key="toggleMuteSounds">NSMenuItem</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<object class="IBToOneOutletInfo" key="checkForUpdateItem">
@@ -4859,6 +4904,10 @@
 						</object>
 						<object class="IBToOneOutletInfo" key="closeWindowItem">
 							<string key="name">closeWindowItem</string>
+							<string key="candidateClassName">NSMenuItem</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="toggleMuteSounds">
+							<string key="name">toggleMuteSounds</string>
 							<string key="candidateClassName">NSMenuItem</string>
 						</object>
 					</dictionary>
@@ -4905,24 +4954,6 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/TreeView.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">WebView</string>
-					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">reloadFromOrigin:</string>
-						<string key="NS.object.0">id</string>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">reloadFromOrigin:</string>
-						<object class="IBActionInfo" key="NS.object.0">
-							<string key="name">reloadFromOrigin:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/WebView.h</string>
 					</object>
 				</object>
 			</array>
