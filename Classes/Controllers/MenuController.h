@@ -24,6 +24,7 @@
     IBOutlet NSMenuItem* closeWindowItem;
     IBOutlet NSMenuItem* closeCurrentPanelItem;
     IBOutlet NSMenuItem* checkForUpdateItem;
+    IBOutlet NSMenuItem* toggleMuteSounds;
     
     __weak AppController* app;
     __weak IRCWorld* world;
@@ -69,6 +70,7 @@
 - (void)showServerPropertyDialog:(IRCClient*)client ignore:(BOOL)ignore;
 
 - (void)onPreferences:(id)sender;
+- (void)onMute:(id)sender;
 - (void)onAutoOp:(id)sender;
 - (void)onDcc:(id)sender;
 - (void)onMainWindow:(id)sender;
