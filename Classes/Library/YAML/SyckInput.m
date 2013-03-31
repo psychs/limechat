@@ -196,7 +196,7 @@ static SYMID cocoa_syck_parse_handler(SyckParser *p, SyckNode *n)
                 oid = syck_map_read( n, map_value, i );
                 syck_lookup_sym( p, oid, (char **)&o3 );
 
-                if(o2 == @"MERGE")
+                if([o2 isEqualToString:@"MERGE"])
                 {
                     if([o3 isKindOfClass:[NSDictionary class]])
                         [v addEntriesFromDictionary:o3];
