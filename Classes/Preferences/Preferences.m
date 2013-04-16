@@ -114,10 +114,22 @@ static NSMutableArray* excludeWords;
     return [ud boolForKey:@"Preferences.General.stop_growl_on_active"];
 }
 
++ (IconBounceType)iconNotificationOnPrivateMessages
+{
+    NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+    return [ud integerForKey:@"Preferences.General.icon_notification_on_private_messages"];
+}
+
++ (IconBounceType)iconNotificationOnHighlights
+{
+    NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+    return [ud integerForKey:@"Preferences.General.icon_notification_on_highlights"];
+}
+
 + (BOOL)bounceIconOnEveryPrivateMessage
 {
     NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-    return [ud boolForKey:@"Preferences.General.bounceIconOnEveryPrivateMessage"];
+    return [ud integerForKey:@"Preferences.General.bounceIconOnEveryPrivateMessage"];
 }
 
 + (BOOL)autoJoinOnInvited
@@ -125,7 +137,6 @@ static NSMutableArray* excludeWords;
     NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
     return [ud boolForKey:@"Preferences.General.auto_join_on_invited"];
 }
-
 
 + (TabActionType)tabAction
 {
@@ -829,7 +840,9 @@ static NSMutableArray* excludeWords;
     [d setBool:YES forKey:@"Preferences.General.showRename"];
     [d setBool:YES forKey:@"Preferences.General.use_growl"];
     [d setBool:YES forKey:@"Preferences.General.stop_growl_on_active"];
-    [d setBool:YES forKey:@"Preferences.General.bounceIconOnEveryPrivateMessage"];
+    [d setInt:1 forKey:@"Preferences.General.bounceIconOnEveryPrivateMessage"];
+    [d setInt:ICON_BOUNCE_ONCE forKey:@"Preferences.General.icon_notification_on_private_messages"];
+    [d setInt:ICON_BOUNCE_ONCE forKey:@"Preferences.General.icon_notification_on_highlights"];
     [d setBool:YES forKey:@"eventHighlightGrowl"];
     [d setBool:YES forKey:@"eventNewtalkGrowl"];
     [d setBool:YES forKey:@"eventInvitedGrowl"];

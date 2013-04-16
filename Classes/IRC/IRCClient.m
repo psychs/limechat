@@ -1833,7 +1833,18 @@
     if ([t isKeyword]) return;
     [t setIsKeyword:YES];
     [self reloadTree];
-    if (![NSApp isActive]) [NSApp requestUserAttention:NSInformationalRequest];
+    if (![NSApp isActive]) {
+        switch ([Preferences iconNotificationOnHighlights]) {
+            case ICON_BOUNCE_ONCE:
+                [NSApp requestUserAttention:NSInformationalRequest];   
+                break;
+            case ICON_BOUNCE_UNTILFOCUS:
+                [NSApp requestUserAttention:NSCriticalRequest];   
+                break;
+            default:
+                break;
+        }
+    }
     [world updateIcon];
 }
 
@@ -1843,7 +1854,18 @@
     if ([t isNewTalk]) return;
     [t setIsNewTalk:YES];
     [self reloadTree];
-    if (![NSApp isActive]) [NSApp requestUserAttention:NSInformationalRequest];
+    if (![NSApp isActive]) {
+        switch ([Preferences iconNotificationOnPrivateMessages]) {
+            case ICON_BOUNCE_ONCE:
+                [NSApp requestUserAttention:NSInformationalRequest];   
+                break;
+            case ICON_BOUNCE_UNTILFOCUS:
+                [NSApp requestUserAttention:NSCriticalRequest];   
+                break;
+            default:
+                break;
+        }
+    }
     [world updateIcon];
 }
 
