@@ -19,7 +19,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.34</string>
+	<string>2.35</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -35,7 +35,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>2.34</string>
+	<string>2.35</string>
 	<key>LCApplicationName</key>
 	<string>LimeChat for Mac</string>
 	<key>LSApplicationCategoryType</key>
@@ -53,7 +53,7 @@
 	<key>SUEnableAutomaticChecks</key>
 	<true/>
 	<key>SUFeedURL</key>
-	<string>https://sourceforge.net/projects/limechat/files/limechat/appcast/limechat_appcast.xml/download?use_mirror=master</string>
+	<string>http://limechat.net/mac/appcast.xml</string>
 	<key>SUPublicDSAKeyFile</key>
 	<string>dsa_pub.pem</string>
 	<key>SUScheduledCheckInterval</key>

@@ -7,7 +7,7 @@
     <language>en</language>
     
     <item>
-      <title>LimeChat 2.33</title>
+      <title>LimeChat 2.35</title>
       <description><![CDATA[
         <html>
         <body>
@@ -22,20 +22,18 @@
             margin: 0.2em 0;
           }
         </style>
-        <h1>LimeChat 2.33</h1>
+        <h1>LimeChat 2.35</h1>
         <ul>
-          <li>Add show/hide rename event settings.</li>
-          <li>Fix URL extractor.</li>
-          <li>Support extended channel modes in some IRC server implementations.</li>
+			<li>Update appcast URL.</li>
         </ul>
         </body>
         </html>
       ]]></description>
-      <pubDate>Wed, 05 Sep 2012 20:27:46 -0700</pubDate>
+      <pubDate>Mon, 15 Apr 2013 20:36:12 -0700</pubDate>
   	  <sparkle:minimumSystemVersion>10.7.0</sparkle:minimumSystemVersion>
-      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/LimeChat_2.33a.tbz"
-                  sparkle:version="2.33" length="2424344" type="application/octet-stream"
-                  sparkle:dsaSignature="MCwCFBqls0KJNvKqjb1ycJzEto+ikqvbAhQRDpHepTQCRFt2y1i4PZ4o7rkrcQ=="/>
+      <enclosure url="https://downloads.sourceforge.net/project/limechat/limechat/LimeChat_2.35.tbz?use_mirror=master"
+                  sparkle:version="2.35" length="2420058" type="application/octet-stream"
+                  sparkle:dsaSignature="MC0CFQCEQ4yQ2rRWwyehgrkRnAFtdIewuAIUN7NCbIANMRMvzBte6M+ePPv6SAk="/>
     </item>
     
     <item>
@@ -63,7 +61,7 @@
       ]]></description>
       <pubDate>Fri, 20 Jan 2012 11:04:45 -0800</pubDate>
   	  <sparkle:minimumSystemVersion>10.6.0</sparkle:minimumSystemVersion>
-      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/LimeChat_2.30.tbz"
+      <enclosure url="https://downloads.sourceforge.net/project/limechat/limechat/LimeChat_2.30.tbz?use_mirror=master"
                   sparkle:version="2.30" length="1639342" type="application/octet-stream"
                   sparkle:dsaSignature="MC4CFQDDixGOhXf7YXSAxoSQ3RVqydtWzwIVAJ/tdrtFhjFQpS7HaVLwxd5rGsCp"/>
     </item>
@@ -96,7 +94,7 @@
         </html>
       ]]></description>
       <pubDate>Tue, 26 Jul 2011 16:18:24 -0700</pubDate>
-      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/LimeChat_2.26.tbz"
+      <enclosure url="https://downloads.sourceforge.net/project/limechat/limechat/LimeChat_2.26.tbz?use_mirror=master"
                   sparkle:version="2.26" length="1889085" type="application/octet-stream"
                   sparkle:dsaSignature="MCwCFCwmdmIt6PDmQJVfHaFD8YVPWnKXAhQpaSjdKWlc9Ituh/+f383U4Wl56g=="/>
     </item>

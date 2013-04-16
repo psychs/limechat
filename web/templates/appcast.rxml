@@ -33,7 +33,7 @@
       ]]></description>
       <pubDate><%= ftime %></pubDate>
   	  <sparkle:minimumSystemVersion>10.7.0</sparkle:minimumSystemVersion>
-      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/<%= package_fname %>"
+      <enclosure url="https://downloads.sourceforge.net/project/limechat/limechat/<%= package_fname %>?use_mirror=master"
                   sparkle:version="<%= version %>" length="<%= fsize %>" type="application/octet-stream"
                   sparkle:dsaSignature="<%= dsa_signature %>"/>
     </item>
@@ -63,7 +63,7 @@
       ]]></description>
       <pubDate>Fri, 20 Jan 2012 11:04:45 -0800</pubDate>
   	  <sparkle:minimumSystemVersion>10.6.0</sparkle:minimumSystemVersion>
-      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/LimeChat_2.30.tbz"
+      <enclosure url="https://downloads.sourceforge.net/project/limechat/limechat/LimeChat_2.30.tbz?use_mirror=master"
                   sparkle:version="2.30" length="1639342" type="application/octet-stream"
                   sparkle:dsaSignature="MC4CFQDDixGOhXf7YXSAxoSQ3RVqydtWzwIVAJ/tdrtFhjFQpS7HaVLwxd5rGsCp"/>
     </item>
@@ -96,7 +96,7 @@
         </html>
       ]]></description>
       <pubDate>Tue, 26 Jul 2011 16:18:24 -0700</pubDate>
-      <enclosure url="http://cloud.github.com/downloads/psychs/limechat/LimeChat_2.26.tbz"
+      <enclosure url="https://downloads.sourceforge.net/project/limechat/limechat/LimeChat_2.26.tbz?use_mirror=master"
                   sparkle:version="2.26" length="1889085" type="application/octet-stream"
                   sparkle:dsaSignature="MCwCFCwmdmIt6PDmQJVfHaFD8YVPWnKXAhQpaSjdKWlc9Ituh/+f383U4Wl56g=="/>
     </item>

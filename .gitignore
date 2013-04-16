@@ -2,6 +2,7 @@ build
 Packages
 xcuserdata
 project.xcworkspace
+etc/dsa_priv.pem
 .DS_Store
 .LSOverride
 *.pbxuser
