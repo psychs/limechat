@@ -1021,6 +1021,8 @@ typedef enum {
     [self handler:@selector(showPasteDialog:) code:KEY_RETURN mods:NSAlternateKeyMask];
     [self handler:@selector(selectPreviousActiveChannel:) char:'[' mods:NSCommandKeyMask];
     [self handler:@selector(selectNextActiveChannel:) char:']' mods:NSCommandKeyMask];
+    [self handler:@selector(selectPreviousActiveChannel:) char:'{' mods:NSCommandKeyMask|NSShiftKeyMask];
+    [self handler:@selector(selectNextActiveChannel:) char:'}' mods:NSCommandKeyMask|NSShiftKeyMask];
     [self handler:@selector(selectPreviousChannel:) code:KEY_UP mods:NSControlKeyMask];
     [self handler:@selector(selectNextChannel:) code:KEY_DOWN mods:NSControlKeyMask];
     [self handler:@selector(selectPreviousServer:) code:KEY_LEFT mods:NSControlKeyMask];
