@@ -1034,7 +1034,9 @@ typedef enum {
     [self handler:@selector(selectPreviousActiveServer:) code:KEY_LEFT mods:NSCommandKeyMask|NSAlternateKeyMask];
     [self handler:@selector(selectNextActiveServer:) code:KEY_RIGHT mods:NSCommandKeyMask|NSAlternateKeyMask];
     [self handler:@selector(selectNextUnreadChannel:) code:KEY_TAB mods:NSControlKeyMask];
+    [self handler:@selector(selectNextUnreadChannel:) code:KEY_DOWN mods:NSCommandKeyMask|NSAlternateKeyMask];
     [self handler:@selector(selectPreviousUnreadChannel:) code:KEY_TAB mods:NSControlKeyMask|NSShiftKeyMask];
+    [self handler:@selector(selectPreviousUnreadChannel:) code:KEY_UP mods:NSCommandKeyMask|NSAlternateKeyMask];
     [self handler:@selector(selectNextUnreadChannel:) code:KEY_SPACE mods:NSAlternateKeyMask];
     [self handler:@selector(selectPreviousUnreadChannel:) code:KEY_SPACE mods:NSAlternateKeyMask|NSShiftKeyMask];
     [self handler:@selector(selectPreviousSelection:) code:KEY_TAB mods:NSAlternateKeyMask];
