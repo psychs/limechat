@@ -1051,7 +1051,12 @@
     }
     else if (i.isActive) {
         if (i == [tree itemAtRow:[tree selectedRow]]) {
-            color = theme.treeSelActiveColor;
+            if ([NSApp isActive]) {
+                color = theme.treeSelActiveColor;
+            }
+            else {
+                color = theme.treeActiveColor;
+            }
         }
         else {
             color = theme.treeActiveColor;
