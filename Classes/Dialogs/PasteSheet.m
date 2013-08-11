@@ -29,9 +29,9 @@ static NSDictionary* SYNTAX_EXT_MAP;
 
         if (!SYNTAXES) {
             SYNTAXES = [[NSArray arrayWithObjects:
-                         @"privmsg", @"notice", @"c", @"css", @"diff", @"html",
-                         @"java", @"javascript", @"php", @"plain text", @"python",
-                         @"ruby", @"sql", @"shell script", @"perl", @"haskell",
+                         @"privmsg", @"notice", @"c", @"clojure", @"coffeescript", @"css", @"diff",
+                         @"handlebars", @"haml", @"html", @"java", @"javascript", @"php", @"plain text",
+                         @"python", @"ruby", @"sql", @"shell script", @"perl", @"haskell",
                          @"scheme", @"objective-c",
                          nil] retain];
         }
@@ -39,8 +39,12 @@ static NSDictionary* SYNTAX_EXT_MAP;
         if (!SYNTAX_EXT_MAP) {
             SYNTAX_EXT_MAP = [[NSDictionary dictionaryWithObjectsAndKeys:
                                @"C", @"c",
+                               @"Clojure", @"clojure",
+                               @"Coffeescript", @"coffeescript",
                                @"CSS", @"css",
                                @"Diff", @"diff",
+                               @"Haml", @"haml",
+                               @"Handlebars", @"handlebars",
                                @"Haskell", @"haskell",
                                @"HTML", @"html",
                                @"Java", @"java",
