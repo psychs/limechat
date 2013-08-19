@@ -2,6 +2,7 @@
 // You can redistribute it and/or modify it under the terms of the GPL version 2 (see the file GPL.txt).
 
 #import "IRCMessage.h"
+#import "NSDateHelper.h"
 #import "NSStringHelper.h"
 
 
@@ -64,8 +65,17 @@
         NSString* key = [t substringToIndex:i];
         NSString* value = [t substringFromIndex:i+1];
 
-        if ([key isEqualToString:@"t"]) {
-            receivedAt = [value longLongValue];
+        // Spec is http://ircv3.atheme.org/extensions/server-time-3.2
+        // ZNC has supported @t and @time keys and UnixTimestamp and ISO8601 dates
+        // in past releases.
+        // Attempt to support all previous formats.
+        if ([key isEqualToString:@"t"] || [key isEqualToString:@"time"]) {
+            if ([value contains:@"-"]) {
+                receivedAt = [[NSDate dateFromISO8601String:value] timeIntervalSince1970];
+            }
+            else {
+                receivedAt = [value longLongValue];
+            }
         }
     }
 
