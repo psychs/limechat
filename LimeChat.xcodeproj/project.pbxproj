@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2735CC1D17C1B6EC00E0AC11 /* NSDateHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2735CC1C17C1B6EC00E0AC11 /* NSDateHelper.m */; };
 		780844D2134CD34B003BB84C /* ImageDownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 780844D1134CD34B003BB84C /* ImageDownloadManager.m */; };
 		780844D3134CD34B003BB84C /* ImageDownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 780844D1134CD34B003BB84C /* ImageDownloadManager.m */; };
 		780844F6134CD45E003BB84C /* ImageSizeCheckClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 780844F5134CD45E003BB84C /* ImageSizeCheckClient.m */; };
@@ -356,6 +357,8 @@
 
 /* Begin PBXFileReference section */
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		2735CC1A17C1B5F500E0AC11 /* NSDateHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSDateHelper.h; sourceTree = "<group>"; };
+		2735CC1C17C1B6EC00E0AC11 /* NSDateHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDateHelper.m; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		780253C20C09525900C170D4 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
@@ -898,6 +901,8 @@
 				78A8C10911737F660044E7A1 /* UnicodeHelper.m */,
 				78A8C10A11737F660044E7A1 /* URLOpener.h */,
 				78A8C10B11737F660044E7A1 /* URLOpener.m */,
+				2735CC1A17C1B5F500E0AC11 /* NSDateHelper.h */,
+				2735CC1C17C1B6EC00E0AC11 /* NSDateHelper.m */,
 			);
 			name = Helpers;
 			path = Classes/Helpers;
@@ -1524,6 +1529,7 @@
 				78AB172715C33374008CD998 /* NumericTextField.m in Sources */,
 				78AB173315C37287008CD998 /* GrowlNotificationController.m in Sources */,
 				78A3004E15C38FB2003263AA /* UserNotificationController.m in Sources */,
+				2735CC1D17C1B6EC00E0AC11 /* NSDateHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
