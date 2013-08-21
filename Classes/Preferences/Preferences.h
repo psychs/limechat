@@ -59,6 +59,7 @@ typedef enum {
 + (BOOL)stopGrowlOnActive;
 + (BOOL)bounceIconOnEveryPrivateMessage;
 + (BOOL)autoJoinOnInvited;
++ (NSString*)defaultChannelMode;
 + (TabActionType)tabAction;
 + (BOOL)useHotkey;
 + (BOOL)keywordCurrentNick;

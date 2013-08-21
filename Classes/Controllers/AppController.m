@@ -1084,7 +1084,7 @@ typedef enum {
                              [NSNumber numberWithBool:YES], @"auto_join",
                              [NSNumber numberWithBool:YES], @"console",
                              [NSNumber numberWithBool:YES], @"growl",
-                             @"+sn", @"mode",
+                             [Preferences defaultChannelMode], @"mode",
                              nil]];
     }
 
