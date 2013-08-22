@@ -309,28 +309,6 @@ static BOOL isUnicharDigit(unichar c)
 
     NSRange r = [result rangeAtIndex:0];
 
-    // exclude non ASCII characters from URLs except for wikipedia
-    NSString* host = [[self substringWithRange:[result rangeAtIndex:2]] lowercaseString];
-    if (![host hasSuffix:@"wikipedia.org"]) {
-        NSRange pathRange = [result rangeAtIndex:3];
-        if (pathRange.length) {
-            static NSRegularExpression* pathRegex = nil;
-            if (!pathRegex) {
-                NSString* pathPattern = @"^/[a-zA-Z0-9\\-._~!#$%&'()*+,-./:;=?@\\[\\]]*";
-                pathRegex = [[NSRegularExpression alloc] initWithPattern:pathPattern options:0 error:NULL];
-            }
-
-            NSString* path = [self substringWithRange:pathRange];
-            NSRange newPathRange = [pathRegex rangeOfFirstMatchInString:path options:0 range:NSMakeRange(0, path.length)];
-            if (newPathRange.location != NSNotFound) {
-                int delta = pathRange.length - newPathRange.length;
-                if (delta > 0) {
-                    r.length -= delta;
-                }
-            }
-        }
-    }
-
     NSString* url = [self substringWithRange:r];
     int len = url.length;
     const UniChar* buf = [url getCharactersBuffer];
