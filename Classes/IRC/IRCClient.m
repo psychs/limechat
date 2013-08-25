@@ -1825,6 +1825,11 @@
     if ([NSApp isActive] && _world.selected == t) return;
     if ([t isUnread]) return;
     [t setIsUnread:YES];
+    
+    LogController* channelLog = [t log];
+    if (![channelLog marked])
+        [channelLog mark];
+    
     [self reloadTree];
     [_world updateIcon];
 }
@@ -2363,6 +2368,11 @@
     if (target.isChannelName) {
         // channel
         IRCChannel* c = [self findChannel:target];
+        
+        id t = c ?: (id)self;
+        if (type != LINE_TYPE_NOTICE)
+            [self setUnreadState:t]; // Set unread before printing, so mark gets put above line
+        
         BOOL keyword = [self printBoth:(c ?: (id)target) type:type nick:nick text:text identified:identified timestamp:m.timestamp];
 
         if (type == LINE_TYPE_NOTICE) {
@@ -2370,8 +2380,6 @@
             [SoundPlayer play:[Preferences soundForEvent:USER_NOTIFICATION_CHANNEL_NOTICE]];
         }
         else {
-            id t = c ?: (id)self;
-            [self setUnreadState:t];
             if (keyword) [self setKeywordState:t];
 
             UserNotificationType kind = keyword ? USER_NOTIFICATION_HIGHLIGHT : USER_NOTIFICATION_CHANNEL_MSG;
@@ -2414,6 +2422,10 @@
             else if (c && type != LINE_TYPE_NOTICE && [Preferences bounceIconOnEveryPrivateMessage]) {
                 moreTalk = YES;
             }
+            
+            id t = c ?: (id)self;
+            if (type != LINE_TYPE_NOTICE)
+                [self setUnreadState:t]; // Set unread before printing, so mark gets put above line
 
             BOOL keyword = [self printBoth:c type:type nick:nick text:text identified:identified timestamp:m.timestamp];
 
@@ -2439,8 +2451,6 @@
                 [SoundPlayer play:[Preferences soundForEvent:USER_NOTIFICATION_TALK_NOTICE]];
             }
             else {
-                id t = c ?: (id)self;
-                [self setUnreadState:t];
                 if (keyword) [self setKeywordState:t];
                 if (newTalk || moreTalk) [self setNewTalkState:t];
 

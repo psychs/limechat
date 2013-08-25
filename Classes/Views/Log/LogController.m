@@ -50,6 +50,7 @@
     BOOL _scrollBottom;
     int _scrollTop;
     NSMutableSet *_fetchingAvatarScreenNames;
+    BOOL _marked;
 }
 
 - (id)init
@@ -206,6 +207,8 @@
     ++_count;
 
     [self restorePosition];
+    
+    marked = YES;
 }
 
 - (void)unmark
@@ -219,6 +222,8 @@
         [[doc body] removeChild:e];
         --_count;
     }
+    
+    marked = NO;
 }
 
 - (void)goToMark

@@ -193,8 +193,10 @@
 {
     for (IRCClient* u in _clients) {
         u.isUnread = NO;
+        [u.log unmark];
         for (IRCChannel* c in u.channels) {
             c.isUnread = NO;
+            [c.log unmark];
         }
     }
     [self reloadTree];
@@ -955,6 +957,9 @@
 
 - (void)outlineViewSelectionDidChange:(NSNotification *)note
 {
+    if (self.selected)
+        [[self.selected log] unmark];
+        
     id nextItem = [_tree itemAtRow:[_tree selectedRow]];
 
     [_text focus];

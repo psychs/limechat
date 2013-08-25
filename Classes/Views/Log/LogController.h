@@ -32,6 +32,7 @@
 @property (nonatomic) NSColor* initialBackgroundColor;
 @property (nonatomic) int maxLines;
 @property (nonatomic, readonly) BOOL viewingBottom;
+@property (nonatomic, readonly) BOOL marked;
 
 - (void)setUp;
 - (void)notifyDidBecomeVisible;
