@@ -7,6 +7,7 @@
 #import "IRCWorld.h"
 #import "IRCClient.h"
 #import "IRCChannel.h"
+#import "NSStringHelper.h"
 #import "NSLocaleHelper.h"
 #import "ImageURLParser.h"
 #import "ImageDownloadManager.h"
@@ -509,6 +510,8 @@
 {
     BOOL key = NO;
     NSArray* urlRanges = nil;
+
+    line.body = [line.body lc_stringByRemovingCrashingSequences];
 
     NSString* body = [LogRenderer renderBody:line.body
                                     keywords:line.keywords

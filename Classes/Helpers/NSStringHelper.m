@@ -541,6 +541,48 @@ static BOOL isUnicharDigit(unichar c)
     return [[[NSString alloc] initWithBytes:buf length:dest - buf encoding:NSASCIIStringEncoding] autorelease];
 }
 
+#define UnicodeIsSpace(c) ({ __typeof__(c) __c = (c); (__c) == 0x9 || (__c) == 0x20 || (__c) == 0xA0 || (__c) == 0x180E || (0x2000 <= (__c) && (__c) <= 0x200A) || (__c) == 0x202F || (__c) == 0x205F || (__c) == 0x3000; })
+#define UnicodeIsCombiningDiacriticalMark(c) ({ __typeof__(c) __c = (c); (0x300 <= (__c) && (__c) <= 0x36F) || (0x1DC0 <= (__c) && (__c) <= 0x1DFF) || (0x20D0 <= (__c) && (__c) <= 0x20FF); })
+#define kUnicodeWhiteSquare ((UniChar)0x25A1)
+
+- (NSString*)lc_stringByRemovingCrashingSequences
+{
+    NSInteger len = self.length;
+    if (!len) {
+        return self;
+    }
+
+    UniChar buf[len];
+    [self getCharacters:buf range:NSMakeRange(0, len)];
+
+    BOOL changed = NO;
+
+    for (NSInteger i=0; i<len; i++) {
+        UniChar c = buf[i];
+        if (UnicodeIsSpace(c)) {
+            if (i+3 < len) {
+                UniChar s1 = buf[i+1];
+                UniChar s2 = buf[i+2];
+                UniChar s3 = buf[i+3];
+                if (UnicodeIsCombiningDiacriticalMark(s1) && UnicodeIsCombiningDiacriticalMark(s2) && UnicodeIsCombiningDiacriticalMark(s3)) {
+                    // Replace with white squares
+                    changed = YES;
+                    buf[i+1] = kUnicodeWhiteSquare;
+                    buf[i+2] = kUnicodeWhiteSquare;
+                    buf[i+3] = kUnicodeWhiteSquare;
+                    i += 3;
+                }
+            }
+        }
+    }
+
+    NSString *result = self;
+    if (changed) {
+        result = [[NSString alloc] initWithCharacters:buf length:len];
+    }
+    return result;
+}
+
 @end
 
 @implementation NSMutableString (NSMutableStringHelper)

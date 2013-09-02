@@ -3,6 +3,7 @@
 
 #import <Foundation/Foundation.h>
 
+#define UnicodeIsRTLCharacter(c) ({ __typeof__(c) __c = (c); (0x0590 <= (__c) && (__c) <= 0x08FF || 0xFB1D <= (__c) && (__c) <= 0xFDFD || 0xFE70 <= (__c) && (__c) <= 0xFEFC); })
 
 @interface UnicodeHelper : NSObject
 

@@ -47,6 +47,8 @@
 - (BOOL)isModeChannelName;
 - (NSString*)canonicalName;
 
+- (NSString*)lc_stringByRemovingCrashingSequences;
+
 @end
 
 @interface NSMutableString (NSMutableStringHelper)
