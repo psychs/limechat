@@ -7,12 +7,18 @@
     <language>en-us</language>
 
     <item>
-      <title>2.35</title>
-      <link>http://limechat.net/mac/#v2.35</link>
-      <pubDate>Mon, 15 Apr 2013 20:36:12 -0700</pubDate>
+      <title>2.36</title>
+      <link>http://limechat.net/mac/#v2.36</link>
+      <pubDate>Mon, 02 Sep 2013 02:20:41 -0700</pubDate>
       <content:encoded><![CDATA[
   			<ul>
-			<li>Update appcast URL.</li>
+          <li>Work around for a crashing bug in WebKit for Mountain Lion and Lion</li>
+          <li>Support ISO8601 server times in ZNC.</li>
+          <li>Add cmd+{ and cmd+} to switch active channels.</li>
+          <li>Use local time zone for CTCP time.</li>
+          <li>Add instagram.com support to inline images.</li>
+          <li>Don't expand image URLs that don't really point to images.</li>
+          <li>Make channel name visible when app is inactive and active text/background are the same color.</li>
         </ul>
       ]]></content:encoded>
     </item>
