@@ -541,7 +541,7 @@ static BOOL isUnicharDigit(unichar c)
     return [[[NSString alloc] initWithBytes:buf length:dest - buf encoding:NSASCIIStringEncoding] autorelease];
 }
 
-#define UnicodeIsSpace(c) ({ __typeof__(c) __c = (c); (__c) == 0x9 || (__c) == 0x20 || (__c) == 0xA0 || (__c) == 0x180E || (0x2000 <= (__c) && (__c) <= 0x200A) || (__c) == 0x202F || (__c) == 0x205F || (__c) == 0x3000; })
+#define UnicodeIsSpace(c) ({ __typeof__(c) __c = (c); (__c) == 0x9 || (__c) == 0x20 || (__c) == 0xA0 || (__c) == 0x1680 || (__c) == 0x180E || (0x2000 <= (__c) && (__c) <= 0x200A) || (__c) == 0x202F || (__c) == 0x205F || (__c) == 0x3000; })
 #define UnicodeIsCombiningDiacriticalMark(c) ({ __typeof__(c) __c = (c); (0x300 <= (__c) && (__c) <= 0x36F) || (0x1DC0 <= (__c) && (__c) <= 0x1DFF) || (0x20D0 <= (__c) && (__c) <= 0x20FF); })
 #define kUnicodeWhiteSquare ((UniChar)0x25A1)
 
