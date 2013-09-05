@@ -542,9 +542,10 @@ static BOOL isUnicharDigit(unichar c)
 }
 
 #define UnicodeIsSpace(c) ({ __typeof__(c) __c = (c); (__c) == 0x9 || (__c) == 0x20 || (__c) == 0xA0 || (__c) == 0x1680 || (__c) == 0x180E || (0x2000 <= (__c) && (__c) <= 0x200A) || (__c) == 0x202F || (__c) == 0x205F || (__c) == 0x3000; })
-#define UnicodeIsCombiningDiacriticalMark(c) ({ __typeof__(c) __c = (c); (0x300 <= (__c) && (__c) <= 0x36F) || (0x483 <= (__c) && (__c) <= 0x487) || (0x1DC0 <= (__c) && (__c) <= 0x1DFF) || (0x20D0 <= (__c) && (__c) <= 0x20FF) || (0x2DE0 <= (__c) && (__c) <= 0x2DFF) || (0x302A <= (__c) && (__c) <= 0x302D) || (0x3099 <= (__c) && (__c) <= 0x309A) ||(0xFE20 <= (__c) && (__c) <= 0xFE2F); })
-#define kUnicodeWhiteSquare ((UniChar)0x25A1)
+#define UnicodeIsCombiningMark(c) ({ __typeof__(c) __c = (c); (0x300 <= (__c) && (__c) <= 0x36F) || (0x483 <= (__c) && (__c) <= 0x487) || (__c) == 0x135F || (0x1DC0 <= (__c) && (__c) <= 0x1DFF) || (0x20D0 <= (__c) && (__c) <= 0x20FF) || (0x2DE0 <= (__c) && (__c) <= 0x2DFF) || (0x302A <= (__c) && (__c) <= 0x302D) || (0x3099 <= (__c) && (__c) <= 0x309A) || (0xA67C <= (__c) && (__c) <= 0xA67D) || (0xFE20 <= (__c) && (__c) <= 0xFE2F); })
+#define UnicodeIsZeroWidth(c) ({ __typeof__(c) __c = (c); (0x200B <= (__c) && (__c) <= 0x200F) || (0x202A <= (__c) && (__c) <= 0x202E) || (0x2060 <= (__c) && (__c) <= 0x2064) || (0x206A <= (__c) && (__c) <= 0x206F) || (__c) == 0xFEFF || (0xFFF9 <= (__c) && (__c) <= 0xFFFB); })
 
+#define kUnicodeWhiteSquare ((UniChar)0x25A1)
 
 - (NSString*)lc_stringByRemovingCrashingSequences
 {
@@ -561,18 +562,26 @@ static BOOL isUnicharDigit(unichar c)
     for (NSInteger i=0; i<len; i++) {
         UniChar c = buf[i];
         if (UnicodeIsSpace(c)) {
-            if (i+3 < len) {
-                UniChar s1 = buf[i+1];
-                UniChar s2 = buf[i+2];
-                UniChar s3 = buf[i+3];
-                if (UnicodeIsCombiningDiacriticalMark(s1) && UnicodeIsCombiningDiacriticalMark(s2) && UnicodeIsCombiningDiacriticalMark(s3)) {
-                    // Replace with white squares
-                    changed = YES;
-                    buf[i+1] = kUnicodeWhiteSquare;
-                    buf[i+2] = kUnicodeWhiteSquare;
-                    buf[i+3] = kUnicodeWhiteSquare;
-                    i += 3;
+            NSInteger count = 0;
+            NSInteger pos = i + 1;
+            for (; pos<len; pos++) {
+                UniChar d = buf[pos];
+                if (UnicodeIsCombiningMark(d)) {
+                    count++;
+                } else if (UnicodeIsZeroWidth(d)) {
+                    // Ignore
+                } else {
+                    break;
                 }
+            }
+
+            if (count >= 3) {
+                // Replace with white squares
+                changed = YES;
+                for (NSInteger j=i+1; j<pos; j++) {
+                    buf[j] = kUnicodeWhiteSquare;
+                }
+                i = pos - 1;
             }
         }
     }
