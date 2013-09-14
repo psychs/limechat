@@ -588,7 +588,7 @@ static BOOL isUnicharDigit(unichar c)
 
     NSString *result = self;
     if (changed) {
-        result = [[NSString alloc] initWithCharacters:buf length:len];
+        result = [[[NSString alloc] initWithCharacters:buf length:len] autorelease];
     }
     return result;
 }
