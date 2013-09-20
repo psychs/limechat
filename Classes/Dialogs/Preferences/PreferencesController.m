@@ -218,11 +218,43 @@
 
 - (NSArray*)availableSounds
 {
-    static NSArray* ary;
-    if (!ary) {
-        ary = [[NSArray arrayWithObjects:@"-", @"Beep", @"Basso", @"Blow", @"Bottle", @"Frog", @"Funk", @"Glass", @"Hero", @"Morse", @"Ping", @"Pop", @"Purr", @"Sosumi", @"Submarine", @"Tink", nil] retain];
+	NSMutableSet * soundFiles = [NSMutableSet set];
+	
+	NSFileManager * fm = [NSFileManager defaultManager];
+	
+    NSString * SytemSoundFiles = @"/System/Library/Sounds";
+    
+    NSString * RootLibrarySoundFiles = @"/Library/Sounds";
+    
+    NSString * UserSoundFiles = @"~/Library/Sounds";
+    
+    NSError* error = nil;
+    
+    UserSoundFiles = [UserSoundFiles stringByExpandingTildeInPath];
+    
+	for (NSString * file in [fm contentsOfDirectoryAtPath:RootLibrarySoundFiles error: &error])
+	{
+		if (![file isEqualToString:@".DS_Store"])
+			[soundFiles addObject:[file stringByDeletingPathExtension]];
+	}
+    
+	for (NSString * file in [fm contentsOfDirectoryAtPath:SytemSoundFiles error: &error])
+	{
+		if (![file isEqualToString:@".DS_Store"])
+			[soundFiles addObject:[file stringByDeletingPathExtension]];
+	}
+    
+	for (NSString * file in [fm contentsOfDirectoryAtPath:UserSoundFiles error: &error])
+	{
+		if (![file isEqualToString:@".DS_Store"])
+			[soundFiles addObject:[file stringByDeletingPathExtension]];
+	}
+	
+    if(error != nil) {
+        NSLog(@"Error in reading files: %@", [error localizedDescription]);
     }
-    return ary;
+    
+	return [[soundFiles allObjects] sortedArrayUsingSelector:@selector(compare:)];
 }
 
 - (NSMutableArray*)sounds
