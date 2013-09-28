@@ -71,7 +71,7 @@
         // Attempt to support all previous formats.
         if ([key isEqualToString:@"t"] || [key isEqualToString:@"time"]) {
             if ([value contains:@"-"]) {
-                receivedAt = [[NSDate dateFromISO8601String:value] timeIntervalSince1970];
+                receivedAt = [NSDate timeIntervalFromISO8601String:value];
             }
             else {
                 receivedAt = [value longLongValue];

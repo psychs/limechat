@@ -10,9 +10,21 @@
 @implementation NSDate (NSDateHelper)
 
 // Adapted from https://github.com/soffes/sstoolkit
-+ (NSDate *)dateFromISO8601String:(NSString *)iso8601 {
-    if (!iso8601) {
+
++ (NSDate *)dateFromISO8601String:(NSString *)iso8601
+{
+    time_t timeInterval = [self timeIntervalFromISO8601String:iso8601];
+    if (timeInterval) {
+        return [NSDate dateWithTimeIntervalSince1970:timeInterval];
+    } else {
         return nil;
+    }
+}
+
++ (time_t)timeIntervalFromISO8601String:(NSString *)iso8601
+{
+    if (!iso8601) {
+        return 0;
     }
 
     const char *str = [iso8601 cStringUsingEncoding:NSUTF8StringEncoding];
@@ -23,7 +35,7 @@
 
     size_t len = strlen(str);
     if (len == 0) {
-        return nil;
+        return 0;
     }
 
     // Copy date/time
@@ -76,10 +88,10 @@
     };
 
     if (strptime_l(newStr, "%FT%T%z", &tm, NULL) == NULL) {
-        return nil;
+        return 0;
     }
 
-    return [NSDate dateWithTimeIntervalSince1970:mktime(&tm)];
+    return mktime(&tm);
 }
 
 @end

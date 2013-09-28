@@ -16,5 +16,6 @@
  */
 
 + (NSDate *)dateFromISO8601String:(NSString *)iso8601String;
++ (time_t)timeIntervalFromISO8601String:(NSString *)iso8601String;
 
 @end
