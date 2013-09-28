@@ -1896,26 +1896,26 @@
 {
     time_t receivedAt;
     time(&receivedAt);
-    return [self printBoth:chan type:type nick:nil text:text identified:NO receivedAt:receivedAt];
+    return [self printBoth:chan type:type nick:nil text:text identified:NO timestamp:receivedAt];
 }
 
-- (BOOL)printBoth:(id)chan type:(LogLineType)type text:(NSString*)text receivedAt:(time_t)receivedAt
+- (BOOL)printBoth:(id)chan type:(LogLineType)type text:(NSString*)text timestamp:(time_t)receivedAt
 {
-    return [self printBoth:chan type:type nick:nil text:text identified:NO receivedAt:receivedAt];
+    return [self printBoth:chan type:type nick:nil text:text identified:NO timestamp:receivedAt];
 }
 
 - (BOOL)printBoth:(id)chan type:(LogLineType)type nick:(NSString*)nick text:(NSString*)text identified:(BOOL)identified
 {
     time_t receivedAt;
     time(&receivedAt);
-    return [self printBoth:chan type:type nick:nick text:text identified:identified receivedAt:receivedAt];
+    return [self printBoth:chan type:type nick:nick text:text identified:identified timestamp:receivedAt];
 }
 
-- (BOOL)printBoth:(id)chan type:(LogLineType)type nick:(NSString*)nick text:(NSString*)text identified:(BOOL)identified receivedAt:(time_t)receivedAt
+- (BOOL)printBoth:(id)chan type:(LogLineType)type nick:(NSString*)nick text:(NSString*)text identified:(BOOL)identified timestamp:(time_t)receivedAt
 {
-    BOOL result = [self printChannel:chan type:type nick:nick text:text identified:identified receivedAt:receivedAt];
+    BOOL result = [self printChannel:chan type:type nick:nick text:text identified:identified timestamp:receivedAt];
     if ([self needPrintConsole:chan]) {
-        [self printConsole:chan type:type nick:nick text:text identified:identified receivedAt:receivedAt];
+        [self printConsole:chan type:type nick:nick text:text identified:identified timestamp:receivedAt];
     }
     return result;
 }
@@ -1993,12 +1993,12 @@
     return s;
 }
 
-- (void)printConsole:(id)chan type:(LogLineType)type text:(NSString*)text receivedAt:(time_t)receivedAt
+- (void)printConsole:(id)chan type:(LogLineType)type text:(NSString*)text timestamp:(time_t)receivedAt
 {
-    [self printConsole:chan type:type nick:nil text:text identified:NO receivedAt:receivedAt];
+    [self printConsole:chan type:type nick:nil text:text identified:NO timestamp:receivedAt];
 }
 
-- (void)printConsole:(id)chan type:(LogLineType)type nick:(NSString*)nick text:(NSString*)text identified:(BOOL)identified receivedAt:(time_t)receivedAt
+- (void)printConsole:(id)chan type:(LogLineType)type nick:(NSString*)nick text:(NSString*)text identified:(BOOL)identified timestamp:(time_t)receivedAt
 {
     NSString* time = [self formatTimestamp:receivedAt];
     IRCChannel* channel = nil;
@@ -2087,12 +2087,12 @@
     [world.consoleLog print:c];
 }
 
-- (BOOL)printChannel:(id)chan type:(LogLineType)type text:(NSString*)text receivedAt:(time_t)receivedAt
+- (BOOL)printChannel:(id)chan type:(LogLineType)type text:(NSString*)text timestamp:(time_t)receivedAt
 {
-    return [self printChannel:chan type:type nick:nil text:text identified:NO receivedAt:receivedAt];
+    return [self printChannel:chan type:type nick:nil text:text identified:NO timestamp:receivedAt];
 }
 
-- (BOOL)printChannel:(id)chan type:(LogLineType)type nick:(NSString*)nick text:(NSString*)text identified:(BOOL)identified receivedAt:(time_t)receivedAt
+- (BOOL)printChannel:(id)chan type:(LogLineType)type nick:(NSString*)nick text:(NSString*)text identified:(BOOL)identified timestamp:(time_t)receivedAt
 {
     NSString* time = [self formatTimestamp:receivedAt];
     IRCChannel* channel = nil;
@@ -2174,36 +2174,36 @@
 {
     time_t receivedAt;
     time(&receivedAt);
-    [self printSystem:channel text:text receivedAt:receivedAt];
+    [self printSystem:channel text:text timestamp:receivedAt];
 }
 
-- (void)printSystem:(id)channel text:(NSString*)text receivedAt:(time_t)receivedAt
+- (void)printSystem:(id)channel text:(NSString*)text timestamp:(time_t)receivedAt
 {
-    [self printChannel:channel type:LINE_TYPE_SYSTEM text:text receivedAt:receivedAt];
+    [self printChannel:channel type:LINE_TYPE_SYSTEM text:text timestamp:receivedAt];
 }
 
 - (void)printSystemBoth:(id)channel text:(NSString*)text
 {
     time_t receivedAt;
     time(&receivedAt);
-    [self printSystemBoth:channel text:text receivedAt:receivedAt];
+    [self printSystemBoth:channel text:text timestamp:receivedAt];
 }
 
-- (void)printSystemBoth:(id)channel text:(NSString*)text receivedAt:(time_t)receivedAt
+- (void)printSystemBoth:(id)channel text:(NSString*)text timestamp:(time_t)receivedAt
 {
-    [self printBoth:channel type:LINE_TYPE_SYSTEM text:text receivedAt:receivedAt];
+    [self printBoth:channel type:LINE_TYPE_SYSTEM text:text timestamp:receivedAt];
 }
 
 - (void)printReply:(IRCMessage*)m
 {
     NSString* text = [m sequence:1];
-    [self printBoth:nil type:LINE_TYPE_REPLY text:text receivedAt:m.receivedAt];
+    [self printBoth:nil type:LINE_TYPE_REPLY text:text timestamp:m.timestamp];
 }
 
 - (void)printUnknownReply:(IRCMessage*)m
 {
     NSString* text = [NSString stringWithFormat:@"Reply(%d): %@", m.numericReply, [m sequence:1]];
-    [self printBoth:nil type:LINE_TYPE_REPLY text:text receivedAt:m.receivedAt];
+    [self printBoth:nil type:LINE_TYPE_REPLY text:text timestamp:m.timestamp];
 }
 
 - (void)printErrorReply:(IRCMessage*)m
@@ -2214,7 +2214,7 @@
 - (void)printErrorReply:(IRCMessage*)m channel:(IRCChannel*)channel
 {
     NSString* text = [NSString stringWithFormat:@"Error(%d): %@", m.numericReply, [m sequence:1]];
-    [self printBoth:channel type:LINE_TYPE_ERROR_REPLY text:text receivedAt:m.receivedAt];
+    [self printBoth:channel type:LINE_TYPE_ERROR_REPLY text:text timestamp:m.timestamp];
 }
 
 - (void)printError:(NSString*)error
@@ -2222,9 +2222,9 @@
     [self printBoth:nil type:LINE_TYPE_ERROR text:error];
 }
 
-- (void)printError:(NSString*)error receivedAt:(time_t)receivedAt
+- (void)printError:(NSString*)error timestamp:(time_t)receivedAt
 {
-    [self printBoth:nil type:LINE_TYPE_ERROR text:error receivedAt:receivedAt];
+    [self printBoth:nil type:LINE_TYPE_ERROR text:error timestamp:receivedAt];
 }
 
 #pragma mark -
@@ -2398,7 +2398,7 @@
     if (target.isChannelName) {
         // channel
         IRCChannel* c = [self findChannel:target];
-        BOOL keyword = [self printBoth:(c ?: (id)target) type:type nick:nick text:text identified:identified receivedAt:m.receivedAt];
+        BOOL keyword = [self printBoth:(c ?: (id)target) type:type nick:nick text:text identified:identified timestamp:m.timestamp];
 
         if (type == LINE_TYPE_NOTICE) {
             [self notifyText:USER_NOTIFICATION_CHANNEL_NOTICE target:(c ?: (id)target) nick:nick text:text];
@@ -2435,7 +2435,7 @@
     else if ([target isEqualNoCase:myNick]) {
         if (!nick.length || [nick contains:@"."]) {
             // system
-            [self printBoth:nil type:type text:text receivedAt:m.receivedAt];
+            [self printBoth:nil type:type text:text timestamp:m.timestamp];
         }
         else {
             // talk
@@ -2450,7 +2450,7 @@
                 moreTalk = YES;
             }
 
-            BOOL keyword = [self printBoth:c type:type nick:nick text:text identified:identified receivedAt:m.receivedAt];
+            BOOL keyword = [self printBoth:c type:type nick:nick text:text identified:identified timestamp:m.timestamp];
 
             if (type == LINE_TYPE_NOTICE) {
                 if ([nick isEqualNoCase:@"NickServ"]) {
@@ -2488,10 +2488,10 @@
     else {
         // system
         if (!nick.length || [nick contains:@"."]) {
-            [self printBoth:nil type:type text:text receivedAt:m.receivedAt];
+            [self printBoth:nil type:type text:text timestamp:m.timestamp];
         }
         else {
-            [self printBoth:nil type:type nick:nick text:text identified:identified receivedAt:m.receivedAt];
+            [self printBoth:nil type:type nick:nick text:text identified:identified timestamp:m.timestamp];
         }
     }
 }
@@ -2536,19 +2536,19 @@
         }
 
         NSString* text = [NSString stringWithFormat:@"CTCP-query unknown (DCC %@) from %@ : %@", subCommand, nick, s];
-        [self printBoth:nil type:LINE_TYPE_REPLY text:text receivedAt:m.receivedAt];
+        [self printBoth:nil type:LINE_TYPE_REPLY text:text timestamp:m.timestamp];
     }
     else {
         CFAbsoluteTime now = CFAbsoluteTimeGetCurrent();
         if (now - lastCTCPTime < CTCP_MIN_INTERVAL) {
             NSString* text = [NSString stringWithFormat:@"CTCP-query %@ from %@ was ignored", command, nick];
-            [self printBoth:nil type:LINE_TYPE_REPLY text:text receivedAt:m.receivedAt];
+            [self printBoth:nil type:LINE_TYPE_REPLY text:text timestamp:m.timestamp];
             return;
         }
         lastCTCPTime = now;
 
         NSString* text = [NSString stringWithFormat:@"CTCP-query %@ from %@", command, nick];
-        [self printBoth:nil type:LINE_TYPE_REPLY text:text receivedAt:m.receivedAt];
+        [self printBoth:nil type:LINE_TYPE_REPLY text:text timestamp:m.timestamp];
 
         if ([command isEqualToString:PING]) {
             [self sendCTCPReply:nick command:command text:s];
@@ -2592,11 +2592,11 @@
         double delta = CFAbsoluteTimeGetCurrent() - time;
 
         NSString* text = [NSString stringWithFormat:@"CTCP-reply %@ from %@ : %1.2f sec", command, nick, delta];
-        [self printBoth:nil type:LINE_TYPE_REPLY text:text receivedAt:m.receivedAt];
+        [self printBoth:nil type:LINE_TYPE_REPLY text:text timestamp:m.timestamp];
     }
     else {
         NSString* text = [NSString stringWithFormat:@"CTCP-reply %@ from %@ : %@", command, nick, s];
-        [self printBoth:nil type:LINE_TYPE_REPLY text:text receivedAt:m.receivedAt];
+        [self printBoth:nil type:LINE_TYPE_REPLY text:text timestamp:m.timestamp];
     }
 }
 
@@ -2623,7 +2623,7 @@
     }
 
     NSString* text = [NSString stringWithFormat:@"Received file transfer request from %@, %@ (%qi bytes) %@:%d", nick, fileName, size, host, port];
-    [self printBoth:nil type:LINE_TYPE_DCC_SEND_RECEIVE text:text receivedAt:m.receivedAt];
+    [self printBoth:nil type:LINE_TYPE_DCC_SEND_RECEIVE text:text timestamp:m.timestamp];
 
     if ([Preferences dccAction] != DCC_IGNORE) {
         if (port > 0 && size > 0) {
@@ -2675,7 +2675,7 @@
         }
         [c activate];
         [self reloadTree];
-        [self printSystem:c text:@"You have joined the channel" receivedAt:m.receivedAt];
+        [self printSystem:c text:@"You have joined the channel" timestamp:m.timestamp];
 
         if (!joinMyAddress) {
             joinMyAddress = [m.sender.address retain];
@@ -2715,7 +2715,7 @@
 
     if ([Preferences showJoinLeave]) {
         NSString* text = [NSString stringWithFormat:@"%@ has joined (%@@%@)", nick, m.sender.user, m.sender.address];
-        [self printBoth:(c ?: (id)chname) type:LINE_TYPE_JOIN text:text receivedAt:m.receivedAt];
+        [self printBoth:(c ?: (id)chname) type:LINE_TYPE_JOIN text:text timestamp:m.timestamp];
     }
 
     //@@@ check auto op
@@ -2757,11 +2757,11 @@
 
     if ([Preferences showJoinLeave]) {
         NSString* text = [NSString stringWithFormat:@"%@ has left (%@)", nick, comment];
-        [self printBoth:(c ?: (id)chname) type:LINE_TYPE_PART text:text receivedAt:m.receivedAt];
+        [self printBoth:(c ?: (id)chname) type:LINE_TYPE_PART text:text timestamp:m.timestamp];
     }
 
     if (myself) {
-        [self printSystem:c text:@"You have left the channel" receivedAt:m.receivedAt];
+        [self printSystem:c text:@"You have left the channel" timestamp:m.timestamp];
     }
 }
 
@@ -2778,7 +2778,7 @@
         if (myself) {
             [c deactivate];
             [self reloadTree];
-            [self printSystemBoth:c text:@"You have been kicked out from the channel" receivedAt:m.receivedAt];
+            [self printSystemBoth:c text:@"You have been kicked out from the channel" timestamp:m.timestamp];
 
             [self notifyEvent:USER_NOTIFICATION_KICKED target:c nick:nick text:comment];
             [SoundPlayer play:[Preferences soundForEvent:USER_NOTIFICATION_KICKED]];
@@ -2790,7 +2790,7 @@
     }
 
     NSString* text = [NSString stringWithFormat:@"%@ has kicked %@ (%@)", nick, target, comment];
-    [self printBoth:(c ?: (id)chname) type:LINE_TYPE_KICK text:text receivedAt:m.receivedAt];
+    [self printBoth:(c ?: (id)chname) type:LINE_TYPE_KICK text:text timestamp:m.timestamp];
 }
 
 - (void)receiveQuit:(IRCMessage*)m
@@ -2803,7 +2803,7 @@
     for (IRCChannel* c in channels) {
         if ([c findMember:nick]) {
             if ([Preferences showJoinLeave]) {
-                [self printChannel:c type:LINE_TYPE_QUIT text:text receivedAt:m.receivedAt];
+                [self printChannel:c type:LINE_TYPE_QUIT text:text timestamp:m.timestamp];
             }
             [c removeMember:nick];
             [self updateChannelTitle:c];
@@ -2812,7 +2812,7 @@
     }
 
     if ([Preferences showJoinLeave]) {
-        [self printConsole:nil type:LINE_TYPE_QUIT text:text receivedAt:m.receivedAt];
+        [self printConsole:nil type:LINE_TYPE_QUIT text:text timestamp:m.timestamp];
     }
 }
 
@@ -2829,7 +2829,7 @@
 
     for (IRCChannel* c in channels) {
         if ([c findMember:target]) {
-            [self printChannel:c type:LINE_TYPE_KILL text:text receivedAt:m.receivedAt];
+            [self printChannel:c type:LINE_TYPE_KILL text:text timestamp:m.timestamp];
             [c removeMember:target];
             [self updateChannelTitle:c];
             [self checkRejoin:c];
@@ -2837,7 +2837,7 @@
     }
 
     if ([Preferences showJoinLeave]) {
-        [self printConsole:nil type:LINE_TYPE_KILL text:text receivedAt:m.receivedAt];
+        [self printConsole:nil type:LINE_TYPE_KILL text:text timestamp:m.timestamp];
     }
 }
 
@@ -2854,7 +2854,7 @@
 
         if ([Preferences showRename]) {
             NSString* text = [NSString stringWithFormat:@"You are now known as %@", toNick];
-            [self printChannel:nil type:LINE_TYPE_NICK text:text receivedAt:m.receivedAt];
+            [self printChannel:nil type:LINE_TYPE_NICK text:text timestamp:m.timestamp];
         }
     }
 
@@ -2863,7 +2863,7 @@
             // rename channel member
             if ([Preferences showRename]) {
                 NSString* text = [NSString stringWithFormat:@"%@ is now known as %@", nick, toNick];
-                [self printChannel:c type:LINE_TYPE_NICK text:text receivedAt:m.receivedAt];
+                [self printChannel:c type:LINE_TYPE_NICK text:text timestamp:m.timestamp];
             }
             [c renameMember:nick to:toNick];
         }
@@ -2896,7 +2896,7 @@
 
     if ([Preferences showRename]) {
         NSString* text = [NSString stringWithFormat:@"%@ is now known as %@", nick, toNick];
-        [self printConsole:nil type:LINE_TYPE_NICK text:text receivedAt:m.receivedAt];
+        [self printConsole:nil type:LINE_TYPE_NICK text:text timestamp:m.timestamp];
     }
 }
 
@@ -2957,14 +2957,14 @@
         }
 
         NSString* text = [NSString stringWithFormat:@"%@ has changed mode: %@", nick, modeStr];
-        [self printBoth:(c ?: (id)target) type:LINE_TYPE_MODE text:text receivedAt:m.receivedAt];
+        [self printBoth:(c ?: (id)target) type:LINE_TYPE_MODE text:text timestamp:m.timestamp];
     }
     else {
         // user mode
         [myMode update:modeStr];
 
         NSString* text = [NSString stringWithFormat:@"%@ has changed mode: %@", nick, modeStr];
-        [self printBoth:nil type:LINE_TYPE_MODE text:text receivedAt:m.receivedAt];
+        [self printBoth:nil type:LINE_TYPE_MODE text:text timestamp:m.timestamp];
         [self updateClientTitle];
     }
 }
@@ -2982,7 +2982,7 @@
     }
 
     NSString* text = [NSString stringWithFormat:@"%@ has set topic: %@", nick, topic];
-    [self printBoth:(c ?: (id)chname) type:LINE_TYPE_TOPIC text:text receivedAt:m.receivedAt];
+    [self printBoth:(c ?: (id)chname) type:LINE_TYPE_TOPIC text:text timestamp:m.timestamp];
 }
 
 - (void)receiveInvite:(IRCMessage*)m
@@ -2995,7 +2995,7 @@
     }
 
     NSString* text = [NSString stringWithFormat:@"%@ has invited you to %@", nick, chname];
-    [self printBoth:self type:LINE_TYPE_INVITE text:text receivedAt:m.receivedAt];
+    [self printBoth:self type:LINE_TYPE_INVITE text:text timestamp:m.timestamp];
 
     if ([Preferences autoJoinOnInvited]) {
         IRCChannel* c = [self findChannel:chname];
@@ -3016,7 +3016,7 @@
 
 - (void)receiveError:(IRCMessage*)m
 {
-    [self printError:m.sequence receivedAt:m.receivedAt];
+    [self printError:m.sequence timestamp:m.timestamp];
 }
 
 - (void)receivePing:(IRCMessage*)m
@@ -3083,7 +3083,7 @@
     [myNick release];
     myNick = [[m paramAt:0] retain];
 
-    [self printSystem:self text:@"Logged in" receivedAt:m.receivedAt];
+    [self printSystem:self text:@"Logged in" timestamp:m.timestamp];
 
     [self notifyEvent:USER_NOTIFICATION_LOGIN];
     [SoundPlayer play:[Preferences soundForEvent:USER_NOTIFICATION_LOGIN]];
@@ -3167,7 +3167,7 @@
             [self updateClientTitle];
 
             NSString* text = [NSString stringWithFormat:@"Mode: %@", modeStr];
-            [self printBoth:nil type:LINE_TYPE_REPLY text:text receivedAt:m.receivedAt];
+            [self printBoth:nil type:LINE_TYPE_REPLY text:text timestamp:m.timestamp];
             break;
         }
         case 290:	// RPL_CAPAB on freenode
@@ -3200,7 +3200,7 @@
 
             IRCChannel* c = [self findChannel:nick];
             NSString* text = [NSString stringWithFormat:@"%@ is away: %@", nick, comment];
-            [self printBoth:(c ?: (id)nick) type:LINE_TYPE_REPLY text:text receivedAt:m.receivedAt];
+            [self printBoth:(c ?: (id)nick) type:LINE_TYPE_REPLY text:text timestamp:m.timestamp];
             break;
         }
         case 311:	// RPL_WHOISUSER
@@ -3215,7 +3215,7 @@
             WhoisDialog* d = [self createWhoisDialogWithNick:nick username:username address:address realname:realname];
             if (!d) {
                 NSString* text = [NSString stringWithFormat:@"%@ is %@ (%@@%@)", nick, realname, username, address];
-                [self printBoth:nil type:LINE_TYPE_REPLY text:text receivedAt:m.receivedAt];
+                [self printBoth:nil type:LINE_TYPE_REPLY text:text timestamp:m.timestamp];
             }
             break;
         }
@@ -3234,7 +3234,7 @@
             }
 
             NSString* text = [NSString stringWithFormat:@"%@ is on %@ (%@)", nick, server, serverInfo];
-            [self printBoth:nil type:LINE_TYPE_REPLY text:text receivedAt:m.receivedAt];
+            [self printBoth:nil type:LINE_TYPE_REPLY text:text timestamp:m.timestamp];
             break;
         }
         case 313:	// RPL_WHOISOPERATOR
@@ -3250,7 +3250,7 @@
             }
 
             NSString* text = [NSString stringWithFormat:@"%@ is an IRC operator", nick];
-            [self printBoth:nil type:LINE_TYPE_REPLY text:text receivedAt:m.receivedAt];
+            [self printBoth:nil type:LINE_TYPE_REPLY text:text timestamp:m.timestamp];
             break;
         }
         case 317:	// RPL_WHOISIDLE
@@ -3287,9 +3287,9 @@
 
             NSString* text;
             text = [NSString stringWithFormat:@"%@ is %@ idle", nick, idle];
-            [self printBoth:nil type:LINE_TYPE_REPLY text:text receivedAt:m.receivedAt];
+            [self printBoth:nil type:LINE_TYPE_REPLY text:text timestamp:m.timestamp];
             text = [NSString stringWithFormat:@"%@ logged in at %@", nick, signOn];
-            [self printBoth:nil type:LINE_TYPE_REPLY text:text receivedAt:m.receivedAt];
+            [self printBoth:nil type:LINE_TYPE_REPLY text:text timestamp:m.timestamp];
             break;
         }
         case 319:	// RPL_WHOISCHANNELS
@@ -3309,7 +3309,7 @@
             }
 
             NSString* text = [NSString stringWithFormat:@"%@ is in %@", nick, trail];
-            [self printBoth:nil type:LINE_TYPE_REPLY text:text receivedAt:m.receivedAt];
+            [self printBoth:nil type:LINE_TYPE_REPLY text:text timestamp:m.timestamp];
             break;
         }
         case 318:	// RPL_ENDOFWHOIS
@@ -3347,7 +3347,7 @@
             }
 
             NSString* text = [NSString stringWithFormat:@"Mode: %@", modeStr];
-            [self printBoth:(c ?: (id)chname) type:LINE_TYPE_REPLY text:text receivedAt:m.receivedAt];
+            [self printBoth:(c ?: (id)chname) type:LINE_TYPE_REPLY text:text timestamp:m.timestamp];
             break;
         }
         case 329:	// hemp ? channel creation time
@@ -3358,7 +3358,7 @@
 
             IRCChannel* c = [self findChannel:chname];
             NSString* text = [NSString stringWithFormat:@"Created at: %@", [[IRCClient dateTimeFormatter] stringFromDate:[NSDate dateWithTimeIntervalSince1970:timeNum]]];
-            [self printBoth:(c ?: (id)chname) type:LINE_TYPE_REPLY text:text receivedAt:m.receivedAt];
+            [self printBoth:(c ?: (id)chname) type:LINE_TYPE_REPLY text:text timestamp:m.timestamp];
             break;
         }
         case 331:	// RPL_NOTOPIC
@@ -3372,7 +3372,7 @@
             }
 
             NSString* text = @"Topic:";
-            [self printBoth:(c ?: (id)chname) type:LINE_TYPE_REPLY text:text receivedAt:m.receivedAt];
+            [self printBoth:(c ?: (id)chname) type:LINE_TYPE_REPLY text:text timestamp:m.timestamp];
             break;
         }
         case 332:	// RPL_TOPIC
@@ -3387,7 +3387,7 @@
             }
 
             NSString* text = [NSString stringWithFormat:@"Topic: %@", topic];
-            [self printBoth:(c ?: (id)chname) type:LINE_TYPE_REPLY text:text receivedAt:m.receivedAt];
+            [self printBoth:(c ?: (id)chname) type:LINE_TYPE_REPLY text:text timestamp:m.timestamp];
             break;
         }
         case 333:	// RPL_TOPIC_WHO_TIME
@@ -3408,7 +3408,7 @@
 
             IRCChannel* c = [self findChannel:chname];
             NSString* text = [NSString stringWithFormat:@"%@ set the topic at: %@", setter, [[IRCClient dateTimeFormatter] stringFromDate:[NSDate dateWithTimeIntervalSince1970:timeNum]]];
-            [self printBoth:(c ?: (id)chname) type:LINE_TYPE_REPLY text:text receivedAt:m.receivedAt];
+            [self printBoth:(c ?: (id)chname) type:LINE_TYPE_REPLY text:text timestamp:m.timestamp];
             break;
         }
         case 341:	// RPL_INVITING
@@ -3417,7 +3417,7 @@
             NSString* chname = [m paramAt:2];
 
             NSString* text = [NSString stringWithFormat:@"Inviting %@ to %@", nick, chname];
-            [self printBoth:nil type:LINE_TYPE_REPLY text:text receivedAt:m.receivedAt];
+            [self printBoth:nil type:LINE_TYPE_REPLY text:text timestamp:m.timestamp];
             break;
         }
         case 353:	// RPL_NAMREPLY
@@ -3454,7 +3454,7 @@
                 [self updateChannelTitle:c];
             }
             else {
-                [self printBoth:c ?: (id)chname type:LINE_TYPE_REPLY text:[NSString stringWithFormat:@"Names: %@", trail] receivedAt:m.receivedAt];
+                [self printBoth:c ?: (id)chname type:LINE_TYPE_REPLY text:[NSString stringWithFormat:@"Names: %@", trail] timestamp:m.timestamp];
             }
             break;
         }
@@ -3526,7 +3526,7 @@
             }
             else {
                 NSString* text = [NSString stringWithFormat:@"%@ (%@) %@", chname, countStr, topic];
-                [self printBoth:nil type:LINE_TYPE_REPLY text:text receivedAt:m.receivedAt];
+                [self printBoth:nil type:LINE_TYPE_REPLY text:text timestamp:m.timestamp];
             }
             break;
         }
@@ -3537,7 +3537,7 @@
         {
             isRegisteredWithSASL = YES;
             NSString* text = [m sequence:3];
-            [self printBoth:nil type:LINE_TYPE_REPLY text:text receivedAt:m.receivedAt];
+            [self printBoth:nil type:LINE_TYPE_REPLY text:text timestamp:m.timestamp];
             break;
         }
         case 903:	// SASL authentication successful

@@ -8,7 +8,7 @@
 
 @implementation IRCMessage
 
-@synthesize receivedAt;
+@synthesize timestamp;
 @synthesize sender;
 @synthesize command;
 @synthesize numericReply;
@@ -48,7 +48,7 @@
 
     sender = [IRCPrefix new];
     command = @"";
-    receivedAt = 0;
+    timestamp = 0;
     params = [NSMutableArray new];
 
     NSMutableString* s = [line mutableCopy];
@@ -71,16 +71,16 @@
         // Attempt to support all previous formats.
         if ([key isEqualToString:@"t"] || [key isEqualToString:@"time"]) {
             if ([value contains:@"-"]) {
-                receivedAt = [NSDate timeIntervalFromISO8601String:value];
+                timestamp = [NSDate timeIntervalFromISO8601String:value];
             }
             else {
-                receivedAt = [value longLongValue];
+                timestamp = [value longLongValue];
             }
         }
     }
 
-    if (receivedAt == 0) {
-        time(&receivedAt);
+    if (timestamp == 0) {
+        time(&timestamp);
     }
 
     if ([s hasPrefix:@":"]) {
