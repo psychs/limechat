@@ -32,10 +32,40 @@
         </html>
       ]]></description>
       <pubDate><%= ftime %></pubDate>
-  	  <sparkle:minimumSystemVersion>10.7.0</sparkle:minimumSystemVersion>
+      <sparkle:minimumSystemVersion>10.8.0</sparkle:minimumSystemVersion>
       <enclosure url="https://downloads.sourceforge.net/project/limechat/limechat/<%= package_fname %>?use_mirror=master"
                   sparkle:version="<%= version %>" length="<%= fsize %>" type="application/octet-stream"
                   sparkle:dsaSignature="<%= dsa_signature %>"/>
+    </item>
+
+    <item>
+      <title>LimeChat 2.38</title>
+      <description><![CDATA[
+        <html>
+        <body>
+        <style>
+          body {
+            font-size: medium;
+          }
+          h1 {
+            font-size: large;
+          }
+          li {
+            margin: 0.2em 0;
+          }
+        </style>
+        <h1>LimeChat 2.38</h1>
+        <ul>
+          <li>Fix minor issues.</li>
+        </ul>
+        </body>
+        </html>
+      ]]></description>
+      <pubDate>Sat, 12 Oct 2013 05:50:06 -0700</pubDate>
+      <sparkle:minimumSystemVersion>10.7.0</sparkle:minimumSystemVersion>
+      <enclosure url="https://downloads.sourceforge.net/project/limechat/limechat/LimeChat_2.38.tbz?use_mirror=master"
+                  sparkle:version="2.38" length="2423721" type="application/octet-stream"
+                  sparkle:dsaSignature="MC0CFQDmiXe81KqMEk0xFcZfVluKBD4xkwIUa7P3TfO2BcTsVss7U4DrRm76ZsI="/>
     </item>
     
     <item>
