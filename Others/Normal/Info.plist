@@ -7,7 +7,7 @@
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleGetInfoString</key>
-	<string>LimeChat for Mac, Copyright 2007-2012 Satoshi Nakagawa</string>
+	<string>LimeChat for Mac, Copyright 2007-2013 Satoshi Nakagawa</string>
 	<key>CFBundleIconFile</key>
 	<string>application.icns</string>
 	<key>CFBundleIdentifier</key>
