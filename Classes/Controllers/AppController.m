@@ -15,7 +15,6 @@
 #import "NSStringHelper.h"
 #import "NSDictionaryHelper.h"
 #import "NSLocaleHelper.h"
-#import "GrowlNotificationController.h"
 #import "UserNotificationController.h"
 
 
@@ -149,14 +148,7 @@
     dcc.mainWindow = window;
     world.dcc = dcc;
 
-    SInt32 version = 0;
-    Gestalt(gestaltSystemVersion, &version);
-    if (version >= 0x1080) {
-        notifier = [UserNotificationController new];
-    }
-    else {
-        notifier = [GrowlNotificationController new];
-    }
+    notifier = [UserNotificationController new];
     notifier.delegate = world;
     world.notifier = notifier;
 
