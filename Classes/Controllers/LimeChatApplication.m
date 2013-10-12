@@ -12,6 +12,9 @@ enum {
 
 
 @implementation LimeChatApplication
+{
+    HotKeyManager* _hotkey;
+}
 
 - (id)init
 {
@@ -23,17 +26,11 @@ enum {
     return self;
 }
 
-- (void)dealloc
-{
-    [hotkey release];
-    [super dealloc];
-}
-
 - (void)sendEvent:(NSEvent *)e
 {
     if ([e type] == NSSystemDefined && [e subtype] == kEventHotKeyPressedSubtype) {
-        if (hotkey && [hotkey enabled]) {
-            unsigned long long handle = (unsigned long long)hotkey.handle;
+        if (_hotkey && [_hotkey enabled]) {
+            unsigned long long handle = (unsigned long long)_hotkey.handle;
             unsigned long long data1 = [e data1];
             handle &= 0xffffffff;
             data1 &= 0xffffffff;
@@ -50,17 +47,17 @@ enum {
 
 - (void)registerHotKey:(int)keyCode modifierFlags:(NSUInteger)modFlags
 {
-    if (!hotkey) {
-        hotkey = [HotKeyManager new];
+    if (!_hotkey) {
+        _hotkey = [HotKeyManager new];
     }
-    [hotkey unregisterHotKey];
-    [hotkey registerHotKeyCode:keyCode withModifier:modFlags];
+    [_hotkey unregisterHotKey];
+    [_hotkey registerHotKeyCode:keyCode withModifier:modFlags];
 }
 
 - (void)unregisterHotKey
 {
-    if (hotkey) {
-        [hotkey unregisterHotKey];
+    if (_hotkey) {
+        [_hotkey unregisterHotKey];
     }
 }
 

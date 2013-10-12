@@ -26,7 +26,7 @@
 
 - (void)setUpNumberFormatter
 {
-    NSNumberFormatter *numberFormatter = [[NSNumberFormatter new] autorelease];
+    NSNumberFormatter *numberFormatter = [NSNumberFormatter new];
     [numberFormatter setNumberStyle:NSNumberFormatterNoStyle];
     [[self cell] setFormatter:numberFormatter];
 }

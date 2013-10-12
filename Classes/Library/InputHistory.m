@@ -8,61 +8,59 @@
 
 
 @implementation InputHistory
+{
+    NSMutableArray* _buf;
+    int _pos;
+}
 
 - (id)init
 {
     self = [super init];
     if (self) {
-        buf = [NSMutableArray new];
+        _buf = [NSMutableArray new];
     }
     return self;
 }
 
-- (void)dealloc
-{
-    [buf release];
-    [super dealloc];
-}
-
 - (void)add:(NSString*)s
 {
-    pos = buf.count;
+    _pos = _buf.count;
     if (s.length == 0) return;
-    if ([[buf lastObject] isEqualToString:s]) return;
+    if ([[_buf lastObject] isEqualToString:s]) return;
 
-    [buf addObject:s];
+    [_buf addObject:s];
 
-    if (buf.count > INPUT_HISTORY_MAX) {
-        [buf removeObjectAtIndex:0];
+    if (_buf.count > INPUT_HISTORY_MAX) {
+        [_buf removeObjectAtIndex:0];
     }
-    pos = buf.count;
+    _pos = _buf.count;
 }
 
 - (NSString*)up:(NSString*)s
 {
     if (s && s.length > 0) {
         NSString* cur = nil;
-        if (0 <= pos && pos < buf.count) {
-            cur = [buf objectAtIndex:pos];
+        if (0 <= _pos && _pos < _buf.count) {
+            cur = [_buf objectAtIndex:_pos];
         }
 
         if (!cur || ![cur isEqualToString:s]) {
             // if the text was modified, add it
-            [buf addObject:s];
-            if (buf.count > INPUT_HISTORY_MAX) {
-                [buf removeObjectAtIndex:0];
-                --pos;
+            [_buf addObject:s];
+            if (_buf.count > INPUT_HISTORY_MAX) {
+                [_buf removeObjectAtIndex:0];
+                --_pos;
             }
         }
     }
 
-    --pos;
-    if (pos < 0) {
-        pos = 0;
+    --_pos;
+    if (_pos < 0) {
+        _pos = 0;
         return nil;
     }
-    else if (0 <= pos && pos < buf.count) {
-        return [buf objectAtIndex:pos];
+    else if (0 <= _pos && _pos < _buf.count) {
+        return [_buf objectAtIndex:_pos];
     }
     else {
         return @"";
@@ -72,13 +70,13 @@
 - (NSString*)down:(NSString*)s
 {
     if (!s || s.length == 0) {
-        pos = buf.count;
+        _pos = _buf.count;
         return nil;
     }
 
     NSString* cur = nil;
-    if (0 <= pos && pos < buf.count) {
-        cur = [buf objectAtIndex:pos];
+    if (0 <= _pos && _pos < _buf.count) {
+        cur = [_buf objectAtIndex:_pos];
     }
 
     if (!cur || ![cur isEqualToString:s]) {
@@ -87,9 +85,9 @@
         return @"";
     }
     else {
-        ++pos;
-        if (0 <= pos && pos < buf.count) {
-            return [buf objectAtIndex:pos];
+        ++_pos;
+        if (0 <= _pos && _pos < _buf.count) {
+            return [_buf objectAtIndex:_pos];
         }
         return @"";
     }

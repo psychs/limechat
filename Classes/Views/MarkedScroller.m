@@ -9,9 +9,6 @@ const static int INSET = 3;
 
 @implementation MarkedScroller
 
-@synthesize dataSource;
-@synthesize markData;
-
 + (BOOL)isCompatibleWithOverlayScrollers
 {
     return self == [MarkedScroller class];
@@ -19,18 +16,18 @@ const static int INSET = 3;
 
 - (void)updateScroller
 {
-    self.markData = [dataSource markedScrollerPositions:self];
+    self.markData = [_dataSource markedScrollerPositions:self];
 }
 
 - (void)drawContentInMarkedScroller
 {
-    if (!dataSource) return;
-    if (![dataSource respondsToSelector:@selector(markedScrollerPositions:)]) return;
-    if (![dataSource respondsToSelector:@selector(markedScrollerColor:)]) return;
+    if (!_dataSource) return;
+    if (![_dataSource respondsToSelector:@selector(markedScrollerPositions:)]) return;
+    if (![_dataSource respondsToSelector:@selector(markedScrollerColor:)]) return;
 
     NSScrollView* scrollView = (NSScrollView*)[self superview];
     int contentHeight = [[scrollView contentView] documentRect].size.height;
-    if (!markData || !markData.count) return;
+    if (!_markData || !_markData.count) return;
 
     //
     // prepare transform
@@ -49,7 +46,7 @@ const static int INSET = 3;
     NSMutableArray* lines = [NSMutableArray array];
     NSPoint prev = NSMakePoint(-1, -1);
 
-    for (NSNumber* e in markData) {
+    for (NSNumber* e in _markData) {
         int i = [e intValue];
         NSPoint pt = NSMakePoint(indent, i);
         pt = [transform transformPoint:pt];
@@ -67,7 +64,7 @@ const static int INSET = 3;
     //
     // draw lines
     //
-    NSColor* color = [dataSource markedScrollerColor:self];
+    NSColor* color = [_dataSource markedScrollerColor:self];
     [color set];
 
     for (NSBezierPath* e in lines) {

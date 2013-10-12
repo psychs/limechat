@@ -11,8 +11,16 @@
 
 
 @implementation GistClient
+{
+    GistClientStage _stage;
+    NSString* _text;
+    NSString* _fileType;
+    BOOL _isPrivate;
 
-@synthesize delegate;
+    NSURLConnection* _conn;
+    NSMutableData* _buf;
+    NSString* _destUrl;
+}
 
 - (id)init
 {
@@ -25,19 +33,14 @@
 - (void)dealloc
 {
     [self cancel];
-    [text release];
-    [fileType release];
-    [super dealloc];
 }
 
 - (void)cancel
 {
-    [conn cancel];
-    [conn autorelease];
-    conn = nil;
+    [_conn cancel];
+    _conn = nil;
 
-    [buf release];
-    buf = [NSMutableData new];
+    _buf = [NSMutableData new];
 }
 
 - (NSString*)formatParameters:(NSDictionary*)params
@@ -54,32 +57,29 @@
 - (void)send:(NSString*)aText fileType:(NSString*)aFileType private:(BOOL)aIsPrivate
 {
     [self cancel];
-    [destUrl autorelease];
-    destUrl = nil;
-    stage = kGistClientGetTop;
+    _destUrl = nil;
+    _stage = kGistClientGetTop;
 
-    [text autorelease];
-    text = [aText retain];
-    [aFileType autorelease];
-    fileType = [aFileType retain];
-    isPrivate = aIsPrivate;
+    _text = aText;
+    _fileType = aFileType;
+    _isPrivate = aIsPrivate;
 
     NSMutableURLRequest* req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:GIST_TOP_URL] cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:TIMEOUT];
-    conn = [[NSURLConnection alloc] initWithRequest:req delegate:self];
+    _conn = [[NSURLConnection alloc] initWithRequest:req delegate:self];
 }
 
 - (void)postDataWithAutheToken:(NSString*)authToken
 {
     [self cancel];
-    stage = kGistClientPost;
+    _stage = kGistClientPost;
 
     NSMutableDictionary* params = [NSMutableDictionary dictionary];
     [params setObject:@"" forKey:@"gist[description]"];
     [params setObject:@"" forKey:@"gist[files][][oid]"];
     [params setObject:@"" forKey:@"gist[files][][name]"];
-    [params setObject:text forKey:@"gist[files][][content]"];
-    [params setObject:fileType forKey:@"gist[files][][language]"];
-    if (isPrivate) {
+    [params setObject:_text forKey:@"gist[files][][content]"];
+    [params setObject:_fileType forKey:@"gist[files][][language]"];
+    if (_isPrivate) {
         [params setObject:@"0" forKey:@"gist[public]"];
     }
     if (authToken) {
@@ -92,7 +92,7 @@
     [req setHTTPMethod:@"POST"];
     [req setHTTPBody:body];
 
-    conn = [[NSURLConnection alloc] initWithRequest:req delegate:self];
+    _conn = [[NSURLConnection alloc] initWithRequest:req delegate:self];
 }
 
 #pragma mark -
@@ -105,17 +105,17 @@
 
 - (void)connection:(NSURLConnection *)sender didReceiveData:(NSData *)data
 {
-    if (conn != sender) return;
+    if (_conn != sender) return;
 
-    [buf appendData:data];
+    [_buf appendData:data];
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)sender
 {
-    if (conn != sender) return;
+    if (_conn != sender) return;
 
-    if (stage == kGistClientGetTop) {
-        NSString* s = [[[NSString alloc] initWithData:buf encoding:NSUTF8StringEncoding] autorelease];
+    if (_stage == kGistClientGetTop) {
+        NSString* s = [[NSString alloc] initWithData:_buf encoding:NSUTF8StringEncoding];
         NSString* authToken = nil;
 
         NSRange authInputTagRange = [s rangeOfString:@"<input name=\"authenticity_token\""];
@@ -152,37 +152,36 @@
             [self postDataWithAutheToken:authToken];
         }
         else {
-            if ([delegate respondsToSelector:@selector(gistClient:didFailWithError:statusCode:)]) {
-                [delegate gistClient:self didFailWithError:@"Failed to post to Gist" statusCode:0];
+            if ([_delegate respondsToSelector:@selector(gistClient:didFailWithError:statusCode:)]) {
+                [_delegate gistClient:self didFailWithError:@"Failed to post to Gist" statusCode:0];
             }
         }
     }
     else {
-        if ([delegate respondsToSelector:@selector(gistClient:didReceiveResponse:)]) {
-            [delegate gistClient:self didReceiveResponse:destUrl];
+        if ([_delegate respondsToSelector:@selector(gistClient:didReceiveResponse:)]) {
+            [_delegate gistClient:self didReceiveResponse:_destUrl];
         }
     }
 }
 
 - (void)connection:(NSURLConnection*)sender didFailWithError:(NSError*)error
 {
-    if (conn != sender) return;
+    if (_conn != sender) return;
 
     [self cancel];
 
-    if ([delegate respondsToSelector:@selector(gistClient:didFailWithError:statusCode:)]) {
-        [delegate gistClient:self didFailWithError:[error localizedDescription] statusCode:0];
+    if ([_delegate respondsToSelector:@selector(gistClient:didFailWithError:statusCode:)]) {
+        [_delegate gistClient:self didFailWithError:[error localizedDescription] statusCode:0];
     }
 }
 
 - (NSURLRequest *)connection:(NSURLConnection *)sender willSendRequest:(NSURLRequest *)req redirectResponse:(NSHTTPURLResponse *)res
 {
-    if (conn != sender) return req;
+    if (_conn != sender) return req;
 
-    if (stage == kGistClientPost) {
+    if (_stage == kGistClientPost) {
         if (res && res.statusCode == 302) {
-            [destUrl autorelease];
-            destUrl = [req.URL.absoluteString retain];
+            _destUrl = req.URL.absoluteString;
 
             // Do not cancel request here.
             // It causes memory leak in NSURLConnection.

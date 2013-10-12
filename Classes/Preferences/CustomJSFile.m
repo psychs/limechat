@@ -6,9 +6,6 @@
 
 @implementation CustomJSFile
 
-@synthesize fileName;
-@synthesize content;
-
 - (id)init
 {
     self = [super init];
@@ -17,29 +14,16 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [fileName release];
-    [content release];
-    [super dealloc];
-}
-
 - (void)setFileName:(NSString *)value
 {
-    if (fileName != value) {
-        [fileName release];
-        fileName = [value retain];
-    }
-
+    _fileName = value;
     [self reload];
 }
 
 - (void)reload
 {
-    [content release];
-
-    NSData* data = [NSData dataWithContentsOfFile:fileName];
-    content = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    NSData* data = [NSData dataWithContentsOfFile:_fileName];
+    _content = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 }
 
 @end

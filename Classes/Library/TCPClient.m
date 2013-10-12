@@ -9,30 +9,17 @@
 
 
 @implementation TCPClient
-
-@synthesize delegate;
-
-@synthesize host;
-@synthesize port;
-@synthesize useSSL;
-
-@synthesize useSystemSocks;
-@synthesize useSocks;
-@synthesize socksVersion;
-@synthesize proxyHost;
-@synthesize proxyPort;
-@synthesize proxyUser;
-@synthesize proxyPassword;
-@synthesize sendQueueSize;
-
-@synthesize active;
-@synthesize connecting;
+{
+    AsyncSocket* _conn;
+    NSMutableData* _buffer;
+    int _tag;
+}
 
 - (id)init
 {
     self = [super init];
     if (self) {
-        buffer = [NSMutableData new];
+        _buffer = [NSMutableData new];
     }
     return self;
 }
@@ -41,72 +28,60 @@
 {
     self = [self init];
     if (self) {
-        conn = [socket retain];
-        conn.delegate = self;
-        [conn setUserData:tag];
-        active = connecting = YES;
-        sendQueueSize = 0;
+        _conn = socket;
+        _conn.delegate = self;
+        [_conn setUserData:_tag];
+        _active = _connecting = YES;
+        _sendQueueSize = 0;
     }
     return self;
 }
 
 - (void)dealloc
 {
-    [host release];
-    [proxyHost release];
-    [proxyUser release];
-    [proxyPassword release];
-
-    if (conn) {
-        conn.delegate = nil;
-        [conn disconnect];
-        [conn autorelease];
-    }
-    [buffer release];
-
-    [super dealloc];
+    _conn.delegate = nil;
+    [_conn disconnect];
 }
 
 - (void)open
 {
     [self close];
 
-    [buffer setLength:0];
-    ++tag;
+    [_buffer setLength:0];
+    ++_tag;
 
-    conn = [[AsyncSocket alloc] initWithDelegate:self userData:tag];
-    [conn connectToHost:host onPort:port error:NULL];
-    active = connecting = YES;
-    sendQueueSize = 0;
+    _conn = [[AsyncSocket alloc] initWithDelegate:self userData:_tag];
+    [_conn connectToHost:_host onPort:_port error:NULL];
+    _active = _connecting = YES;
+    _sendQueueSize = 0;
 }
 
 - (void)close
 {
-    if (!conn) return;
+    if (!_conn) return;
 
-    ++tag;
+    ++_tag;
 
-    [conn disconnect];
-    [conn autorelease];
-    conn = nil;
+    [_conn disconnect];
+    _conn = nil;
 
-    active = connecting = NO;
-    sendQueueSize = 0;
+    _active = _connecting = NO;
+    _sendQueueSize = 0;
 }
 
 - (NSData*)read
 {
-    NSData* result = [buffer autorelease];
-    buffer = [NSMutableData new];
+    NSData* result = _buffer;
+    _buffer = [NSMutableData new];
     return result;
 }
 
 - (NSData*)readLine
 {
-    int len = [buffer length];
+    int len = [_buffer length];
     if (!len) return nil;
 
-    const char* bytes = [buffer bytes];
+    const char* bytes = [_buffer bytes];
     char* p = memchr(bytes, LF, len);
     if (!p) return nil;
     int n = p - bytes;
@@ -118,14 +93,14 @@
         }
     }
 
-    NSMutableData* result = [buffer autorelease];
+    NSMutableData* result = _buffer;
 
     ++p;
     if (p < bytes + len) {
-        buffer = [[NSMutableData alloc] initWithBytes:p length:bytes + len - p];
+        _buffer = [[NSMutableData alloc] initWithBytes:p length:bytes + len - p];
     }
     else {
-        buffer = [NSMutableData new];
+        _buffer = [NSMutableData new];
     }
 
     [result setLength:n];
@@ -136,29 +111,29 @@
 {
     if (![self connected]) return;
 
-    ++sendQueueSize;
+    ++_sendQueueSize;
 
-    [conn writeData:data withTimeout:-1 tag:0];
+    [_conn writeData:data withTimeout:-1 tag:0];
     [self waitRead];
 }
 
 - (BOOL)connected
 {
-    if (!conn) return NO;
-    if (![self checkTag:conn]) return NO;
-    return [conn isConnected];
+    if (!_conn) return NO;
+    if (![self checkTag:_conn]) return NO;
+    return [_conn isConnected];
 }
 
 - (BOOL)onSocketWillConnect:(AsyncSocket*)sender
 {
-    if (useSystemSocks) {
-        [conn useSystemSocksProxy];
+    if (_useSystemSocks) {
+        [_conn useSystemSocksProxy];
     }
-    else if (useSocks) {
-        [conn useSocksProxyVersion:socksVersion host:proxyHost port:proxyPort user:proxyUser password:proxyPassword];
+    else if (_useSocks) {
+        [_conn useSocksProxyVersion:_socksVersion host:_proxyHost port:_proxyPort user:_proxyUser password:_proxyPassword];
     }
-    else if (useSSL) {
-        [conn useSSL];
+    else if (_useSSL) {
+        [_conn useSSL];
     }
     return YES;
 }
@@ -167,10 +142,10 @@
 {
     if (![self checkTag:sender]) return;
     [self waitRead];
-    connecting = NO;
+    _connecting = NO;
 
-    if ([delegate respondsToSelector:@selector(tcpClientDidConnect:)]) {
-        [delegate tcpClientDidConnect:self];
+    if ([_delegate respondsToSelector:@selector(tcpClientDidConnect:)]) {
+        [_delegate tcpClientDidConnect:self];
     }
 }
 
@@ -196,8 +171,8 @@
         msg = [error localizedDescription];
     }
 
-    if ([delegate respondsToSelector:@selector(tcpClient:error:)]) {
-        [delegate tcpClient:self error:msg];
+    if ([_delegate respondsToSelector:@selector(tcpClient:error:)]) {
+        [_delegate tcpClient:self error:msg];
     }
 }
 
@@ -207,8 +182,8 @@
 
     [self close];
 
-    if ([delegate respondsToSelector:@selector(tcpClientDidDisconnect:)]) {
-        [delegate tcpClientDidDisconnect:self];
+    if ([_delegate respondsToSelector:@selector(tcpClientDidDisconnect:)]) {
+        [_delegate tcpClientDidDisconnect:self];
     }
 }
 
@@ -216,10 +191,10 @@
 {
     if (![self checkTag:sender]) return;
 
-    [buffer appendData:data];
+    [_buffer appendData:data];
 
-    if ([delegate respondsToSelector:@selector(tcpClientDidReceiveData:)]) {
-        [delegate tcpClientDidReceiveData:self];
+    if ([_delegate respondsToSelector:@selector(tcpClientDidReceiveData:)]) {
+        [_delegate tcpClientDidReceiveData:self];
     }
 
     [self waitRead];
@@ -229,21 +204,21 @@
 {
     if (![self checkTag:sender]) return;
 
-    --sendQueueSize;
+    --_sendQueueSize;
 
-    if ([delegate respondsToSelector:@selector(tcpClientDidSendData:)]) {
-        [delegate tcpClientDidSendData:self];
+    if ([_delegate respondsToSelector:@selector(tcpClientDidSendData:)]) {
+        [_delegate tcpClientDidSendData:self];
     }
 }
 
 - (BOOL)checkTag:(AsyncSocket*)sock
 {
-    return tag == [sock userData];
+    return _tag == [sock userData];
 }
 
 - (void)waitRead
 {
-    [conn readDataWithTimeout:-1 tag:0];
+    [_conn readDataWithTimeout:-1 tag:0];
 }
 
 @end

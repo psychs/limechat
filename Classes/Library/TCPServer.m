@@ -6,109 +6,104 @@
 
 
 @implementation TCPServer
-
-@synthesize delegate;
-@synthesize isActive;
-@synthesize port;
-@synthesize clients;
+{
+    AsyncSocket* _conn;
+    NSMutableArray *_clients;
+}
 
 - (id)init
 {
     self = [super init];
     if (self) {
-        clients = [NSMutableArray new];
+        _clients = [NSMutableArray new];
     }
     return self;
 }
 
 - (void)dealloc
 {
-    [conn disconnect];
-    [clients release];
-    [super dealloc];
+    [_conn disconnect];
 }
 
 - (BOOL)open
 {
-    if (conn) {
+    if (_conn) {
         [self close];
     }
 
-    conn = [[AsyncSocket alloc] initWithDelegate:self];
-    isActive = [conn acceptOnPort:port error:NULL];
-    if (!isActive) {
+    _conn = [[AsyncSocket alloc] initWithDelegate:self];
+    _isActive = [_conn acceptOnPort:_port error:NULL];
+    if (!_isActive) {
         [self close];
     }
-    return isActive;
+    return _isActive;
 }
 
 - (void)close
 {
-    [conn disconnect];
-    [conn autorelease];
-    conn = nil;
-    isActive = NO;
+    [_conn disconnect];
+    _conn = nil;
+    _isActive = NO;
 }
 
 - (void)closeClient:(TCPClient*)client
 {
     [client close];
-    [clients removeObjectIdenticalTo:client];
+    [_clients removeObjectIdenticalTo:client];
 }
 
 - (void)closeAllClients
 {
-    for (TCPClient* c in clients) {
-        [[c retain] autorelease];
+    for (TCPClient* c in _clients) {
         [c close];
     }
-    [clients removeAllObjects];
+    [_clients removeAllObjects];
 }
 
 - (void)onSocket:(AsyncSocket*)sock didAcceptNewSocket:(AsyncSocket*)newSocket
 {
-    TCPClient* c = [[[TCPClient alloc] initWithExistingConnection:newSocket] autorelease];
+    TCPClient* c = [[TCPClient alloc] initWithExistingConnection:newSocket];
     c.delegate = self;
-    [clients addObject:c];
+    [_clients addObject:c];
 
-    if ([delegate respondsToSelector:@selector(tcpServer:didAccept:)]) {
-        [delegate tcpServer:self didAccept:c];
+    if ([_delegate respondsToSelector:@selector(tcpServer:didAccept:)]) {
+        [_delegate tcpServer:self didAccept:c];
     }
 }
 
 - (void)tcpClientDidConnect:(TCPClient*)sender
 {
-    if ([delegate respondsToSelector:@selector(tcpServer:didConnect:)]) {
-        [delegate tcpServer:self didConnect:sender];
+    if ([_delegate respondsToSelector:@selector(tcpServer:didConnect:)]) {
+        [_delegate tcpServer:self didConnect:sender];
     }
 }
 
 - (void)tcpClientDidDisconnect:(TCPClient*)sender
 {
-    if ([delegate respondsToSelector:@selector(tcpServer:didDisconnect:)]) {
-        [delegate tcpServer:self didDisconnect:sender];
+    if ([_delegate respondsToSelector:@selector(tcpServer:didDisconnect:)]) {
+        [_delegate tcpServer:self didDisconnect:sender];
     }
     [self closeClient:sender];
 }
 
 - (void)tcpClient:(TCPClient*)sender error:(NSString*)error
 {
-    if ([delegate respondsToSelector:@selector(tcpServer:client:error:)]) {
-        [delegate tcpServer:self client:sender error:error];
+    if ([_delegate respondsToSelector:@selector(tcpServer:client:error:)]) {
+        [_delegate tcpServer:self client:sender error:error];
     }
 }
 
 - (void)tcpClientDidReceiveData:(TCPClient*)sender
 {
-    if ([delegate respondsToSelector:@selector(tcpServer:didReceiveData:)]) {
-        [delegate tcpServer:self didReceiveData:sender];
+    if ([_delegate respondsToSelector:@selector(tcpServer:didReceiveData:)]) {
+        [_delegate tcpServer:self didReceiveData:sender];
     }
 }
 
 - (void)tcpClientDidSendData:(TCPClient*)sender
 {
-    if ([delegate respondsToSelector:@selector(tcpServer:didSendData:)]) {
-        [delegate tcpServer:self didSendData:sender];
+    if ([_delegate respondsToSelector:@selector(tcpServer:didSendData:)]) {
+        [_delegate tcpServer:self didSendData:sender];
     }
 }
 

@@ -8,14 +8,9 @@
 #define TWITTER_IMAGE_URL_CLIENT_TIMEOUT    30
 
 
-@interface TwitterImageURLClient ()
-- (void)getResultCode;
-@end
-
-
 static void readStreamEventHandler(CFReadStreamRef stream, CFStreamEventType type, void* userData)
 {
-    TwitterImageURLClient* client = (TwitterImageURLClient*)userData;
+    TwitterImageURLClient* client = (__bridge TwitterImageURLClient*)userData;
 
     switch (type) {
         case kCFStreamEventErrorOccurred:
@@ -29,34 +24,36 @@ static void readStreamEventHandler(CFReadStreamRef stream, CFStreamEventType typ
 
 static void* CFClientRetain(void* obj)
 {
-    return [(id)obj retain];
+    return (void*)CFRetain((CFTypeRef)obj);
 }
 
 static void CFClientRelease(void* obj)
 {
-    [(id)obj release];
+    CFRelease((CFTypeRef)obj);
 }
 
 static CFStringRef CFClientDescribeCopy(void* obj)
 {
-    return (CFStringRef)[[(id)obj description] copy];
+    return CFRetain((__bridge CFStringRef)[[(__bridge id)obj description] copy]);
 }
 
 
 @implementation TwitterImageURLClient
-
-@synthesize delegate;
-@synthesize screenName;
+{
+    CFReadStreamRef _stream;
+    CFStreamClientContext _context;
+    NSTimer* _timeoutTimer;
+}
 
 - (id)init
 {
     self = [super init];
     if (self) {
-        context.version = 0;
-        context.info = self;
-        context.retain = CFClientRetain;
-        context.release = CFClientRelease;
-        context.copyDescription = CFClientDescribeCopy;
+        _context.version = 0;
+        _context.info = (__bridge void*)self;
+        _context.retain = CFClientRetain;
+        _context.release = CFClientRelease;
+        _context.copyDescription = CFClientDescribeCopy;
     }
     return self;
 }
@@ -64,24 +61,21 @@ static CFStringRef CFClientDescribeCopy(void* obj)
 - (void)dealloc
 {
     [self cancel];
-    [screenName release];
-    [super dealloc];
 }
 
 - (void)cancel
 {
-    if (stream) {
-        CFReadStreamClose(stream);
-        CFReadStreamSetClient(stream, 0, NULL, NULL);
-        CFReadStreamUnscheduleFromRunLoop(stream, CFRunLoopGetCurrent(), kCFRunLoopCommonModes);
-        CFRelease(stream);
-        stream = NULL;
+    if (_stream) {
+        CFReadStreamClose(_stream);
+        CFReadStreamSetClient(_stream, 0, NULL, NULL);
+        CFReadStreamUnscheduleFromRunLoop(_stream, CFRunLoopGetCurrent(), kCFRunLoopCommonModes);
+        CFRelease(_stream);
+        _stream = NULL;
     }
 
-    if (timeoutTimer) {
-        [timeoutTimer invalidate];
-        [timeoutTimer release];
-        timeoutTimer = nil;
+    if (_timeoutTimer) {
+        [_timeoutTimer invalidate];
+        _timeoutTimer = nil;
     }
 }
 
@@ -89,73 +83,70 @@ static CFStringRef CFClientDescribeCopy(void* obj)
 {
     [self cancel];
 
-    NSString* url = [NSString stringWithFormat:@"http://api.twitter.com/1/users/profile_image?size=normal&screen_name=%@", [screenName gtm_stringByEscapingForURLArgument]];
+    NSString* url = [NSString stringWithFormat:@"http://api.twitter.com/1/users/profile_image?size=normal&screen_name=%@", [_screenName gtm_stringByEscapingForURLArgument]];
     NSURL* urlObj = [NSURL URLWithString:url];
     if (!urlObj) {
-        if ([delegate respondsToSelector:@selector(twitterImageURLClientDidReceiveBadURL:)]) {
-            [delegate twitterImageURLClientDidReceiveBadURL:self];
+        if ([_delegate respondsToSelector:@selector(twitterImageURLClientDidReceiveBadURL:)]) {
+            [_delegate twitterImageURLClientDidReceiveBadURL:self];
         }
         return;
     }
 
-    CFHTTPMessageRef request = CFHTTPMessageCreateRequest(kCFAllocatorDefault, (CFStringRef)@"HEAD", (CFURLRef)urlObj, kCFHTTPVersion1_1);
-    stream = CFReadStreamCreateForHTTPRequest(kCFAllocatorDefault, request);
+    CFHTTPMessageRef request = CFHTTPMessageCreateRequest(kCFAllocatorDefault, (CFStringRef)@"HEAD", (__bridge CFURLRef)urlObj, kCFHTTPVersion1_1);
+    _stream = CFReadStreamCreateForHTTPRequest(kCFAllocatorDefault, request);
     CFRelease(request);
 
-    CFReadStreamSetClient(stream,
+    CFReadStreamSetClient(_stream,
                           kCFStreamEventErrorOccurred | kCFStreamEventEndEncountered,
                           readStreamEventHandler,
-                          &context);
+                          &_context);
 
-    CFReadStreamScheduleWithRunLoop(stream, CFRunLoopGetCurrent(), kCFRunLoopCommonModes);
-    CFReadStreamOpen(stream);
+    CFReadStreamScheduleWithRunLoop(_stream, CFRunLoopGetCurrent(), kCFRunLoopCommonModes);
+    CFReadStreamOpen(_stream);
 
-    timeoutTimer = [[NSTimer
+    _timeoutTimer = [NSTimer
                      scheduledTimerWithTimeInterval:TWITTER_IMAGE_URL_CLIENT_TIMEOUT
                      target:self
                      selector:@selector(onTimeout:)
                      userInfo:nil
-                     repeats:NO] retain];
+                     repeats:NO];
 
-    [[NSRunLoop currentRunLoop] addTimer:timeoutTimer forMode:NSEventTrackingRunLoopMode];
+    [[NSRunLoop currentRunLoop] addTimer:_timeoutTimer forMode:NSEventTrackingRunLoopMode];
 }
 
 - (void)getResultCode
 {
-    if (stream) {
-        CFHTTPMessageRef reply = (CFHTTPMessageRef)CFReadStreamCopyProperty(stream, kCFStreamPropertyHTTPResponseHeader);
+    if (_stream) {
+        CFHTTPMessageRef reply = (CFHTTPMessageRef)CFReadStreamCopyProperty(_stream, kCFStreamPropertyHTTPResponseHeader);
         if (reply) {
             int code = CFHTTPMessageGetResponseStatusCode(reply);
             if (300 <= code && code < 400) {
-                NSString* location = (NSString*)CFHTTPMessageCopyHeaderFieldValue(reply, CFSTR("Location"));
+                NSString* location = (__bridge_transfer NSString*)CFHTTPMessageCopyHeaderFieldValue(reply, CFSTR("Location"));
                 if (location) {
-                    if ([delegate respondsToSelector:@selector(twitterImageURLClient:didGetImageURL:)]) {
-                        [delegate twitterImageURLClient:self didGetImageURL:location];
+                    if ([_delegate respondsToSelector:@selector(twitterImageURLClient:didGetImageURL:)]) {
+                        [_delegate twitterImageURLClient:self didGetImageURL:location];
                     }
-                    [location release];
                 }
                 else {
-                    NSError* error = (NSError*)CFReadStreamCopyError(stream);
-                    if ([delegate respondsToSelector:@selector(twitterImageURLClient:didFailWithError:)]) {
-                        [delegate twitterImageURLClient:self didFailWithError:[error localizedDescription]];
+                    NSError* error = (__bridge_transfer NSError*)CFReadStreamCopyError(_stream);
+                    if ([_delegate respondsToSelector:@selector(twitterImageURLClient:didFailWithError:)]) {
+                        [_delegate twitterImageURLClient:self didFailWithError:[error localizedDescription]];
                     }
-                    [error release];
                 }
             }
             else {
-                if ([delegate respondsToSelector:@selector(twitterImageURLClient:didFailWithError:)]) {
-                    [delegate twitterImageURLClient:self didFailWithError:@"Not short URL"];
+                if ([_delegate respondsToSelector:@selector(twitterImageURLClient:didFailWithError:)]) {
+                    [_delegate twitterImageURLClient:self didFailWithError:@"Not short URL"];
                 }
             }
 
             CFRelease(reply);
         }
         else {
-            NSError* error = (NSError*)CFReadStreamCopyError(stream);
-            if ([delegate respondsToSelector:@selector(twitterImageURLClient:didFailWithError:)]) {
-                [delegate twitterImageURLClient:self didFailWithError:[error localizedDescription]];
+            NSError* error = (__bridge_transfer NSError*)CFReadStreamCopyError(_stream);
+            if ([_delegate respondsToSelector:@selector(twitterImageURLClient:didFailWithError:)]) {
+                [_delegate twitterImageURLClient:self didFailWithError:[error localizedDescription]];
             }
-            [error release];
         }
     }
 
@@ -166,8 +157,8 @@ static CFStringRef CFClientDescribeCopy(void* obj)
 {
     [self cancel];
 
-    if ([delegate respondsToSelector:@selector(twitterImageURLClient:didFailWithError:)]) {
-        [delegate twitterImageURLClient:self didFailWithError:@"Timed out"];
+    if ([_delegate respondsToSelector:@selector(twitterImageURLClient:didFailWithError:)]) {
+        [_delegate twitterImageURLClient:self didFailWithError:@"Timed out"];
     }
 }
 

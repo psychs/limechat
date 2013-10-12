@@ -18,10 +18,6 @@
     IBOutlet NSTextField* signOnText;
     IBOutlet NSButton* joinButton;
     IBOutlet NSButton* closeButton;
-    
-    __weak id delegate;
-    NSString* nick;
-    BOOL isOperator;
 }
 
 @property (nonatomic, weak) id delegate;

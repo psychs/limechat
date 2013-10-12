@@ -6,9 +6,6 @@
 
 @implementation InviteSheet
 
-@synthesize nicks;
-@synthesize uid;
-
 - (id)init
 {
     self = [super init];
@@ -18,25 +15,19 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [nicks release];
-    [super dealloc];
-}
-
 - (void)startWithChannels:(NSArray*)channels
 {
     NSString* target;
-    if (nicks.count == 1) {
-        target = [nicks objectAtIndex:0];
+    if (_nicks.count == 1) {
+        target = [_nicks objectAtIndex:0];
     }
-    else if (nicks.count == 2) {
-        NSString* first = [nicks objectAtIndex:0];
-        NSString* second = [nicks objectAtIndex:1];
+    else if (_nicks.count == 2) {
+        NSString* first = [_nicks objectAtIndex:0];
+        NSString* second = [_nicks objectAtIndex:1];
         target = [NSString stringWithFormat:@"%@ and %@", first, second];
     }
     else {
-        target = [NSString stringWithFormat:@"%d users", (int)nicks.count];
+        target = [NSString stringWithFormat:@"%d users", (int)_nicks.count];
     }
     titleLabel.stringValue = [NSString stringWithFormat:@"Invite %@ to:", target];
 

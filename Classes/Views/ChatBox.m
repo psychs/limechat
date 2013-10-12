@@ -35,7 +35,7 @@
     NSText* e = [text currentEditor];
     if (e) range = [e selectedRange];
     NSString* s = [text stringValue];
-    [text setAttributedStringValue:[[NSAttributedString new] autorelease]];
+    [text setAttributedStringValue:[NSAttributedString new]];
     [text setStringValue:s];
     if (e) [e setSelectedRange:range];
 

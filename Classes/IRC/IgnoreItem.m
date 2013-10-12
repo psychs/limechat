@@ -7,21 +7,9 @@
 
 
 @implementation IgnoreItem
-
-@synthesize nick;
-@synthesize text;
-@synthesize useRegexForNick;
-@synthesize useRegexForText;
-@synthesize channels;
-
-- (void)dealloc
 {
-    [nick release];
-    [text release];
-    [channels release];
-    [nickRegex release];
-    [textRegex release];
-    [super dealloc];
+    NSRegularExpression* _nickRegex;
+    NSRegularExpression* _textRegex;
 }
 
 - (id)init
@@ -36,11 +24,11 @@
 {
     self = [self init];
     if (self) {
-        nick = [[dic objectForKey:@"nick"] retain];
-        text = [[dic objectForKey:@"text"] retain];
-        useRegexForNick = [dic boolForKey:@"useRegexForNick"];
-        useRegexForText = [dic boolForKey:@"useRegexForText"];
-        channels = [[dic objectForKey:@"channels"] retain];
+        _nick = [dic objectForKey:@"nick"];
+        _text = [dic objectForKey:@"text"];
+        _useRegexForNick = [dic boolForKey:@"useRegexForNick"];
+        _useRegexForText = [dic boolForKey:@"useRegexForText"];
+        _channels = [dic objectForKey:@"channels"];
     }
     return self;
 }
@@ -49,13 +37,13 @@
 {
     NSMutableDictionary* dic = [NSMutableDictionary dictionary];
 
-    if (nick) [dic setObject:nick forKey:@"nick"];
-    if (text) [dic setObject:text forKey:@"text"];
+    if (_nick) [dic setObject:_nick forKey:@"nick"];
+    if (_text) [dic setObject:_text forKey:@"text"];
 
-    [dic setBool:useRegexForNick forKey:@"useRegexForNick"];
-    [dic setBool:useRegexForText forKey:@"useRegexForText"];
+    [dic setBool:_useRegexForNick forKey:@"useRegexForNick"];
+    [dic setBool:_useRegexForText forKey:@"useRegexForText"];
 
-    if (channels) [dic setObject:channels forKey:@"channels"];
+    if (_channels) [dic setObject:_channels forKey:@"channels"];
 
     return dic;
 }
@@ -68,27 +56,27 @@
 
     IgnoreItem* g = (IgnoreItem*)other;
 
-    if (useRegexForNick != g.useRegexForNick) {
+    if (_useRegexForNick != g.useRegexForNick) {
         return NO;
     }
 
-    if (useRegexForText != g.useRegexForText) {
+    if (_useRegexForText != g.useRegexForText) {
         return NO;
     }
 
-    if (nick && g.nick && ![nick isEqualNoCase:g.nick]) {
+    if (_nick && g.nick && ![_nick isEqualNoCase:g.nick]) {
         return NO;
     }
 
-    if (text && g.text && ![text isEqualNoCase:g.text]) {
+    if (_text && g.text && ![_text isEqualNoCase:g.text]) {
         return NO;
     }
 
-    if ((!channels || !channels.count) && (!g.channels || !g.channels.count)) {
+    if ((!_channels || !_channels.count) && (!g.channels || !g.channels.count)) {
         ;
     }
     else {
-        if (![channels isEqualToArray:g.channels]) {
+        if (![_channels isEqualToArray:g.channels]) {
             return NO;
         }
     }
@@ -98,92 +86,86 @@
 
 - (void)setNick:(NSString *)value
 {
-    if (![nick isEqualToString:value]) {
-        [nick release];
-        nick = [value retain];
-
-        [nickRegex release];
-        nickRegex = nil;
+    if (![_nick isEqualToString:value]) {
+        _nick = value;
+        _nickRegex = nil;
     }
 }
 
 - (void)setText:(NSString *)value
 {
-    if (![text isEqualToString:value]) {
-        [text release];
-        text = [value retain];
-
-        [textRegex release];
-        textRegex = nil;
+    if (![_text isEqualToString:value]) {
+        _text = value;
+        _textRegex = nil;
     }
 }
 
 - (BOOL)isValid
 {
-    return nick.length > 0 || text.length > 0;
+    return _nick.length > 0 || _text.length > 0;
 }
 
 - (NSString*)displayNick
 {
-    if (!nick || !nick.length) return @"";
-    if (!useRegexForNick) return nick;
-    return [NSString stringWithFormat:@"/%@/", nick];
+    if (!_nick || !_nick.length) return @"";
+    if (!_useRegexForNick) return _nick;
+    return [NSString stringWithFormat:@"/%@/", _nick];
 }
 
 - (NSString*)displayText
 {
-    if (!text || !text.length) return @"";
-    if (!useRegexForText) return text;
-    return [NSString stringWithFormat:@"/%@/", text];
+    if (!_text || !_text.length) return @"";
+    if (!_useRegexForText) return _text;
+    return [NSString stringWithFormat:@"/%@/", _text];
 }
 
 - (BOOL)checkIgnore:(NSString*)inputText nick:(NSString*)inputNick channel:(NSString*)channel
 {
     // check nick
-    if (!inputNick && nick.length) {
+    if (!inputNick && _nick.length) {
         return NO;
     }
 
-    if (inputNick.length > 0 && nick.length > 0) {
-        if (useRegexForNick) {
-            if (!nickRegex) {
-                nickRegex = [[NSRegularExpression alloc] initWithPattern:nick options:NSRegularExpressionCaseInsensitive error:NULL];
+    if (inputNick.length > 0 && _nick.length > 0) {
+        if (_useRegexForNick) {
+            if (!_nickRegex) {
+                _nickRegex = [[NSRegularExpression alloc] initWithPattern:_nick options:NSRegularExpressionCaseInsensitive error:NULL];
             }
 
-            if (nickRegex) {
-                NSRange range = [nickRegex rangeOfFirstMatchInString:inputNick options:0 range:NSMakeRange(0, inputNick.length)];
+            if (_nickRegex) {
+                NSRange range = [_nickRegex rangeOfFirstMatchInString:inputNick options:0 range:NSMakeRange(0, inputNick.length)];
                 if (!(range.location == 0 && range.length == inputNick.length)) {
                     return NO;
                 }
             }
         }
         else {
-            if (![inputNick isEqualNoCase:nick]) {
+            if (![inputNick isEqualNoCase:_nick]) {
                 return NO;
             }
         }
     }
 
     // check text
-    if (!inputText && text.length) {
+    if (!inputText && _text.length) {
         return NO;
     }
 
-    if (inputText && text.length > 0) {
-        if (useRegexForText) {
-            if (!textRegex) {
-                textRegex = [[NSRegularExpression alloc] initWithPattern:text options:NSRegularExpressionCaseInsensitive error:NULL];
+    if (inputText && _text.length > 0) {
+        if (_useRegexForText) {
+            if (!_textRegex) {
+                _textRegex = [[NSRegularExpression alloc] initWithPattern:_text options:NSRegularExpressionCaseInsensitive error:NULL];
             }
 
-            if (textRegex) {
-                NSRange range = [textRegex rangeOfFirstMatchInString:inputNick options:0 range:NSMakeRange(0, inputText.length)];
+            if (_textRegex) {
+                NSRange range = [_textRegex rangeOfFirstMatchInString:inputNick options:0 range:NSMakeRange(0, inputText.length)];
                 if (!(range.location == 0 && range.length == inputText.length)) {
                     return NO;
                 }
             }
         }
         else {
-            NSRange range = [inputText rangeOfString:text options:NSCaseInsensitiveSearch];
+            NSRange range = [inputText rangeOfString:_text options:NSCaseInsensitiveSearch];
             if (range.location == NSNotFound) {
                 return NO;
             }
@@ -191,13 +173,14 @@
     }
 
     // check channels
-    if (!channel && channels.count) {
+    if (!channel && _channels.count) {
         return NO;
     }
 
-    if (channel && channels.count) {
+    if (channel && _channels.count) {
         BOOL matched = NO;
-        for (NSString* s in channels) {
+        for (NSString* channelName in _channels) {
+            NSString* s = channelName;
             if (![s isChannelName]) {
                 s = [@"#" stringByAppendingString:s];
             }

@@ -6,9 +6,6 @@
 
 @implementation ListView
 
-@synthesize keyDelegate;
-@synthesize textDelegate;
-
 - (int)countSelectedRows
 {
     return [[self selectedRowIndexes] count];
@@ -68,13 +65,13 @@
 
 - (void)keyDown:(NSEvent *)e
 {
-    if (keyDelegate) {
+    if (_keyDelegate) {
         switch ([e keyCode]) {
             case 51:
             case 117:	// delete
                 if ([self countSelectedRows] > 0) {
-                    if ([keyDelegate respondsToSelector:@selector(listViewDelete)]) {
-                        [keyDelegate listViewDelete];
+                    if ([_keyDelegate respondsToSelector:@selector(listViewDelete)]) {
+                        [_keyDelegate listViewDelete];
                         return;
                     }
                 }
@@ -83,8 +80,8 @@
             {
                 NSIndexSet* set = [self selectedRowIndexes];
                 if ([set count] > 0 && [set containsIndex:0]) {
-                    if ([keyDelegate respondsToSelector:@selector(listViewMoveUp)]) {
-                        [keyDelegate listViewMoveUp];
+                    if ([_keyDelegate respondsToSelector:@selector(listViewMoveUp)]) {
+                        [_keyDelegate listViewMoveUp];
                         return;
                     }
                 }
@@ -95,8 +92,8 @@
             case 123 ... 125:	// cursor keys
                 break;
             default:
-                if ([keyDelegate respondsToSelector:@selector(listViewKeyDown:)]) {
-                    [keyDelegate listViewKeyDown:e];
+                if ([_keyDelegate respondsToSelector:@selector(listViewKeyDown:)]) {
+                    [_keyDelegate listViewKeyDown:e];
                 }
                 break;
         }
@@ -107,8 +104,8 @@
 
 - (void)textDidEndEditing:(NSNotification*)note
 {
-    if ([textDelegate respondsToSelector:@selector(textDidEndEditing:)]) {
-        [textDelegate textDidEndEditing:note];
+    if ([_textDelegate respondsToSelector:@selector(textDidEndEditing:)]) {
+        [_textDelegate textDidEndEditing:note];
     }
     [super textDidEndEditing:note];
 }

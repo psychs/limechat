@@ -6,46 +6,44 @@
 #import "IRCWorld.h"
 
 
-static ImageDownloadManager* instance;
+static ImageDownloadManager* _instance;
 
 
 @implementation ImageDownloadManager
-
-@synthesize world;
+{
+    NSMutableSet* _checkers;
+}
 
 - (id)init
 {
     self = [super init];
     if (self) {
-        checkers = [NSMutableSet new];
+        _checkers = [NSMutableSet new];
     }
     return self;
 }
 
 - (void)dealloc
 {
-    [checkers makeObjectsPerformSelector:@selector(cancel)];
-    [checkers release];
-    [super dealloc];
+    [_checkers makeObjectsPerformSelector:@selector(cancel)];
 }
 
 + (ImageDownloadManager*)instance
 {
-    if (!instance) {
-        instance = [ImageDownloadManager new];
+    if (!_instance) {
+        _instance = [ImageDownloadManager new];
     }
-    return instance;
+    return _instance;
 }
 
 + (void)disposeInstance
 {
-    [instance release];
-    instance = nil;
+    _instance = nil;
 }
 
 - (void)checkImageSize:(NSString*)url client:(IRCClient*)client channel:(IRCChannel*)channel lineNumber:(int)lineNumber imageIndex:(int)imageIndex
 {
-    ImageSizeCheckClient* c = [[ImageSizeCheckClient new] autorelease];
+    ImageSizeCheckClient* c = [ImageSizeCheckClient new];
     c.delegate = self;
     c.url = url;
     c.uid = client.uid;
@@ -53,7 +51,7 @@ static ImageDownloadManager* instance;
     c.lineNumber = lineNumber;
     c.imageIndex = imageIndex;
     [c checkSize];
-    [checkers addObject:c];
+    [_checkers addObject:c];
 }
 
 #pragma mark -
@@ -61,21 +59,20 @@ static ImageDownloadManager* instance;
 
 - (void)imageSizeCheckClient:(ImageSizeCheckClient*)sender didReceiveContentLength:(long long)contentLength andType:(NSString*)contentType
 {
-    [[sender retain] autorelease];
-    [checkers removeObject:sender];
+    [_checkers removeObject:sender];
 
     int uid = sender.uid;
     int cid = sender.cid;
     LogController* log = nil;
 
     if (cid) {
-        IRCChannel* channel = [world findChannelByClientId:uid channelId:cid];
+        IRCChannel* channel = [_world findChannelByClientId:uid channelId:cid];
         if (channel) {
             log = channel.log;
         }
     }
     else {
-        IRCClient* client = [world findClientById:uid];
+        IRCClient* client = [_world findClientById:uid];
         if (client) {
             log = client.log;
         }
@@ -88,8 +85,7 @@ static ImageDownloadManager* instance;
 
 - (void)imageSizeCheckClient:(ImageSizeCheckClient*)sender didFailWithError:(NSError*)error statusCode:(int)statusCode
 {
-    [[sender retain] autorelease];
-    [checkers removeObject:sender];
+    [_checkers removeObject:sender];
 }
 
 @end

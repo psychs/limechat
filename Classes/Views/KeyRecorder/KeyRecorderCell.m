@@ -15,11 +15,6 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [super dealloc];
-}
-
 - (NSBezierPath*)borderPathForBounds:(NSRect)r
 {
     //r = NSInsetRect(r, 0.5, 0.5);

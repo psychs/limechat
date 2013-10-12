@@ -9,13 +9,6 @@
 
 
 @interface FileLogger : NSObject
-{
-    __weak IRCClient* client;
-    __weak IRCChannel* channel;
-
-    NSString* fileName;
-    NSFileHandle* file;
-}
 
 @property (nonatomic, weak) IRCClient* client;
 @property (nonatomic, weak) IRCChannel* channel;

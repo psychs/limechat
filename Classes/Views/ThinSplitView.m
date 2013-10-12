@@ -5,15 +5,13 @@
 
 
 @implementation ThinSplitView
-
-@synthesize fixedViewIndex;
-@synthesize position;
-@synthesize inverted;
-@synthesize hidden;
+{
+    int _myDividerThickness;
+}
 
 - (void)setUp
 {
-    myDividerThickness = 1;
+    _myDividerThickness = 1;
 }
 
 - (id)initWithFrame:(NSRect)rect
@@ -36,57 +34,52 @@
 
 - (void)awakeFromNib
 {
-    myDividerThickness = [self isVertical] ? 1 : 5;
+    _myDividerThickness = [self isVertical] ? 1 : 5;
     [self updatePosition];
-}
-
-- (void)dealloc
-{
-    [super dealloc];
 }
 
 - (CGFloat)dividerThickness
 {
-    return myDividerThickness;
+    return _myDividerThickness;
 }
 
 - (void)setFixedViewIndex:(int)value
 {
-    if (fixedViewIndex != value) {
-        fixedViewIndex = value;
-        if (inverted) {
-            fixedViewIndex = fixedViewIndex ? 0 : 1;
+    if (_fixedViewIndex != value) {
+        _fixedViewIndex = value;
+        if (_inverted) {
+            _fixedViewIndex = _fixedViewIndex ? 0 : 1;
         }
     }
 }
 
 - (void)setPosition:(int)value
 {
-    position = value;
+    _position = value;
     [self adjustSubviews];
 }
 
 - (void)setDividerThickness:(int)value
 {
-    myDividerThickness = value;
-    [self setDividerThickness:myDividerThickness];
+    _myDividerThickness = value;
+    [self setDividerThickness:_myDividerThickness];
     [self adjustSubviews];
 }
 
 - (void)setInverted:(BOOL)value
 {
-    if (inverted == value) return;
-    inverted = value;
+    if (_inverted == value) return;
+    _inverted = value;
 
-    NSView* a = [[[[self subviews] objectAtIndex:0] retain] autorelease];
-    NSView* b = [[[[self subviews] objectAtIndex:1] retain] autorelease];
+    NSView* a = [[self subviews] objectAtIndex:0];
+    NSView* b = [[self subviews] objectAtIndex:1];
 
     [a removeFromSuperviewWithoutNeedingDisplay];
     [b removeFromSuperviewWithoutNeedingDisplay];
     [self addSubview:b];
     [self addSubview:a];
 
-    fixedViewIndex = fixedViewIndex ? 0 : 1;
+    _fixedViewIndex = _fixedViewIndex ? 0 : 1;
 
     [self adjustSubviews];
 }
@@ -95,20 +88,20 @@
 {
     [super setVertical:value];
 
-    myDividerThickness = value ? 1 : 5;
+    _myDividerThickness = value ? 1 : 5;
     [self adjustSubviews];
 }
 
 - (void)setHidden:(BOOL)value
 {
-    if (hidden == value) return;
-    hidden = value;
+    if (_hidden == value) return;
+    _hidden = value;
     [self adjustSubviews];
 }
 
 - (void)drawDividerInRect:(NSRect)rect
 {
-    if (hidden) return;
+    if (_hidden) return;
 
     if ([self isVertical]) {
         [[NSColor colorWithCalibratedWhite:0.65 alpha:1] set];
@@ -152,14 +145,14 @@
     NSSize size = self.frame.size;
     int width = size.width;
     int height = size.height;
-    int w = myDividerThickness;
+    int w = _myDividerThickness;
 
-    NSView* fixedView = [[self subviews] objectAtIndex:fixedViewIndex];
-    NSView* flyingView = [[self subviews] objectAtIndex:fixedViewIndex ? 0 : 1];
+    NSView* fixedView = [[self subviews] objectAtIndex:_fixedViewIndex];
+    NSView* flyingView = [[self subviews] objectAtIndex:_fixedViewIndex ? 0 : 1];
     NSRect fixedFrame = fixedView.frame;
     NSRect flyingFrame = flyingView.frame;
 
-    if (hidden) {
+    if (_hidden) {
         if ([self isVertical]) {
             fixedFrame = NSMakeRect(0, 0, 0, height);
             flyingFrame.origin = NSZeroPoint;
@@ -173,29 +166,29 @@
     }
     else {
         if ([self isVertical]) {
-            flyingFrame.size.width = width - w - position;
+            flyingFrame.size.width = width - w - _position;
             flyingFrame.size.height = height;
-            flyingFrame.origin.x = fixedViewIndex ? 0 : position + w;
+            flyingFrame.origin.x = _fixedViewIndex ? 0 : _position + w;
             flyingFrame.origin.y = 0;
             if (flyingFrame.size.width < 0) flyingFrame.size.width = 0;
 
-            fixedFrame.size.width = position;
+            fixedFrame.size.width = _position;
             fixedFrame.size.height = height;
-            fixedFrame.origin.x = fixedViewIndex ? flyingFrame.size.width + w : 0;
+            fixedFrame.origin.x = _fixedViewIndex ? flyingFrame.size.width + w : 0;
             fixedFrame.origin.y = 0;
             if (fixedFrame.size.width > width - w) fixedFrame.size.width = width - w;
         }
         else {
             flyingFrame.size.width = width;
-            flyingFrame.size.height = height - w - position;
+            flyingFrame.size.height = height - w - _position;
             flyingFrame.origin.x = 0;
-            flyingFrame.origin.y = fixedViewIndex ? 0 : position + w;
+            flyingFrame.origin.y = _fixedViewIndex ? 0 : _position + w;
             if (flyingFrame.size.height < 0) flyingFrame.size.height = 0;
 
             fixedFrame.size.width = width;
-            fixedFrame.size.height = position;
+            fixedFrame.size.height = _position;
             fixedFrame.origin.x = 0;
-            fixedFrame.origin.y = fixedViewIndex ? flyingFrame.size.height + w : 0;
+            fixedFrame.origin.y = _fixedViewIndex ? flyingFrame.size.height + w : 0;
             if (fixedFrame.size.height > height - w) fixedFrame.size.height = height - w;
         }
     }
@@ -208,9 +201,9 @@
 
 - (void)updatePosition
 {
-    NSView* view =  [[self subviews] objectAtIndex:fixedViewIndex];
+    NSView* view =  [[self subviews] objectAtIndex:_fixedViewIndex];
     NSSize size = view.frame.size;
-    position = [self isVertical] ? size.width : size.height;
+    _position = [self isVertical] ? size.width : size.height;
 }
 
 @end

@@ -18,17 +18,6 @@ static char* UNITS[] = { "bytes", "KB", "MB", "GB", "TB" };
 
 @implementation DCCFileTransferCell
 
-@synthesize peerNick;
-@synthesize processedSize;
-@synthesize size;
-@synthesize speed;
-@synthesize timeRemaining;
-@synthesize status;
-@synthesize error;
-@synthesize progressBar;
-@synthesize icon;
-@synthesize sendingItem;
-
 - (id)init
 {
     self = [super init];
@@ -37,43 +26,34 @@ static char* UNITS[] = { "bytes", "KB", "MB", "GB", "TB" };
     return self;
 }
 
-- (void)dealloc
-{
-    [peerNick release];
-    [error release];
-    [progressBar release];
-    [icon release];
-    [super dealloc];
-}
-
 - (id)copyWithZone:(NSZone *)zone
 {
     DCCFileTransferCell* c = [[DCCFileTransferCell allocWithZone:zone] init];
-    c.peerNick = peerNick;
-    c.processedSize = processedSize;
-    c.size = size;
-    c.speed = speed;
-    c.timeRemaining = timeRemaining;
-    c.status = status;
-    c.error = error;
-    c.progressBar = progressBar;
-    c.icon = icon;
-    c.sendingItem = sendingItem;
+    c.peerNick = _peerNick;
+    c.processedSize = _processedSize;
+    c.size = _size;
+    c.speed = _speed;
+    c.timeRemaining = _timeRemaining;
+    c.status = _status;
+    c.error = _error;
+    c.progressBar = _progressBar;
+    c.icon = _icon;
+    c.sendingItem = _sendingItem;
     return c;
 }
 
 - (void)drawInteriorWithFrame:(NSRect)frame inView:(NSView*)view
 {
-    if (icon) {
+    if (_icon) {
         CGFloat margin = (frame.size.height - ICON_SIZE.height) / 2;
         CGFloat x = frame.origin.x + margin;
         CGFloat y = frame.origin.y + margin;
         NSRect iconFrame = NSMakeRect(x, y, ICON_SIZE.width, ICON_SIZE.height);
-        NSRect sourceRect = NSMakeRect(0, 0, icon.size.width, icon.size.height);
-        [icon drawInRect:iconFrame fromRect:sourceRect operation:NSCompositeSourceOver fraction:1 respectFlipped:YES hints:nil];
+        NSRect sourceRect = NSMakeRect(0, 0, _icon.size.width, _icon.size.height);
+        [_icon drawInRect:iconFrame fromRect:sourceRect operation:NSCompositeSourceOver fraction:1 respectFlipped:YES hints:nil];
     }
 
-    int offset = progressBar ? 0 : (PROGRESS_BAR_HEIGHT / 3);
+    int offset = _progressBar ? 0 : (PROGRESS_BAR_HEIGHT / 3);
 
     NSString* fname = self.stringValue;
 
@@ -99,13 +79,13 @@ static char* UNITS[] = { "bytes", "KB", "MB", "GB", "TB" };
 
     [fname drawInRect:fnameRect withAttributes:fnameAttrs];
 
-    if (progressBar) {
+    if (_progressBar) {
         NSRect progressRect = frame;
         progressRect.origin.x += progressRect.size.height;
         progressRect.origin.y += FILENAME_HEIGHT;
         progressRect.size.width -= progressRect.size.height + RIGHT_MARGIN;
         progressRect.size.height = PROGRESS_BAR_HEIGHT;
-        progressBar.frame = progressRect;
+        _progressBar.frame = progressRect;
     }
 
     NSRect statusRect = frame;
@@ -115,10 +95,10 @@ static char* UNITS[] = { "bytes", "KB", "MB", "GB", "TB" };
     statusRect.size.height = STATUS_HEIGHT - STATUS_TOP_MARGIN;
 
     NSColor* statusColor;
-    if (status == DCC_ERROR) {
+    if (_status == DCC_ERROR) {
         statusColor = [NSColor redColor];
     }
-    else if (status == DCC_COMPLETE) {
+    else if (_status == DCC_COMPLETE) {
         statusColor = [NSColor blueColor];
     }
     else if (self.isHighlighted && [view.window isMainWindow] && [view.window firstResponder] == view) {
@@ -136,38 +116,38 @@ static char* UNITS[] = { "bytes", "KB", "MB", "GB", "TB" };
 
     NSMutableString* statusStr = [NSMutableString string];
 
-    if (sendingItem) {
-        [statusStr appendFormat:@"To %@    ", peerNick];
+    if (_sendingItem) {
+        [statusStr appendFormat:@"To %@    ", _peerNick];
     }
     else {
-        [statusStr appendFormat:@"From %@    ", peerNick];
+        [statusStr appendFormat:@"From %@    ", _peerNick];
     }
 
-    switch (status) {
+    switch (_status) {
         case DCC_INIT:
-            [statusStr appendString:[self formatSize:size]];
+            [statusStr appendString:[self formatSize:_size]];
             break;
         case DCC_LISTENING:
-            [statusStr appendFormat:@"%@  — Requesting", [self formatSize:size]];
+            [statusStr appendFormat:@"%@  — Requesting", [self formatSize:_size]];
             break;
         case DCC_CONNECTING:
-            [statusStr appendFormat:@"%@  — Connecting", [self formatSize:size]];
+            [statusStr appendFormat:@"%@  — Connecting", [self formatSize:_size]];
             break;
         case DCC_SENDING:
         case DCC_RECEIVING:
-            [statusStr appendFormat:@"%@ / %@ (%@/s)", [self formatSize:processedSize], [self formatSize:size], [self formatSize:speed]];
-            if (timeRemaining) {
-                [statusStr appendFormat:@"  — %@ remaining", [self formatTime:timeRemaining]];
+            [statusStr appendFormat:@"%@ / %@ (%@/s)", [self formatSize:_processedSize], [self formatSize:_size], [self formatSize:_speed]];
+            if (_timeRemaining) {
+                [statusStr appendFormat:@"  — %@ remaining", [self formatTime:_timeRemaining]];
             }
             break;
         case DCC_STOP:
-            [statusStr appendFormat:@"%@ / %@  — Stopped", [self formatSize:processedSize], [self formatSize:size]];
+            [statusStr appendFormat:@"%@ / %@  — Stopped", [self formatSize:_processedSize], [self formatSize:_size]];
             break;
         case DCC_ERROR:
-            [statusStr appendFormat:@"%@ / %@  — Error: %@", [self formatSize:processedSize], [self formatSize:size], error];
+            [statusStr appendFormat:@"%@ / %@  — Error: %@", [self formatSize:_processedSize], [self formatSize:_size], _error];
             break;
         case DCC_COMPLETE:
-            [statusStr appendFormat:@"%@  — Complete", [self formatSize:size]];
+            [statusStr appendFormat:@"%@  — Complete", [self formatSize:_size]];
             break;
     }
 

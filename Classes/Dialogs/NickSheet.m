@@ -6,8 +6,6 @@
 
 @implementation NickSheet
 
-@synthesize uid;
-
 - (id)init
 {
     self = [super init];
@@ -15,11 +13,6 @@
         [NSBundle loadNibNamed:@"NickSheet" owner:self];
     }
     return self;
-}
-
-- (void)dealloc
-{
-    [super dealloc];
 }
 
 - (void)start:(NSString*)nick

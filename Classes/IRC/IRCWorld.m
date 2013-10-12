@@ -18,53 +18,30 @@
 
 
 @implementation IRCWorld
+{
+    IconController* _icon;
+    LogController* _dummyLog;
+    IRCWorldConfig* _config;
 
-@synthesize app;
-@synthesize window;
-@synthesize notifier;
-@synthesize tree;
-@synthesize text;
-@synthesize logBase;
-@synthesize consoleBase;
-@synthesize chatBox;
-@synthesize fieldEditor;
-@synthesize memberList;
-@synthesize menuController;
-@synthesize dcc;
-@synthesize viewTheme;
-@synthesize treeMenu;
-@synthesize logMenu;
-@synthesize consoleMenu;
-@synthesize urlMenu;
-@synthesize addrMenu;
-@synthesize chanMenu;
-@synthesize memberMenu;
-@synthesize consoleLog;
-@synthesize selected;
+    NSMenu* _serverMenu;
+    NSMenu* _channelMenu;
 
-@synthesize clients;
+    int _itemId;
+    BOOL _reloadingTree;
+    IRCTreeItem* _selected;
+
+    int _previousSelectedClientId;
+    int _previousSelectedChannelId;
+}
 
 - (id)init
 {
     self = [super init];
     if (self) {
-        icon = [IconController new];
-        clients = [NSMutableArray new];
+        _icon = [IconController new];
+        _clients = [NSMutableArray new];
     }
     return self;
-}
-
-- (void)dealloc
-{
-    [icon release];
-    [serverMenu release];
-    [channelMenu release];
-    [consoleLog release];
-    [dummyLog release];
-    [config release];
-    [clients release];
-    [selected release];
-    [super dealloc];
 }
 
 #pragma mark -
@@ -72,19 +49,19 @@
 
 - (void)setup:(IRCWorldConfig*)seed
 {
-    consoleLog = [[self createLogWithClient:nil channel:nil console:YES] retain];
-    consoleBase.contentView = consoleLog.view;
-    [consoleLog notifyDidBecomeVisible];
+    _consoleLog = [self createLogWithClient:nil channel:nil console:YES];
+    _consoleBase.contentView = _consoleLog.view;
+    [_consoleLog notifyDidBecomeVisible];
 
-    dummyLog = [[self createLogWithClient:nil channel:nil console:YES] retain];
-    logBase.contentView = dummyLog.view;
-    [dummyLog notifyDidBecomeVisible];
+    _dummyLog = [self createLogWithClient:nil channel:nil console:YES];
+    _logBase.contentView = _dummyLog.view;
+    [_dummyLog notifyDidBecomeVisible];
 
-    config = [seed mutableCopy];
-    for (IRCClientConfig* e in config.clients) {
+    _config = [seed mutableCopy];
+    for (IRCClientConfig* e in _config.clients) {
         [self createClient:e reload:YES];
     }
-    [config.clients removeAllObjects];
+    [_config.clients removeAllObjects];
 
     [self changeInputTextTheme];
     [self changeTreeTheme];
@@ -93,12 +70,12 @@
 
 - (void)setupTree
 {
-    [tree setTarget:self];
-    [tree setDoubleAction:@selector(outlineViewDoubleClicked:)];
-    [tree registerForDraggedTypes:TREE_DRAG_ITEM_TYPES];
+    [_tree setTarget:self];
+    [_tree setDoubleAction:@selector(outlineViewDoubleClicked:)];
+    [_tree registerForDraggedTypes:TREE_DRAG_ITEM_TYPES];
 
     IRCClient* client = nil;;
-    for (IRCClient* e in clients) {
+    for (IRCClient* e in _clients) {
         if (e.config.autoConnect) {
             client = e;
             break;
@@ -106,13 +83,13 @@
     }
 
     if (client) {
-        [tree expandItem:client];
-        int n = [tree rowForItem:client];
+        [_tree expandItem:client];
+        int n = [_tree rowForItem:client];
         if (client.channels.count) ++n;
-        [tree selectItemAtIndex:n];
+        [_tree selectItemAtIndex:n];
     }
-    else if (clients.count > 0) {
-        [tree selectItemAtIndex:0];
+    else if (_clients.count > 0) {
+        [_tree selectItemAtIndex:0];
     }
 
     [self outlineViewSelectionDidChange:nil];
@@ -126,10 +103,10 @@
 
 - (NSMutableDictionary*)dictionaryValue
 {
-    NSMutableDictionary* dic = [config dictionaryValue];
+    NSMutableDictionary* dic = [_config dictionaryValue];
 
     NSMutableArray* ary = [NSMutableArray array];
-    for (IRCClient* u in clients) {
+    for (IRCClient* u in _clients) {
         [ary addObject:[u dictionaryValue]];
     }
 
@@ -139,16 +116,16 @@
 
 - (void)setServerMenuItem:(NSMenuItem*)item
 {
-    if (serverMenu) return;
+    if (_serverMenu) return;
 
-    serverMenu = [[item submenu] copy];
+    _serverMenu = [[item submenu] copy];
 }
 
 - (void)setChannelMenuItem:(NSMenuItem*)item
 {
-    if (channelMenu) return;
+    if (_channelMenu) return;
 
-    channelMenu = [[item submenu] copy];
+    _channelMenu = [[item submenu] copy];
 }
 
 #pragma mark -
@@ -156,15 +133,15 @@
 
 - (IRCClient*)selectedClient
 {
-    if (!selected) return nil;
-    return [selected client];
+    if (!_selected) return nil;
+    return [_selected client];
 }
 
 - (IRCChannel*)selectedChannel
 {
-    if (!selected) return nil;
-    if ([selected isClient]) return nil;
-    return (IRCChannel*)selected;
+    if (!_selected) return nil;
+    if ([_selected isClient]) return nil;
+    return (IRCChannel*)_selected;
 }
 
 #pragma mark -
@@ -172,7 +149,7 @@
 
 - (void)onTimer
 {
-    for (IRCClient* c in clients) {
+    for (IRCClient* c in _clients) {
         [c onTimer];
     }
 }
@@ -182,7 +159,7 @@
     int delay = 0;
     if (afterWakeUp) delay += RECONNECT_AFTER_WAKE_UP_DELAY;
 
-    for (IRCClient* c in clients) {
+    for (IRCClient* c in _clients) {
         if (c.config.autoConnect) {
             [c autoConnect:delay];
             delay += AUTO_CONNECT_DELAY;
@@ -192,32 +169,32 @@
 
 - (void)terminate
 {
-    for (IRCClient* c in clients) {
+    for (IRCClient* c in _clients) {
         [c terminate];
     }
 }
 
 - (void)prepareForSleep
 {
-    for (IRCClient* c in clients) {
+    for (IRCClient* c in _clients) {
         [c disconnect];
     }
 }
 
 - (void)focusInputText
 {
-    [text focus];
+    [_text focus];
 }
 
 - (BOOL)inputText:(NSString*)s command:(NSString*)command
 {
-    if (!selected) return NO;
-    return [[selected client] inputText:s command:command];
+    if (!_selected) return NO;
+    return [[_selected client] inputText:s command:command];
 }
 
 - (void)markAllAsRead
 {
-    for (IRCClient* u in clients) {
+    for (IRCClient* u in _clients) {
         u.isUnread = NO;
         for (IRCChannel* c in u.channels) {
             c.isUnread = NO;
@@ -228,7 +205,7 @@
 
 - (void)markAllScrollbacks
 {
-    for (IRCClient* u in clients) {
+    for (IRCClient* u in _clients) {
         [u.log mark];
         for (IRCChannel* c in u.channels) {
             [c.log mark];
@@ -241,7 +218,7 @@
     BOOL highlight = NO;
     BOOL newTalk = NO;
 
-    for (IRCClient* u in clients) {
+    for (IRCClient* u in _clients) {
         if (u.isKeyword) {
             highlight = YES;
             break;
@@ -258,57 +235,57 @@
         }
     }
 
-    [icon setHighlight:highlight newTalk:newTalk];
+    [_icon setHighlight:highlight newTalk:newTalk];
 }
 
 - (void)reloadTree
 {
-    if (reloadingTree) {
-        [tree setNeedsDisplay];
+    if (_reloadingTree) {
+        [_tree setNeedsDisplay];
         return;
     }
 
-    reloadingTree = YES;
-    [tree reloadData];
-    reloadingTree = NO;
+    _reloadingTree = YES;
+    [_tree reloadData];
+    _reloadingTree = NO;
 }
 
 - (void)expandClient:(IRCClient*)client
 {
-    [tree expandItem:client];
+    [_tree expandItem:client];
 }
 
 - (void)adjustSelection
 {
-    NSInteger row = [tree selectedRow];
-    if (0 <= row && selected && selected != [tree itemAtRow:row]) {
-        [tree selectItemAtIndex:[tree rowForItem:selected]];
+    NSInteger row = [_tree selectedRow];
+    if (0 <= row && _selected && _selected != [_tree itemAtRow:row]) {
+        [_tree selectItemAtIndex:[_tree rowForItem:_selected]];
         [self reloadTree];
     }
 }
 
 - (void)storePreviousSelection
 {
-    if (!selected) {
-        previousSelectedClientId = 0;
-        previousSelectedChannelId = 0;
+    if (!_selected) {
+        _previousSelectedClientId = 0;
+        _previousSelectedChannelId = 0;
     }
-    else if (selected.isClient) {
-        previousSelectedClientId = selected.uid;
-        previousSelectedChannelId = 0;
+    else if (_selected.isClient) {
+        _previousSelectedClientId = _selected.uid;
+        _previousSelectedChannelId = 0;
     }
     else {
-        previousSelectedClientId = selected.client.uid;
-        previousSelectedChannelId = selected.uid;
+        _previousSelectedClientId = _selected.client.uid;
+        _previousSelectedChannelId = _selected.uid;
     }
 }
 
 - (void)selectPreviousItem
 {
-    if (!previousSelectedClientId && !previousSelectedClientId) return;
+    if (!_previousSelectedClientId && !_previousSelectedClientId) return;
 
-    int uid = previousSelectedClientId;
-    int cid = previousSelectedChannelId;
+    int uid = _previousSelectedClientId;
+    int cid = _previousSelectedChannelId;
 
     IRCTreeItem* item;
 
@@ -326,9 +303,9 @@
 
 - (void)preferencesChanged
 {
-    consoleLog.maxLines = [Preferences maxLogLines];
+    _consoleLog.maxLines = [Preferences maxLogLines];
 
-    for (IRCClient* c in clients) {
+    for (IRCClient* c in _clients) {
         [c preferencesChanged];
     }
 }
@@ -341,12 +318,12 @@
     if ([Preferences stopGrowlOnActive] && [NSApp isActive]) return;
     if (![Preferences userNotificationEnabledForEvent:type]) return;
 
-    [notifier notify:type title:title desc:desc context:context];
+    [_notifier notify:type title:title desc:desc context:context];
 }
 
 - (void)notificationControllerDidActivateNotification:(id)context actionButtonClicked:(BOOL)actionButtonClicked
 {
-    [window makeKeyAndOrderFront:nil];
+    [_window makeKeyAndOrderFront:nil];
 	[NSApp activateIgnoringOtherApps:YES];
 
     LOG(@"Notification clicked: %@", context);
@@ -392,12 +369,12 @@
 
 - (void)updateTitle
 {
-    if (!selected) {
-        [window setTitle:@"LimeChat"];
+    if (!_selected) {
+        [_window setTitle:@"LimeChat"];
         return;
     }
 
-    IRCTreeItem* sel = selected;
+    IRCTreeItem* sel = _selected;
     if (sel.isClient) {
         IRCClient* u = (IRCClient*)sel;
         NSString* myNick = u.myNick;
@@ -416,7 +393,7 @@
             if (title.length) [title appendString:@" "];
             [title appendFormat:@"(%@)", mode];
         }
-        [window setTitle:title];
+        [_window setTitle:title];
     }
     else {
         IRCClient* u = sel.client;
@@ -471,22 +448,22 @@
                 [title appendString:topic];
             }
         }
-        [window setTitle:title];
+        [_window setTitle:title];
     }
 }
 
 - (void)updateClientTitle:(IRCClient*)client
 {
-    if (!client || !selected) return;
-    if ([selected client] == client) {
+    if (!client || !_selected) return;
+    if ([_selected client] == client) {
         [self updateTitle];
     }
 }
 
 - (void)updateChannelTitle:(IRCChannel*)channel
 {
-    if (!channel || !selected) return;
-    if (selected == channel) {
+    if (!channel || !_selected) return;
+    if (_selected == channel) {
         [self updateTitle];
     }
 }
@@ -496,7 +473,7 @@
 
 - (IRCClient*)findClient:(NSString*)name
 {
-    for (IRCClient* u in clients) {
+    for (IRCClient* u in _clients) {
         if ([u.name isEqualToString:name]) {
             return u;
         }
@@ -506,7 +483,7 @@
 
 - (IRCClient*)findClientById:(int)uid
 {
-    for (IRCClient* u in clients) {
+    for (IRCClient* u in _clients) {
         if (u.uid == uid) {
             return u;
         }
@@ -516,7 +493,7 @@
 
 - (IRCChannel*)findChannelByClientId:(int)uid channelId:(int)cid
 {
-    for (IRCClient* u in clients) {
+    for (IRCClient* u in _clients) {
         if (u.uid == uid) {
             for (IRCChannel* c in u.channels) {
                 if (c.uid == cid) {
@@ -531,7 +508,7 @@
 
 - (void)select:(id)item
 {
-    if (selected == item) return;
+    if (_selected == item) return;
 
     [self storePreviousSelection];
     [self focusInputText];
@@ -539,23 +516,23 @@
     if (!item) {
         self.selected = nil;
 
-        logBase.contentView = dummyLog.view;
-        [dummyLog notifyDidBecomeVisible];
+        _logBase.contentView = _dummyLog.view;
+        [_dummyLog notifyDidBecomeVisible];
 
-        memberList.dataSource = nil;
-        [memberList reloadData];
-        tree.menu = treeMenu;
+        _memberList.dataSource = nil;
+        [_memberList reloadData];
+        _tree.menu = _treeMenu;
         return;
     }
 
     BOOL isClient = [item isClient];
     IRCClient* client = (IRCClient*)[item client];
 
-    if (!isClient) [tree expandItem:client];
+    if (!isClient) [_tree expandItem:client];
 
-    int i = [tree rowForItem:item];
+    int i = [_tree rowForItem:item];
     if (i < 0) return;
-    [tree selectItemAtIndex:i];
+    [_tree selectItemAtIndex:i];
 
     client.lastSelectedChannel = isClient ? nil : (IRCChannel*)item;
 }
@@ -578,8 +555,8 @@
 
 - (void)selectClientAt:(int)n
 {
-    if (0 <= n && n < clients.count) {
-        IRCClient* c = [clients objectAtIndex:n];
+    if (0 <= n && n < _clients.count) {
+        IRCClient* c = [_clients objectAtIndex:n];
         IRCChannel* e = c.lastSelectedChannel;
         if (e) {
             [self select:e];
@@ -595,11 +572,11 @@
 
 - (void)reloadTheme
 {
-    viewTheme.name = [Preferences themeName];
+    _viewTheme.name = [Preferences themeName];
 
     NSMutableArray* logs = [NSMutableArray array];
-    [logs addObject:consoleLog];
-    for (IRCClient* u in clients) {
+    [logs addObject:_consoleLog];
+    for (IRCClient* u in _clients) {
         [logs addObject:u.log];
         for (IRCChannel* c in u.channels) {
             [logs addObject:c.log];
@@ -617,11 +594,11 @@
 
 - (void)changeInputTextTheme
 {
-    OtherTheme* theme = viewTheme.other;
+    OtherTheme* theme = _viewTheme.other;
 
-    [fieldEditor setInsertionPointColor:theme.inputTextColor];
-    [text setTextColor:theme.inputTextColor];
-    [text setBackgroundColor:theme.inputTextBgColor];
+    [_fieldEditor setInsertionPointColor:theme.inputTextColor];
+    [_text setTextColor:theme.inputTextColor];
+    [_text setBackgroundColor:theme.inputTextBgColor];
 
     NSFont* inputFont = nil;
     if ([Preferences themeOverrideInputFont]) {
@@ -630,38 +607,38 @@
     if (!inputFont) {
         inputFont = theme.inputTextFont;
     }
-    [chatBox setInputTextFont:inputFont];
+    [_chatBox setInputTextFont:inputFont];
 
-    if ([window firstResponder] == [window fieldEditor:NO forObject:text]) {
-        [window makeFirstResponder:dummyLog.view];
-        [window performSelector:@selector(makeFirstResponder:) withObject:text afterDelay:0.001];
+    if ([_window firstResponder] == [_window fieldEditor:NO forObject:_text]) {
+        [_window makeFirstResponder:_dummyLog.view];
+        [_window performSelector:@selector(makeFirstResponder:) withObject:_text afterDelay:0.001];
     }
 }
 
 - (void)changeTreeTheme
 {
-    OtherTheme* theme = viewTheme.other;
+    OtherTheme* theme = _viewTheme.other;
 
-    [tree setFont:theme.treeFont];
-    [tree themeChanged];
-    [tree setNeedsDisplay];
+    [_tree setFont:theme.treeFont];
+    [_tree themeChanged];
+    [_tree setNeedsDisplay];
 }
 
 - (void)changeMemberListTheme
 {
-    OtherTheme* theme = viewTheme.other;
+    OtherTheme* theme = _viewTheme.other;
 
-    [memberList setFont:theme.memberListFont];
-    [[[[memberList tableColumns] objectAtIndex:0] dataCell] themeChanged];
-    [memberList themeChanged];
-    [memberList setNeedsDisplay];
+    [_memberList setFont:theme.memberListFont];
+    [[[[_memberList tableColumns] objectAtIndex:0] dataCell] themeChanged];
+    [_memberList themeChanged];
+    [_memberList setNeedsDisplay];
 }
 
 - (void)changeTextSize:(BOOL)bigger
 {
-    [consoleLog changeTextSize:bigger];
+    [_consoleLog changeTextSize:bigger];
 
-    for (IRCClient* u in clients) {
+    for (IRCClient* u in _clients) {
         [u.log changeTextSize:bigger];
         for (IRCChannel* c in u.channels) {
             [c.log changeTextSize:bigger];
@@ -674,8 +651,8 @@
 
 - (IRCClient*)createClient:(IRCClientConfig*)seed reload:(BOOL)reload
 {
-    IRCClient* c = [[IRCClient new] autorelease];
-    c.uid = ++itemId;
+    IRCClient* c = [IRCClient new];
+    c.uid = ++_itemId;
     c.world = self;
     c.log = [self createLogWithClient:c channel:nil console:NO];
     [c setup:seed];
@@ -684,7 +661,7 @@
         [self createChannel:e client:c reload:NO adjust:NO];
     }
 
-    [clients addObject:c];
+    [_clients addObject:c];
 
     if (reload) [self reloadTree];
 
@@ -696,8 +673,8 @@
     IRCChannel* c = [client findChannel:seed.name];
     if (c) return c;
 
-    c = [[IRCChannel new] autorelease];
-    c.uid = ++itemId;
+    c = [IRCChannel new];
+    c.uid = ++_itemId;
     c.client = client;
     c.mode.isupport = client.isupport;
     [c setup:seed];
@@ -728,7 +705,7 @@
 
 - (IRCChannel*)createTalk:(NSString*)nick client:(IRCClient*)client
 {
-    IRCChannelConfig* seed = [[IRCChannelConfig new] autorelease];
+    IRCChannelConfig* seed = [IRCChannelConfig new];
     seed.name = nick;
     seed.type = CHANNEL_TYPE_TALK;
     IRCChannel* c = [self createChannel:seed client:client reload:YES adjust:YES];
@@ -737,12 +714,12 @@
         [c activate];
 
         IRCUser* m;
-        m = [[IRCUser new] autorelease];
+        m = [IRCUser new];
         m.isupport = client.isupport;
         m.nick = client.myNick;
         [c addMember:m];
 
-        m = [[IRCUser new] autorelease];
+        m = [IRCUser new];
         m.isupport = client.isupport;
         m.nick = c.name;
         [c addMember:m];
@@ -757,24 +734,24 @@
     int i;
 
     if (target.isClient) {
-        i = [clients indexOfObjectIdenticalTo:target];
+        i = [_clients indexOfObjectIdenticalTo:target];
         int n = i + 1;
-        if (0 <= n && n < clients.count) {
-            sel = [clients objectAtIndex:n];
+        if (0 <= n && n < _clients.count) {
+            sel = [_clients objectAtIndex:n];
         }
-        i = [tree rowForItem:target];
+        i = [_tree rowForItem:target];
     }
     else {
-        i = [tree rowForItem:target];
+        i = [_tree rowForItem:target];
         int n = i + 1;
-        if (0 <= n && n < [tree numberOfRows]) {
-            sel = [tree itemAtRow:n];
+        if (0 <= n && n < [_tree numberOfRows]) {
+            sel = [_tree itemAtRow:n];
         }
         if (sel && sel.isClient) {
             // we don't want to change clients when closing a channel
             n = i - 1;
-            if (0 <= n && n < [tree numberOfRows]) {
-                sel = [tree itemAtRow:n];
+            if (0 <= n && n < [_tree numberOfRows]) {
+                sel = [_tree itemAtRow:n];
             }
         }
     }
@@ -784,8 +761,8 @@
     }
     else {
         int n = i - 1;
-        if (0 <= n && n < [tree numberOfRows]) {
-            sel = [tree itemAtRow:n];
+        if (0 <= n && n < [_tree numberOfRows]) {
+            sel = [_tree itemAtRow:n];
         }
         [self select:sel];
     }
@@ -795,7 +772,7 @@
         for (IRCChannel* c in u.channels) {
             [c closeDialogs];
         }
-        [clients removeObjectIdenticalTo:target];
+        [_clients removeObjectIdenticalTo:target];
     }
     else {
         [target.client.channels removeObjectIdenticalTo:target];
@@ -803,23 +780,21 @@
 
     [self reloadTree];
 
-    if (selected) {
-        [tree selectItemAtIndex:[tree rowForItem:sel]];
+    if (_selected) {
+        [_tree selectItemAtIndex:[_tree rowForItem:sel]];
     }
 }
 
 - (void)destroyClient:(IRCClient*)u
 {
-    [[u retain] autorelease];
-
     [u terminate];
     [u disconnect];
 
-    if (selected && selected.client == u) {
+    if (_selected && _selected.client == u) {
         [self selectOtherAndDestroy:u];
     }
     else {
-        [clients removeObjectIdenticalTo:u];
+        [_clients removeObjectIdenticalTo:u];
         [self reloadTree];
         [self adjustSelection];
     }
@@ -827,8 +802,6 @@
 
 - (void)destroyChannel:(IRCChannel*)c
 {
-    [[c retain] autorelease];
-
     [c terminate];
 
     IRCClient* u = c.client;
@@ -842,7 +815,7 @@
         u.lastSelectedChannel = nil;
     }
 
-    if (selected == c) {
+    if (_selected == c) {
         [self selectOtherAndDestroy:c];
     }
     else {
@@ -854,24 +827,24 @@
 
 - (LogController*)createLogWithClient:(IRCClient*)client channel:(IRCChannel*)channel console:(BOOL)console
 {
-    LogController* c = [[LogController new] autorelease];
-    c.menu = console ? consoleMenu : logMenu;
-    c.urlMenu = urlMenu;
-    c.addrMenu = addrMenu;
-    c.chanMenu = chanMenu;
-    c.memberMenu = memberMenu;
+    LogController* c = [LogController new];
+    c.menu = console ? _consoleMenu : _logMenu;
+    c.urlMenu = _urlMenu;
+    c.addrMenu = _addrMenu;
+    c.chanMenu = _chanMenu;
+    c.memberMenu = _memberMenu;
     c.world = self;
     c.client = client;
     c.channel = channel;
     c.maxLines = [Preferences maxLogLines];
-    c.theme = viewTheme;
+    c.theme = _viewTheme;
     c.console = console;
-    c.initialBackgroundColor = [viewTheme.other inputTextBgColor];
+    c.initialBackgroundColor = [_viewTheme.other inputTextBgColor];
     [c setUp];
 
-    [c.view setHostWindow:window];
-    if (consoleLog) {
-        [c.view setTextSizeMultiplier:consoleLog.view.textSizeMultiplier];
+    [c.view setHostWindow:_window];
+    if (_consoleLog) {
+        [c.view setTextSizeMultiplier:_consoleLog.view.textSizeMultiplier];
     }
 
     return c;
@@ -882,7 +855,7 @@
 
 - (void)logKeyDown:(NSEvent*)e
 {
-    [window makeFirstResponder:text];
+    [_window makeFirstResponder:_text];
     [self focusInputText];
 
     switch (e.keyCode) {
@@ -891,7 +864,7 @@
             return;
     }
 
-    [window sendEvent:e];
+    [_window sendEvent:e];
 }
 
 - (void)logDoubleClick:(NSString*)s
@@ -926,7 +899,7 @@
 
 - (void)outlineViewDoubleClicked:(id)sender
 {
-    if (!selected) return;
+    if (!_selected) return;
 
     IRCClient* u = self.selectedClient;
     IRCChannel* c = self.selectedChannel;
@@ -961,7 +934,7 @@
 
 - (NSInteger)outlineView:(NSOutlineView *)sender numberOfChildrenOfItem:(id)item
 {
-    if (!item) return clients.count;
+    if (!item) return _clients.count;
     return [item numberOfChildren];
 }
 
@@ -972,7 +945,7 @@
 
 - (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(IRCTreeItem*)item
 {
-    if (!item) return [clients objectAtIndex:index];
+    if (!item) return [_clients objectAtIndex:index];
     return [item childAtIndex:index];
 }
 
@@ -988,45 +961,45 @@
 
 - (void)outlineViewSelectionDidChange:(NSNotification *)note
 {
-    id nextItem = [tree itemAtRow:[tree selectedRow]];
+    id nextItem = [_tree itemAtRow:[_tree selectedRow]];
 
-    [text focus];
+    [_text focus];
 
     self.selected = nextItem;
 
-    if (!selected) {
-        logBase.contentView = dummyLog.view;
-        [dummyLog notifyDidBecomeVisible];
+    if (!_selected) {
+        _logBase.contentView = _dummyLog.view;
+        [_dummyLog notifyDidBecomeVisible];
 
-        tree.menu = treeMenu;
-        memberList.dataSource = nil;
-        memberList.delegate = nil;
-        [memberList reloadData];
+        _tree.menu = _treeMenu;
+        _memberList.dataSource = nil;
+        _memberList.delegate = nil;
+        [_memberList reloadData];
         return;
     }
 
-    [selected resetState];
+    [_selected resetState];
 
-    LogController* log = [selected log];
-    logBase.contentView = [log view];
+    LogController* log = [_selected log];
+    _logBase.contentView = [log view];
     [log notifyDidBecomeVisible];
 
-    if ([selected isClient]) {
-        tree.menu = serverMenu;
-        memberList.dataSource = nil;
-        memberList.delegate = nil;
-        [memberList reloadData];
+    if ([_selected isClient]) {
+        _tree.menu = _serverMenu;
+        _memberList.dataSource = nil;
+        _memberList.delegate = nil;
+        [_memberList reloadData];
     }
     else {
-        tree.menu = channelMenu;
-        memberList.dataSource = selected;
-        memberList.delegate = selected;
-        [memberList reloadData];
+        _tree.menu = _channelMenu;
+        _memberList.dataSource = _selected;
+        _memberList.delegate = _selected;
+        [_memberList reloadData];
     }
 
-    [memberList deselectAll:nil];
-    [memberList scrollRowToVisible:0];
-    [selected.log.view clearSelection];
+    [_memberList deselectAll:nil];
+    [_memberList scrollRowToVisible:0];
+    [_selected.log.view clearSelection];
 
     [self updateTitle];
     [self reloadTree];
@@ -1035,7 +1008,7 @@
 
 - (void)outlineView:(NSOutlineView *)outlineView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn item:(id)item
 {
-    OtherTheme* theme = viewTheme.other;
+    OtherTheme* theme = _viewTheme.other;
     IRCTreeItem* i = item;
 
     NSColor* color = nil;
@@ -1050,7 +1023,7 @@
         color = theme.treeUnreadColor;
     }
     else if (i.isActive) {
-        if (i == [tree itemAtRow:[tree selectedRow]]) {
+        if (i == [_tree itemAtRow:[_tree selectedRow]]) {
             if ([NSApp isActive]) {
                 color = theme.treeSelActiveColor;
             }
@@ -1063,7 +1036,7 @@
         }
     }
     else {
-        if (i == [tree itemAtRow:[tree selectedRow]]) {
+        if (i == [_tree itemAtRow:[_tree selectedRow]]) {
             color = theme.treeSelInactiveColor;
         }
         else {
@@ -1134,8 +1107,8 @@
 
         IRCClient* toClient = (IRCClient*)item;
         NSArray* ary = toClient.channels;
-        NSMutableArray* low = [[[ary subarrayWithRange:NSMakeRange(0, index)] mutableCopy] autorelease];
-        NSMutableArray* high = [[[ary subarrayWithRange:NSMakeRange(index, ary.count - index)] mutableCopy] autorelease];
+        NSMutableArray* low = [[ary subarrayWithRange:NSMakeRange(0, index)] mutableCopy];
+        NSMutableArray* high = [[ary subarrayWithRange:NSMakeRange(index, ary.count - index)] mutableCopy];
         [low removeObjectIdenticalTo:c];
         [high removeObjectIdenticalTo:c];
 
@@ -1171,13 +1144,11 @@
     if (i.isClient) {
         if (item) return NO;
 
-        NSMutableArray* ary = clients;
-        NSMutableArray* low = [[[ary subarrayWithRange:NSMakeRange(0, index)] mutableCopy] autorelease];
-        NSMutableArray* high = [[[ary subarrayWithRange:NSMakeRange(index, ary.count - index)] mutableCopy] autorelease];
+        NSMutableArray* ary = _clients;
+        NSMutableArray* low = [[ary subarrayWithRange:NSMakeRange(0, index)] mutableCopy];
+        NSMutableArray* high = [[ary subarrayWithRange:NSMakeRange(index, ary.count - index)] mutableCopy];
         [low removeObjectIdenticalTo:i];
         [high removeObjectIdenticalTo:i];
-
-        [[i retain] autorelease];
 
         [ary removeAllObjects];
         [ary addObjectsFromArray:low];
@@ -1191,12 +1162,10 @@
 
         IRCClient* u = (IRCClient*)item;
         NSMutableArray* ary = u.channels;
-        NSMutableArray* low = [[[ary subarrayWithRange:NSMakeRange(0, index)] mutableCopy] autorelease];
-        NSMutableArray* high = [[[ary subarrayWithRange:NSMakeRange(index, ary.count - index)] mutableCopy] autorelease];
+        NSMutableArray* low = [[ary subarrayWithRange:NSMakeRange(0, index)] mutableCopy];
+        NSMutableArray* high = [[ary subarrayWithRange:NSMakeRange(index, ary.count - index)] mutableCopy];
         [low removeObjectIdenticalTo:i];
         [high removeObjectIdenticalTo:i];
-
-        [[i retain] autorelease];
 
         [ary removeAllObjects];
         [ary addObjectsFromArray:low];
@@ -1206,9 +1175,9 @@
         [self save];
     }
 
-    int n = [tree rowForItem:selected];
+    int n = [_tree rowForItem:_selected];
     if (n >= 0) {
-        [tree selectItemAtIndex:n];
+        [_tree selectItemAtIndex:n];
     }
 
     return YES;
@@ -1231,7 +1200,7 @@
     IRCUser* m = [c.members objectAtIndex:[row intValue]];
     if (m) {
         for (NSString* s in files) {
-            [dcc addSenderWithUID:u.uid nick:m.nick fileName:s autoOpen:YES];
+            [_dcc addSenderWithUID:u.uid nick:m.nick fileName:s autoOpen:YES];
         }
     }
 }

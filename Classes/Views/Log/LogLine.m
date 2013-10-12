@@ -6,39 +6,12 @@
 
 @implementation LogLine
 
-@synthesize time;
-@synthesize place;
-@synthesize nick;
-@synthesize body;
-@synthesize lineType;
-@synthesize memberType;
-@synthesize nickInfo;
-@synthesize clickInfo;
-@synthesize identified;
-@synthesize nickColorNumber;
-@synthesize keywords;
-@synthesize excludeWords;
-@synthesize useAvatar;
-
 - (id)init
 {
     self = [super init];
     if (self) {
     }
     return self;
-}
-
-- (void)dealloc
-{
-    [time release];
-    [place release];
-    [nick release];
-    [body release];
-    [nickInfo release];
-    [clickInfo release];
-    [keywords release];
-    [excludeWords release];
-    [super dealloc];
 }
 
 + (NSString*)lineTypeString:(LogLineType)type

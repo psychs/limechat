@@ -6,9 +6,6 @@
 
 @implementation SheetBase
 
-@synthesize delegate;
-@synthesize window;
-
 - (id)init
 {
     self = [super init];
@@ -17,15 +14,9 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [sheet release];
-    [super dealloc];
-}
-
 - (void)startSheet
 {
-    [NSApp beginSheet:sheet modalForWindow:window modalDelegate:self didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:) contextInfo:nil];
+    [NSApp beginSheet:sheet modalForWindow:_window modalDelegate:self didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:) contextInfo:nil];
 }
 
 - (void)endSheet

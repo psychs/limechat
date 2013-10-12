@@ -5,9 +5,9 @@
 
 
 @implementation WebViewAutoScroll
-
-@synthesize webFrame;
-@synthesize scroller;
+{
+    NSRect lastFrame, lastVisibleRect;
+}
 
 - (void)scrollViewToBottom:(NSView*)aView
 {
@@ -19,25 +19,24 @@
 - (void)dealloc
 {
     self.webFrame = nil;
-    [super dealloc];
 }
 
 - (void)setWebFrame:(WebFrameView*)aWebFrame
 {
-    if(aWebFrame == webFrame)
+    if(aWebFrame == _webFrame)
         return;
 
     //[webFrame release];
     //webFrame = [aWebFrame retain];
-    webFrame = aWebFrame;
+    _webFrame = aWebFrame;
 
-    if(webFrame)
+    if(_webFrame)
     {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(webViewDidChangeFrame:) name:NSViewFrameDidChangeNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(webViewDidChangeBounds:) name:NSViewBoundsDidChangeNotification object:nil];
 
-        lastFrame = [[webFrame documentView] frame];
-        lastVisibleRect = [[webFrame documentView] visibleRect];
+        lastFrame = [[_webFrame documentView] frame];
+        lastVisibleRect = [[_webFrame documentView] visibleRect];
     }
     else
     {
@@ -48,23 +47,23 @@
 
 - (void)webViewDidChangeBounds:(NSNotification*)aNotification
 {
-    NSClipView* clipView = [[[webFrame documentView] enclosingScrollView] contentView];
+    NSClipView* clipView = [[[_webFrame documentView] enclosingScrollView] contentView];
     if(clipView != [aNotification object])
         return;
 
     //LOG(@"bounds changed: %@ → %@", NSStringFromRect(lastVisibleRect), NSStringFromRect([[clipView documentView] visibleRect]));
     lastVisibleRect = [[clipView documentView] visibleRect];
 
-    [scroller updateScroller];
+    [_scroller updateScroller];
 }
 
 - (void)webViewDidChangeFrame:(NSNotification*)aNotification
 {
     NSView* view = [aNotification object];
-    if(view != webFrame && view != [webFrame documentView])
+    if(view != _webFrame && view != [_webFrame documentView])
         return;
 
-    if(view == [webFrame documentView])
+    if(view == [_webFrame documentView])
     {
         //LOG(@"frame changed: %@ → %@", NSStringFromRect(lastFrame), NSStringFromRect([view frame]));
         if(NSMaxY(lastVisibleRect) >= NSMaxY(lastFrame))
@@ -76,17 +75,17 @@
         lastFrame = [view frame];
     }
 
-    if(view == webFrame)
+    if(view == _webFrame)
     {
         //LOG(@"visible rect changed: %@ → %@", NSStringFromRect(lastVisibleRect), NSStringFromRect([[webFrame documentView] frame]));
         if(NSMaxY(lastVisibleRect) >= NSMaxY(lastFrame))
         {
             //LOG(@"scroll to bottom");
-            [self scrollViewToBottom:[webFrame documentView]];
+            [self scrollViewToBottom:[_webFrame documentView]];
         }
     }
 
-    [scroller updateScroller];
+    [_scroller updateScroller];
 }
 
 @end

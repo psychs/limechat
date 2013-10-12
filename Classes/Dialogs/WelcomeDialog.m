@@ -7,8 +7,9 @@
 
 
 @implementation WelcomeDialog
-
-@synthesize delegate;
+{
+    NSMutableArray* _channels;
+}
 
 - (id)init
 {
@@ -16,7 +17,7 @@
     if (self) {
         [NSBundle loadNibNamed:@"WelcomeDialog" owner:self];
 
-        channels = [NSMutableArray new];
+        _channels = [NSMutableArray new];
 
         NSArray* servers = [ServerDialog availableServers];
         for (NSString* s in servers) {
@@ -28,10 +29,8 @@
 
 - (void)dealloc
 {
-    [channels release];
     channelTable.delegate = nil;
     channelTable.dataSource = nil;
-    [super dealloc];
 }
 
 - (void)show
@@ -56,7 +55,7 @@
 
 - (void)close
 {
-    delegate = nil;
+    _delegate = nil;
     [self.window close];
 }
 
@@ -81,7 +80,8 @@
     NSMutableSet* set = [NSMutableSet set];
     NSMutableArray* chans = [NSMutableArray array];
 
-    for (NSString* s in channels) {
+    for (NSString* chname in _channels) {
+        NSString* s = chname;
         if (s.length > 0) {
             if (![s isChannelName]) {
                 s = [@"#" stringByAppendingString:s];
@@ -100,8 +100,8 @@
     [dic setObject:chans forKey:@"channels"];
     [dic setObject:[NSNumber numberWithBool:autoConnectCheck.state] forKey:@"autoConnect"];
 
-    if ([delegate respondsToSelector:@selector(welcomeDialog:onOK:)]) {
-        [delegate welcomeDialog:self onOK:dic];
+    if ([_delegate respondsToSelector:@selector(welcomeDialog:onOK:)]) {
+        [_delegate welcomeDialog:self onOK:dic];
     }
 
     [self.window close];
@@ -114,9 +114,9 @@
 
 - (void)onAddChannel:(id)sender
 {
-    [channels addObject:@""];
+    [_channels addObject:@""];
     [channelTable reloadData];
-    int row = channels.count - 1;
+    int row = _channels.count - 1;
     [channelTable selectItemAtIndex:row];
     [channelTable editColumn:0 row:row withEvent:nil select:YES];
 }
@@ -125,9 +125,9 @@
 {
     NSInteger n = [channelTable selectedRow];
     if (n >= 0) {
-        [channels removeObjectAtIndex:n];
+        [_channels removeObjectAtIndex:n];
         [channelTable reloadData];
-        int count = channels.count;
+        int count = _channels.count;
         if (count <= n) n = count - 1;
         if (n >= 0) {
             [channelTable selectItemAtIndex:n];
@@ -160,8 +160,8 @@
 {
     NSInteger n = [channelTable editedRow];
     if (n >= 0) {
-        NSString* s = [[[[[note object] textStorage] string] copy] autorelease];
-        [channels replaceObjectAtIndex:n withObject:s];
+        NSString* s = [[[[note object] textStorage] string] copy];
+        [_channels replaceObjectAtIndex:n withObject:s];
         [channelTable reloadData];
         [channelTable selectItemAtIndex:n];
         [self tableViewSelectionIsChanging:nil];
@@ -170,12 +170,12 @@
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)sender
 {
-    return channels.count;
+    return _channels.count;
 }
 
 - (id)tableView:(NSTableView *)sender objectValueForTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
-    return [channels objectAtIndex:row];
+    return [_channels objectAtIndex:row];
 }
 
 - (void)tableViewSelectionIsChanging:(NSNotification *)note
@@ -188,8 +188,8 @@
 
 - (void)windowWillClose:(NSNotification*)note
 {
-    if ([delegate respondsToSelector:@selector(welcomeDialogWillClose:)]) {
-        [delegate welcomeDialogWillClose:self];
+    if ([_delegate respondsToSelector:@selector(welcomeDialogWillClose:)]) {
+        [_delegate welcomeDialogWillClose:self];
     }
 }
 

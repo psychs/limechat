@@ -9,132 +9,105 @@
 
 
 @implementation DCCReceiver
-
-@synthesize delegate;
-@synthesize uid;
-@synthesize peerNick;
-@synthesize host;
-@synthesize port;
-@synthesize size;
-@synthesize processedSize;
-@synthesize status;
-@synthesize error;
-@synthesize path;
-@synthesize fileName;
-@synthesize downloadFileName;
-@synthesize icon;
-@synthesize progressBar;
+{
+    TCPClient* _sock;
+    NSFileHandle* _file;
+    NSMutableArray* _speedRecords;
+    double _currentRecord;
+}
 
 - (id)init
 {
     self = [super init];
     if (self) {
-        speedRecords = [NSMutableArray new];
+        _speedRecords = [NSMutableArray new];
     }
     return self;
 }
 
 - (void)dealloc
 {
-    [peerNick release];
-    [host release];
-    [error release];
-    [path release];
-    [fileName release];
-    [downloadFileName release];
-    [icon release];
-    [progressBar release];
-
-    [sock close];
-    [sock autorelease];
-    [file release];
-    [speedRecords release];
-    [super dealloc];
+    [_sock close];
 }
 
 - (void)setPath:(NSString *)value
 {
-    if (path != value) {
-        [path release];
-        path = [[value stringByExpandingTildeInPath] retain];
+    if (_path != value) {
+        _path = [value stringByExpandingTildeInPath];
     }
 }
 
 - (void)setFileName:(NSString *)value
 {
-    if (fileName != value) {
-        [fileName release];
-        fileName = [value retain];
-
-        [icon release];
-        icon = [[[NSWorkspace sharedWorkspace] iconForFileType:[fileName pathExtension]] retain];
+    if (_fileName != value) {
+        _fileName = value;
+        _icon = [[NSWorkspace sharedWorkspace] iconForFileType:[_fileName pathExtension]];
     }
 }
 
 - (double)speed
 {
-    if (!speedRecords.count) return 0;
+    if (!_speedRecords.count) return 0;
 
     double sum = 0;
-    for (NSNumber* num in speedRecords) {
+    for (NSNumber* num in _speedRecords) {
         sum += [num doubleValue];
     }
-    return sum / speedRecords.count;
+    return sum / _speedRecords.count;
 }
 
 - (void)open
 {
-    if (sock) {
+    if (_sock) {
         [self close];
     }
 
-    currentRecord = 0;
-    [speedRecords removeAllObjects];
+    _currentRecord = 0;
+    [_speedRecords removeAllObjects];
 
-    sock = [TCPClient new];
-    sock.delegate = self;
-    sock.host = host;
-    sock.port = port;
-    [sock open];
+    _sock = [TCPClient new];
+    _sock.delegate = self;
+    _sock.host = _host;
+    _sock.port = _port;
+    [_sock open];
 }
 
 - (void)close
 {
-    [sock close];
-    [sock autorelease];
-    sock = nil;
+    [_sock close];
+    _sock = nil;
 
     [self closeFile];
 
-    if (status != DCC_ERROR && status != DCC_COMPLETE) {
-        status = DCC_STOP;
+    if (_status != DCC_ERROR && _status != DCC_COMPLETE) {
+        _status = DCC_STOP;
     }
 
-    [delegate dccReceiveOnClose:self];
+    [_delegate dccReceiveOnClose:self];
 }
 
 - (void)onTimer
 {
-    if (status != DCC_RECEIVING) return;
+    if (_status != DCC_RECEIVING) return;
 
-    [speedRecords addObject:[NSNumber numberWithDouble:currentRecord]];
-    if (speedRecords.count > RECORDS_LEN) [speedRecords removeObjectAtIndex:0];
-    currentRecord = 0;
+    [_speedRecords addObject:[NSNumber numberWithDouble:_currentRecord]];
+    if (_speedRecords.count > RECORDS_LEN) [_speedRecords removeObjectAtIndex:0];
+    _currentRecord = 0;
 }
 
 - (void)openFile
 {
-    if (file) return;
+    if (_file) return;
 
-    NSString* base = [fileName stringByDeletingPathExtension];
-    NSString* ext = [fileName pathExtension];
+    NSString* base = [_fileName stringByDeletingPathExtension];
+    NSString* ext = [_fileName pathExtension];
 
     NSFileManager* fm = [NSFileManager defaultManager];
-    NSString* fullName = [path stringByAppendingPathComponent:[NSString stringWithFormat:@"%@%@", DOWNLOADING_PREFIX, fileName]];
+    NSString* fullName = [_path stringByAppendingPathComponent:[NSString stringWithFormat:@"%@%@", DOWNLOADING_PREFIX, _fileName]];
 
     int i = 0;
     while ([fm fileExistsAtPath:fullName]) {
-        fullName = [path stringByAppendingPathComponent:[NSString stringWithFormat:@"%@%@_%d.%@", DOWNLOADING_PREFIX, base, i, ext]];
+        fullName = [_path stringByAppendingPathComponent:[NSString stringWithFormat:@"%@%@_%d.%@", DOWNLOADING_PREFIX, base, i, ext]];
         ++i;
     }
 
@@ -142,37 +115,32 @@
     [fm createDirectoryAtPath:dir withIntermediateDirectories:YES attributes:nil error:NULL];
     [fm createFileAtPath:fullName contents:[NSData data] attributes:nil];
 
-    [file release];
-    file = [[NSFileHandle fileHandleForUpdatingAtPath:fullName] retain];
-
-    [downloadFileName release];
-    downloadFileName = [fullName retain];
+    _file = [NSFileHandle fileHandleForUpdatingAtPath:fullName];
+    _downloadFileName = fullName;
 }
 
 - (void)closeFile
 {
-    if (!file) return;
+    if (!_file) return;
 
-    [file closeFile];
-    [file release];
-    file = nil;
+    [_file closeFile];
+    _file = nil;
 
-    if (status == DCC_COMPLETE) {
-        NSString* base = [fileName stringByDeletingPathExtension];
-        NSString* ext = [fileName pathExtension];
-        NSString* fullName = [path stringByAppendingPathComponent:fileName];
+    if (_status == DCC_COMPLETE) {
+        NSString* base = [_fileName stringByDeletingPathExtension];
+        NSString* ext = [_fileName pathExtension];
+        NSString* fullName = [_path stringByAppendingPathComponent:_fileName];
 
         NSFileManager* fm = [NSFileManager defaultManager];
 
         int i = 0;
         while ([fm fileExistsAtPath:fullName]) {
-            fullName = [path stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_%d.%@", base, i, ext]];
+            fullName = [_path stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_%d.%@", base, i, ext]];
             ++i;
         }
 
-        [fm moveItemAtPath:downloadFileName toPath:fullName error:NULL];
-        [downloadFileName release];
-        downloadFileName = [fullName retain];
+        [fm moveItemAtPath:_downloadFileName toPath:fullName error:NULL];
+        _downloadFileName = fullName;
     }
 }
 
@@ -181,63 +149,61 @@
 
 - (void)tcpClientDidConnect:(TCPClient*)sender
 {
-    processedSize = 0;
-    status = DCC_RECEIVING;
+    _processedSize = 0;
+    _status = DCC_RECEIVING;
 
     [self openFile];
 
-    [delegate dccReceiveOnOpen:self];
+    [_delegate dccReceiveOnOpen:self];
 }
 
 - (void)tcpClientDidDisconnect:(TCPClient*)sender
 {
-    if (status == DCC_COMPLETE || status == DCC_ERROR) return;
+    if (_status == DCC_COMPLETE || _status == DCC_ERROR) return;
 
-    status = DCC_ERROR;
-    [error release];
-    error = @"Disconnected";
+    _status = DCC_ERROR;
+    _error = @"Disconnected";
     [self close];
 
-    [delegate dccReceiveOnError:self];
+    [_delegate dccReceiveOnError:self];
 }
 
 - (void)tcpClient:(TCPClient*)sender error:(NSString*)err
 {
-    if (status == DCC_COMPLETE || status == DCC_ERROR) return;
+    if (_status == DCC_COMPLETE || _status == DCC_ERROR) return;
 
-    status = DCC_ERROR;
-    [error release];
-    error = [err retain];
+    _status = DCC_ERROR;
+    _error = err;
     [self close];
 
-    [delegate dccReceiveOnError:self];
+    [_delegate dccReceiveOnError:self];
 }
 
 - (void)tcpClientDidReceiveData:(TCPClient*)sender
 {
-    NSData* data = [sock read];
-    processedSize += data.length;
-    currentRecord += data.length;
+    NSData* data = [_sock read];
+    _processedSize += data.length;
+    _currentRecord += data.length;
 
     if (data.length) {
-        [file writeData:data];
+        [_file writeData:data];
     }
 
-    uint32_t rsize = processedSize & 0xFFFFFFFF;
+    uint32_t rsize = _processedSize & 0xFFFFFFFF;
     unsigned char ack[4];
     ack[0] = (rsize >> 24) & 0xFF;
     ack[1] = (rsize >> 16) & 0xFF;
     ack[2] = (rsize >>  8) & 0xFF;
     ack[3] = rsize & 0xFF;
-    [sock write:[NSData dataWithBytes:ack length:4]];
+    [_sock write:[NSData dataWithBytes:ack length:4]];
 
-    progressBar.doubleValue = processedSize;
-    [progressBar setNeedsDisplay:YES];
+    _progressBar.doubleValue = _processedSize;
+    [_progressBar setNeedsDisplay:YES];
 
-    if (processedSize >= size) {
-        status = DCC_COMPLETE;
+    if (_processedSize >= _size) {
+        _status = DCC_COMPLETE;
         [self close];
-        [delegate dccReceiveOnComplete:self];
+        [_delegate dccReceiveOnComplete:self];
     }
 }
 

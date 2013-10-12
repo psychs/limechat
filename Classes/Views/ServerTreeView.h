@@ -7,15 +7,6 @@
 
 
 @interface ServerTreeView : TreeView
-{
-    __weak id responderDelegate;
-    OtherTheme* theme;
-
-    NSColor* bgColor;
-    NSColor* topLineColor;
-    NSColor* bottomLineColor;
-    NSGradient* gradient;
-}
 
 @property (nonatomic, weak) id responderDelegate;
 @property (nonatomic, strong) OtherTheme* theme;

@@ -6,31 +6,16 @@
 
 @implementation IRCPrefix
 
-@synthesize raw;
-@synthesize nick;
-@synthesize user;
-@synthesize address;
-@synthesize isServer;
-
 - (id)init
 {
     self = [super init];
     if (self) {
-        raw = @"";
-        nick = @"";
-        user = @"";
-        address = @"";
+        _raw = @"";
+        _nick = @"";
+        _user = @"";
+        _address = @"";
     }
     return self;
-}
-
-- (void)dealloc
-{
-    [raw release];
-    [nick release];
-    [user release];
-    [address release];
-    [super dealloc];
 }
 
 @end

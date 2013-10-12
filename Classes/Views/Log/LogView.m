@@ -6,20 +6,17 @@
 
 @implementation LogView
 
-@synthesize keyDelegate;
-@synthesize resizeDelegate;
-
 - (void)keyDown:(NSEvent *)e
 {
-    if (keyDelegate) {
+    if (_keyDelegate) {
         NSUInteger m = [e modifierFlags];
         BOOL ctrl = (m & NSControlKeyMask) != 0;
         BOOL alt = (m & NSAlternateKeyMask) != 0;
         BOOL cmd = (m & NSCommandKeyMask) != 0;
 
         if (!(ctrl || alt || cmd)) {
-            if ([keyDelegate respondsToSelector:@selector(logViewKeyDown:)]) {
-                [keyDelegate logViewKeyDown:e];
+            if ([_keyDelegate respondsToSelector:@selector(logViewKeyDown:)]) {
+                [_keyDelegate logViewKeyDown:e];
             }
             return;
         }
@@ -30,14 +27,14 @@
 
 - (void)setFrame:(NSRect)rect
 {
-    if (resizeDelegate && [resizeDelegate respondsToSelector:@selector(logViewWillResize)]) {
-        [resizeDelegate logViewWillResize];
+    if (_resizeDelegate && [_resizeDelegate respondsToSelector:@selector(logViewWillResize)]) {
+        [_resizeDelegate logViewWillResize];
     }
 
     [super setFrame:rect];
 
-    if (resizeDelegate && [resizeDelegate respondsToSelector:@selector(logViewDidResize)]) {
-        [resizeDelegate logViewDidResize];
+    if (_resizeDelegate && [_resizeDelegate respondsToSelector:@selector(logViewDidResize)]) {
+        [_resizeDelegate logViewDidResize];
     }
 }
 

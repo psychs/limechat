@@ -11,18 +11,6 @@ typedef enum {
 
 
 @interface GistClient : NSObject
-{
-    __weak id delegate;
-
-    GistClientStage stage;
-    NSString* text;
-    NSString* fileType;
-    BOOL isPrivate;
-
-    NSURLConnection* conn;
-    NSMutableData* buf;
-    NSString* destUrl;
-}
 
 @property (nonatomic, weak) id delegate;
 

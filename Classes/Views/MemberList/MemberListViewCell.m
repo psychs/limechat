@@ -16,8 +16,6 @@ static NSMutableParagraphStyle* nickStyle;
 
 @implementation MemberListViewCell
 
-@synthesize member;
-
 - (id)init
 {
     self = [super init];
@@ -26,17 +24,11 @@ static NSMutableParagraphStyle* nickStyle;
     return self;
 }
 
-- (void)dealloc
-{
-    [member release];
-    [super dealloc];
-}
-
 - (id)copyWithZone:(NSZone *)zone
 {
     MemberListViewCell* c = [[MemberListViewCell allocWithZone:zone] init];
     c.font = self.font;
-    c.member = member;
+    c.member = _member;
     return c;
 }
 
@@ -58,8 +50,7 @@ static NSMutableParagraphStyle* nickStyle;
 
 - (void)setup:(id)aTheme
 {
-    [theme autorelease];
-    theme = [aTheme retain];
+    theme = aTheme;
 
     if (!markStyle) {
         markStyle = [NSMutableParagraphStyle new];
@@ -91,7 +82,7 @@ static NSMutableParagraphStyle* nickStyle;
             color = [theme memberListSelColor] ?: [NSColor selectedControlTextColor];
         }
     }
-    else if ([member isOp]) {
+    else if ([_member isOp]) {
         color = [theme memberListOpColor];
     }
     else {
@@ -107,7 +98,7 @@ static NSMutableParagraphStyle* nickStyle;
     rect.origin.x += LEFT_MARGIN;
     rect.size.width = markWidth;
 
-    UniChar mark = [member mark];
+    UniChar mark = [_member mark];
     if (mark != INVALID_MARK_CHAR) {
         NSString* markStr = [NSString stringWithFormat:@"%C", mark];
         [markStr drawInRect:rect withAttributes:style];
@@ -121,7 +112,7 @@ static NSMutableParagraphStyle* nickStyle;
     rect.origin.x += offset;
     rect.size.width -= offset;
 
-    NSString* nick = [member nick];
+    NSString* nick = [_member nick];
     [nick drawInRect:rect withAttributes:style];
 }
 

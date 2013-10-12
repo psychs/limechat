@@ -9,8 +9,6 @@
 
 @implementation UserNotificationController
 
-@synthesize delegate;
-
 - (id)init
 {
     self = [super init];
@@ -81,7 +79,7 @@
             break;
     }
 
-    NSUserNotification* note = [[NSUserNotification new] autorelease];
+    NSUserNotification* note = [NSUserNotification new];
     note.title = title;
     note.subtitle = desc;
     if (context) {
@@ -102,7 +100,7 @@
 - (void)userNotificationCenter:(NSUserNotificationCenter*)sender didActivateNotification:(NSUserNotification*)note
 {
     BOOL actionButtonClicked = note.activationType == NSUserNotificationActivationTypeActionButtonClicked;
-    [delegate notificationControllerDidActivateNotification:[note.userInfo objectForKey:USER_NOTIFICATION_CONTEXT_KEY] actionButtonClicked:actionButtonClicked];
+    [_delegate notificationControllerDidActivateNotification:[note.userInfo objectForKey:USER_NOTIFICATION_CONTEXT_KEY] actionButtonClicked:actionButtonClicked];
 }
 
 @end

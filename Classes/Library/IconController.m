@@ -5,21 +5,25 @@
 
 
 @implementation IconController
+{
+    BOOL _highlight;
+    BOOL _newTalk;
+}
 
 - (void)setHighlight:(BOOL)aHighlight newTalk:(BOOL)aNewTalk
 {
-    if (highlight == aHighlight && newTalk == aNewTalk) {
+    if (_highlight == aHighlight && _newTalk == aNewTalk) {
         return;
     }
 
-    highlight = aHighlight;
-    newTalk = aNewTalk;
+    _highlight = aHighlight;
+    _newTalk = aNewTalk;
 
     NSImage* icon = [NSImage imageNamed:@"NSApplicationIcon"];
 
-    if (highlight || newTalk) {
+    if (_highlight || _newTalk) {
         NSSize iconSize = icon.size;
-        NSImage* badge = highlight ? [NSImage imageNamed:@"redbadge"] : [NSImage imageNamed:@"bluebadge"];
+        NSImage* badge = _highlight ? [NSImage imageNamed:@"redbadge"] : [NSImage imageNamed:@"bluebadge"];
         if (badge) {
             NSSize size = badge.size;
             int w = size.width;
@@ -30,7 +34,7 @@
             NSRect sourceRect = NSMakeRect(0, 0, size.width, size.height);
             NSDictionary* hints = @{NSImageHintInterpolation:[NSNumber numberWithInt:NSImageInterpolationHigh]};
 
-            icon = [[icon copy] autorelease];
+            icon = [icon copy];
             [icon lockFocus];
             [badge drawInRect:rect fromRect:sourceRect operation:NSCompositeSourceOver fraction:1 respectFlipped:YES hints:hints];
             [icon unlockFocus];

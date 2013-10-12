@@ -6,17 +6,14 @@
 
 @implementation HotKeyManager
 
-@synthesize handle;
-
 - (void)dealloc
 {
     [self unregisterHotKey];
-    [super dealloc];
 }
 
 - (BOOL)enabled
 {
-    return handle != 0;
+    return _handle != 0;
 }
 
 - (BOOL)registerHotKeyCode:(int)keyCode withModifier:(NSUInteger)modifier
@@ -33,15 +30,15 @@
 
     EventHotKeyID keyId = {'LmCt', serial++};
 
-    OSStatus status = RegisterEventHotKey(keyCode, mod, keyId, GetApplicationEventTarget(), 0, &handle);
+    OSStatus status = RegisterEventHotKey(keyCode, mod, keyId, GetApplicationEventTarget(), 0, &_handle);
     return status == noErr;
 }
 
 - (void)unregisterHotKey
 {
-    if (handle) {
-        UnregisterEventHotKey(handle);
-        handle = 0;
+    if (_handle) {
+        UnregisterEventHotKey(_handle);
+        _handle = 0;
     }
 }
 

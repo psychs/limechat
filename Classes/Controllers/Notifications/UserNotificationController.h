@@ -5,9 +5,6 @@
 
 
 @interface UserNotificationController : NSObject <NotificationController, NSUserNotificationCenterDelegate>
-{
-    __weak id<NotificationControllerDelegate> delegate;
-}
 
 @property (nonatomic, weak) id<NotificationControllerDelegate> delegate;
 

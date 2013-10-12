@@ -15,8 +15,13 @@
 
 
 @implementation PreferencesController
-
-@synthesize delegate;
+{
+    NSMutableArray* _sounds;
+    NSOpenPanel* _transcriptFolderOpenPanel;
+    NSFont* _logFont;
+    NSFont* _inputFont;
+    BOOL _changingLogFont;
+}
 
 - (id)init
 {
@@ -25,15 +30,6 @@
         [NSBundle loadNibNamed:@"Preferences" owner:self];
     }
     return self;
-}
-
-- (void)dealloc
-{
-    [sounds release];
-    [transcriptFolderOpenPanel release];
-    [logFont release];
-    [inputFont release];
-    [super dealloc];
 }
 
 #pragma mark -
@@ -45,11 +41,8 @@
     [self updateTranscriptFolder];
     [self updateTheme];
 
-    [logFont release];
-    logFont = [[NSFont fontWithName:[Preferences themeLogFontName] size:[Preferences themeLogFontSize]] retain];
-
-    [inputFont release];
-    inputFont = [[NSFont fontWithName:[Preferences themeInputFontName] size:[Preferences themeInputFontSize]] retain];
+    _logFont = [NSFont fontWithName:[Preferences themeLogFontName] size:[Preferences themeLogFontSize]];
+    _inputFont = [NSFont fontWithName:[Preferences themeInputFontName] size:[Preferences themeInputFontSize]];
 
     if (![self.window isVisible]) {
         [self.window center];
@@ -208,14 +201,14 @@
 {
     static NSArray* ary;
     if (!ary) {
-        ary = [[NSArray arrayWithObjects:@"-", @"Beep", @"Basso", @"Blow", @"Bottle", @"Frog", @"Funk", @"Glass", @"Hero", @"Morse", @"Ping", @"Pop", @"Purr", @"Sosumi", @"Submarine", @"Tink", nil] retain];
+        ary = [NSArray arrayWithObjects:@"-", @"Beep", @"Basso", @"Blow", @"Bottle", @"Frog", @"Funk", @"Glass", @"Hero", @"Morse", @"Ping", @"Pop", @"Purr", @"Sosumi", @"Submarine", @"Tink", nil];
     }
     return ary;
 }
 
 - (NSMutableArray*)sounds
 {
-    if (!sounds) {
+    if (!_sounds) {
         NSMutableArray* ary = [NSMutableArray new];
         SoundWrapper* e;
 
@@ -264,9 +257,9 @@
         e = [SoundWrapper soundWrapperWithEventType:USER_NOTIFICATION_FILE_SEND_ERROR];
         [ary addObject:e];
 
-        sounds = ary;
+        _sounds = ary;
     }
-    return sounds;
+    return _sounds;
 }
 
 #pragma mark -
@@ -304,8 +297,7 @@
         [self updateTranscriptFolder];
     }
 
-    [transcriptFolderOpenPanel autorelease];
-    transcriptFolderOpenPanel = nil;
+    _transcriptFolderOpenPanel = nil;
 }
 
 - (void)onTranscriptFolderChanged:(id)sender
@@ -329,8 +321,7 @@
         [blockSelf transcriptFolderPanelDidEnd:d returnCode:result contextInfo:NULL];
     }];
 
-    [transcriptFolderOpenPanel release];
-    transcriptFolderOpenPanel = [d retain];
+    _transcriptFolderOpenPanel = d;
 }
 
 #pragma mark -
@@ -369,7 +360,7 @@
 
             int i = 0;
             for (NSString* f in files) {
-                NSMenuItem* item = [[[NSMenuItem alloc] initWithTitle:f action:nil keyEquivalent:@""] autorelease];
+                NSMenuItem* item = [[NSMenuItem alloc] initWithTitle:f action:nil keyEquivalent:@""];
                 [item setTag:tag];
                 [themeButton.menu addItem:item];
                 ++i;
@@ -428,35 +419,33 @@
 
 - (void)onSelectFont:(id)sender
 {
-    changingLogFont = YES;
+    _changingLogFont = YES;
 
     NSFontManager* fm = [NSFontManager sharedFontManager];
-    [fm setSelectedFont:logFont isMultiple:NO];
+    [fm setSelectedFont:_logFont isMultiple:NO];
     [fm orderFrontFontPanel:self];
 }
 
 - (void)onInputSelectFont:(id)sender
 {
-    changingLogFont = NO;
+    _changingLogFont = NO;
 
     NSFontManager* fm = [NSFontManager sharedFontManager];
-    [fm setSelectedFont:inputFont isMultiple:NO];
+    [fm setSelectedFont:_inputFont isMultiple:NO];
     [fm orderFrontFontPanel:self];
 }
 
 - (void)changeFont:(id)sender
 {
-    if (changingLogFont) {
-        [logFont autorelease];
-        logFont = [[sender convertFont:logFont] retain];
-        [self setValue:logFont.fontName forKey:@"fontDisplayName"];
-        [self setValue:[NSNumber numberWithDouble:logFont.pointSize] forKey:@"fontPointSize"];
+    if (_changingLogFont) {
+        _logFont = [sender convertFont:_logFont];
+        [self setValue:_logFont.fontName forKey:@"fontDisplayName"];
+        [self setValue:[NSNumber numberWithDouble:_logFont.pointSize] forKey:@"fontPointSize"];
     }
     else {
-        [inputFont autorelease];
-        inputFont = [[sender convertFont:inputFont] retain];
-        [self setValue:inputFont.fontName forKey:@"inputFontDisplayName"];
-        [self setValue:[NSNumber numberWithDouble:inputFont.pointSize] forKey:@"inputFontPointSize"];
+        _inputFont = [sender convertFont:_inputFont];
+        [self setValue:_inputFont.fontName forKey:@"inputFontDisplayName"];
+        [self setValue:[NSNumber numberWithDouble:_inputFont.pointSize] forKey:@"inputFontPointSize"];
     }
 
     [self onLayoutChanged:nil];
@@ -510,8 +499,8 @@
     [Preferences cleanUpWords];
     [Preferences sync];
 
-    if ([delegate respondsToSelector:@selector(preferencesDialogWillClose:)]) {
-        [delegate preferencesDialogWillClose:self];
+    if ([_delegate respondsToSelector:@selector(preferencesDialogWillClose:)]) {
+        [_delegate preferencesDialogWillClose:self];
     }
 }
 

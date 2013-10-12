@@ -116,7 +116,7 @@
         }
     }
 
-    return [[[NSString alloc] initWithCharacters:buf length:n] autorelease];
+    return [[NSString alloc] initWithCharacters:buf length:n];
 }
 
 @end

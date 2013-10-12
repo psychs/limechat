@@ -6,22 +6,4 @@
 
 @implementation TimerCommand
 
-@synthesize time;
-@synthesize cid;
-@synthesize input;
-
-- (id)init
-{
-    self = [super init];
-    if (self) {
-    }
-    return self;
-}
-
-- (void)dealloc
-{
-    [input release];
-    [super dealloc];
-}
-
 @end

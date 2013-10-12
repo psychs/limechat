@@ -25,47 +25,44 @@ static BOOL yamlClass(id object)
 }
 
 @implementation YAMLWrapper
+{
+    Class _tag;
+    id _data;
+}
 
 + (id)wrapperWithData:(id)d tag:(Class)cn
 {
-    return [[[YAMLWrapper alloc] initWrapperWithData:d tag:cn] autorelease];
+    return [[YAMLWrapper alloc] initWrapperWithData:d tag:cn];
 }
 
 - (id)initWrapperWithData:(id)d tag:(Class)cn
 {
     self = [super init];
     if (self) {
-        data = [d retain];
-        tag = cn;
+        _data = d;
+        _tag = cn;
     }
     return self;
 }
 
-- (void)dealloc
-{
-    [data release];
-    [super dealloc];
-}
-
 - (id)copyWithZone:(NSZone *)zone
 {
-    return [[YAMLWrapper allocWithZone:zone] initWrapperWithData:data tag:tag];
+    return [[YAMLWrapper allocWithZone:zone] initWrapperWithData:_data tag:_tag];
 }
 
 - (id)data
 {
-    return data;
+    return _data;
 }
 
 - (Class)tag
 {
-    return tag;
+    return _tag;
 }
 
 - (id)yamlParse
 {
-    LOG(@"%@-%@",tag,data);
-    return [tag performSelector:@selector(objectWithYAML:) withObject:data];
+    return [_tag performSelector:@selector(objectWithYAML:) withObject:_data];
 }
 
 @end
@@ -77,8 +74,7 @@ static BOOL yamlClass(id object)
 + (id)yamlStringWithUTF8String:(const char *)bytes length:(unsigned)length
 {
     NSString *str = [[NSString alloc] initWithBytes:bytes length:length encoding:NSUTF8StringEncoding];
-
-    return [str autorelease];
+    return str;
 }
 
 - (int)yamlIndent
@@ -209,8 +205,10 @@ static BOOL yamlClass(id object)
 
     for (i=0; i<c; i++)
     {
-        [array addObject:
-         [[self objectAtIndex:i] performSelector:aSelector withObject:anObject]];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+        [array addObject:[[self objectAtIndex:i] performSelector:aSelector withObject:anObject]];
+#pragma clang diagnostic pop
     }
     return array;
 }
@@ -222,8 +220,10 @@ static BOOL yamlClass(id object)
 
     for (i=0; i<c; i++)
     {
-        [array addObject:
-         [[self objectAtIndex:i] performSelector:aSelector]];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+        [array addObject:[[self objectAtIndex:i] performSelector:aSelector]];
+#pragma clang diagnostic pop
     }
     return array;
 }
@@ -337,8 +337,11 @@ static BOOL yamlClass(id object)
     for (i=0; i<c; i++)
     {
         id key = [allKeys objectAtIndex:i];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
         [dict setObject: [[self objectForKey:key] performSelector:aSelector withObject:anObject]
                  forKey: key];
+#pragma clang diagnostic pop
     }
     return dict;
 }
@@ -352,8 +355,11 @@ static BOOL yamlClass(id object)
     for (i=0; i<c; i++)
     {
         id key = [allKeys objectAtIndex:i];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
         [dict setObject: [[self objectForKey:key] performSelector:aSelector]
                  forKey: key];
+#pragma clang diagnostic pop
     }
     return dict;
 }
@@ -370,7 +376,10 @@ static BOOL yamlClass(id object)
 - (void)yamlPerformSelector:(SEL)sel withEachObjectInArray:(NSArray *)array {
     unsigned i, c = [array count];
     for (i=0; i<c; i++) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
         [self performSelector:sel withObject:[array objectAtIndex:i]];
+#pragma clang diagnostic pop
     }
 }
 

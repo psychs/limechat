@@ -28,68 +28,91 @@
 
 
 @implementation IRCClient
+{
+    IRCConnection* _conn;
+    int _connectDelay;
+    BOOL _reconnectEnabled;
+    BOOL _retryEnabled;
+    BOOL _isQuitting;
+    NSStringEncoding _encoding;
 
-@synthesize world;
+    NSString* _inputNick;
+    NSString* _sentNick;
+    int _tryingNickNumber;
 
-@synthesize config;
-@synthesize channels;
-@synthesize isupport;
-@synthesize myMode;
-@synthesize isConnecting;
-@synthesize isConnected;
-@synthesize isLoggedIn;
+    NSString* _serverHostname;
+    BOOL _isRegisteredWithSASL;
+    BOOL _registeringToNickServ;
+    BOOL _inWhois;
+    BOOL _inList;
+    BOOL _identifyMsg;
+    BOOL _identifyCTCP;
 
-@synthesize myNick;
-@synthesize myAddress;
+    AddressDetectionType _addressDetectionMethod;
+    HostResolver* _nameResolver;
+    NSString* _joinMyAddress;
+    CFAbsoluteTime _lastCTCPTime;
+    int _pongInterval;
+    CFAbsoluteTime _joinSentTime;
+    NSString* _joiningChannelName;
 
-@synthesize lastSelectedChannel;
+    Timer* _pongTimer;
+    Timer* _quitTimer;
+    Timer* _reconnectTimer;
+    Timer* _retryTimer;
+    Timer* _autoJoinTimer;
+    Timer* _commandQueueTimer;
+    NSMutableArray* _commandQueue;
 
-@synthesize propertyDialog;
+    NSMutableArray* _whoisDialogs;
+    ListDialog* _channelListDialog;
+}
 
 - (id)init
 {
     self = [super init];
     if (self) {
-        tryingNickNumber = -1;
-        channels = [NSMutableArray new];
-        isupport = [IRCISupportInfo new];
-        myMode = [IRCUserMode new];
-        whoisDialogs = [NSMutableArray new];
+        _tryingNickNumber = -1;
+        _channels = [NSMutableArray new];
+        _isupport = [IRCISupportInfo new];
+        _myMode = [IRCUserMode new];
+        _whoisDialogs =
+        [NSMutableArray new];
 
-        nameResolver = [HostResolver new];
-        nameResolver.delegate = self;
+        _nameResolver = [HostResolver new];
+        _nameResolver.delegate = self;
 
-        pongTimer = [Timer new];
-        pongTimer.delegate = self;
-        pongTimer.reqeat = YES;
-        pongTimer.selector = @selector(onPongTimer:);
+        _pongTimer = [Timer new];
+        _pongTimer.delegate = self;
+        _pongTimer.reqeat = YES;
+        _pongTimer.selector = @selector(onPongTimer:);
 
-        quitTimer = [Timer new];
-        quitTimer.delegate = self;
-        quitTimer.reqeat = NO;
-        quitTimer.selector = @selector(onQuitTimer:);
+        _quitTimer = [Timer new];
+        _quitTimer.delegate = self;
+        _quitTimer.reqeat = NO;
+        _quitTimer.selector = @selector(onQuitTimer:);
 
-        reconnectTimer = [Timer new];
-        reconnectTimer.delegate = self;
-        reconnectTimer.reqeat = NO;
-        reconnectTimer.selector = @selector(onReconnectTimer:);
+        _reconnectTimer = [Timer new];
+        _reconnectTimer.delegate = self;
+        _reconnectTimer.reqeat = NO;
+        _reconnectTimer.selector = @selector(onReconnectTimer:);
 
-        retryTimer = [Timer new];
-        retryTimer.delegate = self;
-        retryTimer.reqeat = NO;
-        retryTimer.selector = @selector(onRetryTimer:);
+        _retryTimer = [Timer new];
+        _retryTimer.delegate = self;
+        _retryTimer.reqeat = NO;
+        _retryTimer.selector = @selector(onRetryTimer:);
 
-        autoJoinTimer = [Timer new];
-        autoJoinTimer.delegate = self;
-        autoJoinTimer.reqeat = NO;
-        autoJoinTimer.selector = @selector(onAutoJoinTimer:);
+        _autoJoinTimer = [Timer new];
+        _autoJoinTimer.delegate = self;
+        _autoJoinTimer.reqeat = NO;
+        _autoJoinTimer.selector = @selector(onAutoJoinTimer:);
 
-        commandQueueTimer = [Timer new];
-        commandQueueTimer.delegate = self;
-        commandQueueTimer.reqeat = NO;
-        commandQueueTimer.selector = @selector(onCommandQueueTimer:);
+        _commandQueueTimer = [Timer new];
+        _commandQueueTimer.delegate = self;
+        _commandQueueTimer.reqeat = NO;
+        _commandQueueTimer.selector = @selector(onCommandQueueTimer:);
 
-        commandQueue = [NSMutableArray new];
+        _commandQueue = [NSMutableArray new];
 
     }
     return self;
@@ -97,44 +120,14 @@
 
 - (void)dealloc
 {
-    [config release];
-    [channels release];
-    [isupport release];
-    [myMode release];
-    [conn close];
-    [conn autorelease];
-
-    [inputNick release];
-    [sentNick release];
-    [myNick release];
-
-    [serverHostname release];
-
-    nameResolver.delegate = nil;
-    [nameResolver autorelease];
-    [joinMyAddress release];
-    [myAddress release];
-    [joiningChannelName release];
-
-    [pongTimer stop];
-    [pongTimer release];
-    [quitTimer stop];
-    [quitTimer release];
-    [reconnectTimer stop];
-    [reconnectTimer release];
-    [retryTimer stop];
-    [retryTimer release];
-    [autoJoinTimer stop];
-    [autoJoinTimer release];
-    [commandQueueTimer stop];
-    [commandQueueTimer release];
-    [commandQueue release];
-
-    [lastSelectedChannel release];
-    [whoisDialogs release];
-    [channelListDialog release];
-    [propertyDialog release];
-    [super dealloc];
+    [_conn close];
+    _nameResolver.delegate = nil;
+    [_pongTimer stop];
+    [_quitTimer stop];
+    [_reconnectTimer stop];
+    [_retryTimer stop];
+    [_autoJoinTimer stop];
+    [_commandQueueTimer stop];
 }
 
 #pragma mark -
@@ -142,24 +135,22 @@
 
 - (void)setup:(IRCClientConfig*)seed
 {
-    [config autorelease];
-    config = [seed mutableCopy];
+    _config = [seed mutableCopy];
 
-    addressDetectionMethod = [Preferences dccAddressDetectionMethod];
-    if (addressDetectionMethod == ADDRESS_DETECT_SPECIFY) {
+    _addressDetectionMethod = [Preferences dccAddressDetectionMethod];
+    if (_addressDetectionMethod == ADDRESS_DETECT_SPECIFY) {
         NSString* host = [Preferences dccMyaddress];
         if (host.length) {
-            [nameResolver resolve:host];
+            [_nameResolver resolve:host];
         }
     }
 }
 
 - (void)updateConfig:(IRCClientConfig*)seed
 {
-    [config autorelease];
-    config = [seed mutableCopy];
+    _config = [seed mutableCopy];
 
-    NSArray* chans = config.channels;
+    NSArray* chans = _config.channels;
 
     NSMutableArray* ary = [NSMutableArray array];
 
@@ -168,15 +159,15 @@
         if (c) {
             [c updateConfig:i];
             [ary addObject:c];
-            [channels removeObjectIdenticalTo:c];
+            [_channels removeObjectIdenticalTo:c];
         }
         else {
-            c = [world createChannel:i client:self reload:NO adjust:NO];
+            c = [_world createChannel:i client:self reload:NO adjust:NO];
             [ary addObject:c];
         }
     }
 
-    for (IRCChannel* c in channels) {
+    for (IRCChannel* c in _channels) {
         if (c.isChannel) {
             [self partChannel:c];
         }
@@ -185,24 +176,24 @@
         }
     }
 
-    [channels removeAllObjects];
-    [channels addObjectsFromArray:ary];
+    [_channels removeAllObjects];
+    [_channels addObjectsFromArray:ary];
 
-    [config.channels removeAllObjects];
+    [_config.channels removeAllObjects];
 
-    [world reloadTree];
-    [world adjustSelection];
+    [_world reloadTree];
+    [_world adjustSelection];
 }
 
 - (IRCClientConfig*)storedConfig
 {
-    IRCClientConfig* u = [[config mutableCopy] autorelease];
+    IRCClientConfig* u = [_config mutableCopy];
     u.uid = self.uid;
     [u.channels removeAllObjects];
 
-    for (IRCChannel* c in channels) {
+    for (IRCChannel* c in _channels) {
         if (c.isChannel) {
-            [u.channels addObject:[[c.config mutableCopy] autorelease]];
+            [u.channels addObject:[c.config mutableCopy]];
         }
     }
 
@@ -211,10 +202,10 @@
 
 - (NSMutableDictionary*)dictionaryValue
 {
-    NSMutableDictionary* dic = [config dictionaryValue];
+    NSMutableDictionary* dic = [_config dictionaryValue];
 
     NSMutableArray* ary = [NSMutableArray array];
-    for (IRCChannel* c in channels) {
+    for (IRCChannel* c in _channels) {
         if (c.isChannel) {
             [ary addObject:[c dictionaryValue]];
         }
@@ -229,7 +220,7 @@
 
 - (NSString*)name
 {
-    return config.name;
+    return _config.name;
 }
 
 - (BOOL)isNewTalk
@@ -239,7 +230,7 @@
 
 - (BOOL)isReconnecting
 {
-    return reconnectTimer && reconnectTimer.isActive;
+    return _reconnectTimer && _reconnectTimer.isActive;
 }
 
 #pragma mark -
@@ -247,7 +238,7 @@
 
 - (void)autoConnect:(int)delay
 {
-    connectDelay = delay;
+    _connectDelay = delay;
     [self connect];
 }
 
@@ -259,7 +250,7 @@
 {
     [self quit];
     [self closeDialogs];
-    for (IRCChannel* c in channels) {
+    for (IRCChannel* c in _channels) {
         [c terminate];
     }
     [self disconnect];
@@ -267,61 +258,59 @@
 
 - (void)closeDialogs
 {
-    for (WhoisDialog* d in whoisDialogs) {
+    for (WhoisDialog* d in _whoisDialogs) {
         [d close];
     }
-    [whoisDialogs removeAllObjects];
+    [_whoisDialogs removeAllObjects];
 
-    [channelListDialog close];
-    [channelListDialog release];
+    [_channelListDialog close];
 }
 
 - (void)preferencesChanged
 {
     self.log.maxLines = [Preferences maxLogLines];
 
-    if (addressDetectionMethod != [Preferences dccAddressDetectionMethod]) {
-        addressDetectionMethod = [Preferences dccAddressDetectionMethod];
+    if (_addressDetectionMethod != [Preferences dccAddressDetectionMethod]) {
+        _addressDetectionMethod = [Preferences dccAddressDetectionMethod];
 
-        [myAddress release];
-        myAddress = nil;
+        _myAddress = nil;
 
-        if (addressDetectionMethod == ADDRESS_DETECT_SPECIFY) {
+        if (_addressDetectionMethod == ADDRESS_DETECT_SPECIFY) {
             NSString* host = [Preferences dccMyaddress];
             if (host.length) {
-                [nameResolver resolve:host];
+                [_nameResolver resolve:host];
             }
         }
         else {
-            if (joinMyAddress.length) {
-                [nameResolver resolve:joinMyAddress];
+            if (_joinMyAddress.length) {
+                [_nameResolver resolve:_joinMyAddress];
             }
         }
     }
 
-    if (isLoggedIn) {
-        if (pongInterval != [Preferences pongInterval]) {
-            if (serverHostname.length) {
-                [self send:PONG, serverHostname, nil];
+    if (_isLoggedIn) {
+        if (_pongInterval != [Preferences pongInterval]) {
+            if (_serverHostname.length) {
+                [self send:PONG, _serverHostname, nil];
             }
             [self stopPongTimer];
             [self startPongTimer];
         }
     }
 
-    for (IRCChannel* c in channels) {
+    for (IRCChannel* c in _channels) {
         [c preferencesChanged];
     }
 }
 
 - (void)reloadTree
 {
-    [world reloadTree];
+    [_world reloadTree];
 }
 
 - (BOOL)checkIgnore:(NSString*)text nick:(NSString*)nick channel:(NSString*)channel
 {
-    for (IgnoreItem* g in config.ignores) {
+    for (IgnoreItem* g in _config.ignores) {
         if ([g checkIgnore:text nick:nick channel:channel]) {
             return YES;
         }
@@ -335,13 +324,13 @@
 
 - (void)createChannelListDialog
 {
-    if (!channelListDialog) {
-        channelListDialog = [ListDialog new];
-        channelListDialog.delegate = self;
-        [channelListDialog start];
+    if (!_channelListDialog) {
+        _channelListDialog = [ListDialog new];
+        _channelListDialog.delegate = self;
+        [_channelListDialog start];
     }
     else {
-        [channelListDialog show];
+        [_channelListDialog show];
     }
 }
 
@@ -357,8 +346,7 @@
 
 - (void)listDialogWillClose:(ListDialog*)sender
 {
-    [channelListDialog autorelease];
-    channelListDialog = nil;
+    _channelListDialog = nil;
 }
 
 #pragma mark -
@@ -366,23 +354,23 @@
 
 - (void)startPongTimer
 {
-    if (!isLoggedIn) return;
-    if (pongTimer.isActive) return;
+    if (!_isLoggedIn) return;
+    if (_pongTimer.isActive) return;
 
-    pongInterval = [Preferences pongInterval];
-    [pongTimer start:pongInterval];
+    _pongInterval = [Preferences pongInterval];
+    [_pongTimer start:_pongInterval];
 }
 
 - (void)stopPongTimer
 {
-    [pongTimer stop];
+    [_pongTimer stop];
 }
 
 - (void)onPongTimer:(id)sender
 {
-    if (isLoggedIn) {
-        if (serverHostname.length) {
-            [self send:PONG, serverHostname, nil];
+    if (_isLoggedIn) {
+        if (_serverHostname.length) {
+            [self send:PONG, _serverHostname, nil];
         }
     }
     else {
@@ -392,14 +380,14 @@
 
 - (void)startQuitTimer
 {
-    if (quitTimer.isActive) return;
+    if (_quitTimer.isActive) return;
 
-    [quitTimer start:QUIT_INTERVAL];
+    [_quitTimer start:QUIT_INTERVAL];
 }
 
 - (void)stopQuitTimer
 {
-    [quitTimer stop];
+    [_quitTimer stop];
 }
 
 - (void)onQuitTimer:(id)sender
@@ -409,14 +397,14 @@
 
 - (void)startReconnectTimer
 {
-    if (reconnectTimer.isActive) return;
+    if (_reconnectTimer.isActive) return;
 
-    [reconnectTimer start:RECONNECT_INTERVAL];
+    [_reconnectTimer start:RECONNECT_INTERVAL];
 }
 
 - (void)stopReconnectTimer
 {
-    [reconnectTimer stop];
+    [_reconnectTimer stop];
 }
 
 - (void)onReconnectTimer:(id)sender
@@ -426,14 +414,14 @@
 
 - (void)startRetryTimer
 {
-    if (retryTimer.isActive) return;
+    if (_retryTimer.isActive) return;
 
-    [retryTimer start:RETRY_INTERVAL];
+    [_retryTimer start:RETRY_INTERVAL];
 }
 
 - (void)stopRetryTimer
 {
-    [retryTimer stop];
+    [_retryTimer stop];
 }
 
 - (void)onRetryTimer:(id)sender
@@ -444,13 +432,13 @@
 
 - (void)startAutoJoinTimer
 {
-    [autoJoinTimer stop];
-    [autoJoinTimer start:NICKSERV_INTERVAL];
+    [_autoJoinTimer stop];
+    [_autoJoinTimer start:NICKSERV_INTERVAL];
 }
 
 - (void)stopAutoJoinTimer
 {
-    [autoJoinTimer stop];
+    [_autoJoinTimer stop];
 }
 
 - (void)onAutoJoinTimer:(id)sender
@@ -470,10 +458,9 @@
 {
     [self stopReconnectTimer];
 
-    if (conn) {
-        [conn close];
-        [conn autorelease];
-        conn = nil;
+    if (_conn) {
+        [_conn close];
+        _conn = nil;
     }
 
     switch (mode) {
@@ -488,11 +475,11 @@
             break;
     }
 
-    isConnecting = YES;
-    reconnectEnabled = YES;
-    retryEnabled = YES;
+    _isConnecting = YES;
+    _reconnectEnabled = YES;
+    _retryEnabled = YES;
 
-    NSString* host = config.host;
+    NSString* host = _config.host;
     if (host) {
         int n = [host findCharacter:' '];
         if (n >= 0) {
@@ -500,39 +487,38 @@
         }
     }
 
-    conn = [IRCConnection new];
-    conn.delegate = self;
-    conn.host = host;
-    conn.port = config.port;
-    conn.useSSL = config.useSSL;
-    conn.encoding = config.encoding;
+    _conn = [IRCConnection new];
+    _conn.delegate = self;
+    _conn.host = host;
+    _conn.port = _config.port;
+    _conn.useSSL = _config.useSSL;
+    _conn.encoding = _config.encoding;
 
-    switch (config.proxyType) {
+    switch (_config.proxyType) {
         case PROXY_SOCKS_SYSTEM:
-            conn.useSystemSocks = YES;
+            _conn.useSystemSocks = YES;
             // fall through
         case PROXY_SOCKS4:
         case PROXY_SOCKS5:
-            conn.useSocks = YES;
-            conn.socksVersion = config.proxyType;
-            conn.proxyHost = config.proxyHost;
-            conn.proxyPort = config.proxyPort;
-            conn.proxyUser = config.proxyUser;
-            conn.proxyPassword = config.proxyPassword;
+            _conn.useSocks = YES;
+            _conn.socksVersion = _config.proxyType;
+            _conn.proxyHost = _config.proxyHost;
+            _conn.proxyPort = _config.proxyPort;
+            _conn.proxyUser = _config.proxyUser;
+            _conn.proxyPassword = _config.proxyPassword;
             break;
         default:
             break;
     }
 
-    [conn open];
+    [_conn open];
 }
 
 - (void)disconnect
 {
-    if (conn) {
-        [conn close];
-        [conn autorelease];
-        conn = nil;
+    if (_conn) {
+        [_conn close];
+        _conn = nil;
     }
 
     [self changeStateOff];
@@ -545,15 +531,15 @@
 
 - (void)quit:(NSString*)comment
 {
-    if (!isLoggedIn) {
+    if (!_isLoggedIn) {
         [self disconnect];
         return;
     }
 
-    isQuitting = YES;
-    reconnectEnabled = NO;
-    [conn clearSendQueue];
-    [self send:QUIT, comment ?: config.leavingComment, nil];
+    _isQuitting = YES;
+    _reconnectEnabled = NO;
+    [_conn clearSendQueue];
+    [self send:QUIT, comment ?: _config.leavingComment, nil];
 
     [self startQuitTimer];
 }
@@ -565,19 +551,17 @@
 
 - (void)changeNick:(NSString*)newNick
 {
-    if (!isConnected) return;
+    if (!_isConnected) return;
 
-    [inputNick autorelease];
-    [sentNick autorelease];
-    inputNick = [newNick retain];
-    sentNick = [newNick retain];
+    _inputNick = newNick;
+    _sentNick = newNick;
 
     [self send:NICK, newNick, nil];
 }
 
 - (void)joinChannel:(IRCChannel*)channel
 {
-    if (!isLoggedIn) return;
+    if (!_isLoggedIn) return;
     if (channel.isActive) return;
 
     NSString* password = channel.config.password;
@@ -588,7 +572,7 @@
 
 - (void)joinChannel:(IRCChannel*)channel password:(NSString*)password
 {
-    if (!isLoggedIn) return;
+    if (!_isLoggedIn) return;
 
     if (!password.length) password = channel.config.password;
     if (!password.length) password = nil;
@@ -598,10 +582,10 @@
 
 - (void)partChannel:(IRCChannel*)channel
 {
-    if (!isLoggedIn) return;
+    if (!_isLoggedIn) return;
     if (!channel.isActive) return;
 
-    NSString* comment = config.leavingComment;
+    NSString* comment = _config.leavingComment;
     if (!comment.length) comment = nil;
 
     [self send:PART, channel.name, comment, nil];
@@ -609,14 +593,14 @@
 
 - (void)sendWhois:(NSString*)nick
 {
-    if (!isLoggedIn) return;
+    if (!_isLoggedIn) return;
 
     [self send:WHOIS, nick, nick, nil];
 }
 
 - (void)changeOp:(IRCChannel*)channel users:(NSArray*)inputUsers mode:(char)mode value:(BOOL)value
 {
-    if (!isLoggedIn || !channel || !channel.isActive || !channel.isChannel || !channel.isOp) return;
+    if (!_isLoggedIn || !channel || !channel.isActive || !channel.isChannel || !channel.isOp) return;
 
     NSMutableArray* users = [NSMutableArray array];
 
@@ -629,7 +613,7 @@
         }
     }
 
-    int max = isupport.modesCount;
+    int max = _isupport.modesCount;
     while (users.count) {
         NSArray* ary = [users subarrayWithRange:NSMakeRange(0, MIN(max, users.count))];
 
@@ -668,16 +652,16 @@
 
     NSString* address = nil;
 
-    if (myAddress) {
-        NSTextCheckingResult* result = [addressRegexp firstMatchInString:myAddress options:0 range:NSMakeRange(0, myAddress.length)];
+    if (_myAddress) {
+        NSTextCheckingResult* result = [addressRegexp firstMatchInString:_myAddress options:0 range:NSMakeRange(0, _myAddress.length)];
         if (!result || result.numberOfRanges < 5) {
-            address = myAddress;
+            address = _myAddress;
         }
         else {
-            int w = [[myAddress substringWithRange:[result rangeAtIndex:1]] intValue];
-            int x = [[myAddress substringWithRange:[result rangeAtIndex:2]] intValue];
-            int y = [[myAddress substringWithRange:[result rangeAtIndex:3]] intValue];
-            int z = [[myAddress substringWithRange:[result rangeAtIndex:4]] intValue];
+            int w = [[_myAddress substringWithRange:[result rangeAtIndex:1]] intValue];
+            int x = [[_myAddress substringWithRange:[result rangeAtIndex:2]] intValue];
+            int y = [[_myAddress substringWithRange:[result rangeAtIndex:3]] intValue];
+            int z = [[_myAddress substringWithRange:[result rangeAtIndex:4]] intValue];
 
             unsigned long long a = 0;
             a |= w; a <<= 8;
@@ -692,7 +676,7 @@
     NSString* trail = [NSString stringWithFormat:@"%@ %@ %d %qi", escapedFileName, address, port, size];
     [self sendCTCPQuery:nick command:@"DCC SEND" text:trail];
 
-    NSString* text = [NSString stringWithFormat:@"Trying file transfer to %@, %@ (%qi bytes) %@:%d", nick, fileName, size, myAddress, port];
+    NSString* text = [NSString stringWithFormat:@"Trying file transfer to %@, %@ (%qi bytes) %@:%d", nick, fileName, size, _myAddress, port];
     [self printBoth:nil type:LINE_TYPE_DCC_SEND_SEND text:text];
 }
 
@@ -702,8 +686,8 @@
     NSMutableString* pass = [NSMutableString string];
 
     for (IRCChannel* c in chans) {
-        NSMutableString* prevTarget = [[target mutableCopy] autorelease];
-        NSMutableString* prevPass = [[pass mutableCopy] autorelease];
+        NSMutableString* prevTarget = [target mutableCopy];
+        NSMutableString* prevPass = [pass mutableCopy];
 
         if (target.length) [target appendString:@","];
         [target appendString:c.name];
@@ -712,8 +696,8 @@
             [pass appendString:c.password];
         }
 
-        NSData* targetData = [target dataUsingEncoding:conn.encoding];
-        NSData* passData = [pass dataUsingEncoding:conn.encoding];
+        NSData* targetData = [target dataUsingEncoding:_conn.encoding];
+        NSData* passData = [pass dataUsingEncoding:_conn.encoding];
 
         if (targetData.length + passData.length > MAX_BODY_LEN) {
             if (prevTarget.length) {
@@ -751,11 +735,11 @@
 
 - (void)performAutoJoin
 {
-    registeringToNickServ = NO;
+    _registeringToNickServ = NO;
     [self stopAutoJoinTimer];
 
     NSMutableArray* ary = [NSMutableArray array];
-    for (IRCChannel* c in channels) {
+    for (IRCChannel* c in _channels) {
         if (c.isChannel && c.config.autoJoin) {
             [ary addObject:c];
         }
@@ -800,7 +784,7 @@
 - (void)checkRejoin:(IRCChannel*)c
 {
     if (![Preferences autoRejoin]) return;
-    if (myMode.r) return;
+    if (_myMode.r) return;
     if (!c || !c.isChannel || c.isOp || [c numberOfMembers] > 1 || c.mode.a) return;
     if (![c.name isModeChannelName]) return;
 
@@ -820,13 +804,14 @@
 
 - (BOOL)inputText:(NSString*)str command:(NSString*)command
 {
-    if (!isConnected) return NO;
+    if (!_isConnected) return NO;
 
-    id sel = world.selected;
+    id sel = _world.selected;
     if (!sel) return NO;
 
     NSArray* lines = [str splitIntoLines];
-    for (NSString* s in lines) {
+    for (NSString* line in lines) {
+        NSString* s = line;
         if (s.length == 0) continue;
 
         if ([sel isClient]) {
@@ -863,20 +848,20 @@
     int max = IRC_BODY_LEN;
 
     if (chname) {
-        max -= [conn convertToCommonEncoding:chname].length;
+        max -= [_conn convertToCommonEncoding:chname].length;
     }
 
-    if (myNick.length) {
-        max -= myNick.length;
+    if (_myNick.length) {
+        max -= _myNick.length;
     }
     else {
-        max -= isupport.nickLen;
+        max -= _isupport.nickLen;
     }
 
-    max -= config.username.length;
+    max -= _config.username.length;
 
-    if (joinMyAddress) {
-        max -= joinMyAddress.length;
+    if (_joinMyAddress) {
+        max -= _joinMyAddress.length;
     }
     else {
         max -= IRC_ADDRESS_LEN;
@@ -901,11 +886,11 @@
         s = [s substringToIndex:max];
     }
     else {
-        s = [[s copy] autorelease];
+        s = [s copy];
     }
 
     while (1) {
-        int len = [conn convertToCommonEncoding:s].length;
+        int len = [_conn convertToCommonEncoding:s].length;
         int delta = len - max;
         if (delta <= 0) break;
 
@@ -941,13 +926,13 @@
     for (NSString* line in lines) {
         if (!line.length) continue;
 
-        NSMutableString* s = [[line mutableCopy] autorelease];
+        NSMutableString* s = [line mutableCopy];
 
         while (s.length > 0) {
             NSString* t = [self truncateText:s command:command channelName:channel.name];
             if (!t.length) break;
 
-            [self printBoth:channel type:type nick:myNick text:t identified:YES];
+            [self printBoth:channel type:type nick:_myNick text:t identified:YES];
 
             NSString* cmd = command;
             if (type == LINE_TYPE_ACTION) {
@@ -1032,18 +1017,14 @@
 
 - (NSString*)expandVariables:(NSString*)s
 {
-    return [s stringByReplacingOccurrencesOfString:@"$nick" withString:myNick];
+    return [s stringByReplacingOccurrencesOfString:@"$nick" withString:_myNick];
 }
 
 - (void)sendJoinAndSelect:(NSString*)channelName
 {
-    if (joiningChannelName != channelName) {
-        [joiningChannelName release];
-        joiningChannelName = [channelName retain];
-    }
-
-    joinSentTime = CFAbsoluteTimeGetCurrent();
-    [self send:JOIN, joiningChannelName, nil];
+    _joiningChannelName = channelName;
+    _joinSentTime = CFAbsoluteTimeGetCurrent();
+    [self send:JOIN, _joiningChannelName, nil];
 }
 
 - (BOOL)sendCommand:(NSString*)s
@@ -1053,17 +1034,17 @@
 
 - (BOOL)sendCommand:(NSString*)str completeTarget:(BOOL)completeTarget target:(NSString*)targetChannelName
 {
-    if (!isConnected || !str.length) return NO;
+    if (!_isConnected || !str.length) return NO;
 
     str = [self expandVariables:str];
 
-    NSMutableString* s = [[str mutableCopy] autorelease];
+    NSMutableString* s = [str mutableCopy];
 
     NSString* cmd = [[s getToken] uppercaseString];
     if (!cmd.length) return NO;
 
-    IRCClient* u = world.selectedClient;
-    IRCChannel* c = world.selectedChannel;
+    IRCClient* u = _world.selectedClient;
+    IRCChannel* c = _world.selectedChannel;
 
     IRCChannel* selChannel = nil;
     if ([cmd isEqualToString:MODE] && !([s hasPrefix:@"+"] || [s hasPrefix:@"-"])) {
@@ -1108,16 +1089,16 @@
         if (!nick.length) {
             // close the current talk
             if (c && c.isTalk) {
-                [world destroyChannel:c];
+                [_world destroyChannel:c];
             }
         }
         else {
             // open a new talk
             IRCChannel* c = [self findChannel:nick];
             if (!c) {
-                c = [world createTalk:nick client:self];
+                c = [_world createTalk:nick client:self];
             }
-            [world select:c];
+            [_world select:c];
         }
         return YES;
     }
@@ -1127,14 +1108,14 @@
             c = [self findChannel:nick];
         }
         if (c && c.isTalk) {
-            [world destroyChannel:c];
+            [_world destroyChannel:c];
         }
         return YES;
     }
     else if ([cmd isEqualToString:TIMER]) {
         int interval = [[s getToken] intValue];
         if (interval > 0) {
-            TimerCommand* cmd = [[TimerCommand new] autorelease];
+            TimerCommand* cmd = [TimerCommand new];
             if ([s hasPrefix:@"/"]) {
                 [s deleteCharactersInRange:NSMakeRange(0, 1)];
             }
@@ -1179,7 +1160,7 @@
     }
     else if ([cmd isEqualToString:IGNORE] || [cmd isEqualToString:UNIGNORE]) {
         if (!s.length) {
-            [world.menuController showServerPropertyDialog:self ignore:YES];
+            [_world.menuController showServerPropertyDialog:self ignore:YES];
             return YES;
         }
 
@@ -1232,7 +1213,7 @@
             }
         }
 
-        IgnoreItem* g = [[IgnoreItem new] autorelease];
+        IgnoreItem* g = [IgnoreItem new];
         g.nick = nick;
         g.text = text;
         g.useRegexForNick = useRegexForNick;
@@ -1242,7 +1223,7 @@
         if (g.isValid) {
             if ([cmd isEqualToString:IGNORE]) {
                 BOOL found = NO;
-                for (IgnoreItem* e in config.ignores) {
+                for (IgnoreItem* e in _config.ignores) {
                     if ([g isEqual:e]) {
                         found = YES;
                         break;
@@ -1250,17 +1231,17 @@
                 }
 
                 if (!found) {
-                    [config.ignores addObject:g];
-                    [world save];
+                    [_config.ignores addObject:g];
+                    [_world save];
                 }
             }
             else {
-                NSMutableArray* ignores = config.ignores;
+                NSMutableArray* ignores = _config.ignores;
                 for (int i=ignores.count-1; i>=0; --i) {
                     IgnoreItem* e = [ignores objectAtIndex:i];
                     if ([g isEqual:e]) {
                         [ignores removeObjectAtIndex:i];
-                        [world save];
+                        [_world save];
                         break;
                     }
                 }
@@ -1305,7 +1286,7 @@
             targetChannelName = selChannel.name;
         }
         else if (selChannel && selChannel.isTalk && ![s isChannelName]) {
-            [world destroyChannel:selChannel];
+            [_world destroyChannel:selChannel];
             return YES;
         }
         else {
@@ -1399,7 +1380,7 @@
     else if ([cmd isEqualToString:UMODE]) {
         cmd = MODE;
         [s insertString:@" " atIndex:0];
-        [s insertString:myNick atIndex:0];
+        [s insertString:_myNick atIndex:0];
     }
 
     //
@@ -1432,7 +1413,7 @@
     }
 
     if ([cmd isEqualToString:CTCP]) {
-        NSMutableString* t = [[s mutableCopy] autorelease];
+        NSMutableString* t = [s mutableCopy];
         NSString* subCommand = [[t getToken] uppercaseString];
         if ([subCommand isEqualToString:ACTION]) {
             cmd = ACTION;
@@ -1466,7 +1447,8 @@
 
             NSMutableArray* targetsResult = [NSMutableArray array];
             NSArray* targets = [targetChannelName componentsSeparatedByString:@","];
-            for (NSString* chname in targets) {
+            for (NSString* channelName in targets) {
+                NSString* chname = channelName;
                 if (!chname.length) continue;
 
                 // support @#channel
@@ -1483,10 +1465,10 @@
                     && ![chname isChannelName]
                     && ![lowerChname isEqualToString:@"nickserv"]
                     && ![lowerChname isEqualToString:@"chanserv"]) {
-                    c = [world createTalk:chname client:self];
+                    c = [_world createTalk:chname client:self];
                 }
 
-                [self printBoth:(c ?: (id)chname) type:type nick:myNick text:t identified:YES];
+                [self printBoth:(c ?: (id)chname) type:type nick:_myNick text:t identified:YES];
 
                 // support @#channel and omsg/onotice
                 if ([chname isChannelName]) {
@@ -1593,7 +1575,7 @@
 
 - (void)sendLine:(NSString*)str
 {
-    [conn sendLine:str];
+    [_conn sendLine:str];
 
     LOG(@">>> %@", str);
 }
@@ -1630,7 +1612,7 @@
 
 - (IRCChannel*)findChannel:(NSString*)name
 {
-    for (IRCChannel* c in channels) {
+    for (IRCChannel* c in _channels) {
         if ([c.name isEqualNoCase:name]) {
             return c;
         }
@@ -1641,7 +1623,7 @@
 - (int)indexOfTalkChannel
 {
     int i = 0;
-    for (IRCChannel* e in channels) {
+    for (IRCChannel* e in _channels) {
         if (e.isTalk) return i;
         ++i;
     }
@@ -1655,31 +1637,31 @@
 {
     CFAbsoluteTime now = CFAbsoluteTimeGetCurrent();
 
-    while (commandQueue.count) {
-        TimerCommand* m = [commandQueue objectAtIndex:0];
+    while (_commandQueue.count) {
+        TimerCommand* m = [_commandQueue objectAtIndex:0];
         if (m.time <= now) {
             NSString* target = nil;
-            IRCChannel* c = [world findChannelByClientId:self.uid channelId:m.cid];
+            IRCChannel* c = [_world findChannelByClientId:self.uid channelId:m.cid];
             if (c) {
                 target = c.name;
             }
 
             [self sendCommand:m.input completeTarget:YES target:target];
 
-            [commandQueue removeObjectAtIndex:0];
+            [_commandQueue removeObjectAtIndex:0];
         }
         else {
             break;
         }
     }
 
-    if (commandQueue.count) {
-        TimerCommand* m = [commandQueue objectAtIndex:0];
+    if (_commandQueue.count) {
+        TimerCommand* m = [_commandQueue objectAtIndex:0];
         CFAbsoluteTime delta = m.time - CFAbsoluteTimeGetCurrent();
-        [commandQueueTimer start:delta];
+        [_commandQueueTimer start:delta];
     }
     else {
-        [commandQueueTimer stop];
+        [_commandQueueTimer stop];
     }
 }
 
@@ -1687,17 +1669,17 @@
 {
     BOOL added = NO;
     int i = 0;
-    for (TimerCommand* c in commandQueue) {
+    for (TimerCommand* c in _commandQueue) {
         if (m.time < c.time) {
             added = YES;
-            [commandQueue insertObject:m atIndex:i];
+            [_commandQueue insertObject:m atIndex:i];
             break;
         }
         ++i;
     }
 
     if (!added) {
-        [commandQueue addObject:m];
+        [_commandQueue addObject:m];
     }
 
     if (i == 0) {
@@ -1707,8 +1689,8 @@
 
 - (void)clearCommandQueue
 {
-    [commandQueueTimer stop];
-    [commandQueue removeAllObjects];
+    [_commandQueueTimer stop];
+    [_commandQueue removeAllObjects];
 }
 
 - (void)onCommandQueueTimer:(id)sender
@@ -1721,12 +1703,12 @@
 
 - (void)updateClientTitle
 {
-    [world updateClientTitle:self];
+    [_world updateClientTitle:self];
 }
 
 - (void)updateChannelTitle:(IRCChannel*)c
 {
-    [world updateChannelTitle:c];
+    [_world updateChannelTitle:c];
 }
 
 #pragma mark -
@@ -1767,7 +1749,7 @@
         [context setObject:text forKey:USER_NOTIFICATION_INVITED_CHANNEL_NAME_KEY];
     }
 
-    [world sendUserNotification:type title:title desc:desc context:context];
+    [_world sendUserNotification:type title:title desc:desc context:context];
 }
 
 - (void)notifyEvent:(UserNotificationType)type
@@ -1821,7 +1803,7 @@
         [context setObject:text forKey:USER_NOTIFICATION_INVITED_CHANNEL_NAME_KEY];
     }
 
-    [world sendUserNotification:type title:title desc:desc context:context];
+    [_world sendUserNotification:type title:title desc:desc context:context];
 }
 
 #pragma mark -
@@ -1829,31 +1811,31 @@
 
 - (void)setKeywordState:(id)t
 {
-    if ([NSApp isActive] && world.selected == t) return;
+    if ([NSApp isActive] && _world.selected == t) return;
     if ([t isKeyword]) return;
     [t setIsKeyword:YES];
     [self reloadTree];
     if (![NSApp isActive]) [NSApp requestUserAttention:NSInformationalRequest];
-    [world updateIcon];
+    [_world updateIcon];
 }
 
 - (void)setNewTalkState:(id)t
 {
-    if ([NSApp isActive] && world.selected == t) return;
+    if ([NSApp isActive] && _world.selected == t) return;
     if ([t isNewTalk]) return;
     [t setIsNewTalk:YES];
     [self reloadTree];
     if (![NSApp isActive]) [NSApp requestUserAttention:NSInformationalRequest];
-    [world updateIcon];
+    [_world updateIcon];
 }
 
 - (void)setUnreadState:(id)t
 {
-    if ([NSApp isActive] && world.selected == t) return;
+    if ([NSApp isActive] && _world.selected == t) return;
     if ([t isUnread]) return;
     [t setIsUnread:YES];
     [self reloadTree];
-    [world updateIcon];
+    [_world updateIcon];
 }
 
 #pragma mark -
@@ -1870,7 +1852,7 @@
     char buf[TIME_BUFFER_SIZE+1];
     strftime(buf, TIME_BUFFER_SIZE, [format UTF8String], local);
     buf[TIME_BUFFER_SIZE] = 0;
-    NSString* result = [[[NSString alloc] initWithBytes:buf length:strlen(buf) encoding:NSUTF8StringEncoding] autorelease];
+    NSString* result = [[NSString alloc] initWithBytes:buf length:strlen(buf) encoding:NSUTF8StringEncoding];
     return result;
 }
 
@@ -1889,7 +1871,7 @@
         return NO;
     }
 
-    return target != world.selected || !target.log.viewingBottom;
+    return target != _world.selected || !target.log.viewingBottom;
 }
 
 - (BOOL)printBoth:(id)chan type:(LogLineType)type text:(NSString*)text
@@ -1927,7 +1909,7 @@
         format = [Preferences themeNickFormat];
     }
     else {
-        format = world.viewTheme.other.logNickFormat;
+        format = _world.viewTheme.other.logNickFormat;
     }
 
     NSString* s = format;
@@ -2027,7 +2009,7 @@
         place = [NSString stringWithFormat:@"<%@> ", channelName];
     }
     else {
-        place = [NSString stringWithFormat:@"<%@> ", config.name];
+        place = [NSString stringWithFormat:@"<%@> ", _config.name];
     }
 
     if (nick.length > 0) {
@@ -2039,7 +2021,7 @@
         }
     }
 
-    if (nick && [nick isEqualToString:myNick]) {
+    if (nick && [nick isEqualToString:_myNick]) {
         memberType = MEMBER_TYPE_MYSELF;
     }
 
@@ -2063,14 +2045,14 @@
             excludeWords = [Preferences excludeWords];
 
             if ([Preferences keywordCurrentNick]) {
-                NSMutableArray* ary = [[keywords mutableCopy] autorelease];
-                [ary insertObject:myNick atIndex:0];
+                NSMutableArray* ary = [keywords mutableCopy];
+                [ary insertObject:_myNick atIndex:0];
                 keywords = ary;
             }
         }
     }
 
-    LogLine* c = [[LogLine new] autorelease];
+    LogLine* c = [LogLine new];
     c.time = time;
     c.place = place;
     c.nick = nickStr;
@@ -2084,7 +2066,7 @@
     c.keywords = keywords;
     c.excludeWords = excludeWords;
 
-    [world.consoleLog print:c];
+    [_world.consoleLog print:c];
 }
 
 - (BOOL)printChannel:(id)chan type:(LogLineType)type text:(NSString*)text timestamp:(time_t)receivedAt
@@ -2123,7 +2105,7 @@
         }
     }
 
-    if (nick && [nick isEqualToString:myNick]) {
+    if (nick && [nick isEqualToString:_myNick]) {
         memberType = MEMBER_TYPE_MYSELF;
     }
 
@@ -2140,14 +2122,14 @@
             excludeWords = [Preferences excludeWords];
 
             if ([Preferences keywordCurrentNick]) {
-                NSMutableArray* ary = [[keywords mutableCopy] autorelease];
-                [ary insertObject:myNick atIndex:0];
+                NSMutableArray* ary = [keywords mutableCopy];
+                [ary insertObject:_myNick atIndex:0];
                 keywords = ary;
             }
         }
     }
 
-    LogLine* c = [[LogLine new] autorelease];
+    LogLine* c = [LogLine new];
     c.time = time;
     c.place = place;
     c.nick = nickStr;
@@ -2160,7 +2142,7 @@
     c.nickColorNumber = colorNumber;
     c.keywords = keywords;
     c.excludeWords = excludeWords;
-    c.useAvatar = type == LINE_TYPE_PRIVMSG && [[config.userInfo lowercaseString] contains:@"showtwitteravatar"];
+    c.useAvatar = type == LINE_TYPE_PRIVMSG && [[_config.userInfo lowercaseString] contains:@"showtwitteravatar"];
 
     if (channel) {
         return [channel print:c];
@@ -2237,7 +2219,7 @@
 
 - (BOOL)isActive
 {
-    return isLoggedIn;
+    return _isLoggedIn;
 }
 
 - (IRCClient*)client
@@ -2247,17 +2229,17 @@
 
 - (int)numberOfChildren
 {
-    return channels.count;
+    return _channels.count;
 }
 
 - (id)childAtIndex:(int)index
 {
-    return [channels objectAtIndex:index];
+    return [_channels objectAtIndex:index];
 }
 
 - (NSString*)label
 {
-    return config.name;
+    return _config.name;
 }
 
 #pragma mark -
@@ -2271,16 +2253,16 @@
         return d;
     }
 
-    d = [[WhoisDialog new] autorelease];
+    d = [WhoisDialog new];
     d.delegate = self;
-    [whoisDialogs addObject:d];
+    [_whoisDialogs addObject:d];
     [d startWithNick:nick username:username address:address realname:realname];
     return d;
 }
 
 - (WhoisDialog*)findWhoisDialog:(NSString*)nick
 {
-    for (WhoisDialog* d in whoisDialogs) {
+    for (WhoisDialog* d in _whoisDialogs) {
         if ([nick isEqualNoCase:d.nick]) {
             return d;
         }
@@ -2290,9 +2272,9 @@
 
 - (void)whoisDialogOnTalk:(WhoisDialog*)sender
 {
-    IRCChannel* c = [world createTalk:sender.nick client:self];
+    IRCChannel* c = [_world createTalk:sender.nick client:self];
     if (c) {
-        [world select:c];
+        [_world select:c];
     }
 }
 
@@ -2308,8 +2290,7 @@
 
 - (void)whoisDialogWillClose:(WhoisDialog*)sender
 {
-    [[sender retain] autorelease];
-    [whoisDialogs removeObjectIdenticalTo:sender];
+    [_whoisDialogs removeObjectIdenticalTo:sender];
 }
 
 #pragma mark -
@@ -2319,9 +2300,7 @@
 {
     NSArray* addresses = [host addresses];
     if (addresses.count) {
-        NSString* address = [addresses objectAtIndex:0];
-        [myAddress release];
-        myAddress = [address retain];
+        _myAddress = [addresses objectAtIndex:0];
     }
 }
 
@@ -2337,11 +2316,11 @@
     NSString* text = [m paramAt:1];
 
     BOOL identified = NO;
-    if (identifyCTCP && ([text hasPrefix:@"+\x01"] || [text hasPrefix:@"-\x01"])) {
+    if (_identifyCTCP && ([text hasPrefix:@"+\x01"] || [text hasPrefix:@"-\x01"])) {
         identified = [text hasPrefix:@"+"];
         text = [text substringFromIndex:1];
     }
-    else if (identifyMsg && ([text hasPrefix:@"+"] || [text hasPrefix:@"-"])) {
+    else if (_identifyMsg && ([text hasPrefix:@"+"] || [text hasPrefix:@"-"])) {
         identified = [text hasPrefix:@"+"];
         text = [text substringFromIndex:1];
     }
@@ -2419,9 +2398,9 @@
                 if (sender) {
                     static NSCharacterSet* underlineSet = nil;
                     if (!underlineSet) {
-                        underlineSet = [[NSCharacterSet characterSetWithCharactersInString:@"_"] retain];
+                        underlineSet = [NSCharacterSet characterSetWithCharactersInString:@"_"];
                     }
-                    NSString* trimmedMyNick = [myNick stringByTrimmingCharactersInSet:underlineSet];
+                    NSString* trimmedMyNick = [_myNick stringByTrimmingCharactersInSet:underlineSet];
                     if ([text rangeOfString:trimmedMyNick options:NSCaseInsensitiveSearch].location != NSNotFound) {
                         [sender outgoingConversation];
                     }
@@ -2432,7 +2411,7 @@
             }
         }
     }
-    else if ([target isEqualNoCase:myNick]) {
+    else if ([target isEqualNoCase:_myNick]) {
         if (!nick.length || [nick contains:@"."]) {
             // system
             [self printBoth:nil type:type text:text timestamp:m.timestamp];
@@ -2443,7 +2422,7 @@
             BOOL newTalk = NO;
             BOOL moreTalk = NO;
             if (!c && type != LINE_TYPE_NOTICE) {
-                c = [world createTalk:nick client:self];
+                c = [_world createTalk:nick client:self];
                 newTalk = YES;
             }
             else if (c && type != LINE_TYPE_NOTICE && [Preferences bounceIconOnEveryPrivateMessage]) {
@@ -2454,7 +2433,7 @@
 
             if (type == LINE_TYPE_NOTICE) {
                 if ([nick isEqualNoCase:@"NickServ"]) {
-                    if (registeringToNickServ) {
+                    if (_registeringToNickServ) {
                         if ([text hasPrefix:@"You are now identified for "]
                             || [text hasPrefix:@"Invalid password for "]
                             || [text hasSuffix:@" is not a registered nickname."]) {
@@ -2463,8 +2442,8 @@
                     }
                     else {
                         if ([text hasPrefix:@"This nickname is registered."]) {
-                            if (config.nickPassword.length) {
-                                [self send:PRIVMSG, @"NickServ", [NSString stringWithFormat:@"IDENTIFY %@", config.nickPassword], nil];
+                            if (_config.nickPassword.length) {
+                                [self send:PRIVMSG, @"NickServ", [NSString stringWithFormat:@"IDENTIFY %@", _config.nickPassword], nil];
                             }
                         }
                     }
@@ -2501,7 +2480,7 @@
     //LOG(@"CTCP Query: %@", text);
 
     NSString* nick = m.sender.nick;
-    NSMutableString* s = [[text mutableCopy] autorelease];
+    NSMutableString* s = [text mutableCopy];
     NSString* command = [[s getToken] uppercaseString];
 
     if ([self checkIgnore:nil nick:nick channel:nil]) {
@@ -2540,12 +2519,12 @@
     }
     else {
         CFAbsoluteTime now = CFAbsoluteTimeGetCurrent();
-        if (now - lastCTCPTime < CTCP_MIN_INTERVAL) {
+        if (now - _lastCTCPTime < CTCP_MIN_INTERVAL) {
             NSString* text = [NSString stringWithFormat:@"CTCP-query %@ from %@ was ignored", command, nick];
             [self printBoth:nil type:LINE_TYPE_REPLY text:text timestamp:m.timestamp];
             return;
         }
-        lastCTCPTime = now;
+        _lastCTCPTime = now;
 
         NSString* text = [NSString stringWithFormat:@"CTCP-query %@ from %@", command, nick];
         [self printBoth:nil type:LINE_TYPE_REPLY text:text timestamp:m.timestamp];
@@ -2554,8 +2533,8 @@
             [self sendCTCPReply:nick command:command text:s];
         }
         else if ([command isEqualToString:TIME]) {
-            NSDateFormatter* formatter = [[NSDateFormatter new] autorelease];
-            NSLocale* locale = [[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"] autorelease];
+            NSDateFormatter* formatter = [NSDateFormatter new];
+            NSLocale* locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
             [formatter setLocale:locale];
             [formatter setDateFormat:@"yyyy/MM/dd HH:mm Z"];
             NSString* text = [formatter stringFromDate:[NSDate date]];
@@ -2569,7 +2548,7 @@
             [self sendCTCPReply:nick command:command text:text];
         }
         else if ([command isEqualToString:USERINFO]) {
-            [self sendCTCPReply:nick command:command text:config.userInfo ?: @""];
+            [self sendCTCPReply:nick command:command text:_config.userInfo ?: @""];
         }
         else if ([command isEqualToString:CLIENTINFO]) {
             [self sendCTCPReply:nick command:command text:NSLocalizedString(@"CTCPClientInfo", nil)];
@@ -2580,7 +2559,7 @@
 - (void)receiveCTCPReply:(IRCMessage*)m text:(NSString*)text
 {
     NSString* nick = m.sender.nick;
-    NSMutableString* s = [[text mutableCopy] autorelease];
+    NSMutableString* s = [text mutableCopy];
     NSString* command = [[s getToken] uppercaseString];
 
     if ([self checkIgnore:nil nick:nick channel:nil]) {
@@ -2605,7 +2584,7 @@
     NSString* nick = m.sender.nick;
     NSString* target = [m paramAt:0];
 
-    if (![target isEqualToString:myNick]) return;
+    if (![target isEqualToString:_myNick]) return;
 
     LOG(@"receive dcc send");
 
@@ -2637,7 +2616,7 @@
                 path = @"~/Desktop";
             }
 
-            [world.dcc addReceiverWithUID:self.uid nick:nick host:host port:port path:path fileName:fileName size:size];
+            [_world.dcc addReceiverWithUID:self.uid nick:nick host:host port:port path:path fileName:fileName size:size];
 
             [self notifyEvent:USER_NOTIFICATION_FILE_RECEIVE_REQUEST target:nil nick:nick text:fileName];
             [SoundPlayer play:[Preferences soundForEvent:USER_NOTIFICATION_FILE_RECEIVE_REQUEST]];
@@ -2654,7 +2633,7 @@
     NSString* nick = m.sender.nick;
     NSString* chname = [m paramAt:0];
 
-    BOOL myself = [nick isEqualNoCase:myNick];
+    BOOL myself = [nick isEqualNoCase:_myNick];
 
     // work around for ircd 2.9.5
     BOOL njoin = NO;
@@ -2667,44 +2646,42 @@
 
     if (myself) {
         if (!c) {
-            IRCChannelConfig* seed = [[IRCChannelConfig new] autorelease];
+            IRCChannelConfig* seed = [IRCChannelConfig new];
             seed.name = chname;
             seed.autoJoin = NO;
-            c = [world createChannel:seed client:self reload:YES adjust:YES];
-            [world save];
+            c = [_world createChannel:seed client:self reload:YES adjust:YES];
+            [_world save];
         }
         [c activate];
         [self reloadTree];
         [self printSystem:c text:@"You have joined the channel" timestamp:m.timestamp];
 
-        if (!joinMyAddress) {
-            joinMyAddress = [m.sender.address retain];
-            if (addressDetectionMethod == ADDRESS_DETECT_JOIN) {
-                if (joinMyAddress.length) {
-                    [nameResolver resolve:joinMyAddress];
+        if (!_joinMyAddress) {
+            _joinMyAddress = m.sender.address;
+            if (_addressDetectionMethod == ADDRESS_DETECT_JOIN) {
+                if (_joinMyAddress.length) {
+                    [_nameResolver resolve:_joinMyAddress];
                 }
             }
         }
 
-        if (joiningChannelName) {
+        if (_joiningChannelName) {
             CFAbsoluteTime now = CFAbsoluteTimeGetCurrent();
-            if (now - joinSentTime < 30) {
-                if ([joiningChannelName isEqualNoCase:chname]) {
-                    [world select:c];
-                    [joiningChannelName release];
-                    joiningChannelName = nil;
+            if (now - _joinSentTime < 30) {
+                if ([_joiningChannelName isEqualNoCase:chname]) {
+                    [_world select:c];
+                    _joiningChannelName = nil;
                 }
             }
             else {
-                [joiningChannelName release];
-                joiningChannelName = nil;
+                _joiningChannelName = nil;
             }
         }
     }
 
     if (c) {
-        IRCUser* u = [[IRCUser new] autorelease];
-        u.isupport = isupport;
+        IRCUser* u = [IRCUser new];
+        u.isupport = _isupport;
         u.nick = nick;
         u.username = m.sender.user;
         u.address = m.sender.address;
@@ -2723,8 +2700,8 @@
     // add user to talk
     c = [self findChannel:nick];
     if (c) {
-        IRCUser* u = [[IRCUser new] autorelease];
-        u.isupport = isupport;
+        IRCUser* u = [IRCUser new];
+        u.isupport = _isupport;
         u.nick = nick;
         u.username = m.sender.user;
         u.address = m.sender.address;
@@ -2742,7 +2719,7 @@
 
     IRCChannel* c = [self findChannel:chname];
     if (c) {
-        if ([nick isEqualNoCase:myNick]) {
+        if ([nick isEqualNoCase:_myNick]) {
             myself = YES;
             [c deactivate];
             [self reloadTree];
@@ -2774,7 +2751,7 @@
 
     IRCChannel* c = [self findChannel:chname];
     if (c) {
-        BOOL myself = [target isEqualNoCase:myNick];
+        BOOL myself = [target isEqualNoCase:_myNick];
         if (myself) {
             [c deactivate];
             [self reloadTree];
@@ -2800,7 +2777,7 @@
 
     NSString* text = [NSString stringWithFormat:@"%@ has left IRC (%@)", nick, comment];
 
-    for (IRCChannel* c in channels) {
+    for (IRCChannel* c in _channels) {
         if ([c findMember:nick]) {
             if ([Preferences showJoinLeave]) {
                 [self printChannel:c type:LINE_TYPE_QUIT text:text timestamp:m.timestamp];
@@ -2827,7 +2804,7 @@
 
     NSString* text = [NSString stringWithFormat:@"%@ has forced %@ to leave IRC (%@)", sender, target, comment];
 
-    for (IRCChannel* c in channels) {
+    for (IRCChannel* c in _channels) {
         if ([c findMember:target]) {
             [self printChannel:c type:LINE_TYPE_KILL text:text timestamp:m.timestamp];
             [c removeMember:target];
@@ -2846,10 +2823,9 @@
     NSString* nick = m.sender.nick;
     NSString* toNick = [m paramAt:0];
 
-    if ([nick isEqualNoCase:myNick]) {
+    if ([nick isEqualNoCase:_myNick]) {
         // changed my nick
-        [myNick release];
-        myNick = [toNick retain];
+        _myNick = toNick;
         [self updateClientTitle];
 
         if ([Preferences showRename]) {
@@ -2858,7 +2834,7 @@
         }
     }
 
-    for (IRCChannel* c in channels) {
+    for (IRCChannel* c in _channels) {
         if ([c findMember:nick]) {
             // rename channel member
             if ([Preferences showRename]) {
@@ -2875,7 +2851,7 @@
         if (t) {
             // there is a channel already for a nick
             // just remove it
-            [world destroyChannel:t];
+            [_world destroyChannel:t];
         }
 
         // rename talk
@@ -2885,14 +2861,14 @@
     }
 
     // rename nick on whois dialogs
-    for (WhoisDialog* d in whoisDialogs) {
+    for (WhoisDialog* d in _whoisDialogs) {
         if ([d.nick isEqualToString:nick]) {
             d.nick = toNick;
         }
     }
 
     // rename nick in dcc
-    [world.dcc nickChanged:nick toNick:toNick client:self];
+    [_world.dcc nickChanged:nick toNick:toNick client:self];
 
     if ([Preferences showRename]) {
         NSString* text = [NSString stringWithFormat:@"%@ is now known as %@", nick, toNick];
@@ -2915,8 +2891,7 @@
 
             if (c.mode.a != prevA) {
                 if (c.mode.a) {
-                    IRCUser* me = [c findMember:myNick];
-                    [[me retain] autorelease];
+                    IRCUser* me = [c findMember:_myNick];
                     [c addMember:me];
                 }
                 else {
@@ -2934,13 +2909,13 @@
 
                 BOOL myself = NO;
 
-                if ((mode == 'q' || mode == 'a' || mode == 'o') && [myNick isEqualNoCase:t]) {
+                if ((mode == 'q' || mode == 'a' || mode == 'o') && [_myNick isEqualNoCase:t]) {
                     // mode change for myself
-                    IRCUser* m = [c findMember:myNick];
+                    IRCUser* m = [c findMember:_myNick];
                     if (m) {
                         myself = YES;
                         BOOL prev = m.isOp;
-                        [c changeMember:myNick mode:mode value:plus];
+                        [c changeMember:_myNick mode:mode value:plus];
                         c.isOp = m.isOp;
                         if (!prev && c.isOp && c.isWhoInit) {
                             // @@@ check all auto op
@@ -2961,7 +2936,7 @@
     }
     else {
         // user mode
-        [myMode update:modeStr];
+        [_myMode update:modeStr];
 
         NSString* text = [NSString stringWithFormat:@"%@ has changed mode: %@", nick, modeStr];
         [self printBoth:nil type:LINE_TYPE_MODE text:text timestamp:m.timestamp];
@@ -3000,10 +2975,10 @@
     if ([Preferences autoJoinOnInvited]) {
         IRCChannel* c = [self findChannel:chname];
         if (!c) {
-            IRCChannelConfig* seed = [[IRCChannelConfig new] autorelease];
+            IRCChannelConfig* seed = [IRCChannelConfig new];
             seed.name = chname;
-            c = [world createChannel:seed client:self reload:YES adjust:YES];
-            [world save];
+            c = [_world createChannel:seed client:self reload:YES adjust:YES];
+            [_world save];
             [self joinChannel:c];
         }
     } else {
@@ -3029,7 +3004,7 @@
 
 - (void)receiveCap:(IRCMessage*)m
 {
-    if (isLoggedIn) return;
+    if (_isLoggedIn) return;
 
     NSString* command = [m paramAt:1];
     NSString* params = [[m paramAt:2] trim];
@@ -3043,18 +3018,18 @@
 
 - (void)receiveAuthenticate:(IRCMessage*)m
 {
-    if (isLoggedIn) return;
+    if (_isLoggedIn) return;
 
     NSString* command = [[m paramAt:0] trim];
 
     if ([command isEqualNoCase:@"+"]) {
-        NSString* user = config.username;
-        NSString* pass = config.nickPassword;
-        if (!user.length) user = config.nick;
+        NSString* user = _config.username;
+        NSString* pass = _config.nickPassword;
+        if (!user.length) user = _config.nick;
         if (!pass.length) pass = @"";
 
-        NSString* base = [NSString stringWithFormat:@"%@\0%@\0%@", config.nick, user, pass];
-        NSData* data = [base dataUsingEncoding:encoding];
+        NSString* base = [NSString stringWithFormat:@"%@\0%@\0%@", _config.nick, user, pass];
+        NSData* data = [base dataUsingEncoding:_encoding];
         NSString* authStr = [GTMBase64 stringByEncodingData:data];
         [self send:AUTHENTICATE, authStr, nil];
     }
@@ -3062,57 +3037,56 @@
 
 - (void)receiveInit:(IRCMessage*)m
 {
-    if (isLoggedIn) return;
+    if (_isLoggedIn) return;
 
-    isLoggedIn = YES;
-    conn.loggedIn = YES;
-    tryingNickNumber = -1;
+    _isLoggedIn = YES;
+    _conn.loggedIn = YES;
+    _tryingNickNumber = -1;
 
-    registeringToNickServ = NO;
-    inWhois = NO;
-    inList = NO;
+    _registeringToNickServ = NO;
+    _inWhois = NO;
+    _inList = NO;
 
     [self startPongTimer];
     [self stopRetryTimer];
     [self stopAutoJoinTimer];
 
-    [world expandClient:self];
+    [_world expandClient:self];
 
-    [serverHostname release];
-    serverHostname = [m.sender.raw retain];
-    [myNick release];
-    myNick = [[m paramAt:0] retain];
+    _serverHostname = m.sender.raw;
+    _myNick = [m paramAt:0];
 
     [self printSystem:self text:@"Logged in" timestamp:m.timestamp];
 
     [self notifyEvent:USER_NOTIFICATION_LOGIN];
     [SoundPlayer play:[Preferences soundForEvent:USER_NOTIFICATION_LOGIN]];
 
-    if (!isRegisteredWithSASL && config.nickPassword.length) {
-        registeringToNickServ = YES;
+    if (!_isRegisteredWithSASL && _config.nickPassword.length) {
+        _registeringToNickServ = YES;
         [self startAutoJoinTimer];
-        [self send:PRIVMSG, @"NickServ", [NSString stringWithFormat:@"IDENTIFY %@", config.nickPassword], nil];
+        [self send:PRIVMSG, @"NickServ", [NSString stringWithFormat:@"IDENTIFY %@", _config.nickPassword], nil];
     }
 
-    for (NSString* s in config.loginCommands) {
+    for (NSString* command in _config.loginCommands) {
+        NSString* s = command;
         if ([s hasPrefix:@"/"]) {
             s = [s substringFromIndex:1];
         }
         [self sendCommand:s completeTarget:NO target:nil];
     }
 
-    for (IRCChannel* c in channels) {
+    for (IRCChannel* c in _channels) {
         if (c.isTalk) {
             [c activate];
 
             IRCUser* m;
-            m = [[IRCUser new] autorelease];
-            m.isupport = isupport;
-            m.nick = myNick;
+            m = [IRCUser new];
+            m.isupport = _isupport;
+            m.nick = _myNick;
             [c addMember:m];
 
-            m = [[IRCUser new] autorelease];
-            m.isupport = isupport;
+            m = [IRCUser new];
+            m.isupport = _isupport;
             m.nick = c.name;
             [c addMember:m];
         }
@@ -3121,7 +3095,7 @@
     [self updateClientTitle];
     [self reloadTree];
 
-    if (!registeringToNickServ) {
+    if (!_registeringToNickServ) {
         [self performAutoJoin];
     }
 }
@@ -3152,7 +3126,7 @@
             [self printReply:m];
             break;
         case 5:		// RPL_ISUPPORT
-            [isupport update:[m sequence:1]];
+            [_isupport update:[m sequence:1]];
             [self printReply:m];
             break;
         case 221:	// RPL_UMODEIS
@@ -3162,8 +3136,8 @@
             modeStr = [modeStr stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
             if ([modeStr isEqualToString:@"+"]) return;
 
-            [myMode clear];
-            [myMode update:modeStr];
+            [_myMode clear];
+            [_myMode update:modeStr];
             [self updateClientTitle];
 
             NSString* text = [NSString stringWithFormat:@"Mode: %@", modeStr];
@@ -3176,10 +3150,10 @@
             kind = [kind lowercaseString];
 
             if ([kind isEqualToString:@"identify-msg"]) {
-                identifyMsg = YES;
+                _identifyMsg = YES;
             }
             else if ([kind isEqualToString:@"identify-ctcp"]) {
-                identifyCTCP = YES;
+                _identifyCTCP = YES;
             }
 
             [self printReply:m];
@@ -3190,7 +3164,7 @@
             NSString* nick = [m paramAt:1];
             NSString* comment = [m paramAt:2];
 
-            if (inWhois) {
+            if (_inWhois) {
                 WhoisDialog* d = [self findWhoisDialog:nick];
                 if (d) {
                     [d setAwayMessage:comment];
@@ -3210,7 +3184,7 @@
             NSString* address = [m paramAt:3];
             NSString* realname = [m paramAt:5];
 
-            inWhois = YES;
+            _inWhois = YES;
 
             WhoisDialog* d = [self createWhoisDialogWithNick:nick username:username address:address realname:realname];
             if (!d) {
@@ -3225,7 +3199,7 @@
             NSString* server = [m paramAt:2];
             NSString* serverInfo = [m paramAt:3];
 
-            if (inWhois) {
+            if (_inWhois) {
                 WhoisDialog* d = [self findWhoisDialog:nick];
                 if (d) {
                     [d setServer:server serverInfo:serverInfo];
@@ -3241,7 +3215,7 @@
         {
             NSString* nick = [m paramAt:1];
 
-            if (inWhois) {
+            if (_inWhois) {
                 WhoisDialog* d = [self findWhoisDialog:nick];
                 if (d) {
                     [d setIsOperator:YES];
@@ -3277,7 +3251,7 @@
                 signOn = [[IRCClient dateTimeFormatter] stringFromDate:date];
             }
 
-            if (inWhois) {
+            if (_inWhois) {
                 WhoisDialog* d = [self findWhoisDialog:nick];
                 if (d) {
                     [d setIdle:idle signOn:signOn];
@@ -3300,7 +3274,7 @@
             trail = [trail stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
             NSArray* channelNames = [trail componentsSeparatedByString:@" "];
 
-            if (inWhois) {
+            if (_inWhois) {
                 WhoisDialog* d = [self findWhoisDialog:nick];
                 if (d) {
                     [d setChannels:channelNames];
@@ -3313,7 +3287,7 @@
             break;
         }
         case 318:	// RPL_ENDOFWHOIS
-            inWhois = NO;
+            _inWhois = NO;
             break;
         case 324:	// RPL_CHANNELMODEIS
         {
@@ -3331,8 +3305,7 @@
 
                 if (c.mode.a != prevA) {
                     if (c.mode.a) {
-                        IRCUser* me = [c findMember:myNick];
-                        [[me retain] autorelease];
+                        IRCUser* me = [c findMember:_myNick];
                         [c clearMembers];
                         [c addMember:me];
                     }
@@ -3399,7 +3372,7 @@
 
             static NSCharacterSet* set = nil;
             if (!set) {
-                set = [[NSCharacterSet characterSetWithCharactersInString:@"!@"] retain];
+                set = [NSCharacterSet characterSetWithCharactersInString:@"!@"];
             }
             NSRange r = [setter rangeOfCharacterFromSet:set];
             if (r.location != NSNotFound) {
@@ -3428,25 +3401,26 @@
             IRCChannel* c = [self findChannel:chname];
             if (c && c.isActive && !c.isNamesInit) {
                 NSArray* ary = [trail componentsSeparatedByString:@" "];
-                for (NSString* nick in ary) {
+                for (NSString* nickItem in ary) {
+                    NSString* nick = nickItem;
                     if (!nick.length) continue;
                     char opMark = [nick characterAtIndex:0];
-                    char mode = [isupport modeForMark:opMark];
+                    char mode = [_isupport modeForMark:opMark];
                     if (mode != INVALID_MODE_CHAR) {
                         nick = [nick substringFromIndex:1];
                     }
 
-                    IRCUser* m = [[IRCUser new] autorelease];
-                    m.isupport = isupport;
+                    IRCUser* m = [IRCUser new];
+                    m.isupport = _isupport;
                     m.nick = nick;
                     m.q = (mode == 'q');
                     m.a = (mode == 'a');
                     m.o = (mode == 'o') || m.q;
                     m.h = (mode == 'h');
                     m.v = (mode == 'v');
-                    m.isMyself = [nick isEqualNoCase:myNick];
+                    m.isMyself = [nick isEqualNoCase:_myNick];
                     [c addMember:m reload:NO];
-                    if ([myNick isEqualNoCase:nick]) {
+                    if ([_myNick isEqualNoCase:nick]) {
                         c.isOp = (m.q || m.a | m.o);
                     }
                 }
@@ -3511,18 +3485,18 @@
             NSString* countStr = [m paramAt:2];
             NSString* topic = [m sequence:3];
 
-            if (!inList) {
-                inList = YES;
-                if (channelListDialog) {
-                    [channelListDialog clear];
+            if (!_inList) {
+                _inList = YES;
+                if (_channelListDialog) {
+                    [_channelListDialog clear];
                 }
                 else {
                     [self createChannelListDialog];
                 }
             }
 
-            if (channelListDialog) {
-                [channelListDialog addChannel:chname count:[countStr intValue] topic:topic];
+            if (_channelListDialog) {
+                [_channelListDialog addChannel:chname count:[countStr intValue] topic:topic];
             }
             else {
                 NSString* text = [NSString stringWithFormat:@"%@ (%@) %@", chname, countStr, topic];
@@ -3531,11 +3505,11 @@
             break;
         }
         case 323:	// RPL_LISTEND
-            inList = NO;
+            _inList = NO;
             break;
         case 900:	// SASL logged in
         {
-            isRegisteredWithSASL = YES;
+            _isRegisteredWithSASL = YES;
             NSString* text = [m sequence:3];
             [self printBoth:nil type:LINE_TYPE_REPLY text:text timestamp:m.timestamp];
             break;
@@ -3566,7 +3540,7 @@
         {
             NSString* nick = [m paramAt:1];
 
-            if (registeringToNickServ && [nick isEqualNoCase:@"NickServ"]) {
+            if (_registeringToNickServ && [nick isEqualNoCase:@"NickServ"]) {
                 [self performAutoJoin];
             }
 
@@ -3587,13 +3561,13 @@
 
 - (void)receiveNickCollisionError:(IRCMessage*)m
 {
-    if (config.altNicks.count && !isLoggedIn) {
+    if (_config.altNicks.count && !_isLoggedIn) {
         // only works when not logged in
-        ++tryingNickNumber;
-        NSArray* altNicks = config.altNicks;
+        ++_tryingNickNumber;
+        NSArray* altNicks = _config.altNicks;
 
-        if (tryingNickNumber < altNicks.count) {
-            NSString* nick = [altNicks objectAtIndex:tryingNickNumber];
+        if (_tryingNickNumber < altNicks.count) {
+            NSString* nick = [altNicks objectAtIndex:_tryingNickNumber];
             [self send:NICK, nick, nil];
         }
         else {
@@ -3607,8 +3581,8 @@
 
 - (void)tryAnotherNick
 {
-    if (sentNick.length >= isupport.nickLen) {
-        NSString* nick = [sentNick substringToIndex:isupport.nickLen];
+    if (_sentNick.length >= _isupport.nickLen) {
+        NSString* nick = [_sentNick substringToIndex:_isupport.nickLen];
         BOOL found = NO;
 
         for (int i=nick.length-1; i>=0; --i) {
@@ -3616,27 +3590,24 @@
             if (c != '_') {
                 found = YES;
                 NSString* head = [nick substringToIndex:i];
-                NSMutableString* s = [[head mutableCopy] autorelease];
-                for (int i=isupport.nickLen - s.length; i>0; --i) {
+                NSMutableString* s = [head mutableCopy];
+                for (int i=_isupport.nickLen - s.length; i>0; --i) {
                     [s appendString:@"_"];
                 }
-                [sentNick release];
-                sentNick = [s retain];
+                _sentNick = s;
                 break;
             }
         }
 
         if (!found) {
-            [sentNick release];
-            sentNick = @"0";
+            _sentNick = @"0";
         }
     }
     else {
-        [sentNick autorelease];
-        sentNick = [[sentNick stringByAppendingString:@"_"] retain];
+        _sentNick = [_sentNick stringByAppendingString:@"_"];
     }
 
-    [self send:NICK, sentNick, nil];
+    [self send:NICK, _sentNick, nil];
 }
 
 #pragma mark -
@@ -3644,39 +3615,34 @@
 
 - (void)changeStateOff
 {
-    BOOL prevConnected = isConnected;
+    BOOL prevConnected = _isConnected;
 
-    [conn autorelease];
-    conn = nil;
+    _conn = nil;
 
     [self clearCommandQueue];
     [self stopPongTimer];
     [self stopQuitTimer];
     [self stopRetryTimer];
 
-    if (reconnectEnabled) {
+    if (_reconnectEnabled) {
         [self startReconnectTimer];
     }
 
-    isConnecting = isConnected = isLoggedIn = isQuitting = NO;
-    [myNick release];
-    myNick = @"";
-    [sentNick release];
-    sentNick = @"";
+    _isConnecting = _isConnected = _isLoggedIn = _isQuitting = NO;
+    _myNick = @"";
+    _sentNick = @"";
 
-    tryingNickNumber = -1;
-    [joinMyAddress release];
-    joinMyAddress = nil;
-    joinSentTime = 0;
-    [joiningChannelName release];
-    joiningChannelName = nil;
+    _tryingNickNumber = -1;
+    _joinMyAddress = nil;
+    _joinSentTime = 0;
+    _joiningChannelName = nil;
 
-    inWhois = NO;
-    inList = NO;
-    identifyMsg = NO;
-    identifyCTCP = NO;
+    _inWhois = NO;
+    _inList = NO;
+    _identifyMsg = NO;
+    _identifyCTCP = NO;
 
-    for (IRCChannel* c in channels) {
+    for (IRCChannel* c in _channels) {
         if (c.isActive) {
             [c deactivate];
             [self printSystem:c text:@"Disconnected"];
@@ -3700,45 +3666,42 @@
 
     [self printSystemBoth:nil text:@"Connected"];
 
-    isConnecting = isLoggedIn = NO;
-    isConnected = reconnectEnabled = YES;
-    encoding = config.encoding;
-    isRegisteredWithSASL = NO;
+    _isConnecting = _isLoggedIn = NO;
+    _isConnected = _reconnectEnabled = YES;
+    _encoding = _config.encoding;
+    _isRegisteredWithSASL = NO;
 
-    if (!inputNick.length) {
-        [inputNick autorelease];
-        inputNick = [config.nick retain];
+    if (!_inputNick.length) {
+        _inputNick = _config.nick;
     }
-    [sentNick autorelease];
-    [myNick autorelease];
-    sentNick = [inputNick retain];
-    myNick = [inputNick retain];
+    _sentNick = _inputNick;
+    _myNick = _inputNick;
 
-    [isupport reset];
-    [myMode clear];
+    [_isupport reset];
+    [_myMode clear];
 
-    int modeParam = config.invisibleMode ? 8 : 0;
-    NSString* user = config.username;
-    NSString* realName = config.realName;
-    if (!user.length) user = config.nick;
-    if (!realName.length) realName = config.nick;
+    int modeParam = _config.invisibleMode ? 8 : 0;
+    NSString* user = _config.username;
+    NSString* realName = _config.realName;
+    if (!user.length) user = _config.nick;
+    if (!realName.length) realName = _config.nick;
 
-    if (config.useSASL) {
+    if (_config.useSASL) {
         // If you send REQ to some servers (hyperion or etc) before PASS, the server refuses connection.
         // To avoid this, do not send REQ if SASL setting is off.
         [self send:CAP, @"REQ", @"znc.in/server-time", nil];
         [self send:CAP, @"REQ", @"znc.in/server-time-iso", nil];
 
-        if (config.nick.length && config.nickPassword.length) {
+        if (_config.nick.length && _config.nickPassword.length) {
             [self send:CAP, @"REQ", @"sasl", nil];
         }
     }
 
-    if (config.password.length) {
-        [self send:PASS, config.password, nil];
+    if (_config.password.length) {
+        [self send:PASS, _config.password, nil];
     }
 
-    [self send:NICK, sentNick, nil];
+    [self send:NICK, _sentNick, nil];
     [self send:USER, user, [NSString stringWithFormat:@"%d", modeParam], @"*", realName, nil];
 
     [self updateClientTitle];
@@ -3756,34 +3719,34 @@
 
 - (void)ircConnectionDidReceive:(NSData*)data
 {
-    NSStringEncoding enc = encoding;
-    if (encoding == NSUTF8StringEncoding && config.fallbackEncoding != NSUTF8StringEncoding && ![data isValidUTF8]) {
-        enc = config.fallbackEncoding;
+    NSStringEncoding enc = _encoding;
+    if (_encoding == NSUTF8StringEncoding && _config.fallbackEncoding != NSUTF8StringEncoding && ![data isValidUTF8]) {
+        enc = _config.fallbackEncoding;
     }
 
-    if (encoding == NSISO2022JPStringEncoding) {
+    if (_encoding == NSISO2022JPStringEncoding) {
         data = [data convertKanaFromNativeToISO2022];
     }
 
-    NSString* s = [[[NSString alloc] initWithData:data encoding:enc] autorelease];
+    NSString* s = [[NSString alloc] initWithData:data encoding:enc];
     if (!s) {
-        if (encoding == NSISO2022JPStringEncoding) {
+        if (_encoding == NSISO2022JPStringEncoding) {
             // avoid incomplete sequence
-            NSMutableData* d = [[data mutableCopy] autorelease];
+            NSMutableData* d = [data mutableCopy];
             while (d.length > 1) {
                 [d setLength:d.length - 1];
-                s = [[[NSString alloc] initWithData:d encoding:enc] autorelease];
+                s = [[NSString alloc] initWithData:d encoding:enc];
                 if (s) break;
             }
         }
 
         if (!s) {
-            s = [[[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding] autorelease];
+            s = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
             if (!s) return;
         }
     }
 
-    IRCMessage* m = [[[IRCMessage alloc] initWithLine:s] autorelease];
+    IRCMessage* m = [[IRCMessage alloc] initWithLine:s];
     NSString* cmd = m.command;
 
     if (m.numericReply > 0) [self receiveNumericReply:m];

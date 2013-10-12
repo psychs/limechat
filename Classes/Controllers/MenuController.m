@@ -31,52 +31,33 @@
 #define ACTIVE_CHANTALK     (ACTIVE && (c.isChannel || c.isTalk))
 #define LOGIN_CHANTALK      (LOGIN && (!c || c.isChannel || c.isTalk))
 #define IS_OP               (ACTIVE_CHANNEL && c.isOp)
-#define KEY_WINDOW          ([window isKeyWindow])
+#define KEY_WINDOW          ([_window isKeyWindow])
 
 
 @implementation MenuController
-
-@synthesize app;
-@synthesize world;
-@synthesize window;
-@synthesize text;
-@synthesize tree;
-@synthesize memberList;
-
-@synthesize pointedUrl;
-@synthesize pointedAddress;
-@synthesize pointedNick;
-@synthesize pointedChannelName;
+{
+    id _sparkleUpdater;
+    PreferencesController* _preferencesController;
+    NSMutableArray* _serverDialogs;
+    NSMutableArray* _channelDialogs;
+    NickSheet* _nickSheet;
+    ModeSheet* _modeSheet;
+    TopicSheet* _topicSheet;
+    PasteSheet* _pasteSheet;
+    InviteSheet* _inviteSheet;
+    NSOpenPanel* _fileSendPanel;
+    NSArray* _fileSendTargets;
+    int _fileSendUID;
+}
 
 - (id)init
 {
     self = [super init];
     if (self) {
-        serverDialogs = [NSMutableArray new];
-        channelDialogs = [NSMutableArray new];
+        _serverDialogs = [NSMutableArray new];
+        _channelDialogs = [NSMutableArray new];
     }
     return self;
-}
-
-- (void)dealloc
-{
-    [pointedUrl release];
-    [pointedAddress release];
-    [pointedNick release];
-    [pointedChannelName release];
-
-    [preferencesController release];
-    [serverDialogs release];
-    [channelDialogs release];
-
-    [nickSheet release];
-    [modeSheet release];
-    [topicSheet release];
-    [pasteSheet release];
-    [inviteSheet release];
-    [fileSendPanel release];
-    [fileSendTargets release];
-    [super dealloc];
 }
 
 - (void)setUp
@@ -84,23 +65,23 @@
 #ifdef TARGET_APP_STORE
     [[checkForUpdateItem menu] removeItem:checkForUpdateItem];
 #else
-    sparkleUpdater = [SUUpdater new];
-    [sparkleUpdater setDelegate:app];
-    [checkForUpdateItem setTarget:sparkleUpdater];
+    _sparkleUpdater = [SUUpdater new];
+    [_sparkleUpdater setDelegate:_app];
+    [checkForUpdateItem setTarget:_sparkleUpdater];
     [checkForUpdateItem setAction:@selector(checkForUpdates:)];
 #endif
 }
 
 - (void)terminate
 {
-    for (ServerDialog* d in serverDialogs) {
+    for (ServerDialog* d in _serverDialogs) {
         [d close];
     }
-    for (ChannelDialog* d in channelDialogs) {
+    for (ChannelDialog* d in _channelDialogs) {
         [d close];
     }
-    if (preferencesController) {
-        [preferencesController close];
+    if (_preferencesController) {
+        [_preferencesController close];
     }
 }
 
@@ -113,8 +94,8 @@
 
 - (BOOL)validateMenuItem:(NSMenuItem *)item
 {
-    IRCClient* u = world.selectedClient;
-    IRCChannel* c = world.selectedChannel;
+    IRCClient* u = _world.selectedClient;
+    IRCChannel* c = _world.selectedChannel;
 
     NSInteger tag = item.tag;
     if ([self isNickMenu:item]) tag -= 500;
@@ -144,7 +125,7 @@
             if (!win) return NO;
             id t = [win firstResponder];
             if (!t) return NO;
-            if (win == window) {
+            if (win == _window) {
                 return YES;
             }
             else if ([t respondsToSelector:@selector(paste:)]) {
@@ -177,10 +158,10 @@
         }
         case 332:	// paste my address
         {
-            if (![window isKeyWindow]) return NO;
-            id t = [window firstResponder];
+            if (![_window isKeyWindow]) return NO;
+            id t = [_window firstResponder];
             if (!t) return NO;
-            IRCClient* u = world.selectedClient;
+            IRCClient* u = _world.selectedClient;
             if (!u || !u.myAddress) return NO;
             return YES;
         }
@@ -193,9 +174,9 @@
         case 414:	// go to mark
             return YES;
         case 421:	// make text bigger
-            return [world.consoleLog.view canMakeTextLarger];
+            return [_world.consoleLog.view canMakeTextLarger];
         case 422:	// make text smaller
-            return [world.consoleLog.view canMakeTextSmaller];
+            return [_world.consoleLog.view canMakeTextSmaller];
         case 443:	// reload theme
             return YES;
 
@@ -281,7 +262,7 @@
 
 - (LogView*)currentWebView
 {
-    id t = [window firstResponder];
+    id t = [_window firstResponder];
     while ([t isKindOfClass:[NSView class]]) {
         if ([t isKindOfClass:[LogView class]]) {
             return t;
@@ -294,21 +275,21 @@
 - (BOOL)checkSelectedMembers:(NSMenuItem*)item
 {
     if ([self isNickMenu:item]) {
-        return pointedNick != nil;
+        return _pointedNick != nil;
     }
     else {
-        return [memberList countSelectedRows] > 0;
+        return [_memberList countSelectedRows] > 0;
     }
 }
 
 - (NSArray*)selectedMembers:(NSMenuItem*)sender
 {
-    IRCChannel* c = world.selectedChannel;
+    IRCChannel* c = _world.selectedChannel;
     if (!c) {
         if ([self isNickMenu:sender]) {
-            IRCUser* m = [[IRCUser new] autorelease];
+            IRCUser* m = [IRCUser new];
             m.isupport = c.client.isupport;
-            m.nick = pointedNick;
+            m.nick = _pointedNick;
             return [NSArray arrayWithObject:m];
         }
         else {
@@ -317,7 +298,7 @@
     }
     else {
         if ([self isNickMenu:sender]) {
-            IRCUser* m = [c findMember:pointedNick];
+            IRCUser* m = [c findMember:_pointedNick];
             if (m) {
                 return [NSArray arrayWithObject:m];
             }
@@ -327,7 +308,7 @@
         }
         else {
             NSMutableArray* ary = [NSMutableArray array];
-            NSIndexSet* indexes = [memberList selectedRowIndexes];
+            NSIndexSet* indexes = [_memberList selectedRowIndexes];
             for (NSUInteger i=[indexes firstIndex]; i!=NSNotFound; i=[indexes indexGreaterThanIndex:i]) {
                 IRCUser* m = [c memberAtIndex:i];
                 [ary addObject:m];
@@ -340,7 +321,7 @@
 - (void)deselectMembers:(NSMenuItem*)sender
 {
     if (![self isNickMenu:sender]) {
-        [memberList deselectAll:nil];
+        [_memberList deselectAll:nil];
     }
 }
 
@@ -349,16 +330,16 @@
 
 - (void)onPreferences:(id)sender
 {
-    if (!preferencesController) {
-        preferencesController = [PreferencesController new];
-        preferencesController.delegate = self;
+    if (!_preferencesController) {
+        _preferencesController = [PreferencesController new];
+        _preferencesController.delegate = self;
     }
-    [preferencesController show];
+    [_preferencesController show];
 }
 
 - (void)preferencesDialogWillClose:(PreferencesController*)sender
 {
-    [world preferencesChanged];
+    [_world preferencesChanged];
 }
 
 - (void)onAutoOp:(id)sender
@@ -367,12 +348,12 @@
 
 - (void)onDcc:(id)sender
 {
-    [world.dcc show:YES];
+    [_world.dcc show:YES];
 }
 
 - (void)onMainWindow:(id)sender
 {
-    [window makeKeyAndOrderFront:nil];
+    [_window makeKeyAndOrderFront:nil];
 }
 
 - (void)onHelp:(id)sender
@@ -382,10 +363,10 @@
 
 - (void)onCloseWindow:(id)sender
 {
-    if ([window isKeyWindow]) {
+    if ([_window isKeyWindow]) {
         // for main window
-        IRCClient* u = world.selectedClient;
-        IRCChannel* c = world.selectedChannel;
+        IRCClient* u = _world.selectedClient;
+        IRCChannel* c = _world.selectedChannel;
         if (u && c) {
             if (c.isChannel && c.isActive) {
                 NSString* message = [NSString stringWithFormat:@"Close %@ ?", c.name];
@@ -394,8 +375,8 @@
                     return;
                 }
             }
-            [world destroyChannel:c];
-            [world save];
+            [_world destroyChannel:c];
+            [_world save];
         }
     }
     else {
@@ -406,87 +387,86 @@
 
 - (void)onCloseCurrentPanel:(id)sender
 {
-    IRCClient* u = world.selectedClient;
-    IRCChannel* c = world.selectedChannel;
+    IRCClient* u = _world.selectedClient;
+    IRCChannel* c = _world.selectedChannel;
     if (u && c) {
-        [world destroyChannel:c];
-        [world save];
+        [_world destroyChannel:c];
+        [_world save];
     }
 }
 
 - (void)startPasteSheetWithContent:(NSString*)content nick:(NSString*)nick uid:(int)uid cid:(int)cid editMode:(BOOL)editMode
 {
-    if (pasteSheet) return;
+    if (_pasteSheet) return;
 
-    pasteSheet = [PasteSheet new];
-    pasteSheet.delegate = self;
-    pasteSheet.window = window;
-    pasteSheet.uid = uid;
-    pasteSheet.cid = cid;
-    pasteSheet.nick = nick;
-    pasteSheet.editMode = editMode;
-    pasteSheet.originalText = content;
-    pasteSheet.syntax = [Preferences pasteSyntax];
-    pasteSheet.command = [Preferences pasteCommand];
+    _pasteSheet = [PasteSheet new];
+    _pasteSheet.delegate = self;
+    _pasteSheet.window = _window;
+    _pasteSheet.uid = uid;
+    _pasteSheet.cid = cid;
+    _pasteSheet.nick = nick;
+    _pasteSheet.editMode = editMode;
+    _pasteSheet.originalText = content;
+    _pasteSheet.syntax = [Preferences pasteSyntax];
+    _pasteSheet.command = [Preferences pasteCommand];
 
     NSDictionary* dic = [Preferences loadWindowStateWithName:@"paste_sheet"];
     if (dic) {
         int w = [dic intForKey:@"w"];
         int h = [dic intForKey:@"h"];
         if (w > 0 && h > 0) {
-            pasteSheet.size = NSMakeSize(w, h);
+            _pasteSheet.size = NSMakeSize(w, h);
         }
     }
 
-    [pasteSheet start];
+    [_pasteSheet start];
 }
 
 - (void)pasteSheet:(PasteSheet*)sender onPasteText:(NSString*)s
 {
-    IRCClient* u = [world findClientById:pasteSheet.uid];
-    IRCChannel* c = [world findChannelByClientId:pasteSheet.uid channelId:pasteSheet.cid];
+    IRCClient* u = [_world findClientById:_pasteSheet.uid];
+    IRCChannel* c = [_world findChannelByClientId:_pasteSheet.uid channelId:_pasteSheet.cid];
     if (!u || !c) return;
 
     NSArray* lines = [s splitIntoLines];
     for (NSString* line in lines) {
         if (line.length) {
-            [u sendText:line command:[pasteSheet.command uppercaseString] channel:c];
+            [u sendText:line command:[_pasteSheet.command uppercaseString] channel:c];
         }
     }
 }
 
 - (void)pasteSheet:(PasteSheet*)sender onPasteURL:(NSString*)url
 {
-    [world focusInputText];
-    NSText* fe = [window fieldEditor:NO forObject:text];
+    [_world focusInputText];
+    NSText* fe = [_window fieldEditor:NO forObject:_text];
     [fe replaceCharactersInRange:[fe selectedRange] withString:url];
     [fe scrollRangeToVisible:[fe selectedRange]];
 }
 
 - (void)pasteSheetOnCancel:(PasteSheet*)sender
 {
-    if (pasteSheet.editMode) {
-        [text setStringValue:pasteSheet.originalText];
-        [world focusInputText];
+    if (_pasteSheet.editMode) {
+        [_text setStringValue:_pasteSheet.originalText];
+        [_world focusInputText];
     }
 }
 
 - (void)pasteSheetWillClose:(PasteSheet*)sender
 {
-    NSSize size = pasteSheet.size;
+    NSSize size = _pasteSheet.size;
     NSDictionary* dic = [NSDictionary dictionaryWithObjectsAndKeys:
                          [NSNumber numberWithInt:size.width], @"w",
                          [NSNumber numberWithInt:size.height], @"h",
                          nil];
     [Preferences saveWindowState:dic name:@"paste_sheet"];
 
-    if (!pasteSheet.isShortText) {
-        [Preferences setPasteSyntax:pasteSheet.syntax];
-        [Preferences setPasteCommand:pasteSheet.command];
+    if (!_pasteSheet.isShortText) {
+        [Preferences setPasteSyntax:_pasteSheet.syntax];
+        [Preferences setPasteCommand:_pasteSheet.command];
     }
 
-    [pasteSheet autorelease];
-    pasteSheet = nil;
+    _pasteSheet = nil;
 }
 
 - (void)onPaste:(id)sender
@@ -499,7 +479,7 @@
     id t = [win firstResponder];
     if (!t) return;
 
-    if (win == window) {
+    if (win == _window) {
         NSString* s = [pb stringContent];
         if (!s.length) return;
 
@@ -512,7 +492,7 @@
             NSString* lastLine = [lines objectAtIndex:1];
             multiLine = lastLine.length > 0;
         }
-        IRCChannel* c = world.selectedChannel;
+        IRCChannel* c = _world.selectedChannel;
 
         if (c && multiLine) {
             // multi line
@@ -522,9 +502,9 @@
         else {
             // single line
             if (![t isKindOfClass:[NSTextView class]]) {
-                [world focusInputText];
+                [_world focusInputText];
             }
-            NSText* e = [win fieldEditor:NO forObject:text];
+            NSText* e = [win fieldEditor:NO forObject:_text];
             [e paste:nil];
         }
     }
@@ -543,12 +523,12 @@
 
 - (void)onPasteDialog:(id)sender
 {
-    IRCClient* u = world.selectedClient;
-    IRCChannel* c = world.selectedChannel;
+    IRCClient* u = _world.selectedClient;
+    IRCChannel* c = _world.selectedChannel;
     if (!u || !c) return;
 
-    NSString* s = text.stringValue;
-    [text setStringValue:@""];
+    NSString* s = _text.stringValue;
+    [_text setStringValue:@""];
     [self startPasteSheetWithContent:s nick:u.myNick uid:u.uid cid:c.uid editMode:YES];
 }
 
@@ -578,18 +558,18 @@
 
 - (void)onPasteMyAddress:(id)sender
 {
-    if (![window isKeyWindow]) return;
+    if (![_window isKeyWindow]) return;
 
-    id t = [window firstResponder];
+    id t = [_window firstResponder];
     if (!t) return;
 
-    IRCClient* u = world.selectedClient;
+    IRCClient* u = _world.selectedClient;
     if (!u || !u.myAddress) return;
 
     if (![t isKindOfClass:[NSTextView class]]) {
-        [world focusInputText];
+        [_world focusInputText];
     }
-    NSText* fe = [window fieldEditor:NO forObject:text];
+    NSText* fe = [_window fieldEditor:NO forObject:_text];
     [fe replaceCharactersInRange:[fe selectedRange] withString:u.myAddress];
     [fe scrollRangeToVisible:[fe selectedRange]];
 }
@@ -608,7 +588,7 @@
 
 - (void)onCopyLogAsHtml:(id)sender
 {
-    IRCTreeItem* sel = world.selected;
+    IRCTreeItem* sel = _world.selected;
     if (!sel) return;
     NSString* s = [sel.log.view contentString];
     [[NSPasteboard generalPasteboard] setStringContent:s];
@@ -616,67 +596,67 @@
 
 - (void)onCopyConsoleLogAsHtml:(id)sender
 {
-    NSString* s = [world.consoleLog.view contentString];
+    NSString* s = [_world.consoleLog.view contentString];
     [[NSPasteboard generalPasteboard] setStringContent:s];
 }
 
 - (void)onMarkScrollback:(id)sender
 {
-    IRCTreeItem* sel = world.selected;
+    IRCTreeItem* sel = _world.selected;
     if (!sel) return;
     [sel.log mark];
 }
 
 - (void)onClearMark:(id)sender
 {
-    IRCTreeItem* sel = world.selected;
+    IRCTreeItem* sel = _world.selected;
     if (!sel) return;
     [sel.log unmark];
 }
 
 - (void)onGoToMark:(id)sender
 {
-    IRCTreeItem* sel = world.selected;
+    IRCTreeItem* sel = _world.selected;
     if (!sel) return;
     [sel.log goToMark];
 }
 
 - (void)onMarkAllAsRead:(id)sender
 {
-    [world markAllAsRead];
+    [_world markAllAsRead];
 }
 
 - (void)onMarkAllAsReadAndMarkAllScrollbacks:(id)sender
 {
-    [world markAllAsRead];
-    [world markAllScrollbacks];
+    [_world markAllAsRead];
+    [_world markAllScrollbacks];
 }
 
 - (void)onMakeTextBigger:(id)sender
 {
-    [world changeTextSize:YES];
+    [_world changeTextSize:YES];
 }
 
 - (void)onMakeTextSmaller:(id)sender
 {
-    [world changeTextSize:NO];
+    [_world changeTextSize:NO];
 }
 
 - (void)onReloadTheme:(id)sender
 {
-    [world reloadTheme];
+    [_world reloadTheme];
 }
 
 - (void)onConnect:(id)sender
 {
-    IRCClient* u = world.selectedClient;
+    IRCClient* u = _world.selectedClient;
     if (!u) return;
     [u connect];
 }
 
 - (void)onDisconnect:(id)sender
 {
-    IRCClient* u = world.selectedClient;
+    IRCClient* u = _world.selectedClient;
     if (!u) return;
     [u quit];
     [u cancelReconnect];
@@ -684,73 +664,72 @@
 
 - (void)onCancelReconnecting:(id)sender
 {
-    IRCClient* u = world.selectedClient;
+    IRCClient* u = _world.selectedClient;
     if (!u) return;
     [u cancelReconnect];
 }
 
 - (void)onNick:(id)sender
 {
-    if (nickSheet) return;
+    if (_nickSheet) return;
 
-    IRCClient* u = world.selectedClient;
+    IRCClient* u = _world.selectedClient;
     if (!u) return;
 
-    nickSheet = [NickSheet new];
-    nickSheet.delegate = self;
-    nickSheet.window = window;
-    nickSheet.uid = u.uid;
-    [nickSheet start:u.myNick];
+    _nickSheet = [NickSheet new];
+    _nickSheet.delegate = self;
+    _nickSheet.window = _window;
+    _nickSheet.uid = u.uid;
+    [_nickSheet start:u.myNick];
 }
 
 - (void)nickSheet:(NickSheet*)sender didInputNick:(NSString*)newNick
 {
     int uid = sender.uid;
-    IRCClient* u = [world findClientById:uid];
+    IRCClient* u = [_world findClientById:uid];
     if (!u) return;
     [u changeNick:newNick];
 }
 
 - (void)nickSheetWillClose:(NickSheet*)sender
 {
-    [nickSheet release];
-    nickSheet = nil;
+    _nickSheet = nil;
 }
 
 - (void)onChannelList:(id)sender
 {
-    IRCClient* u = world.selectedClient;
+    IRCClient* u = _world.selectedClient;
     if (!u) return;
     [u createChannelListDialog];
 }
 
 - (void)onAddServer:(id)sender
 {
-    ServerDialog* d = [[ServerDialog new] autorelease];
+    ServerDialog* d = [ServerDialog new];
     d.delegate = self;
-    d.parentWindow = window;
-    d.config = [[IRCClientConfig new] autorelease];
+    d.parentWindow = _window;
+    d.config = [IRCClientConfig new];
     d.uid = -1;
-    [serverDialogs addObject:d];
+    [_serverDialogs addObject:d];
     [d startWithIgnoreTab:NO];
 }
 
 - (void)onCopyServer:(id)sender
 {
-    IRCClient* u = world.selectedClient;
+    IRCClient* u = _world.selectedClient;
     if (!u) return;
 
     IRCClientConfig* config = u.storedConfig;
     config.name = [config.name stringByAppendingString:@"_"];
 
-    IRCClient* n = [world createClient:config reload:YES];
-    [world expandClient:n];
-    [world save];
+    IRCClient* n = [_world createClient:config reload:YES];
+    [_world expandClient:n];
+    [_world save];
 }
 
 - (void)onDeleteServer:(id)sender
 {
-    IRCClient* u = world.selectedClient;
+    IRCClient* u = _world.selectedClient;
     if (!u || u.isConnected) return;
 
     NSString* message = [NSString stringWithFormat:@"Delete %@ ?", u.name];
@@ -760,8 +739,8 @@
         return;
     }
 
-    [world destroyClient:u];
-    [world save];
+    [_world destroyClient:u];
+    [_world save];
 }
 
 - (void)showServerPropertyDialog:(IRCClient*)u ignore:(BOOL)ignore
@@ -773,41 +752,40 @@
         return;
     }
 
-    ServerDialog* d = [[ServerDialog new] autorelease];
+    ServerDialog* d = [ServerDialog new];
     d.delegate = self;
-    d.parentWindow = window;
+    d.parentWindow = _window;
     d.config = u.storedConfig;
     d.uid = u.uid;
-    [serverDialogs addObject:d];
+    [_serverDialogs addObject:d];
     [d startWithIgnoreTab:ignore];
 }
 
 - (void)onServerProperties:(id)sender
 {
-    [self showServerPropertyDialog:world.selectedClient ignore:NO];
+    [self showServerPropertyDialog:_world.selectedClient ignore:NO];
 }
 
 - (void)serverDialogOnOK:(ServerDialog*)sender
 {
     if (sender.uid < 0) {
         // create
-        [world createClient:sender.config reload:YES];
+        [_world createClient:sender.config reload:YES];
     }
     else {
         // update
-        IRCClient* u = [world findClientById:sender.uid];
+        IRCClient* u = [_world findClientById:sender.uid];
         if (!u) return;
         [u updateConfig:sender.config];
     }
-    [world save];
+    [_world save];
 }
 
 - (void)serverDialogWillClose:(ServerDialog*)sender
 {
-    [[sender retain] autorelease];
-    [serverDialogs removeObjectIdenticalTo:sender];
+    [_serverDialogs removeObjectIdenticalTo:sender];
 
-    IRCClient* u = world.selectedClient;
+    IRCClient* u = _world.selectedClient;
     if (!u) return;
     u.propertyDialog = nil;
 }
@@ -818,44 +796,44 @@
 
 - (void)onJoin:(id)sender
 {
-    IRCClient* u = world.selectedClient;
-    IRCChannel* c = world.selectedChannel;
+    IRCClient* u = _world.selectedClient;
+    IRCChannel* c = _world.selectedChannel;
     if (!u || !c || !u.isLoggedIn || c.isActive || !c.isChannel) return;
     [u joinChannel:c];
 }
 
 - (void)onLeave:(id)sender
 {
-    IRCClient* u = world.selectedClient;
-    IRCChannel* c = world.selectedChannel;
+    IRCClient* u = _world.selectedClient;
+    IRCChannel* c = _world.selectedChannel;
     if (!u || !c || !u.isLoggedIn || !c.isActive) return;
     if (c.isChannel) {
         [u partChannel:c];
     }
     else {
-        [world destroyChannel:c];
+        [_world destroyChannel:c];
     }
 }
 
 - (void)onTopic:(id)sender
 {
-    IRCClient* u = world.selectedClient;
-    IRCChannel* c = world.selectedChannel;
+    IRCClient* u = _world.selectedClient;
+    IRCChannel* c = _world.selectedChannel;
     if (!u || !c) return;
-    if (topicSheet) return;
+    if (_topicSheet) return;
 
-    topicSheet = [TopicSheet new];
-    topicSheet.delegate = self;
-    topicSheet.window = window;
-    topicSheet.uid = u.uid;
-    topicSheet.cid = c.uid;
-    [topicSheet start:c.topic];
+    _topicSheet = [TopicSheet new];
+    _topicSheet.delegate = self;
+    _topicSheet.window = _window;
+    _topicSheet.uid = u.uid;
+    _topicSheet.cid = c.uid;
+    [_topicSheet start:c.topic];
 }
 
 - (void)topicSheet:(TopicSheet*)sender onOK:(NSString*)topic
 {
-    IRCClient* u = [world findClientById:sender.uid];
-    IRCChannel* c = [world findChannelByClientId:sender.uid channelId:sender.cid];
+    IRCClient* u = [_world findClientById:sender.uid];
+    IRCChannel* c = [_world findChannelByClientId:sender.uid channelId:sender.cid];
     if (!u || !c) return;
 
     [u send:TOPIC, c.name, topic, nil];
@@ -863,31 +841,30 @@
 
 - (void)topicSheetWillClose:(TopicSheet*)sender
 {
-    [topicSheet autorelease];
-    topicSheet = nil;
+    _topicSheet = nil;
 }
 
 - (void)onMode:(id)sender
 {
-    IRCClient* u = world.selectedClient;
-    IRCChannel* c = world.selectedChannel;
+    IRCClient* u = _world.selectedClient;
+    IRCChannel* c = _world.selectedChannel;
     if (!u || !c) return;
-    if (modeSheet) return;
+    if (_modeSheet) return;
 
-    modeSheet = [ModeSheet new];
-    modeSheet.delegate = self;
-    modeSheet.window = window;
-    modeSheet.uid = u.uid;
-    modeSheet.cid = c.uid;
-    modeSheet.mode = [[c.mode mutableCopy] autorelease];
-    modeSheet.channelName = c.name;
-    [modeSheet start];
+    _modeSheet = [ModeSheet new];
+    _modeSheet.delegate = self;
+    _modeSheet.window = _window;
+    _modeSheet.uid = u.uid;
+    _modeSheet.cid = c.uid;
+    _modeSheet.mode = [c.mode mutableCopy];
+    _modeSheet.channelName = c.name;
+    [_modeSheet start];
 }
 
 - (void)modeSheetOnOK:(ModeSheet*)sender
 {
-    IRCClient* u = [world findClientById:sender.uid];
-    IRCChannel* c = [world findChannelByClientId:sender.uid channelId:sender.cid];
+    IRCClient* u = [_world findClientById:sender.uid];
+    IRCChannel* c = [_world findChannelByClientId:sender.uid channelId:sender.cid];
     if (!u || !c) return;
 
     NSString* changeStr = [c.mode getChangeCommand:sender.mode];
@@ -896,53 +873,51 @@
         [u sendLine:line];
     }
 
-    [modeSheet autorelease];
-    modeSheet = nil;
+    _modeSheet = nil;
 }
 
 - (void)modeSheetWillClose:(ModeSheet*)sender
 {
-    [modeSheet autorelease];
-    modeSheet = nil;
+    _modeSheet = nil;
 }
 
 - (void)onAddChannel:(id)sender
 {
-    IRCClient* u = world.selectedClient;
-    IRCChannel* c = world.selectedChannel;
+    IRCClient* u = _world.selectedClient;
+    IRCChannel* c = _world.selectedChannel;
     if (!u) return;
 
     IRCChannelConfig* config;
     if (c && c.isChannel) {
-        config = [[c.config mutableCopy] autorelease];
+        config = [c.config mutableCopy];
     }
     else {
-        config = [[IRCChannelConfig new] autorelease];
+        config = [IRCChannelConfig new];
     }
     config.name = @"";
 
-    ChannelDialog* d = [[ChannelDialog new] autorelease];
+    ChannelDialog* d = [ChannelDialog new];
     d.delegate = self;
-    d.parentWindow = window;
+    d.parentWindow = _window;
     d.config = config;
     d.uid = u.uid;
     d.cid = -1;
-    [channelDialogs addObject:d];
+    [_channelDialogs addObject:d];
     [d start];
 }
 
 - (void)onDeleteChannel:(id)sender
 {
-    IRCChannel* c = world.selectedChannel;
+    IRCChannel* c = _world.selectedChannel;
     if (!c) return;
-    [world destroyChannel:c];
-    [world save];
+    [_world destroyChannel:c];
+    [_world save];
 }
 
 - (void)onChannelProperties:(id)sender
 {
-    IRCClient* u = world.selectedClient;
-    IRCChannel* c = world.selectedChannel;
+    IRCClient* u = _world.selectedClient;
+    IRCChannel* c = _world.selectedChannel;
     if (!u || !c) return;
 
     if (c.propertyDialog) {
@@ -950,13 +925,13 @@
         return;
     }
 
-    ChannelDialog* d = [[ChannelDialog new] autorelease];
+    ChannelDialog* d = [ChannelDialog new];
     d.delegate = self;
-    d.parentWindow = window;
-    d.config = [[c.config mutableCopy] autorelease];
+    d.parentWindow = _window;
+    d.config = [c.config mutableCopy];
     d.uid = u.uid;
     d.cid = c.uid;
-    [channelDialogs addObject:d];
+    [_channelDialogs addObject:d];
     [d start];
 }
 
@@ -964,32 +939,30 @@
 {
     if (sender.cid < 0) {
         // create
-        IRCClient* u = [world findClientById:sender.uid];
+        IRCClient* u = [_world findClientById:sender.uid];
         if (!u) return;
-        [world createChannel:sender.config client:u reload:YES adjust:YES];
-        [world expandClient:u];
-        [world save];
+        [_world createChannel:sender.config client:u reload:YES adjust:YES];
+        [_world expandClient:u];
+        [_world save];
     }
     else {
         // update
-        IRCChannel* c = [world findChannelByClientId:sender.uid channelId:sender.cid];
+        IRCChannel* c = [_world findChannelByClientId:sender.uid channelId:sender.cid];
         if (!c) return;
         [c updateConfig:sender.config];
     }
 
-    [world save];
+    [_world save];
 }
 
 - (void)channelDialogWillClose:(ChannelDialog*)sender
 {
-    [[sender retain] autorelease];
-
     if (sender.cid >= 0) {
-        IRCChannel* c = [world findChannelByClientId:sender.uid channelId:sender.cid];
+        IRCChannel* c = [_world findChannelByClientId:sender.uid channelId:sender.cid];
         c.propertyDialog = nil;
     }
 
-    [channelDialogs removeObjectIdenticalTo:sender];
+    [_channelDialogs removeObjectIdenticalTo:sender];
 }
 
 - (void)onChannelAutoOp:(id)sender
@@ -998,7 +971,7 @@
 
 - (void)whoisSelectedMembers:(id)sender deselect:(BOOL)deselect
 {
-    IRCClient* u = world.selectedClient;
+    IRCClient* u = _world.selectedClient;
     if (!u) return;
 
     for (IRCUser* m in [self selectedMembers:sender]) {
@@ -1012,15 +985,15 @@
 
 - (void)talkSelectedMembers:(id)sender deselect:(BOOL)deselect
 {
-    IRCClient* u = world.selectedClient;
+    IRCClient* u = _world.selectedClient;
     if (!u) return;
 
     for (IRCUser* m in [self selectedMembers:sender]) {
         IRCChannel* c = [u findChannel:m.nick];
         if (!c) {
-            c = [world createTalk:m.nick client:u];
+            c = [_world createTalk:m.nick client:u];
         }
-        [world select:c];
+        [_world select:c];
     }
 
     if (deselect) {
@@ -1031,7 +1004,7 @@
 - (void)memberListDoubleClicked:(id)sender
 {
     MemberListView* view = sender;
-    NSPoint pt = [window mouseLocationOutsideOfEventStream];
+    NSPoint pt = [_window mouseLocationOutsideOfEventStream];
     pt = [view convertPoint:pt fromView:nil];
     int n = [view rowAtPoint:pt];
     if (n >= 0) {
@@ -1062,8 +1035,8 @@
 
 - (void)changeOp:(id)sender mode:(char)mode value:(BOOL)value
 {
-    IRCClient* u = world.selectedClient;
-    IRCChannel* c = world.selectedChannel;
+    IRCClient* u = _world.selectedClient;
+    IRCChannel* c = _world.selectedChannel;
     if (!u || !u.isLoggedIn || !c || !c.isActive || !c.isChannel || !c.isOp) return;
 
     [u changeOp:c users:[self selectedMembers:sender] mode:mode value:value];
@@ -1082,10 +1055,10 @@
 
 - (void)onMemberInvite:(id)sender
 {
-    if (inviteSheet) return;
+    if (_inviteSheet) return;
 
-    IRCClient* u = world.selectedClient;
-    IRCChannel* c = world.selectedChannel;
+    IRCClient* u = _world.selectedClient;
+    IRCChannel* c = _world.selectedChannel;
     if (!u || !u.isLoggedIn || !c) return;
 
     NSMutableArray* nicks = [NSMutableArray array];
@@ -1102,17 +1075,17 @@
 
     if (!channels.count) return;
 
-    inviteSheet = [InviteSheet new];
-    inviteSheet.delegate = self;
-    inviteSheet.window = window;
-    inviteSheet.nicks = nicks;
-    inviteSheet.uid = u.uid;
-    [inviteSheet startWithChannels:channels];
+    _inviteSheet = [InviteSheet new];
+    _inviteSheet.delegate = self;
+    _inviteSheet.window = _window;
+    _inviteSheet.nicks = nicks;
+    _inviteSheet.uid = u.uid;
+    [_inviteSheet startWithChannels:channels];
 }
 
 - (void)inviteSheet:(InviteSheet*)sender onSelectChannel:(NSString*)channelName
 {
-    IRCClient* u = [world findClientById:sender.uid];
+    IRCClient* u = [_world findClientById:sender.uid];
     if (!u) return;
 
     for (NSString* nick in sender.nicks) {
@@ -1122,14 +1095,13 @@
 
 - (void)inviteSheetWillClose:(InviteSheet*)sender
 {
-    [inviteSheet autorelease];
-    inviteSheet = nil;
+    _inviteSheet = nil;
 }
 
 - (void)onMemberKick:(id)sender
 {
-    IRCClient* u = world.selectedClient;
-    IRCChannel* c = world.selectedChannel;
+    IRCClient* u = _world.selectedClient;
+    IRCChannel* c = _world.selectedChannel;
     if (!u || !u.isLoggedIn || !c || !c.isActive || !c.isChannel || !c.isOp) return;
 
     for (IRCUser* m in [self selectedMembers:sender]) {
@@ -1159,19 +1131,18 @@
 
 - (void)onMemberSendFile:(id)sender
 {
-    if (fileSendPanel) {
-        [fileSendPanel cancel:nil];
+    if (_fileSendPanel) {
+        [_fileSendPanel cancel:nil];
     }
 
-    IRCClient* u = world.selectedClient;
+    IRCClient* u = _world.selectedClient;
     if (!u) return;
 
-    [fileSendTargets release];
-    fileSendTargets = [[self selectedMembers:sender] retain];
+    _fileSendTargets = [self selectedMembers:sender];
 
-    if (!fileSendTargets.count) return;
+    if (!_fileSendTargets.count) return;
 
-    fileSendUID = u.uid;
+    _fileSendUID = u.uid;
 
     NSOpenPanel* d = [NSOpenPanel openPanel];
     [d setCanChooseFiles:YES];
@@ -1186,8 +1157,7 @@
         [blockSelf fileSendPanelDidEnd:d returnCode:result contextInfo:NULL];
     }];
 
-    [fileSendPanel release];
-    fileSendPanel = [d retain];
+    _fileSendPanel = d;
 }
 
 - (void)fileSendPanelDidEnd:(NSOpenPanel *)panel returnCode:(int)returnCode contextInfo:(void  *)contextInfo
@@ -1195,24 +1165,21 @@
     if (returnCode == NSOKButton) {
         NSArray* files = [panel URLs];
 
-        for (IRCUser* m in fileSendTargets) {
+        for (IRCUser* m in _fileSendTargets) {
             for (NSURL* fileUrl in files) {
                 NSString* fname = [fileUrl path];
-                [world.dcc addSenderWithUID:fileSendUID nick:m.nick fileName:fname autoOpen:YES];
+                [_world.dcc addSenderWithUID:_fileSendUID nick:m.nick fileName:fname autoOpen:YES];
             }
         }
     }
 
-    [fileSendPanel release];
-    fileSendPanel = nil;
-
-    [fileSendTargets release];
-    fileSendTargets = nil;
+    _fileSendPanel = nil;
+    _fileSendTargets = nil;
 }
 
 - (void)onMemberPing:(id)sender
 {
-    IRCClient* u = world.selectedClient;
+    IRCClient* u = _world.selectedClient;
     if (!u) return;
 
     for (IRCUser* m in [self selectedMembers:sender]) {
@@ -1224,7 +1191,7 @@
 
 - (void)onMemberTime:(id)sender
 {
-    IRCClient* u = world.selectedClient;
+    IRCClient* u = _world.selectedClient;
     if (!u) return;
 
     for (IRCUser* m in [self selectedMembers:sender]) {
@@ -1236,7 +1203,7 @@
 
 - (void)onMemberVersion:(id)sender
 {
-    IRCClient* u = world.selectedClient;
+    IRCClient* u = _world.selectedClient;
     if (!u) return;
 
     for (IRCUser* m in [self selectedMembers:sender]) {
@@ -1248,7 +1215,7 @@
 
 - (void)onMemberUserInfo:(id)sender
 {
-    IRCClient* u = world.selectedClient;
+    IRCClient* u = _world.selectedClient;
     if (!u) return;
 
     for (IRCUser* m in [self selectedMembers:sender]) {
@@ -1260,7 +1227,7 @@
 
 - (void)onMemberClientInfo:(id)sender
 {
-    IRCClient* u = world.selectedClient;
+    IRCClient* u = _world.selectedClient;
     if (!u) return;
 
     for (IRCUser* m in [self selectedMembers:sender]) {
@@ -1276,23 +1243,23 @@
 
 - (void)onCopyUrl:(id)sender
 {
-    if (!pointedUrl) return;
-    [[NSPasteboard generalPasteboard] setStringContent:pointedUrl];
+    if (!_pointedUrl) return;
+    [[NSPasteboard generalPasteboard] setStringContent:_pointedUrl];
     self.pointedUrl = nil;
 }
 
 - (void)onJoinChannel:(id)sender
 {
-    if (!pointedChannelName) return;
-    IRCClient* u = world.selectedClient;
+    if (!_pointedChannelName) return;
+    IRCClient* u = _world.selectedClient;
     if (!u || !u.isLoggedIn) return;
-    [u send:JOIN, pointedChannelName, nil];
+    [u send:JOIN, _pointedChannelName, nil];
 }
 
 - (void)onCopyAddress:(id)sender
 {
-    if (!pointedAddress) return;
-    [[NSPasteboard generalPasteboard] setStringContent:pointedAddress];
+    if (!_pointedAddress) return;
+    [[NSPasteboard generalPasteboard] setStringContent:_pointedAddress];
     self.pointedAddress = nil;
 }
 

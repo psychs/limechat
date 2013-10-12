@@ -9,9 +9,6 @@
 {
     IBOutlet NSTextField* titleLabel;
     IBOutlet NSPopUpButton* channelPopup;
-
-    NSArray* nicks;
-    int uid;
 }
 
 @property (nonatomic, strong) NSArray* nicks;

@@ -8,12 +8,6 @@
 
 
 @interface ViewTheme : NSObject
-{
-    NSString* name;
-    LogTheme* log;
-    OtherTheme* other;
-    CustomJSFile* js;
-}
 
 @property (nonatomic, strong) NSString* name;
 @property (nonatomic, readonly) LogTheme* log;

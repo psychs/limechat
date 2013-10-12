@@ -7,15 +7,6 @@
 
 
 @interface MemberListView : ListView
-{
-    __weak id dropDelegate;
-    OtherTheme* theme;
-
-    NSColor* bgColor;
-    NSColor* topLineColor;
-    NSColor* bottomLineColor;
-    NSGradient* gradient;
-}
 
 @property (nonatomic, weak) id dropDelegate;
 @property (nonatomic, strong) OtherTheme* theme;

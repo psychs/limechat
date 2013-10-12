@@ -6,9 +6,6 @@
 
 @implementation TopicSheet
 
-@synthesize uid;
-@synthesize cid;
-
 - (id)init
 {
     self = [super init];
@@ -16,11 +13,6 @@
         [NSBundle loadNibNamed:@"TopicSheet" owner:self];
     }
     return self;
-}
-
-- (void)dealloc
-{
-    [super dealloc];
 }
 
 - (void)start:(NSString*)topic

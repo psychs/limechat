@@ -7,35 +7,21 @@
 
 @implementation IRCChannelConfig
 
-@synthesize type;
-
-@synthesize name;
-@synthesize password;
-
-@synthesize autoJoin;
-@synthesize logToConsole;
-@synthesize growl;
-
-@synthesize mode;
-@synthesize topic;
-
-@synthesize autoOp;
-
 - (id)init
 {
     self = [super init];
     if (self) {
-        type = CHANNEL_TYPE_CHANNEL;
-        autoOp = [NSMutableArray new];
+        _type = CHANNEL_TYPE_CHANNEL;
+        _autoOp = [NSMutableArray new];
 
-        autoJoin = YES;
-        logToConsole = YES;
-        growl = YES;
+        _autoJoin = YES;
+        _logToConsole = YES;
+        _growl = YES;
 
-        name = @"";
-        password = @"";
-        mode = @"+sn";
-        topic = @"";
+        _name = @"";
+        _password = @"";
+        _mode = @"+sn";
+        _topic = @"";
     }
     return self;
 }
@@ -44,53 +30,40 @@
 {
     self = [self init];
     if (self) {
-        type = [dic intForKey:@"type"];
+        _type = [dic intForKey:@"type"];
 
-        name = [[dic stringForKey:@"name"] retain] ?: @"";
-        password = [[dic stringForKey:@"password"] retain] ?: @"";
+        _name = [dic stringForKey:@"name"] ?: @"";
+        _password = [dic stringForKey:@"password"] ?: @"";
 
-        autoJoin = [dic boolForKey:@"auto_join"];
-        logToConsole = [dic boolForKey:@"console"];
-        growl = [dic boolForKey:@"growl"];
+        _autoJoin = [dic boolForKey:@"auto_join"];
+        _logToConsole = [dic boolForKey:@"console"];
+        _growl = [dic boolForKey:@"growl"];
 
-        mode = [[dic stringForKey:@"mode"] retain] ?: @"";
-        topic = [[dic stringForKey:@"topic"] retain] ?: @"";
+        _mode = [dic stringForKey:@"mode"] ?: @"";
+        _topic = [dic stringForKey:@"topic"] ?: @"";
 
-        [autoOp addObjectsFromArray:[dic arrayForKey:@"autoop"]];
+        [_autoOp addObjectsFromArray:[dic arrayForKey:@"autoop"]];
     }
     return self;
-}
-
-- (void)dealloc
-{
-    [name release];
-    [password release];
-
-    [mode release];
-    [topic release];
-
-    [autoOp release];
-
-    [super dealloc];
 }
 
 - (NSMutableDictionary*)dictionaryValue
 {
     NSMutableDictionary* dic = [NSMutableDictionary dictionary];
 
-    [dic setInt:type forKey:@"type"];
+    [dic setInt:_type forKey:@"type"];
 
-    if (name) [dic setObject:name forKey:@"name"];
-    if (password) [dic setObject:password forKey:@"password"];
+    if (_name) [dic setObject:_name forKey:@"name"];
+    if (_password) [dic setObject:_password forKey:@"password"];
 
-    [dic setBool:autoJoin forKey:@"auto_join"];
-    [dic setBool:logToConsole forKey:@"console"];
-    [dic setBool:growl forKey:@"growl"];
+    [dic setBool:_autoJoin forKey:@"auto_join"];
+    [dic setBool:_logToConsole forKey:@"console"];
+    [dic setBool:_growl forKey:@"growl"];
 
-    if (mode) [dic setObject:mode forKey:@"mode"];
-    if (topic) [dic setObject:topic forKey:@"topic"];
+    if (_mode) [dic setObject:_mode forKey:@"mode"];
+    if (_topic) [dic setObject:_topic forKey:@"topic"];
 
-    if (autoOp) [dic setObject:autoOp forKey:@"autoop"];
+    if (_autoOp) [dic setObject:_autoOp forKey:@"autoop"];
 
     return dic;
 }

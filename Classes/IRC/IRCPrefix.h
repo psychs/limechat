@@ -5,13 +5,6 @@
 
 
 @interface IRCPrefix : NSObject
-{
-    NSString* raw;
-    NSString* nick;
-    NSString* user;
-    NSString* address;
-    BOOL isServer;
-}
 
 @property (nonatomic, strong) NSString* raw;
 @property (nonatomic, strong) NSString* nick;

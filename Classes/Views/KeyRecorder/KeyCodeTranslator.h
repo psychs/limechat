@@ -6,10 +6,6 @@
 
 
 @interface KeyCodeTranslator : NSObject
-{
-    TISInputSourceRef layout;
-    const UCKeyboardLayout* layoutData;
-}
 
 + (id)sharedInstance;
 - (TISInputSourceRef)keyboardLayout;

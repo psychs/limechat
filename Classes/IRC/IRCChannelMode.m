@@ -6,24 +6,11 @@
 
 @implementation IRCChannelMode
 
-@synthesize isupport;
-@synthesize a;
-@synthesize i;
-@synthesize m;
-@synthesize n;
-@synthesize p;
-@synthesize q;
-@synthesize r;
-@synthesize s;
-@synthesize t;
-@synthesize l;
-@synthesize k;
-
 - (id)init
 {
     self = [super init];
     if (self) {
-        k = @"";
+        _k = @"";
     }
     return self;
 }
@@ -32,27 +19,20 @@
 {
     self = [self init];
     if (self) {
-        isupport = [other.isupport retain];
-        a = other.a;
-        i = other.i;
-        m = other.m;
-        n = other.n;
-        p = other.p;
-        q = other.q;
-        r = other.r;
-        s = other.s;
-        t = other.t;
-        l = other.l;
-        k = [other.k retain];
+        _isupport = other.isupport;
+        _a = other.a;
+        _i = other.i;
+        _m = other.m;
+        _n = other.n;
+        _p = other.p;
+        _q = other.q;
+        _r = other.r;
+        _s = other.s;
+        _t = other.t;
+        _l = other.l;
+        _k = other.k;
     }
     return self;
-}
-
-- (void)dealloc
-{
-    [isupport release];
-    [k release];
-    [super dealloc];
 }
 
 - (id)mutableCopyWithZone:(NSZone *)zone
@@ -62,34 +42,34 @@
 
 - (NSString*)k
 {
-    return k ?: @"";
+    return _k ?: @"";
 }
 
 - (void)clear
 {
-    a = i = m = n = p = q = r = s = t = NO;
-    l = 0;
+    _a = _i = _m = _n = _p = _q = _r = _s = _t = NO;
+    _l = 0;
     self.k = nil;
 }
 
 - (NSArray*)update:(NSString*)str
 {
-    NSArray* ary = [isupport parseMode:str];
+    NSArray* ary = [_isupport parseMode:str];
     for (IRCModeInfo* h in ary) {
         if (h.op) continue;
         unsigned char mode = h.mode;
         BOOL plus = h.plus;
         if (h.simpleMode) {
             switch (mode) {
-                case 'a': a = plus; break;
-                case 'i': i = plus; break;
-                case 'm': m = plus; break;
-                case 'n': n = plus; break;
-                case 'p': p = plus; break;
-                case 'q': q = plus; break;
-                case 'r': r = plus; break;
-                case 's': s = plus; break;
-                case 't': t = plus; break;
+                case 'a': _a = plus; break;
+                case 'i': _i = plus; break;
+                case 'm': _m = plus; break;
+                case 'n': _n = plus; break;
+                case 'p': _p = plus; break;
+                case 'q': _q = plus; break;
+                case 'r': _r = plus; break;
+                case 's': _s = plus; break;
+                case 't': _t = plus; break;
             }
         }
         else {
@@ -97,18 +77,16 @@
                 case 'k':
                 {
                     NSString* param = h.param ?: @"";
-                    [k autorelease];
-                    k = plus ? param : @"";
-                    [k retain];
+                    _k = plus ? param : @"";
                     break;
                 }
                 case 'l':
                     if (plus) {
                         NSString* param = h.param;
-                        l = [param intValue];
+                        _l = [param intValue];
                     }
                     else {
-                        l = 0;
+                        _l = 0;
                     }
                     break;
             }
@@ -122,35 +100,35 @@
     NSMutableString* str = [NSMutableString string];
     NSMutableString* trail = [NSMutableString string];
 
-    if (a != mode.a) {
-        [str appendString:a ? @"-a" : @"+a"];
+    if (_a != mode.a) {
+        [str appendString:_a ? @"-a" : @"+a"];
     }
-    if (i != mode.i) {
-        [str appendString:i ? @"-i" : @"+i"];
+    if (_i != mode.i) {
+        [str appendString:_i ? @"-i" : @"+i"];
     }
-    if (m != mode.m) {
-        [str appendString:m ? @"-m" : @"+m"];
+    if (_m != mode.m) {
+        [str appendString:_m ? @"-m" : @"+m"];
     }
-    if (n != mode.n) {
-        [str appendString:n ? @"-n" : @"+n"];
+    if (_n != mode.n) {
+        [str appendString:_n ? @"-n" : @"+n"];
     }
-    if (p != mode.p) {
-        [str appendString:p ? @"-p" : @"+p"];
+    if (_p != mode.p) {
+        [str appendString:_p ? @"-p" : @"+p"];
     }
-    if (q != mode.q) {
-        [str appendString:q ? @"-q" : @"+q"];
+    if (_q != mode.q) {
+        [str appendString:_q ? @"-q" : @"+q"];
     }
-    if (r != mode.r) {
-        [str appendString:r ? @"-r" : @"+r"];
+    if (_r != mode.r) {
+        [str appendString:_r ? @"-r" : @"+r"];
     }
-    if (s != mode.s) {
-        [str appendString:s ? @"-s" : @"+s"];
+    if (_s != mode.s) {
+        [str appendString:_s ? @"-s" : @"+s"];
     }
-    if (t != mode.t) {
-        [str appendString:t ? @"-t" : @"+t"];
+    if (_t != mode.t) {
+        [str appendString:_t ? @"-t" : @"+t"];
     }
 
-    if (l != mode.l) {
+    if (_l != mode.l) {
         if (mode.l > 0) {
             [str appendString:@"+l"];
             [trail appendFormat:@" %d", mode.l];
@@ -160,14 +138,14 @@
         }
     }
 
-    if (![k isEqualToString:mode.k]) {
+    if (![_k isEqualToString:mode.k]) {
         if (mode.k.length) {
             [str appendString:@"+k"];
             [trail appendFormat:@" %@", mode.k];
         }
-        else if (k.length) {
+        else if (_k.length) {
             [str appendString:@"-k"];
-            [trail appendFormat:@" %@", k];
+            [trail appendFormat:@" %@", _k];
         }
     }
 
@@ -179,26 +157,26 @@
     NSMutableString* str = [NSMutableString string];
     NSMutableString* trail = [NSMutableString string];
 
-    if (p) [str appendString:@"p"];
-    if (s) [str appendString:@"s"];
-    if (m) [str appendString:@"m"];
-    if (n) [str appendString:@"n"];
-    if (t) [str appendString:@"t"];
-    if (i) [str appendString:@"i"];
-    if (a) [str appendString:@"a"];
-    if (q) [str appendString:@"q"];
-    if (r) [str appendString:@"r"];
+    if (_p) [str appendString:@"p"];
+    if (_s) [str appendString:@"s"];
+    if (_m) [str appendString:@"m"];
+    if (_n) [str appendString:@"n"];
+    if (_t) [str appendString:@"t"];
+    if (_i) [str appendString:@"i"];
+    if (_a) [str appendString:@"a"];
+    if (_q) [str appendString:@"q"];
+    if (_r) [str appendString:@"r"];
 
     if (str.length) [str insertString:@"+" atIndex:0];
 
-    if (l > 0) {
+    if (_l > 0) {
         [str appendString:@"+l"];
-        [trail appendFormat:@" %d", l];
+        [trail appendFormat:@" %d", _l];
     }
 
-    if (k && k.length) {
+    if (_k && _k.length) {
         [str appendString:@"+k"];
-        if (!maskK) [trail appendFormat:@" %@", k];
+        if (!maskK) [trail appendFormat:@" %@", _k];
     }
 
     [str appendString:trail];

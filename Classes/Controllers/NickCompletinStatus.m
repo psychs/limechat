@@ -6,9 +6,6 @@
 
 @implementation NickCompletinStatus
 
-@synthesize text;
-@synthesize range;
-
 - (id)init
 {
     self = [super init];
@@ -18,16 +15,10 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [text release];
-    [super dealloc];
-}
-
 - (void)clear
 {
-    self.text = nil;
-    range = NSMakeRange(NSNotFound, 0);
+    _text = nil;
+    _range = NSMakeRange(NSNotFound, 0);
 }
 
 @end

@@ -6,8 +6,6 @@
 
 @implementation TreeView
 
-@synthesize keyDelegate;
-
 - (int)countSelectedRows
 {
     return [[self selectedRowIndexes] count];
@@ -49,15 +47,15 @@
 
 - (void)keyDown:(NSEvent *)e
 {
-    if (keyDelegate) {
+    if (_keyDelegate) {
         switch ([e keyCode]) {
             case 123 ... 126:
             case 116:
             case 121:
                 break;
             default:
-                if ([keyDelegate respondsToSelector:@selector(treeViewKeyDown:)]) {
-                    [keyDelegate treeViewKeyDown:e];
+                if ([_keyDelegate respondsToSelector:@selector(treeViewKeyDown:)]) {
+                    [_keyDelegate treeViewKeyDown:e];
                 }
                 break;
         }

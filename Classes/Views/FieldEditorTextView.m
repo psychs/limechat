@@ -5,28 +5,23 @@
 
 
 @implementation FieldEditorTextView
-
-@synthesize pasteDelegate;
+{
+    KeyEventHandler* _keyHandler;
+}
 
 - (id)initWithFrame:(NSRect)frameRect textContainer:(NSTextContainer *)aTextContainer
 {
     self = [super initWithFrame:frameRect textContainer:aTextContainer];
     if (self) {
-        keyHandler = [KeyEventHandler new];
+        _keyHandler = [KeyEventHandler new];
     }
     return self;
 }
 
-- (void)dealloc
-{
-    [keyHandler release];
-    [super dealloc];
-}
-
 - (void)paste:(id)sender
 {
-    if (pasteDelegate) {
-        BOOL result = [pasteDelegate fieldEditorTextViewPaste:self];
+    if (_pasteDelegate) {
+        BOOL result = [_pasteDelegate fieldEditorTextViewPaste:self];
         if (result) {
             return;
         }
@@ -37,22 +32,22 @@
 
 - (void)setKeyHandlerTarget:(id)target
 {
-    [keyHandler setTarget:target];
+    [_keyHandler setTarget:target];
 }
 
 - (void)registerKeyHandler:(SEL)selector key:(int)code modifiers:(NSUInteger)mods
 {
-    [keyHandler registerSelector:selector key:code modifiers:mods];
+    [_keyHandler registerSelector:selector key:code modifiers:mods];
 }
 
 - (void)registerKeyHandler:(SEL)selector character:(UniChar)c modifiers:(NSUInteger)mods
 {
-    [keyHandler registerSelector:selector character:c modifiers:mods];
+    [_keyHandler registerSelector:selector character:c modifiers:mods];
 }
 
 - (void)keyDown:(NSEvent *)e
 {
-    if ([keyHandler processKeyEvent:e]) {
+    if ([_keyHandler processKeyEvent:e]) {
         return;
     }
 

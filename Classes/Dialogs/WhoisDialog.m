@@ -14,10 +14,6 @@ static int windowPlace;
 
 @implementation WhoisDialog
 
-@synthesize delegate;
-@synthesize isOperator;
-@synthesize nick;
-
 - (id)init
 {
     self = [super init];
@@ -27,24 +23,18 @@ static int windowPlace;
     return self;
 }
 
-- (void)dealloc
-{
-    [super dealloc];
-}
-
 - (void)setIsOperator:(BOOL)value
 {
-    isOperator = value;
+    _isOperator = value;
     [self updateNick];
 }
 
 - (void)setNick:(NSString *)value
 {
-    if (nick != value) {
-        [nick release];
-        nick = [value retain];
+    if (_nick != value) {
+        _nick = value;
         [self updateNick];
-        [self.window setTitle:nick];
+        [self.window setTitle:_nick];
     }
 }
 
@@ -91,7 +81,7 @@ static int windowPlace;
 
 - (void)updateNick
 {
-    NSString* s = isOperator ? [nick stringByAppendingString:@" (IRC operator)"] : nick;
+    NSString* s = _isOperator ? [_nick stringByAppendingString:@" (IRC operator)"] : _nick;
     [nickText setStringValue:s];
 }
 
@@ -133,7 +123,7 @@ static int windowPlace;
 
 - (void)close
 {
-    delegate = nil;
+    _delegate = nil;
     [self.window close];
 }
 
@@ -144,15 +134,15 @@ static int windowPlace;
 
 - (void)onTalk:(id)sender
 {
-    if ([delegate respondsToSelector:@selector(whoisDialogOnTalk:)]) {
-        [delegate whoisDialogOnTalk:self];
+    if ([_delegate respondsToSelector:@selector(whoisDialogOnTalk:)]) {
+        [_delegate whoisDialogOnTalk:self];
     }
 }
 
 - (void)onUpdate:(id)sender
 {
-    if ([delegate respondsToSelector:@selector(whoisDialogOnUpdate:)]) {
-        [delegate whoisDialogOnUpdate:self];
+    if ([_delegate respondsToSelector:@selector(whoisDialogOnUpdate:)]) {
+        [_delegate whoisDialogOnUpdate:self];
     }
 }
 
@@ -165,8 +155,8 @@ static int windowPlace;
         chname = [chname substringFromIndex:1];
     }
 
-    if ([delegate respondsToSelector:@selector(whoisDialogOnJoin:channel:)]) {
-        [delegate whoisDialogOnJoin:self channel:chname];
+    if ([_delegate respondsToSelector:@selector(whoisDialogOnJoin:channel:)]) {
+        [_delegate whoisDialogOnJoin:self channel:chname];
     }
 }
 
@@ -175,8 +165,8 @@ static int windowPlace;
 
 - (void)windowWillClose:(NSNotification*)note
 {
-    if ([delegate respondsToSelector:@selector(whoisDialogWillClose:)]) {
-        [delegate whoisDialogWillClose:self];
+    if ([_delegate respondsToSelector:@selector(whoisDialogWillClose:)]) {
+        [_delegate whoisDialogWillClose:self];
     }
 }
 

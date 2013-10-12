@@ -6,18 +6,6 @@
 
 @implementation IRCTreeItem
 
-@synthesize uid;
-@synthesize log;
-@synthesize isKeyword;
-@synthesize isUnread;
-@synthesize isNewTalk;
-
-- (void)dealloc
-{
-    [log release];
-    [super dealloc];
-}
-
 - (IRCClient*)client
 {
     return nil;
@@ -28,14 +16,9 @@
     return NO;
 }
 
-- (BOOL)isActive
-{
-    return NO;
-}
-
 - (void)resetState
 {
-    isKeyword = isUnread = isNewTalk = NO;
+    _isKeyword = _isUnread = _isNewTalk = NO;
 }
 
 - (int)numberOfChildren

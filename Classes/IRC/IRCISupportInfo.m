@@ -11,38 +11,29 @@
 
 
 @implementation IRCISupportInfo
-
-@synthesize nickLen;
-@synthesize modesCount;
-@synthesize markMap;
-@synthesize modeMap;
+{
+    unsigned char _modes[MODES_SIZE];
+}
 
 - (id)init
 {
     self = [super init];
     if (self) {
-        markMap = [NSMutableDictionary new];
-        modeMap = [NSMutableDictionary new];
+        _markMap = [NSMutableDictionary new];
+        _modeMap = [NSMutableDictionary new];
         [self reset];
     }
     return self;
 }
 
-- (void)dealloc
-{
-    [markMap release];
-    [modeMap release];
-    [super dealloc];
-}
-
 - (void)reset
 {
-    [markMap removeAllObjects];
-    [modeMap removeAllObjects];
+    [_markMap removeAllObjects];
+    [_modeMap removeAllObjects];
 
-    memset(modes, 0, MODES_SIZE);
-    nickLen = 9;
-    modesCount = 3;
+    memset(_modes, 0, MODES_SIZE);
+    _nickLen = 9;
+    _modesCount = 3;
 
     [self setValue:OP_VALUE forMode:'o'];
     [self setValue:OP_VALUE forMode:'h'];
@@ -63,12 +54,12 @@
     [self setValue:4 forMode:'q'];
     [self setValue:4 forMode:'r'];
 
-    [markMap setObject:@'o' forKey:@'@'];
-    [markMap setObject:@'h' forKey:@'%'];
-    [markMap setObject:@'v' forKey:@'+'];
-    [modeMap setObject:@'@' forKey:@'o'];
-    [modeMap setObject:@'%' forKey:@'h'];
-    [modeMap setObject:@'+' forKey:@'v'];
+    [_markMap setObject:@'o' forKey:@'@'];
+    [_markMap setObject:@'h' forKey:@'%'];
+    [_markMap setObject:@'v' forKey:@'+'];
+    [_modeMap setObject:@'@' forKey:@'o'];
+    [_modeMap setObject:@'%' forKey:@'h'];
+    [_modeMap setObject:@'+' forKey:@'v'];
 }
 
 - (void)update:(NSString*)str
@@ -91,10 +82,10 @@
                 [self parseChanmodes:value];
             }
             else if ([key isEqualToString:@"NICKLEN"]) {
-                nickLen = [value intValue];
+                _nickLen = [value intValue];
             }
             else if ([key isEqualToString:@"MODES"]) {
-                modesCount = [value intValue];
+                _modesCount = [value intValue];
             }
         }
     }
@@ -103,7 +94,7 @@
 - (NSArray*)parseMode:(NSString*)str
 {
     NSMutableArray* ary = [NSMutableArray array];
-    NSMutableString* s = [[str mutableCopy] autorelease];
+    NSMutableString* s = [str mutableCopy];
     BOOL plus = NO;
 
     while (s.length) {
@@ -180,8 +171,8 @@
     if ([str hasPrefix:@"("]) {
         NSRange r = [str rangeOfString:@")"];
         if (r.location != NSNotFound) {
-            [markMap removeAllObjects];
-            [modeMap removeAllObjects];
+            [_markMap removeAllObjects];
+            [_modeMap removeAllObjects];
 
             NSString* modeStr = [str substringWithRange:NSMakeRange(1, r.location - 1)];
             NSString* markStr = [str substringFromIndex:NSMaxRange(r)];
@@ -196,8 +187,8 @@
                     UniChar markChar = [markStr characterAtIndex:i];
                     NSNumber* modeNumber = [NSNumber numberWithInt:modeChar];
                     NSNumber* markNumber = [NSNumber numberWithInt:markChar];
-                    [markMap setObject:modeNumber forKey:markNumber];
-                    [modeMap setObject:markNumber forKey:modeNumber];
+                    [_markMap setObject:modeNumber forKey:markNumber];
+                    [_modeMap setObject:markNumber forKey:modeNumber];
                 }
             }
         }
@@ -223,11 +214,11 @@
 {
     if ('a' <= m && m <= 'z') {
         int n = m - 'a';
-        modes[n] = value;
+        _modes[n] = value;
     }
     else if ('A' <= m && m <= 'Z') {
         int n = m - 'A' + 26;
-        modes[n] = value;
+        _modes[n] = value;
     }
 }
 
@@ -235,18 +226,18 @@
 {
     if ('a' <= m && m <= 'z') {
         int n = m - 'a';
-        return modes[n];
+        return _modes[n];
     }
     else if ('A' <= m && m <= 'Z') {
         int n = m - 'A' + 26;
-        return modes[n];
+        return _modes[n];
     }
     return 0;
 }
 
 - (char)modeForMark:(char)mark
 {
-    NSNumber* mode = [markMap objectForKey:[NSNumber numberWithInt:mark]];
+    NSNumber* mode = [_markMap objectForKey:[NSNumber numberWithInt:mark]];
     if (mode) {
         return [mode intValue];
     }
@@ -255,7 +246,7 @@
 
 - (char)markForMode:(char)mode
 {
-    NSNumber* mark = [modeMap objectForKey:[NSNumber numberWithInt:mode]];
+    NSNumber* mark = [_modeMap objectForKey:[NSNumber numberWithInt:mode]];
     if (mark) {
         return [mark intValue];
     }
@@ -267,21 +258,9 @@
 
 @implementation IRCModeInfo
 
-@synthesize mode;
-@synthesize plus;
-@synthesize op;
-@synthesize simpleMode;
-@synthesize param;
-
 + (IRCModeInfo*)modeInfo
 {
-    return [[IRCModeInfo new] autorelease];
-}
-
-- (void)dealloc
-{
-    [param release];
-    [super dealloc];
+    return [IRCModeInfo new];
 }
 
 @end

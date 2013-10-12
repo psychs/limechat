@@ -7,10 +7,10 @@
 
 
 @implementation ListDialog
-
-@synthesize delegate;
-@synthesize sortKey;
-@synthesize sortOrder;
+{
+    NSMutableArray* _list;
+    NSMutableArray* _filteredList;
+}
 
 - (id)init
 {
@@ -18,18 +18,11 @@
     if (self) {
         [NSBundle loadNibNamed:@"ListDialog" owner:self];
 
-        list = [NSMutableArray new];
-        sortKey = 1;
-        sortOrder = NSOrderedDescending;
+        _list = [NSMutableArray new];
+        _sortKey = 1;
+        _sortOrder = NSOrderedDescending;
     }
     return self;
-}
-
-- (void)dealloc
-{
-    [list release];
-    [filteredList release];
-    [super dealloc];
 }
 
 - (void)start
@@ -74,9 +67,8 @@
 
 - (void)clear
 {
-    [list removeAllObjects];
-    [filteredList release];
-    filteredList = nil;
+    [_list removeAllObjects];
+    _filteredList = nil;
 
     [self reloadTable];
 }
@@ -87,17 +79,17 @@
 
     NSString* filter = [filterText stringValue];
     if (filter.length) {
-        if (!filteredList) {
-            filteredList = [NSMutableArray new];
+        if (!_filteredList) {
+            _filteredList = [NSMutableArray new];
         }
 
         if ([channel rangeOfString:filter options:NSCaseInsensitiveSearch].location != NSNotFound
             || [topic rangeOfString:filter options:NSCaseInsensitiveSearch].location != NSNotFound) {
-            [self sortedInsert:item inArray:filteredList];
+            [self sortedInsert:item inArray:_filteredList];
         }
     }
 
-    [self sortedInsert:item inArray:list];
+    [self sortedInsert:item inArray:_list];
     [self reloadTable];
 }
 
@@ -108,7 +100,7 @@
 
 static NSInteger compareItems(NSArray* self, NSArray* other, void* context)
 {
-    ListDialog* dialog = (ListDialog*)context;
+    ListDialog* dialog = (__bridge ListDialog*)context;
     int key = dialog.sortKey;
     NSComparisonResult order = dialog.sortOrder;
 
@@ -133,7 +125,7 @@ static NSInteger compareItems(NSArray* self, NSArray* other, void* context)
 
 - (void)sort
 {
-    [list sortUsingFunction:compareItems context:self];
+    [_list sortUsingFunction:compareItems context:(void*)self];
 }
 
 - (void)sortedInsert:(NSArray*)item inArray:(NSMutableArray*)ary
@@ -144,7 +136,7 @@ static NSInteger compareItems(NSArray* self, NSArray* other, void* context)
 
     while (right - left > THRESHOLD) {
         int pivot = (left + right) / 2;
-        if (compareItems([ary objectAtIndex:pivot], item, self) == NSOrderedDescending) {
+        if (compareItems([ary objectAtIndex:pivot], item, (__bridge void*)self) == NSOrderedDescending) {
             right = pivot;
         }
         else {
@@ -153,7 +145,7 @@ static NSInteger compareItems(NSArray* self, NSArray* other, void* context)
     }
 
     for (int i=left; i<right; ++i) {
-        if (compareItems([ary objectAtIndex:i], item, self) == NSOrderedDescending) {
+        if (compareItems([ary objectAtIndex:i], item, (__bridge void*)self) == NSOrderedDescending) {
             [ary insertObject:item atIndex:i];
             return;
         }
@@ -172,37 +164,36 @@ static NSInteger compareItems(NSArray* self, NSArray* other, void* context)
 
 - (void)onUpdate:(id)sender
 {
-    if ([delegate respondsToSelector:@selector(listDialogOnUpdate:)]) {
-        [delegate listDialogOnUpdate:self];
+    if ([_delegate respondsToSelector:@selector(listDialogOnUpdate:)]) {
+        [_delegate listDialogOnUpdate:self];
     }
 }
 
 - (void)onJoin:(id)sender
 {
-    NSArray* ary = list;
+    NSArray* ary = _list;
     NSString* filter = [filterText stringValue];
     if (filter.length) {
-        ary = filteredList;
+        ary = _filteredList;
     }
 
     NSIndexSet* indexes = [table selectedRowIndexes];
     for (NSUInteger i=[indexes firstIndex]; i!=NSNotFound; i=[indexes indexGreaterThanIndex:i]) {
         NSArray* item = [ary objectAtIndex:i];
-        if ([delegate respondsToSelector:@selector(listDialogOnJoin:channel:)]) {
-            [delegate listDialogOnJoin:self channel:[item objectAtIndex:0]];
+        if ([_delegate respondsToSelector:@selector(listDialogOnJoin:channel:)]) {
+            [_delegate listDialogOnJoin:self channel:[item objectAtIndex:0]];
         }
     }
 }
 
 - (void)onSearchFieldChange:(id)sender
 {
-    [filteredList release];
-    filteredList = nil;
+    _filteredList = nil;
 
     NSString* filter = [filterText stringValue];
     if (filter.length) {
         NSMutableArray* ary = [NSMutableArray new];
-        for (NSArray* item in list) {
+        for (NSArray* item in _list) {
             NSString* channel = [item objectAtIndex:0];
             NSString* topic = [item objectAtIndex:2];
             if ([channel rangeOfString:filter options:NSCaseInsensitiveSearch].location != NSNotFound
@@ -210,7 +201,7 @@ static NSInteger compareItems(NSArray* self, NSArray* other, void* context)
                 [ary addObject:item];
             }
         }
-        filteredList = ary;
+        _filteredList = ary;
     }
 
     [self reloadTable];
@@ -262,15 +253,15 @@ static NSInteger compareItems(NSArray* self, NSArray* other, void* context)
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)sender
 {
-    if (filteredList) {
-        return filteredList.count;
+    if (_filteredList) {
+        return _filteredList.count;
     }
-    return list.count;
+    return _list.count;
 }
 
 - (id)tableView:(NSTableView *)sender objectValueForTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
-    NSArray* ary = filteredList ?: list;
+    NSArray* ary = _filteredList ?: _list;
     NSArray* item = [ary objectAtIndex:row];
     NSString* col = [column identifier];
 
@@ -299,17 +290,17 @@ static NSInteger compareItems(NSArray* self, NSArray* other, void* context)
         i = 2;
     }
 
-    if (sortKey == i) {
-        sortOrder = - sortOrder;
+    if (_sortKey == i) {
+        _sortOrder = - _sortOrder;
     }
     else {
-        sortKey = i;
-        sortOrder = (sortKey == 1) ? NSOrderedDescending : NSOrderedAscending;
+        _sortKey = i;
+        _sortOrder = (_sortKey == 1) ? NSOrderedDescending : NSOrderedAscending;
     }
 
     [self sort];
 
-    if (filteredList) {
+    if (_filteredList) {
         [self onSearchFieldChange:nil];
     }
 
@@ -323,8 +314,8 @@ static NSInteger compareItems(NSArray* self, NSArray* other, void* context)
 {
     [self saveWindowState];
 
-    if ([delegate respondsToSelector:@selector(listDialogWillClose:)]) {
-        [delegate listDialogWillClose:self];
+    if ([_delegate respondsToSelector:@selector(listDialogWillClose:)]) {
+        [_delegate listDialogWillClose:self];
     }
 }
 

@@ -6,72 +6,63 @@
 
 
 @implementation IRCSendingMessage
-
-@synthesize command;
-@synthesize params;
-@synthesize penalty;
-@synthesize completeColon;
+{
+    NSString* _string;
+}
 
 - (id)initWithCommand:(NSString*)aCommand
 {
     self = [super init];
     if (self) {
-        command = [[aCommand uppercaseString] retain];
-        penalty = IRC_PENALTY_NORMAL;
-        completeColon = YES;
-        params = [NSMutableArray new];
+        _command = [aCommand uppercaseString];
+        _penalty = IRC_PENALTY_NORMAL;
+        _completeColon = YES;
+        _params = [NSMutableArray new];
     }
     return self;
 }
 
-- (void)dealloc
-{
-    [command release];
-    [params release];
-    [super dealloc];
-}
-
 - (void)addParameter:(NSString*)parameter
 {
-    [params addObject:parameter];
+    [_params addObject:parameter];
 }
 
 - (NSString*)string
 {
-    if (!string) {
+    if (!_string) {
         BOOL forceCompleteColon = NO;
 
-        if ([command isEqualToString:PRIVMSG] ||[command isEqualToString:NOTICE]) {
+        if ([_command isEqualToString:PRIVMSG] ||[_command isEqualToString:NOTICE]) {
             forceCompleteColon = YES;
         }
-        else if ([command isEqualToString:NICK]
-                 || [command isEqualToString:MODE]
-                 || [command isEqualToString:JOIN]
-                 || [command isEqualToString:NAMES]
-                 || [command isEqualToString:WHO]
-                 || [command isEqualToString:LIST]
-                 || [command isEqualToString:INVITE]
-                 || [command isEqualToString:WHOIS]
-                 || [command isEqualToString:WHOWAS]
-                 || [command isEqualToString:ISON]
-                 || [command isEqualToString:USER]) {
-            completeColon = NO;
+        else if ([_command isEqualToString:NICK]
+                 || [_command isEqualToString:MODE]
+                 || [_command isEqualToString:JOIN]
+                 || [_command isEqualToString:NAMES]
+                 || [_command isEqualToString:WHO]
+                 || [_command isEqualToString:LIST]
+                 || [_command isEqualToString:INVITE]
+                 || [_command isEqualToString:WHOIS]
+                 || [_command isEqualToString:WHOWAS]
+                 || [_command isEqualToString:ISON]
+                 || [_command isEqualToString:USER]) {
+            _completeColon = NO;
         }
 
         NSMutableString* d = [NSMutableString new];
 
-        [d appendString:command];
+        [d appendString:_command];
 
-        int count = [params count];
+        int count = [_params count];
         if (count > 0) {
             for (int i=0; i<count-1; ++i) {
-                NSString* s = [params objectAtIndex:i];
+                NSString* s = [_params objectAtIndex:i];
                 [d appendString:@" "];
                 [d appendString:s];
             }
 
             [d appendString:@" "];
-            NSString* s = [params objectAtIndex:count-1];
+            NSString* s = [_params objectAtIndex:count-1];
             int len = s.length;
             BOOL firstColonOrSpace = NO;
             if (len > 0) {
@@ -79,7 +70,7 @@
                 firstColonOrSpace = (c == ' ' || c == ':');
             }
 
-            if (forceCompleteColon || (completeColon && (s.length == 0 || firstColonOrSpace))) {
+            if (forceCompleteColon || (_completeColon && (s.length == 0 || firstColonOrSpace))) {
                 [d appendString:@":"];
             }
             [d appendString:s];
@@ -87,9 +78,9 @@
 
         [d appendString:@"\r\n"];
 
-        string = d;
+        _string = d;
     }
-    return string;
+    return _string;
 }
 
 @end

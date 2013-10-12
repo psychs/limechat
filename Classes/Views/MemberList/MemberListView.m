@@ -6,13 +6,16 @@
 
 
 @implementation MemberListView
-
-@synthesize dropDelegate;
-@synthesize theme;
+{
+    NSColor* _bgColor;
+    NSColor* _topLineColor;
+    NSColor* _bottomLineColor;
+    NSGradient* _gradient;
+}
 
 - (void)setUp
 {
-    bgColor = [[NSColor controlBackgroundColor] retain];
+    _bgColor = [NSColor controlBackgroundColor];
 }
 
 - (id)initWithFrame:(NSRect)rect
@@ -31,16 +34,6 @@
         [self setUp];
     }
     return self;
-}
-
-- (void)dealloc
-{
-    [theme release];
-    [bgColor release];
-    [topLineColor release];
-    [bottomLineColor release];
-    [gradient release];
-    [super dealloc];
 }
 
 - (void)awakeFromNib
@@ -77,22 +70,17 @@
 
 - (void)themeChanged
 {
-    [bgColor release];
-    [topLineColor release];
-    [bottomLineColor release];
-    [gradient release];
+    _bgColor = _theme.memberListBgColor;
+    _topLineColor = _theme.memberListSelTopLineColor;
+    _bottomLineColor = _theme.memberListSelBottomLineColor;
 
-    bgColor = [theme.memberListBgColor retain];
-    topLineColor = [theme.memberListSelTopLineColor retain];
-    bottomLineColor = [theme.memberListSelBottomLineColor retain];
-
-    NSColor* start = theme.memberListSelTopColor;
-    NSColor* end = theme.memberListSelBottomColor;
+    NSColor* start = _theme.memberListSelTopColor;
+    NSColor* end = _theme.memberListSelBottomColor;
     if (start && end) {
-        gradient = [[NSGradient alloc] initWithStartingColor:start endingColor:end];
+        _gradient = [[NSGradient alloc] initWithStartingColor:start endingColor:end];
     }
     else {
-        gradient = nil;
+        _gradient = nil;
     }
 }
 
@@ -105,18 +93,18 @@
 {
     NSRect frame = [self rectOfRow:row];
 
-    if (topLineColor && bottomLineColor && gradient) {
+    if (_topLineColor && _bottomLineColor && _gradient) {
         NSRect rect = frame;
         rect.origin.y += 1;
         rect.size.height -= 2;
-        [gradient drawInRect:rect angle:90];
+        [_gradient drawInRect:rect angle:90];
 
-        [topLineColor set];
+        [_topLineColor set];
         rect = frame;
         rect.size.height = 1;
         NSRectFill(rect);
 
-        [bottomLineColor set];
+        [_bottomLineColor set];
         rect = frame;
         rect.origin.y += rect.size.height - 1;
         rect.size.height = 1;
@@ -135,7 +123,7 @@
 
 - (void)drawBackgroundInClipRect:(NSRect)rect
 {
-    [bgColor set];
+    [_bgColor set];
     NSRectFill(rect);
 }
 
@@ -206,8 +194,8 @@
     if ([files count] > 0) {
         int row = [self draggedRow:sender];
         if (row >= 0) {
-            if ([dropDelegate respondsToSelector:@selector(memberListViewDropFiles:row:)]) {
-                [dropDelegate memberListViewDropFiles:files row:[NSNumber numberWithInt:row]];
+            if ([_dropDelegate respondsToSelector:@selector(memberListViewDropFiles:row:)]) {
+                [_dropDelegate memberListViewDropFiles:files row:[NSNumber numberWithInt:row]];
             }
             return YES;
         }

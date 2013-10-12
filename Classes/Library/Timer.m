@@ -5,59 +5,52 @@
 
 
 @implementation Timer
-
-@synthesize delegate;
-@synthesize reqeat;
-@synthesize selector;
+{
+    NSTimer* _timer;
+}
 
 - (id)init
 {
     self = [super init];
     if (self) {
-        reqeat = YES;
-        selector = @selector(timerOnTimer:);
+        _reqeat = YES;
+        _selector = @selector(timerOnTimer:);
     }
     return self;
 }
 
-- (void)dealloc
-{
-    [timer release];
-    [super dealloc];
-}
-
 - (BOOL)isActive
 {
-    return timer != nil;
+    return _timer != nil;
 }
 
 - (void)start:(NSTimeInterval)interval
 {
     [self stop];
 
-    timer = [[NSTimer scheduledTimerWithTimeInterval:interval target:self selector:@selector(onTimer:) userInfo:nil repeats:reqeat] retain];
-    [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSEventTrackingRunLoopMode];
+    _timer = [NSTimer scheduledTimerWithTimeInterval:interval target:self selector:@selector(onTimer:) userInfo:nil repeats:_reqeat];
+    [[NSRunLoop currentRunLoop] addTimer:_timer forMode:NSEventTrackingRunLoopMode];
 }
 
 - (void)stop
 {
-    [[self retain] autorelease];
-
-    [timer invalidate];
-    [timer release];
-    timer = nil;
+    [_timer invalidate];
+    _timer = nil;
 }
 
 - (void)onTimer:(id)sender
 {
     if (!self.isActive) return;
 
-    if (!reqeat) {
+    if (!_reqeat) {
         [self stop];
     }
 
-    if ([delegate respondsToSelector:selector]) {
-        [delegate performSelector:selector withObject:self];
+    if ([_delegate respondsToSelector:_selector]) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+        [_delegate performSelector:_selector withObject:self];
+#pragma clang diagnostic pop
     }
 }
 

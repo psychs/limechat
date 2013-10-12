@@ -101,7 +101,6 @@
 
             NSString* s = [[NSString alloc] initWithCharacters:buf+start length:pos - start];
             [lines addObject:s];
-            [s release];
 
             start = i + 1;
         }
@@ -109,7 +108,6 @@
 
     NSString* s = [[NSString alloc] initWithCharacters:buf+start length:len - start];
     [lines addObject:s];
-    [s release];
 
     return lines;
 }
@@ -192,7 +190,7 @@ static BOOL isUnicharDigit(unichar c)
         }
     }
 
-    return [[[NSString alloc] initWithCharacters:dest length:n] autorelease];
+    return [[NSString alloc] initWithCharacters:dest length:n];
 }
 
 - (NSString*)safeFileName
@@ -263,7 +261,7 @@ static BOOL isUnicharDigit(unichar c)
         }
     }
 
-    return [[[NSString alloc] initWithCharacters:buf length:pos] autorelease];
+    return [[NSString alloc] initWithCharacters:buf length:pos];
 }
 
 - (BOOL)isChannelName
@@ -496,7 +494,7 @@ static BOOL isUnicharDigit(unichar c)
         }
     }
 
-    return [[[NSString alloc] initWithBytes:buf length:dest - buf encoding:NSASCIIStringEncoding] autorelease];
+    return [[NSString alloc] initWithBytes:buf length:dest - buf encoding:NSASCIIStringEncoding];
 }
 
 - (NSString*)encodeURIFragment
@@ -538,7 +536,7 @@ static BOOL isUnicharDigit(unichar c)
         }
     }
 
-    return [[[NSString alloc] initWithBytes:buf length:dest - buf encoding:NSASCIIStringEncoding] autorelease];
+    return [[NSString alloc] initWithBytes:buf length:dest - buf encoding:NSASCIIStringEncoding];
 }
 
 #define UnicodeIsSpace(c) ({ __typeof__(c) __c = (c); (__c) == 0x9 || (__c) == 0x20 || (__c) == 0xA0 || (__c) == 0x1680 || (__c) == 0x180E || (0x2000 <= (__c) && (__c) <= 0x200A) || (__c) == 0x202F || (__c) == 0x205F || (__c) == 0x3000; })
@@ -588,7 +586,7 @@ static BOOL isUnicharDigit(unichar c)
 
     NSString *result = self;
     if (changed) {
-        result = [[[NSString alloc] initWithCharacters:buf length:len] autorelease];
+        result = [[NSString alloc] initWithCharacters:buf length:len];
     }
     return result;
 }
@@ -601,7 +599,7 @@ static BOOL isUnicharDigit(unichar c)
 {
     static NSCharacterSet* spaceSet = nil;
     if (!spaceSet) {
-        spaceSet = [[NSCharacterSet characterSetWithCharactersInString:@" "] retain];
+        spaceSet = [NSCharacterSet characterSetWithCharactersInString:@" "];
     }
 
     NSRange r = [self rangeOfCharacterFromSet:spaceSet];
@@ -616,7 +614,7 @@ static BOOL isUnicharDigit(unichar c)
         return result;
     }
 
-    NSString* result = [[self copy] autorelease];
+    NSString* result = [self copy];
     [self setString:@""];
     return result;
 }
@@ -673,7 +671,7 @@ static BOOL isUnicharDigit(unichar c)
         }
     }
 
-    NSString* result = [[self copy] autorelease];
+    NSString* result = [self copy];
     [self setString:@""];
     return result;
 }

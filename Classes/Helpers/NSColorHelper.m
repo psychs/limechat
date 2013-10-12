@@ -60,7 +60,7 @@
 
     static NSDictionary* nameMap = nil;
     if (!nameMap) {
-        nameMap = [[NSDictionary dictionaryWithObjectsAndKeys:
+        nameMap = [NSDictionary dictionaryWithObjectsAndKeys:
                     DEVICE_RGB(0, 0, 0), @"black",
                     DEVICE_RGB(0xC0, 0xC0, 0xC0), @"silver",
                     DEVICE_RGB(0x80, 0x80, 0x80), @"gray",
@@ -78,7 +78,7 @@
                     DEVICE_RGB(0, 0x80, 0x80), @"teal",
                     DEVICE_RGB(0, 0xFF, 0xFF), @"aqua",
                     DEVICE_RGBA(0, 0, 0, 0), @"transparent",
-                    nil] retain];
+                    nil];
     }
 
     return [nameMap objectForKey:[s lowercaseString]];

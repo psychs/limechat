@@ -6,13 +6,11 @@
 
 @implementation HostResolver
 
-@synthesize delegate;
-
 - (id)initWithDelegate:(id)aDelegate
 {
     self = [super init];
     if (self) {
-        delegate = aDelegate;
+        _delegate = aDelegate;
     }
     return self;
 }
@@ -26,33 +24,27 @@
 
 - (void)resolveInternal:(NSString*)hostname
 {
-    [self retain];
-
-    NSAutoreleasePool* pool = [NSAutoreleasePool new];
-
-    NSHost* host = [NSHost hostWithName:hostname];
-    NSArray* info = [NSArray arrayWithObjects:hostname, host, nil];
-    [self performSelectorOnMainThread:@selector(hostResolved:) withObject:info waitUntilDone:YES];
-
-    [pool release];
-
-    [self release];
+    @autoreleasepool {
+        NSHost* host = [NSHost hostWithName:hostname];
+        NSArray* info = [NSArray arrayWithObjects:hostname, host, nil];
+        [self performSelectorOnMainThread:@selector(hostResolved:) withObject:info waitUntilDone:YES];
+    }
 }
 
 - (void)hostResolved:(NSArray*)info
 {
-    if (!delegate) return;
+    if (!_delegate) return;
 
     if ([info count] == 2) {
         NSHost* host = [info objectAtIndex:1];
-        if ([delegate respondsToSelector:@selector(hostResolver:didResolve:)]) {
-            [delegate hostResolver:self didResolve:host];
+        if ([_delegate respondsToSelector:@selector(hostResolver:didResolve:)]) {
+            [_delegate hostResolver:self didResolve:host];
         }
     }
     else {
         NSString* hostname = [info objectAtIndex:0];
-        if ([delegate respondsToSelector:@selector(hostResolver:didNotResolve:)]) {
-            [delegate hostResolver:self didNotResolve:hostname];
+        if ([_delegate respondsToSelector:@selector(hostResolver:didNotResolve:)]) {
+            [_delegate hostResolver:self didNotResolve:hostname];
         }
     }
 }

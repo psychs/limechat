@@ -6,13 +6,17 @@
 
 
 @implementation TwitterAvatarURLManager
+{
+    NSMutableDictionary* _connections;
+    NSMutableDictionary* _imageUrls;
+}
 
 - (id)init
 {
     self = [super init];
     if (self) {
-        connections = [NSMutableDictionary new];
-        imageUrls = [NSMutableDictionary new];
+        _connections = [NSMutableDictionary new];
+        _imageUrls = [NSMutableDictionary new];
     }
     return self;
 }
@@ -28,17 +32,14 @@
 
 - (void)dealloc
 {
-    for (TwitterImageURLClient* c in connections) {
+    for (TwitterImageURLClient* c in _connections) {
         [c cancel];
     }
-    [connections release];
-    [imageUrls release];
-    [super dealloc];
 }
 
 - (NSString*)imageURLForTwitterScreenName:(NSString*)screenName
 {
-    return [imageUrls objectForKey:screenName];
+    return [_imageUrls objectForKey:screenName];
 }
 
 - (BOOL)fetchImageURLForTwitterScreenName:(NSString*)screenName
@@ -47,19 +48,19 @@
         return NO;
     }
 
-    NSString* url = [imageUrls objectForKey:screenName];
+    NSString* url = [_imageUrls objectForKey:screenName];
     if (url) {
         return NO;
     }
 
-    if ([connections objectForKey:screenName]) {
+    if ([_connections objectForKey:screenName]) {
         return NO;
     }
 
-    TwitterImageURLClient *client = [[TwitterImageURLClient new] autorelease];
+    TwitterImageURLClient *client = [TwitterImageURLClient new];
     client.delegate = self;
     client.screenName = screenName;
-    [connections setObject:client forKey:screenName];
+    [_connections setObject:client forKey:screenName];
     [client getImageURL];
 
     return YES;
@@ -71,26 +72,23 @@
 
 - (void)twitterImageURLClient:(TwitterImageURLClient*)sender didGetImageURL:(NSString*)imageUrl
 {
-    [[sender retain] autorelease];
-    [connections removeObjectForKey:sender];
+    [_connections removeObjectForKey:sender];
 
     NSString* screenName = sender.screenName;
     if (screenName.length && imageUrl.length) {
-        [imageUrls setObject:imageUrl forKey:screenName];
+        [_imageUrls setObject:imageUrl forKey:screenName];
         [[NSNotificationCenter defaultCenter] postNotificationName:TwitterAvatarURLManagerDidGetImageURLNotification object:screenName];
     }
 }
 
 - (void)twitterImageURLClientDidReceiveBadURL:(TwitterImageURLClient*)sender
 {
-    [[sender retain] autorelease];
-    [connections removeObjectForKey:sender];
+    [_connections removeObjectForKey:sender];
 }
 
 - (void)twitterImageURLClient:(TwitterImageURLClient*)sender didFailWithError:(NSString*)error
 {
-    [[sender retain] autorelease];
-    [connections removeObjectForKey:sender];
+    [_connections removeObjectForKey:sender];
 }
 
 @end

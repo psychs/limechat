@@ -17,54 +17,52 @@
 
 
 @implementation DCCController
+{
+    BOOL _loaded;
+    NSMutableArray* _receivers;
+    NSMutableArray* _senders;
 
-@synthesize delegate;
-@synthesize world;
-@synthesize mainWindow;
+    Timer* _timer;
+}
 
 - (id)init
 {
     self = [super init];
     if (self) {
-        receivers = [NSMutableArray new];
-        senders = [NSMutableArray new];
+        _receivers = [NSMutableArray new];
+        _senders = [NSMutableArray new];
 
-        timer = [Timer new];
-        timer.delegate = self;
+        _timer = [Timer new];
+        _timer.delegate = self;
     }
     return self;
 }
 
 - (void)dealloc
 {
-    [receivers release];
-    [senders release];
-
-    [timer stop];
-    [timer release];
-    [super dealloc];
+    [_timer stop];
 }
 
 - (void)show:(BOOL)key
 {
-    if (!loaded) {
-        loaded = YES;
+    if (!_loaded) {
+        _loaded = YES;
         [NSBundle loadNibNamed:@"DCCDialog" owner:self];
         [splitter setFixedViewIndex:1];
 
-        DCCFileTransferCell* senderCell = [[DCCFileTransferCell new] autorelease];
+        DCCFileTransferCell* senderCell = [DCCFileTransferCell new];
         [[[senderTable tableColumns] objectAtIndex:0] setDataCell:senderCell];
 
-        DCCFileTransferCell* receiverCell = [[DCCFileTransferCell new] autorelease];
+        DCCFileTransferCell* receiverCell = [DCCFileTransferCell new];
         [[[receiverTable tableColumns] objectAtIndex:0] setDataCell:receiverCell];
 
-        for (DCCReceiver* e in receivers) {
+        for (DCCReceiver* e in _receivers) {
             if (e.status == DCC_RECEIVING) {
                 [self dccReceiveOnOpen:e];
             }
         }
 
-        for (DCCSender* e in senders) {
+        for (DCCSender* e in _senders) {
             if (e.status == DCC_SENDING) {
                 [self dccSenderOnConnect:e];
             }
@@ -88,7 +86,7 @@
 
 - (void)close
 {
-    if (!loaded) return;
+    if (!_loaded) return;
 
     [self.window close];
 }
@@ -103,14 +101,14 @@
     int uid = client.uid;
     BOOL found = NO;
 
-    for (DCCReceiver* e in receivers) {
+    for (DCCReceiver* e in _receivers) {
         if (e.uid == uid && [e.peerNick isEqualToString:nick]) {
             e.peerNick = toNick;
             found = YES;
         }
     }
 
-    for (DCCSender* e in senders) {
+    for (DCCSender* e in _senders) {
         if (e.uid == uid && [e.peerNick isEqualToString:nick]) {
             e.peerNick = toNick;
             found = YES;
@@ -125,7 +123,7 @@
 
 - (void)addReceiverWithUID:(int)uid nick:(NSString*)nick host:(NSString*)host port:(int)port path:(NSString*)path fileName:(NSString*)fileName size:(long long)size
 {
-    DCCReceiver* c = [[DCCReceiver new] autorelease];
+    DCCReceiver* c = [DCCReceiver new];
     c.delegate = self;
     c.uid = uid;
     c.peerNick = nick;
@@ -134,7 +132,7 @@
     c.path = path;
     c.fileName = fileName;
     c.size = size;
-    [receivers insertObject:c atIndex:0];
+    [_receivers insertObject:c atIndex:0];
 
     if ([Preferences dccAction] == DCC_AUTO_ACCEPT) {
         [c open];
@@ -152,14 +150,14 @@
 
     if (!size) return;
 
-    DCCSender* c = [[DCCSender new] autorelease];
+    DCCSender* c = [DCCSender new];
     c.delegate = self;
     c.uid = uid;
     c.peerNick = nick;
     c.fullFileName = fileName;
-    [senders insertObject:c atIndex:0];
+    [_senders insertObject:c atIndex:0];
 
-    IRCClient* u = [world findClientById:uid];
+    IRCClient* u = [_world findClientById:uid];
     if (!u || !u.myAddress) {
         [c setAddressError];
         return;
@@ -176,7 +174,7 @@
 - (int)countReceivingItems
 {
     int i = 0;
-    for (DCCReceiver* e in receivers) {
+    for (DCCReceiver* e in _receivers) {
         if (e.status == DCC_RECEIVING) {
             ++i;
         }
@@ -187,7 +185,7 @@
 - (int)countSendingItems
 {
     int i = 0;
-    for (DCCSender* e in senders) {
+    for (DCCSender* e in _senders) {
         if (e.status == DCC_SENDING) {
             ++i;
         }
@@ -211,8 +209,8 @@
 {
     BOOL enabled = NO;
 
-    for (int i=receivers.count-1; i>=0; --i) {
-        DCCReceiver* e = [receivers objectAtIndex:i];
+    for (int i=_receivers.count-1; i>=0; --i) {
+        DCCReceiver* e = [_receivers objectAtIndex:i];
         if (e.status == DCC_ERROR || e.status == DCC_COMPLETE || e.status == DCC_STOP) {
             enabled = YES;
             break;
@@ -220,8 +218,8 @@
     }
 
     if (!enabled) {
-        for (int i=senders.count-1; i>=0; --i) {
-            DCCSender* e = [senders objectAtIndex:i];
+        for (int i=_senders.count-1; i>=0; --i) {
+            DCCSender* e = [_senders objectAtIndex:i];
             if (e.status == DCC_ERROR || e.status == DCC_COMPLETE || e.status == DCC_STOP) {
                 enabled = YES;
                 break;
@@ -268,7 +266,7 @@
 
 - (void)destroyReceiverAtIndex:(int)i
 {
-    DCCReceiver* e = [receivers objectAtIndex:i];
+    DCCReceiver* e = [_receivers objectAtIndex:i];
     e.delegate = nil;
     [e close];
 
@@ -276,13 +274,12 @@
     if (bar) {
         [bar removeFromSuperview];
     }
-    [[e retain] autorelease];
-    [receivers removeObjectAtIndex:i];
+    [_receivers removeObjectAtIndex:i];
 }
 
 - (void)destroySenderAtIndex:(int)i
 {
-    DCCSender* e = [senders objectAtIndex:i];
+    DCCSender* e = [_senders objectAtIndex:i];
     e.delegate = nil;
     [e close];
 
@@ -290,8 +287,7 @@
     if (bar) {
         [bar removeFromSuperview];
     }
-    [[e retain] autorelease];
-    [senders removeObjectAtIndex:i];
+    [_senders removeObjectAtIndex:i];
 }
 
 #pragma mark -
@@ -307,7 +303,7 @@
         NSMutableArray* sel = [NSMutableArray array];
         NSIndexSet* indexes = [receiverTable selectedRowIndexes];
         for (NSUInteger i=[indexes firstIndex]; i!=NSNotFound; i=[indexes indexGreaterThanIndex:i]) {
-            [sel addObject:[receivers objectAtIndex:i]];
+            [sel addObject:[_receivers objectAtIndex:i]];
         }
 
         switch (tag) {
@@ -351,7 +347,7 @@
         NSMutableArray* sel = [NSMutableArray array];
         NSIndexSet* indexes = [senderTable selectedRowIndexes];
         for (NSUInteger i=[indexes firstIndex]; i!=NSNotFound; i=[indexes indexGreaterThanIndex:i]) {
-            [sel addObject:[senders objectAtIndex:i]];
+            [sel addObject:[_senders objectAtIndex:i]];
         }
 
         switch (tag) {
@@ -379,15 +375,15 @@
 
 - (void)clear:(id)sender
 {
-    for (int i=receivers.count-1; i>=0; --i) {
-        DCCReceiver* e = [receivers objectAtIndex:i];
+    for (int i=_receivers.count-1; i>=0; --i) {
+        DCCReceiver* e = [_receivers objectAtIndex:i];
         if (e.status == DCC_ERROR || e.status == DCC_COMPLETE || e.status == DCC_STOP) {
             [self destroyReceiverAtIndex:i];
         }
     }
 
-    for (int i=senders.count-1; i>=0; --i) {
-        DCCSender* e = [senders objectAtIndex:i];
+    for (int i=_senders.count-1; i>=0; --i) {
+        DCCSender* e = [_senders objectAtIndex:i];
         if (e.status == DCC_ERROR || e.status == DCC_COMPLETE || e.status == DCC_STOP) {
             [self destroySenderAtIndex:i];
         }
@@ -401,7 +397,7 @@
 {
     NSIndexSet* indexes = [receiverTable selectedRowIndexes];
     for (NSUInteger i=[indexes firstIndex]; i!=NSNotFound; i=[indexes indexGreaterThanIndex:i]) {
-        DCCReceiver* e = [receivers objectAtIndex:i];
+        DCCReceiver* e = [_receivers objectAtIndex:i];
         [e open];
     }
 
@@ -413,7 +409,7 @@
 {
     NSIndexSet* indexes = [receiverTable selectedRowIndexes];
     for (NSUInteger i=[indexes firstIndex]; i!=NSNotFound; i=[indexes indexGreaterThanIndex:i]) {
-        DCCReceiver* e = [receivers objectAtIndex:i];
+        DCCReceiver* e = [_receivers objectAtIndex:i];
         [e close];
     }
 
@@ -438,7 +434,7 @@
 
     NSIndexSet* indexes = [receiverTable selectedRowIndexes];
     for (NSUInteger i=[indexes firstIndex]; i!=NSNotFound; i=[indexes indexGreaterThanIndex:i]) {
-        DCCReceiver* e = [receivers objectAtIndex:i];
+        DCCReceiver* e = [_receivers objectAtIndex:i];
         [ws openFile:e.downloadFileName];
     }
 
@@ -452,7 +448,7 @@
 
     NSIndexSet* indexes = [receiverTable selectedRowIndexes];
     for (NSUInteger i=[indexes firstIndex]; i!=NSNotFound; i=[indexes indexGreaterThanIndex:i]) {
-        DCCReceiver* e = [receivers objectAtIndex:i];
+        DCCReceiver* e = [_receivers objectAtIndex:i];
         [ws selectFile:e.downloadFileName inFileViewerRootedAtPath:nil];
     }
 
@@ -464,7 +460,7 @@
 {
     NSIndexSet* indexes = [senderTable selectedRowIndexes];
     for (NSUInteger i=[indexes firstIndex]; i!=NSNotFound; i=[indexes indexGreaterThanIndex:i]) {
-        DCCSender* e = [senders objectAtIndex:i];
+        DCCSender* e = [_senders objectAtIndex:i];
         [e open];
     }
 
@@ -476,7 +472,7 @@
 {
     NSIndexSet* indexes = [senderTable selectedRowIndexes];
     for (NSUInteger i=[indexes firstIndex]; i!=NSNotFound; i=[indexes indexGreaterThanIndex:i]) {
-        DCCSender* e = [senders objectAtIndex:i];
+        DCCSender* e = [_senders objectAtIndex:i];
         [e close];
     }
 
@@ -508,10 +504,10 @@
 
 - (void)dccReceiveOnOpen:(DCCReceiver*)sender
 {
-    if (!loaded) return;
+    if (!_loaded) return;
 
     if (!sender.progressBar) {
-        TableProgressIndicator* bar = [[TableProgressIndicator new] autorelease];
+        TableProgressIndicator* bar = [TableProgressIndicator new];
         [bar setIndeterminate:NO];
         [bar setMinValue:0];
         [bar setMaxValue:sender.size];
@@ -526,7 +522,7 @@
 
 - (void)dccReceiveOnClose:(DCCReceiver*)sender
 {
-    if (!loaded) return;
+    if (!_loaded) return;
 
     [self removeControlsFromReceiver:sender];
     [self reloadReceiverTable];
@@ -535,25 +531,25 @@
 
 - (void)dccReceiveOnError:(DCCReceiver*)sender
 {
-    if (!loaded) return;
+    if (!_loaded) return;
 
     [self removeControlsFromReceiver:sender];
     [self reloadReceiverTable];
     [self updateTimer];
 
-    [world sendUserNotification:USER_NOTIFICATION_FILE_RECEIVE_ERROR title:sender.peerNick desc:sender.fileName context:nil];
+    [_world sendUserNotification:USER_NOTIFICATION_FILE_RECEIVE_ERROR title:sender.peerNick desc:sender.fileName context:nil];
     [SoundPlayer play:[Preferences soundForEvent:USER_NOTIFICATION_FILE_RECEIVE_ERROR]];
 }
 
 - (void)dccReceiveOnComplete:(DCCReceiver*)sender
 {
-    if (!loaded) return;
+    if (!_loaded) return;
 
     [self removeControlsFromReceiver:sender];
     [self reloadReceiverTable];
     [self updateTimer];
 
-    [world sendUserNotification:USER_NOTIFICATION_FILE_RECEIVE_SUCCESS title:sender.peerNick desc:sender.fileName context:nil];
+    [_world sendUserNotification:USER_NOTIFICATION_FILE_RECEIVE_SUCCESS title:sender.peerNick desc:sender.fileName context:nil];
     [SoundPlayer play:[Preferences soundForEvent:USER_NOTIFICATION_FILE_RECEIVE_SUCCESS]];
 }
 
@@ -570,12 +566,12 @@
 
 - (void)dccSenderOnListen:(DCCSender*)sender
 {
-    IRCClient* u = [world findClientById:sender.uid];
+    IRCClient* u = [_world findClientById:sender.uid];
     if (!u) return;
 
     [u sendFile:sender.peerNick port:sender.port fileName:sender.fileName size:sender.size];
 
-    if (!loaded) return;
+    if (!_loaded) return;
 
     [self reloadSenderTable];
     [self updateTimer];
@@ -583,10 +579,10 @@
 
 - (void)dccSenderOnConnect:(DCCSender*)sender
 {
-    if (!loaded) return;
+    if (!_loaded) return;
 
     if (!sender.progressBar) {
-        TableProgressIndicator* bar = [[TableProgressIndicator new] autorelease];
+        TableProgressIndicator* bar = [TableProgressIndicator new];
         [bar setIndeterminate:NO];
         [bar setMinValue:0];
         [bar setMaxValue:sender.size];
@@ -601,7 +597,7 @@
 
 - (void)dccSenderOnClose:(DCCSender*)sender
 {
-    if (!loaded) return;
+    if (!_loaded) return;
 
     [self removeControlsFromSender:sender];
     [self reloadSenderTable];
@@ -610,25 +606,25 @@
 
 - (void)dccSenderOnError:(DCCSender*)sender
 {
-    if (!loaded) return;
+    if (!_loaded) return;
 
     [self removeControlsFromSender:sender];
     [self reloadSenderTable];
     [self updateTimer];
 
-    [world sendUserNotification:USER_NOTIFICATION_FILE_SEND_ERROR title:sender.peerNick desc:sender.fileName context:nil];
+    [_world sendUserNotification:USER_NOTIFICATION_FILE_SEND_ERROR title:sender.peerNick desc:sender.fileName context:nil];
     [SoundPlayer play:[Preferences soundForEvent:USER_NOTIFICATION_FILE_SEND_ERROR]];
 }
 
 - (void)dccSenderOnComplete:(DCCSender*)sender
 {
-    if (!loaded) return;
+    if (!_loaded) return;
 
     [self removeControlsFromSender:sender];
     [self reloadSenderTable];
     [self updateTimer];
 
-    [world sendUserNotification:USER_NOTIFICATION_FILE_SEND_SUCCESS title:sender.peerNick desc:sender.fileName context:nil];
+    [_world sendUserNotification:USER_NOTIFICATION_FILE_SEND_SUCCESS title:sender.peerNick desc:sender.fileName context:nil];
     [SoundPlayer play:[Preferences soundForEvent:USER_NOTIFICATION_FILE_SEND_SUCCESS]];
 }
 
@@ -638,10 +634,10 @@
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)sender
 {
     if (sender == senderTable) {
-        return senders.count;
+        return _senders.count;
     }
     else {
-        return receivers.count;
+        return _receivers.count;
     }
 }
 
@@ -653,9 +649,9 @@
 - (void)tableView:(NSTableView *)sender willDisplayCell:(DCCFileTransferCell*)c forTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
     if (sender == senderTable) {
-        if (row < 0 || senders.count <= row) return;
+        if (row < 0 || _senders.count <= row) return;
 
-        DCCSender* e = [senders objectAtIndex:row];
+        DCCSender* e = [_senders objectAtIndex:row];
         double speed = e.speed;
 
         c.sendingItem = YES;
@@ -671,9 +667,9 @@
         c.progressBar = e.progressBar;
     }
     else {
-        if (row < 0 || receivers.count <= row) return;
+        if (row < 0 || _receivers.count <= row) return;
 
-        DCCReceiver* e = [receivers objectAtIndex:row];
+        DCCReceiver* e = [_receivers objectAtIndex:row];
         double speed = e.speed;
 
         c.sendingItem = NO;
@@ -695,10 +691,10 @@
 
 - (void)updateTimer
 {
-    if (timer.isActive) {
+    if (_timer.isActive) {
         BOOL foundActive = NO;
 
-        for (DCCReceiver* e in receivers) {
+        for (DCCReceiver* e in _receivers) {
             if (e.status == DCC_RECEIVING) {
                 foundActive = YES;
                 break;
@@ -706,7 +702,7 @@
         }
 
         if (!foundActive) {
-            for (DCCSender* e in senders) {
+            for (DCCSender* e in _senders) {
                 if (e.status == DCC_SENDING) {
                     foundActive = YES;
                     break;
@@ -715,13 +711,13 @@
         }
 
         if (!foundActive) {
-            [timer stop];
+            [_timer stop];
         }
     }
     else {
         BOOL foundActive = NO;
 
-        for (DCCReceiver* e in receivers) {
+        for (DCCReceiver* e in _receivers) {
             if (e.status == DCC_RECEIVING) {
                 foundActive = YES;
                 break;
@@ -729,7 +725,7 @@
         }
 
         if (!foundActive) {
-            for (DCCSender* e in senders) {
+            for (DCCSender* e in _senders) {
                 if (e.status == DCC_SENDING) {
                     foundActive = YES;
                     break;
@@ -738,7 +734,7 @@
         }
 
         if (foundActive) {
-            [timer start:TIMER_INTERVAL];
+            [_timer start:TIMER_INTERVAL];
         }
     }
 }
@@ -749,11 +745,11 @@
     [self reloadSenderTable];
     [self updateTimer];
 
-    for (DCCReceiver* e in receivers) {
+    for (DCCReceiver* e in _receivers) {
         [e onTimer];
     }
 
-    for (DCCSender* e in senders) {
+    for (DCCSender* e in _senders) {
         [e onTimer];
     }
 }

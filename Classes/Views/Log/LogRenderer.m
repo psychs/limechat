@@ -258,7 +258,7 @@ static NSString* renderRange(NSString* body, attr_t attr, int start, int len)
         dest[n++] = c;
     }
 
-    body = [[[NSString alloc] initWithCharacters:dest length:n] autorelease];
+    body = [[NSString alloc] initWithCharacters:dest length:n];
     len = n;
 
     //

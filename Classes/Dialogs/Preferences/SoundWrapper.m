@@ -7,34 +7,32 @@
 
 
 @implementation SoundWrapper
+{
+    UserNotificationType _eventType;
+}
 
 - (id)initWithEventType:(UserNotificationType)aEventType
 {
     self = [super init];
     if (self) {
-        eventType = aEventType;
+        _eventType = aEventType;
     }
     return self;
 }
 
 + (SoundWrapper*)soundWrapperWithEventType:(UserNotificationType)eventType
 {
-    return [[[SoundWrapper alloc] initWithEventType:eventType] autorelease];
-}
-
-- (void)dealloc
-{
-    [super dealloc];
+    return [[SoundWrapper alloc] initWithEventType:eventType];
 }
 
 - (NSString*)displayName
 {
-    return [Preferences titleForEvent:eventType];
+    return [Preferences titleForEvent:_eventType];
 }
 
 - (NSString*)sound
 {
-    NSString* sound = [Preferences soundForEvent:eventType];
+    NSString* sound = [Preferences soundForEvent:_eventType];
 
     if (sound.length == 0) {
         return EMPTY_SOUND;
@@ -53,27 +51,27 @@
     if (value.length) {
         [SoundPlayer play:value];
     }
-    [Preferences setSound:value forEvent:eventType];
+    [Preferences setSound:value forEvent:_eventType];
 }
 
 - (BOOL)growl
 {
-    return [Preferences userNotificationEnabledForEvent:eventType];
+    return [Preferences userNotificationEnabledForEvent:_eventType];
 }
 
 - (void)setGrowl:(BOOL)value
 {
-    [Preferences setUserNotificationEnabled:value forEvent:eventType];
+    [Preferences setUserNotificationEnabled:value forEvent:_eventType];
 }
 
 - (BOOL)growlSticky
 {
-    return [Preferences growlStickyForEvent:eventType];
+    return [Preferences growlStickyForEvent:_eventType];
 }
 
 - (void)setGrowlSticky:(BOOL)value
 {
-    [Preferences setGrowlSticky:value forEvent:eventType];
+    [Preferences setGrowlSticky:value forEvent:_eventType];
 }
 
 @end

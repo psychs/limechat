@@ -9,37 +9,12 @@
 
 @implementation LogPolicy
 
-@synthesize menuController;
-@synthesize menu;
-@synthesize urlMenu;
-@synthesize addrMenu;
-@synthesize memberMenu;
-@synthesize chanMenu;
-@synthesize url;
-@synthesize addr;
-@synthesize nick;
-@synthesize chan;
-
 - (id)init
 {
     self = [super init];
     if (self) {
     }
     return self;
-}
-
-- (void)dealloc
-{
-    [menu release];
-    [urlMenu release];
-    [addrMenu release];
-    [memberMenu release];
-    [chanMenu release];
-    [url release];
-    [addr release];
-    [nick release];
-    [chan release];
-    [super dealloc];
 }
 
 - (NSUInteger)webView:(WebView*)sender dragDestinationActionMaskForDraggingInfo:(id)draggingInfo
@@ -49,60 +24,56 @@
 
 - (NSArray *)webView:(WebView *)sender contextMenuItemsForElement:(NSDictionary *)element defaultMenuItems:(NSArray *)defaultMenuItems
 {
-    if (url) {
-        menuController.pointedUrl = url;
-        [url autorelease];
-        url = nil;
+    if (_url) {
+        _menuController.pointedUrl = _url;
+        _url = nil;
 
         NSMutableArray* ary = [NSMutableArray array];
-        for (NSMenuItem* item in [urlMenu itemArray]) {
-            [ary addObject:[[item copy] autorelease]];
+        for (NSMenuItem* item in [_urlMenu itemArray]) {
+            [ary addObject:[item copy]];
         }
         return ary;
     }
-    else if (addr) {
-        menuController.pointedAddress = addr;
-        [addr autorelease];
-        addr = nil;
+    else if (_addr) {
+        _menuController.pointedAddress = _addr;
+        _addr = nil;
 
         NSMutableArray* ary = [NSMutableArray array];
-        for (NSMenuItem* item in [addrMenu itemArray]) {
-            [ary addObject:[[item copy] autorelease]];
+        for (NSMenuItem* item in [_addrMenu itemArray]) {
+            [ary addObject:[item copy]];
         }
         return ary;
     }
-    else if (nick) {
+    else if (_nick) {
         NSMutableArray* ary = [NSMutableArray array];
-        NSMenuItem* nickItem = [[[NSMenuItem alloc] initWithTitle:nick action:nil keyEquivalent:@""] autorelease];
+        NSMenuItem* nickItem = [[NSMenuItem alloc] initWithTitle:_nick action:nil keyEquivalent:@""];
         [ary addObject:nickItem];
         [ary addObject:[NSMenuItem separatorItem]];
 
-        menuController.pointedNick = nick;
-        [nick autorelease];
-        nick = nil;
+        _menuController.pointedNick = _nick;
+        _nick = nil;
 
-        for (NSMenuItem* item in [memberMenu itemArray]) {
-            item = [[item copy] autorelease];
+        for (NSMenuItem* originalItem in [_memberMenu itemArray]) {
+            NSMenuItem* item = [originalItem copy];
             [self modifyMemberMenuItem:item];
             [ary addObject:item];
         }
         return ary;
     }
-    else if (chan) {
-        menuController.pointedChannelName = chan;
-        [chan autorelease];
-        chan = nil;
+    else if (_chan) {
+        _menuController.pointedChannelName = _chan;
+        _chan = nil;
 
         NSMutableArray* ary = [NSMutableArray array];
-        for (NSMenuItem* item in [chanMenu itemArray]) {
-            [ary addObject:[[item copy] autorelease]];
+        for (NSMenuItem* item in [_chanMenu itemArray]) {
+            [ary addObject:[item copy]];
         }
         return ary;
     }
-    else if (menu){
+    else if (_menu){
         NSMutableArray* ary = [NSMutableArray array];
-        for (NSMenuItem* item in [menu itemArray]) {
-            [ary addObject:[[item copy] autorelease]];
+        for (NSMenuItem* item in [_menu itemArray]) {
+            [ary addObject:[item copy]];
         }
         return ary;
     }

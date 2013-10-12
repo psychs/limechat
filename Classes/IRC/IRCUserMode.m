@@ -6,14 +6,6 @@
 
 @implementation IRCUserMode
 
-@synthesize a;
-@synthesize i;
-@synthesize r;
-@synthesize s;
-@synthesize w;
-@synthesize o;
-@synthesize O;
-
 - (id)init
 {
     self = [super init];
@@ -22,14 +14,9 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [super dealloc];
-}
-
 - (void)clear
 {
-    a = i = r = s = w = o = O = NO;
+    _a = _i = _r = _s = _w = _o = _O = NO;
 }
 
 - (void)update:(NSString*)str
@@ -47,25 +34,25 @@
                 plus = NO;
                 break;
             case 'a':
-                a = plus;
+                _a = plus;
                 break;
             case 'i':
-                i = plus;
+                _i = plus;
                 break;
             case 'r':
-                r = plus;
+                _r = plus;
                 break;
             case 's':
-                s = plus;
+                _s = plus;
                 break;
             case 'w':
-                w = plus;
+                _w = plus;
                 break;
             case 'o':
-                o = plus;
+                _o = plus;
                 break;
             case 'O':
-                O = plus;
+                _O = plus;
                 break;
         }
     }
@@ -75,13 +62,13 @@
 {
     NSMutableString* str = [NSMutableString string];
 
-    if (a) [str appendString:@"a"];
-    if (i) [str appendString:@"i"];
-    if (r) [str appendString:@"r"];
-    if (s) [str appendString:@"s"];
-    if (w) [str appendString:@"w"];
-    if (o) [str appendString:@"o"];
-    if (O) [str appendString:@"O"];
+    if (_a) [str appendString:@"a"];
+    if (_i) [str appendString:@"i"];
+    if (_r) [str appendString:@"r"];
+    if (_s) [str appendString:@"s"];
+    if (_w) [str appendString:@"w"];
+    if (_o) [str appendString:@"o"];
+    if (_O) [str appendString:@"O"];
 
     if (str.length) [str insertString:@"+" atIndex:0];
     return str;

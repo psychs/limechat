@@ -7,44 +7,26 @@
 
 @implementation ViewTheme
 
-@synthesize name;
-@synthesize log;
-@synthesize other;
-@synthesize js;
-
 - (id)init
 {
     self = [super init];
     if (self) {
-        log = [LogTheme new];
-        other = [OtherTheme new];
-        js = [CustomJSFile new];
+        _log = [LogTheme new];
+        _other = [OtherTheme new];
+        _js = [CustomJSFile new];
     }
     return self;
 }
 
-- (void)dealloc
-{
-    [name release];
-    [log release];
-    [other release];
-    [js release];
-    [super dealloc];
-}
-
 - (void)setName:(NSString *)value
 {
-    if (name != value) {
-        [name release];
-        name = [value retain];
-    }
-
+    _name = value;
     [self load];
 }
 
 - (void)load
 {
-    if (name) {
+    if (_name) {
         NSArray* kindAndName = [ViewTheme extractFileName:[Preferences themeName]];
         if (kindAndName) {
             NSString* kind = [kindAndName objectAtIndex:0];
@@ -57,23 +39,23 @@
                 fullName = [[ViewTheme userBasePath] stringByAppendingPathComponent:fname];
             }
 
-            log.fileName = [fullName stringByAppendingString:@".css"];
-            other.fileName = [fullName stringByAppendingString:@".yaml"];
-            js.fileName = [fullName stringByAppendingString:@".js"];
+            _log.fileName = [fullName stringByAppendingString:@".css"];
+            _other.fileName = [fullName stringByAppendingString:@".yaml"];
+            _js.fileName = [fullName stringByAppendingString:@".js"];
             return;
         }
     }
 
-    log.fileName = nil;
-    other.fileName = nil;
-    js.fileName = nil;
+    _log.fileName = nil;
+    _other.fileName = nil;
+    _js.fileName = nil;
 }
 
 - (void)reload
 {
-    [log reload];
-    [other reload];
-    [js reload];
+    [_log reload];
+    [_other reload];
+    [_js reload];
 }
 
 + (void)createUserDirectory
@@ -123,7 +105,7 @@
 {
     static NSString* resourceBasePath = nil;
     if (!resourceBasePath) {
-        resourceBasePath = [[[[[NSBundle mainBundle] resourcePath] stringByDeletingLastPathComponent] stringByAppendingPathComponent:@"Themes"] retain];
+        resourceBasePath = [[[[NSBundle mainBundle] resourcePath] stringByDeletingLastPathComponent] stringByAppendingPathComponent:@"Themes"];
     }
     return resourceBasePath;
 }
@@ -146,7 +128,7 @@
         path = [path stringByAppendingPathComponent:@"LimeChat"];
 #endif
         path = [path stringByAppendingPathComponent:@"Themes"];
-        userBasePath = [path retain];
+        userBasePath = path;
     }
     return userBasePath;
 }

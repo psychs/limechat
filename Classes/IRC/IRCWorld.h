@@ -25,44 +25,6 @@
 
 
 @interface IRCWorld : NSObject <NSOutlineViewDataSource, NSOutlineViewDelegate, NotificationControllerDelegate>
-{
-    __weak AppController* app;
-    __weak MainWindow* window;
-    __weak id<NotificationController> notifier;
-    IconController* icon;
-    __weak ServerTreeView* tree;
-    __weak InputTextField* text;
-    __weak NSBox* logBase;
-    __weak NSBox* consoleBase;
-    __weak ChatBox* chatBox;
-    __weak FieldEditorTextView* fieldEditor;
-    __weak MemberListView* memberList;
-    __weak MenuController* menuController;
-    __weak DCCController* dcc;
-    __weak ViewTheme* viewTheme;
-    __weak NSMenu* serverMenu;
-    __weak NSMenu* channelMenu;
-    __weak NSMenu* treeMenu;
-    __weak NSMenu* logMenu;
-    __weak NSMenu* consoleMenu;
-    __weak NSMenu* urlMenu;
-    __weak NSMenu* addrMenu;
-    __weak NSMenu* chanMenu;
-    __weak NSMenu* memberMenu;
-
-    LogController* consoleLog;
-    LogController* dummyLog;
-
-    IRCWorldConfig* config;
-    NSMutableArray* clients;
-
-    int itemId;
-    BOOL reloadingTree;
-    IRCTreeItem* selected;
-
-    int previousSelectedClientId;
-    int previousSelectedChannelId;
-}
 
 @property (nonatomic, weak) AppController* app;
 @property (nonatomic, weak) MainWindow* window;
@@ -72,19 +34,19 @@
 @property (nonatomic, weak) NSBox* logBase;
 @property (nonatomic, weak) NSBox* consoleBase;
 @property (nonatomic, weak) ChatBox* chatBox;
-@property (nonatomic, weak) FieldEditorTextView* fieldEditor;
+@property (nonatomic, strong) FieldEditorTextView* fieldEditor;
 @property (nonatomic, weak) MemberListView* memberList;
 @property (nonatomic, weak) MenuController* menuController;
 @property (nonatomic, weak) DCCController* dcc;
 @property (nonatomic, weak) ViewTheme* viewTheme;
-@property (nonatomic, weak) NSMenu* treeMenu;
-@property (nonatomic, weak) NSMenu* logMenu;
-@property (nonatomic, weak) NSMenu* consoleMenu;
-@property (nonatomic, weak) NSMenu* urlMenu;
-@property (nonatomic, weak) NSMenu* addrMenu;
-@property (nonatomic, weak) NSMenu* chanMenu;
-@property (nonatomic, weak) NSMenu* memberMenu;
-@property (nonatomic, weak) LogController* consoleLog;
+@property (nonatomic, strong) NSMenu* treeMenu;
+@property (nonatomic, strong) NSMenu* logMenu;
+@property (nonatomic, strong) NSMenu* consoleMenu;
+@property (nonatomic, strong) NSMenu* urlMenu;
+@property (nonatomic, strong) NSMenu* addrMenu;
+@property (nonatomic, strong) NSMenu* chanMenu;
+@property (nonatomic, strong) NSMenu* memberMenu;
+@property (nonatomic, strong) LogController* consoleLog;
 
 @property (nonatomic, readonly) NSMutableArray* clients;
 @property (nonatomic, strong) IRCTreeItem* selected;

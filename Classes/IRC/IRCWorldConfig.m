@@ -8,15 +8,12 @@
 
 @implementation IRCWorldConfig
 
-@synthesize clients;
-@synthesize autoOp;
-
 - (id)init
 {
     self = [super init];
     if (self) {
-        clients = [NSMutableArray new];
-        autoOp = [NSMutableArray new];
+        _clients = [NSMutableArray new];
+        _autoOp = [NSMutableArray new];
     }
     return self;
 }
@@ -28,20 +25,13 @@
         NSArray* ary = [dic arrayForKey:@"clients"] ?: [dic arrayForKey:@"units"];
 
         for (NSDictionary* e in ary) {
-            IRCClientConfig* c = [[[IRCClientConfig alloc] initWithDictionary:e] autorelease];
-            [clients addObject:c];
+            IRCClientConfig* c = [[IRCClientConfig alloc] initWithDictionary:e];
+            [_clients addObject:c];
         }
 
-        [autoOp addObjectsFromArray:[dic arrayForKey:@"autoop"]];
+        [_autoOp addObjectsFromArray:[dic arrayForKey:@"autoop"]];
     }
     return self;
-}
-
-- (void)dealloc
-{
-    [clients release];
-    [autoOp release];
-    [super dealloc];
 }
 
 - (NSMutableDictionary*)dictionaryValue
@@ -49,12 +39,12 @@
     NSMutableDictionary* dic = [NSMutableDictionary dictionary];
 
     NSMutableArray* clientAry = [NSMutableArray array];
-    for (IRCClientConfig* e in clients) {
+    for (IRCClientConfig* e in _clients) {
         [clientAry addObject:[e dictionaryValue]];
     }
     [dic setObject:clientAry forKey:@"clients"];
 
-    [dic setObject:autoOp forKey:@"autoop"];
+    [dic setObject:_autoOp forKey:@"autoop"];
 
     return dic;
 }

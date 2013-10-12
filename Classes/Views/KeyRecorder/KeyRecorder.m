@@ -14,8 +14,11 @@
 
 
 @implementation KeyRecorder
-
-@synthesize delegate, keyCode, modifierFlags;
+{
+    BOOL _recording;
+    BOOL _eraseButtonPushed;
+    BOOL _eraseButtonHighlighted;
+}
 
 + (Class)cellClass
 {
@@ -30,30 +33,25 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [super dealloc];
-}
-
 - (void)setKeyCode:(int)value
 {
-    if (keyCode != value) {
-        keyCode = value;
+    if (_keyCode != value) {
+        _keyCode = value;
         [self setNeedsDisplay];
     }
 }
 
 - (void)setModifierFlags:(NSUInteger)value
 {
-    if (modifierFlags != value) {
-        modifierFlags = value;
+    if (_modifierFlags != value) {
+        _modifierFlags = value;
         [self setNeedsDisplay];
     }
 }
 
 - (BOOL)valid
 {
-    return keyCode != 0;
+    return _keyCode != 0;
 }
 
 - (BOOL)acceptsFirstResponder
@@ -63,7 +61,7 @@
 
 - (BOOL)resignFirstResponder
 {
-    recording = NO;
+    _recording = NO;
     [self setNeedsDisplay];
     return YES;
 }
@@ -74,12 +72,12 @@
 
     NSPoint pt = [self convertPoint:[e locationInWindow] fromView:nil];
 
-    if (!recording && NSPointInRect(pt, [self eraseButtonFrame])) {
-        eraseButtonPushed = YES;
-        eraseButtonHighlighted = YES;
+    if (!_recording && NSPointInRect(pt, [self eraseButtonFrame])) {
+        _eraseButtonPushed = YES;
+        _eraseButtonHighlighted = YES;
     }
     else {
-        recording = !recording;
+        _recording = !_recording;
     }
 
     [self setNeedsDisplay];
@@ -87,24 +85,24 @@
 
 - (void)mouseDragged:(NSEvent*)e
 {
-    if (eraseButtonPushed) {
+    if (_eraseButtonPushed) {
         NSPoint pt = [self convertPoint:[e locationInWindow] fromView:nil];
-        eraseButtonHighlighted = NSPointInRect(pt, [self eraseButtonFrame]);
+        _eraseButtonHighlighted = NSPointInRect(pt, [self eraseButtonFrame]);
         [self setNeedsDisplay];
     }
 }
 
 - (void)mouseUp:(NSEvent*)e
 {
-    if (eraseButtonPushed) {
+    if (_eraseButtonPushed) {
         NSPoint pt = [self convertPoint:[e locationInWindow] fromView:nil];
         if (NSPointInRect(pt, [self eraseButtonFrame])) {
             [self clearKey];
         }
     }
 
-    eraseButtonPushed = NO;
-    eraseButtonHighlighted = NO;
+    _eraseButtonPushed = NO;
+    _eraseButtonHighlighted = NO;
     [self setNeedsDisplay];
 }
 
@@ -134,7 +132,7 @@
 
 - (void)keyDown:(NSEvent*)e
 {
-    if (!recording || self.window.firstResponder != self) return;
+    if (!_recording || self.window.firstResponder != self) return;
 
     int k = [e keyCode];
     NSUInteger m = [e modifierFlags];
@@ -176,7 +174,7 @@
 
 - (BOOL)performKeyEquivalent:(NSEvent*)e
 {
-    if (!recording || self.window.firstResponder != self) return NO;
+    if (!_recording || self.window.firstResponder != self) return NO;
 
     int k = [e keyCode];
     NSUInteger m = [e modifierFlags];
@@ -222,17 +220,17 @@
         }
     }
 
-    int prevKeyCode = keyCode;
-    NSUInteger prevModifierFlags = modifierFlags;
+    int prevKeyCode = _keyCode;
+    NSUInteger prevModifierFlags = _modifierFlags;
 
-    recording = NO;
-    keyCode = k;
-    modifierFlags = m;
+    _recording = NO;
+    _keyCode = k;
+    _modifierFlags = m;
     [self setNeedsDisplay];
 
-    if (keyCode != prevKeyCode || modifierFlags != prevModifierFlags) {
-        if ([delegate respondsToSelector:@selector(keyRecorderDidChangeKey:)]) {
-            [delegate keyRecorderDidChangeKey:self];
+    if (_keyCode != prevKeyCode || _modifierFlags != prevModifierFlags) {
+        if ([_delegate respondsToSelector:@selector(keyRecorderDidChangeKey:)]) {
+            [_delegate keyRecorderDidChangeKey:self];
         }
     }
 
@@ -242,24 +240,24 @@
 
 - (void)clearKey
 {
-    int prevKeyCode = keyCode;
-    NSUInteger prevModifierFlags = modifierFlags;
+    int prevKeyCode = _keyCode;
+    NSUInteger prevModifierFlags = _modifierFlags;
 
-    recording = NO;
-    keyCode = 0;
-    modifierFlags = 0;
+    _recording = NO;
+    _keyCode = 0;
+    _modifierFlags = 0;
     [self setNeedsDisplay];
 
-    if (keyCode != prevKeyCode && modifierFlags != prevModifierFlags) {
-        if ([delegate respondsToSelector:@selector(keyRecorderDidChangeKey:)]) {
-            [delegate keyRecorderDidChangeKey:self];
+    if (_keyCode != prevKeyCode && _modifierFlags != prevModifierFlags) {
+        if ([_delegate respondsToSelector:@selector(keyRecorderDidChangeKey:)]) {
+            [_delegate keyRecorderDidChangeKey:self];
         }
     }
 }
 
 - (void)stopRecording
 {
-    recording = NO;
+    _recording = NO;
     [self setNeedsDisplay];
 }
 
@@ -281,19 +279,19 @@
 
 - (NSString*)stringForCurrentKey
 {
-    if (keyCode == 0) return nil;
+    if (_keyCode == 0) return nil;
 
-    NSString* keyName = [self transformKeyCodeToString:keyCode];
+    NSString* keyName = [self transformKeyCodeToString:_keyCode];
     if (!keyName) {
         return nil;
     }
 
     NSMutableString* s = [NSMutableString string];
 
-    BOOL ctrl  = (modifierFlags & NSControlKeyMask) != 0;
-    BOOL alt   = (modifierFlags & NSAlternateKeyMask) != 0;
-    BOOL shift = (modifierFlags & NSShiftKeyMask) != 0;
-    BOOL cmd   = (modifierFlags & NSCommandKeyMask) != 0;
+    BOOL ctrl  = (_modifierFlags & NSControlKeyMask) != 0;
+    BOOL alt   = (_modifierFlags & NSAlternateKeyMask) != 0;
+    BOOL shift = (_modifierFlags & NSShiftKeyMask) != 0;
+    BOOL cmd   = (_modifierFlags & NSCommandKeyMask) != 0;
 
     if (ctrl)  [s appendString:CTRL];
     if (alt)   [s appendString:ALT];
@@ -347,11 +345,11 @@
     NSString* s = nil;
     NSDictionary* attr = nil;
 
-    if (recording) {
+    if (_recording) {
         s = @"Type shortcut...";
         attr = [KeyRecorder placeholderAttribute];
     }
-    else if (keyCode) {
+    else if (_keyCode) {
         s = [self stringForCurrentKey];
         attr = [KeyRecorder normalAttribute];
     }
@@ -361,16 +359,16 @@
         attr = [KeyRecorder placeholderAttribute];
     }
 
-    NSAttributedString* as = [[[NSAttributedString alloc] initWithString:s attributes:attr] autorelease];
+    NSAttributedString* as = [[NSAttributedString alloc] initWithString:s attributes:attr];
     r = NSInsetRect(r, 10, 1);
     r.origin.y -= 2;
     [as drawInRect:r];
 
-    if (keyCode && !recording) {
+    if (_keyCode && !_recording) {
         NSRect circleRect = [self eraseButtonFrame];
         NSRect xRect = NSInsetRect(circleRect, 4.1, 4.1);
 
-        NSColor* circleColor = eraseButtonHighlighted ? [NSColor grayColor] : [NSColor lightGrayColor];
+        NSColor* circleColor = _eraseButtonHighlighted ? [NSColor grayColor] : [NSColor lightGrayColor];
         [circleColor set];
         NSBezierPath* circlePath = [NSBezierPath bezierPath];
         [circlePath appendBezierPathWithOvalInRect:circleRect];
@@ -397,15 +395,14 @@
 {
     static NSDictionary* placeholderAttribute = nil;
     if (!placeholderAttribute) {
-        NSMutableParagraphStyle* ps = [[NSMutableParagraphStyle new] autorelease];
+        NSMutableParagraphStyle* ps = [NSMutableParagraphStyle new];
         [ps setAlignment:NSCenterTextAlignment];
 
         placeholderAttribute = @{
-    NSFontAttributeName: [NSFont systemFontOfSize:12],
-    NSForegroundColorAttributeName: [NSColor colorWithCalibratedWhite:0.4 alpha:1],
-    NSParagraphStyleAttributeName: ps,
+            NSFontAttributeName: [NSFont systemFontOfSize:12],
+            NSForegroundColorAttributeName: [NSColor colorWithCalibratedWhite:0.4 alpha:1],
+            NSParagraphStyleAttributeName: ps,
         };
-        [placeholderAttribute retain];
     }
     return placeholderAttribute;
 }
@@ -414,15 +411,14 @@
 {
     static NSDictionary* normalAttribute = nil;
     if (!normalAttribute) {
-        NSMutableParagraphStyle* ps = [[NSMutableParagraphStyle new] autorelease];
+        NSMutableParagraphStyle* ps = [NSMutableParagraphStyle new];
         [ps setAlignment:NSCenterTextAlignment];
 
         normalAttribute = @{
-    NSFontAttributeName: [NSFont systemFontOfSize:12],
-    NSForegroundColorAttributeName: [NSColor blackColor],
-    NSParagraphStyleAttributeName: ps,
+            NSFontAttributeName: [NSFont systemFontOfSize:12],
+            NSForegroundColorAttributeName: [NSColor blackColor],
+            NSParagraphStyleAttributeName: ps,
         };
-        [normalAttribute retain];
     }
     return normalAttribute;
 }
@@ -469,7 +465,6 @@
         @125: @"↓",
         @126: @"↑",
         };
-        [specialKeyMap retain];
     }
     return specialKeyMap;
 }
@@ -496,7 +491,6 @@
         @91, // 8
         @92, // 9
         ];
-        [padKeyArray retain];
     }
     return padKeyArray;
 }

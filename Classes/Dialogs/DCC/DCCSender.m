@@ -12,89 +12,73 @@
 
 
 @implementation DCCSender
-
-@synthesize delegate;
-@synthesize uid;
-@synthesize peerNick;
-@synthesize port;
-@synthesize fileName;
-@synthesize fullFileName;
-@synthesize size;
-@synthesize processedSize;
-@synthesize status;
-@synthesize error;
-@synthesize icon;
-@synthesize progressBar;
+{
+    TCPServer* _sock;
+    TCPClient* _client;
+    NSFileHandle* _file;
+    NSMutableArray* _speedRecords;
+    double _currentRecord;
+}
 
 - (id)init
 {
     self = [super init];
     if (self) {
-        speedRecords = [NSMutableArray new];
+        _speedRecords = [NSMutableArray new];
     }
     return self;
 }
 
 - (void)dealloc
 {
-    [peerNick release];
-    [fileName release];
-    [fullFileName release];
-    [error release];
-    [icon release];
-    [progressBar release];
-    [file release];
-    [speedRecords release];
-    [super dealloc];
+    [_client close];
+    [_sock closeAllClients];
+    [_sock close];
+    [_file closeFile];
 }
 
 - (void)setFullFileName:(NSString *)value
 {
-    if (fullFileName != value) {
-        [fullFileName release];
-        fullFileName = [value retain];
+    if (_fullFileName != value) {
+        _fullFileName = value;
 
         NSFileManager* fm = [NSFileManager defaultManager];
-        NSDictionary* attr = [fm attributesOfItemAtPath:fullFileName error:NULL];
+        NSDictionary* attr = [fm attributesOfItemAtPath:_fullFileName error:NULL];
         if (attr) {
             NSNumber* sizeNum = [attr objectForKey:NSFileSize];
-            size = [sizeNum longLongValue];
+            _size = [sizeNum longLongValue];
         }
         else {
-            size = 0;
+            _size = 0;
         }
 
-        [fileName release];
-        fileName = [[fullFileName lastPathComponent] retain];
-
-        [icon release];
-        icon = [[[NSWorkspace sharedWorkspace] iconForFileType:[fileName pathExtension]] retain];
+        _fileName = [_fullFileName lastPathComponent];
+        _icon = [[NSWorkspace sharedWorkspace] iconForFileType:[_fileName pathExtension]];
     }
 }
 
 - (double)speed
 {
-    if (!speedRecords.count) return 0;
+    if (!_speedRecords.count) return 0;
 
     double sum = 0;
-    for (NSNumber* num in speedRecords) {
+    for (NSNumber* num in _speedRecords) {
         sum += [num doubleValue];
     }
-    return sum / speedRecords.count;
+    return sum / _speedRecords.count;
 }
 
 - (BOOL)open
 {
-    port = [Preferences dccFirstPort];
+    _port = [Preferences dccFirstPort];
 
     while (![self doOpen]) {
-        ++port;
-        if ([Preferences dccLastPort] < port) {
-            status = DCC_ERROR;
-            [error release];
-            error = @"No available ports";
+        ++_port;
+        if ([Preferences dccLastPort] < _port) {
+            _status = DCC_ERROR;
+            _error = @"No available ports";
 
-            [delegate dccSenderOnError:self];
+            [_delegate dccSenderOnError:self];
             return NO;
         }
     }
@@ -104,115 +88,111 @@
 
 - (void)close
 {
-    if (sock) {
-        [client autorelease];
-        client = nil;
+    if (_sock) {
+        [_client close];
+        _client = nil;
 
-        [sock closeAllClients];
-        [sock close];
-        [sock autorelease];
-        sock = nil;
+        [_sock closeAllClients];
+        [_sock close];
+        _sock = nil;
     }
 
     [self closeFile];
 
-    if (status != DCC_ERROR && status != DCC_COMPLETE) {
-        status = DCC_STOP;
+    if (_status != DCC_ERROR && _status != DCC_COMPLETE) {
+        _status = DCC_STOP;
     }
 
-    [delegate dccSenderOnClose:self];
+    [_delegate dccSenderOnClose:self];
 }
 
 - (void)onTimer
 {
-    if (status != DCC_SENDING) return;
+    if (_status != DCC_SENDING) return;
 
-    [speedRecords addObject:[NSNumber numberWithDouble:currentRecord]];
-    if (speedRecords.count > RECORDS_LEN) [speedRecords removeObjectAtIndex:0];
-    currentRecord = 0;
+    [_speedRecords addObject:[NSNumber numberWithDouble:_currentRecord]];
+    if (_speedRecords.count > RECORDS_LEN) [_speedRecords removeObjectAtIndex:0];
+    _currentRecord = 0;
 
     [self send];
 }
 
 - (void)setAddressError
 {
-    status = DCC_ERROR;
-    [error release];
-    error = @"Cannot detect your IP address";
-    [delegate dccSenderOnError:self];
+    _status = DCC_ERROR;
+    _error = @"Cannot detect your IP address";
+    [_delegate dccSenderOnError:self];
 }
 
 - (BOOL)doOpen
 {
-    if (sock) {
+    if (_sock) {
         [self close];
     }
 
-    status = DCC_INIT;
-    processedSize = 0;
-    currentRecord = 0;
-    [speedRecords removeAllObjects];
+    _status = DCC_INIT;
+    _processedSize = 0;
+    _currentRecord = 0;
+    [_speedRecords removeAllObjects];
 
-    sock = [TCPServer new];
-    sock.delegate = self;
-    sock.port = port;
-    BOOL res = [sock open];
+    _sock = [TCPServer new];
+    _sock.delegate = self;
+    _sock.port = _port;
+    BOOL res = [_sock open];
     if (!res) return NO;
 
-    status = DCC_LISTENING;
+    _status = DCC_LISTENING;
     [self openFile];
-    if (!file) return NO;
+    if (!_file) return NO;
 
-    [delegate dccSenderOnListen:self];
+    [_delegate dccSenderOnListen:self];
     return YES;
 }
 
 - (void)openFile
 {
-    if (file) {
+    if (_file) {
         [self closeFile];
     }
 
-    file = [[NSFileHandle fileHandleForReadingAtPath:fullFileName] retain];
-    if (!file) {
-        status = DCC_ERROR;
-        [error release];
-        error = @"Could not open file";
+    _file = [NSFileHandle fileHandleForReadingAtPath:_fullFileName];
+    if (!_file) {
+        _status = DCC_ERROR;
+        _error = @"Could not open file";
         [self close];
-        [delegate dccSenderOnError:self];
+        [_delegate dccSenderOnError:self];
     }
 }
 
 - (void)closeFile
 {
-    if (!file) return;
+    if (!_file) return;
 
-    [file closeFile];
-    [file release];
-    file = nil;
+    [_file closeFile];
+    _file = nil;
 }
 
 - (void)send
 {
-    if (status == DCC_COMPLETE) return;
-    if (processedSize >= size) return;
-    if (!client) return;
+    if (_status == DCC_COMPLETE) return;
+    if (_processedSize >= _size) return;
+    if (!_client) return;
 
     while (1) {
-        if (currentRecord >= RATE_LIMIT) return;
-        if (client.sendQueueSize >= MAX_QUEUE_SIZE) return;
-        if (processedSize >= size) {
+        if (_currentRecord >= RATE_LIMIT) return;
+        if (_client.sendQueueSize >= MAX_QUEUE_SIZE) return;
+        if (_processedSize >= _size) {
             [self closeFile];
             return;
         }
 
-        NSData* data = [file readDataOfLength:BUF_SIZE];
-        processedSize += data.length;
-        currentRecord += data.length;
-        [client write:data];
+        NSData* data = [_file readDataOfLength:BUF_SIZE];
+        _processedSize += data.length;
+        _currentRecord += data.length;
+        [_client write:data];
 
-        [progressBar setDoubleValue:processedSize];
-        [progressBar setNeedsDisplay:YES];
+        [_progressBar setDoubleValue:_processedSize];
+        [_progressBar setNeedsDisplay:YES];
     }
 }
 
@@ -225,44 +205,41 @@
 
 - (void)tcpServer:(TCPServer*)sender didConnect:(TCPClient*)aClient
 {
-    if (sock) {
-        [sock close];
+    if (_sock) {
+        [_sock close];
     }
 
-    [client release];
-    client = [aClient retain];
-    status = DCC_SENDING;
-    [delegate dccSenderOnConnect:self];
+    _client = aClient;
+    _status = DCC_SENDING;
+    [_delegate dccSenderOnConnect:self];
 
     [self send];
 }
 
 - (void)tcpServer:(TCPServer*)sender client:(TCPClient*)aClient error:(NSString*)err
 {
-    if (status == DCC_COMPLETE || status == DCC_ERROR) return;
+    if (_status == DCC_COMPLETE || _status == DCC_ERROR) return;
 
-    status = DCC_ERROR;
-    [error release];
-    error = [err retain];
+    _status = DCC_ERROR;
+    _error = err;
     [self close];
-    [delegate dccSenderOnError:self];
+    [_delegate dccSenderOnError:self];
 }
 
 - (void)tcpServer:(TCPServer*)sender didDisconnect:(TCPClient*)aClient
 {
-    if (processedSize >= size) {
-        status = DCC_COMPLETE;
+    if (_processedSize >= _size) {
+        _status = DCC_COMPLETE;
         [self close];
         return;
     }
 
-    if (status == DCC_COMPLETE || status == DCC_ERROR) return;
+    if (_status == DCC_COMPLETE || _status == DCC_ERROR) return;
 
-    status = DCC_ERROR;
-    [error release];
-    error = @"Disconnected";
+    _status = DCC_ERROR;
+    _error = @"Disconnected";
     [self close];
-    [delegate dccSenderOnError:self];
+    [_delegate dccSenderOnError:self];
 }
 
 - (void)tcpServer:(TCPServer*)sender didReceiveData:(TCPClient*)aClient
@@ -272,10 +249,10 @@
 
 - (void)tcpServer:(TCPServer*)sender didSendData:(TCPClient*)aClient
 {
-    if (processedSize >= size) {
-        if (!client.sendQueueSize) {
-            status = DCC_COMPLETE;
-            [delegate dccSenderOnComplete:self];
+    if (_processedSize >= _size) {
+        if (!_client.sendQueueSize) {
+            _status = DCC_COMPLETE;
+            [_delegate dccSenderOnComplete:self];
         }
     }
     else {

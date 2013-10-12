@@ -5,9 +5,9 @@
 
 
 @implementation IgnoreItemSheet
-
-@synthesize ignore;
-@synthesize newItem;
+{
+    NSMutableArray* _channels;
+}
 
 - (id)init
 {
@@ -18,41 +18,33 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [ignore release];
-    [channels release];
-    [super dealloc];
-}
-
 - (void)start
 {
     //
     // load
     //
 
-    if (ignore.nick.length) {
+    if (_ignore.nick.length) {
         nickCheck.state = NSOnState;
-        [nickPopup selectItemWithTag:ignore.useRegexForNick ? 1 : 0];
-        nickText.stringValue = ignore.nick;
+        [nickPopup selectItemWithTag:_ignore.useRegexForNick ? 1 : 0];
+        nickText.stringValue = _ignore.nick;
     }
     else {
         nickCheck.state = NSOffState;
     }
 
-    if (ignore.text.length) {
+    if (_ignore.text.length) {
         messageCheck.state = NSOnState;
-        [messagePopup selectItemWithTag:ignore.useRegexForText ? 1 : 0];
-        messageText.stringValue = ignore.text;
+        [messagePopup selectItemWithTag:_ignore.useRegexForText ? 1 : 0];
+        messageText.stringValue = _ignore.text;
     }
     else {
         messageCheck.state = NSOffState;
     }
 
-    [channels release];
-    channels = [ignore.channels mutableCopy];
-    if (!channels) {
-        channels = [NSMutableArray new];
+    _channels = [_ignore.channels mutableCopy];
+    if (!_channels) {
+        _channels = [NSMutableArray new];
     }
     [self reloadChannelTable];
     [self updateButtons];
@@ -74,7 +66,7 @@
 
 - (void)addChannel:(id)sender
 {
-    [channels addObject:@""];
+    [_channels addObject:@""];
     [self reloadChannelTable];
 
     NSInteger row = [channelTable numberOfRows] - 1;
@@ -87,9 +79,9 @@
     NSInteger i = [channelTable selectedRow];
     if (i < 0) return;
 
-    [channels removeObjectAtIndex:i];
+    [_channels removeObjectAtIndex:i];
 
-    int count = channels.count;
+    int count = _channels.count;
     if (count) {
         if (count <= i) {
             [channelTable selectItemAtIndex:count - 1];
@@ -112,31 +104,31 @@
     NSString* message = messageText.stringValue;
 
     if (nickCheck.state == NSOnState && nick.length) {
-        ignore.nick = nick;
-        ignore.useRegexForNick = nickPopup.selectedItem.tag == 1;
+        _ignore.nick = nick;
+        _ignore.useRegexForNick = nickPopup.selectedItem.tag == 1;
     }
     else {
-        ignore.nick = nil;
+        _ignore.nick = nil;
     }
 
     if (messageCheck.state == NSOnState && message.length) {
-        ignore.text = message;
-        ignore.useRegexForText = messagePopup.selectedItem.tag == 1;
+        _ignore.text = message;
+        _ignore.useRegexForText = messagePopup.selectedItem.tag == 1;
     }
     else {
-        ignore.text = nil;
+        _ignore.text = nil;
     }
 
     NSMutableSet* channelSet = [NSMutableSet set];
     NSMutableArray* channelAry = [NSMutableArray array];
-    for (NSString* e in channels) {
+    for (NSString* e in _channels) {
         if (e.length && ![channelSet containsObject:e]) {
             [channelAry addObject:e];
             [channelSet addObject:e];
         }
     }
     [channelAry sortUsingSelector:@selector(caseInsensitiveCompare:)];
-    ignore.channels = channelAry;
+    _ignore.channels = channelAry;
 
     //
     // call delegate
@@ -164,17 +156,17 @@
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)sender
 {
-    return channels.count;
+    return _channels.count;
 }
 
 - (id)tableView:(NSTableView *)sender objectValueForTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
-    return [channels objectAtIndex:row];
+    return [_channels objectAtIndex:row];
 }
 
 - (void)tableView:(NSTableView *)sender setObjectValue:(id)obj forTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
-    [channels replaceObjectAtIndex:row withObject:obj];
+    [_channels replaceObjectAtIndex:row withObject:obj];
 }
 
 - (void)tableViewSelectionDidChange:(NSNotification *)note

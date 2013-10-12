@@ -9,8 +9,6 @@
 {
     IBOutlet NSTextField* currentText;
     IBOutlet NSTextField* newText;
-    
-    int uid;
 }
 
 @property (nonatomic) int uid;

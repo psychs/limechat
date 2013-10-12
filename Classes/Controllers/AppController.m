@@ -23,18 +23,18 @@
 
 
 @implementation AppController
-
-- (void)dealloc
 {
-    [welcomeDialog release];
-    [notifier release];
-    [dcc release];
-    [fieldEditor release];
-    [world release];
-    [viewTheme release];
-    [inputHistory release];
-    [completionStatus release];
-    [super dealloc];
+    WelcomeDialog* _welcomeDialog;
+    id<NotificationController> _notifier;
+    DCCController* _dcc;
+    FieldEditorTextView* _fieldEditor;
+    IRCWorld* _world;
+    ViewTheme* _viewTheme;
+    InputHistory* _inputHistory;
+    NickCompletinStatus* _completionStatus;
+
+    BOOL _threeColumns;
+    BOOL _terminating;
 }
 
 #pragma mark -
@@ -70,68 +70,68 @@
     infoSplitter.fixedViewIndex = 1;
     treeSplitter.hidden = YES;
 
-    fieldEditor = [[FieldEditorTextView alloc] initWithFrame:NSZeroRect];
-    [fieldEditor setFieldEditor:YES];
-    fieldEditor.pasteDelegate = self;
+    _fieldEditor = [[FieldEditorTextView alloc] initWithFrame:NSZeroRect];
+    [_fieldEditor setFieldEditor:YES];
+    _fieldEditor.pasteDelegate = self;
 
-    [fieldEditor setContinuousSpellCheckingEnabled:[Preferences spellCheckEnabled]];
-    [fieldEditor setGrammarCheckingEnabled:[Preferences grammarCheckEnabled]];
-    [fieldEditor setSmartInsertDeleteEnabled:[Preferences smartInsertDeleteEnabled]];
-    [fieldEditor setAutomaticQuoteSubstitutionEnabled:[Preferences quoteSubstitutionEnabled]];
-    [fieldEditor setAutomaticLinkDetectionEnabled:[Preferences linkDetectionEnabled]];
-    [fieldEditor setAutomaticSpellingCorrectionEnabled:[Preferences spellingCorrectionEnabled]];
-    [fieldEditor setAutomaticDashSubstitutionEnabled:[Preferences dashSubstitutionEnabled]];
-    [fieldEditor setAutomaticDataDetectionEnabled:[Preferences dataDetectionEnabled]];
-    [fieldEditor setAutomaticTextReplacementEnabled:[Preferences textReplacementEnabled]];
+    [_fieldEditor setContinuousSpellCheckingEnabled:[Preferences spellCheckEnabled]];
+    [_fieldEditor setGrammarCheckingEnabled:[Preferences grammarCheckEnabled]];
+    [_fieldEditor setSmartInsertDeleteEnabled:[Preferences smartInsertDeleteEnabled]];
+    [_fieldEditor setAutomaticQuoteSubstitutionEnabled:[Preferences quoteSubstitutionEnabled]];
+    [_fieldEditor setAutomaticLinkDetectionEnabled:[Preferences linkDetectionEnabled]];
+    [_fieldEditor setAutomaticSpellingCorrectionEnabled:[Preferences spellingCorrectionEnabled]];
+    [_fieldEditor setAutomaticDashSubstitutionEnabled:[Preferences dashSubstitutionEnabled]];
+    [_fieldEditor setAutomaticDataDetectionEnabled:[Preferences dataDetectionEnabled]];
+    [_fieldEditor setAutomaticTextReplacementEnabled:[Preferences textReplacementEnabled]];
 
     [text setFocusRingType:NSFocusRingTypeNone];
 
-    viewTheme = [ViewTheme new];
-    viewTheme.name = [Preferences themeName];
-    tree.theme = viewTheme.other;
-    memberList.theme = viewTheme.other;
-    MemberListViewCell* cell = [[MemberListViewCell new] autorelease];
-    [cell setup:viewTheme.other];
+    _viewTheme = [ViewTheme new];
+    _viewTheme.name = [Preferences themeName];
+    tree.theme = _viewTheme.other;
+    memberList.theme = _viewTheme.other;
+    MemberListViewCell* cell = [MemberListViewCell new];
+    [cell setup:_viewTheme.other];
     [[[memberList tableColumns] objectAtIndex:0] setDataCell:cell];
 
     [self loadWindowState];
     [window setAlphaValue:[Preferences themeTransparency]];
     [self set3columnLayout:[Preferences mainWindowLayout] == MAIN_WINDOW_LAYOUT_3_COLUMN];
 
-    IRCWorldConfig* seed = [[[IRCWorldConfig alloc] initWithDictionary:[Preferences loadWorld]] autorelease];
+    IRCWorldConfig* seed = [[IRCWorldConfig alloc] initWithDictionary:[Preferences loadWorld]];
 
-    world = [IRCWorld new];
-    world.app = self;
-    world.window = window;
-    world.notifier = notifier;
-    world.tree = tree;
-    world.text = text;
-    world.logBase = logBase;
-    world.consoleBase = consoleBase;
-    world.chatBox = chatBox;
-    world.fieldEditor = fieldEditor;
-    world.memberList = memberList;
-    [world setServerMenuItem:serverMenu];
-    [world setChannelMenuItem:channelMenu];
-    world.treeMenu = treeMenu;
-    world.logMenu = logMenu;
-    world.consoleMenu = consoleMenu;
-    world.urlMenu = urlMenu;
-    world.addrMenu = addrMenu;
-    world.chanMenu = chanMenu;
-    world.memberMenu = memberMenu;
-    world.viewTheme = viewTheme;
-    world.menuController = menu;
-    [world setup:seed];
+    _world = [IRCWorld new];
+    _world.app = self;
+    _world.window = window;
+    _world.notifier = _notifier;
+    _world.tree = tree;
+    _world.text = text;
+    _world.logBase = logBase;
+    _world.consoleBase = consoleBase;
+    _world.chatBox = chatBox;
+    _world.fieldEditor = _fieldEditor;
+    _world.memberList = memberList;
+    [_world setServerMenuItem:serverMenu];
+    [_world setChannelMenuItem:channelMenu];
+    _world.treeMenu = treeMenu;
+    _world.logMenu = logMenu;
+    _world.consoleMenu = consoleMenu;
+    _world.urlMenu = urlMenu;
+    _world.addrMenu = addrMenu;
+    _world.chanMenu = chanMenu;
+    _world.memberMenu = memberMenu;
+    _world.viewTheme = _viewTheme;
+    _world.menuController = menu;
+    [_world setup:seed];
 
-    tree.dataSource = world;
-    tree.delegate = world;
-    tree.responderDelegate = world;
+    tree.dataSource = _world;
+    tree.delegate = _world;
+    tree.responderDelegate = _world;
     [tree reloadData];
-    [world setupTree];
+    [_world setupTree];
 
     menu.app = self;
-    menu.world = world;
+    menu.world = _world;
     menu.window = window;
     menu.tree = tree;
     menu.memberList = memberList;
@@ -140,21 +140,21 @@
 
     memberList.target = menu;
     [memberList setDoubleAction:@selector(memberListDoubleClicked:)];
-    memberList.keyDelegate = world;
-    memberList.dropDelegate = world;
+    memberList.keyDelegate = _world;
+    memberList.dropDelegate = _world;
 
-    dcc = [DCCController new];
-    dcc.world = world;
-    dcc.mainWindow = window;
-    world.dcc = dcc;
+    _dcc = [DCCController new];
+    _dcc.world = _world;
+    _dcc.mainWindow = window;
+    _world.dcc = _dcc;
 
-    notifier = [UserNotificationController new];
-    notifier.delegate = world;
-    world.notifier = notifier;
+    _notifier = [UserNotificationController new];
+    _notifier.delegate = _world;
+    _world.notifier = _notifier;
 
-    inputHistory = [InputHistory new];
+    _inputHistory = [InputHistory new];
 
-    [ImageDownloadManager instance].world = world;
+    [ImageDownloadManager instance].world = _world;
 
     [self registerKeyHandlers];
 }
@@ -163,24 +163,24 @@
 {
     [ViewTheme createUserDirectory];
 
-    if (!world.clients.count) {
-        welcomeDialog = [WelcomeDialog new];
-        welcomeDialog.delegate = self;
-        [welcomeDialog show];
+    if (!_world.clients.count) {
+        _welcomeDialog = [WelcomeDialog new];
+        _welcomeDialog.delegate = self;
+        [_welcomeDialog show];
     }
     else {
         [window makeFirstResponder:text];
         [window makeKeyAndOrderFront:nil];
-        [world autoConnect:NO];
+        [_world autoConnect:NO];
     }
 }
 
 - (void)applicationDidBecomeActive:(NSNotification *)note
 {
-    id sel = world.selected;
+    id sel = _world.selected;
     if (sel) {
         [sel resetState];
-        [world updateIcon];
+        [_world updateIcon];
     }
 
     [tree setNeedsDisplay];
@@ -211,12 +211,12 @@
 
 - (BOOL)queryTerminate
 {
-    if (terminating) {
+    if (_terminating) {
         return YES;
     }
 
-    int receiving = [dcc countReceivingItems];
-    int sending = [dcc countSendingItems];
+    int receiving = [_dcc countReceivingItems];
+    int sending = [_dcc countSendingItems];
 
     if (receiving > 0 || sending > 0) {
         NSMutableString* msg = [NSMutableString stringWithString:@"Now you are "];
@@ -261,18 +261,18 @@
     NSAppleEventManager* em = [NSAppleEventManager sharedAppleEventManager];
     [em removeEventHandlerForEventClass:KInternetEventClass andEventID:KAEGetURL];
 
-    [Preferences setSpellCheckEnabled:[fieldEditor isContinuousSpellCheckingEnabled]];
-    [Preferences setGrammarCheckEnabled:[fieldEditor isGrammarCheckingEnabled]];
-    [Preferences setSmartInsertDeleteEnabled:[fieldEditor smartInsertDeleteEnabled]];
-    [Preferences setQuoteSubstitutionEnabled:[fieldEditor isAutomaticQuoteSubstitutionEnabled]];
-    [Preferences setLinkDetectionEnabled:[fieldEditor isAutomaticLinkDetectionEnabled]];
-    [Preferences setSpellingCorrectionEnabled:[fieldEditor isAutomaticSpellingCorrectionEnabled]];
-    [Preferences setDashSubstitutionEnabled:[fieldEditor isAutomaticDashSubstitutionEnabled]];
-    [Preferences setDataDetectionEnabled:[fieldEditor isAutomaticDataDetectionEnabled]];
-    [Preferences setTextReplacementEnabled:[fieldEditor isAutomaticTextReplacementEnabled]];
+    [Preferences setSpellCheckEnabled:[_fieldEditor isContinuousSpellCheckingEnabled]];
+    [Preferences setGrammarCheckEnabled:[_fieldEditor isGrammarCheckingEnabled]];
+    [Preferences setSmartInsertDeleteEnabled:[_fieldEditor smartInsertDeleteEnabled]];
+    [Preferences setQuoteSubstitutionEnabled:[_fieldEditor isAutomaticQuoteSubstitutionEnabled]];
+    [Preferences setLinkDetectionEnabled:[_fieldEditor isAutomaticLinkDetectionEnabled]];
+    [Preferences setSpellingCorrectionEnabled:[_fieldEditor isAutomaticSpellingCorrectionEnabled]];
+    [Preferences setDashSubstitutionEnabled:[_fieldEditor isAutomaticDashSubstitutionEnabled]];
+    [Preferences setDataDetectionEnabled:[_fieldEditor isAutomaticDataDetectionEnabled]];
+    [Preferences setTextReplacementEnabled:[_fieldEditor isAutomaticTextReplacementEnabled]];
 
-    [dcc terminate];
-    [world terminate];
+    [_dcc terminate];
+    [_world terminate];
     [menu terminate];
     [ImageDownloadManager disposeInstance];
     [NSApp unregisterHotKey];
@@ -284,7 +284,7 @@
 
 - (void)updaterWillRelaunchApplication:(id)sender
 {
-    terminating = YES;
+    _terminating = YES;
 }
 
 #pragma mark -
@@ -292,17 +292,17 @@
 
 - (void)computerWillSleep:(NSNotification*)note
 {
-    [world prepareForSleep];
+    [_world prepareForSleep];
 }
 
 - (void)computerDidWakeUp:(NSNotification*)note
 {
-    [world autoConnect:YES];
+    [_world autoConnect:YES];
 }
 
 - (void)computerWillPowerOff:(NSNotification*)note
 {
-    terminating = YES;
+    _terminating = YES;
     [NSApp terminate:nil];
 }
 
@@ -318,7 +318,7 @@
 - (id)windowWillReturnFieldEditor:(NSWindow *)sender toObject:(id)client
 {
     if (client == text) {
-        return fieldEditor;
+        return _fieldEditor;
     }
     else {
         return nil;
@@ -332,7 +332,7 @@
 
 - (void)windowWillClose:(NSNotification *)note
 {
-    terminating = YES;
+    _terminating = YES;
     [NSApp terminate:nil];
 }
 
@@ -344,8 +344,8 @@
     NSString* s = [[NSPasteboard generalPasteboard] stringContent];
     if (!s.length) return NO;
 
-    IRCClient* client = world.selectedClient;
-    IRCChannel* channel = world.selectedChannel;
+    IRCClient* client = _world.selectedClient;
+    IRCChannel* channel = _world.selectedChannel;
     if (channel) {
         static NSRegularExpression* regex = nil;
         if (!regex) {
@@ -362,7 +362,7 @@
     }
 
     if (![[window firstResponder] isKindOfClass:[NSTextView class]]) {
-        [world focusInputText];
+        [_world focusInputText];
     }
     return NO;
 }
@@ -374,16 +374,16 @@
 {
     NSString* s = [text stringValue];
     if (s.length) {
-        if ([world inputText:s command:command]) {
-            [inputHistory add:s];
+        if ([_world inputText:s command:command]) {
+            [_inputHistory add:s];
             [text setStringValue:@""];
         }
     }
 
     [text focus];
 
-    if (completionStatus) {
-        [completionStatus clear];
+    if (_completionStatus) {
+        [_completionStatus clear];
     }
 }
 
@@ -394,10 +394,10 @@
 
 - (void)set3columnLayout:(BOOL)value
 {
-    if (value == threeColumns) return;
-    threeColumns = value;
+    if (value == _threeColumns) return;
+    _threeColumns = value;
 
-    if (threeColumns) {
+    if (_threeColumns) {
         infoSplitter.hidden = YES;
         infoSplitter.inverted = YES;
         [leftTreeBase addSubview:treeScrollView];
@@ -436,7 +436,7 @@
         treeSplitter.position = [dic intForKey:@"tree"];
 
         if (spellCheckingValue) {
-            [fieldEditor setContinuousSpellCheckingEnabled:[spellCheckingValue boolValue]];
+            [_fieldEditor setContinuousSpellCheckingEnabled:[spellCheckingValue boolValue]];
         }
     }
     else {
@@ -470,7 +470,7 @@
     [dic setInt:logSplitter.position forKey:@"log"];
     [dic setInt:infoSplitter.position forKey:@"info"];
     [dic setInt:treeSplitter.position forKey:@"tree"];
-    [dic setBool:[fieldEditor isContinuousSpellCheckingEnabled] forKey:@"spell_checking"];
+    [dic setBool:[_fieldEditor isContinuousSpellCheckingEnabled] forKey:@"spell_checking"];
 
     [Preferences saveWindowState:dic name:@"main_window"];
     [Preferences sync];
@@ -478,7 +478,7 @@
 
 - (void)themeDidChange:(NSNotification*)note
 {
-    [world reloadTheme];
+    [_world reloadTheme];
     [self set3columnLayout:[Preferences mainWindowLayout] == MAIN_WINDOW_LAYOUT_3_COLUMN];
     [window setAlphaValue:[Preferences themeTransparency]];
 }
@@ -488,12 +488,12 @@
 
 - (void)completeNick:(BOOL)forward
 {
-    IRCClient* client = world.selectedClient;
-    IRCChannel* channel = world.selectedChannel;
+    IRCClient* client = _world.selectedClient;
+    IRCChannel* channel = _world.selectedChannel;
     if (!client || !channel) return;
 
     if ([window firstResponder] != [window fieldEditor:NO forObject:text]) {
-        [world focusInputText];
+        [_world focusInputText];
     }
 
     NSText* fe = [window fieldEditor:YES forObject:text];
@@ -502,11 +502,11 @@
     NSRange selectedRange = [fe selectedRange];
     if (selectedRange.location == NSNotFound) return;
 
-    if (!completionStatus) {
-        completionStatus = [NickCompletinStatus new];
+    if (!_completionStatus) {
+        _completionStatus = [NickCompletinStatus new];
     }
 
-    NickCompletinStatus* status = completionStatus;
+    NickCompletinStatus* status = _completionStatus;
     NSString* s = text.stringValue;
 
     if ([status.text isEqualToString:s]
@@ -599,7 +599,7 @@
         lowerChoices = choices;
     }
     else {
-        NSMutableArray* users = [[channel.members mutableCopy] autorelease];
+        NSMutableArray* users = [channel.members mutableCopy];
         [users sortUsingSelector:@selector(compareUsingWeights:)];
 
         NSMutableArray* nicks = [NSMutableArray array];
@@ -719,7 +719,7 @@ typedef enum {
 
 - (void)scroll:(ScrollKind)op
 {
-    IRCTreeItem* sel = world.selected;
+    IRCTreeItem* sel = _world.selected;
     if (sel) {
         LogController* log = [sel log];
         LogView* view = log.view;
@@ -773,7 +773,7 @@ typedef enum {
 - (void)move:(MoveKind)dir target:(MoveKind)target
 {
     if (dir == MOVE_UP || dir == MOVE_DOWN) {
-        id sel = world.selected;
+        id sel = _world.selected;
         if (!sel) return;
         int n = [tree rowForItem:sel];
         if (n < 0) return;
@@ -796,31 +796,31 @@ typedef enum {
             if (i) {
                 if (target == MOVE_ACTIVE) {
                     if (![i isClient] && [i isActive]) {
-                        [world select:i];
+                        [_world select:i];
                         break;
                     }
                 }
                 else if (target == MOVE_UNREAD) {
                     if ([i isUnread]) {
-                        [world select:i];
+                        [_world select:i];
                         break;
                     }
                 }
                 else {
-                    [world select:i];
+                    [_world select:i];
                     break;
                 }
             }
         }
     }
     else if (dir == MOVE_LEFT || dir == MOVE_RIGHT) {
-        IRCClient* client = world.selectedClient;
+        IRCClient* client = _world.selectedClient;
         if (!client) return;
-        NSUInteger pos = [world.clients indexOfObjectIdenticalTo:client];
+        NSUInteger pos = [_world.clients indexOfObjectIdenticalTo:client];
         if (pos == NSNotFound) return;
         int n = pos;
         int start = n;
-        int count = world.clients.count;
+        int count = _world.clients.count;
         if (count <= 1) return;
         while (1) {
             if (dir == MOVE_LEFT) {
@@ -834,18 +834,18 @@ typedef enum {
 
             if (n == start) break;
 
-            client = [world.clients objectAtIndex:n];
+            client = [_world.clients objectAtIndex:n];
             if (client) {
                 if (target == MOVE_ACTIVE) {
                     if (client.isLoggedIn) {
                         id t = client.lastSelectedChannel ?: (id)client;
-                        [world select:t];
+                        [_world select:t];
                         break;
                     }
                 }
                 else {
                     id t = client.lastSelectedChannel ?: (id)client;
-                    [world select:t];
+                    [_world select:t];
                     break;
                 }
             }
@@ -905,7 +905,7 @@ typedef enum {
 
 - (void)selectPreviousSelection:(NSEvent*)e
 {
-    [world selectPreviousItem];
+    [_world selectPreviousItem];
 }
 
 - (void)selectChannelAtNumber:(NSEvent*)e
@@ -914,7 +914,7 @@ typedef enum {
     if (s.length) {
         UniChar c = [s characterAtIndex:0];
         int n = c - '0';
-        [world selectChannelAt:n];
+        [_world selectChannelAt:n];
     }
 }
 
@@ -925,7 +925,7 @@ typedef enum {
         UniChar c = [s characterAtIndex:0];
         int n = c - '0';
         n = (n == 0) ? 9 : (n - 1);
-        [world selectClientAt:n];
+        [_world selectClientAt:n];
     }
 }
 
@@ -969,19 +969,19 @@ typedef enum {
 
 - (void)inputHistoryUp:(NSEvent*)e
 {
-    NSString* s = [inputHistory up:[text stringValue]];
+    NSString* s = [_inputHistory up:[text stringValue]];
     if (s) {
         [text setStringValue:s];
-        [world focusInputText];
+        [_world focusInputText];
     }
 }
 
 - (void)inputHistoryDown:(NSEvent*)e
 {
-    NSString* s = [inputHistory down:[text stringValue]];
+    NSString* s = [_inputHistory down:[text stringValue]];
     if (s) {
         [text setStringValue:s];
-        [world focusInputText];
+        [_world focusInputText];
     }
 }
 
@@ -997,13 +997,13 @@ typedef enum {
 
 - (void)inputHandler:(SEL)sel code:(int)keyCode mods:(NSUInteger)mods
 {
-    [fieldEditor registerKeyHandler:sel key:keyCode modifiers:mods];
+    [_fieldEditor registerKeyHandler:sel key:keyCode modifiers:mods];
 }
 
 - (void)registerKeyHandlers
 {
     [window setKeyHandlerTarget:self];
-    [fieldEditor setKeyHandlerTarget:self];
+    [_fieldEditor setKeyHandlerTarget:self];
 
     [self handler:@selector(tab:) code:KEY_TAB mods:0];
     [self handler:@selector(shiftTab:) code:KEY_TAB mods:NSShiftKeyMask];
@@ -1059,7 +1059,7 @@ typedef enum {
     NSString* name = host;
 
     NSString* hostPattern = @"^[^\\s]+\\s+\\(([^()]+)\\)";
-    NSRegularExpression* hostRegex = [[[NSRegularExpression alloc] initWithPattern:hostPattern options:0 error:NULL] autorelease];
+    NSRegularExpression* hostRegex = [[NSRegularExpression alloc] initWithPattern:hostPattern options:0 error:NULL];
     NSTextCheckingResult* result = [hostRegex firstMatchInString:host options:0 range:NSMakeRange(0, host.length)];
     if (result && result.numberOfRanges > 0) {
         name = [host substringWithRange:[result rangeAtIndex:1]];
@@ -1103,9 +1103,9 @@ typedef enum {
         }
     }
 
-    IRCClientConfig* c = [[[IRCClientConfig alloc] initWithDictionary:dic] autorelease];
-    IRCClient* u = [world createClient:c reload:YES];
-    [world save];
+    IRCClientConfig* c = [[IRCClientConfig alloc] initWithDictionary:dic];
+    IRCClient* u = [_world createClient:c reload:YES];
+    [_world save];
 
     if (c.autoConnect) {
         [u connect];
@@ -1114,8 +1114,7 @@ typedef enum {
 
 - (void)welcomeDialogWillClose:(WelcomeDialog*)sender
 {
-    [welcomeDialog autorelease];
-    welcomeDialog = nil;
+    _welcomeDialog = nil;
 
     [window makeKeyAndOrderFront:nil];
 }

@@ -9,10 +9,6 @@
 #import <Foundation/Foundation.h>
 
 @interface YAMLWrapper : NSObject
-{
-    Class tag;
-    id data;
-}
 + (id)wrapperWithData:(id)d tag:(Class)cn;
 - (id)initWrapperWithData:(id)d tag:(Class)cn;
 - (id)data;

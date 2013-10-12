@@ -7,13 +7,12 @@
 
 
 @implementation ChannelDialog
+{
+    BOOL _isSheet;
+    BOOL _isEndedSheet;
+}
 
-@synthesize delegate;
 @synthesize window;
-@synthesize parentWindow;
-@synthesize uid;
-@synthesize cid;
-@synthesize config;
 
 - (id)init
 {
@@ -24,17 +23,10 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [window release];
-    [config release];
-    [super dealloc];
-}
-
 - (void)start
 {
-    isSheet = NO;
-    isEndedSheet = NO;
+    _isSheet = NO;
+    _isEndedSheet = NO;
     [self load];
     [self update];
     [self show];
@@ -42,64 +34,64 @@
 
 - (void)startSheet
 {
-    isSheet = YES;
-    isEndedSheet = NO;
+    _isSheet = YES;
+    _isEndedSheet = NO;
     [self load];
     [self update];
-    [NSApp beginSheet:window modalForWindow:parentWindow modalDelegate:self didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:) contextInfo:nil];
+    [NSApp beginSheet:window modalForWindow:_parentWindow modalDelegate:self didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:) contextInfo:nil];
 }
 
 - (void)show
 {
     if (![self.window isVisible]) {
-        [self.window centerOfWindow:parentWindow];
+        [self.window centerOfWindow:_parentWindow];
     }
     [self.window makeKeyAndOrderFront:nil];
 }
 
 - (void)close
 {
-    delegate = nil;
+    _delegate = nil;
     [self.window close];
 }
 
 - (void)sheetDidEnd:(NSWindow*)sender returnCode:(NSInteger)returnCode contextInfo:(void*)contextInfo
 {
-    isEndedSheet = YES;
+    _isEndedSheet = YES;
     [window close];
 }
 
 - (void)load
 {
-    nameText.stringValue = config.name;
-    passwordText.stringValue = config.password;
-    modeText.stringValue = config.mode;
-    topicText.stringValue = config.topic;
+    nameText.stringValue = _config.name;
+    passwordText.stringValue = _config.password;
+    modeText.stringValue = _config.mode;
+    topicText.stringValue = _config.topic;
 
-    autoJoinCheck.state = config.autoJoin;
-    consoleCheck.state = config.logToConsole;
-    growlCheck.state = config.growl;
+    autoJoinCheck.state = _config.autoJoin;
+    consoleCheck.state = _config.logToConsole;
+    growlCheck.state = _config.growl;
 }
 
 - (void)save
 {
-    config.name = nameText.stringValue;
-    config.password = passwordText.stringValue;
-    config.mode = modeText.stringValue;
-    config.topic = topicText.stringValue;
+    _config.name = nameText.stringValue;
+    _config.password = passwordText.stringValue;
+    _config.mode = modeText.stringValue;
+    _config.topic = topicText.stringValue;
 
-    config.autoJoin = autoJoinCheck.state;
-    config.logToConsole = consoleCheck.state;
-    config.growl = growlCheck.state;
+    _config.autoJoin = autoJoinCheck.state;
+    _config.logToConsole = consoleCheck.state;
+    _config.growl = growlCheck.state;
 
-    if (![config.name isChannelName]) {
-        config.name = [@"#" stringByAppendingString:config.name];
+    if (![_config.name isChannelName]) {
+        _config.name = [@"#" stringByAppendingString:_config.name];
     }
 }
 
 - (void)update
 {
-    if (cid < 0) {
+    if (_cid < 0) {
         [self.window setTitle:@"New Channel"];
     }
     else {
@@ -125,8 +117,8 @@
 {
     [self save];
 
-    if ([delegate respondsToSelector:@selector(channelDialogOnOK:)]) {
-        [delegate channelDialogOnOK:self];
+    if ([_delegate respondsToSelector:@selector(channelDialogOnOK:)]) {
+        [_delegate channelDialogOnOK:self];
     }
 
     [self cancel:nil];
@@ -134,7 +126,7 @@
 
 - (void)cancel:(id)sender
 {
-    if (isSheet) {
+    if (_isSheet) {
         [NSApp endSheet:window];
     }
     else {
@@ -147,12 +139,12 @@
 
 - (void)windowWillClose:(NSNotification*)note
 {
-    if (isSheet && !isEndedSheet) {
+    if (_isSheet && !_isEndedSheet) {
         [NSApp endSheet:window];
     }
 
-    if ([delegate respondsToSelector:@selector(channelDialogWillClose:)]) {
-        [delegate channelDialogWillClose:self];
+    if ([_delegate respondsToSelector:@selector(channelDialogWillClose:)]) {
+        [_delegate channelDialogWillClose:self];
     }
 }
 

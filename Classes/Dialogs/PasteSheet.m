@@ -10,16 +10,9 @@ static NSDictionary* SYNTAX_EXT_MAP;
 
 
 @implementation PasteSheet
-
-@synthesize nick;
-@synthesize uid;
-@synthesize cid;
-@synthesize originalText;
-@synthesize syntax;
-@synthesize command;
-@synthesize size;
-@synthesize editMode;
-@synthesize isShortText;
+{
+    GistClient* _gist;
+}
 
 - (id)init
 {
@@ -28,16 +21,16 @@ static NSDictionary* SYNTAX_EXT_MAP;
         [NSBundle loadNibNamed:@"PasteSheet" owner:self];
 
         if (!SYNTAXES) {
-            SYNTAXES = [[NSArray arrayWithObjects:
+            SYNTAXES = [NSArray arrayWithObjects:
                          @"privmsg", @"notice", @"c", @"css", @"diff", @"html",
                          @"java", @"javascript", @"php", @"plain text", @"python",
                          @"ruby", @"sql", @"shell script", @"perl", @"haskell",
                          @"scheme", @"objective-c",
-                         nil] retain];
+                         nil];
         }
 
         if (!SYNTAX_EXT_MAP) {
-            SYNTAX_EXT_MAP = [[NSDictionary dictionaryWithObjectsAndKeys:
+            SYNTAX_EXT_MAP = [NSDictionary dictionaryWithObjectsAndKeys:
                                @"C", @"c",
                                @"CSS", @"css",
                                @"Diff", @"diff",
@@ -54,7 +47,7 @@ static NSDictionary* SYNTAX_EXT_MAP;
                                @"Scheme", @"scheme",
                                @"Shell", @"shell script",
                                @"SQL", @"sql",
-                               nil, nil] retain];
+                               nil, nil];
         }
     }
     return self;
@@ -62,32 +55,26 @@ static NSDictionary* SYNTAX_EXT_MAP;
 
 - (void)dealloc
 {
-    [nick release];
-    [originalText release];
-    [syntax release];
-    [command release];
-    [gist cancel];
-    [gist autorelease];
-    [super dealloc];
+    [_gist cancel];
 }
 
 - (void)start
 {
-    if (editMode) {
-        NSArray* lines = [originalText splitIntoLines];
-        isShortText = lines.count <= 3;
-        if (isShortText) {
+    if (_editMode) {
+        NSArray* lines = [_originalText splitIntoLines];
+        _isShortText = lines.count <= 3;
+        if (_isShortText) {
             self.syntax = @"privmsg";
         }
         [sheet makeFirstResponder:bodyText];
     }
 
-    [syntaxPopup selectItemWithTag:[self tagFromSyntax:syntax]];
-    [commandPopup selectItemWithTag:[self tagFromSyntax:command]];
-    [bodyText setString:originalText];
+    [syntaxPopup selectItemWithTag:[self tagFromSyntax:_syntax]];
+    [commandPopup selectItemWithTag:[self tagFromSyntax:_command]];
+    [bodyText setString:_originalText];
 
-    if (!NSEqualSizes(size, NSZeroSize)) {
-        [sheet setContentSize:size];
+    if (!NSEqualSizes(_size, NSZeroSize)) {
+        [sheet setContentSize:_size];
     }
 
     [self startSheet];
@@ -97,9 +84,8 @@ static NSDictionary* SYNTAX_EXT_MAP;
 {
     [self setRequesting:YES];
 
-    if (gist) {
-        [gist cancel];
-        [gist autorelease];
+    if (_gist) {
+        [_gist cancel];
     }
 
     NSString* s = bodyText.string;
@@ -108,15 +94,14 @@ static NSDictionary* SYNTAX_EXT_MAP;
         fileType = @"Text";
     }
 
-    gist = [GistClient new];
-    gist.delegate = self;
-    [gist send:s fileType:fileType private:YES];
+    _gist = [GistClient new];
+    _gist.delegate = self;
+    [_gist send:s fileType:fileType private:YES];
 }
 
 - (void)sendInChannel:(id)sender
 {
-    [command release];
-    command = [[self syntaxFromTag:commandPopup.selectedTag] retain];
+    _command = [self syntaxFromTag:commandPopup.selectedTag];
 
     NSString* s = bodyText.string;
 
@@ -185,8 +170,7 @@ static NSDictionary* SYNTAX_EXT_MAP;
 
 - (void)gistClient:(GistClient*)sender didReceiveResponse:(NSString*)url
 {
-    [gist autorelease];
-    gist = nil;
+    _gist = nil;
 
     [self setRequesting:NO];
 
@@ -206,8 +190,7 @@ static NSDictionary* SYNTAX_EXT_MAP;
 
 - (void)gistClient:(GistClient*)sender didFailWithError:(NSString*)error statusCode:(int)statusCode
 {
-    [gist autorelease];
-    gist = nil;
+    _gist = nil;
 
     [self setRequesting:NO];
     [errorLabel setStringValue:[NSString stringWithFormat:@"Gist error: %@", error]];
@@ -218,13 +201,11 @@ static NSDictionary* SYNTAX_EXT_MAP;
 
 - (void)windowWillClose:(NSNotification*)note
 {
-    [syntax release];
-    [command release];
-    syntax = [[self syntaxFromTag:syntaxPopup.selectedTag] retain];
-    command = [[self syntaxFromTag:commandPopup.selectedTag] retain];
+    _syntax = [self syntaxFromTag:syntaxPopup.selectedTag];
+    _command = [self syntaxFromTag:commandPopup.selectedTag];
 
     NSView* contentView = [sheet contentView];
-    size = contentView.frame.size;
+    _size = contentView.frame.size;
 
     if ([self.delegate respondsToSelector:@selector(pasteSheetWillClose:)]) {
         [self.delegate pasteSheetWillClose:self];

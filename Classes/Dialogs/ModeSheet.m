@@ -6,11 +6,6 @@
 
 @implementation ModeSheet
 
-@synthesize mode;
-@synthesize channelName;
-@synthesize uid;
-@synthesize cid;
-
 - (id)init
 {
     self = [super init];
@@ -20,36 +15,29 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [mode release];
-    [channelName release];
-    [super dealloc];
-}
-
 - (void)start
 {
-    [sCheck setState:mode.s];
-    [pCheck setState:mode.p];
-    [nCheck setState:mode.n];
-    [tCheck setState:mode.t];
-    [iCheck setState:mode.i];
-    [mCheck setState:mode.m];
-    [aCheck setState:mode.a];
-    [rCheck setState:mode.r];
-    [kCheck setState:mode.k.length > 0];
-    [lCheck setState:mode.l > 0];
+    [sCheck setState:_mode.s];
+    [pCheck setState:_mode.p];
+    [nCheck setState:_mode.n];
+    [tCheck setState:_mode.t];
+    [iCheck setState:_mode.i];
+    [mCheck setState:_mode.m];
+    [aCheck setState:_mode.a];
+    [rCheck setState:_mode.r];
+    [kCheck setState:_mode.k.length > 0];
+    [lCheck setState:_mode.l > 0];
 
-    [kText setStringValue:mode.k ?: @""];
-    [lText setStringValue:[NSString stringWithFormat:@"%d", mode.l]];
+    [kText setStringValue:_mode.k ?: @""];
+    [lText setStringValue:[NSString stringWithFormat:@"%d", _mode.l]];
 
     [self updateTextFields];
 
-    if ([channelName hasPrefix:@"!"]) {
+    if ([_channelName hasPrefix:@"!"]) {
         [aCheck setEnabled:YES];
         [rCheck setEnabled:YES];
     }
-    else if ([channelName hasPrefix:@"&"]) {
+    else if ([_channelName hasPrefix:@"&"]) {
         [aCheck setEnabled:YES];
         [rCheck setEnabled:NO];
     }
@@ -84,27 +72,27 @@
 
 - (void)ok:(id)sender
 {
-    mode.s = [sCheck state] == NSOnState;
-    mode.p = [pCheck state] == NSOnState;
-    mode.n = [nCheck state] == NSOnState;
-    mode.t = [tCheck state] == NSOnState;
-    mode.i = [iCheck state] == NSOnState;
-    mode.m = [mCheck state] == NSOnState;
-    mode.a = [aCheck state] == NSOnState;
-    mode.r = [rCheck state] == NSOnState;
+    _mode.s = [sCheck state] == NSOnState;
+    _mode.p = [pCheck state] == NSOnState;
+    _mode.n = [nCheck state] == NSOnState;
+    _mode.t = [tCheck state] == NSOnState;
+    _mode.i = [iCheck state] == NSOnState;
+    _mode.m = [mCheck state] == NSOnState;
+    _mode.a = [aCheck state] == NSOnState;
+    _mode.r = [rCheck state] == NSOnState;
 
     if ([kCheck state] == NSOnState) {
-        mode.k = [kText stringValue];
+        _mode.k = [kText stringValue];
     }
     else {
-        mode.k = @"";
+        _mode.k = @"";
     }
 
     if ([lCheck state] == NSOnState) {
-        mode.l = [[lText stringValue] intValue];
+        _mode.l = [[lText stringValue] intValue];
     }
     else {
-        mode.l = 0;
+        _mode.l = 0;
     }
 
     if ([self.delegate respondsToSelector:@selector(modeSheetOnOK:)]) {
