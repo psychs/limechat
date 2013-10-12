@@ -39,18 +39,6 @@
 #pragma mark -
 #pragma mark Utilities
 
-- (void)awakeFromNib
-{
-    SInt32 version = 0;
-    Gestalt(gestaltSystemVersion, &version);
-    if (version >= 0x1080) {
-        NSArray* columns = [soundsTable tableColumns];
-        if (columns.count > 3) {
-            [soundsTable removeTableColumn:[columns objectAtIndex:2]];
-        }
-    }
-}
-
 - (void)show
 {
     [self loadHotKey];
