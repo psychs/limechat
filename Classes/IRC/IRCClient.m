@@ -1741,9 +1741,9 @@
     NSString* desc = [NSString stringWithFormat:@"<%@> %@", nick, text];
 
     NSMutableDictionary* context = [NSMutableDictionary dictionary];
-    [context setObject:[NSNumber numberWithInt:self.uid] forKey:USER_NOTIFICATION_CLIENT_ID_KEY];
+    [context setObject:@(self.uid) forKey:USER_NOTIFICATION_CLIENT_ID_KEY];
     if (channel) {
-        [context setObject:[NSNumber numberWithInt:channel.uid] forKey:USER_NOTIFICATION_CHANNEL_ID_KEY];
+        [context setObject:@(channel.uid) forKey:USER_NOTIFICATION_CHANNEL_ID_KEY];
     }
     if (type == USER_NOTIFICATION_INVITED && text) {
         [context setObject:text forKey:USER_NOTIFICATION_INVITED_CHANNEL_NAME_KEY];
@@ -1795,9 +1795,9 @@
     }
 
     NSMutableDictionary* context = [NSMutableDictionary dictionary];
-    [context setObject:[NSNumber numberWithInt:self.uid] forKey:USER_NOTIFICATION_CLIENT_ID_KEY];
+    [context setObject:@(self.uid) forKey:USER_NOTIFICATION_CLIENT_ID_KEY];
     if (channel) {
-        [context setObject:[NSNumber numberWithInt:channel.uid] forKey:USER_NOTIFICATION_CHANNEL_ID_KEY];
+        [context setObject:@(channel.uid) forKey:USER_NOTIFICATION_CHANNEL_ID_KEY];
     }
     if (type == USER_NOTIFICATION_INVITED && text) {
         [context setObject:text forKey:USER_NOTIFICATION_INVITED_CHANNEL_NAME_KEY];

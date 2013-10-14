@@ -98,7 +98,7 @@
     [dic setObject:_nickText.stringValue forKey:@"nick"];
     [dic setObject:_hostCombo.stringValue forKey:@"host"];
     [dic setObject:chans forKey:@"channels"];
-    [dic setObject:[NSNumber numberWithBool:_autoConnectCheck.state] forKey:@"autoConnect"];
+    [dic setObject:@((BOOL)_autoConnectCheck.state) forKey:@"autoConnect"];
 
     if ([_delegate respondsToSelector:@selector(welcomeDialog:onOK:)]) {
         [_delegate welcomeDialog:self onOK:dic];

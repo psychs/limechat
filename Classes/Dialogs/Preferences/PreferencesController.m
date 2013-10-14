@@ -139,31 +139,31 @@
     if ([key isEqualToString:@"maxLogLines"]) {
         int n = [*value intValue];
         if (n < LINES_MIN) {
-            *value = [NSNumber numberWithInt:LINES_MIN];
+            *value = @(LINES_MIN);
         }
     }
     else if ([key isEqualToString:@"dccFirstPort"]) {
         int n = [*value intValue];
         if (n < PORT_MIN) {
-            *value = [NSNumber numberWithInt:PORT_MIN];
+            *value = @(PORT_MIN);
         }
         else if (PORT_MAX < n) {
-            *value = [NSNumber numberWithInt:PORT_MAX];
+            *value = @(PORT_MAX);
         }
     }
     else if ([key isEqualToString:@"dccLastPort"]) {
         int n = [*value intValue];
         if (n < PORT_MIN) {
-            *value = [NSNumber numberWithInt:PORT_MIN];
+            *value = @(PORT_MIN);
         }
         else if (PORT_MAX < n) {
-            *value = [NSNumber numberWithInt:PORT_MAX];
+            *value = @(PORT_MAX);
         }
     }
     else if ([key isEqualToString:@"pongInterval"]) {
         int n = [*value intValue];
         if (n < PONG_INTERVAL_MIN) {
-            *value = [NSNumber numberWithInt:PONG_INTERVAL_MIN];
+            *value = @(PONG_INTERVAL_MIN);
         }
     }
     return YES;
@@ -440,12 +440,12 @@
     if (_changingLogFont) {
         _logFont = [sender convertFont:_logFont];
         [self setValue:_logFont.fontName forKey:@"fontDisplayName"];
-        [self setValue:[NSNumber numberWithDouble:_logFont.pointSize] forKey:@"fontPointSize"];
+        [self setValue:@(_logFont.pointSize) forKey:@"fontPointSize"];
     }
     else {
         _inputFont = [sender convertFont:_inputFont];
         [self setValue:_inputFont.fontName forKey:@"inputFontDisplayName"];
-        [self setValue:[NSNumber numberWithDouble:_inputFont.pointSize] forKey:@"inputFontPointSize"];
+        [self setValue:@(_inputFont.pointSize) forKey:@"inputFontPointSize"];
     }
 
     [self onLayoutChanged:nil];

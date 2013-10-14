@@ -90,7 +90,7 @@
 {
     if (_status != DCC_RECEIVING) return;
 
-    [_speedRecords addObject:[NSNumber numberWithDouble:_currentRecord]];
+    [_speedRecords addObject:@(_currentRecord)];
     if (_speedRecords.count > RECORDS_LEN) [_speedRecords removeObjectAtIndex:0];
     _currentRecord = 0;
 }

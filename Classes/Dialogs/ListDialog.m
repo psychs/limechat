@@ -75,7 +75,7 @@
 
 - (void)addChannel:(NSString*)channel count:(int)count topic:(NSString*)topic
 {
-    NSArray* item = [NSArray arrayWithObjects:channel, [NSNumber numberWithInt:count], topic, nil];
+    NSArray* item = [NSArray arrayWithObjects:channel, @(count), topic, nil];
 
     NSString* filter = [_filterText stringValue];
     if (filter.length) {
@@ -241,7 +241,7 @@ static NSInteger compareItems(NSArray* self, NSArray* other, void* context)
 
     NSMutableArray* cols = [NSMutableArray array];
     for (NSTableColumn* col in [_table tableColumns]) {
-        [cols addObject:[NSNumber numberWithDouble:col.width]];
+        [cols addObject:@(col.width)];
     }
 
     NSDictionary* dic = [NSDictionary dictionaryWithObjectsAndKeys:win, @"window", cols, @"tablecols", nil];

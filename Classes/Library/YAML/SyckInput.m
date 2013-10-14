@@ -45,23 +45,23 @@ static SYMID cocoa_syck_parse_handler(SyckParser *p, SyckNode *n)
             }
             else if ( strcmp( type_id, "bool#yes" ) == 0 )
             {
-                v = [NSNumber numberWithBool:YES];
+                v = @YES;
             }
             else if ( strcmp( type_id, "bool#no" ) == 0 )
             {
-                v = [NSNumber numberWithBool:NO];
+                v = @NO;
             }
             else if ( strcmp( type_id, "int#hex" ) == 0 )
             {
                 syck_str_blow_away_commas( n );
                 long i2 = strtol( n->data.str->ptr, NULL, 16 );
-                v = [NSNumber numberWithLong:i2];
+                v = @(i2);
             }
             else if ( strcmp( type_id, "int#oct" ) == 0 )
             {
                 syck_str_blow_away_commas( n );
                 long i2 = strtol( n->data.str->ptr, NULL, 8 );
-                v = [NSNumber numberWithLong:i2];
+                v = @(i2);
             }
             else if ( strcmp( type_id, "int#base60" ) == 0 )
             {
@@ -86,12 +86,12 @@ static SYMID cocoa_syck_parse_handler(SyckParser *p, SyckNode *n)
                     sixty *= 60;
                     end = colon;
                 }
-                v = [NSNumber numberWithLong:total];
+                v = @(total);
             }
             else if ( strncmp( type_id, "int", 3 ) == 0 )
             {
                 syck_str_blow_away_commas( n );
-                v = [NSNumber numberWithLong:strtol( n->data.str->ptr, NULL, 10 )];
+                v = @(strtol( n->data.str->ptr, NULL, 10 ));
             }
             else if ( strcmp( type_id, "float#base60" ) == 0 )
             {
@@ -116,7 +116,7 @@ static SYMID cocoa_syck_parse_handler(SyckParser *p, SyckNode *n)
                     sixty *= 60;
                     end = colon;
                 }
-                v = [NSNumber numberWithFloat:total];
+                v = @(total);
             }
             else if ( strcmp( type_id, "float#nan" ) == 0 )
             {
@@ -133,7 +133,7 @@ static SYMID cocoa_syck_parse_handler(SyckParser *p, SyckNode *n)
             else if ( strncmp( type_id, "float", 5 ) == 0 )
             {
                 syck_str_blow_away_commas( n );
-                v = [NSNumber numberWithFloat:strtod( n->data.str->ptr, NULL )];
+                v = @(strtod( n->data.str->ptr, NULL ));
             }
             /*
              else if ( strcmp( type_id, "timestamp#iso8601" ) == 0 )

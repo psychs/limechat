@@ -434,7 +434,7 @@
             return c.password;
         }
         else if ([columnId isEqualToString:@"join"]) {
-            return [NSNumber numberWithBool:c.autoJoin];
+            return @(c.autoJoin);
         }
     }
     else {
@@ -492,7 +492,7 @@
 - (BOOL)tableView:(NSTableView *)sender writeRowsWithIndexes:(NSIndexSet *)rows toPasteboard:(NSPasteboard *)pboard
 {
     if (sender == _channelTable) {
-        NSArray* ary = [NSArray arrayWithObject:[NSNumber numberWithInt:[rows firstIndex]]];
+        NSArray* ary = [NSArray arrayWithObject:@([rows firstIndex])];
         [pboard declareTypes:TABLE_ROW_TYPES owner:self];
         [pboard setPropertyList:ary forType:TABLE_ROW_TYPE];
     }

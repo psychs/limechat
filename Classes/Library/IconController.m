@@ -32,7 +32,7 @@
             int y = iconSize.height - h;
             NSRect rect = NSMakeRect(x, y, w, h);
             NSRect sourceRect = NSMakeRect(0, 0, size.width, size.height);
-            NSDictionary* hints = @{NSImageHintInterpolation:[NSNumber numberWithInt:NSImageInterpolationHigh]};
+            NSDictionary* hints = @{NSImageHintInterpolation:@(NSImageInterpolationHigh)};
 
             icon = [icon copy];
             [icon lockFocus];

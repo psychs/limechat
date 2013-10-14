@@ -205,7 +205,7 @@
                 return NO;
             default:
             {
-                NSString* s = [[KeyRecorder specialKeyMap] objectForKey:[NSNumber numberWithInt:k]];
+                NSString* s = [[KeyRecorder specialKeyMap] objectForKey:@(k)];
                 if (!s) {
                     return YES;
                 }
@@ -215,7 +215,7 @@
     }
     else if (!ctrl && !shift && !alt && cmd) {
         // cmd
-        if (![[KeyRecorder padKeyArray] containsObject:[NSNumber numberWithInt:k]]) {
+        if (![[KeyRecorder padKeyArray] containsObject:@(k)]) {
             return NO;
         }
     }
@@ -263,13 +263,13 @@
 
 - (NSString*)transformKeyCodeToString:(unsigned int)k
 {
-    NSString* name = [[KeyRecorder specialKeyMap] objectForKey:[NSNumber numberWithInt:k]];
+    NSString* name = [[KeyRecorder specialKeyMap] objectForKey:@(k)];
     if (name) return name;
 
     NSString* s = [[KeyCodeTranslator sharedInstance] translateKeyCode:k];
     if (!s) return nil;
 
-    BOOL isPadKey = [[KeyRecorder padKeyArray] containsObject:[NSNumber numberWithInt:k]];
+    BOOL isPadKey = [[KeyRecorder padKeyArray] containsObject:@(k)];
     NSString* keyString = [s uppercaseString];
     if (isPadKey) {
         keyString = [NSString stringWithFormat:@"#%@", keyString];

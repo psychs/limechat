@@ -76,22 +76,22 @@
 
 - (void)setBool:(BOOL)value forKey:(NSString*)key
 {
-    [self setObject:[NSNumber numberWithBool:value] forKey:key];
+    [self setObject:@(value) forKey:key];
 }
 
 - (void)setInt:(int)value forKey:(NSString*)key
 {
-    [self setObject:[NSNumber numberWithInt:value] forKey:key];
+    [self setObject:@(value) forKey:key];
 }
 
 - (void)setLongLong:(long long)value forKey:(NSString*)key
 {
-    [self setObject:[NSNumber numberWithLongLong:value] forKey:key];
+    [self setObject:@(value) forKey:key];
 }
 
 - (void)setDouble:(double)value forKey:(NSString*)key
 {
-    [self setObject:[NSNumber numberWithDouble:value] forKey:key];
+    [self setObject:@(value) forKey:key];
 }
 
 @end

@@ -1494,7 +1494,7 @@ static void MyCFWriteStreamCallback(CFWriteStreamRef stream, CFStreamEventType t
     }
 
     [settings setObject:host forKey:(NSString*)kCFStreamPropertySOCKSProxyHost];
-    [settings setObject:[NSNumber numberWithInt:port] forKey:(NSString*)kCFStreamPropertySOCKSProxyPort];
+    [settings setObject:@(port) forKey:(NSString*)kCFStreamPropertySOCKSProxyPort];
 
     if ([user length]) [settings setObject:user forKey:(NSString*)kCFStreamPropertySOCKSUser];
     if ([password length]) [settings setObject:password forKey:(NSString*)kCFStreamPropertySOCKSPassword];

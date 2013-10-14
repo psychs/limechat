@@ -185,8 +185,8 @@
 
                 if (i < markLen) {
                     UniChar markChar = [markStr characterAtIndex:i];
-                    NSNumber* modeNumber = [NSNumber numberWithInt:modeChar];
-                    NSNumber* markNumber = [NSNumber numberWithInt:markChar];
+                    NSNumber* modeNumber = @(modeChar);
+                    NSNumber* markNumber = @(markChar);
                     [_markMap setObject:modeNumber forKey:markNumber];
                     [_modeMap setObject:markNumber forKey:modeNumber];
                 }
@@ -237,7 +237,7 @@
 
 - (char)modeForMark:(char)mark
 {
-    NSNumber* mode = [_markMap objectForKey:[NSNumber numberWithInt:mark]];
+    NSNumber* mode = [_markMap objectForKey:@(mark)];
     if (mode) {
         return [mode intValue];
     }
@@ -246,7 +246,7 @@
 
 - (char)markForMode:(char)mode
 {
-    NSNumber* mark = [_modeMap objectForKey:[NSNumber numberWithInt:mode]];
+    NSNumber* mark = [_modeMap objectForKey:@(mode)];
     if (mark) {
         return [mark intValue];
     }

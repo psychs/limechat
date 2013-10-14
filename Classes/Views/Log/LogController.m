@@ -129,7 +129,7 @@
     DOMHTMLDocument* doc = (DOMHTMLDocument*)[[_view mainFrame] DOMDocument];
     if (!doc) return;
     DOMHTMLElement* body = [doc body];
-    [body setValue:[NSNumber numberWithInt:0] forKey:@"scrollTop"];
+    [body setValue:@0 forKey:@"scrollTop"];
 }
 
 - (void)moveToBottom
@@ -234,7 +234,7 @@
             }
             t = (DOMHTMLElement*)[t parentNode];
         }
-        [[doc body] setValue:[NSNumber numberWithInt:y - 20] forKey:@"scrollTop"];
+        [[doc body] setValue:@(y - 20) forKey:@"scrollTop"];
     }
 }
 
@@ -439,7 +439,7 @@
     if (!viewingBottom) {
         // scroll back by delta
         if (delta > 0) {
-            [body setValue:[NSNumber numberWithInt:top - delta] forKey:@"scrollTop"];
+            [body setValue:@(top - delta) forKey:@"scrollTop"];
         }
     }
 
@@ -638,7 +638,7 @@
     }
 
     if ([[attrs objectForKey:@"highlight"] isEqualToString:@"true"]) {
-        [_highlightedLineNumbers addObject:[NSNumber numberWithInt:currentLineNumber]];
+        [_highlightedLineNumbers addObject:@(currentLineNumber)];
     }
 
     if (_scroller) {
@@ -885,7 +885,7 @@
                 [self moveToBottom];
             }
             else if (_scrollTop) {
-                [body setValue:[NSNumber numberWithInt:_scrollTop] forKey:@"scrollTop"];
+                [body setValue:@(_scrollTop) forKey:@"scrollTop"];
             }
         }
     }
@@ -1049,7 +1049,7 @@
             DOMHTMLElement* e = (DOMHTMLElement*)[doc getElementById:key];
             if (e) {
                 int pos = [[e valueForKey:@"offsetTop"] intValue] + [[e valueForKey:@"offsetHeight"] intValue] / 2;
-                [result addObject:[NSNumber numberWithInt:pos]];
+                [result addObject:@(pos)];
             }
         }
     }

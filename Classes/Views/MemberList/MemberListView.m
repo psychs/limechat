@@ -195,7 +195,7 @@
         int row = [self draggedRow:sender];
         if (row >= 0) {
             if ([_dropDelegate respondsToSelector:@selector(memberListViewDropFiles:row:)]) {
-                [_dropDelegate memberListViewDropFiles:files row:[NSNumber numberWithInt:row]];
+                [_dropDelegate memberListViewDropFiles:files row:@(row)];
             }
             return YES;
         }

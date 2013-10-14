@@ -456,8 +456,8 @@
 {
     NSSize size = _pasteSheet.size;
     NSDictionary* dic = [NSDictionary dictionaryWithObjectsAndKeys:
-                         [NSNumber numberWithInt:size.width], @"w",
-                         [NSNumber numberWithInt:size.height], @"h",
+                         @(size.width), @"w",
+                         @(size.height), @"h",
                          nil];
     [Preferences saveWindowState:dic name:@"paste_sheet"];
 

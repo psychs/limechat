@@ -1073,9 +1073,9 @@ typedef enum {
     for (NSString* s in [config objectForKey:@"channels"]) {
         [channels addObject:[NSDictionary dictionaryWithObjectsAndKeys:
                              s, @"name",
-                             [NSNumber numberWithBool:YES], @"auto_join",
-                             [NSNumber numberWithBool:YES], @"console",
-                             [NSNumber numberWithBool:YES], @"growl",
+                             @YES, @"auto_join",
+                             @YES, @"console",
+                             @YES, @"growl",
                              @"+sn", @"mode",
                              nil]];
     }
@@ -1096,10 +1096,10 @@ typedef enum {
             || [net contains:@"quakenet"]
             || [net contains:@"mozilla"]
             || [net contains:@"ustream"]) {
-            [dic setObject:[NSNumber numberWithLong:NSUTF8StringEncoding] forKey:@"encoding"];
+            [dic setObject:@(NSUTF8StringEncoding) forKey:@"encoding"];
         }
         else {
-            [dic setObject:[NSNumber numberWithLong:NSISO2022JPStringEncoding] forKey:@"encoding"];
+            [dic setObject:@(NSISO2022JPStringEncoding) forKey:@"encoding"];
         }
     }
 
