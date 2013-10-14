@@ -151,22 +151,6 @@
     return YES;
 }
 
-static int ctoi(unsigned char c)
-{
-    if ('0' <= c && c <= '9') {
-        return c - '0';
-    }
-    else if ('a' <= c && c <= 'f') {
-        return c - 'a' + 10;
-    }
-    else if ('A' <= c && c <= 'F') {
-        return c - 'A' + 10;
-    }
-    else {
-        return 0;
-    }
-}
-
 static BOOL isUnicharDigit(unichar c)
 {
     return '0' <= c && c <= '9';
