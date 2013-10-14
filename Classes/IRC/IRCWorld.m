@@ -44,8 +44,7 @@
     return self;
 }
 
-#pragma mark -
-#pragma mark Init
+#pragma mark - Init
 
 - (void)setup:(IRCWorldConfig*)seed
 {
@@ -128,8 +127,7 @@
     _channelMenu = [[item submenu] copy];
 }
 
-#pragma mark -
-#pragma mark Properties
+#pragma mark - Properties
 
 - (IRCClient*)selectedClient
 {
@@ -144,8 +142,7 @@
     return (IRCChannel*)_selected;
 }
 
-#pragma mark -
-#pragma mark Utilities
+#pragma mark - Utilities
 
 - (void)onTimer
 {
@@ -310,8 +307,7 @@
     }
 }
 
-#pragma mark -
-#pragma mark User Notification
+#pragma mark - User Notification
 
 - (void)sendUserNotification:(UserNotificationType)type title:(NSString*)title desc:(NSString*)desc context:(id)context
 {
@@ -364,8 +360,7 @@
 	}
 }
 
-#pragma mark -
-#pragma mark Window Title
+#pragma mark - Window Title
 
 - (void)updateTitle
 {
@@ -468,8 +463,7 @@
     }
 }
 
-#pragma mark -
-#pragma mark Tree Items
+#pragma mark - Tree Items
 
 - (IRCClient*)findClient:(NSString*)name
 {
@@ -567,8 +561,7 @@
     }
 }
 
-#pragma mark -
-#pragma mark Theme
+#pragma mark - Theme
 
 - (void)reloadTheme
 {
@@ -646,8 +639,7 @@
     }
 }
 
-#pragma mark -
-#pragma mark Factory
+#pragma mark - Factory
 
 - (IRCClient*)createClient:(IRCClientConfig*)seed reload:(BOOL)reload
 {
@@ -850,8 +842,7 @@
     return c;
 }
 
-#pragma mark -
-#pragma mark Log Delegate
+#pragma mark - Log Delegate
 
 - (void)logKeyDown:(NSEvent*)e
 {
@@ -894,8 +885,7 @@
     }
 }
 
-#pragma mark -
-#pragma mark NSOutlineView Delegate
+#pragma mark - NSOutlineView Delegate
 
 - (void)outlineViewDoubleClicked:(id)sender
 {
@@ -1183,8 +1173,7 @@
     return YES;
 }
 
-#pragma mark -
-#pragma mark memberListView Delegate
+#pragma mark - memberListView Delegate
 
 - (void)memberListViewKeyDown:(NSEvent*)e
 {

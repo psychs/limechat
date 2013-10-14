@@ -67,8 +67,7 @@
 }
 
 
-#pragma mark -
-#pragma mark TwitterImageURLClientDelegate
+#pragma mark - TwitterImageURLClientDelegate
 
 - (void)twitterImageURLClient:(TwitterImageURLClient*)sender didGetImageURL:(NSString*)imageUrl
 {

@@ -169,8 +169,7 @@ static NSMutableArray* excludeWords;
     return [ud objectForKey:@"Preferences.Keyword.words"];
 }
 
-#pragma mark -
-#pragma mark Paste
+#pragma mark - Paste
 
 + (NSString*)pasteCommand
 {
@@ -196,8 +195,7 @@ static NSMutableArray* excludeWords;
     [ud setObject:value forKey:@"Preferences.General.paste_syntax"];
 }
 
-#pragma mark -
-#pragma mark Theme
+#pragma mark - Theme
 
 + (NSString*)themeName
 {
@@ -301,8 +299,7 @@ static NSMutableArray* excludeWords;
     return [ud doubleForKey:@"Preferences.Theme.transparency"];
 }
 
-#pragma mark -
-#pragma mark DCC Ports
+#pragma mark - DCC Ports
 
 + (int)dccFirstPort
 {
@@ -328,8 +325,7 @@ static NSMutableArray* excludeWords;
     [ud setInteger:value forKey:@"Preferences.Dcc.last_port"];
 }
 
-#pragma mark -
-#pragma mark Connectivity
+#pragma mark - Connectivity
 
 + (int)pongInterval
 {
@@ -343,8 +339,7 @@ static NSMutableArray* excludeWords;
     [ud setInteger:value forKey:@"Preferences.Advanced.pongInterval"];
 }
 
-#pragma mark -
-#pragma mark Max Log Lines
+#pragma mark - Max Log Lines
 
 + (int)maxLogLines
 {
@@ -358,8 +353,7 @@ static NSMutableArray* excludeWords;
     [ud setInteger:value forKey:@"Preferences.General.max_log_lines"];
 }
 
-#pragma mark -
-#pragma mark Transcript Folder
+#pragma mark - Transcript Folder
 
 + (NSString*)transcriptFolder
 {
@@ -373,8 +367,7 @@ static NSMutableArray* excludeWords;
     [ud setObject:value forKey:@"Preferences.General.transcript_folder"];
 }
 
-#pragma mark -
-#pragma mark Events
+#pragma mark - Events
 
 + (NSString*)titleForEvent:(UserNotificationType)event
 {
@@ -538,8 +531,7 @@ static NSMutableArray* excludeWords;
     [ud setBool:value forKey:key];
 }
 
-#pragma mark -
-#pragma mark World
+#pragma mark - World
 
 + (BOOL)spellCheckEnabled
 {
@@ -651,8 +643,7 @@ static NSMutableArray* excludeWords;
     [ud setBool:value forKey:@"textReplacement"];
 }
 
-#pragma mark -
-#pragma mark World
+#pragma mark - World
 
 + (NSDictionary*)loadWorld
 {
@@ -666,8 +657,7 @@ static NSMutableArray* excludeWords;
     [ud setObject:value forKey:@"world"];
 }
 
-#pragma mark -
-#pragma mark Window
+#pragma mark - Window
 
 + (NSDictionary*)loadWindowStateWithName:(NSString*)name
 {
@@ -681,8 +671,7 @@ static NSMutableArray* excludeWords;
     [ud setObject:value forKey:name];
 }
 
-#pragma mark -
-#pragma mark Hot Keys
+#pragma mark - Hot Keys
 
 + (int)hotKeyKeyCode
 {
@@ -708,8 +697,7 @@ static NSMutableArray* excludeWords;
     [ud setInteger:value forKey:@"Preferences.General.hotkey_modifier_flags"];
 }
 
-#pragma mark -
-#pragma mark Keywords
+#pragma mark - Keywords
 
 + (void)loadKeywords
 {
@@ -795,8 +783,7 @@ static NSMutableArray* excludeWords;
     return excludeWords;
 }
 
-#pragma mark -
-#pragma mark KVO
+#pragma mark - KVO
 
 + (void)observeValueForKeyPath:(NSString*)key ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
@@ -869,8 +856,7 @@ static NSMutableArray* excludeWords;
     [self loadExcludeWords];
 }
 
-#pragma mark -
-#pragma mark Migration
+#pragma mark - Migration
 
 + (void)migrate
 {

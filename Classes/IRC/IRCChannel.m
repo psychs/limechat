@@ -27,8 +27,7 @@
     return self;
 }
 
-#pragma mark -
-#pragma mark Init
+#pragma mark - Init
 
 - (void)setup:(IRCChannelConfig*)seed
 {
@@ -51,8 +50,7 @@
     return [_config dictionaryValue];
 }
 
-#pragma mark -
-#pragma mark Properties
+#pragma mark - Properties
 
 - (NSString*)name
 {
@@ -88,8 +86,7 @@
     return nil;
 }
 
-#pragma mark -
-#pragma mark Utilities
+#pragma mark - Utilities
 
 - (void)terminate
 {
@@ -177,8 +174,7 @@
     return result;
 }
 
-#pragma mark -
-#pragma mark Member List
+#pragma mark - Member List
 
 - (void)sortedInsert:(IRCUser*)item
 {
@@ -351,8 +347,7 @@
     }
 }
 
-#pragma mark -
-#pragma mark IRCTreeItem
+#pragma mark - IRCTreeItem
 
 - (BOOL)isClient
 {
@@ -384,8 +379,7 @@
     return _config.name;
 }
 
-#pragma mark -
-#pragma mark NSTableViwe Delegate
+#pragma mark - NSTableViwe Delegate
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)sender
 {

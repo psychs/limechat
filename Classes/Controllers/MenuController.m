@@ -257,8 +257,7 @@
     return YES;
 }
 
-#pragma mark -
-#pragma mark Utilities
+#pragma mark - Utilities
 
 - (LogView*)currentWebView
 {
@@ -325,8 +324,7 @@
     }
 }
 
-#pragma mark -
-#pragma mark Menu Items
+#pragma mark - Menu Items
 
 - (void)onPreferences:(id)sender
 {

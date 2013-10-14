@@ -165,8 +165,7 @@ static NSDictionary* SYNTAX_EXT_MAP;
     return nil;
 }
 
-#pragma mark -
-#pragma mark GistClient Delegate
+#pragma mark - GistClient Delegate
 
 - (void)gistClient:(GistClient*)sender didReceiveResponse:(NSString*)url
 {
@@ -196,8 +195,7 @@ static NSDictionary* SYNTAX_EXT_MAP;
     [_errorLabel setStringValue:[NSString stringWithFormat:@"Gist error: %@", error]];
 }
 
-#pragma mark -
-#pragma mark NSWindow Delegate
+#pragma mark - NSWindow Delegate
 
 - (void)windowWillClose:(NSNotification*)note
 {

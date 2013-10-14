@@ -65,8 +65,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-#pragma mark -
-#pragma mark Properties
+#pragma mark - Properties
 
 - (void)setMaxLines:(int)value
 {
@@ -82,8 +81,7 @@
     }
 }
 
-#pragma mark -
-#pragma mark Utilities
+#pragma mark - Utilities
 
 - (void)setUp
 {
@@ -857,8 +855,7 @@
     }
 }
 
-#pragma mark -
-#pragma mark WebView Delegate
+#pragma mark - WebView Delegate
 
 - (void)webView:(WebView *)sender didClearWindowObject:(WebScriptObject *)windowObject forFrame:(WebFrame *)frame
 {
@@ -1015,8 +1012,7 @@
     return request;
 }
 
-#pragma mark -
-#pragma mark LogView Delegate
+#pragma mark - LogView Delegate
 
 - (void)logViewKeyDown:(NSEvent *)e
 {
@@ -1038,8 +1034,7 @@
     [self restorePosition];
 }
 
-#pragma mark -
-#pragma mark MarkedScroller Delegate
+#pragma mark - MarkedScroller Delegate
 
 - (NSArray*)markedScrollerPositions:(MarkedScroller*)sender
 {
@@ -1065,8 +1060,7 @@
     return [[_theme other] logScrollerMarkColor];
 }
 
-#pragma mark -
-#pragma mark TwitterAvatarImageURLManager Notifications
+#pragma mark - TwitterAvatarImageURLManager Notifications
 
 - (void)twitterAvatarURLManagerDidGetImageURL:(NSNotification*)note
 {

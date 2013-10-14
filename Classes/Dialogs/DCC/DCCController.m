@@ -290,8 +290,7 @@
     [_senders removeObjectAtIndex:i];
 }
 
-#pragma mark -
-#pragma mark Actions
+#pragma mark - Actions
 
 - (BOOL)validateMenuItem:(NSMenuItem *)item
 {
@@ -491,8 +490,7 @@
     [self updateTimer];
 }
 
-#pragma mark -
-#pragma mark DCCReceiver Delegate
+#pragma mark - DCCReceiver Delegate
 
 - (void)removeControlsFromReceiver:(DCCReceiver*)receiver
 {
@@ -553,8 +551,7 @@
     [SoundPlayer play:[Preferences soundForEvent:USER_NOTIFICATION_FILE_RECEIVE_SUCCESS]];
 }
 
-#pragma mark -
-#pragma mark DCCSender Delegate
+#pragma mark - DCCSender Delegate
 
 - (void)removeControlsFromSender:(DCCSender*)sender
 {
@@ -628,8 +625,7 @@
     [SoundPlayer play:[Preferences soundForEvent:USER_NOTIFICATION_FILE_SEND_SUCCESS]];
 }
 
-#pragma mark -
-#pragma mark NSTableViwe Delegate
+#pragma mark - NSTableViwe Delegate
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)sender
 {
@@ -686,8 +682,7 @@
     }
 }
 
-#pragma mark -
-#pragma mark Timer Delegate
+#pragma mark - Timer Delegate
 
 - (void)updateTimer
 {
@@ -754,16 +749,14 @@
     }
 }
 
-#pragma mark -
-#pragma mark DialogWindow Delegate
+#pragma mark - DialogWindow Delegate
 
 - (void)dialogWindowEscape
 {
     [self.window close];
 }
 
-#pragma mark -
-#pragma mark NSWindow Delegate
+#pragma mark - NSWindow Delegate
 
 - (void)windowDidBecomeMain:(NSNotification *)note
 {

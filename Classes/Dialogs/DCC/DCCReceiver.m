@@ -144,8 +144,7 @@
     }
 }
 
-#pragma mark -
-#pragma mark TCPClient Delegate
+#pragma mark - TCPClient Delegate
 
 - (void)tcpClientDidConnect:(TCPClient*)sender
 {

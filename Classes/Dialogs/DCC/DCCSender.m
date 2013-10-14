@@ -196,8 +196,7 @@
     }
 }
 
-#pragma mark -
-#pragma mark TCPServer Delegate
+#pragma mark - TCPServer Delegate
 
 - (void)tcpServer:(TCPServer*)sender didAccept:(TCPClient*)aClient
 {

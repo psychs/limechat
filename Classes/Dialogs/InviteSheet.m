@@ -49,8 +49,7 @@
     [self endSheet];
 }
 
-#pragma mark -
-#pragma mark NSWindow Delegate
+#pragma mark - NSWindow Delegate
 
 - (void)windowWillClose:(NSNotification*)note
 {

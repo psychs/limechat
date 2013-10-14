@@ -108,8 +108,7 @@
     [self update];
 }
 
-#pragma mark -
-#pragma mark Actions
+#pragma mark - Actions
 
 - (void)ok:(id)sender
 {
@@ -132,8 +131,7 @@
     }
 }
 
-#pragma mark -
-#pragma mark NSWindow Delegate
+#pragma mark - NSWindow Delegate
 
 - (void)windowWillClose:(NSNotification*)note
 {

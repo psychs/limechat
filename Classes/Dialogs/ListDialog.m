@@ -154,8 +154,7 @@ static NSInteger compareItems(NSArray* self, NSArray* other, void* context)
     [ary insertObject:item atIndex:right];
 }
 
-#pragma mark -
-#pragma mark Actions
+#pragma mark - Actions
 
 - (void)onClose:(id)sender
 {
@@ -248,8 +247,7 @@ static NSInteger compareItems(NSArray* self, NSArray* other, void* context)
     [Preferences saveWindowState:dic name:@"channel_list_window"];
 }
 
-#pragma mark -
-#pragma mark NSTableView Delegate
+#pragma mark - NSTableView Delegate
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)sender
 {
@@ -307,8 +305,7 @@ static NSInteger compareItems(NSArray* self, NSArray* other, void* context)
     [self reloadTable];
 }
 
-#pragma mark -
-#pragma mark NSWindow Delegate
+#pragma mark - NSWindow Delegate
 
 - (void)windowWillClose:(NSNotification*)note
 {

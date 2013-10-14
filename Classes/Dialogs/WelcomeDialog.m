@@ -153,8 +153,7 @@
     [_okButton setEnabled:nick.length > 0 && host.length > 0];
 }
 
-#pragma mark -
-#pragma mark NSTableViwe Delegate
+#pragma mark - NSTableViwe Delegate
 
 - (void)textDidEndEditing:(NSNotification*)note
 {
@@ -183,8 +182,7 @@
     [_deleteChannelButton setEnabled:[_channelTable selectedRow] >= 0];
 }
 
-#pragma mark -
-#pragma mark NSWindow Delegate
+#pragma mark - NSWindow Delegate
 
 - (void)windowWillClose:(NSNotification*)note
 {

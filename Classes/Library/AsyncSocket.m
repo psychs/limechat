@@ -16,7 +16,7 @@
 #import <CFNetwork/CFSocketStream.h>
 #import <SystemConfiguration/SystemConfiguration.h>
 
-#pragma mark Declarations
+#pragma mark - Declarations
 
 #define READQUEUE_CAPACITY	5			/* Initial capacity. */
 #define WRITEQUEUE_CAPACITY 5			/* Initial capacity. */

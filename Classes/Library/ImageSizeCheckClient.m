@@ -48,8 +48,7 @@
     _conn = [[NSURLConnection alloc] initWithRequest:req delegate:self];
 }
 
-#pragma mark -
-#pragma mark NSURLConnection Delegate
+#pragma mark - NSURLConnection Delegate
 
 - (NSCachedURLResponse *)connection:(NSURLConnection *)connection willCacheResponse:(NSCachedURLResponse *)cachedResponse
 {

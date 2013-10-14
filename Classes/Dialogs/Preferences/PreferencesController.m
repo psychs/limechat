@@ -32,8 +32,7 @@
     return self;
 }
 
-#pragma mark -
-#pragma mark Utilities
+#pragma mark - Utilities
 
 - (void)show
 {
@@ -51,8 +50,7 @@
     [self.window makeKeyAndOrderFront:nil];
 }
 
-#pragma mark -
-#pragma mark KVC Properties
+#pragma mark - KVC Properties
 
 - (void)setFontDisplayName:(NSString*)value
 {
@@ -169,8 +167,7 @@
     return YES;
 }
 
-#pragma mark -
-#pragma mark Hot Key
+#pragma mark - Hot Key
 
 - (void)loadHotKey
 {
@@ -194,8 +191,7 @@
     }
 }
 
-#pragma mark -
-#pragma mark Sounds
+#pragma mark - Sounds
 
 - (NSArray*)availableSounds
 {
@@ -262,8 +258,7 @@
     return _sounds;
 }
 
-#pragma mark -
-#pragma mark Transcript Folder Popup
+#pragma mark - Transcript Folder Popup
 
 - (void)updateTranscriptFolder
 {
@@ -324,8 +319,7 @@
     _transcriptFolderOpenPanel = d;
 }
 
-#pragma mark -
-#pragma mark Theme
+#pragma mark - Theme
 
 - (void)updateTheme
 {
@@ -461,8 +455,7 @@
     [self onLayoutChanged:nil];
 }
 
-#pragma mark -
-#pragma mark Actions
+#pragma mark - Actions
 
 - (void)editTable:(NSTableView*)table
 {
@@ -489,8 +482,7 @@
     [nc postNotificationName:ThemeDidChangeNotification object:nil userInfo:nil];
 }
 
-#pragma mark -
-#pragma mark NSWindow Delegate
+#pragma mark - NSWindow Delegate
 
 - (void)windowWillClose:(NSNotification *)note
 {

@@ -204,8 +204,7 @@
     [_ignoreTable reloadData];
 }
 
-#pragma mark -
-#pragma mark Actions
+#pragma mark - Actions
 
 - (void)ok:(id)sender
 {
@@ -259,8 +258,7 @@
     //[sslCheck setEnabled:tag == PROXY_NONE];
 }
 
-#pragma mark -
-#pragma mark Channel Actions
+#pragma mark - Channel Actions
 
 - (void)addChannel:(id)sender
 {
@@ -349,8 +347,7 @@
     [self reloadChannelTable];
 }
 
-#pragma mark -
-#pragma mark Ignore Actions
+#pragma mark - Ignore Actions
 
 - (void)addIgnore:(id)sender
 {
@@ -408,8 +405,7 @@
     _ignoreSheet = nil;
 }
 
-#pragma mark -
-#pragma mark NSTableViwe Delegate
+#pragma mark - NSTableViwe Delegate
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)sender
 {
@@ -557,8 +553,7 @@
     return NO;
 }
 
-#pragma mark -
-#pragma mark NSWindow Delegate
+#pragma mark - NSWindow Delegate
 
 - (void)windowWillClose:(NSNotification*)note
 {
@@ -569,8 +564,7 @@
     }
 }
 
-#pragma mark -
-#pragma mark Servers
+#pragma mark - Servers
 
 + (NSArray*)availableServers
 {

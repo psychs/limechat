@@ -54,8 +54,7 @@ static ImageDownloadManager* _instance;
     [_checkers addObject:c];
 }
 
-#pragma mark -
-#pragma mark ImageSizeCheckClient Delegate
+#pragma mark - ImageSizeCheckClient Delegate
 
 - (void)imageSizeCheckClient:(ImageSizeCheckClient*)sender didReceiveContentLength:(long long)contentLength andType:(NSString*)contentType
 {

@@ -141,8 +141,7 @@
     [super ok:sender];
 }
 
-#pragma mark -
-#pragma mark NSWindow Delegate
+#pragma mark - NSWindow Delegate
 
 - (void)windowWillClose:(NSNotification*)note
 {
@@ -151,8 +150,7 @@
     }
 }
 
-#pragma mark -
-#pragma mark NSTableViwe Delegate
+#pragma mark - NSTableViwe Delegate
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)sender
 {

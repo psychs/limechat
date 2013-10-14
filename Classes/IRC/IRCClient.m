@@ -130,8 +130,7 @@
     [_commandQueueTimer stop];
 }
 
-#pragma mark -
-#pragma mark Init
+#pragma mark - Init
 
 - (void)setup:(IRCClientConfig*)seed
 {
@@ -215,8 +214,7 @@
     return dic;
 }
 
-#pragma mark -
-#pragma mark Properties
+#pragma mark - Properties
 
 - (NSString*)name
 {
@@ -233,8 +231,7 @@
     return _reconnectTimer && _reconnectTimer.isActive;
 }
 
-#pragma mark -
-#pragma mark Utilities
+#pragma mark - Utilities
 
 - (void)autoConnect:(int)delay
 {
@@ -319,8 +316,7 @@
     return NO;
 }
 
-#pragma mark -
-#pragma mark ListDialog
+#pragma mark - ListDialog
 
 - (void)createChannelListDialog
 {
@@ -349,8 +345,7 @@
     _channelListDialog = nil;
 }
 
-#pragma mark -
-#pragma mark Timers
+#pragma mark - Timers
 
 - (void)startPongTimer
 {
@@ -446,8 +441,7 @@
     [self performAutoJoin];
 }
 
-#pragma mark -
-#pragma mark Commands
+#pragma mark - Commands
 
 - (void)connect
 {
@@ -799,8 +793,7 @@
     [self joinChannel:c password:pass];
 }
 
-#pragma mark -
-#pragma mark Sending Text
+#pragma mark - Sending Text
 
 - (BOOL)inputText:(NSString*)str command:(NSString*)command
 {
@@ -1607,8 +1600,7 @@
     [self sendLine:s];
 }
 
-#pragma mark -
-#pragma mark Find Channel
+#pragma mark - Find Channel
 
 - (IRCChannel*)findChannel:(NSString*)name
 {
@@ -1630,8 +1622,7 @@
     return -1;
 }
 
-#pragma mark -
-#pragma mark Command Queue
+#pragma mark - Command Queue
 
 - (void)processCommandsInCommandQueue
 {
@@ -1698,8 +1689,7 @@
     [self processCommandsInCommandQueue];
 }
 
-#pragma mark -
-#pragma mark Window Title
+#pragma mark - Window Title
 
 - (void)updateClientTitle
 {
@@ -1711,8 +1701,7 @@
     [_world updateChannelTitle:c];
 }
 
-#pragma mark -
-#pragma mark Growl
+#pragma mark - Growl
 
 - (void)notifyText:(UserNotificationType)type target:(id)target nick:(NSString*)nick text:(NSString*)text
 {
@@ -1806,8 +1795,7 @@
     [_world sendUserNotification:type title:title desc:desc context:context];
 }
 
-#pragma mark -
-#pragma mark Channel States
+#pragma mark - Channel States
 
 - (void)setKeywordState:(id)t
 {
@@ -1838,8 +1826,7 @@
     [_world updateIcon];
 }
 
-#pragma mark -
-#pragma mark Print
+#pragma mark - Print
 
 - (NSString*)formatTimestamp:(time_t)global
 {
@@ -2209,8 +2196,7 @@
     [self printBoth:nil type:LINE_TYPE_ERROR text:error timestamp:receivedAt];
 }
 
-#pragma mark -
-#pragma mark IRCTreeItem
+#pragma mark - IRCTreeItem
 
 - (BOOL)isClient
 {
@@ -2242,8 +2228,7 @@
     return _config.name;
 }
 
-#pragma mark -
-#pragma mark WhoisDialog
+#pragma mark - WhoisDialog
 
 - (WhoisDialog*)createWhoisDialogWithNick:(NSString*)nick username:(NSString*)username address:(NSString*)address realname:(NSString*)realname
 {
@@ -2293,8 +2278,7 @@
     [_whoisDialogs removeObjectIdenticalTo:sender];
 }
 
-#pragma mark -
-#pragma mark HostResolver Delegate
+#pragma mark - HostResolver Delegate
 
 - (void)hostResolver:(HostResolver*)sender didResolve:(NSHost*)host
 {
@@ -2308,8 +2292,7 @@
 {
 }
 
-#pragma mark -
-#pragma mark Protocol Handlers
+#pragma mark - Protocol Handlers
 
 - (void)receivePrivmsgAndNotice:(IRCMessage*)m
 {
@@ -3610,8 +3593,7 @@
     [self send:NICK, _sentNick, nil];
 }
 
-#pragma mark -
-#pragma mark IRCConnection Delegate
+#pragma mark - IRCConnection Delegate
 
 - (void)changeStateOff
 {
@@ -3770,8 +3752,7 @@
 {
 }
 
-#pragma mark -
-#pragma mark Class Method
+#pragma mark - Class Method
 
 + (NSDateFormatter*)dateTimeFormatter
 {

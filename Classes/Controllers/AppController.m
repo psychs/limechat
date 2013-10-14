@@ -37,8 +37,7 @@
     BOOL _terminating;
 }
 
-#pragma mark -
-#pragma mark NSApplication Delegate
+#pragma mark - NSApplication Delegate
 
 - (void)awakeFromNib
 {
@@ -279,16 +278,14 @@
     [self saveWindowState];
 }
 
-#pragma mark -
-#pragma mark SUUpdater Delegate
+#pragma mark - SUUpdater Delegate
 
 - (void)updaterWillRelaunchApplication:(id)sender
 {
     _terminating = YES;
 }
 
-#pragma mark -
-#pragma mark NSWorkspace Notifications
+#pragma mark - NSWorkspace Notifications
 
 - (void)computerWillSleep:(NSNotification*)note
 {
@@ -312,8 +309,7 @@
     //LOG(@"%@", url);
 }
 
-#pragma mark -
-#pragma mark NSWindow Delegate
+#pragma mark - NSWindow Delegate
 
 - (id)windowWillReturnFieldEditor:(NSWindow *)sender toObject:(id)client
 {
@@ -336,8 +332,7 @@
     [NSApp terminate:nil];
 }
 
-#pragma mark -
-#pragma mark FieldEditorTextView Delegate
+#pragma mark - FieldEditorTextView Delegate
 
 - (BOOL)fieldEditorTextViewPaste:(id)sender;
 {
@@ -367,8 +362,7 @@
     return NO;
 }
 
-#pragma mark -
-#pragma mark Utilities
+#pragma mark - Utilities
 
 - (void)sendText:(NSString*)command
 {
@@ -415,8 +409,7 @@
     }
 }
 
-#pragma mark -
-#pragma mark Preferences
+#pragma mark - Preferences
 
 - (void)loadWindowState
 {
@@ -483,8 +476,7 @@
     [_window setAlphaValue:[Preferences themeTransparency]];
 }
 
-#pragma mark -
-#pragma mark Nick Completion
+#pragma mark - Nick Completion
 
 - (void)completeNick:(BOOL)forward
 {
@@ -707,8 +699,7 @@
     }
 }
 
-#pragma mark -
-#pragma mark Keyboard Navigation
+#pragma mark - Keyboard Navigation
 
 typedef enum {
     SCROLL_TOP,
@@ -1050,8 +1041,7 @@ typedef enum {
     [self inputHandler:@selector(inputHistoryDown:) code:KEY_DOWN mods:NSAlternateKeyMask];
 }
 
-#pragma mark -
-#pragma mark WelcomeDialog Delegate
+#pragma mark - WelcomeDialog Delegate
 
 - (void)welcomeDialog:(WelcomeDialog*)sender onOK:(NSDictionary*)config
 {
