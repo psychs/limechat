@@ -32,5 +32,6 @@
 - (void)conversation;
 
 - (NSComparisonResult)compare:(IRCUser*)other;
+- (NSComparisonResult)compareUsingWeights:(IRCUser*)other;
 
 @end

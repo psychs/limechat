@@ -62,7 +62,8 @@ static BOOL yamlClass(id object)
 
 - (id)yamlParse
 {
-    return [_tag performSelector:@selector(objectWithYAML:) withObject:_data];
+    //return [_tag performSelector:@selector(objectWithYAML:) withObject:_data];
+    return nil;
 }
 
 @end
