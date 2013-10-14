@@ -20,11 +20,6 @@
 
 
 @interface MenuController : NSObject
-{
-    IBOutlet NSMenuItem* closeWindowItem;
-    IBOutlet NSMenuItem* closeCurrentPanelItem;
-    IBOutlet NSMenuItem* checkForUpdateItem;
-}
 
 @property (nonatomic, weak) AppController* app;
 @property (nonatomic, weak) IRCWorld* world;
@@ -33,10 +28,14 @@
 @property (nonatomic, weak) ServerTreeView* tree;
 @property (nonatomic, weak) MemberListView* memberList;
 
-@property (nonatomic, strong) NSString* pointedUrl;
-@property (nonatomic, strong) NSString* pointedAddress;
-@property (nonatomic, strong) NSString* pointedNick;
-@property (nonatomic, strong) NSString* pointedChannelName;
+@property (nonatomic) NSString* pointedUrl;
+@property (nonatomic) NSString* pointedAddress;
+@property (nonatomic) NSString* pointedNick;
+@property (nonatomic) NSString* pointedChannelName;
+
+@property (nonatomic) IBOutlet NSMenuItem* closeWindowItem;
+@property (nonatomic) IBOutlet NSMenuItem* closeCurrentPanelItem;
+@property (nonatomic) IBOutlet NSMenuItem* checkForUpdateItem;
 
 - (void)setUp;
 - (void)terminate;

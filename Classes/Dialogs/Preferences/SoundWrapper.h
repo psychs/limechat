@@ -11,7 +11,7 @@
 @interface SoundWrapper : NSObject
 
 @property (nonatomic, readonly) NSString* displayName;
-@property (nonatomic, strong) NSString* sound;
+@property (nonatomic) NSString* sound;
 @property (nonatomic) BOOL growl;
 @property (nonatomic) BOOL growlSticky;
 

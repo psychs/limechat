@@ -6,25 +6,22 @@
 
 
 @interface ChannelDialog : NSObject
-{
-    IBOutlet NSWindow* window;
-    
-    IBOutlet NSTextField* nameText;
-    IBOutlet NSTextField* passwordText;
-    IBOutlet NSTextField* modeText;
-    IBOutlet NSTextField* topicText;
-    IBOutlet NSButton* autoJoinCheck;
-    IBOutlet NSButton* consoleCheck;
-    IBOutlet NSButton* growlCheck;
-    IBOutlet NSButton* okButton;
-}
 
 @property (nonatomic, weak) id delegate;
-@property (nonatomic, readonly) NSWindow* window;
 @property (nonatomic, weak) NSWindow* parentWindow;
 @property (nonatomic) int uid;
 @property (nonatomic) int cid;
-@property (nonatomic, strong) IRCChannelConfig* config;
+@property (nonatomic) IRCChannelConfig* config;
+
+@property (nonatomic) IBOutlet NSWindow* window;
+@property (nonatomic) IBOutlet NSTextField* nameText;
+@property (nonatomic) IBOutlet NSTextField* passwordText;
+@property (nonatomic) IBOutlet NSTextField* modeText;
+@property (nonatomic) IBOutlet NSTextField* topicText;
+@property (nonatomic) IBOutlet NSButton* autoJoinCheck;
+@property (nonatomic) IBOutlet NSButton* consoleCheck;
+@property (nonatomic) IBOutlet NSButton* growlCheck;
+@property (nonatomic) IBOutlet NSButton* okButton;
 
 - (void)start;
 - (void)startSheet;

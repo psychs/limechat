@@ -11,6 +11,6 @@
 @interface LogScriptEventSink : NSObject
 
 @property (nonatomic, weak) id owner;
-@property (nonatomic, strong) LogPolicy* policy;
+@property (nonatomic) LogPolicy* policy;
 
 @end

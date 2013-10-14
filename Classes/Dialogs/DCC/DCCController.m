@@ -48,13 +48,13 @@
     if (!_loaded) {
         _loaded = YES;
         [NSBundle loadNibNamed:@"DCCDialog" owner:self];
-        [splitter setFixedViewIndex:1];
+        [_splitter setFixedViewIndex:1];
 
         DCCFileTransferCell* senderCell = [DCCFileTransferCell new];
-        [[[senderTable tableColumns] objectAtIndex:0] setDataCell:senderCell];
+        [[[_senderTable tableColumns] objectAtIndex:0] setDataCell:senderCell];
 
         DCCFileTransferCell* receiverCell = [DCCFileTransferCell new];
-        [[[receiverTable tableColumns] objectAtIndex:0] setDataCell:receiverCell];
+        [[[_receiverTable tableColumns] objectAtIndex:0] setDataCell:receiverCell];
 
         for (DCCReceiver* e in _receivers) {
             if (e.status == DCC_RECEIVING) {
@@ -195,13 +195,13 @@
 
 - (void)reloadReceiverTable
 {
-    [receiverTable reloadData];
+    [_receiverTable reloadData];
     [self updateClearButton];
 }
 
 - (void)reloadSenderTable
 {
-    [senderTable reloadData];
+    [_senderTable reloadData];
     [self updateClearButton];
 }
 
@@ -227,7 +227,7 @@
         }
     }
 
-    [clearButton setEnabled:enabled];
+    [_clearButton setEnabled:enabled];
 }
 
 - (void)loadWindowState
@@ -240,12 +240,12 @@
         int h = [dic intForKey:@"h"];
         NSRect r = NSMakeRect(x, y, w, h);
         [self.window setFrame:r display:NO];
-        [splitter setPosition:[dic intForKey:@"split"]];
+        [_splitter setPosition:[dic intForKey:@"split"]];
     }
     else {
         [self.window setFrame:NSMakeRect(0, 0, 350, 300) display:NO];
         [self.window center];
-        [splitter setPosition:100];
+        [_splitter setPosition:100];
     }
 }
 
@@ -258,7 +258,7 @@
     [dic setInt:rect.origin.y forKey:@"y"];
     [dic setInt:rect.size.width forKey:@"w"];
     [dic setInt:rect.size.height forKey:@"h"];
-    [dic setInt:splitter.position forKey:@"split"];
+    [dic setInt:_splitter.position forKey:@"split"];
 
     [Preferences saveWindowState:dic name:@"dcc_window"];
     [Preferences sync];
@@ -298,10 +298,10 @@
     NSInteger tag = item.tag;
 
     if (tag < 3100) {
-        if (![receiverTable countSelectedRows]) return NO;
+        if (![_receiverTable countSelectedRows]) return NO;
 
         NSMutableArray* sel = [NSMutableArray array];
-        NSIndexSet* indexes = [receiverTable selectedRowIndexes];
+        NSIndexSet* indexes = [_receiverTable selectedRowIndexes];
         for (NSUInteger i=[indexes firstIndex]; i!=NSNotFound; i=[indexes indexGreaterThanIndex:i]) {
             [sel addObject:[_receivers objectAtIndex:i]];
         }
@@ -342,10 +342,10 @@
         }
     }
     else {
-        if (![senderTable countSelectedRows]) return NO;
+        if (![_senderTable countSelectedRows]) return NO;
 
         NSMutableArray* sel = [NSMutableArray array];
-        NSIndexSet* indexes = [senderTable selectedRowIndexes];
+        NSIndexSet* indexes = [_senderTable selectedRowIndexes];
         for (NSUInteger i=[indexes firstIndex]; i!=NSNotFound; i=[indexes indexGreaterThanIndex:i]) {
             [sel addObject:[_senders objectAtIndex:i]];
         }
@@ -395,7 +395,7 @@
 
 - (void)startReceiver:(id)sender
 {
-    NSIndexSet* indexes = [receiverTable selectedRowIndexes];
+    NSIndexSet* indexes = [_receiverTable selectedRowIndexes];
     for (NSUInteger i=[indexes firstIndex]; i!=NSNotFound; i=[indexes indexGreaterThanIndex:i]) {
         DCCReceiver* e = [_receivers objectAtIndex:i];
         [e open];
@@ -407,7 +407,7 @@
 
 - (void)stopReceiver:(id)sender
 {
-    NSIndexSet* indexes = [receiverTable selectedRowIndexes];
+    NSIndexSet* indexes = [_receiverTable selectedRowIndexes];
     for (NSUInteger i=[indexes firstIndex]; i!=NSNotFound; i=[indexes indexGreaterThanIndex:i]) {
         DCCReceiver* e = [_receivers objectAtIndex:i];
         [e close];
@@ -419,7 +419,7 @@
 
 - (void)deleteReceiver:(id)sender
 {
-    NSIndexSet* indexes = [receiverTable selectedRowIndexes];
+    NSIndexSet* indexes = [_receiverTable selectedRowIndexes];
     for (NSUInteger i=[indexes lastIndex]; i!=NSNotFound; i=[indexes indexLessThanIndex:i]) {
         [self destroyReceiverAtIndex:i];
     }
@@ -432,7 +432,7 @@
 {
     NSWorkspace* ws = [NSWorkspace sharedWorkspace];
 
-    NSIndexSet* indexes = [receiverTable selectedRowIndexes];
+    NSIndexSet* indexes = [_receiverTable selectedRowIndexes];
     for (NSUInteger i=[indexes firstIndex]; i!=NSNotFound; i=[indexes indexGreaterThanIndex:i]) {
         DCCReceiver* e = [_receivers objectAtIndex:i];
         [ws openFile:e.downloadFileName];
@@ -446,7 +446,7 @@
 {
     NSWorkspace* ws = [NSWorkspace sharedWorkspace];
 
-    NSIndexSet* indexes = [receiverTable selectedRowIndexes];
+    NSIndexSet* indexes = [_receiverTable selectedRowIndexes];
     for (NSUInteger i=[indexes firstIndex]; i!=NSNotFound; i=[indexes indexGreaterThanIndex:i]) {
         DCCReceiver* e = [_receivers objectAtIndex:i];
         [ws selectFile:e.downloadFileName inFileViewerRootedAtPath:nil];
@@ -458,7 +458,7 @@
 
 - (void)startSender:(id)sender
 {
-    NSIndexSet* indexes = [senderTable selectedRowIndexes];
+    NSIndexSet* indexes = [_senderTable selectedRowIndexes];
     for (NSUInteger i=[indexes firstIndex]; i!=NSNotFound; i=[indexes indexGreaterThanIndex:i]) {
         DCCSender* e = [_senders objectAtIndex:i];
         [e open];
@@ -470,7 +470,7 @@
 
 - (void)stopSender:(id)sender
 {
-    NSIndexSet* indexes = [senderTable selectedRowIndexes];
+    NSIndexSet* indexes = [_senderTable selectedRowIndexes];
     for (NSUInteger i=[indexes firstIndex]; i!=NSNotFound; i=[indexes indexGreaterThanIndex:i]) {
         DCCSender* e = [_senders objectAtIndex:i];
         [e close];
@@ -482,7 +482,7 @@
 
 - (void)deleteSender:(id)sender
 {
-    NSIndexSet* indexes = [senderTable selectedRowIndexes];
+    NSIndexSet* indexes = [_senderTable selectedRowIndexes];
     for (NSUInteger i=[indexes lastIndex]; i!=NSNotFound; i=[indexes indexLessThanIndex:i]) {
         [self destroySenderAtIndex:i];
     }
@@ -512,7 +512,7 @@
         [bar setMinValue:0];
         [bar setMaxValue:sender.size];
         [bar setDoubleValue:sender.processedSize];
-        [receiverTable addSubview:bar];
+        [_receiverTable addSubview:bar];
         sender.progressBar = bar;
     }
 
@@ -587,7 +587,7 @@
         [bar setMinValue:0];
         [bar setMaxValue:sender.size];
         [bar setDoubleValue:sender.processedSize];
-        [senderTable addSubview:bar];
+        [_senderTable addSubview:bar];
         sender.progressBar = bar;
     }
 
@@ -633,7 +633,7 @@
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)sender
 {
-    if (sender == senderTable) {
+    if (sender == _senderTable) {
         return _senders.count;
     }
     else {
@@ -648,7 +648,7 @@
 
 - (void)tableView:(NSTableView *)sender willDisplayCell:(DCCFileTransferCell*)c forTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
-    if (sender == senderTable) {
+    if (sender == _senderTable) {
         if (row < 0 || _senders.count <= row) return;
 
         DCCSender* e = [_senders objectAtIndex:row];

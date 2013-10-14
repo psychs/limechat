@@ -8,10 +8,10 @@
 @interface IRCMessage : NSObject
 
 @property (nonatomic) time_t timestamp;
-@property (nonatomic, strong) IRCPrefix* sender;
-@property (nonatomic, strong) NSString* command;
+@property (nonatomic) IRCPrefix* sender;
+@property (nonatomic) NSString* command;
 @property (nonatomic) int numericReply;
-@property (nonatomic, strong) NSMutableArray* params;
+@property (nonatomic) NSMutableArray* params;
 
 - (id)initWithLine:(NSString*)line;
 

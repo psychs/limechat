@@ -6,9 +6,9 @@
 
 @interface LogTheme : NSObject
 
-@property (nonatomic, strong) NSString* fileName;
+@property (nonatomic) NSString* fileName;
 @property (nonatomic, readonly) NSURL* baseUrl;
-@property (nonatomic, strong) NSString* content;
+@property (nonatomic) NSString* content;
 
 - (void)reload;
 

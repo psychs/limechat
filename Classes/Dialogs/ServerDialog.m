@@ -28,7 +28,7 @@
 
         NSArray* servers = [[self class] availableServers];
         for (NSString* s in servers) {
-            [hostCombo addItemWithObjectValue:s];
+            [_hostCombo addItemWithObjectValue:s];
         }
     }
     return self;
@@ -40,13 +40,13 @@
         [self.window setTitle:@"New Server"];
     }
 
-    [channelTable setTarget:self];
-    [channelTable setDoubleAction:@selector(tableViewDoubleClicked:)];
-    [channelTable registerForDraggedTypes:TABLE_ROW_TYPES];
+    [_channelTable setTarget:self];
+    [_channelTable setDoubleAction:@selector(tableViewDoubleClicked:)];
+    [_channelTable registerForDraggedTypes:TABLE_ROW_TYPES];
 
-    [ignoreTable setTarget:self];
-    [ignoreTable setDoubleAction:@selector(tableViewDoubleClicked:)];
-    [ignoreTable registerForDraggedTypes:TABLE_ROW_TYPES];
+    [_ignoreTable setTarget:self];
+    [_ignoreTable setDoubleAction:@selector(tableViewDoubleClicked:)];
+    [_ignoreTable registerForDraggedTypes:TABLE_ROW_TYPES];
 
     [self load];
     [self updateConnectionPage];
@@ -58,7 +58,7 @@
     [self reloadIgnoreTable];
 
     if (ignoreTab) {
-        [tab selectTabViewItem:[tab tabViewItemAtIndex:IGNORE_TAB_INDEX]];
+        [_tab selectTabViewItem:[_tab tabViewItemAtIndex:IGNORE_TAB_INDEX]];
     }
 
     [self show];
@@ -80,59 +80,59 @@
 
 - (void)load
 {
-    nameText.stringValue = _config.name;
-    autoConnectCheck.state = _config.autoConnect;
+    _nameText.stringValue = _config.name;
+    _autoConnectCheck.state = _config.autoConnect;
 
-    hostCombo.stringValue = _config.host;
-    sslCheck.state = _config.useSSL;
-    portText.intValue = _config.port;
+    _hostCombo.stringValue = _config.host;
+    _sslCheck.state = _config.useSSL;
+    _portText.intValue = _config.port;
 
-    nickText.stringValue = _config.nick;
-    passwordText.stringValue = _config.password;
-    usernameText.stringValue = _config.username;
-    realNameText.stringValue = _config.realName;
-    nickPasswordText.stringValue = _config.nickPassword;
-    saslCheck.state = _config.useSASL;
+    _nickText.stringValue = _config.nick;
+    _passwordText.stringValue = _config.password;
+    _usernameText.stringValue = _config.username;
+    _realNameText.stringValue = _config.realName;
+    _nickPasswordText.stringValue = _config.nickPassword;
+    _saslCheck.state = _config.useSASL;
     if (_config.altNicks.count) {
-        altNicksText.stringValue = [_config.altNicks componentsJoinedByString:@" "];
+        _altNicksText.stringValue = [_config.altNicks componentsJoinedByString:@" "];
     }
     else {
-        altNicksText.stringValue = @"";
+        _altNicksText.stringValue = @"";
     }
 
-    leavingCommentText.stringValue = _config.leavingComment;
-    userInfoText.stringValue = _config.userInfo;
+    _leavingCommentText.stringValue = _config.leavingComment;
+    _userInfoText.stringValue = _config.userInfo;
 
-    [encodingCombo selectItemWithTag:_config.encoding];
-    [fallbackEncodingCombo selectItemWithTag:_config.fallbackEncoding];
+    [_encodingCombo selectItemWithTag:_config.encoding];
+    [_fallbackEncodingCombo selectItemWithTag:_config.fallbackEncoding];
 
-    [proxyCombo selectItemWithTag:_config.proxyType];
-    proxyHostText.stringValue = _config.proxyHost;
-    proxyPortText.intValue = _config.proxyPort;
-    proxyUserText.stringValue = _config.proxyUser;
-    proxyPasswordText.stringValue = _config.proxyPassword;
+    [_proxyCombo selectItemWithTag:_config.proxyType];
+    _proxyHostText.stringValue = _config.proxyHost;
+    _proxyPortText.intValue = _config.proxyPort;
+    _proxyUserText.stringValue = _config.proxyUser;
+    _proxyPasswordText.stringValue = _config.proxyPassword;
 
-    loginCommandsText.string = [_config.loginCommands componentsJoinedByString:@"\n"];
-    invisibleCheck.state = _config.invisibleMode;
+    _loginCommandsText.string = [_config.loginCommands componentsJoinedByString:@"\n"];
+    _invisibleCheck.state = _config.invisibleMode;
 }
 
 - (void)save
 {
-    _config.name = nameText.stringValue;
-    _config.autoConnect = autoConnectCheck.state;
+    _config.name = _nameText.stringValue;
+    _config.autoConnect = _autoConnectCheck.state;
 
-    _config.host = hostCombo.stringValue;
-    _config.useSSL = sslCheck.state;
-    _config.port = portText.intValue;
+    _config.host = _hostCombo.stringValue;
+    _config.useSSL = _sslCheck.state;
+    _config.port = _portText.intValue;
 
-    _config.nick = nickText.stringValue;
-    _config.password = passwordText.stringValue;
-    _config.username = usernameText.stringValue;
-    _config.realName = realNameText.stringValue;
-    _config.nickPassword = nickPasswordText.stringValue;
-    _config.useSASL = saslCheck.state;
+    _config.nick = _nickText.stringValue;
+    _config.password = _passwordText.stringValue;
+    _config.username = _usernameText.stringValue;
+    _config.realName = _realNameText.stringValue;
+    _config.nickPassword = _nickPasswordText.stringValue;
+    _config.useSASL = _saslCheck.state;
 
-    NSArray* nicks = [altNicksText.stringValue componentsSeparatedByString:@" "];
+    NSArray* nicks = [_altNicksText.stringValue componentsSeparatedByString:@" "];
     [_config.altNicks removeAllObjects];
     for (NSString* s in nicks) {
         if (s.length) {
@@ -140,19 +140,19 @@
         }
     }
 
-    _config.leavingComment = leavingCommentText.stringValue;
-    _config.userInfo = userInfoText.stringValue;
+    _config.leavingComment = _leavingCommentText.stringValue;
+    _config.userInfo = _userInfoText.stringValue;
 
-    _config.encoding = encodingCombo.selectedTag;
-    _config.fallbackEncoding = fallbackEncodingCombo.selectedTag;
+    _config.encoding = _encodingCombo.selectedTag;
+    _config.fallbackEncoding = _fallbackEncodingCombo.selectedTag;
 
-    _config.proxyType = proxyCombo.selectedTag;
-    _config.proxyHost = proxyHostText.stringValue;
-    _config.proxyPort = proxyPortText.intValue;
-    _config.proxyUser = proxyUserText.stringValue;
-    _config.proxyPassword = proxyPasswordText.stringValue;
+    _config.proxyType = _proxyCombo.selectedTag;
+    _config.proxyHost = _proxyHostText.stringValue;
+    _config.proxyPort = _proxyPortText.intValue;
+    _config.proxyUser = _proxyUserText.stringValue;
+    _config.proxyPassword = _proxyPasswordText.stringValue;
 
-    NSArray* commands = [loginCommandsText.string componentsSeparatedByString:@"\n"];
+    NSArray* commands = [_loginCommandsText.string componentsSeparatedByString:@"\n"];
     [_config.loginCommands removeAllObjects];
     for (NSString* s in commands) {
         if (s.length) {
@@ -160,48 +160,48 @@
         }
     }
 
-    _config.invisibleMode = invisibleCheck.state;
+    _config.invisibleMode = _invisibleCheck.state;
 }
 
 - (void)updateConnectionPage
 {
-    NSString* name = [nameText stringValue];
-    NSString* host = [hostCombo stringValue];
-    int port = [portText intValue];
-    NSString* nick = [nickText stringValue];
-    NSString* nickPassword = [nickPasswordText stringValue];
+    NSString* name = [_nameText stringValue];
+    NSString* host = [_hostCombo stringValue];
+    int port = [_portText intValue];
+    NSString* nick = [_nickText stringValue];
+    NSString* nickPassword = [_nickPasswordText stringValue];
 
     BOOL enabled = name.length && host.length && ![host isEqualToString:@"-"] && port > 0 && nick.length;
-    [okButton setEnabled:enabled];
+    [_okButton setEnabled:enabled];
 
     BOOL saslEnabled = nickPassword.length > 0;
-    [saslCheck setEnabled:saslEnabled];
+    [_saslCheck setEnabled:saslEnabled];
 }
 
 - (void)updateChannelsPage
 {
-    NSInteger i = [channelTable selectedRow];
+    NSInteger i = [_channelTable selectedRow];
     BOOL enabled = (i >= 0);
-    [editChannelButton setEnabled:enabled];
-    [deleteChannelButton setEnabled:enabled];
+    [_editChannelButton setEnabled:enabled];
+    [_deleteChannelButton setEnabled:enabled];
 }
 
 - (void)reloadChannelTable
 {
-    [channelTable reloadData];
+    [_channelTable reloadData];
 }
 
 - (void)updateIgnoresPage
 {
-    NSInteger i = [ignoreTable selectedRow];
+    NSInteger i = [_ignoreTable selectedRow];
     BOOL enabled = (i >= 0);
-    [editIgnoreButton setEnabled:enabled];
-    [deleteIgnoreButton setEnabled:enabled];
+    [_editIgnoreButton setEnabled:enabled];
+    [_deleteIgnoreButton setEnabled:enabled];
 }
 
 - (void)reloadIgnoreTable
 {
-    [ignoreTable reloadData];
+    [_ignoreTable reloadData];
 }
 
 #pragma mark -
@@ -244,18 +244,18 @@
 
 - (void)encodingChanged:(id)sender
 {
-    int tag = [encodingCombo selectedTag];
-    [fallbackEncodingCombo setEnabled:(tag == NSUTF8StringEncoding)];
+    int tag = [_encodingCombo selectedTag];
+    [_fallbackEncodingCombo setEnabled:(tag == NSUTF8StringEncoding)];
 }
 
 - (void)proxyChanged:(id)sender
 {
-    int tag = [proxyCombo selectedTag];
+    int tag = [_proxyCombo selectedTag];
     BOOL enabled = (tag == PROXY_SOCKS4 || tag == PROXY_SOCKS5);
-    [proxyHostText setEnabled:enabled];
-    [proxyPortText setEnabled:enabled];
-    [proxyUserText setEnabled:enabled];
-    [proxyPasswordText setEnabled:enabled];
+    [_proxyHostText setEnabled:enabled];
+    [_proxyPortText setEnabled:enabled];
+    [_proxyUserText setEnabled:enabled];
+    [_proxyPasswordText setEnabled:enabled];
     //[sslCheck setEnabled:tag == PROXY_NONE];
 }
 
@@ -264,7 +264,7 @@
 
 - (void)addChannel:(id)sender
 {
-    NSInteger sel = [channelTable selectedRow];
+    NSInteger sel = [_channelTable selectedRow];
     IRCChannelConfig* conf;
     if (sel < 0) {
         conf = [IRCChannelConfig new];
@@ -286,7 +286,7 @@
 
 - (void)editChannel:(id)sender
 {
-    NSInteger sel = [channelTable selectedRow];
+    NSInteger sel = [_channelTable selectedRow];
     if (sel < 0) return;
     IRCChannelConfig* c = [[_config.channels objectAtIndex:sel] mutableCopy];
 
@@ -331,7 +331,7 @@
 
 - (void)deleteChannel:(id)sender
 {
-    NSInteger sel = [channelTable selectedRow];
+    NSInteger sel = [_channelTable selectedRow];
     if (sel < 0) return;
 
     [_config.channels removeObjectAtIndex:sel];
@@ -339,10 +339,10 @@
     int count = _config.channels.count;
     if (count) {
         if (count <= sel) {
-            [channelTable selectItemAtIndex:count - 1];
+            [_channelTable selectItemAtIndex:count - 1];
         }
         else {
-            [channelTable selectItemAtIndex:sel];
+            [_channelTable selectItemAtIndex:sel];
         }
     }
 
@@ -364,7 +364,7 @@
 
 - (void)editIgnore:(id)sender
 {
-    NSInteger sel = [ignoreTable selectedRow];
+    NSInteger sel = [_ignoreTable selectedRow];
     if (sel < 0) return;
 
     _ignoreSheet = [IgnoreItemSheet new];
@@ -376,7 +376,7 @@
 
 - (void)deleteIgnore:(id)sender
 {
-    NSInteger sel = [ignoreTable selectedRow];
+    NSInteger sel = [_ignoreTable selectedRow];
     if (sel < 0) return;
 
     [_config.ignores removeObjectAtIndex:sel];
@@ -384,10 +384,10 @@
     int count = _config.ignores.count;
     if (count) {
         if (count <= sel) {
-            [ignoreTable selectItemAtIndex:count - 1];
+            [_ignoreTable selectItemAtIndex:count - 1];
         }
         else {
-            [ignoreTable selectItemAtIndex:sel];
+            [_ignoreTable selectItemAtIndex:sel];
         }
     }
 
@@ -413,7 +413,7 @@
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)sender
 {
-    if (sender == channelTable) {
+    if (sender == _channelTable) {
         return _config.channels.count;
     }
     else {
@@ -423,7 +423,7 @@
 
 - (id)tableView:(NSTableView *)sender objectValueForTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
-    if (sender == channelTable) {
+    if (sender == _channelTable) {
         IRCChannelConfig* c = [_config.channels objectAtIndex:row];
         NSString* columnId = [column identifier];
 
@@ -454,7 +454,7 @@
 
 - (void)tableView:(NSTableView *)sender setObjectValue:(id)obj forTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
-    if (sender == channelTable) {
+    if (sender == _channelTable) {
         IRCChannelConfig* c = [_config.channels objectAtIndex:row];
         NSString* columnId = [column identifier];
 
@@ -471,7 +471,7 @@
 {
     id sender = [note object];
 
-    if (sender == channelTable) {
+    if (sender == _channelTable) {
         [self updateChannelsPage];
     }
     else {
@@ -481,7 +481,7 @@
 
 - (void)tableViewDoubleClicked:(id)sender
 {
-    if (sender == channelTable) {
+    if (sender == _channelTable) {
         [self editChannel:nil];
     }
     else {
@@ -491,7 +491,7 @@
 
 - (BOOL)tableView:(NSTableView *)sender writeRowsWithIndexes:(NSIndexSet *)rows toPasteboard:(NSPasteboard *)pboard
 {
-    if (sender == channelTable) {
+    if (sender == _channelTable) {
         NSArray* ary = [NSArray arrayWithObject:[NSNumber numberWithInt:[rows firstIndex]]];
         [pboard declareTypes:TABLE_ROW_TYPES owner:self];
         [pboard setPropertyList:ary forType:TABLE_ROW_TYPE];
@@ -504,7 +504,7 @@
 
 - (NSDragOperation)tableView:(NSTableView *)sender validateDrop:(id < NSDraggingInfo >)info proposedRow:(NSInteger)row proposedDropOperation:(NSTableViewDropOperation)op
 {
-    if (sender == channelTable) {
+    if (sender == _channelTable) {
         NSPasteboard* pboard = [info draggingPasteboard];
         if (op == NSTableViewDropAbove && [pboard availableTypeFromArray:TABLE_ROW_TYPES]) {
             return NSDragOperationGeneric;
@@ -520,7 +520,7 @@
 
 - (BOOL)tableView:(NSTableView *)sender acceptDrop:(id < NSDraggingInfo >)info row:(NSInteger)row dropOperation:(NSTableViewDropOperation)op
 {
-    if (sender == channelTable) {
+    if (sender == _channelTable) {
         NSPasteboard* pboard = [info draggingPasteboard];
         if (op == NSTableViewDropAbove && [pboard availableTypeFromArray:TABLE_ROW_TYPES]) {
             NSArray* selectedRows = [pboard propertyListForType:TABLE_ROW_TYPE];
@@ -545,7 +545,7 @@
 
             sel = [ary indexOfObjectIdenticalTo:target];
             if (0 <= sel) {
-                [channelTable selectItemAtIndex:sel];
+                [_channelTable selectItemAtIndex:sel];
             }
 
             return YES;
@@ -562,7 +562,7 @@
 
 - (void)windowWillClose:(NSNotification*)note
 {
-    [channelTable unregisterDraggedTypes];
+    [_channelTable unregisterDraggedTypes];
 
     if ([_delegate respondsToSelector:@selector(serverDialogWillClose:)]) {
         [_delegate serverDialogWillClose:self];

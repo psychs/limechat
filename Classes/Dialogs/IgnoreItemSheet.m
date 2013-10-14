@@ -25,21 +25,21 @@
     //
 
     if (_ignore.nick.length) {
-        nickCheck.state = NSOnState;
-        [nickPopup selectItemWithTag:_ignore.useRegexForNick ? 1 : 0];
-        nickText.stringValue = _ignore.nick;
+        _nickCheck.state = NSOnState;
+        [_nickPopup selectItemWithTag:_ignore.useRegexForNick ? 1 : 0];
+        _nickText.stringValue = _ignore.nick;
     }
     else {
-        nickCheck.state = NSOffState;
+        _nickCheck.state = NSOffState;
     }
 
     if (_ignore.text.length) {
-        messageCheck.state = NSOnState;
-        [messagePopup selectItemWithTag:_ignore.useRegexForText ? 1 : 0];
-        messageText.stringValue = _ignore.text;
+        _messageCheck.state = NSOnState;
+        [_messagePopup selectItemWithTag:_ignore.useRegexForText ? 1 : 0];
+        _messageText.stringValue = _ignore.text;
     }
     else {
-        messageCheck.state = NSOffState;
+        _messageCheck.state = NSOffState;
     }
 
     _channels = [_ignore.channels mutableCopy];
@@ -54,14 +54,14 @@
 
 - (void)reloadChannelTable
 {
-    [channelTable reloadData];
+    [_channelTable reloadData];
 }
 
 - (void)updateButtons
 {
-    NSInteger i = [channelTable selectedRow];
+    NSInteger i = [_channelTable selectedRow];
     BOOL enabled = (i >= 0);
-    [deleteChannelButton setEnabled:enabled];
+    [_deleteChannelButton setEnabled:enabled];
 }
 
 - (void)addChannel:(id)sender
@@ -69,14 +69,14 @@
     [_channels addObject:@""];
     [self reloadChannelTable];
 
-    NSInteger row = [channelTable numberOfRows] - 1;
-    [channelTable scrollRowToVisible:row];
-    [channelTable editColumn:0 row:row withEvent:nil select:YES];
+    NSInteger row = [_channelTable numberOfRows] - 1;
+    [_channelTable scrollRowToVisible:row];
+    [_channelTable editColumn:0 row:row withEvent:nil select:YES];
 }
 
 - (void)deleteChannel:(id)sender
 {
-    NSInteger i = [channelTable selectedRow];
+    NSInteger i = [_channelTable selectedRow];
     if (i < 0) return;
 
     [_channels removeObjectAtIndex:i];
@@ -84,10 +84,10 @@
     int count = _channels.count;
     if (count) {
         if (count <= i) {
-            [channelTable selectItemAtIndex:count - 1];
+            [_channelTable selectItemAtIndex:count - 1];
         }
         else {
-            [channelTable selectItemAtIndex:i];
+            [_channelTable selectItemAtIndex:i];
         }
     }
 
@@ -100,20 +100,20 @@
     // save
     //
 
-    NSString* nick = nickText.stringValue;
-    NSString* message = messageText.stringValue;
+    NSString* nick = _nickText.stringValue;
+    NSString* message = _messageText.stringValue;
 
-    if (nickCheck.state == NSOnState && nick.length) {
+    if (_nickCheck.state == NSOnState && nick.length) {
         _ignore.nick = nick;
-        _ignore.useRegexForNick = nickPopup.selectedItem.tag == 1;
+        _ignore.useRegexForNick = _nickPopup.selectedItem.tag == 1;
     }
     else {
         _ignore.nick = nil;
     }
 
-    if (messageCheck.state == NSOnState && message.length) {
+    if (_messageCheck.state == NSOnState && message.length) {
         _ignore.text = message;
-        _ignore.useRegexForText = messagePopup.selectedItem.tag == 1;
+        _ignore.useRegexForText = _messagePopup.selectedItem.tag == 1;
     }
     else {
         _ignore.text = nil;

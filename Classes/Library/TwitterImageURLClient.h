@@ -7,7 +7,7 @@
 @interface TwitterImageURLClient : NSObject
 
 @property (nonatomic, weak) id delegate;
-@property (nonatomic, strong) NSString* screenName;
+@property (nonatomic) NSString* screenName;
 
 - (void)cancel;
 - (void)getImageURL;

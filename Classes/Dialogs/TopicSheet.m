@@ -17,14 +17,14 @@
 
 - (void)start:(NSString*)topic
 {
-    [text setStringValue:topic ?: @""];
+    [_text setStringValue:topic ?: @""];
     [self startSheet];
 }
 
 - (void)ok:(id)sender
 {
     if ([self.delegate respondsToSelector:@selector(topicSheet:onOK:)]) {
-        [self.delegate topicSheet:self onOK:[text stringValue]];
+        [self.delegate topicSheet:self onOK:[_text stringValue]];
     }
 
     [super ok:nil];

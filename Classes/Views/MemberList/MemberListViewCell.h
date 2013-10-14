@@ -8,7 +8,7 @@
 
 @interface MemberListViewCell : NSCell
 
-@property (nonatomic, strong) IRCUser* member;
+@property (nonatomic) IRCUser* member;
 
 - (void)setup:(OtherTheme*)theme;
 - (void)themeChanged;

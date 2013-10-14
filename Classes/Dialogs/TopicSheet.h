@@ -6,12 +6,11 @@
 
 
 @interface TopicSheet : SheetBase
-{
-    IBOutlet NSTextField* text;
-}
 
 @property (nonatomic) int uid;
 @property (nonatomic) int cid;
+
+@property (nonatomic) IBOutlet NSTextField* text;
 
 - (void)start:(NSString*)topic;
 

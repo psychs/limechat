@@ -9,7 +9,7 @@
 @interface MemberListView : ListView
 
 @property (nonatomic, weak) id dropDelegate;
-@property (nonatomic, strong) OtherTheme* theme;
+@property (nonatomic) OtherTheme* theme;
 
 - (void)themeChanged;
 

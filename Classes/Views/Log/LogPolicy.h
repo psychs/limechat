@@ -10,14 +10,14 @@
 @interface LogPolicy : NSObject
 
 @property (nonatomic, weak) MenuController* menuController;
-@property (nonatomic, strong) NSMenu* menu;
-@property (nonatomic, strong) NSMenu* urlMenu;
-@property (nonatomic, strong) NSMenu* addrMenu;
-@property (nonatomic, strong) NSMenu* memberMenu;
-@property (nonatomic, strong) NSMenu* chanMenu;
-@property (nonatomic, strong) NSString* url;
-@property (nonatomic, strong) NSString* addr;
-@property (nonatomic, strong) NSString* nick;
-@property (nonatomic, strong) NSString* chan;
+@property (nonatomic) NSMenu* menu;
+@property (nonatomic) NSMenu* urlMenu;
+@property (nonatomic) NSMenu* addrMenu;
+@property (nonatomic) NSMenu* memberMenu;
+@property (nonatomic) NSMenu* chanMenu;
+@property (nonatomic) NSString* url;
+@property (nonatomic) NSString* addr;
+@property (nonatomic) NSString* nick;
+@property (nonatomic) NSString* chan;
 
 @end

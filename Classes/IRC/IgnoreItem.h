@@ -6,11 +6,11 @@
 
 @interface IgnoreItem : NSObject
 
-@property (nonatomic, strong) NSString* nick;
-@property (nonatomic, strong) NSString* text;
+@property (nonatomic) NSString* nick;
+@property (nonatomic) NSString* text;
 @property (nonatomic) BOOL useRegexForNick;
 @property (nonatomic) BOOL useRegexForText;
-@property (nonatomic, strong) NSArray* channels;
+@property (nonatomic) NSArray* channels;
 
 @property (nonatomic, readonly) BOOL isValid;
 @property (nonatomic, readonly) NSString* displayNick;

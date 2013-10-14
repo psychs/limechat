@@ -11,7 +11,7 @@
 @interface IRCTreeItem : NSObject <NSTableViewDataSource, NSTableViewDelegate>
 
 @property (nonatomic) int uid;
-@property (nonatomic, strong) LogController* log;
+@property (nonatomic) LogController* log;
 @property (nonatomic) BOOL isKeyword;
 @property (nonatomic) BOOL isUnread;
 @property (nonatomic) BOOL isNewTalk;

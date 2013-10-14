@@ -12,16 +12,15 @@
 
 
 @interface DCCController : NSWindowController
-{
-    IBOutlet ListView* receiverTable;
-    IBOutlet ListView* senderTable;
-    IBOutlet ThinSplitView* splitter;
-    IBOutlet NSButton* clearButton;
-}
 
 @property (nonatomic, weak) id delegate;
 @property (nonatomic, weak) IRCWorld* world;
 @property (nonatomic, weak) NSWindow* mainWindow;
+
+@property (nonatomic) IBOutlet ListView* receiverTable;
+@property (nonatomic) IBOutlet ListView* senderTable;
+@property (nonatomic) IBOutlet ThinSplitView* splitter;
+@property (nonatomic) IBOutlet NSButton* clearButton;
 
 - (void)show:(BOOL)key;
 - (void)close;

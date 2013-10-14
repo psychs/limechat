@@ -27,7 +27,7 @@
 
 - (void)start
 {
-    [table setDoubleAction:@selector(onJoin:)];
+    [_table setDoubleAction:@selector(onJoin:)];
 
     [self show];
 }
@@ -48,7 +48,7 @@
 
             int i = 0;
             for (NSNumber* n in cols) {
-                [[[table tableColumns] objectAtIndex:i] setWidth:[n doubleValue]];
+                [[[_table tableColumns] objectAtIndex:i] setWidth:[n doubleValue]];
                 ++i;
             }
         }
@@ -77,7 +77,7 @@
 {
     NSArray* item = [NSArray arrayWithObjects:channel, [NSNumber numberWithInt:count], topic, nil];
 
-    NSString* filter = [filterText stringValue];
+    NSString* filter = [_filterText stringValue];
     if (filter.length) {
         if (!_filteredList) {
             _filteredList = [NSMutableArray new];
@@ -95,7 +95,7 @@
 
 - (void)reloadTable
 {
-    [table reloadData];
+    [_table reloadData];
 }
 
 static NSInteger compareItems(NSArray* self, NSArray* other, void* context)
@@ -172,12 +172,12 @@ static NSInteger compareItems(NSArray* self, NSArray* other, void* context)
 - (void)onJoin:(id)sender
 {
     NSArray* ary = _list;
-    NSString* filter = [filterText stringValue];
+    NSString* filter = [_filterText stringValue];
     if (filter.length) {
         ary = _filteredList;
     }
 
-    NSIndexSet* indexes = [table selectedRowIndexes];
+    NSIndexSet* indexes = [_table selectedRowIndexes];
     for (NSUInteger i=[indexes firstIndex]; i!=NSNotFound; i=[indexes indexGreaterThanIndex:i]) {
         NSArray* item = [ary objectAtIndex:i];
         if ([_delegate respondsToSelector:@selector(listDialogOnJoin:channel:)]) {
@@ -190,7 +190,7 @@ static NSInteger compareItems(NSArray* self, NSArray* other, void* context)
 {
     _filteredList = nil;
 
-    NSString* filter = [filterText stringValue];
+    NSString* filter = [_filterText stringValue];
     if (filter.length) {
         NSMutableArray* ary = [NSMutableArray new];
         for (NSArray* item in _list) {
@@ -223,7 +223,7 @@ static NSInteger compareItems(NSArray* self, NSArray* other, void* context)
 
     int i = 0;
     for (NSNumber* n in cols) {
-        [[[table tableColumns] objectAtIndex:i] setWidth:[n doubleValue]];
+        [[[_table tableColumns] objectAtIndex:i] setWidth:[n doubleValue]];
         ++i;
     }
 
@@ -240,7 +240,7 @@ static NSInteger compareItems(NSArray* self, NSArray* other, void* context)
     [win setDouble:rect.size.height forKey:@"h"];
 
     NSMutableArray* cols = [NSMutableArray array];
-    for (NSTableColumn* col in [table tableColumns]) {
+    for (NSTableColumn* col in [_table tableColumns]) {
         [cols addObject:[NSNumber numberWithDouble:col.width]];
     }
 

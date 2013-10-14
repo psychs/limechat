@@ -5,14 +5,13 @@
 
 
 @interface SheetBase : NSObject
-{
-    IBOutlet NSWindow* sheet;
-    IBOutlet NSButton* okButton;
-    IBOutlet NSButton* cancelButton;
-}
 
 @property (nonatomic, weak) id delegate;
 @property (nonatomic, weak) NSWindow* window;
+
+@property (nonatomic) IBOutlet NSWindow* sheet;
+@property (nonatomic) IBOutlet NSButton* okButton;
+@property (nonatomic) IBOutlet NSButton* cancelButton;
 
 - (void)startSheet;
 - (void)endSheet;

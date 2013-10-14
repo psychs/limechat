@@ -67,8 +67,8 @@
 #else
     _sparkleUpdater = [SUUpdater new];
     [_sparkleUpdater setDelegate:_app];
-    [checkForUpdateItem setTarget:_sparkleUpdater];
-    [checkForUpdateItem setAction:@selector(checkForUpdates:)];
+    [_checkForUpdateItem setTarget:_sparkleUpdater];
+    [_checkForUpdateItem setAction:@selector(checkForUpdates:)];
 #endif
 }
 
@@ -109,11 +109,11 @@
             return KEY_WINDOW && u && c;
         case 203:	// close window / close current panel
             if (KEY_WINDOW) {
-                [closeWindowItem setTitle:NSLocalizedString(@"CloseCurrentPanelMenuTitle", nil)];
+                [_closeWindowItem setTitle:NSLocalizedString(@"CloseCurrentPanelMenuTitle", nil)];
                 return u && c;
             }
             else {
-                [closeWindowItem setTitle:NSLocalizedString(@"CloseWindowMenuTitle", nil)];
+                [_closeWindowItem setTitle:NSLocalizedString(@"CloseWindowMenuTitle", nil)];
                 return YES;
             }
         case 313:	// paste
@@ -872,8 +872,6 @@
         NSString* line = [NSString stringWithFormat:@"%@ %@ %@", MODE, c.name, changeStr];
         [u sendLine:line];
     }
-
-    _modeSheet = nil;
 }
 
 - (void)modeSheetWillClose:(ModeSheet*)sender

@@ -22,14 +22,14 @@
 @property (nonatomic, weak) IRCWorld* world;
 @property (nonatomic, weak) IRCClient* client;
 @property (nonatomic, weak) IRCChannel* channel;
-@property (nonatomic, strong) NSMenu* menu;
-@property (nonatomic, strong) NSMenu* urlMenu;
-@property (nonatomic, strong) NSMenu* addrMenu;
-@property (nonatomic, strong) NSMenu* chanMenu;
-@property (nonatomic, strong) NSMenu* memberMenu;
-@property (nonatomic, strong) ViewTheme* theme;
+@property (nonatomic) NSMenu* menu;
+@property (nonatomic) NSMenu* urlMenu;
+@property (nonatomic) NSMenu* addrMenu;
+@property (nonatomic) NSMenu* chanMenu;
+@property (nonatomic) NSMenu* memberMenu;
+@property (nonatomic) ViewTheme* theme;
 @property (nonatomic) BOOL console;
-@property (nonatomic, strong) NSColor* initialBackgroundColor;
+@property (nonatomic) NSColor* initialBackgroundColor;
 @property (nonatomic) int maxLines;
 @property (nonatomic, readonly) BOOL viewingBottom;
 

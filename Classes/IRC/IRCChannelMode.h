@@ -7,7 +7,7 @@
 
 @interface IRCChannelMode : NSObject <NSMutableCopying>
 
-@property (nonatomic, strong) IRCISupportInfo* isupport;
+@property (nonatomic) IRCISupportInfo* isupport;
 @property (nonatomic) BOOL a;
 @property (nonatomic) BOOL i;
 @property (nonatomic) BOOL m;
@@ -18,7 +18,7 @@
 @property (nonatomic) BOOL s;
 @property (nonatomic) BOOL t;
 @property (nonatomic) int l;
-@property (nonatomic, strong) NSString* k;
+@property (nonatomic) NSString* k;
 
 - (void)clear;
 - (NSArray*)update:(NSString*)str;

@@ -36,18 +36,18 @@ typedef enum {
 
 @interface LogLine : NSObject
 
-@property (nonatomic, strong) NSString* time;
-@property (nonatomic, strong) NSString* place;
-@property (nonatomic, strong) NSString* nick;
-@property (nonatomic, strong) NSString* body;
+@property (nonatomic) NSString* time;
+@property (nonatomic) NSString* place;
+@property (nonatomic) NSString* nick;
+@property (nonatomic) NSString* body;
 @property (nonatomic) LogLineType lineType;
 @property (nonatomic) LogMemberType memberType;
-@property (nonatomic, strong) NSString* nickInfo;
-@property (nonatomic, strong) NSString* clickInfo;
+@property (nonatomic) NSString* nickInfo;
+@property (nonatomic) NSString* clickInfo;
 @property (nonatomic) BOOL identified;
 @property (nonatomic) int nickColorNumber;
-@property (nonatomic, strong) NSArray* keywords;
-@property (nonatomic, strong) NSArray* excludeWords;
+@property (nonatomic) NSArray* keywords;
+@property (nonatomic) NSArray* excludeWords;
 @property (nonatomic) BOOL useAvatar;
 
 + (NSString*)lineTypeString:(LogLineType)type;

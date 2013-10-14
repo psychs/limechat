@@ -6,7 +6,7 @@
 
 @interface NickCompletinStatus : NSObject
 
-@property (nonatomic, strong) NSString* text;
+@property (nonatomic) NSString* text;
 @property (nonatomic) NSRange range;
 
 - (void)clear;

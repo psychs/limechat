@@ -12,8 +12,6 @@
     BOOL _isEndedSheet;
 }
 
-@synthesize window;
-
 - (id)init
 {
     self = [super init];
@@ -38,7 +36,7 @@
     _isEndedSheet = NO;
     [self load];
     [self update];
-    [NSApp beginSheet:window modalForWindow:_parentWindow modalDelegate:self didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:) contextInfo:nil];
+    [NSApp beginSheet:_window modalForWindow:_parentWindow modalDelegate:self didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:) contextInfo:nil];
 }
 
 - (void)show
@@ -58,31 +56,31 @@
 - (void)sheetDidEnd:(NSWindow*)sender returnCode:(NSInteger)returnCode contextInfo:(void*)contextInfo
 {
     _isEndedSheet = YES;
-    [window close];
+    [_window close];
 }
 
 - (void)load
 {
-    nameText.stringValue = _config.name;
-    passwordText.stringValue = _config.password;
-    modeText.stringValue = _config.mode;
-    topicText.stringValue = _config.topic;
+    _nameText.stringValue = _config.name;
+    _passwordText.stringValue = _config.password;
+    _modeText.stringValue = _config.mode;
+    _topicText.stringValue = _config.topic;
 
-    autoJoinCheck.state = _config.autoJoin;
-    consoleCheck.state = _config.logToConsole;
-    growlCheck.state = _config.growl;
+    _autoJoinCheck.state = _config.autoJoin;
+    _consoleCheck.state = _config.logToConsole;
+    _growlCheck.state = _config.growl;
 }
 
 - (void)save
 {
-    _config.name = nameText.stringValue;
-    _config.password = passwordText.stringValue;
-    _config.mode = modeText.stringValue;
-    _config.topic = topicText.stringValue;
+    _config.name = _nameText.stringValue;
+    _config.password = _passwordText.stringValue;
+    _config.mode = _modeText.stringValue;
+    _config.topic = _topicText.stringValue;
 
-    _config.autoJoin = autoJoinCheck.state;
-    _config.logToConsole = consoleCheck.state;
-    _config.growl = growlCheck.state;
+    _config.autoJoin = _autoJoinCheck.state;
+    _config.logToConsole = _consoleCheck.state;
+    _config.growl = _growlCheck.state;
 
     if (![_config.name isChannelName]) {
         _config.name = [@"#" stringByAppendingString:_config.name];
@@ -95,14 +93,14 @@
         [self.window setTitle:@"New Channel"];
     }
     else {
-        [nameText setEditable:NO];
-        [nameText setSelectable:NO];
-        [nameText setBezeled:NO];
-        [nameText setDrawsBackground:NO];
+        [_nameText setEditable:NO];
+        [_nameText setSelectable:NO];
+        [_nameText setBezeled:NO];
+        [_nameText setDrawsBackground:NO];
     }
 
-    NSString* s = nameText.stringValue;
-    [okButton setEnabled:s.length > 0];
+    NSString* s = _nameText.stringValue;
+    [_okButton setEnabled:s.length > 0];
 }
 
 - (void)controlTextDidChange:(NSNotification*)note
@@ -127,7 +125,7 @@
 - (void)cancel:(id)sender
 {
     if (_isSheet) {
-        [NSApp endSheet:window];
+        [NSApp endSheet:_window];
     }
     else {
         [self.window close];
@@ -140,7 +138,7 @@
 - (void)windowWillClose:(NSNotification*)note
 {
     if (_isSheet && !_isEndedSheet) {
-        [NSApp endSheet:window];
+        [NSApp endSheet:_window];
     }
 
     if ([_delegate respondsToSelector:@selector(channelDialogWillClose:)]) {

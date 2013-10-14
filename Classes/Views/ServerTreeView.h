@@ -9,7 +9,7 @@
 @interface ServerTreeView : TreeView
 
 @property (nonatomic, weak) id responderDelegate;
-@property (nonatomic, strong) OtherTheme* theme;
+@property (nonatomic) OtherTheme* theme;
 
 - (void)themeChanged;
 

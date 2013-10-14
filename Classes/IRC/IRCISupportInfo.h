@@ -31,7 +31,7 @@
 @property (nonatomic) BOOL plus;
 @property (nonatomic) BOOL op;
 @property (nonatomic) BOOL simpleMode;
-@property (nonatomic, strong) NSString* param;
+@property (nonatomic) NSString* param;
 
 + (IRCModeInfo*)modeInfo;
 

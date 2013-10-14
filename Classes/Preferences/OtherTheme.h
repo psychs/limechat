@@ -6,7 +6,7 @@
 
 @interface OtherTheme : NSObject
 
-@property (nonatomic, strong) NSString* fileName;
+@property (nonatomic) NSString* fileName;
 
 @property (nonatomic, readonly) NSString* logNickFormat;
 @property (nonatomic, readonly) NSColor* logScrollerMarkColor;

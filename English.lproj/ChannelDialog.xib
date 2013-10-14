@@ -182,9 +182,9 @@ Gw
                         <font key="titleFont" metaFont="system"/>
                     </box>
                     <button id="60">
-                        <rect key="frame" x="100" y="288" width="168" height="18"/>
+                        <rect key="frame" x="100" y="288" width="199" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="check" title="Notify events in Growl" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="81">
+                        <buttonCell key="cell" type="check" title="Notify in Notification Center" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="81">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>

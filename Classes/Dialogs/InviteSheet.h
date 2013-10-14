@@ -6,13 +6,12 @@
 
 
 @interface InviteSheet : SheetBase
-{
-    IBOutlet NSTextField* titleLabel;
-    IBOutlet NSPopUpButton* channelPopup;
-}
 
-@property (nonatomic, strong) NSArray* nicks;
+@property (nonatomic) NSArray* nicks;
 @property (nonatomic) int uid;
+
+@property (nonatomic) IBOutlet NSTextField* titleLabel;
+@property (nonatomic) IBOutlet NSPopUpButton* channelPopup;
 
 - (void)startWithChannels:(NSArray*)channels;
 

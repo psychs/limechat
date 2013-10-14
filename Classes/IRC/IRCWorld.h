@@ -34,22 +34,22 @@
 @property (nonatomic, weak) NSBox* logBase;
 @property (nonatomic, weak) NSBox* consoleBase;
 @property (nonatomic, weak) ChatBox* chatBox;
-@property (nonatomic, strong) FieldEditorTextView* fieldEditor;
+@property (nonatomic) FieldEditorTextView* fieldEditor;
 @property (nonatomic, weak) MemberListView* memberList;
 @property (nonatomic, weak) MenuController* menuController;
 @property (nonatomic, weak) DCCController* dcc;
 @property (nonatomic, weak) ViewTheme* viewTheme;
-@property (nonatomic, strong) NSMenu* treeMenu;
-@property (nonatomic, strong) NSMenu* logMenu;
-@property (nonatomic, strong) NSMenu* consoleMenu;
-@property (nonatomic, strong) NSMenu* urlMenu;
-@property (nonatomic, strong) NSMenu* addrMenu;
-@property (nonatomic, strong) NSMenu* chanMenu;
-@property (nonatomic, strong) NSMenu* memberMenu;
-@property (nonatomic, strong) LogController* consoleLog;
+@property (nonatomic) NSMenu* treeMenu;
+@property (nonatomic) NSMenu* logMenu;
+@property (nonatomic) NSMenu* consoleMenu;
+@property (nonatomic) NSMenu* urlMenu;
+@property (nonatomic) NSMenu* addrMenu;
+@property (nonatomic) NSMenu* chanMenu;
+@property (nonatomic) NSMenu* memberMenu;
+@property (nonatomic) LogController* consoleLog;
 
 @property (nonatomic, readonly) NSMutableArray* clients;
-@property (nonatomic, strong) IRCTreeItem* selected;
+@property (nonatomic) IRCTreeItem* selected;
 @property (nonatomic, readonly) IRCClient* selectedClient;
 @property (nonatomic, readonly) IRCChannel* selectedChannel;
 

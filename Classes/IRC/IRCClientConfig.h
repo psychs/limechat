@@ -14,31 +14,31 @@ typedef enum {
 
 @interface IRCClientConfig : NSObject <NSMutableCopying>
 
-@property (nonatomic, strong) NSString* name;
+@property (nonatomic) NSString* name;
 
-@property (nonatomic, strong) NSString* host;
+@property (nonatomic) NSString* host;
 @property (nonatomic) int port;
 @property (nonatomic) BOOL useSSL;
 
-@property (nonatomic, strong) NSString* nick;
-@property (nonatomic, strong) NSString* password;
-@property (nonatomic, strong) NSString* username;
-@property (nonatomic, strong) NSString* realName;
-@property (nonatomic, strong) NSString* nickPassword;
+@property (nonatomic) NSString* nick;
+@property (nonatomic) NSString* password;
+@property (nonatomic) NSString* username;
+@property (nonatomic) NSString* realName;
+@property (nonatomic) NSString* nickPassword;
 @property (nonatomic) BOOL useSASL;
 @property (nonatomic, readonly) NSMutableArray* altNicks;
 
 @property (nonatomic) ProxyType proxyType;
-@property (nonatomic, strong) NSString* proxyHost;
+@property (nonatomic) NSString* proxyHost;
 @property (nonatomic) int proxyPort;
-@property (nonatomic, strong) NSString* proxyUser;
-@property (nonatomic, strong) NSString* proxyPassword;
+@property (nonatomic) NSString* proxyUser;
+@property (nonatomic) NSString* proxyPassword;
 
 @property (nonatomic) BOOL autoConnect;
 @property (nonatomic) NSStringEncoding encoding;
 @property (nonatomic) NSStringEncoding fallbackEncoding;
-@property (nonatomic, strong) NSString* leavingComment;
-@property (nonatomic, strong) NSString* userInfo;
+@property (nonatomic) NSString* leavingComment;
+@property (nonatomic) NSString* userInfo;
 @property (nonatomic) BOOL invisibleMode;
 @property (nonatomic, readonly) NSMutableArray* loginCommands;
 @property (nonatomic, readonly) NSMutableArray* channels;

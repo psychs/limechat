@@ -14,15 +14,15 @@ typedef enum {
 
 @property (nonatomic) ChannelType type;
 
-@property (nonatomic, strong) NSString* name;
-@property (nonatomic, strong) NSString* password;
+@property (nonatomic) NSString* name;
+@property (nonatomic) NSString* password;
 
 @property (nonatomic) BOOL autoJoin;
 @property (nonatomic) BOOL logToConsole;
 @property (nonatomic) BOOL growl;
 
-@property (nonatomic, strong) NSString* mode;
-@property (nonatomic, strong) NSString* topic;
+@property (nonatomic) NSString* mode;
+@property (nonatomic) NSString* topic;
 
 @property (nonatomic, readonly) NSMutableArray* autoOp;
 

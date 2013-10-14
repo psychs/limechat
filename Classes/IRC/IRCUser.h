@@ -7,10 +7,10 @@
 
 @interface IRCUser : NSObject
 
-@property (nonatomic, strong) NSString* nick;
+@property (nonatomic) NSString* nick;
 @property (nonatomic, readonly) NSString* canonicalNick;
-@property (nonatomic, strong) NSString* username;
-@property (nonatomic, strong) NSString* address;
+@property (nonatomic) NSString* username;
+@property (nonatomic) NSString* address;
 @property (nonatomic) BOOL q;
 @property (nonatomic) BOOL a;
 @property (nonatomic) BOOL o;
@@ -23,7 +23,7 @@
 @property (nonatomic, readonly) CGFloat weight;
 @property (nonatomic, readonly) CGFloat incomingWeight;
 @property (nonatomic, readonly) CGFloat outgoingWeight;
-@property (nonatomic, strong) IRCISupportInfo* isupport;
+@property (nonatomic) IRCISupportInfo* isupport;
 
 - (BOOL)hasMode:(char)mode;
 

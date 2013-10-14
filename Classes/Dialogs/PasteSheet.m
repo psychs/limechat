@@ -66,15 +66,15 @@ static NSDictionary* SYNTAX_EXT_MAP;
         if (_isShortText) {
             self.syntax = @"privmsg";
         }
-        [sheet makeFirstResponder:bodyText];
+        [self.sheet makeFirstResponder:_bodyText];
     }
 
-    [syntaxPopup selectItemWithTag:[self tagFromSyntax:_syntax]];
-    [commandPopup selectItemWithTag:[self tagFromSyntax:_command]];
-    [bodyText setString:_originalText];
+    [_syntaxPopup selectItemWithTag:[self tagFromSyntax:_syntax]];
+    [_commandPopup selectItemWithTag:[self tagFromSyntax:_command]];
+    [_bodyText setString:_originalText];
 
     if (!NSEqualSizes(_size, NSZeroSize)) {
-        [sheet setContentSize:_size];
+        [self.sheet setContentSize:_size];
     }
 
     [self startSheet];
@@ -88,8 +88,8 @@ static NSDictionary* SYNTAX_EXT_MAP;
         [_gist cancel];
     }
 
-    NSString* s = bodyText.string;
-    NSString* fileType = [SYNTAX_EXT_MAP objectForKey:[self syntaxFromTag:syntaxPopup.selectedTag]];
+    NSString* s = _bodyText.string;
+    NSString* fileType = [SYNTAX_EXT_MAP objectForKey:[self syntaxFromTag:_syntaxPopup.selectedTag]];
     if (!fileType) {
         fileType = @"Text";
     }
@@ -101,9 +101,9 @@ static NSDictionary* SYNTAX_EXT_MAP;
 
 - (void)sendInChannel:(id)sender
 {
-    _command = [self syntaxFromTag:commandPopup.selectedTag];
+    _command = [self syntaxFromTag:_commandPopup.selectedTag];
 
-    NSString* s = bodyText.string;
+    NSString* s = _bodyText.string;
 
     if ([self.delegate respondsToSelector:@selector(pasteSheet:onPasteText:)]) {
         [self.delegate pasteSheet:self onPasteText:s];
@@ -123,28 +123,28 @@ static NSDictionary* SYNTAX_EXT_MAP;
 
 - (void)setRequesting:(BOOL)value
 {
-    errorLabel.stringValue = value ? @"Sending…" : @"";
+    _errorLabel.stringValue = value ? @"Sending…" : @"";
     if (value) {
-        [uploadIndicator startAnimation:nil];
+        [_uploadIndicator startAnimation:nil];
     }
     else {
-        [uploadIndicator stopAnimation:nil];
+        [_uploadIndicator stopAnimation:nil];
     }
 
-    [pasteOnlineButton setEnabled:!value];
-    [sendInChannelButton setEnabled:!value];
-    [syntaxPopup setEnabled:!value];
-    [commandPopup setEnabled:!value];
+    [_pasteOnlineButton setEnabled:!value];
+    [_sendInChannelButton setEnabled:!value];
+    [_syntaxPopup setEnabled:!value];
+    [_commandPopup setEnabled:!value];
 
     if (value) {
-        [bodyText setEditable:NO];
-        [bodyText setTextColor:[NSColor disabledControlTextColor]];
-        [bodyText setBackgroundColor:[NSColor windowBackgroundColor]];
+        [_bodyText setEditable:NO];
+        [_bodyText setTextColor:[NSColor disabledControlTextColor]];
+        [_bodyText setBackgroundColor:[NSColor windowBackgroundColor]];
     }
     else {
-        [bodyText setTextColor:[NSColor textColor]];
-        [bodyText setBackgroundColor:[NSColor textBackgroundColor]];
-        [bodyText setEditable:YES];
+        [_bodyText setTextColor:[NSColor textColor]];
+        [_bodyText setBackgroundColor:[NSColor textBackgroundColor]];
+        [_bodyText setEditable:YES];
     }
 }
 
@@ -175,7 +175,7 @@ static NSDictionary* SYNTAX_EXT_MAP;
     [self setRequesting:NO];
 
     if (url.length) {
-        [errorLabel setStringValue:@""];
+        [_errorLabel setStringValue:@""];
 
         if ([self.delegate respondsToSelector:@selector(pasteSheet:onPasteURL:)]) {
             [self.delegate pasteSheet:self onPasteURL:url];
@@ -184,7 +184,7 @@ static NSDictionary* SYNTAX_EXT_MAP;
         [self endSheet];
     }
     else {
-        [errorLabel setStringValue:@"Could not get an URL from Gist"];
+        [_errorLabel setStringValue:@"Could not get an URL from Gist"];
     }
 }
 
@@ -193,7 +193,7 @@ static NSDictionary* SYNTAX_EXT_MAP;
     _gist = nil;
 
     [self setRequesting:NO];
-    [errorLabel setStringValue:[NSString stringWithFormat:@"Gist error: %@", error]];
+    [_errorLabel setStringValue:[NSString stringWithFormat:@"Gist error: %@", error]];
 }
 
 #pragma mark -
@@ -201,10 +201,10 @@ static NSDictionary* SYNTAX_EXT_MAP;
 
 - (void)windowWillClose:(NSNotification*)note
 {
-    _syntax = [self syntaxFromTag:syntaxPopup.selectedTag];
-    _command = [self syntaxFromTag:commandPopup.selectedTag];
+    _syntax = [self syntaxFromTag:_syntaxPopup.selectedTag];
+    _command = [self syntaxFromTag:_commandPopup.selectedTag];
 
-    NSView* contentView = [sheet contentView];
+    NSView* contentView = [self.sheet contentView];
     _size = contentView.frame.size;
 
     if ([self.delegate respondsToSelector:@selector(pasteSheetWillClose:)]) {

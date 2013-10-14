@@ -10,18 +10,18 @@
 
 @property (nonatomic, weak) id delegate;
 @property (nonatomic) int uid;
-@property (nonatomic, strong) NSString* peerNick;
-@property (nonatomic, strong) NSString* host;
+@property (nonatomic) NSString* peerNick;
+@property (nonatomic) NSString* host;
 @property (nonatomic) int port;
 @property (nonatomic) long long size;
 @property (nonatomic, readonly) long long processedSize;
 @property (nonatomic, readonly) DCCFileTransferStatus status;
 @property (nonatomic, readonly) NSString* error;
-@property (nonatomic, strong) NSString* path;
-@property (nonatomic, strong) NSString* fileName;
+@property (nonatomic) NSString* path;
+@property (nonatomic) NSString* fileName;
 @property (nonatomic, readonly) NSString* downloadFileName;
 @property (nonatomic, readonly) NSImage* icon;
-@property (nonatomic, strong) NSProgressIndicator* progressBar;
+@property (nonatomic) NSProgressIndicator* progressBar;
 @property (nonatomic, readonly) double speed;
 
 - (void)open;

@@ -9,56 +9,55 @@
 
 
 @interface ServerDialog : NSWindowController
-{
-    IBOutlet NSTabView* tab;
-    
-    IBOutlet NSTextField* nameText;
-    IBOutlet NSButton* autoConnectCheck;
-    
-    IBOutlet NSComboBox* hostCombo;
-    IBOutlet NSButton* sslCheck;
-    IBOutlet NSTextField* portText;
-    
-    IBOutlet NSTextField* nickText;
-    IBOutlet NSTextField* passwordText;
-    IBOutlet NSTextField* usernameText;
-    IBOutlet NSTextField* realNameText;
-    IBOutlet NSTextField* nickPasswordText;
-    IBOutlet NSButton* saslCheck;
-    IBOutlet NSTextField* altNicksText;
-    
-    IBOutlet NSTextField* leavingCommentText;
-    IBOutlet NSTextField* userInfoText;
-    
-    IBOutlet NSPopUpButton* encodingCombo;
-    IBOutlet NSPopUpButton* fallbackEncodingCombo;
-    
-    IBOutlet NSPopUpButton* proxyCombo;
-    IBOutlet NSTextField* proxyHostText;
-    IBOutlet NSTextField* proxyPortText;
-    IBOutlet NSTextField* proxyUserText;
-    IBOutlet NSTextField* proxyPasswordText;
-    
-    IBOutlet ListView* channelTable;
-    IBOutlet NSButton* addChannelButton;
-    IBOutlet NSButton* editChannelButton;
-    IBOutlet NSButton* deleteChannelButton;
-    
-    IBOutlet NSTextView* loginCommandsText;
-    IBOutlet NSButton* invisibleCheck;
-    
-    IBOutlet ListView* ignoreTable;
-    IBOutlet NSButton* addIgnoreButton;
-    IBOutlet NSButton* editIgnoreButton;
-    IBOutlet NSButton* deleteIgnoreButton;
-    
-    IBOutlet NSButton* okButton;
-}
 
 @property (nonatomic, weak) id delegate;
 @property (nonatomic, weak) NSWindow* parentWindow;
 @property (nonatomic) int uid;
-@property (nonatomic, strong) IRCClientConfig* config;
+@property (nonatomic) IRCClientConfig* config;
+
+@property (nonatomic) IBOutlet NSTabView* tab;
+
+@property (nonatomic) IBOutlet NSTextField* nameText;
+@property (nonatomic) IBOutlet NSButton* autoConnectCheck;
+
+@property (nonatomic) IBOutlet NSComboBox* hostCombo;
+@property (nonatomic) IBOutlet NSButton* sslCheck;
+@property (nonatomic) IBOutlet NSTextField* portText;
+
+@property (nonatomic) IBOutlet NSTextField* nickText;
+@property (nonatomic) IBOutlet NSTextField* passwordText;
+@property (nonatomic) IBOutlet NSTextField* usernameText;
+@property (nonatomic) IBOutlet NSTextField* realNameText;
+@property (nonatomic) IBOutlet NSTextField* nickPasswordText;
+@property (nonatomic) IBOutlet NSButton* saslCheck;
+@property (nonatomic) IBOutlet NSTextField* altNicksText;
+
+@property (nonatomic) IBOutlet NSTextField* leavingCommentText;
+@property (nonatomic) IBOutlet NSTextField* userInfoText;
+
+@property (nonatomic) IBOutlet NSPopUpButton* encodingCombo;
+@property (nonatomic) IBOutlet NSPopUpButton* fallbackEncodingCombo;
+
+@property (nonatomic) IBOutlet NSPopUpButton* proxyCombo;
+@property (nonatomic) IBOutlet NSTextField* proxyHostText;
+@property (nonatomic) IBOutlet NSTextField* proxyPortText;
+@property (nonatomic) IBOutlet NSTextField* proxyUserText;
+@property (nonatomic) IBOutlet NSTextField* proxyPasswordText;
+
+@property (nonatomic) IBOutlet ListView* channelTable;
+@property (nonatomic) IBOutlet NSButton* addChannelButton;
+@property (nonatomic) IBOutlet NSButton* editChannelButton;
+@property (nonatomic) IBOutlet NSButton* deleteChannelButton;
+
+@property (nonatomic) IBOutlet NSTextView* loginCommandsText;
+@property (nonatomic) IBOutlet NSButton* invisibleCheck;
+
+@property (nonatomic) IBOutlet ListView* ignoreTable;
+@property (nonatomic) IBOutlet NSButton* addIgnoreButton;
+@property (nonatomic) IBOutlet NSButton* editIgnoreButton;
+@property (nonatomic) IBOutlet NSButton* deleteIgnoreButton;
+
+@property (nonatomic) IBOutlet NSButton* okButton;
 
 - (void)startWithIgnoreTab:(BOOL)ignoreTab;
 - (void)show;

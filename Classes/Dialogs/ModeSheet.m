@@ -17,79 +17,79 @@
 
 - (void)start
 {
-    [sCheck setState:_mode.s];
-    [pCheck setState:_mode.p];
-    [nCheck setState:_mode.n];
-    [tCheck setState:_mode.t];
-    [iCheck setState:_mode.i];
-    [mCheck setState:_mode.m];
-    [aCheck setState:_mode.a];
-    [rCheck setState:_mode.r];
-    [kCheck setState:_mode.k.length > 0];
-    [lCheck setState:_mode.l > 0];
+    [_sCheck setState:_mode.s];
+    [_pCheck setState:_mode.p];
+    [_nCheck setState:_mode.n];
+    [_tCheck setState:_mode.t];
+    [_iCheck setState:_mode.i];
+    [_mCheck setState:_mode.m];
+    [_aCheck setState:_mode.a];
+    [_rCheck setState:_mode.r];
+    [_kCheck setState:_mode.k.length > 0];
+    [_lCheck setState:_mode.l > 0];
 
-    [kText setStringValue:_mode.k ?: @""];
-    [lText setStringValue:[NSString stringWithFormat:@"%d", _mode.l]];
+    [_kText setStringValue:_mode.k ?: @""];
+    [_lText setStringValue:[NSString stringWithFormat:@"%d", _mode.l]];
 
     [self updateTextFields];
 
     if ([_channelName hasPrefix:@"!"]) {
-        [aCheck setEnabled:YES];
-        [rCheck setEnabled:YES];
+        [_aCheck setEnabled:YES];
+        [_rCheck setEnabled:YES];
     }
     else if ([_channelName hasPrefix:@"&"]) {
-        [aCheck setEnabled:YES];
-        [rCheck setEnabled:NO];
+        [_aCheck setEnabled:YES];
+        [_rCheck setEnabled:NO];
     }
     else {
-        [aCheck setEnabled:NO];
-        [rCheck setEnabled:NO];
+        [_aCheck setEnabled:NO];
+        [_rCheck setEnabled:NO];
     }
 
-    [sheet makeFirstResponder:sCheck];
+    [self.sheet makeFirstResponder:_sCheck];
     [self startSheet];
 }
 
 - (void)updateTextFields
 {
-    [kText setEnabled:kCheck.state == NSOnState];
-    [lText setEnabled:lCheck.state == NSOnState];
+    [_kText setEnabled:_kCheck.state == NSOnState];
+    [_lText setEnabled:_lCheck.state == NSOnState];
 }
 
 - (void)onChangeCheck:(id)sender
 {
     [self updateTextFields];
 
-    if ([sCheck state] == NSOnState && [pCheck state] == NSOnState) {
-        if (sender == sCheck) {
-            [pCheck setState:NSOffState];
+    if ([_sCheck state] == NSOnState && [_pCheck state] == NSOnState) {
+        if (sender == _sCheck) {
+            [_pCheck setState:NSOffState];
         }
         else {
-            [sCheck setState:NSOffState];
+            [_sCheck setState:NSOffState];
         }
     }
 }
 
 - (void)ok:(id)sender
 {
-    _mode.s = [sCheck state] == NSOnState;
-    _mode.p = [pCheck state] == NSOnState;
-    _mode.n = [nCheck state] == NSOnState;
-    _mode.t = [tCheck state] == NSOnState;
-    _mode.i = [iCheck state] == NSOnState;
-    _mode.m = [mCheck state] == NSOnState;
-    _mode.a = [aCheck state] == NSOnState;
-    _mode.r = [rCheck state] == NSOnState;
+    _mode.s = [_sCheck state] == NSOnState;
+    _mode.p = [_pCheck state] == NSOnState;
+    _mode.n = [_nCheck state] == NSOnState;
+    _mode.t = [_tCheck state] == NSOnState;
+    _mode.i = [_iCheck state] == NSOnState;
+    _mode.m = [_mCheck state] == NSOnState;
+    _mode.a = [_aCheck state] == NSOnState;
+    _mode.r = [_rCheck state] == NSOnState;
 
-    if ([kCheck state] == NSOnState) {
-        _mode.k = [kText stringValue];
+    if ([_kCheck state] == NSOnState) {
+        _mode.k = [_kText stringValue];
     }
     else {
         _mode.k = @"";
     }
 
-    if ([lCheck state] == NSOnState) {
-        _mode.l = [[lText stringValue] intValue];
+    if ([_lCheck state] == NSOnState) {
+        _mode.l = [[_lText stringValue] intValue];
     }
     else {
         _mode.l = 0;

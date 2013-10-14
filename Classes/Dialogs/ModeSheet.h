@@ -7,25 +7,24 @@
 
 
 @interface ModeSheet : SheetBase
-{
-    IBOutlet NSButton* sCheck;
-    IBOutlet NSButton* pCheck;
-    IBOutlet NSButton* nCheck;
-    IBOutlet NSButton* tCheck;
-    IBOutlet NSButton* iCheck;
-    IBOutlet NSButton* mCheck;
-    IBOutlet NSButton* aCheck;
-    IBOutlet NSButton* rCheck;
-    IBOutlet NSButton* kCheck;
-    IBOutlet NSButton* lCheck;
-    IBOutlet NSTextField* kText;
-    IBOutlet NSTextField* lText;
-}
 
-@property (nonatomic, strong) IRCChannelMode* mode;
-@property (nonatomic, strong) NSString* channelName;
+@property (nonatomic) IRCChannelMode* mode;
+@property (nonatomic) NSString* channelName;
 @property (nonatomic) int uid;
 @property (nonatomic) int cid;
+
+@property (nonatomic) IBOutlet NSButton* sCheck;
+@property (nonatomic) IBOutlet NSButton* pCheck;
+@property (nonatomic) IBOutlet NSButton* nCheck;
+@property (nonatomic) IBOutlet NSButton* tCheck;
+@property (nonatomic) IBOutlet NSButton* iCheck;
+@property (nonatomic) IBOutlet NSButton* mCheck;
+@property (nonatomic) IBOutlet NSButton* aCheck;
+@property (nonatomic) IBOutlet NSButton* rCheck;
+@property (nonatomic) IBOutlet NSButton* kCheck;
+@property (nonatomic) IBOutlet NSButton* lCheck;
+@property (nonatomic) IBOutlet NSTextField* kText;
+@property (nonatomic) IBOutlet NSTextField* lText;
 
 - (void)start;
 

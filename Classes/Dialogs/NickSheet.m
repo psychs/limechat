@@ -17,9 +17,9 @@
 
 - (void)start:(NSString*)nick
 {
-    [currentText setStringValue:nick];
-    [newText setStringValue:nick];
-    [sheet makeFirstResponder:newText];
+    [_currentText setStringValue:nick];
+    [_nextText setStringValue:nick];
+    [self.sheet makeFirstResponder:_nextText];
 
     [self startSheet];
 }
@@ -27,7 +27,7 @@
 - (void)ok:(id)sender
 {
     if ([self.delegate respondsToSelector:@selector(nickSheet:didInputNick:)]) {
-        [self.delegate nickSheet:self didInputNick:newText.stringValue];
+        [self.delegate nickSheet:self didInputNick:_nextText.stringValue];
     }
 
     [super ok:sender];

@@ -174,19 +174,19 @@
 
 - (void)loadHotKey
 {
-    hotKey.keyCode = [Preferences hotKeyKeyCode];
-    hotKey.modifierFlags = [Preferences hotKeyModifierFlags];
+    _hotKey.keyCode = [Preferences hotKeyKeyCode];
+    _hotKey.modifierFlags = [Preferences hotKeyModifierFlags];
 }
 
 - (void)keyRecorderDidChangeKey:(KeyRecorder*)sender
 {
-    int code = hotKey.keyCode;
-    NSUInteger mods = hotKey.modifierFlags;
+    int code = _hotKey.keyCode;
+    NSUInteger mods = _hotKey.modifierFlags;
 
     [Preferences setHotKeyKeyCode:code];
     [Preferences setHotKeyModifierFlags:mods];
 
-    if (hotKey.keyCode) {
+    if (_hotKey.keyCode) {
         [(LimeChatApplication*)NSApp registerHotKey:code modifierFlags:mods];
     }
     else {
@@ -274,14 +274,14 @@
     NSImage* icon = [[NSWorkspace sharedWorkspace] iconForFile:path];
     [icon setSize:NSMakeSize(16, 16)];
 
-    NSMenuItem* item = [transcriptFolderButton itemAtIndex:0];
+    NSMenuItem* item = [_transcriptFolderButton itemAtIndex:0];
     [item setTitle:dirName];
     [item setImage:icon];
 }
 
 - (void)transcriptFolderPanelDidEnd:(NSOpenPanel *)panel returnCode:(int)returnCode contextInfo:(void  *)contextInfo
 {
-    [transcriptFolderButton selectItem:[transcriptFolderButton itemAtIndex:0]];
+    [_transcriptFolderButton selectItem:[_transcriptFolderButton itemAtIndex:0]];
 
     if (returnCode == NSOKButton) {
         NSString* path = [[[panel URLs] objectAtIndex:0] path];
@@ -302,7 +302,7 @@
 
 - (void)onTranscriptFolderChanged:(id)sender
 {
-    if ([transcriptFolderButton selectedTag] != 2) return;
+    if ([_transcriptFolderButton selectedTag] != 2) return;
 
     NSString* path = [Preferences transcriptFolder];
     path = [path stringByExpandingTildeInPath];
@@ -333,9 +333,9 @@
     // update menu
     //
 
-    [themeButton removeAllItems];
-    [themeButton addItemWithTitle:@"Default"];
-    [[themeButton itemAtIndex:0] setTag:0];
+    [_themeButton removeAllItems];
+    [_themeButton addItemWithTitle:@"Default"];
+    [[_themeButton itemAtIndex:0] setTag:0];
 
     NSFileManager* fm = [NSFileManager defaultManager];
     NSArray* ary = [NSArray arrayWithObjects:[ViewTheme resourceBasePath], [ViewTheme userBasePath], nil];
@@ -356,13 +356,13 @@
 
         files = [[set allObjects] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
         if (files.count) {
-            [themeButton.menu addItem:[NSMenuItem separatorItem]];
+            [_themeButton.menu addItem:[NSMenuItem separatorItem]];
 
             int i = 0;
             for (NSString* f in files) {
                 NSMenuItem* item = [[NSMenuItem alloc] initWithTitle:f action:nil keyEquivalent:@""];
                 [item setTag:tag];
-                [themeButton.menu addItem:item];
+                [_themeButton.menu addItem:item];
                 ++i;
             }
         }
@@ -376,7 +376,7 @@
 
     NSArray* kindAndName = [ViewTheme extractFileName:[Preferences themeName]];
     if (!kindAndName) {
-        [themeButton selectItemAtIndex:0];
+        [_themeButton selectItemAtIndex:0];
         return;
     }
 
@@ -388,11 +388,11 @@
         targetTag = 1;
     }
 
-    int count = [themeButton numberOfItems];
+    int count = [_themeButton numberOfItems];
     for (int i=0; i<count; i++) {
-        NSMenuItem* item = [themeButton itemAtIndex:i];
+        NSMenuItem* item = [_themeButton itemAtIndex:i];
         if ([item tag] == targetTag && [[item title] isEqualToString:name]) {
-            [themeButton selectItemAtIndex:i];
+            [_themeButton selectItemAtIndex:i];
             break;
         }
     }
@@ -400,7 +400,7 @@
 
 - (void)onChangedTheme:(id)sender
 {
-    NSMenuItem* item = [themeButton selectedItem];
+    NSMenuItem* item = [_themeButton selectedItem];
     NSString* name = [item title];
     if (item.tag == 0) {
         [Preferences setThemeName:[ViewTheme buildResourceFileName:name]];
@@ -473,14 +473,14 @@
 
 - (void)onAddKeyword:(id)sender
 {
-    [keywordsArrayController add:nil];
-    [self performSelector:@selector(editTable:) withObject:keywordsTable afterDelay:0.01];
+    [_keywordsArrayController add:nil];
+    [self performSelector:@selector(editTable:) withObject:_keywordsTable afterDelay:0.01];
 }
 
 - (void)onAddExcludeWord:(id)sender
 {
-    [excludeWordsArrayController add:nil];
-    [self performSelector:@selector(editTable:) withObject:excludeWordsTable afterDelay:0.01];
+    [_excludeWordsArrayController add:nil];
+    [self performSelector:@selector(editTable:) withObject:_excludeWordsTable afterDelay:0.01];
 }
 
 - (void)onLayoutChanged:(id)sender

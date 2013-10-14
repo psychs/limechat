@@ -9,6 +9,6 @@
 @interface WebViewAutoScroll : NSObject
 
 @property (nonatomic, weak) WebFrameView* webFrame;
-@property (nonatomic, strong) MarkedScroller* scroller;
+@property (nonatomic) MarkedScroller* scroller;
 
 @end

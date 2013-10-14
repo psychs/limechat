@@ -5,24 +5,23 @@
 
 
 @interface WhoisDialog : NSWindowController
-{
-    IBOutlet NSTextField* nickText;
-    IBOutlet NSTextField* logInText;
-    IBOutlet NSTextField* realnameText;
-    IBOutlet NSTextField* addressText;
-    IBOutlet NSTextField* serverText;
-    IBOutlet NSTextField* serverInfoText;
-    IBOutlet NSPopUpButton* channelsCombo;
-    IBOutlet NSTextField* awayText;
-    IBOutlet NSTextField* idleText;
-    IBOutlet NSTextField* signOnText;
-    IBOutlet NSButton* joinButton;
-    IBOutlet NSButton* closeButton;
-}
 
 @property (nonatomic, weak) id delegate;
 @property (nonatomic) BOOL isOperator;
-@property (nonatomic, strong) NSString* nick;
+@property (nonatomic) NSString* nick;
+
+@property (nonatomic) IBOutlet NSTextField* nickText;
+@property (nonatomic) IBOutlet NSTextField* logInText;
+@property (nonatomic) IBOutlet NSTextField* realnameText;
+@property (nonatomic) IBOutlet NSTextField* addressText;
+@property (nonatomic) IBOutlet NSTextField* serverText;
+@property (nonatomic) IBOutlet NSTextField* serverInfoText;
+@property (nonatomic) IBOutlet NSPopUpButton* channelsCombo;
+@property (nonatomic) IBOutlet NSTextField* awayText;
+@property (nonatomic) IBOutlet NSTextField* idleText;
+@property (nonatomic) IBOutlet NSTextField* signOnText;
+@property (nonatomic) IBOutlet NSButton* joinButton;
+@property (nonatomic) IBOutlet NSButton* closeButton;
 
 - (void)show;
 - (void)close;

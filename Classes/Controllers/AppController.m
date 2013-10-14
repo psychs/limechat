@@ -42,9 +42,9 @@
 
 - (void)awakeFromNib
 {
-    NSWindowCollectionBehavior behavior = [window collectionBehavior];
+    NSWindowCollectionBehavior behavior = [_window collectionBehavior];
     behavior |= NSWindowCollectionBehaviorFullScreenPrimary;
-    [window setCollectionBehavior:behavior];
+    [_window setCollectionBehavior:behavior];
 
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(themeDidChange:) name:ThemeDidChangeNotification object:nil];
@@ -65,10 +65,10 @@
         [(LimeChatApplication*)NSApp registerHotKey:keyCode modifierFlags:modifierFlags];
     }
 
-    rootSplitter.fixedViewIndex = 1;
-    logSplitter.fixedViewIndex = 1;
-    infoSplitter.fixedViewIndex = 1;
-    treeSplitter.hidden = YES;
+    _rootSplitter.fixedViewIndex = 1;
+    _logSplitter.fixedViewIndex = 1;
+    _infoSplitter.fixedViewIndex = 1;
+    _treeSplitter.hidden = YES;
 
     _fieldEditor = [[FieldEditorTextView alloc] initWithFrame:NSZeroRect];
     [_fieldEditor setFieldEditor:YES];
@@ -84,68 +84,68 @@
     [_fieldEditor setAutomaticDataDetectionEnabled:[Preferences dataDetectionEnabled]];
     [_fieldEditor setAutomaticTextReplacementEnabled:[Preferences textReplacementEnabled]];
 
-    [text setFocusRingType:NSFocusRingTypeNone];
+    [_text setFocusRingType:NSFocusRingTypeNone];
 
     _viewTheme = [ViewTheme new];
     _viewTheme.name = [Preferences themeName];
-    tree.theme = _viewTheme.other;
-    memberList.theme = _viewTheme.other;
+    _tree.theme = _viewTheme.other;
+    _memberList.theme = _viewTheme.other;
     MemberListViewCell* cell = [MemberListViewCell new];
     [cell setup:_viewTheme.other];
-    [[[memberList tableColumns] objectAtIndex:0] setDataCell:cell];
+    [[[_memberList tableColumns] objectAtIndex:0] setDataCell:cell];
 
     [self loadWindowState];
-    [window setAlphaValue:[Preferences themeTransparency]];
+    [_window setAlphaValue:[Preferences themeTransparency]];
     [self set3columnLayout:[Preferences mainWindowLayout] == MAIN_WINDOW_LAYOUT_3_COLUMN];
 
     IRCWorldConfig* seed = [[IRCWorldConfig alloc] initWithDictionary:[Preferences loadWorld]];
 
     _world = [IRCWorld new];
     _world.app = self;
-    _world.window = window;
+    _world.window = _window;
     _world.notifier = _notifier;
-    _world.tree = tree;
-    _world.text = text;
-    _world.logBase = logBase;
-    _world.consoleBase = consoleBase;
-    _world.chatBox = chatBox;
+    _world.tree = _tree;
+    _world.text = _text;
+    _world.logBase = _logBase;
+    _world.consoleBase = _consoleBase;
+    _world.chatBox = _chatBox;
     _world.fieldEditor = _fieldEditor;
-    _world.memberList = memberList;
-    [_world setServerMenuItem:serverMenu];
-    [_world setChannelMenuItem:channelMenu];
-    _world.treeMenu = treeMenu;
-    _world.logMenu = logMenu;
-    _world.consoleMenu = consoleMenu;
-    _world.urlMenu = urlMenu;
-    _world.addrMenu = addrMenu;
-    _world.chanMenu = chanMenu;
-    _world.memberMenu = memberMenu;
+    _world.memberList = _memberList;
+    [_world setServerMenuItem:_serverMenu];
+    [_world setChannelMenuItem:_channelMenu];
+    _world.treeMenu = _treeMenu;
+    _world.logMenu = _logMenu;
+    _world.consoleMenu = _consoleMenu;
+    _world.urlMenu = _urlMenu;
+    _world.addrMenu = _addrMenu;
+    _world.chanMenu = _chanMenu;
+    _world.memberMenu = _memberMenu;
     _world.viewTheme = _viewTheme;
-    _world.menuController = menu;
+    _world.menuController = _menu;
     [_world setup:seed];
 
-    tree.dataSource = _world;
-    tree.delegate = _world;
-    tree.responderDelegate = _world;
-    [tree reloadData];
+    _tree.dataSource = _world;
+    _tree.delegate = _world;
+    _tree.responderDelegate = _world;
+    [_tree reloadData];
     [_world setupTree];
 
-    menu.app = self;
-    menu.world = _world;
-    menu.window = window;
-    menu.tree = tree;
-    menu.memberList = memberList;
-    menu.text = text;
-    [menu setUp];
+    _menu.app = self;
+    _menu.world = _world;
+    _menu.window = _window;
+    _menu.tree = _tree;
+    _menu.memberList = _memberList;
+    _menu.text = _text;
+    [_menu setUp];
 
-    memberList.target = menu;
-    [memberList setDoubleAction:@selector(memberListDoubleClicked:)];
-    memberList.keyDelegate = _world;
-    memberList.dropDelegate = _world;
+    _memberList.target = _menu;
+    [_memberList setDoubleAction:@selector(memberListDoubleClicked:)];
+    _memberList.keyDelegate = _world;
+    _memberList.dropDelegate = _world;
 
     _dcc = [DCCController new];
     _dcc.world = _world;
-    _dcc.mainWindow = window;
+    _dcc.mainWindow = _window;
     _world.dcc = _dcc;
 
     _notifier = [UserNotificationController new];
@@ -169,8 +169,8 @@
         [_welcomeDialog show];
     }
     else {
-        [window makeFirstResponder:text];
-        [window makeKeyAndOrderFront:nil];
+        [_window makeFirstResponder:_text];
+        [_window makeKeyAndOrderFront:nil];
         [_world autoConnect:NO];
     }
 }
@@ -183,26 +183,26 @@
         [_world updateIcon];
     }
 
-    [tree setNeedsDisplay];
+    [_tree setNeedsDisplay];
 }
 
 - (void)applicationDidResignActive:(NSNotification *)note
 {
-    [tree setNeedsDisplay];
+    [_tree setNeedsDisplay];
 }
 
 - (BOOL)applicationShouldHandleReopen:(NSApplication*)sender hasVisibleWindows:(BOOL)flag
 {
-    [window makeKeyAndOrderFront:nil];
+    [_window makeKeyAndOrderFront:nil];
     return YES;
 }
 
 - (void)applicationDidReceiveHotKey:(id)sender
 {
-    if (![window isVisible] || ![NSApp isActive]) {
+    if (![_window isVisible] || ![NSApp isActive]) {
         [NSApp activateIgnoringOtherApps:YES];
-        [window makeKeyAndOrderFront:nil];
-        [text focus];
+        [_window makeKeyAndOrderFront:nil];
+        [_text focus];
     }
     else {
         [NSApp hide:nil];
@@ -273,7 +273,7 @@
 
     [_dcc terminate];
     [_world terminate];
-    [menu terminate];
+    [_menu terminate];
     [ImageDownloadManager disposeInstance];
     [NSApp unregisterHotKey];
     [self saveWindowState];
@@ -317,7 +317,7 @@
 
 - (id)windowWillReturnFieldEditor:(NSWindow *)sender toObject:(id)client
 {
-    if (client == text) {
+    if (client == _text) {
         return _fieldEditor;
     }
     else {
@@ -356,12 +356,12 @@
         NSRange range = [regex rangeOfFirstMatchInString:s options:0 range:NSMakeRange(0, s.length)];
         if (range.location != NSNotFound) {
             // multi line
-            [menu startPasteSheetWithContent:s nick:client.myNick uid:client.uid cid:channel.uid editMode:YES];
+            [_menu startPasteSheetWithContent:s nick:client.myNick uid:client.uid cid:channel.uid editMode:YES];
             return YES;
         }
     }
 
-    if (![[window firstResponder] isKindOfClass:[NSTextView class]]) {
+    if (![[_window firstResponder] isKindOfClass:[NSTextView class]]) {
         [_world focusInputText];
     }
     return NO;
@@ -372,15 +372,15 @@
 
 - (void)sendText:(NSString*)command
 {
-    NSString* s = [text stringValue];
+    NSString* s = [_text stringValue];
     if (s.length) {
         if ([_world inputText:s command:command]) {
             [_inputHistory add:s];
-            [text setStringValue:@""];
+            [_text setStringValue:@""];
         }
     }
 
-    [text focus];
+    [_text focus];
 
     if (_completionStatus) {
         [_completionStatus clear];
@@ -398,20 +398,20 @@
     _threeColumns = value;
 
     if (_threeColumns) {
-        infoSplitter.hidden = YES;
-        infoSplitter.inverted = YES;
-        [leftTreeBase addSubview:treeScrollView];
-        treeSplitter.hidden = NO;
-        if (treeSplitter.position < 1) treeSplitter.position = 120;
-        treeScrollView.frame = leftTreeBase.bounds;
+        _infoSplitter.hidden = YES;
+        _infoSplitter.inverted = YES;
+        [_leftTreeBase addSubview:_treeScrollView];
+        _treeSplitter.hidden = NO;
+        if (_treeSplitter.position < 1) _treeSplitter.position = 120;
+        _treeScrollView.frame = _leftTreeBase.bounds;
     }
     else {
-        treeSplitter.hidden = YES;
-        [rightTreeBase addSubview:treeScrollView];
-        infoSplitter.inverted = NO;
-        infoSplitter.hidden = NO;
-        if (infoSplitter.position < 1) infoSplitter.position = 100;
-        treeScrollView.frame = rightTreeBase.bounds;
+        _treeSplitter.hidden = YES;
+        [_rightTreeBase addSubview:_treeScrollView];
+        _infoSplitter.inverted = NO;
+        _infoSplitter.hidden = NO;
+        if (_infoSplitter.position < 1) _infoSplitter.position = 100;
+        _treeScrollView.frame = _rightTreeBase.bounds;
     }
 }
 
@@ -429,11 +429,11 @@
         int h = [dic intForKey:@"h"];
         id spellCheckingValue = [dic objectForKey:@"spell_checking"];
 
-        [window setFrame:NSMakeRect(x, y, w, h) display:YES];
-        rootSplitter.position = [dic intForKey:@"root"];
-        logSplitter.position = [dic intForKey:@"log"];
-        infoSplitter.position = [dic intForKey:@"info"];
-        treeSplitter.position = [dic intForKey:@"tree"];
+        [_window setFrame:NSMakeRect(x, y, w, h) display:YES];
+        _rootSplitter.position = [dic intForKey:@"root"];
+        _logSplitter.position = [dic intForKey:@"log"];
+        _infoSplitter.position = [dic intForKey:@"info"];
+        _treeSplitter.position = [dic intForKey:@"tree"];
 
         if (spellCheckingValue) {
             [_fieldEditor setContinuousSpellCheckingEnabled:[spellCheckingValue boolValue]];
@@ -447,13 +447,13 @@
             int w = 500;
             int h = 500;
             rect = NSMakeRect(p.x - w/2, p.y - h/2, w, h);
-            [window setFrame:rect display:YES];
+            [_window setFrame:rect display:YES];
         }
 
-        rootSplitter.position = 130;
-        logSplitter.position = 150;
-        infoSplitter.position = 250;
-        treeSplitter.position = 120;
+        _rootSplitter.position = 130;
+        _logSplitter.position = 150;
+        _infoSplitter.position = 250;
+        _treeSplitter.position = 120;
     }
 }
 
@@ -461,15 +461,15 @@
 {
     NSMutableDictionary* dic = [NSMutableDictionary dictionary];
 
-    NSRect rect = window.frame;
+    NSRect rect = _window.frame;
     [dic setInt:rect.origin.x forKey:@"x"];
     [dic setInt:rect.origin.y forKey:@"y"];
     [dic setInt:rect.size.width forKey:@"w"];
     [dic setInt:rect.size.height forKey:@"h"];
-    [dic setInt:rootSplitter.position forKey:@"root"];
-    [dic setInt:logSplitter.position forKey:@"log"];
-    [dic setInt:infoSplitter.position forKey:@"info"];
-    [dic setInt:treeSplitter.position forKey:@"tree"];
+    [dic setInt:_rootSplitter.position forKey:@"root"];
+    [dic setInt:_logSplitter.position forKey:@"log"];
+    [dic setInt:_infoSplitter.position forKey:@"info"];
+    [dic setInt:_treeSplitter.position forKey:@"tree"];
     [dic setBool:[_fieldEditor isContinuousSpellCheckingEnabled] forKey:@"spell_checking"];
 
     [Preferences saveWindowState:dic name:@"main_window"];
@@ -480,7 +480,7 @@
 {
     [_world reloadTheme];
     [self set3columnLayout:[Preferences mainWindowLayout] == MAIN_WINDOW_LAYOUT_3_COLUMN];
-    [window setAlphaValue:[Preferences themeTransparency]];
+    [_window setAlphaValue:[Preferences themeTransparency]];
 }
 
 #pragma mark -
@@ -492,11 +492,11 @@
     IRCChannel* channel = _world.selectedChannel;
     if (!client || !channel) return;
 
-    if ([window firstResponder] != [window fieldEditor:NO forObject:text]) {
+    if ([_window firstResponder] != [_window fieldEditor:NO forObject:_text]) {
         [_world focusInputText];
     }
 
-    NSText* fe = [window fieldEditor:YES forObject:text];
+    NSText* fe = [_window fieldEditor:YES forObject:_text];
     if (!fe) return;
 
     NSRange selectedRange = [fe selectedRange];
@@ -507,7 +507,7 @@
     }
 
     NickCompletinStatus* status = _completionStatus;
-    NSString* s = text.stringValue;
+    NSString* s = _text.stringValue;
 
     if ([status.text isEqualToString:s]
         && status.range.location != NSNotFound
@@ -702,7 +702,7 @@
     }
     else {
         selectedRange.length = t.length - pre.length;
-        status.text = text.stringValue;
+        status.text = _text.stringValue;
         status.range = selectedRange;
     }
 }
@@ -775,10 +775,10 @@ typedef enum {
     if (dir == MOVE_UP || dir == MOVE_DOWN) {
         id sel = _world.selected;
         if (!sel) return;
-        int n = [tree rowForItem:sel];
+        int n = [_tree rowForItem:sel];
         if (n < 0) return;
         int start = n;
-        int count = [tree numberOfRows];
+        int count = [_tree numberOfRows];
         if (count <= 1) return;
         while (1) {
             if (dir == MOVE_UP) {
@@ -792,7 +792,7 @@ typedef enum {
 
             if (n == start) break;
 
-            id i = [tree itemAtRow:n];
+            id i = [_tree itemAtRow:n];
             if (i) {
                 if (target == MOVE_ACTIVE) {
                     if (![i isClient] && [i isActive]) {
@@ -964,35 +964,35 @@ typedef enum {
 
 - (void)showPasteDialog:(NSEvent*)e
 {
-    [menu onPasteDialog:nil];
+    [_menu onPasteDialog:nil];
 }
 
 - (void)inputHistoryUp:(NSEvent*)e
 {
-    NSString* s = [_inputHistory up:[text stringValue]];
+    NSString* s = [_inputHistory up:[_text stringValue]];
     if (s) {
-        [text setStringValue:s];
+        [_text setStringValue:s];
         [_world focusInputText];
     }
 }
 
 - (void)inputHistoryDown:(NSEvent*)e
 {
-    NSString* s = [_inputHistory down:[text stringValue]];
+    NSString* s = [_inputHistory down:[_text stringValue]];
     if (s) {
-        [text setStringValue:s];
+        [_text setStringValue:s];
         [_world focusInputText];
     }
 }
 
 - (void)handler:(SEL)sel code:(int)keyCode mods:(NSUInteger)mods
 {
-    [window registerKeyHandler:sel key:keyCode modifiers:mods];
+    [_window registerKeyHandler:sel key:keyCode modifiers:mods];
 }
 
 - (void)handler:(SEL)sel char:(UniChar)c mods:(NSUInteger)mods
 {
-    [window registerKeyHandler:sel character:c modifiers:mods];
+    [_window registerKeyHandler:sel character:c modifiers:mods];
 }
 
 - (void)inputHandler:(SEL)sel code:(int)keyCode mods:(NSUInteger)mods
@@ -1002,7 +1002,7 @@ typedef enum {
 
 - (void)registerKeyHandlers
 {
-    [window setKeyHandlerTarget:self];
+    [_window setKeyHandlerTarget:self];
     [_fieldEditor setKeyHandlerTarget:self];
 
     [self handler:@selector(tab:) code:KEY_TAB mods:0];
@@ -1116,7 +1116,7 @@ typedef enum {
 {
     _welcomeDialog = nil;
 
-    [window makeKeyAndOrderFront:nil];
+    [_window makeKeyAndOrderFront:nil];
 }
 
 @end

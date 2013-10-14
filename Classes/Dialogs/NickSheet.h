@@ -6,12 +6,11 @@
 
 
 @interface NickSheet : SheetBase
-{
-    IBOutlet NSTextField* currentText;
-    IBOutlet NSTextField* newText;
-}
 
 @property (nonatomic) int uid;
+
+@property (nonatomic) IBOutlet NSTextField* currentText;
+@property (nonatomic) IBOutlet NSTextField* nextText;
 
 - (void)start:(NSString*)nick;
 

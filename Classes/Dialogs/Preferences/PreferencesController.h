@@ -9,25 +9,23 @@
 
 
 @interface PreferencesController : NSWindowController
-{
-    IBOutlet KeyRecorder* hotKey;
-
-    IBOutlet NSTableView* keywordsTable;
-    IBOutlet NSTableView* excludeWordsTable;
-    IBOutlet NSArrayController* keywordsArrayController;
-    IBOutlet NSArrayController* excludeWordsArrayController;
-    IBOutlet NSPopUpButton* transcriptFolderButton;
-    IBOutlet NSPopUpButton* themeButton;
-    IBOutlet NSTableView* soundsTable;
-}
 
 @property (nonatomic, weak) id delegate;
-@property (nonatomic, strong) NSString* fontDisplayName;
+@property (nonatomic) NSString* fontDisplayName;
 @property (nonatomic) CGFloat fontPointSize;
-@property (nonatomic, strong) NSString* inputFontDisplayName;
+@property (nonatomic) NSString* inputFontDisplayName;
 @property (nonatomic) CGFloat inputFontPointSize;
 @property (nonatomic, readonly) NSArray* availableSounds;
 @property (nonatomic, readonly) NSMutableArray* sounds;
+
+@property (nonatomic) IBOutlet KeyRecorder* hotKey;
+@property (nonatomic) IBOutlet NSTableView* keywordsTable;
+@property (nonatomic) IBOutlet NSTableView* excludeWordsTable;
+@property (nonatomic) IBOutlet NSArrayController* keywordsArrayController;
+@property (nonatomic) IBOutlet NSArrayController* excludeWordsArrayController;
+@property (nonatomic) IBOutlet NSPopUpButton* transcriptFolderButton;
+@property (nonatomic) IBOutlet NSPopUpButton* themeButton;
+@property (nonatomic) IBOutlet NSTableView* soundsTable;
 
 - (void)show;
 

@@ -8,7 +8,7 @@
         <customObject id="-2" userLabel="File's Owner" customClass="NickSheet">
             <connections>
                 <outlet property="currentText" destination="8" id="33"/>
-                <outlet property="newText" destination="9" id="32"/>
+                <outlet property="nextText" destination="9" id="9nC-Mi-Hsn"/>
                 <outlet property="okButton" destination="15" id="29"/>
                 <outlet property="sheet" destination="5" id="37"/>
             </connections>

@@ -41,61 +41,61 @@ static int windowPlace;
 - (void)startWithNick:(NSString*)aNick username:(NSString*)username address:(NSString*)address realname:(NSString*)realname
 {
     [self setNick:aNick username:username address:address realname:realname];
-    [self.window makeFirstResponder:closeButton];
+    [self.window makeFirstResponder:_closeButton];
     [self show];
 }
 
 - (void)setNick:(NSString*)aNick username:(NSString*)username address:(NSString*)address realname:(NSString*)realname
 {
     self.nick = aNick;
-    [logInText setStringValue:username];
-    [addressText setStringValue:address];
-    [realnameText setStringValue:realname];
+    [_logInText setStringValue:username];
+    [_addressText setStringValue:address];
+    [_realnameText setStringValue:realname];
     [self setAwayMessage:@""];
-    [channelsCombo removeAllItems];
+    [_channelsCombo removeAllItems];
     [self updateChannels];
 }
 
 - (void)setChannels:(NSArray*)channels
 {
-    [channelsCombo addItemsWithTitles:channels];
+    [_channelsCombo addItemsWithTitles:channels];
     [self updateChannels];
 }
 
 - (void)setServer:(NSString*)server serverInfo:(NSString*)info
 {
-    [serverText setStringValue:server];
-    [serverInfoText setStringValue:info];
+    [_serverText setStringValue:server];
+    [_serverInfoText setStringValue:info];
 }
 
 - (void)setAwayMessage:(NSString*)value
 {
-    [awayText setStringValue:value];
+    [_awayText setStringValue:value];
 }
 
 - (void)setIdle:(NSString*)idle signOn:(NSString*)signOn
 {
-    [idleText setStringValue:idle];
-    [signOnText setStringValue:signOn];
+    [_idleText setStringValue:idle];
+    [_signOnText setStringValue:signOn];
 }
 
 - (void)updateNick
 {
     NSString* s = _isOperator ? [_nick stringByAppendingString:@" (IRC operator)"] : _nick;
-    [nickText setStringValue:s];
+    [_nickText setStringValue:s];
 }
 
 - (void)updateChannels
 {
-    if ([channelsCombo numberOfItems]) {
-        NSMenuItem* sel = [channelsCombo selectedItem];
+    if ([_channelsCombo numberOfItems]) {
+        NSMenuItem* sel = [_channelsCombo selectedItem];
         if (sel && sel.title.length) {
-            [joinButton setEnabled:YES];
+            [_joinButton setEnabled:YES];
             return;
         }
     }
 
-    [joinButton setEnabled:NO];
+    [_joinButton setEnabled:NO];
 }
 
 - (void)show
@@ -148,7 +148,7 @@ static int windowPlace;
 
 - (void)onJoin:(id)sender
 {
-    NSMenuItem* sel = [channelsCombo selectedItem];
+    NSMenuItem* sel = [_channelsCombo selectedItem];
     if (!sel) return;
     NSString* chname = sel.title;
     if ([chname hasPrefix:@"@"] || [chname hasPrefix:@"+"]) {

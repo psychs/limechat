@@ -6,7 +6,7 @@
 
 @interface CustomJSFile : NSObject
 
-@property (nonatomic, strong) NSString* fileName;
+@property (nonatomic) NSString* fileName;
 @property (nonatomic, readonly) NSString* content;
 
 - (void)reload;

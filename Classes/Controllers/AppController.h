@@ -20,31 +20,30 @@
 
 
 @interface AppController : NSObject
-{
-    IBOutlet MainWindow* window;
-    IBOutlet ServerTreeView* tree;
-    IBOutlet NSBox* logBase;
-    IBOutlet NSBox* consoleBase;
-    IBOutlet MemberListView* memberList;
-    IBOutlet InputTextField* text;
-    IBOutlet ChatBox* chatBox;
-    IBOutlet NSScrollView* treeScrollView;
-    IBOutlet NSView* leftTreeBase;
-    IBOutlet NSView* rightTreeBase;
-    IBOutlet ThinSplitView* rootSplitter;
-    IBOutlet ThinSplitView* logSplitter;
-    IBOutlet ThinSplitView* infoSplitter;
-    IBOutlet ThinSplitView* treeSplitter;
-    IBOutlet MenuController* menu;
-    IBOutlet NSMenuItem* serverMenu;
-    IBOutlet NSMenuItem* channelMenu;
-    IBOutlet NSMenu* memberMenu;
-    IBOutlet NSMenu* treeMenu;
-    IBOutlet NSMenu* logMenu;
-    IBOutlet NSMenu* consoleMenu;
-    IBOutlet NSMenu* urlMenu;
-    IBOutlet NSMenu* addrMenu;
-    IBOutlet NSMenu* chanMenu;
-}
+
+@property (nonatomic) IBOutlet MainWindow* window;
+@property (nonatomic) IBOutlet ServerTreeView* tree;
+@property (nonatomic) IBOutlet NSBox* logBase;
+@property (nonatomic) IBOutlet NSBox* consoleBase;
+@property (nonatomic) IBOutlet MemberListView* memberList;
+@property (nonatomic) IBOutlet InputTextField* text;
+@property (nonatomic) IBOutlet ChatBox* chatBox;
+@property (nonatomic) IBOutlet NSScrollView* treeScrollView;
+@property (nonatomic) IBOutlet NSView* leftTreeBase;
+@property (nonatomic) IBOutlet NSView* rightTreeBase;
+@property (nonatomic) IBOutlet ThinSplitView* rootSplitter;
+@property (nonatomic) IBOutlet ThinSplitView* logSplitter;
+@property (nonatomic) IBOutlet ThinSplitView* infoSplitter;
+@property (nonatomic) IBOutlet ThinSplitView* treeSplitter;
+@property (nonatomic) IBOutlet MenuController* menu;
+@property (nonatomic) IBOutlet NSMenuItem* serverMenu;
+@property (nonatomic) IBOutlet NSMenuItem* channelMenu;
+@property (nonatomic) IBOutlet NSMenu* memberMenu;
+@property (nonatomic) IBOutlet NSMenu* treeMenu;
+@property (nonatomic) IBOutlet NSMenu* logMenu;
+@property (nonatomic) IBOutlet NSMenu* consoleMenu;
+@property (nonatomic) IBOutlet NSMenu* urlMenu;
+@property (nonatomic) IBOutlet NSMenu* addrMenu;
+@property (nonatomic) IBOutlet NSMenu* chanMenu;
 
 @end

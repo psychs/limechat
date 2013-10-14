@@ -9,7 +9,7 @@
 @interface IRCConnection : NSObject
 
 @property (nonatomic, weak) id delegate;
-@property (nonatomic, strong) NSString* host;
+@property (nonatomic) NSString* host;
 @property (nonatomic) int port;
 @property (nonatomic) BOOL useSSL;
 @property (nonatomic) NSStringEncoding encoding;
@@ -17,10 +17,10 @@
 @property (nonatomic) BOOL useSystemSocks;
 @property (nonatomic) BOOL useSocks;
 @property (nonatomic) int socksVersion;
-@property (nonatomic, strong) NSString* proxyHost;
+@property (nonatomic) NSString* proxyHost;
 @property (nonatomic) int proxyPort;
-@property (nonatomic, strong) NSString* proxyUser;
-@property (nonatomic, strong) NSString* proxyPassword;
+@property (nonatomic) NSString* proxyUser;
+@property (nonatomic) NSString* proxyPassword;
 
 @property (nonatomic, readonly) BOOL active;
 @property (nonatomic, readonly) BOOL connecting;

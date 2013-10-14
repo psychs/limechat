@@ -29,10 +29,10 @@
     else {
         target = [NSString stringWithFormat:@"%d users", (int)_nicks.count];
     }
-    titleLabel.stringValue = [NSString stringWithFormat:@"Invite %@ to:", target];
+    _titleLabel.stringValue = [NSString stringWithFormat:@"Invite %@ to:", target];
 
     for (NSString* s in channels) {
-        [channelPopup addItemWithTitle:s];
+        [_channelPopup addItemWithTitle:s];
     }
 
     [self startSheet];
@@ -40,7 +40,7 @@
 
 - (void)invite:(id)sender
 {
-    NSString* channelName = [[channelPopup selectedItem] title];
+    NSString* channelName = [[_channelPopup selectedItem] title];
 
     if ([self.delegate respondsToSelector:@selector(inviteSheet:onSelectChannel:)]) {
         [self.delegate inviteSheet:self onSelectChannel:channelName];

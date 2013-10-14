@@ -6,15 +6,14 @@
 
 
 @interface ListDialog : NSWindowController
-{
-    IBOutlet ListView* table;
-    IBOutlet NSSearchField* filterText;
-    IBOutlet NSButton* updateButton;
-}
 
 @property (nonatomic, weak) id delegate;
 @property (nonatomic, readonly) int sortKey;
 @property (nonatomic, readonly) NSComparisonResult sortOrder;
+
+@property (nonatomic) IBOutlet ListView* table;
+@property (nonatomic) IBOutlet NSSearchField* filterText;
+@property (nonatomic) IBOutlet NSButton* updateButton;
 
 - (void)start;
 - (void)show;
