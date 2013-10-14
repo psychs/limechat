@@ -92,7 +92,7 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <popUpButtonCell key="cell" type="push" title="Partial matching" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" selectedItem="818" id="4222">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="system"/>
+                                                <font key="font" metaFont="menu"/>
                                                 <menu key="menu" title="OtherViews" id="817">
                                                     <items>
                                                         <menuItem title="Partial matching" state="on" id="818"/>
@@ -143,7 +143,7 @@
                                                 <rect key="frame" x="-100" y="-100" width="181" height="15"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </scroller>
-                                            <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="37" id="4264">
+                                            <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" id="4264">
                                                 <rect key="frame" x="167" y="1" width="15" height="114"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </scroller>
@@ -217,7 +217,7 @@
                                                 <rect key="frame" x="-100" y="-100" width="181" height="15"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </scroller>
-                                            <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="37" id="4266">
+                                            <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" id="4266">
                                                 <rect key="frame" x="167" y="1" width="15" height="85"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </scroller>
@@ -268,7 +268,7 @@
                             <tabViewItem label="Interface" identifier="" id="44">
                                 <view key="view" id="45">
                                     <rect key="frame" x="10" y="33" width="439" height="355"/>
-                                    <autoresizingMask key="autoresizingMask"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <button id="46">
                                             <rect key="frame" x="15" y="321" width="217" height="18"/>
@@ -339,7 +339,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <popUpButtonCell key="cell" type="push" title="Auto-completes nicknames" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="96" id="4236">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="system"/>
+                                                <font key="font" metaFont="menu"/>
                                                 <menu key="menu" title="OtherViews" id="93">
                                                     <items>
                                                         <menuItem title="Does nothing" tag="100" id="95"/>
@@ -357,7 +357,7 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <popUpButtonCell key="cell" type="push" title="3 Columns" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="1" inset="2" selectedItem="199" id="4237">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="system"/>
+                                                <font key="font" metaFont="menu"/>
                                                 <menu key="menu" title="OtherViews" id="198">
                                                     <items>
                                                         <menuItem title="2 Columns" id="200"/>
@@ -411,7 +411,7 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <popUpButtonCell key="cell" type="push" title="Private message" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="4474" id="4470">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="system"/>
+                                                <font key="font" metaFont="menu"/>
                                                 <menu key="menu" title="OtherViews" id="4471">
                                                     <items>
                                                         <menuItem title="Private message" state="on" id="4474"/>
@@ -438,14 +438,14 @@
                             <tabViewItem label="Log" identifier="" id="98">
                                 <view key="view" id="99">
                                     <rect key="frame" x="10" y="33" width="439" height="355"/>
-                                    <autoresizingMask key="autoresizingMask"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <popUpButton verticalHuggingPriority="750" id="108">
                                             <rect key="frame" x="135" y="178" width="230" height="26"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <popUpButtonCell key="cell" type="push" title=" " bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="111" id="4242">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="system"/>
+                                                <font key="font" metaFont="menu"/>
                                                 <menu key="menu" title="OtherViews" id="109">
                                                     <items>
                                                         <menuItem title=" " state="on" id="111"/>
@@ -546,7 +546,7 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <popUpButtonCell key="cell" type="push" title="Default" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" selectedItem="251" id="4248">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="system"/>
+                                                <font key="font" metaFont="menu"/>
                                                 <menu key="menu" title="OtherViews" id="250">
                                                     <items>
                                                         <menuItem title="Default" state="on" id="251"/>
@@ -656,8 +656,8 @@
                                                 </objectValues>
                                             </comboBoxCell>
                                             <connections>
-                                                <binding destination="1247" name="enabled" keyPath="values.Preferences.Theme.override_nick_format" id="1771"/>
                                                 <binding destination="1247" name="value" keyPath="values.Preferences.Theme.nick_format" id="1713"/>
+                                                <binding destination="1247" name="enabled" keyPath="values.Preferences.Theme.override_nick_format" id="1771"/>
                                             </connections>
                                         </comboBox>
                                         <button id="593">
@@ -829,7 +829,7 @@
                                                                 </tableHeaderCell>
                                                                 <popUpButtonCell key="dataCell" type="bevel" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="bezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" id="4419">
                                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                                    <font key="font" metaFont="system"/>
+                                                                    <font key="font" metaFont="menu"/>
                                                                     <menu key="menu" id="4420"/>
                                                                     <connections>
                                                                         <binding destination="-2" name="contentValues" keyPath="availableSounds" id="4421"/>
@@ -837,8 +837,8 @@
                                                                 </popUpButtonCell>
                                                                 <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                                 <connections>
-                                                                    <binding destination="-2" name="content" keyPath="availableSounds" id="4422"/>
                                                                     <binding destination="4378" name="selectedObject" keyPath="arrangedObjects.sound" previousBinding="4422" id="4423"/>
+                                                                    <binding destination="-2" name="content" keyPath="availableSounds" id="4422"/>
                                                                 </connections>
                                                             </tableColumn>
                                                         </tableColumns>
@@ -909,7 +909,7 @@
                             <tabViewItem label="Advanced" identifier="2" id="8">
                                 <view key="view" id="9">
                                     <rect key="frame" x="10" y="33" width="439" height="355"/>
-                                    <autoresizingMask key="autoresizingMask"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textField verticalHuggingPriority="750" id="16" customClass="NumericTextField">
                                             <rect key="frame" x="219" y="171" width="72" height="22"/>
@@ -959,7 +959,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField verticalHuggingPriority="750" id="26">
-                                            <rect key="frame" x="296" y="173" width="17" height="17"/>
+                                            <rect key="frame" x="296" y="174" width="17" height="17"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="to" id="4212">
                                                 <font key="font" metaFont="system"/>
@@ -972,7 +972,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <popUpButtonCell key="cell" type="push" title="Get address on join" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="2" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="31" id="4213">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="system"/>
+                                                <font key="font" metaFont="menu"/>
                                                 <menu key="menu" title="OtherViews" id="29">
                                                     <items>
                                                         <menuItem title="Get address on join" state="on" tag="2" id="31"/>
@@ -1011,7 +1011,7 @@
                                             </connections>
                                         </textField>
                                         <textField verticalHuggingPriority="750" id="35" customClass="TextFieldWithDisabledState">
-                                            <rect key="frame" x="14" y="214" width="200" height="17"/>
+                                            <rect key="frame" x="14" y="215" width="200" height="17"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Specified address:" id="4216">
                                                 <font key="font" metaFont="system"/>
@@ -1031,7 +1031,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <popUpButtonCell key="cell" type="push" title="Accept automatically" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="4276" id="4274">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="system"/>
+                                                <font key="font" metaFont="menu"/>
                                                 <menu key="menu" title="OtherViews" id="4275">
                                                     <items>
                                                         <menuItem title="Accept automatically" state="on" id="4276"/>
