@@ -1065,7 +1065,7 @@ typedef enum {
                              s, @"name",
                              @YES, @"auto_join",
                              @YES, @"console",
-                             @YES, @"growl",
+                             @YES, @"notify",
                              @"+sn", @"mode",
                              nil]];
     }

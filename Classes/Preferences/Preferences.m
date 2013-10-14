@@ -108,7 +108,7 @@ static NSMutableArray* excludeWords;
     return [ud boolForKey:@"Preferences.General.showRename"];
 }
 
-+ (BOOL)stopGrowlOnActive
++ (BOOL)stopNotificationsOnActive
 {
     NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
     return [ud boolForKey:@"Preferences.General.stop_growl_on_active"];
@@ -513,20 +513,6 @@ static NSMutableArray* excludeWords;
 + (void)setUserNotificationEnabled:(BOOL)value forEvent:(UserNotificationType)event
 {
     NSString* key = [[self keyForEvent:event] stringByAppendingString:@"Growl"];
-    NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-    [ud setBool:value forKey:key];
-}
-
-+ (BOOL)growlStickyForEvent:(UserNotificationType)event
-{
-    NSString* key = [[self keyForEvent:event] stringByAppendingString:@"GrowlSticky"];
-    NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-    return [ud boolForKey:key];
-}
-
-+ (void)setGrowlSticky:(BOOL)value forEvent:(UserNotificationType)event
-{
-    NSString* key = [[self keyForEvent:event] stringByAppendingString:@"GrowlSticky"];
     NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
     [ud setBool:value forKey:key];
 }

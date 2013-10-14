@@ -16,7 +16,7 @@
 
         _autoJoin = YES;
         _logToConsole = YES;
-        _growl = YES;
+        _notify = YES;
 
         _name = @"";
         _password = @"";
@@ -37,7 +37,11 @@
 
         _autoJoin = [dic boolForKey:@"auto_join"];
         _logToConsole = [dic boolForKey:@"console"];
-        _growl = [dic boolForKey:@"growl"];
+        if ([dic objectForKey:@"notify"]) {
+            _notify = [dic boolForKey:@"notify"];
+        } else {
+            _notify = [dic boolForKey:@"growl"];
+        }
 
         _mode = [dic stringForKey:@"mode"] ?: @"";
         _topic = [dic stringForKey:@"topic"] ?: @"";
@@ -58,7 +62,7 @@
 
     [dic setBool:_autoJoin forKey:@"auto_join"];
     [dic setBool:_logToConsole forKey:@"console"];
-    [dic setBool:_growl forKey:@"growl"];
+    [dic setBool:_notify forKey:@"notify"];
 
     if (_mode) [dic setObject:_mode forKey:@"mode"];
     if (_topic) [dic setObject:_topic forKey:@"topic"];

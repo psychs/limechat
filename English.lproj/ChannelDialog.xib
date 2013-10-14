@@ -9,9 +9,9 @@
             <connections>
                 <outlet property="autoJoinCheck" destination="15" id="91"/>
                 <outlet property="consoleCheck" destination="18" id="93"/>
-                <outlet property="growlCheck" destination="60" id="92"/>
                 <outlet property="modeText" destination="13" id="89"/>
                 <outlet property="nameText" destination="8" id="87"/>
+                <outlet property="notifyCheck" destination="60" id="Cft-nI-AoW"/>
                 <outlet property="okButton" destination="19" id="94"/>
                 <outlet property="passwordText" destination="12" id="88"/>
                 <outlet property="topicText" destination="14" id="90"/>

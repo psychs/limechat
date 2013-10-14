@@ -20,7 +20,7 @@
 @property (nonatomic) IBOutlet NSTextField* topicText;
 @property (nonatomic) IBOutlet NSButton* autoJoinCheck;
 @property (nonatomic) IBOutlet NSButton* consoleCheck;
-@property (nonatomic) IBOutlet NSButton* growlCheck;
+@property (nonatomic) IBOutlet NSButton* notifyCheck;
 @property (nonatomic) IBOutlet NSButton* okButton;
 
 - (void)start;

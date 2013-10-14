@@ -54,24 +54,14 @@
     [Preferences setSound:value forEvent:_eventType];
 }
 
-- (BOOL)growl
+- (BOOL)notification
 {
     return [Preferences userNotificationEnabledForEvent:_eventType];
 }
 
-- (void)setGrowl:(BOOL)value
+- (void)setNotification:(BOOL)value
 {
     [Preferences setUserNotificationEnabled:value forEvent:_eventType];
-}
-
-- (BOOL)growlSticky
-{
-    return [Preferences growlStickyForEvent:_eventType];
-}
-
-- (void)setGrowlSticky:(BOOL)value
-{
-    [Preferences setGrowlSticky:value forEvent:_eventType];
 }
 
 @end

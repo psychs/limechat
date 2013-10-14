@@ -56,7 +56,7 @@ typedef enum {
 + (BOOL)showInlineImages;
 + (BOOL)showJoinLeave;
 + (BOOL)showRename;
-+ (BOOL)stopGrowlOnActive;
++ (BOOL)stopNotificationsOnActive;
 + (BOOL)bounceIconOnEveryPrivateMessage;
 + (BOOL)autoJoinOnInvited;
 + (TabActionType)tabAction;
@@ -107,8 +107,6 @@ typedef enum {
 + (void)setSound:(NSString*)value forEvent:(UserNotificationType)event;
 + (BOOL)userNotificationEnabledForEvent:(UserNotificationType)event;
 + (void)setUserNotificationEnabled:(BOOL)value forEvent:(UserNotificationType)event;
-+ (BOOL)growlStickyForEvent:(UserNotificationType)event;
-+ (void)setGrowlSticky:(BOOL)value forEvent:(UserNotificationType)event;
 
 + (BOOL)spellCheckEnabled;
 + (void)setSpellCheckEnabled:(BOOL)value;

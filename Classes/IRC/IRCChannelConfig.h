@@ -19,7 +19,7 @@ typedef enum {
 
 @property (nonatomic) BOOL autoJoin;
 @property (nonatomic) BOOL logToConsole;
-@property (nonatomic) BOOL growl;
+@property (nonatomic) BOOL notify;
 
 @property (nonatomic) NSString* mode;
 @property (nonatomic) NSString* topic;

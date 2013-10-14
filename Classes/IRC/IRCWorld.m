@@ -311,7 +311,7 @@
 
 - (void)sendUserNotification:(UserNotificationType)type title:(NSString*)title desc:(NSString*)desc context:(id)context
 {
-    if ([Preferences stopGrowlOnActive] && [NSApp isActive]) return;
+    if ([Preferences stopNotificationsOnActive] && [NSApp isActive]) return;
     if (![Preferences userNotificationEnabledForEvent:type]) return;
 
     [_notifier notify:type title:title desc:desc context:context];

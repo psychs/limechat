@@ -68,7 +68,7 @@
 
     _autoJoinCheck.state = _config.autoJoin;
     _consoleCheck.state = _config.logToConsole;
-    _growlCheck.state = _config.growl;
+    _notifyCheck.state = _config.notify;
 }
 
 - (void)save
@@ -80,7 +80,7 @@
 
     _config.autoJoin = _autoJoinCheck.state;
     _config.logToConsole = _consoleCheck.state;
-    _config.growl = _growlCheck.state;
+    _config.notify = _notifyCheck.state;
 
     if (![_config.name isChannelName]) {
         _config.name = [@"#" stringByAppendingString:_config.name];

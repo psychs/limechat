@@ -12,8 +12,7 @@
 
 @property (nonatomic, readonly) NSString* displayName;
 @property (nonatomic) NSString* sound;
-@property (nonatomic) BOOL growl;
-@property (nonatomic) BOOL growlSticky;
+@property (nonatomic) BOOL notification;
 
 + (SoundWrapper*)soundWrapperWithEventType:(UserNotificationType)eventType;
 

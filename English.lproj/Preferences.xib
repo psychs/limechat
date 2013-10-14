@@ -818,7 +818,7 @@
                                                                 </buttonCell>
                                                                 <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                                 <connections>
-                                                                    <binding destination="4378" name="value" keyPath="arrangedObjects.growl" id="4415"/>
+                                                                    <binding destination="4378" name="value" keyPath="arrangedObjects.notification" id="1ZW-Wj-5cS"/>
                                                                 </connections>
                                                             </tableColumn>
                                                             <tableColumn identifier="sound" editable="NO" width="149.2578125" minWidth="41.2578125" maxWidth="1000" id="4418">

@@ -1701,11 +1701,11 @@
     [_world updateChannelTitle:c];
 }
 
-#pragma mark - Growl
+#pragma mark - User Notification
 
 - (void)notifyText:(UserNotificationType)type target:(id)target nick:(NSString*)nick text:(NSString*)text
 {
-    if ([Preferences stopGrowlOnActive] && [NSApp isActive]) return;
+    if ([Preferences stopNotificationsOnActive] && [NSApp isActive]) return;
     if (![Preferences userNotificationEnabledForEvent:type]) return;
 
     IRCChannel* channel = nil;
@@ -1714,7 +1714,7 @@
         if ([target isKindOfClass:[IRCChannel class]]) {
             channel = (IRCChannel*)target;
             chname = channel.name;
-            if (!channel.config.growl) {
+            if (!channel.config.notify) {
                 return;
             }
         }
@@ -1748,14 +1748,14 @@
 
 - (void)notifyEvent:(UserNotificationType)type target:(id)target nick:(NSString*)nick text:(NSString*)text
 {
-    if ([Preferences stopGrowlOnActive] && [NSApp isActive]) return;
+    if ([Preferences stopNotificationsOnActive] && [NSApp isActive]) return;
     if (![Preferences userNotificationEnabledForEvent:type]) return;
 
     IRCChannel* channel = nil;
     if (target) {
         if ([target isKindOfClass:[IRCChannel class]]) {
             channel = (IRCChannel*)target;
-            if (!channel.config.growl) {
+            if (!channel.config.notify) {
                 return;
             }
         }
