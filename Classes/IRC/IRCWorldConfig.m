@@ -51,7 +51,7 @@
 
 - (id)mutableCopyWithZone:(NSZone *)zone
 {
-    return [[IRCWorldConfig allocWithZone:zone] initWithDictionary:[self dictionaryValue]];
+    return [[IRCWorldConfig alloc] initWithDictionary:[self dictionaryValue]];
 }
 
 @end

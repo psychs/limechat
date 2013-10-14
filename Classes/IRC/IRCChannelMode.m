@@ -37,7 +37,7 @@
 
 - (id)mutableCopyWithZone:(NSZone *)zone
 {
-    return [[IRCChannelMode allocWithZone:zone] initWithChannelMode:self];
+    return [[IRCChannelMode alloc] initWithChannelMode:self];
 }
 
 - (NSString*)k

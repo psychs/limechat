@@ -70,7 +70,7 @@
 
 - (id)mutableCopyWithZone:(NSZone *)zone
 {
-    return [[IRCChannelConfig allocWithZone:zone] initWithDictionary:[self dictionaryValue]];
+    return [[IRCChannelConfig alloc] initWithDictionary:[self dictionaryValue]];
 }
 
 @end

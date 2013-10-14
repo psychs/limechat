@@ -28,7 +28,7 @@ static char* UNITS[] = { "bytes", "KB", "MB", "GB", "TB" };
 
 - (id)copyWithZone:(NSZone *)zone
 {
-    DCCFileTransferCell* c = [[DCCFileTransferCell allocWithZone:zone] init];
+    DCCFileTransferCell* c = [[DCCFileTransferCell alloc] init];
     c.peerNick = _peerNick;
     c.processedSize = _processedSize;
     c.size = _size;

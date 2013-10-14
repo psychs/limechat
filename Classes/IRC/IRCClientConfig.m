@@ -148,7 +148,7 @@
 
 - (id)mutableCopyWithZone:(NSZone *)zone
 {
-    return [[IRCClientConfig allocWithZone:zone] initWithDictionary:[self dictionaryValue]];
+    return [[IRCClientConfig alloc] initWithDictionary:[self dictionaryValue]];
 }
 
 @end

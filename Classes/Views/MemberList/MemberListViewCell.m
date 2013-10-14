@@ -26,7 +26,7 @@ static NSMutableParagraphStyle* nickStyle;
 
 - (id)copyWithZone:(NSZone *)zone
 {
-    MemberListViewCell* c = [[MemberListViewCell allocWithZone:zone] init];
+    MemberListViewCell* c = [[MemberListViewCell alloc] init];
     c.font = self.font;
     c.member = _member;
     return c;
