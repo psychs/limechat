@@ -7,26 +7,32 @@ static BOOL initialized;
 static SInt32 major;
 static SInt32 minor;
 static SInt32 bugFix;
+static BOOL isMarvericksOrLater;
 
 @implementation LCFSystemInfo
 
 + (void)_initializeVersionInfo
 {
-    if (!initialized) {
-        initialized = YES;
+    if (initialized) {
+        return;
+    }
+
+    initialized = YES;
+
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
-        Gestalt(gestaltSystemVersionMajor, &major);
-        Gestalt(gestaltSystemVersionMinor, &minor);
-        Gestalt(gestaltSystemVersionBugFix, &bugFix);
+    Gestalt(gestaltSystemVersionMajor, &major);
+    Gestalt(gestaltSystemVersionMinor, &minor);
+    Gestalt(gestaltSystemVersionBugFix, &bugFix);
 #pragma clang diagnostic pop
-    }
+
+    isMarvericksOrLater = (major > 10) || (major == 10 && minor >= 9);
 }
 
-+ (BOOL)isMountainLionOrLater
++ (BOOL)isMarvericksOrLater
 {
     [self _initializeVersionInfo];
-    return (major > 10) || (major == 10 && minor >= 8);
+    return isMarvericksOrLater;
 }
 
 @end

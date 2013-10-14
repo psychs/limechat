@@ -5,6 +5,6 @@
 
 @interface LCFSystemInfo : NSObject
 
-+ (BOOL)isMountainLionOrLater;
++ (BOOL)isMarvericksOrLater;
 
 @end

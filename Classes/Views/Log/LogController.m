@@ -12,6 +12,7 @@
 #import "ImageURLParser.h"
 #import "ImageDownloadManager.h"
 #import "TwitterAvatarURLManager.h"
+#import "LCFSystemInfo.h"
 
 
 #define BOTTOM_EPSILON          20
@@ -488,7 +489,9 @@
     BOOL key = NO;
     NSArray* urlRanges = nil;
 
-    line.body = [line.body lc_stringByRemovingCrashingSequences];
+    if (![LCFSystemInfo isMarvericksOrLater]) {
+        line.body = [line.body lc_stringByRemovingCrashingSequences];
+    }
 
     NSString* body = [LogRenderer renderBody:line.body
                                     keywords:line.keywords
