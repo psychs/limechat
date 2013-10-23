@@ -645,8 +645,11 @@
 /* Begin PBXProject section */
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+			};
 			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "Sparkle" */;
 			compatibilityVersion = "Xcode 3.0";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				English,
@@ -905,6 +908,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FA1941CA0D94A70100DD942E /* ConfigFrameworkDebug.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 			};
 			name = Debug;
 		};
@@ -912,8 +916,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FA1941D50D94A70100DD942E /* ConfigFrameworkRelease.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1)";
-				ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1 = "ppc i386";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_DEBUGGING_SYMBOLS = full;
 			};
 			name = Release;
@@ -932,69 +935,11 @@
 			};
 			name = Release;
 		};
-		61072EAD0DF263BD008FE88B /* Release (GC dual-mode; 10.5-only) */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				GCC_VERSION = "";
-				WARNING_CFLAGS = "-Wundeclared-selector";
-			};
-			name = "Release (GC dual-mode; 10.5-only)";
-		};
-		61072EAE0DF263BD008FE88B /* Release (GC dual-mode; 10.5-only) */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 61072EB20DF2640C008FE88B /* ConfigFrameworkReleaseGCSupport.xcconfig */;
-			buildSettings = {
-				INSTALL_PATH = "@loader_path/../Frameworks";
-			};
-			name = "Release (GC dual-mode; 10.5-only)";
-		};
-		61072EAF0DF263BD008FE88B /* Release (GC dual-mode; 10.5-only) */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = FA1941D20D94A70100DD942E /* ConfigTestAppRelease.xcconfig */;
-			buildSettings = {
-			};
-			name = "Release (GC dual-mode; 10.5-only)";
-		};
-		61072EB00DF263BD008FE88B /* Release (GC dual-mode; 10.5-only) */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = FA1941D40D94A70100DD942E /* ConfigRelaunchRelease.xcconfig */;
-			buildSettings = {
-			};
-			name = "Release (GC dual-mode; 10.5-only)";
-		};
-		61072EB10DF263BD008FE88B /* Release (GC dual-mode; 10.5-only) */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(NATIVE_ARCH)";
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
-				INFOPLIST_FILE = "Tests/Sparkle Unit Tests-Info.plist";
-				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Cocoa,
-					"-framework",
-					SenTestingKit,
-				);
-				PREBINDING = NO;
-				PRODUCT_NAME = "Sparkle Unit Tests";
-				WRAPPER_EXTENSION = octest;
-				ZERO_LINK = NO;
-			};
-			name = "Release (GC dual-mode; 10.5-only)";
-		};
 		612279DB0DB5470300AB99EA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1023,7 +968,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(NATIVE_ARCH)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
@@ -1051,6 +996,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FA1941CB0D94A70100DD942E /* ConfigTestAppDebug.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 			};
 			name = Debug;
 		};
@@ -1058,6 +1004,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FA1941D20D94A70100DD942E /* ConfigTestAppRelease.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 			};
 			name = Release;
 		};
@@ -1065,6 +1012,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FA1941D30D94A70100DD942E /* ConfigRelaunchDebug.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 			};
 			name = Debug;
 		};
@@ -1072,6 +1020,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FA1941D40D94A70100DD942E /* ConfigRelaunchRelease.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 			};
 			name = Release;
 		};
@@ -1083,7 +1032,6 @@
 			buildConfigurations = (
 				1DEB91AE08733DA50010E9CD /* Debug */,
 				1DEB91AF08733DA50010E9CD /* Release */,
-				61072EAE0DF263BD008FE88B /* Release (GC dual-mode; 10.5-only) */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1093,7 +1041,6 @@
 			buildConfigurations = (
 				1DEB91B208733DA50010E9CD /* Debug */,
 				1DEB91B308733DA50010E9CD /* Release */,
-				61072EAD0DF263BD008FE88B /* Release (GC dual-mode; 10.5-only) */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1103,7 +1050,6 @@
 			buildConfigurations = (
 				612279DB0DB5470300AB99EA /* Debug */,
 				612279DC0DB5470300AB99EA /* Release */,
-				61072EB10DF263BD008FE88B /* Release (GC dual-mode; 10.5-only) */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1113,7 +1059,6 @@
 			buildConfigurations = (
 				61B5F90609C4CEE300B25A18 /* Debug */,
 				61B5F90709C4CEE300B25A18 /* Release */,
-				61072EAF0DF263BD008FE88B /* Release (GC dual-mode; 10.5-only) */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1123,7 +1068,6 @@
 			buildConfigurations = (
 				DAAEFC980DA571DF0051E0D0 /* Debug */,
 				DAAEFC990DA571DF0051E0D0 /* Release */,
-				61072EB00DF263BD008FE88B /* Release (GC dual-mode; 10.5-only) */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
