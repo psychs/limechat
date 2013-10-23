@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2735CC1D17C1B6EC00E0AC11 /* NSDateHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2735CC1C17C1B6EC00E0AC11 /* NSDateHelper.m */; };
+		78000B561817D79D001935E2 /* LCFSystemInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 781A35CF180B8A8D009E88FC /* LCFSystemInfo.m */; };
 		780844D2134CD34B003BB84C /* ImageDownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 780844D1134CD34B003BB84C /* ImageDownloadManager.m */; };
 		780844D3134CD34B003BB84C /* ImageDownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 780844D1134CD34B003BB84C /* ImageDownloadManager.m */; };
 		780844F6134CD45E003BB84C /* ImageSizeCheckClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 780844F5134CD45E003BB84C /* ImageSizeCheckClient.m */; };
@@ -1164,6 +1165,7 @@
 				78E570CE0C1C306500BDF7EC /* Frameworks */,
 				7835DF2C0D0414020064916A /* CopyFiles */,
 				789AF7B41085A047006848B3 /* CopyFiles */,
+				78000B551817D729001935E2 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1266,6 +1268,22 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		78000B551817D729001935E2 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "LOCATION=\"${BUILT_PRODUCTS_DIR}\"/\"${FRAMEWORKS_FOLDER_PATH}\"\nIDENTITY=\"Developer ID Application: Satoshi Nakagawa\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/Sparkle.framework/Versions/A\"";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		782DA87212DB5A3800C07861 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -1282,6 +1300,7 @@
 				782DA87C12DB5A3800C07861 /* ModeSheet.m in Sources */,
 				782DA87D12DB5A3800C07861 /* NickSheet.m in Sources */,
 				782DA87E12DB5A3800C07861 /* PasteSheet.m in Sources */,
+				78000B561817D79D001935E2 /* LCFSystemInfo.m in Sources */,
 				782DA87F12DB5A3800C07861 /* PreferencesController.m in Sources */,
 				782DA88012DB5A3800C07861 /* SoundWrapper.m in Sources */,
 				782DA88112DB5A3800C07861 /* ServerDialog.m in Sources */,
@@ -1652,25 +1671,25 @@
 		782DA8FE12DB5A3800C07861 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
+				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					TARGET_APP_STORE,
 					DEBUG_BUILD,
 				);
 				INFOPLIST_FILE = "Others/AppStore/Info-AppStore.plist";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "B97D42C6-E7D9-463A-8064-30EEA7EB5961";
 			};
 			name = Debug;
 		};
 		782DA8FF12DB5A3800C07861 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
+				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = TARGET_APP_STORE;
 				INFOPLIST_FILE = "Others/AppStore/Info-AppStore.plist";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "B97D42C6-E7D9-463A-8064-30EEA7EB5961";
 			};
 			name = Release;
 		};
@@ -1680,7 +1699,6 @@
 				CODE_SIGN_IDENTITY = "Developer ID Application: Satoshi Nakagawa";
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = Others/Normal/Info.plist;
-				OTHER_CODE_SIGN_FLAGS = "--deep";
 				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
@@ -1691,7 +1709,6 @@
 				CODE_SIGN_IDENTITY = "Developer ID Application: Satoshi Nakagawa";
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = Others/Normal/Info.plist;
-				OTHER_CODE_SIGN_FLAGS = "--deep";
 				PROVISIONING_PROFILE = "";
 			};
 			name = Release;

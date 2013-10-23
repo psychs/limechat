@@ -63,7 +63,7 @@
 - (void)setUp
 {
 #ifdef TARGET_APP_STORE
-    [[checkForUpdateItem menu] removeItem:checkForUpdateItem];
+    [[_checkForUpdateItem menu] removeItem:_checkForUpdateItem];
 #else
     _sparkleUpdater = [SUUpdater new];
     [_sparkleUpdater setDelegate:_app];
