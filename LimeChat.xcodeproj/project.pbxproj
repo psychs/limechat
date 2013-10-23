@@ -1680,6 +1680,7 @@
 				CODE_SIGN_IDENTITY = "Developer ID Application: Satoshi Nakagawa";
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = Others/Normal/Info.plist;
+				OTHER_CODE_SIGN_FLAGS = "--deep";
 				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
@@ -1690,6 +1691,7 @@
 				CODE_SIGN_IDENTITY = "Developer ID Application: Satoshi Nakagawa";
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = Others/Normal/Info.plist;
+				OTHER_CODE_SIGN_FLAGS = "--deep";
 				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
