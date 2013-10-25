@@ -532,7 +532,7 @@
                 [s appendFormat:@"<span class=\"avatar_placeholder placeholder_%@\"/></span>", escapedNick];
             }
         }
-        [s appendFormat:@"<span class=\"sender\" type=\"%@\"", [LogLine memberTypeString:line.memberType]];
+        [s appendFormat:@"<span class=\"sender\" _type=\"%@\"", [LogLine memberTypeString:line.memberType]];
         if (!_console) [s appendString:@" oncontextmenu=\"on_nick()\""];
         [s appendFormat:@" identified=\"%@\"", line.identified ? @"true" : @"false"];
         if (line.memberType == MEMBER_TYPE_NORMAL) [s appendFormat:@" colornumber=\"%d\"", line.nickColorNumber];
@@ -544,7 +544,7 @@
     NSString* lineTypeString = [LogLine lineTypeString:type];
     BOOL isText = type == LINE_TYPE_PRIVMSG || type == LINE_TYPE_NOTICE || type == LINE_TYPE_ACTION;
 
-    [s appendFormat:@"<span class=\"message\" type=\"%@\">%@", lineTypeString, body];
+    [s appendFormat:@"<span class=\"message\" _type=\"%@\">%@", lineTypeString, body];
     if (isText && !_console && urlRanges.count && [Preferences showInlineImages]) {
         //
         // expand image URLs
@@ -593,7 +593,7 @@
     NSMutableDictionary* attrs = [NSMutableDictionary dictionary];
     [attrs setObject:(_lineNumber % 2 == 0 ? @"even" : @"odd") forKey:@"alternate"];
     [attrs setObject:klass forKey:@"class"];
-    [attrs setObject:[LogLine lineTypeString:type] forKey:@"type"];
+    [attrs setObject:[LogLine lineTypeString:type] forKey:@"_type"];
     [attrs setObject:(key ? @"true" : @"false") forKey:@"highlight"];
     if (line.nickInfo) {
         [attrs setObject:line.nickInfo forKey:@"nick"];
@@ -655,16 +655,16 @@
     NSString* bodyClass = _console ? @"console" : @"normal";
     NSMutableString* bodyAttrs = [NSMutableString string];
     if (_channel) {
-        [bodyAttrs appendFormat:@"type=\"%@\"", [_channel channelTypeString]];
+        [bodyAttrs appendFormat:@"_type=\"%@\"", [_channel channelTypeString]];
         if ([_channel isChannel]) {
             [bodyAttrs appendFormat:@" channelname=\"%@\"", tagEscape([_channel name])];
         }
     }
     else if (_console) {
-        [bodyAttrs appendString:@"type=\"console\""];
+        [bodyAttrs appendString:@"_type=\"console\""];
     }
     else {
-        [bodyAttrs appendString:@"type=\"server\""];
+        [bodyAttrs appendString:@"_type=\"server\""];
     }
 
     NSString* style = [[_theme log] content];
@@ -694,8 +694,8 @@
      @"<meta http-equiv=\"Content-Script-Type\" content=\"text/javascript\">"
      @"<meta http-equiv=\"Content-Style-Type\" content=\"text/css\">"
      ];
-    [s appendFormat:@"<style>%@</style>", [self defaultCSS]];
-    if (style) [s appendFormat:@"<style><!-- %@ --></style>", style];
+    [s appendFormat:@"<style>%@</style>", [self _stringByReplacingTypeAttributeSelectorsInCSSString:[self defaultCSS]]];
+    if (style) [s appendFormat:@"<style><!-- %@ --></style>", [self _stringByReplacingTypeAttributeSelectorsInCSSString:style]];
     if (overrideStyle) [s appendFormat:@"<style><!-- %@ --></style>", overrideStyle];
     [s appendString:@"</head>"];
     [s appendFormat:@"<body class=\"%@\" %@></body>", bodyClass, bodyAttrs];
@@ -821,6 +821,16 @@
      ];
 
     return s;
+}
+
+- (NSString*)_stringByReplacingTypeAttributeSelectorsInCSSString:(NSString*)inputString
+{
+    // On Mavericks, type selector doesn't work sometimes.
+    static NSRegularExpression* re = nil;
+    if (!re) {
+        re = [NSRegularExpression regularExpressionWithPattern:@"\\[\\s*type\\s*([=~|\\]])" options:0 error:NULL];
+    }
+    return [re stringByReplacingMatchesInString:inputString options:0 range:NSMakeRange(0, [inputString length]) withTemplate:@"[_type$1"];
 }
 
 - (void)setUpScroller
