@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4510" systemVersion="12F45" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment version="1070" defaultVersion="1080" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4510"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4514"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="PreferencesController">
@@ -139,11 +139,11 @@
                                                 </subviews>
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </clipView>
-                                            <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" id="4265">
+                                            <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="4265">
                                                 <rect key="frame" x="-100" y="-100" width="181" height="15"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </scroller>
-                                            <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" id="4264">
+                                            <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="4264">
                                                 <rect key="frame" x="167" y="1" width="15" height="114"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </scroller>
@@ -213,11 +213,11 @@
                                                 </subviews>
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </clipView>
-                                            <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" id="4267">
+                                            <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="4267">
                                                 <rect key="frame" x="-100" y="-100" width="181" height="15"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </scroller>
-                                            <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" id="4266">
+                                            <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="4266">
                                                 <rect key="frame" x="167" y="1" width="15" height="85"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </scroller>
@@ -649,10 +649,10 @@
                                                     <string>%n: </string>
                                                     <string>%@%n: </string>
                                                     <string>(%n) </string>
-                                                    <string>&lt;%n> </string>
-                                                    <string>&lt;%9n> </string>
-                                                    <string>&lt;%-9n> </string>
-                                                    <string>&lt;%@%n> </string>
+                                                    <string>&lt;%n&gt; </string>
+                                                    <string>&lt;%9n&gt; </string>
+                                                    <string>&lt;%-9n&gt; </string>
+                                                    <string>&lt;%@%n&gt; </string>
                                                 </objectValues>
                                             </comboBoxCell>
                                             <connections>
@@ -846,11 +846,11 @@
                                                 </subviews>
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </clipView>
-                                            <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" id="4271">
+                                            <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="4271">
                                                 <rect key="frame" x="1" y="173" width="403" height="15"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </scroller>
-                                            <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" id="4270">
+                                            <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="4270">
                                                 <rect key="frame" x="389" y="17" width="15" height="156"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </scroller>

@@ -7,12 +7,12 @@
     <language>en-us</language>
 
     <item>
-      <title>2.38</title>
-      <link>http://limechat.net/mac/#v2.38</link>
-      <pubDate>Sat, 12 Oct 2013 05:50:06 -0700</pubDate>
+      <title>2.39</title>
+      <link>http://limechat.net/mac/#v2.39</link>
+      <pubDate>Fri, 25 Oct 2013 02:20:30 -0700</pubDate>
       <content:encoded><![CDATA[
   			<ul>
-          <li>Fix minor issues.</li>
+          <li>10.9 support.</li>
         </ul>
       ]]></content:encoded>
     </item>
