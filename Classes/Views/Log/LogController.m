@@ -23,6 +23,10 @@
 - (void)setAllowsHorizontalScrolling:(BOOL)value;
 @end
 
+@interface WebView (Private)
+- (void)setBackgroundColor:(NSColor *)color;
+@end
+
 
 @implementation LogController
 {
@@ -102,7 +106,7 @@
     [_view removeFromSuperview];
     _view = [[LogView alloc] initWithFrame:NSZeroRect];
     if ([_view respondsToSelector:@selector(setBackgroundColor:)]) {
-        [(id)_view setBackgroundColor:_initialBackgroundColor];
+        [_view setBackgroundColor:_initialBackgroundColor];
     }
     _view.frameLoadDelegate = self;
     _view.UIDelegate = _policy;
