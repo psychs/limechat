@@ -353,7 +353,7 @@
 {
     _ignoreSheet = [IgnoreItemSheet new];
     _ignoreSheet.delegate = self;
-    _ignoreSheet.window = self.window;
+    _ignoreSheet.parentWindow = self.window;
     _ignoreSheet.ignore = [IgnoreItem new];
     _ignoreSheet.newItem = YES;
     [_ignoreSheet start];
@@ -366,7 +366,7 @@
 
     _ignoreSheet = [IgnoreItemSheet new];
     _ignoreSheet.delegate = self;
-    _ignoreSheet.window = self.window;
+    _ignoreSheet.parentWindow = self.window;
     _ignoreSheet.ignore = [_config.ignores objectAtIndex:sel];
     [_ignoreSheet start];
 }

@@ -5,4 +5,9 @@
 
 
 @interface DialogWindow : NSWindow
+
+- (void)startSheetModalForWindow:(NSWindow *)parentWindow;
+- (void)endSheet;
+- (void)closeWindowOrSheet;
+
 @end

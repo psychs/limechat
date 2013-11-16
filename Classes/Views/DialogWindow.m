@@ -5,6 +5,35 @@
 
 
 @implementation DialogWindow
+{
+    BOOL _isSheet;
+}
+
+- (void)startSheetModalForWindow:(NSWindow *)parentWindow
+{
+    _isSheet = YES;
+    [NSApp beginSheet:self modalForWindow:parentWindow modalDelegate:self didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:) contextInfo:nil];
+}
+
+- (void)endSheet
+{
+    [NSApp endSheet:self];
+}
+
+- (void)sheetDidEnd:(NSWindow*)sender returnCode:(NSInteger)returnCode contextInfo:(void*)contextInfo
+{
+    [self close];
+}
+
+- (void)closeWindowOrSheet
+{
+    if (_isSheet) {
+        [self endSheet];
+    }
+    else {
+        [self close];
+    }
+}
 
 - (void)sendEvent:(NSEvent *)e
 {
@@ -22,7 +51,7 @@
                 // no mods
                 switch (k) {
                     case 0x35:	// esc
-                        [self close];
+                        [self closeWindowOrSheet];
                         return;
                 }
             }

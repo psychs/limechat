@@ -4,13 +4,10 @@
 #import "ChannelDialog.h"
 #import "NSWindowHelper.h"
 #import "NSStringHelper.h"
+#import "DialogWindow.h"
 
 
 @implementation ChannelDialog
-{
-    BOOL _isSheet;
-    BOOL _isEndedSheet;
-}
 
 - (id)init
 {
@@ -23,8 +20,6 @@
 
 - (void)start
 {
-    _isSheet = NO;
-    _isEndedSheet = NO;
     [self load];
     [self update];
     [self show];
@@ -32,11 +27,9 @@
 
 - (void)startSheet
 {
-    _isSheet = YES;
-    _isEndedSheet = NO;
     [self load];
     [self update];
-    [NSApp beginSheet:_window modalForWindow:_parentWindow modalDelegate:self didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:) contextInfo:nil];
+    [[self _dialogWindow] startSheetModalForWindow:_parentWindow];
 }
 
 - (void)show
@@ -51,12 +44,6 @@
 {
     _delegate = nil;
     [self.window close];
-}
-
-- (void)sheetDidEnd:(NSWindow*)sender returnCode:(NSInteger)returnCode contextInfo:(void*)contextInfo
-{
-    _isEndedSheet = YES;
-    [_window close];
 }
 
 - (void)load
@@ -108,6 +95,11 @@
     [self update];
 }
 
+- (DialogWindow *)_dialogWindow
+{
+    return (DialogWindow *)self.window;
+}
+
 #pragma mark - Actions
 
 - (void)ok:(id)sender
@@ -123,22 +115,13 @@
 
 - (void)cancel:(id)sender
 {
-    if (_isSheet) {
-        [NSApp endSheet:_window];
-    }
-    else {
-        [self.window close];
-    }
+    [[self _dialogWindow] closeWindowOrSheet];
 }
 
 #pragma mark - NSWindow Delegate
 
 - (void)windowWillClose:(NSNotification*)note
 {
-    if (_isSheet && !_isEndedSheet) {
-        [NSApp endSheet:_window];
-    }
-
     if ([_delegate respondsToSelector:@selector(channelDialogWillClose:)]) {
         [_delegate channelDialogWillClose:self];
     }

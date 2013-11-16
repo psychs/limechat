@@ -16,17 +16,12 @@
 
 - (void)startSheet
 {
-    [NSApp beginSheet:_sheet modalForWindow:_window modalDelegate:self didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:) contextInfo:nil];
+    [_sheet startSheetModalForWindow:_parentWindow];
 }
 
 - (void)endSheet
 {
-    [NSApp endSheet:_sheet];
-}
-
-- (void)sheetDidEnd:(NSWindow*)sender returnCode:(NSInteger)returnCode contextInfo:(void*)contextInfo
-{
-    [_sheet close];
+    [_sheet endSheet];
 }
 
 - (void)ok:(id)sender

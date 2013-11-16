@@ -399,7 +399,7 @@
 
     _pasteSheet = [PasteSheet new];
     _pasteSheet.delegate = self;
-    _pasteSheet.window = _window;
+    _pasteSheet.parentWindow = _window;
     _pasteSheet.uid = uid;
     _pasteSheet.cid = cid;
     _pasteSheet.nick = nick;
@@ -676,7 +676,7 @@
 
     _nickSheet = [NickSheet new];
     _nickSheet.delegate = self;
-    _nickSheet.window = _window;
+    _nickSheet.parentWindow = _window;
     _nickSheet.uid = u.uid;
     [_nickSheet start:u.myNick];
 }
@@ -822,7 +822,7 @@
 
     _topicSheet = [TopicSheet new];
     _topicSheet.delegate = self;
-    _topicSheet.window = _window;
+    _topicSheet.parentWindow = _window;
     _topicSheet.uid = u.uid;
     _topicSheet.cid = c.uid;
     [_topicSheet start:c.topic];
@@ -851,7 +851,7 @@
 
     _modeSheet = [ModeSheet new];
     _modeSheet.delegate = self;
-    _modeSheet.window = _window;
+    _modeSheet.parentWindow = _window;
     _modeSheet.uid = u.uid;
     _modeSheet.cid = c.uid;
     _modeSheet.mode = [c.mode mutableCopy];
@@ -1073,7 +1073,7 @@
 
     _inviteSheet = [InviteSheet new];
     _inviteSheet.delegate = self;
-    _inviteSheet.window = _window;
+    _inviteSheet.parentWindow = _window;
     _inviteSheet.nicks = nicks;
     _inviteSheet.uid = u.uid;
     [_inviteSheet startWithChannels:channels];
