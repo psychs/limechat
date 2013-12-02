@@ -195,13 +195,5 @@ Gw
                 <outlet property="delegate" destination="-2" id="84"/>
             </connections>
         </window>
-        <view id="38">
-            <rect key="frame" x="0.0" y="0.0" width="125" height="1"/>
-            <autoresizingMask key="autoresizingMask"/>
-        </view>
-        <view id="42">
-            <rect key="frame" x="0.0" y="0.0" width="125" height="1"/>
-            <autoresizingMask key="autoresizingMask"/>
-        </view>
     </objects>
 </document>
