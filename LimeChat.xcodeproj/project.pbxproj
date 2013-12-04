@@ -303,6 +303,7 @@
 		78E5723D0C1C30BA00BDF7EC /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 780253C20C09525900C170D4 /* CoreServices.framework */; };
 		78FA9F651085AA1400001F13 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78FA9F641085AA1400001F13 /* Sparkle.framework */; };
 		78FA9F6E1085AA1A00001F13 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 78FA9F641085AA1400001F13 /* Sparkle.framework */; };
+		C33D0A9B183439E0006C2327 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C33D0A9A183439E0006C2327 /* Security.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -621,6 +622,7 @@
 		78E570D00C1C306500BDF7EC /* LimeChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LimeChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		78F786AD15C3F30D00B7937A /* LimeChat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = LimeChat.entitlements; sourceTree = "<group>"; };
 		78FA9F641085AA1400001F13 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = Frameworks/Sparkle.framework; sourceTree = "<group>"; };
+		C33D0A9A183439E0006C2327 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -640,6 +642,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C33D0A9B183439E0006C2327 /* Security.framework in Frameworks */,
 				78E572390C1C30BA00BDF7EC /* Cocoa.framework in Frameworks */,
 				78E5723B0C1C30BA00BDF7EC /* WebKit.framework in Frameworks */,
 				78E5723C0C1C30BA00BDF7EC /* Carbon.framework in Frameworks */,
@@ -718,6 +721,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C33D0A9A183439E0006C2327 /* Security.framework */,
 				29B97325FDCFA39411CA2CEA /* Foundation.framework */,
 				29B97324FDCFA39411CA2CEA /* AppKit.framework */,
 				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
