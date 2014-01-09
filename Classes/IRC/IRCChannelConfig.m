@@ -2,10 +2,15 @@
 // You can redistribute it and/or modify it under the terms of the GPL version 2 (see the file GPL.txt).
 
 #import "IRCChannelConfig.h"
+#import "Keychain.h"
 #import "NSDictionaryHelper.h"
+#import "NSStringHelper.h"
 
 
 @implementation IRCChannelConfig
+{
+    NSString *_channelID;
+}
 
 - (id)init
 {
@@ -17,6 +22,8 @@
         _autoJoin = YES;
         _logToConsole = YES;
         _notify = YES;
+
+        _channelID = [NSString lcf_uuidString];
 
         _name = @"";
         _password = @"";
@@ -32,8 +39,10 @@
     if (self) {
         _type = [dic intForKey:@"type"];
 
+        _channelID = [dic stringForKey:@"channelID"] ?: [NSString lcf_uuidString];
+
         _name = [dic stringForKey:@"name"] ?: @"";
-        _password = [dic stringForKey:@"password"] ?: @"";
+        _password = [dic stringForKey:@"password"] ?: [Keychain genericPasswordWithAccountName:[self passwordKey] serviceName:[self keychainServiceName]] ?: @"";
 
         _autoJoin = [dic boolForKey:@"auto_join"];
         _logToConsole = [dic boolForKey:@"console"];
@@ -57,8 +66,14 @@
 
     [dic setInt:_type forKey:@"type"];
 
+    if (_channelID) [dic setObject:_channelID forKey:@"channelID"];
+
     if (_name) [dic setObject:_name forKey:@"name"];
-    if (_password) [dic setObject:_password forKey:@"password"];
+    if (_password.length) {
+        [Keychain setGenericPassword:_password accountName:[self passwordKey] serviceName:[self keychainServiceName]];
+    } else if (_password) {
+        [dic setObject:_password forKey:@"password"];
+    }
 
     [dic setBool:_autoJoin forKey:@"auto_join"];
     [dic setBool:_logToConsole forKey:@"console"];
@@ -75,6 +90,16 @@
 - (id)mutableCopyWithZone:(NSZone *)zone
 {
     return [[IRCChannelConfig alloc] initWithDictionary:[self dictionaryValue]];
+}
+
+- (NSString*)keychainServiceName
+{
+    return [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"];
+}
+
+- (NSString*)passwordKey
+{
+    return [_channelID stringByAppendingString:@"_channelPassword"];
 }
 
 @end

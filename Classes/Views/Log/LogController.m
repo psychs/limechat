@@ -492,7 +492,7 @@
     NSArray* urlRanges = nil;
 
     if (![LCFSystemInfo isMarvericksOrLater]) {
-        line.body = [line.body lc_stringByRemovingCrashingSequences];
+        line.body = [line.body lcf_stringByRemovingCrashingSequences];
     }
 
     NSString* body = [LogRenderer renderBody:line.body

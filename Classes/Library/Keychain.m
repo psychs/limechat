@@ -15,17 +15,17 @@ static SecProtocolType SecProtocolTypeFromString(NSString* scheme);
 + (BOOL)testInternetPasswordWithName:(NSString*)name url:(NSURL*)url
 {
     OSStatus status;
-    [self findInternetPasswordWithName:name url:url status:&status];
+    [self internetPasswordWithName:name url:url status:&status];
     return status != userCanceledErr && status != errSecAuthFailed;
 }
 
-+ (NSString*)findInternetPasswordWithName:(NSString*)name url:(NSURL*)url
++ (NSString*)internetPasswordWithName:(NSString*)name url:(NSURL*)url
 {
     OSStatus status;
-    return [self findInternetPasswordWithName:name url:url status:&status];
+    return [self internetPasswordWithName:name url:url status:&status];
 }
 
-+ (NSString*)findInternetPasswordWithName:(NSString*)name url:(NSURL*)url status:(OSStatus*)status
++ (NSString*)internetPasswordWithName:(NSString*)name url:(NSURL*)url status:(OSStatus*)status
 {
     char* str = NULL;
     UInt32 len = 0;
@@ -88,17 +88,17 @@ static SecProtocolType SecProtocolTypeFromString(NSString* scheme);
 + (BOOL)testGenericPasswordWithAccountName:(NSString*)accountName serviceName:(NSString*)serviceName
 {
     OSStatus status;
-    [self findGenericPasswordWithAccountName:accountName serviceName:serviceName status:&status];
+    [self genericPasswordWithAccountName:accountName serviceName:serviceName status:&status];
     return status != userCanceledErr && status != errSecAuthFailed;
 }
 
-+ (NSString*)findGenericPasswordWithAccountName:(NSString*)accountName serviceName:(NSString*)serviceName
++ (NSString*)genericPasswordWithAccountName:(NSString*)accountName serviceName:(NSString*)serviceName
 {
     OSStatus status;
-    return [self findGenericPasswordWithAccountName:accountName serviceName:serviceName status:&status];
+    return [self genericPasswordWithAccountName:accountName serviceName:serviceName status:&status];
 }
 
-+ (NSString*)findGenericPasswordWithAccountName:(NSString*)accountName serviceName:(NSString*)serviceName status:(OSStatus*)status
++ (NSString*)genericPasswordWithAccountName:(NSString*)accountName serviceName:(NSString*)serviceName status:(OSStatus*)status
 {
     char* str = NULL;
     UInt32 len = 0;

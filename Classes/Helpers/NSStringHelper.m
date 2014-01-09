@@ -5,8 +5,8 @@
 #import "UnicodeHelper.h"
 
 
-#define LF  0xa
-#define CR  0xd
+#define LF  (0xa)
+#define CR  (0xd)
 
 
 @implementation NSString (NSStringHelper)
@@ -529,7 +529,7 @@ static BOOL isUnicharDigit(unichar c)
 
 #define kUnicodeWhiteSquare ((UniChar)0x25A1)
 
-- (NSString*)lc_stringByRemovingCrashingSequences
+- (NSString*)lcf_stringByRemovingCrashingSequences
 {
     NSInteger len = self.length;
     if (!len) {
@@ -575,7 +575,16 @@ static BOOL isUnicharDigit(unichar c)
     return result;
 }
 
++ (NSString*)lcf_uuidString
+{
+    CFUUIDRef uuid = CFUUIDCreate(NULL);
+    NSString *uuidString = (__bridge_transfer NSString*)CFUUIDCreateString(NULL, uuid);
+    CFRelease(uuid);
+    return uuidString;
+}
+
 @end
+
 
 @implementation NSMutableString (NSMutableStringHelper)
 

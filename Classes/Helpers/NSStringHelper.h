@@ -47,7 +47,8 @@
 - (BOOL)isModeChannelName;
 - (NSString*)canonicalName;
 
-- (NSString*)lc_stringByRemovingCrashingSequences;
+- (NSString*)lcf_stringByRemovingCrashingSequences;
++ (NSString*)lcf_uuidString;
 
 @end
 

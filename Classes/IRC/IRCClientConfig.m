@@ -1,14 +1,19 @@
 // LimeChat is copyrighted free software by Satoshi Nakagawa <psychs AT limechat DOT net>.
 // You can redistribute it and/or modify it under the terms of the GPL version 2 (see the file GPL.txt).
 
-#import "IRCClientConfig.h"
-#import "IRCChannelConfig.h"
 #import "IgnoreItem.h"
+#import "IRCChannelConfig.h"
+#import "IRCClientConfig.h"
+#import "Keychain.h"
 #import "NSDictionaryHelper.h"
 #import "NSLocaleHelper.h"
+#import "NSStringHelper.h"
 
 
 @implementation IRCClientConfig
+{
+    NSString* _clientID;
+}
 
 - (id)init
 {
@@ -19,6 +24,8 @@
         _channels = [NSMutableArray new];
         _autoOp = [NSMutableArray new];
         _ignores = [NSMutableArray new];
+
+        _clientID = [NSString lcf_uuidString];
 
         _name = @"";
         _host = @"";
@@ -50,17 +57,19 @@
 {
     self = [self init];
     if (self) {
+        _clientID = [dic stringForKey:@"clientID"] ?: [NSString lcf_uuidString];
+
         _name = [dic stringForKey:@"name"] ?: @"";
 
         _host = [dic stringForKey:@"host"] ?: @"";
         _port = [dic intForKey:@"port"] ?: 6667;
-        _password = [dic stringForKey:@"password"] ?: @"";
+        _password = [dic stringForKey:@"password"] ?: [Keychain genericPasswordWithAccountName:[self passwordKey] serviceName:[self keychainServiceName]] ?: @"";
         _useSSL = [dic boolForKey:@"ssl"];
 
         _nick = [dic stringForKey:@"nick"] ?: @"";
         _username = [dic stringForKey:@"username"] ?: @"";
         _realName = [dic stringForKey:@"realname"] ?: @"";
-        _nickPassword = [dic stringForKey:@"nickPassword"] ?: @"";
+        _nickPassword = [dic stringForKey:@"nickPassword"] ?: [Keychain genericPasswordWithAccountName:[self nickPassword] serviceName:[self keychainServiceName]] ?: @"";
         _useSASL = [dic boolForKey:@"useSASL"];
         [_altNicks addObjectsFromArray:[dic arrayForKey:@"alt_nicks"]];
 
@@ -68,7 +77,7 @@
         _proxyHost = [dic stringForKey:@"proxy_host"] ?: @"";
         _proxyPort = [dic intForKey:@"proxy_port"] ?: 1080;
         _proxyUser = [dic stringForKey:@"proxy_user"] ?: @"";
-        _proxyPassword = [dic stringForKey:@"proxy_password"] ?: @"";
+        _proxyPassword = [dic stringForKey:@"proxy_password"] ?: [Keychain genericPasswordWithAccountName:[self proxyPasswordKey] serviceName:[self keychainServiceName]] ?: @"";
 
         _autoConnect = [dic boolForKey:@"auto_connect"];
         _encoding = [dic intForKey:@"encoding"] ?: NSUTF8StringEncoding;
@@ -98,6 +107,8 @@
 {
     NSMutableDictionary* dic = [NSMutableDictionary dictionary];
 
+    if (_clientID) [dic setObject:_clientID forKey:@"clientID"];
+
     if (_name) [dic setObject:_name forKey:@"name"];
 
     if (_host) [dic setObject:_host forKey:@"host"];
@@ -105,10 +116,18 @@
     [dic setBool:_useSSL forKey:@"ssl"];
 
     if (_nick) [dic setObject:_nick forKey:@"nick"];
-    if (_password) [dic setObject:_password forKey:@"password"];
+    if (_password.length) {
+        [Keychain setGenericPassword:_password accountName:[self passwordKey] serviceName:[self keychainServiceName]];
+    } else if (_password) {
+        [dic setObject:_password forKey:@"password"];
+    }
     if (_username) [dic setObject:_username forKey:@"username"];
     if (_realName) [dic setObject:_realName forKey:@"realname"];
-    if (_nickPassword) [dic setObject:_nickPassword forKey:@"nickPassword"];
+    if (_nickPassword.length) {
+        [Keychain setGenericPassword:_nickPassword accountName:[self nickPasswordKey] serviceName:[self keychainServiceName]];
+    } else if (_nickPassword) {
+        [dic setObject:_nickPassword forKey:@"nickPassword"];
+    }
     [dic setBool:_useSASL forKey:@"useSASL"];
     if (_altNicks) [dic setObject:_altNicks forKey:@"alt_nicks"];
 
@@ -116,7 +135,11 @@
     if (_proxyHost) [dic setObject:_proxyHost forKey:@"proxy_host"];
     [dic setInt:_proxyPort forKey:@"proxy_port"];
     if (_proxyUser) [dic setObject:_proxyUser forKey:@"proxy_user"];
-    if (_proxyPassword) [dic setObject:_proxyPassword forKey:@"proxy_password"];
+    if (_proxyPassword.length) {
+        [Keychain setGenericPassword:_proxyPassword accountName:[self proxyPasswordKey] serviceName:[self keychainServiceName]];
+    } else if (_proxyPassword) {
+        [dic setObject:_proxyPassword forKey:@"proxy_password"];
+    }
 
     [dic setBool:_autoConnect forKey:@"auto_connect"];
     [dic setInt:_encoding forKey:@"encoding"];
@@ -149,6 +172,26 @@
 - (id)mutableCopyWithZone:(NSZone *)zone
 {
     return [[IRCClientConfig alloc] initWithDictionary:[self dictionaryValue]];
+}
+
+- (NSString*)keychainServiceName
+{
+    return [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"];
+}
+
+- (NSString*)passwordKey
+{
+    return [_clientID stringByAppendingString:@"_password"];
+}
+
+- (NSString*)nickPasswordKey
+{
+    return [_clientID stringByAppendingString:@"_nickservPassword"];
+}
+
+- (NSString*)proxyPasswordKey
+{
+    return [_clientID stringByAppendingString:@"_proxyPassword"];
 }
 
 @end
