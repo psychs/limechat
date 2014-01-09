@@ -178,6 +178,10 @@
 		78347EDF1158D4B00073E2F0 /* WhoisDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78347ED11158D4B00073E2F0 /* WhoisDialog.xib */; };
 		7835FB921177341D005DC0B4 /* ListDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 7835FB911177341D005DC0B4 /* ListDialog.m */; };
 		783E6ADB1173802100261552 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 783E6AD91173802100261552 /* main.m */; };
+		786E46EB187F1D3A00CF139C /* Keychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 786E46EA187F1D3A00CF139C /* Keychain.m */; };
+		786E46EC187F1D3A00CF139C /* Keychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 786E46EA187F1D3A00CF139C /* Keychain.m */; };
+		786E46EF187F1DF000CF139C /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 786E46ED187F1DBB00CF139C /* Security.framework */; };
+		786E46F0187F1DFF00CF139C /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 786E46ED187F1DBB00CF139C /* Security.framework */; };
 		787F49421589809F003AADE2 /* TwitterAvatarURLManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 787F49411589809F003AADE2 /* TwitterAvatarURLManager.m */; };
 		787F49431589809F003AADE2 /* TwitterAvatarURLManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 787F49411589809F003AADE2 /* TwitterAvatarURLManager.m */; };
 		787F494715898166003AADE2 /* TwitterImageURLClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 787F494615898166003AADE2 /* TwitterImageURLClient.m */; };
@@ -393,6 +397,9 @@
 		7835FB911177341D005DC0B4 /* ListDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListDialog.m; sourceTree = "<group>"; };
 		783E6AD61173802100261552 /* LimeChat_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LimeChat_Prefix.pch; sourceTree = "<group>"; };
 		783E6AD91173802100261552 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		786E46E9187F1D3A00CF139C /* Keychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Keychain.h; path = Classes/Library/Keychain.h; sourceTree = SOURCE_ROOT; };
+		786E46EA187F1D3A00CF139C /* Keychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Keychain.m; path = Classes/Library/Keychain.m; sourceTree = SOURCE_ROOT; };
+		786E46ED187F1DBB00CF139C /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		787F49401589809F003AADE2 /* TwitterAvatarURLManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterAvatarURLManager.h; sourceTree = "<group>"; };
 		787F49411589809F003AADE2 /* TwitterAvatarURLManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwitterAvatarURLManager.m; sourceTree = "<group>"; };
 		787F494515898166003AADE2 /* TwitterImageURLClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterImageURLClient.h; sourceTree = "<group>"; };
@@ -628,6 +635,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				786E46EF187F1DF000CF139C /* Security.framework in Frameworks */,
 				782DA8F312DB5A3800C07861 /* Cocoa.framework in Frameworks */,
 				782DA8F412DB5A3800C07861 /* WebKit.framework in Frameworks */,
 				782DA8F512DB5A3800C07861 /* Carbon.framework in Frameworks */,
@@ -640,6 +648,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				786E46F0187F1DFF00CF139C /* Security.framework in Frameworks */,
 				78E572390C1C30BA00BDF7EC /* Cocoa.framework in Frameworks */,
 				78E5723B0C1C30BA00BDF7EC /* WebKit.framework in Frameworks */,
 				78E5723C0C1C30BA00BDF7EC /* Carbon.framework in Frameworks */,
@@ -725,6 +734,7 @@
 				780253C20C09525900C170D4 /* CoreServices.framework */,
 				788D56F00BB6872B00DDBF69 /* WebKit.framework */,
 				78835405109FEA7F00CD2FFF /* SystemConfiguration.framework */,
+				786E46ED187F1DBB00CF139C /* Security.framework */,
 				78FA9F641085AA1400001F13 /* Sparkle.framework */,
 			);
 			name = Frameworks;
@@ -807,6 +817,8 @@
 				78A8C0DB11737F660044E7A1 /* PasteSheet.m */,
 				78A7B58511744F12006B324A /* InviteSheet.h */,
 				78A7B58611744F12006B324A /* InviteSheet.m */,
+				786E46E9187F1D3A00CF139C /* Keychain.h */,
+				786E46EA187F1D3A00CF139C /* Keychain.m */,
 				78A8C0D611737F660044E7A1 /* ModeSheet.h */,
 				78A8C0D711737F660044E7A1 /* ModeSheet.m */,
 				78A8C0D811737F660044E7A1 /* NickSheet.h */,
@@ -1314,6 +1326,7 @@
 				782DA88A12DB5A3800C07861 /* NSColorHelper.m in Sources */,
 				782DA88B12DB5A3800C07861 /* NSDataHelper.m in Sources */,
 				782DA88C12DB5A3800C07861 /* NSDictionaryHelper.m in Sources */,
+				786E46EC187F1D3A00CF139C /* Keychain.m in Sources */,
 				782DA88D12DB5A3800C07861 /* NSLocaleHelper.m in Sources */,
 				782DA88E12DB5A3800C07861 /* NSPasteboardHelper.m in Sources */,
 				782DA88F12DB5A3800C07861 /* NSRectHelper.m in Sources */,
@@ -1512,6 +1525,7 @@
 				78A8C20E11737F660044E7A1 /* TableProgressIndicator.m in Sources */,
 				78A8C20F11737F660044E7A1 /* TextField.m in Sources */,
 				78A8C21011737F660044E7A1 /* TextFieldWithDisabledState.m in Sources */,
+				786E46EB187F1D3A00CF139C /* Keychain.m in Sources */,
 				78A8C21111737F660044E7A1 /* ThinSplitView.m in Sources */,
 				78A8C21211737F660044E7A1 /* TreeView.m in Sources */,
 				783E6ADB1173802100261552 /* main.m in Sources */,
