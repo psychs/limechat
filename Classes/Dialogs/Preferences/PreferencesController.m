@@ -32,6 +32,16 @@
     return self;
 }
 
+- (void)dealloc
+{
+    _keywordsTable.delegate = nil;
+    _keywordsTable.dataSource = nil;
+    _excludeWordsTable.delegate = nil;
+    _excludeWordsTable.dataSource = nil;
+    _soundsTable.delegate = nil;
+    _soundsTable.dataSource = nil;
+}
+
 #pragma mark - Utilities
 
 - (void)show
