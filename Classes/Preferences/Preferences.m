@@ -90,6 +90,12 @@ static NSMutableArray* excludeWords;
     return [ud boolForKey:@"Preferences.General.open_browser_in_background"];
 }
 
++ (BOOL)hideWindowOnClose
+{
+    NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+    return [ud boolForKey:@"Preferences.General.hide_window_on_close"];
+}
+
 + (BOOL)showInlineImages
 {
     NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];

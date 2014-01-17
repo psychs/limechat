@@ -323,7 +323,13 @@
 
 - (BOOL)windowShouldClose:(id)sender
 {
-    return [self queryTerminate];
+    if ([Preferences hideWindowOnClose]) {
+        [sender orderOut:self];
+        return NO;
+    }
+    else {
+        return [self queryTerminate];
+    }
 }
 
 - (void)windowWillClose:(NSNotification *)note
