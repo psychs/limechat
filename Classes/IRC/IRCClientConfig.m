@@ -116,14 +116,18 @@
     [dic setBool:_useSSL forKey:@"ssl"];
 
     if (_nick) [dic setObject:_nick forKey:@"nick"];
-    if (_password.length && !DEBUG_BUILD) {
+    BOOL useKeychain = YES;
+#ifdef DEBUG_BUILD
+    useKeychain = NO;
+#endif
+    if (_password.length && useKeychain) {
         [Keychain setGenericPassword:_password accountName:[self passwordKey] serviceName:[self keychainServiceName]];
     } else if (_password) {
         [dic setObject:_password forKey:@"password"];
     }
     if (_username) [dic setObject:_username forKey:@"username"];
     if (_realName) [dic setObject:_realName forKey:@"realname"];
-    if (_nickPassword.length && !DEBUG_BUILD) {
+    if (_nickPassword.length && useKeychain) {
         [Keychain setGenericPassword:_nickPassword accountName:[self nickPasswordKey] serviceName:[self keychainServiceName]];
     } else if (_nickPassword) {
         [dic setObject:_nickPassword forKey:@"nickPassword"];
@@ -135,7 +139,7 @@
     if (_proxyHost) [dic setObject:_proxyHost forKey:@"proxy_host"];
     [dic setInt:_proxyPort forKey:@"proxy_port"];
     if (_proxyUser) [dic setObject:_proxyUser forKey:@"proxy_user"];
-    if (_proxyPassword.length && !DEBUG_BUILD) {
+    if (_proxyPassword.length && useKeychain) {
         [Keychain setGenericPassword:_proxyPassword accountName:[self proxyPasswordKey] serviceName:[self keychainServiceName]];
     } else if (_proxyPassword) {
         [dic setObject:_proxyPassword forKey:@"proxy_password"];

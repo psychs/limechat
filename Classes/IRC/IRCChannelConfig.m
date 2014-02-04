@@ -69,7 +69,11 @@
     if (_channelID) [dic setObject:_channelID forKey:@"channelID"];
 
     if (_name) [dic setObject:_name forKey:@"name"];
-    if (_password.length && !DEBUG_BUILD) {
+    BOOL useKeychain = YES;
+#ifdef DEBUG_BUILD
+    useKeychain = NO;
+#endif
+    if (_password.length && useKeychain) {
         [Keychain setGenericPassword:_password accountName:[self passwordKey] serviceName:[self keychainServiceName]];
     } else if (_password) {
         [dic setObject:_password forKey:@"password"];
