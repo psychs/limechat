@@ -119,6 +119,9 @@ body.normal .sender[type=normal], body.normal .sender[type=myself] {
 	padding-right: 0.3ex;
 	text-align: right;
 	width: 20ex;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
 }
 
 body.normal div.line[type=action] .sender[type=normal], div.line[type=action] .sender[type=myself] {
