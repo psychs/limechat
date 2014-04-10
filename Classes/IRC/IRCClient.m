@@ -22,7 +22,6 @@
 #define QUIT_INTERVAL       5
 #define RECONNECT_INTERVAL  20
 #define RETRY_INTERVAL      240
-#define NICKSERV_INTERVAL   5
 
 #define CTCP_MIN_INTERVAL   5
 
@@ -428,7 +427,7 @@
 - (void)startAutoJoinTimer
 {
     [_autoJoinTimer stop];
-    [_autoJoinTimer start:NICKSERV_INTERVAL];
+    [_autoJoinTimer start:_config.timeout];
 }
 
 - (void)stopAutoJoinTimer

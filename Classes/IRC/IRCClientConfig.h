@@ -25,6 +25,7 @@ typedef enum {
 @property (nonatomic) NSString* username;
 @property (nonatomic) NSString* realName;
 @property (nonatomic) NSString* nickPassword;
+@property (nonatomic) int timeout;
 @property (nonatomic) BOOL useSASL;
 @property (nonatomic, readonly) NSMutableArray* altNicks;
 

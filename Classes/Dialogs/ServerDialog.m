@@ -92,7 +92,9 @@
     _usernameText.stringValue = _config.username;
     _realNameText.stringValue = _config.realName;
     _nickPasswordText.stringValue = _config.nickPassword;
+    _timeoutText.intValue = _config.timeout;
     _saslCheck.state = _config.useSASL;
+
     if (_config.altNicks.count) {
         _altNicksText.stringValue = [_config.altNicks componentsJoinedByString:@" "];
     }
@@ -130,6 +132,7 @@
     _config.username = _usernameText.stringValue;
     _config.realName = _realNameText.stringValue;
     _config.nickPassword = _nickPasswordText.stringValue;
+    _config.timeout = _timeoutText.intValue;
     _config.useSASL = _saslCheck.state;
 
     NSArray* nicks = [_altNicksText.stringValue componentsSeparatedByString:@" "];
@@ -170,6 +173,7 @@
     int port = [_portText intValue];
     NSString* nick = [_nickText stringValue];
     NSString* nickPassword = [_nickPasswordText stringValue];
+    int timeout = [_timeoutText intValue];
 
     BOOL enabled = name.length && host.length && ![host isEqualToString:@"-"] && port > 0 && nick.length;
     [_okButton setEnabled:enabled];
