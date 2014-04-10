@@ -35,6 +35,7 @@
         _username = @"";
         _realName = @"";
         _nickPassword = @"";
+        _timeout = 15;
 
         _proxyHost = @"";
         _proxyPort = 1080;
@@ -70,6 +71,7 @@
         _username = [dic stringForKey:@"username"] ?: @"";
         _realName = [dic stringForKey:@"realname"] ?: @"";
         _nickPassword = [dic stringForKey:@"nickPassword"] ?: [Keychain genericPasswordWithAccountName:[self nickPassword] serviceName:[self keychainServiceName]] ?: @"";
+        _timeout = [dic intForKey:@"timeout"] ?: 15;
         _useSASL = [dic boolForKey:@"useSASL"];
         [_altNicks addObjectsFromArray:[dic arrayForKey:@"alt_nicks"]];
 
@@ -132,6 +134,7 @@
     } else if (_nickPassword) {
         [dic setObject:_nickPassword forKey:@"nickPassword"];
     }
+    [dic setInt:_timeout forKey:@"timeout"];
     [dic setBool:_useSASL forKey:@"useSASL"];
     if (_altNicks) [dic setObject:_altNicks forKey:@"alt_nicks"];
 

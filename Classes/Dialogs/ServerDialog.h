@@ -31,6 +31,7 @@
 @property (nonatomic) IBOutlet NSTextField* nickPasswordText;
 @property (nonatomic) IBOutlet NSButton* saslCheck;
 @property (nonatomic) IBOutlet NSTextField* altNicksText;
+@property (nonatomic) IBOutlet NSTextField* timeoutText;
 
 @property (nonatomic) IBOutlet NSTextField* leavingCommentText;
 @property (nonatomic) IBOutlet NSTextField* userInfoText;
