@@ -132,7 +132,7 @@
     else if (_useSocks) {
         [_conn useSocksProxyVersion:_socksVersion host:_proxyHost port:_proxyPort user:_proxyUser password:_proxyPassword];
     }
-    
+
     if (_useSSL) {
         [_conn useSSL];
     }
