@@ -7,12 +7,12 @@
     <language>en-us</language>
 
     <item>
-      <title>2.39</title>
-      <link>http://limechat.net/mac/#v2.39</link>
-      <pubDate>Fri, 25 Oct 2013 02:20:30 -0700</pubDate>
+      <title>2.40</title>
+      <link>http://limechat.net/mac/#v2.40</link>
+      <pubDate>Sun, 04 May 2014 15:00:40 -0700</pubDate>
       <content:encoded><![CDATA[
   			<ul>
-          <li>10.9 support.</li>
+          <li>Allow SSL Connection regardless of SOCKS proxy settings.</li>
         </ul>
       ]]></content:encoded>
     </item>
