@@ -2738,7 +2738,7 @@
         if (myself) {
             [c deactivate];
             [self reloadTree];
-            [self printSystemBoth:c text:@"You have been kicked out from the channel" timestamp:m.timestamp];
+            [self printSystemBoth:c text:@"You have been kicked out of the channel" timestamp:m.timestamp];
 
             [self notifyEvent:USER_NOTIFICATION_KICKED target:c nick:nick text:comment];
             [SoundPlayer play:[Preferences soundForEvent:USER_NOTIFICATION_KICKED]];
