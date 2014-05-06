@@ -7,7 +7,7 @@
     <language>en</language>
     
     <item>
-      <title>LimeChat 2.40</title>
+      <title>LimeChat 2.41</title>
       <description><![CDATA[
         <html>
         <body>
@@ -22,18 +22,18 @@
             margin: 0.2em 0;
           }
         </style>
-        <h1>LimeChat 2.40</h1>
+        <h1>LimeChat 2.41</h1>
         <ul>
-          <li>Allow SSL Connection regardless of SOCKS proxy settings.</li>
+          <li>Fix bug when saving NickServ password.</li>
         </ul>
         </body>
         </html>
       ]]></description>
-      <pubDate>Sun, 04 May 2014 15:00:40 -0700</pubDate>
+      <pubDate>Mon, 05 May 2014 21:42:07 -0700</pubDate>
       <sparkle:minimumSystemVersion>10.8.0</sparkle:minimumSystemVersion>
-      <enclosure url="https://downloads.sourceforge.net/project/limechat/limechat/LimeChat_2.40.tbz?use_mirror=master"
-                  sparkle:version="2.40" length="1846437" type="application/octet-stream"
-                  sparkle:dsaSignature="MC0CFGWTLJOyViEh0votmNR41KgEzE+GAhUA5gZ0a4zVAXtwYvRYDuOSHOS4TfA="/>
+      <enclosure url="https://downloads.sourceforge.net/project/limechat/limechat/LimeChat_2.41.tbz?use_mirror=master"
+                  sparkle:version="2.41" length="1846497" type="application/octet-stream"
+                  sparkle:dsaSignature="MC4CFQD5ADGF//CMdb71w3JdQhe/APV+AgIVAL2oYEVQUaopveB7pNnJAAb5DyiI"/>
     </item>
 
     <item>
