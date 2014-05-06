@@ -130,7 +130,12 @@
     _config.username = _usernameText.stringValue;
     _config.realName = _realNameText.stringValue;
     _config.nickPassword = _nickPasswordText.stringValue;
-    _config.useSASL = _saslCheck.state;
+    if (_config.nickPassword.length > 0) {
+        _config.useSASL = _saslCheck.state;
+    }
+    else {
+        _config.useSASL = NO;
+    }
 
     NSArray* nicks = [_altNicksText.stringValue componentsSeparatedByString:@" "];
     [_config.altNicks removeAllObjects];

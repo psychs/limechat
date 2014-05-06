@@ -70,7 +70,9 @@
         _username = [dic stringForKey:@"username"] ?: @"";
         _realName = [dic stringForKey:@"realname"] ?: @"";
         _nickPassword = [dic stringForKey:@"nickPassword"] ?: [Keychain genericPasswordWithAccountName:[self nickPasswordKey] serviceName:[self keychainServiceName]] ?: @"";
-        _useSASL = [dic boolForKey:@"useSASL"];
+        if (_nickPassword.length > 0) {
+            _useSASL = [dic boolForKey:@"useSASL"];
+        }
         [_altNicks addObjectsFromArray:[dic arrayForKey:@"alt_nicks"]];
 
         _proxyType = [dic intForKey:@"proxy"];
