@@ -7,7 +7,7 @@
     <language>en</language>
     
     <item>
-      <title>LimeChat 2.41</title>
+      <title>LimeChat 2.42</title>
       <description><![CDATA[
         <html>
         <body>
@@ -22,18 +22,19 @@
             margin: 0.2em 0;
           }
         </style>
-        <h1>LimeChat 2.41</h1>
+        <h1>LimeChat 2.42</h1>
         <ul>
-          <li>Fix bug when saving NickServ password.</li>
+          <li>Use nickname in settings when disconnected from menu.</li>
+          <li>Improve passwords serialization.</li>
         </ul>
         </body>
         </html>
       ]]></description>
-      <pubDate>Mon, 05 May 2014 21:42:07 -0700</pubDate>
+      <pubDate>Sun, 22 Jun 2014 23:34:27 -0700</pubDate>
       <sparkle:minimumSystemVersion>10.8.0</sparkle:minimumSystemVersion>
-      <enclosure url="https://downloads.sourceforge.net/project/limechat/limechat/LimeChat_2.41.tbz?use_mirror=master"
-                  sparkle:version="2.41" length="1846497" type="application/octet-stream"
-                  sparkle:dsaSignature="MC4CFQD5ADGF//CMdb71w3JdQhe/APV+AgIVAL2oYEVQUaopveB7pNnJAAb5DyiI"/>
+      <enclosure url="https://downloads.sourceforge.net/project/limechat/limechat/LimeChat_2.42.tbz?use_mirror=master"
+                  sparkle:version="2.42" length="1847017" type="application/octet-stream"
+                  sparkle:dsaSignature="MC0CFQCU0iLMTIjt45aWhCgh+pDAj11RrAIUHjiAkSyLwrhn5iE69RGaNPRdbeA="/>
     </item>
 
     <item>

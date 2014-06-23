@@ -7,12 +7,13 @@
     <language>en-us</language>
 
     <item>
-      <title>2.41</title>
-      <link>http://limechat.net/mac/#v2.41</link>
-      <pubDate>Mon, 05 May 2014 21:42:07 -0700</pubDate>
+      <title>2.42</title>
+      <link>http://limechat.net/mac/#v2.42</link>
+      <pubDate>Sun, 22 Jun 2014 23:34:27 -0700</pubDate>
       <content:encoded><![CDATA[
   			<ul>
-          <li>Fix bug when saving NickServ password.</li>
+          <li>Use nickname in settings when disconnected from menu.</li>
+          <li>Improve passwords serialization.</li>
         </ul>
       ]]></content:encoded>
     </item>
