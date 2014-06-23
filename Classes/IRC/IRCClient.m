@@ -521,6 +521,9 @@
 - (void)quit
 {
     [self quit:nil];
+
+    // Reset nick when disconnected from menu
+    _inputNick = nil;
 }
 
 - (void)quit:(NSString*)comment
