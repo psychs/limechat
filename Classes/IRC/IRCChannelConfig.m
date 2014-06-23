@@ -66,11 +66,6 @@
     return self;
 }
 
-- (NSMutableDictionary*)dictionaryValue
-{
-    return [self dictionaryValueSavingToKeychain:YES];
-}
-
 - (NSMutableDictionary*)dictionaryValueSavingToKeychain:(BOOL)saveToKeychain
 {
     NSMutableDictionary* dic = [NSMutableDictionary dictionary];
