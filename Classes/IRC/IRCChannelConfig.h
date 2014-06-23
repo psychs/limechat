@@ -28,5 +28,8 @@ typedef enum {
 
 - (id)initWithDictionary:(NSDictionary*)dic;
 - (NSMutableDictionary*)dictionaryValue;
+- (NSMutableDictionary*)dictionaryValueSavingToKeychain:(BOOL)saveToKeychain;
+
+- (void)deletePasswordsFromKeychain;
 
 @end

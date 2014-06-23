@@ -47,7 +47,7 @@
 
 - (NSMutableDictionary*)dictionaryValue
 {
-    return [_config dictionaryValue];
+    return [_config dictionaryValueSavingToKeychain:YES];
 }
 
 #pragma mark - Properties

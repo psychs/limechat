@@ -63,13 +63,25 @@
 
         _host = [dic stringForKey:@"host"] ?: @"";
         _port = [dic intForKey:@"port"] ?: 6667;
-        _password = [dic stringForKey:@"password"] ?: [Keychain genericPasswordWithAccountName:[self passwordKey] serviceName:[self keychainServiceName]] ?: @"";
+        _password = [dic stringForKey:@"password"];
+        if (!_password) {
+            _password = [Keychain genericPasswordWithAccountName:[self passwordKey] serviceName:[self keychainServiceName]];
+            if (!_password) {
+                _password = @"";
+            }
+        }
         _useSSL = [dic boolForKey:@"ssl"];
 
         _nick = [dic stringForKey:@"nick"] ?: @"";
         _username = [dic stringForKey:@"username"] ?: @"";
         _realName = [dic stringForKey:@"realname"] ?: @"";
-        _nickPassword = [dic stringForKey:@"nickPassword"] ?: [Keychain genericPasswordWithAccountName:[self nickPasswordKey] serviceName:[self keychainServiceName]] ?: @"";
+        _nickPassword = [dic stringForKey:@"nickPassword"];
+        if (!_nickPassword) {
+            _nickPassword = [Keychain genericPasswordWithAccountName:[self nickPasswordKey] serviceName:[self keychainServiceName]];
+            if (!_nickPassword) {
+                _nickPassword = @"";
+            }
+        }
         if (_nickPassword.length > 0) {
             _useSASL = [dic boolForKey:@"useSASL"];
         }
@@ -79,7 +91,13 @@
         _proxyHost = [dic stringForKey:@"proxy_host"] ?: @"";
         _proxyPort = [dic intForKey:@"proxy_port"] ?: 1080;
         _proxyUser = [dic stringForKey:@"proxy_user"] ?: @"";
-        _proxyPassword = [dic stringForKey:@"proxy_password"] ?: [Keychain genericPasswordWithAccountName:[self proxyPasswordKey] serviceName:[self keychainServiceName]] ?: @"";
+        _proxyPassword = [dic stringForKey:@"proxy_password"];
+        if (!_proxyPassword) {
+            _proxyPassword = [Keychain genericPasswordWithAccountName:[self proxyPasswordKey] serviceName:[self keychainServiceName]];
+            if (!_proxyPassword) {
+                _proxyPassword = @"";
+            }
+        }
 
         _autoConnect = [dic boolForKey:@"auto_connect"];
         _encoding = [dic intForKey:@"encoding"] ?: NSUTF8StringEncoding;
@@ -107,6 +125,11 @@
 
 - (NSMutableDictionary*)dictionaryValue
 {
+    return [self dictionaryValueSavingToKeychain:YES includingChildren:YES];
+}
+
+- (NSMutableDictionary*)dictionaryValueSavingToKeychain:(BOOL)saveToKeychain includingChildren:(BOOL)includingChildren
+{
     NSMutableDictionary* dic = [NSMutableDictionary dictionary];
 
     if (_clientID) [dic setObject:_clientID forKey:@"clientID"];
@@ -122,17 +145,17 @@
 #ifdef DEBUG_BUILD
     useKeychain = NO;
 #endif
-    if (_password.length && useKeychain) {
+    if (useKeychain && saveToKeychain && _password.length) {
         [Keychain setGenericPassword:_password accountName:[self passwordKey] serviceName:[self keychainServiceName]];
-    } else if (_password) {
-        [dic setObject:_password forKey:@"password"];
+    } else {
+        [dic setObject:_password ?: @"" forKey:@"password"];
     }
     if (_username) [dic setObject:_username forKey:@"username"];
     if (_realName) [dic setObject:_realName forKey:@"realname"];
-    if (_nickPassword.length && useKeychain) {
+    if (useKeychain && saveToKeychain && _nickPassword.length) {
         [Keychain setGenericPassword:_nickPassword accountName:[self nickPasswordKey] serviceName:[self keychainServiceName]];
-    } else if (_nickPassword) {
-        [dic setObject:_nickPassword forKey:@"nickPassword"];
+    } else {
+        [dic setObject:_nickPassword ?: @"" forKey:@"nickPassword"];
     }
     [dic setBool:_useSASL forKey:@"useSASL"];
     if (_altNicks) [dic setObject:_altNicks forKey:@"alt_nicks"];
@@ -141,10 +164,11 @@
     if (_proxyHost) [dic setObject:_proxyHost forKey:@"proxy_host"];
     [dic setInt:_proxyPort forKey:@"proxy_port"];
     if (_proxyUser) [dic setObject:_proxyUser forKey:@"proxy_user"];
-    if (_proxyPassword.length && useKeychain) {
+
+    if (useKeychain && saveToKeychain && _proxyPassword.length) {
         [Keychain setGenericPassword:_proxyPassword accountName:[self proxyPasswordKey] serviceName:[self keychainServiceName]];
-    } else if (_proxyPassword) {
-        [dic setObject:_proxyPassword forKey:@"proxy_password"];
+    } else {
+        [dic setObject:_proxyPassword ?: @"" forKey:@"proxy_password"];
     }
 
     [dic setBool:_autoConnect forKey:@"auto_connect"];
@@ -156,11 +180,13 @@
 
     if (_altNicks) [dic setObject:_loginCommands forKey:@"login_commands"];
 
-    NSMutableArray* channelAry = [NSMutableArray array];
-    for (IRCChannelConfig* e in _channels) {
-        [channelAry addObject:[e dictionaryValue]];
+    if (includingChildren) {
+        NSMutableArray* channelAry = [NSMutableArray array];
+        for (IRCChannelConfig* e in _channels) {
+            [channelAry addObject:[e dictionaryValueSavingToKeychain:saveToKeychain]];
+        }
+        [dic setObject:channelAry forKey:@"channels"];
     }
-    [dic setObject:channelAry forKey:@"channels"];
 
     [dic setObject:_autoOp forKey:@"autoop"];
 
@@ -177,7 +203,18 @@
 
 - (id)mutableCopyWithZone:(NSZone *)zone
 {
-    return [[IRCClientConfig alloc] initWithDictionary:[self dictionaryValue]];
+    return [[IRCClientConfig alloc] initWithDictionary:[self dictionaryValueSavingToKeychain:NO includingChildren:YES]];
+}
+
+- (void)deletePasswordsFromKeychain
+{
+    [Keychain deleteGenericPasswordWithAccountName:[self passwordKey] serviceName:[self keychainServiceName]];
+    [Keychain deleteGenericPasswordWithAccountName:[self nickPasswordKey] serviceName:[self keychainServiceName]];
+    [Keychain deleteGenericPasswordWithAccountName:[self proxyPasswordKey] serviceName:[self keychainServiceName]];
+
+    for (IRCChannelConfig* e in _channels) {
+        [e deletePasswordsFromKeychain];
+    }
 }
 
 - (NSString*)keychainServiceName

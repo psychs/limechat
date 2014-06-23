@@ -201,7 +201,7 @@
 
 - (NSMutableDictionary*)dictionaryValue
 {
-    NSMutableDictionary* dic = [_config dictionaryValue];
+    NSMutableDictionary* dic = [_config dictionaryValueSavingToKeychain:YES includingChildren:NO];
 
     NSMutableArray* ary = [NSMutableArray array];
     for (IRCChannel* c in _channels) {

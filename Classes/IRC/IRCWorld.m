@@ -102,7 +102,7 @@
 
 - (NSMutableDictionary*)dictionaryValue
 {
-    NSMutableDictionary* dic = [_config dictionaryValue];
+    NSMutableDictionary* dic = [_config dictionaryValueSavingToKeychain:YES includingChildren:NO];
 
     NSMutableArray* ary = [NSMutableArray array];
     for (IRCClient* u in _clients) {
@@ -782,6 +782,8 @@
     [u terminate];
     [u disconnect];
 
+    [u.config deletePasswordsFromKeychain];
+
     if (_selected && _selected.client == u) {
         [self selectOtherAndDestroy:u];
     }
@@ -806,6 +808,8 @@
     if (u.lastSelectedChannel == c) {
         u.lastSelectedChannel = nil;
     }
+
+    [c.config deletePasswordsFromKeychain];
 
     if (_selected == c) {
         [self selectOtherAndDestroy:c];

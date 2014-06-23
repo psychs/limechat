@@ -36,13 +36,20 @@
 
 - (NSMutableDictionary*)dictionaryValue
 {
+    return [self dictionaryValueSavingToKeychain:YES includingChildren:YES];
+}
+
+- (NSMutableDictionary*)dictionaryValueSavingToKeychain:(BOOL)saveToKeychain includingChildren:(BOOL)includingChildren
+{
     NSMutableDictionary* dic = [NSMutableDictionary dictionary];
 
-    NSMutableArray* clientAry = [NSMutableArray array];
-    for (IRCClientConfig* e in _clients) {
-        [clientAry addObject:[e dictionaryValue]];
+    if (includingChildren) {
+        NSMutableArray* clientAry = [NSMutableArray array];
+        for (IRCClientConfig* e in _clients) {
+            [clientAry addObject:[e dictionaryValueSavingToKeychain:saveToKeychain includingChildren:includingChildren]];
+        }
+        [dic setObject:clientAry forKey:@"clients"];
     }
-    [dic setObject:clientAry forKey:@"clients"];
 
     [dic setObject:_autoOp forKey:@"autoop"];
 
@@ -51,7 +58,7 @@
 
 - (id)mutableCopyWithZone:(NSZone *)zone
 {
-    return [[IRCWorldConfig alloc] initWithDictionary:[self dictionaryValue]];
+    return [[IRCWorldConfig alloc] initWithDictionary:[self dictionaryValueSavingToKeychain:NO includingChildren:YES]];
 }
 
 @end

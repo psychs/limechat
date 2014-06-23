@@ -11,5 +11,6 @@
 
 - (id)initWithDictionary:(NSDictionary*)dic;
 - (NSMutableDictionary*)dictionaryValue;
+- (NSMutableDictionary*)dictionaryValueSavingToKeychain:(BOOL)saveToKeychain includingChildren:(BOOL)includingChildren;
 
 @end
