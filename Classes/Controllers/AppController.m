@@ -334,7 +334,7 @@
 
 - (void)windowDidResignKey:(NSNotification *)note
 {
-    IRCTreeItem* sel = world.selected;
+    IRCTreeItem* sel = _world.selected;
     if (sel) [sel.log unmark];
 }
 

@@ -208,7 +208,7 @@
 
     [self restorePosition];
     
-    marked = YES;
+    _marked = YES;
 }
 
 - (void)unmark
@@ -223,7 +223,7 @@
         --_count;
     }
     
-    marked = NO;
+    _marked = NO;
 }
 
 - (void)goToMark
