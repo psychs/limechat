@@ -10,6 +10,10 @@ LimeChat is an IRC client for Mac OS X.
 
 * Satoshi Nakagawa http://github.com/psychs
 * ##limechat on chat.freenode.net
+ 
+## Contributing
+
+* Earn bounties for contributing: [![Bountysource](https://www.bountysource.com/badge/tracker?tracker_id=45221)](https://www.bountysource.com/trackers/45221-limechat?utm_source=45221&utm_medium=shield&utm_campaign=TRACKER_BADGE)
 
 ## Thanks To
 
