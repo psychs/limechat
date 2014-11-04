@@ -2917,15 +2917,19 @@
             [self updateChannelTitle:c];
         }
 
-        NSString* text = [NSString stringWithFormat:@"%@ has changed mode: %@", nick, modeStr];
-        [self printBoth:(c ?: (id)target) type:LINE_TYPE_MODE text:text timestamp:m.timestamp];
+        if([Preferences showModeChange]) {
+            NSString* text = [NSString stringWithFormat:@"%@ has changed mode: %@", nick, modeStr];
+            [self printBoth:(c ?: (id)target) type:LINE_TYPE_MODE text:text timestamp:m.timestamp];
+        }
     }
     else {
         // user mode
         [_myMode update:modeStr];
 
-        NSString* text = [NSString stringWithFormat:@"%@ has changed mode: %@", nick, modeStr];
-        [self printBoth:nil type:LINE_TYPE_MODE text:text timestamp:m.timestamp];
+        if([Preferences showModeChange]) {
+            NSString* text = [NSString stringWithFormat:@"%@ has changed mode: %@", nick, modeStr];
+            [self printBoth:nil type:LINE_TYPE_MODE text:text timestamp:m.timestamp];
+        }
         [self updateClientTitle];
     }
 }
