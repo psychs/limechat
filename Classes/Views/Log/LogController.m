@@ -510,6 +510,7 @@
                                 excludeWords:line.excludeWords
                           highlightWholeLine:[Preferences keywordWholeLine]
                               exactWordMatch:[Preferences keywordMatchingMethod] == KEYWORD_MATCH_EXACT
+                                 showEffects:[Preferences showEffects]
                                  highlighted:&key
                                    URLRanges:&urlRanges];
 
