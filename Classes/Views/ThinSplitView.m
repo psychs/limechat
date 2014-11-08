@@ -3,11 +3,11 @@
 
 #import "ThinSplitView.h"
 
-
 @implementation ThinSplitView
 {
     int _myDividerThickness;
 }
+@synthesize hidden = _hidden;
 
 - (void)setUp
 {
