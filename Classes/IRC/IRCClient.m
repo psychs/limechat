@@ -2106,7 +2106,7 @@
         }
     }
 
-    if (type == LINE_TYPE_PRIVMSG || type == LINE_TYPE_ACTION) {
+    if (type == LINE_TYPE_PRIVMSG || type == LINE_TYPE_ACTION || type == LINE_TYPE_NOTICE) {
         if (memberType != MEMBER_TYPE_MYSELF) {
             keywords = [Preferences keywords];
             excludeWords = [Preferences excludeWords];
