@@ -2106,7 +2106,8 @@
         }
     }
 
-    if (type == LINE_TYPE_PRIVMSG || type == LINE_TYPE_ACTION || type == LINE_TYPE_NOTICE) {
+    BOOL keywordNotice = [Preferences keywordNotice];
+    if (type == LINE_TYPE_PRIVMSG || type == LINE_TYPE_ACTION || (type == LINE_TYPE_NOTICE && keywordNotice)) {
         if (memberType != MEMBER_TYPE_MYSELF) {
             keywords = [Preferences keywords];
             excludeWords = [Preferences excludeWords];
