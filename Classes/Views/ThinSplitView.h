@@ -9,6 +9,8 @@
 @property (nonatomic) int fixedViewIndex;
 @property (nonatomic) int position;
 @property (nonatomic) BOOL inverted;
+// This overrides super's `hidden` with a different meaning
+// TODO: rename
 @property (nonatomic) BOOL hidden;
 
 @end
