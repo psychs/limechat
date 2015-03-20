@@ -18,7 +18,7 @@ static NSDictionary* SYNTAX_EXT_MAP;
 {
     self = [super init];
     if (self) {
-        [NSBundle loadNibNamed:@"PasteSheet" owner:self];
+        [[NSBundle mainBundle] loadNibNamed:@"PasteSheet" owner:self topLevelObjects:NULL];
 
         if (!SYNTAXES) {
             SYNTAXES = [NSArray arrayWithObjects:

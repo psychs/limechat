@@ -13,7 +13,7 @@
 {
     self = [super init];
     if (self) {
-        [NSBundle loadNibNamed:@"IgnoreItemSheet" owner:self];
+        [[NSBundle mainBundle] loadNibNamed:@"IgnoreItemSheet" owner:self topLevelObjects:NULL];
     }
     return self;
 }
