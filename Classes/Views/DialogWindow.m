@@ -38,8 +38,8 @@
 - (void)sendEvent:(NSEvent *)e
 {
     if ([e type] == NSKeyDown) {
-        NSInputManager* im = [NSInputManager currentInputManager];
-        if (!im || !im.markedRange.length) {
+        NSTextInputContext *ic = [NSTextInputContext currentInputContext];
+        if (!ic.client || !ic.client.markedRange.length) {
             int k = [e keyCode];
             NSUInteger m = [e modifierFlags];
             BOOL shift = (m & NSShiftKeyMask) != 0;

@@ -4,7 +4,7 @@
 #import <Foundation/Foundation.h>
 
 
-typedef enum {
+typedef NS_ENUM(NSInteger, DCCFileTransferStatus) {
     DCC_INIT,
     DCC_ERROR,
     DCC_STOP,
@@ -13,7 +13,7 @@ typedef enum {
     DCC_RECEIVING,
     DCC_SENDING,
     DCC_COMPLETE,
-} DCCFileTransferStatus;
+} ;
 
 
 @interface DCCFileTransferCell : NSCell

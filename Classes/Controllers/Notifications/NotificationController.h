@@ -4,7 +4,7 @@
 #import <Foundation/Foundation.h>
 
 
-typedef enum {
+typedef NS_ENUM(NSInteger, UserNotificationType) {
 	USER_NOTIFICATION_HIGHLIGHT,
 	USER_NOTIFICATION_NEW_TALK,
 	USER_NOTIFICATION_CHANNEL_MSG,
@@ -21,7 +21,7 @@ typedef enum {
 	USER_NOTIFICATION_FILE_SEND_SUCCESS,
 	USER_NOTIFICATION_FILE_SEND_ERROR,
 	USER_NOTIFICATION_COUNT,
-} UserNotificationType;
+} ;
 
 
 #define USER_NOTIFICATION_DCC_KEY                   @"dcc"

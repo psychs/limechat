@@ -66,8 +66,8 @@
 
 - (BOOL)processKeyEvent:(NSEvent*)e
 {
-    NSInputManager* im = [NSInputManager currentInputManager];
-    if (im && [im markedRange].length > 0) return NO;
+    NSTextInputContext *ic = [NSTextInputContext currentInputContext];
+    if (ic.client && ic.client.markedRange.length > 0) return NO;
 
     NSUInteger m = [e modifierFlags];
     m &= NSShiftKeyMask | NSControlKeyMask | NSAlternateKeyMask | NSCommandKeyMask;

@@ -7,6 +7,7 @@
 @implementation ThinSplitView
 {
     int _myDividerThickness;
+    BOOL _hidden;
 }
 
 - (void)setUp

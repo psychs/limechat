@@ -19,11 +19,11 @@
 @class IRCWorld;
 
 
-typedef enum {
+typedef NS_ENUM(NSInteger, ConnectMode) {
     CONNECT_NORMAL,
     CONNECT_RECONNECT,
     CONNECT_RETRY,
-} ConnectMode;
+} ;
 
 
 @interface IRCClient : IRCTreeItem
