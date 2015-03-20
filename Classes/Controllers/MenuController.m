@@ -36,7 +36,7 @@
 
 @implementation MenuController
 {
-    id _sparkleUpdater;
+    SUUpdater *_sparkleUpdater;
     PreferencesController* _preferencesController;
     NSMutableArray* _serverDialogs;
     NSMutableArray* _channelDialogs;
