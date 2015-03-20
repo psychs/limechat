@@ -4,10 +4,10 @@
 #import <Cocoa/Cocoa.h>
 
 
-typedef enum {
+typedef NS_ENUM(NSInteger, ChannelType) {
     CHANNEL_TYPE_CHANNEL,
     CHANNEL_TYPE_TALK,
-} ChannelType;
+} ;
 
 
 @interface IRCChannelConfig : NSObject <NSMutableCopying>

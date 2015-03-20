@@ -9,11 +9,11 @@
 #define SI      0x0F
 
 
-typedef enum {
+typedef NS_ENUM(NSInteger, KanaEncoding) {
     ENC_OTHER,
     ENC_JIS_ROMAN,
     ENC_JIS_KANA,
-} KanaEncoding;
+} ;
 
 
 @implementation NSData (Kana)

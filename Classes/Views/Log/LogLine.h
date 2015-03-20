@@ -4,7 +4,7 @@
 #import <Cocoa/Cocoa.h>
 
 
-typedef enum {
+typedef NS_ENUM(NSInteger, LogLineType) {
     LINE_TYPE_SYSTEM,
     LINE_TYPE_ERROR,
     LINE_TYPE_REPLY,
@@ -26,12 +26,12 @@ typedef enum {
     LINE_TYPE_WALLOPS,
     LINE_TYPE_DEBUG_SEND,
     LINE_TYPE_DEBUG_RECEIVE,
-} LogLineType;
+} ;
 
-typedef enum {
+typedef NS_ENUM(NSInteger, LogMemberType) {
     MEMBER_TYPE_NORMAL,
     MEMBER_TYPE_MYSELF,
-} LogMemberType;
+} ;
 
 
 @interface LogLine : NSObject

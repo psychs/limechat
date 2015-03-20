@@ -4,12 +4,12 @@
 #import <Cocoa/Cocoa.h>
 
 
-typedef enum {
+typedef NS_ENUM(NSInteger, ProxyType) {
     PROXY_NONE = 0,
     PROXY_SOCKS_SYSTEM = 1,
     PROXY_SOCKS4 = 4,
     PROXY_SOCKS5 = 5,
-} ProxyType;
+} ;
 
 
 @interface IRCClientConfig : NSObject <NSMutableCopying>

@@ -4,10 +4,10 @@
 #import <Foundation/Foundation.h>
 
 
-typedef enum {
+typedef NS_ENUM(NSInteger, GistClientStage) {
     kGistClientGetTop,
     kGistClientPost,
-} GistClientStage;
+} ;
 
 
 @interface GistClient : NSObject

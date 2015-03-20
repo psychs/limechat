@@ -701,12 +701,12 @@
 
 #pragma mark - Keyboard Navigation
 
-typedef enum {
+typedef NS_ENUM(NSInteger, ScrollKind) {
     SCROLL_TOP,
     SCROLL_BOTTOM,
     SCROLL_PAGE_UP,
     SCROLL_PAGE_DOWN,
-} ScrollKind;
+} ;
 
 - (void)scroll:(ScrollKind)op
 {
@@ -751,7 +751,7 @@ typedef enum {
     [self scroll:SCROLL_PAGE_DOWN];
 }
 
-typedef enum {
+typedef NS_ENUM(NSInteger, MoveKind) {
     MOVE_UP,
     MOVE_DOWN,
     MOVE_LEFT,
@@ -759,7 +759,7 @@ typedef enum {
     MOVE_ALL,
     MOVE_ACTIVE,
     MOVE_UNREAD,
-} MoveKind;
+} ;
 
 - (void)move:(MoveKind)dir target:(MoveKind)target
 {

@@ -5,37 +5,37 @@
 #import "NotificationController.h"
 
 
-typedef enum {
+typedef NS_ENUM(NSInteger, AddressDetectionType) {
     ADDRESS_DETECT_SPECIFY = 0,
     ADDRESS_DETECT_JOIN = 2,
-} AddressDetectionType;
+} ;
 
-typedef enum {
+typedef NS_ENUM(NSInteger, DCCActionType) {
     DCC_AUTO_ACCEPT = 0,
     DCC_SHOW_DIALOG,
     DCC_IGNORE,
-} DCCActionType;
+} ;
 
-typedef enum {
+typedef NS_ENUM(NSInteger, MainWindowLayoutType) {
     MAIN_WINDOW_LAYOUT_2_COLUMN = 0,
     MAIN_WINDOW_LAYOUT_3_COLUMN,
-} MainWindowLayoutType;
+} ;
 
-typedef enum {
+typedef NS_ENUM(NSInteger, DoubleClickUserActionType) {
     DOUBLE_CLICK_USER_ACTION_TALK = 0,
     DOUBLE_CLICK_USER_ACTION_WHOIS,
-} DoubleClickUserActionType;
+} ;
 
-typedef enum {
+typedef NS_ENUM(NSInteger, KeywordMatchType) {
     KEYWORD_MATCH_PARTIAL = 0,
     KEYWORD_MATCH_EXACT,
-} KeywordMatchType;
+} ;
 
-typedef enum {
+typedef NS_ENUM(NSInteger, TabActionType) {
     TAB_COMPLETE_NICK = 0,
     TAB_UNREAD,
     TAB_NONE = 100,
-} TabActionType;
+} ;
 
 
 @interface Preferences : NSObject
