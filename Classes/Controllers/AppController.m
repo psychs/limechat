@@ -229,7 +229,7 @@
             [msg appendFormat:@"sending %d files", sending];
         }
         [msg appendString:@"."];
-        NSInteger result = NSRunAlertPanel(@"Quit LimeChat?", msg, @"Quit", @"Cancel", nil);
+        NSInteger result = NSRunAlertPanel(@"Quit LimeChat?", @"%@", @"Quit", @"Cancel", nil, msg);
         if (result != NSAlertDefaultReturn) {
             return NO;
         }
