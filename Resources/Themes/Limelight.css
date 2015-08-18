@@ -194,3 +194,26 @@ html[channelname="##apple"].normal {
 html[channelname="#python"].normal {
 	background: #202020 url('Limelight/python.png') no-repeat fixed bottom right;
 }
+
+/* Close Button */
+
+.close {
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 18px;
+    color: #FFFFFF;
+    text-shadow: 0 1px 0 #ffffff;
+    opacity: 0.2;
+    filter: alpha(opacity=20);
+    text-decoration: none !important;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.close:hover {
+    color: #FFFFFF;
+    text-decoration: none !important;
+    opacity: 0.4;
+    filter: alpha(opacity=40);
+    cursor: pointer;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}

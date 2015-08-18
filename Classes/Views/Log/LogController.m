@@ -350,8 +350,11 @@
             DOMHTMLElement* imageAnchorTag = (DOMHTMLElement*)[doc createElement:@"a"];
             [imageAnchorTag setAttribute:@"href" value:url];
             [imageAnchorTag setAttribute:@"imageindex" value:[NSString stringWithFormat:@"%d", imageIndex]];
+            
+            NSDate *date = [NSDate date];
+            NSString* imgID = [NSString stringWithFormat:@"%lld",[@(floor([date timeIntervalSince1970] * 1000)) longLongValue]];
 
-            NSString* imageAnchorTagContent = [NSString stringWithFormat:@"<img src=\"%@\" class=\"inlineimage\"/>", url];
+            NSString* imageAnchorTagContent = [NSString stringWithFormat:@"<img src=\"%@\" id=\"%@\" class=\"inlineimage\"/>", url, imgID];
             [imageAnchorTag setInnerHTML:imageAnchorTagContent];
 
             DOMElement* after = [beforeTag nextElementSibling];
@@ -361,6 +364,13 @@
             else {
                 [messageTag appendChild:imageAnchorTag];
             }
+            
+            DOMHTMLElement* imageCloseButton = (DOMHTMLElement*)[doc createElement:@"a"];
+            [imageCloseButton setAttribute:@"onclick" value:[NSString stringWithFormat:@"hideImage('%@');",imgID]];
+            [imageCloseButton setAttribute:@"class" value:@"close"];
+            [imageCloseButton setAttribute:@"id" value:[NSString stringWithFormat:@"%@btn",imgID]];
+            [imageCloseButton setInnerText:@"x"];
+            [messageTag appendChild:imageCloseButton];
 
             [self restorePositionWithDelay];
         }
@@ -701,6 +711,7 @@
     [s appendFormat:@"<style>%@</style>", [self _stringByReplacingTypeAttributeSelectorsInCSSString:[self defaultCSS]]];
     if (style) [s appendFormat:@"<style><!-- %@ --></style>", [self _stringByReplacingTypeAttributeSelectorsInCSSString:style]];
     if (overrideStyle) [s appendFormat:@"<style><!-- %@ --></style>", overrideStyle];
+    [s appendString:@"<script>function hideImage(id){document.getElementById(id).style.display = 'none'; document.getElementById(id+'btn').style.display = 'none';}</script>"];
     [s appendString:@"</head>"];
     [s appendFormat:@"<body class=\"%@\" %@></body>", bodyClass, bodyAttrs];
     [s appendString:@"</html>"];
