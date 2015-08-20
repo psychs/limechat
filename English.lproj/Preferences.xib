@@ -441,7 +441,7 @@
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <popUpButton verticalHuggingPriority="750" id="108">
-                                            <rect key="frame" x="135" y="178" width="230" height="26"/>
+                                            <rect key="frame" x="135" y="148" width="230" height="26"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <popUpButtonCell key="cell" type="push" title=" " bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="111" id="4242">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -462,7 +462,7 @@
                                             </connections>
                                         </popUpButton>
                                         <button id="118">
-                                            <rect key="frame" x="15" y="183" width="117" height="18"/>
+                                            <rect key="frame" x="15" y="153" width="117" height="18"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <buttonCell key="cell" type="check" title="Log transcripts" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="4244">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -473,7 +473,7 @@
                                             </connections>
                                         </button>
                                         <textField verticalHuggingPriority="750" id="647">
-                                            <rect key="frame" x="14" y="228" width="131" height="17"/>
+                                            <rect key="frame" x="14" y="198" width="131" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Message scrollback:" id="4245">
                                                 <font key="font" metaFont="system"/>
@@ -482,7 +482,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField verticalHuggingPriority="750" id="649" customClass="NumericTextField">
-                                            <rect key="frame" x="150" y="225" width="71" height="22"/>
+                                            <rect key="frame" x="150" y="195" width="71" height="22"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="right" drawsBackground="YES" id="4246">
                                                 <font key="font" metaFont="system"/>
@@ -512,7 +512,7 @@
                                             </connections>
                                         </button>
                                         <button id="4291">
-                                            <rect key="frame" x="15" y="261" width="187" height="18"/>
+                                            <rect key="frame" x="15" y="231" width="187" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="check" title="Show image links in inline" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="4292">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -523,7 +523,7 @@
                                             </connections>
                                         </button>
                                         <button id="4489">
-                                            <rect key="frame" x="15" y="291" width="152" height="18"/>
+                                            <rect key="frame" x="15" y="261" width="152" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="check" title="Show rename events" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="4490">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -531,6 +531,17 @@
                                             </buttonCell>
                                             <connections>
                                                 <binding destination="1247" name="value" keyPath="values.Preferences.General.showRename" id="4492"/>
+                                            </connections>
+                                        </button>
+                                        <button id="KOH-ST-CHH">
+                                            <rect key="frame" x="15" y="291" width="189" height="18"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="check" title="Show mode change events" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="ZXN-EV-uEt">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <binding destination="1247" name="value" keyPath="values.Preferences.General.show_mode_change" id="6rx-2l-URT"/>
                                             </connections>
                                         </button>
                                     </subviews>
