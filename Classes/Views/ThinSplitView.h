@@ -9,6 +9,5 @@
 @property (nonatomic) int fixedViewIndex;
 @property (nonatomic) int position;
 @property (nonatomic) BOOL inverted;
-@property (nonatomic) BOOL hidden;
 
 @end
