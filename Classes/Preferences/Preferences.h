@@ -54,6 +54,7 @@ typedef enum {
 + (MainWindowLayoutType)mainWindowLayout;
 + (BOOL)openBrowserInBackground;
 + (BOOL)showInlineImages;
++ (BOOL)hideNSFWInlineImages;
 + (BOOL)showJoinLeave;
 + (BOOL)showModeChange;
 + (BOOL)showRename;

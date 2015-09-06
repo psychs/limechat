@@ -561,43 +561,47 @@
     [s appendFormat:@"<span class=\"message\" _type=\"%@\">%@", lineTypeString, body];
     if (isText && !_console && urlRanges.count && [Preferences showInlineImages]) {
         //
-        // expand image URLs
+        // expand image URLs unless text says NSFW
         //
-        BOOL showInlineImage = NO;
-        int imageIndex = 0;
+        NSRegularExpression* regex = [NSRegularExpression regularExpressionWithPattern:@"nsfw" options:NSRegularExpressionCaseInsensitive error:NULL];
+        NSTextCheckingResult* match = [regex firstMatchInString:line.body options:0 range:NSMakeRange(0, [line.body length])];
+        if (!([Preferences hideNSFWInlineImages] && match)) {
+            BOOL showInlineImage = NO;
+            int imageIndex = 0;
 
-        for (NSValue* rangeValue in urlRanges) {
-            NSString* url = [line.body substringWithRange:[rangeValue rangeValue]];
+            for (NSValue* rangeValue in urlRanges) {
+                NSString* url = [line.body substringWithRange:[rangeValue rangeValue]];
 
-            BOOL isFileURL = NO;
-            BOOL checkingSize = NO;
+                BOOL isFileURL = NO;
+                BOOL checkingSize = NO;
 
-            if ([ImageURLParser isImageFileURL:url]) {
-                isFileURL = YES;
-                if (![url hasPrefix:@"http://gyazo.com/"]) {
-                    checkingSize = YES;
-                    [[ImageDownloadManager instance] checkImageSize:url client:_client channel:_channel lineNumber:_lineNumber imageIndex:imageIndex];
-                }
-            }
-
-            if (!checkingSize) {
-                NSString* imageUrl = nil;
-                if (isFileURL) {
-                    imageUrl = url;
-                }
-                else {
-                    imageUrl = [ImageURLParser serviceImageURLForURL:url];
-                }
-
-                if (imageUrl) {
-                    if (!showInlineImage) {
-                        [s appendString:@"<br/>"];
+                if ([ImageURLParser isImageFileURL:url]) {
+                    isFileURL = YES;
+                    if (![url hasPrefix:@"http://gyazo.com/"]) {
+                        checkingSize = YES;
+                        [[ImageDownloadManager instance] checkImageSize:url client:_client channel:_channel lineNumber:_lineNumber imageIndex:imageIndex];
                     }
-                    showInlineImage = YES;
-                    [s appendFormat:@"<a href=\"%@\" imageindex=\"%d\"><img src=\"%@\" class=\"inlineimage\"/></a>", url, imageIndex, imageUrl];
                 }
+
+                if (!checkingSize) {
+                    NSString* imageUrl = nil;
+                    if (isFileURL) {
+                        imageUrl = url;
+                    }
+                    else {
+                        imageUrl = [ImageURLParser serviceImageURLForURL:url];
+                    }
+
+                    if (imageUrl) {
+                        if (!showInlineImage) {
+                            [s appendString:@"<br/>"];
+                        }
+                        showInlineImage = YES;
+                        [s appendFormat:@"<a href=\"%@\" imageindex=\"%d\"><img src=\"%@\" class=\"inlineimage\"/></a>", url, imageIndex, imageUrl];
+                    }
+                }
+                ++imageIndex;
             }
-            ++imageIndex;
         }
     }
     [s appendString:@"</span>"];
