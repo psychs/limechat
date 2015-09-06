@@ -60,6 +60,9 @@
     return self;
 }
 
+- (IBAction)toggleMuteSounds:(id)sender {
+}
+
 - (void)setUp
 {
 #ifdef TARGET_APP_STORE
@@ -103,6 +106,7 @@
     switch (tag) {
         case 102:	// preferences
         case 104:	// auto op
+        case 108:   // sound toggle
         case 201:	// dcc
             return YES;
         case 202:	// close current panel without confirmation
@@ -333,6 +337,21 @@
         _preferencesController.delegate = self;
     }
     [_preferencesController show];
+}
+
+- (void)onMute:(id)sender
+{
+    NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+    BOOL current = [ud boolForKey:@"Preferences.General.muteSounds"];
+    
+    if(current) {
+        [_toggleMuteSounds setState: NSOffState];
+        [ud setBool: NO forKey:@"Preferences.General.muteSounds"];
+    }
+    else {
+        [_toggleMuteSounds setState: NSOnState];
+        [ud setBool: YES forKey:@"Preferences.General.muteSounds"];
+    }
 }
 
 - (void)preferencesDialogWillClose:(PreferencesController*)sender

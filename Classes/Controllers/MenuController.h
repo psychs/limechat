@@ -36,6 +36,7 @@
 @property (nonatomic) IBOutlet NSMenuItem* closeWindowItem;
 @property (nonatomic) IBOutlet NSMenuItem* closeCurrentPanelItem;
 @property (nonatomic) IBOutlet NSMenuItem* checkForUpdateItem;
+@property (nonatomic) IBOutlet NSMenuItem* toggleMuteSounds;
 
 - (void)setUp;
 - (void)terminate;
@@ -43,6 +44,7 @@
 - (void)showServerPropertyDialog:(IRCClient*)client ignore:(BOOL)ignore;
 
 - (void)onPreferences:(id)sender;
+- (void)onMute:(id)sender;
 - (void)onAutoOp:(id)sender;
 - (void)onDcc:(id)sender;
 - (void)onMainWindow:(id)sender;

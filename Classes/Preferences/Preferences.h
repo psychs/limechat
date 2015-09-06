@@ -105,6 +105,8 @@ typedef enum {
 + (NSString*)titleForEvent:(UserNotificationType)event;
 + (NSString*)soundForEvent:(UserNotificationType)event;
 + (void)setSound:(NSString*)value forEvent:(UserNotificationType)event;
++ (BOOL)isMuted;
++ (void)setMuted:(BOOL)value;
 + (BOOL)userNotificationEnabledForEvent:(UserNotificationType)event;
 + (void)setUserNotificationEnabled:(BOOL)value forEvent:(UserNotificationType)event;
 

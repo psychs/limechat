@@ -503,6 +503,18 @@ static NSMutableArray* excludeWords;
     [ud setObject:value forKey:key];
 }
 
++ (BOOL)isMuted
+{
+    NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+    return [ud boolForKey:@"Preferences.General.muteSounds"];
+}
+
++ (void)setMuted:(BOOL)value
+{
+    NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+    [ud setBool:value forKey:@"Preferences.General.muteSounds"];
+}
+
 + (BOOL)userNotificationEnabledForEvent:(UserNotificationType)event
 {
     NSString* key = [[self keyForEvent:event] stringByAppendingString:@"Growl"];
