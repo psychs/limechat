@@ -193,8 +193,10 @@
 {
     for (IRCClient* u in _clients) {
         u.isUnread = NO;
+        u.isKeyword = NO;
         for (IRCChannel* c in u.channels) {
             c.isUnread = NO;
+            c.isKeyword = NO;
         }
     }
     [self reloadTree];
