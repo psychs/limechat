@@ -66,6 +66,13 @@
 {
     if (_conn != sender) return;
 
+	/* If a user clicks a link that redirects to a data image, then 
+	 this value will not be NSHTTPURLResponse which results in a crash
+	 when trying to make a call to -allHeaderFields */
+	if ([_response isKindOfClass:[NSHTTPURLResponse class]] == NO) {
+		return;
+	}
+
     long long contentLength = 0;
     NSString* contentType;
     int statusCode = [_response statusCode];
