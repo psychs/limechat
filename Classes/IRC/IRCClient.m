@@ -26,6 +26,7 @@
 
 #define CTCP_MIN_INTERVAL   5
 
+#define TOLERANCE_TIME 4
 
 @implementation IRCClient
 {
@@ -506,6 +507,8 @@
     }
 
     [_conn open];
+        
+    
 }
 
 - (void)disconnect
@@ -1571,10 +1574,18 @@
 
 - (void)sendLine:(NSString*)str
 {
-    [_conn sendLine:str];
-
+   [_conn sendLine:str];
+    if ([str contains:@"PRIVMSG"]) {
+        IRCMessage *m = [[IRCMessage alloc] initWithLine:str];
+        [self saveMsg:m forChannel:m.params[0]];
+    }
+    
+    
+    
+    
     LOG(@">>> %@", str);
 }
+
 
 - (void)send:(NSString*)str, ...
 {
@@ -1603,6 +1614,33 @@
     [self sendLine:s];
 }
 
+#pragma mark Saving messages
+-(void)saveMsg:(IRCMessage*)m forChannel:(NSString*)channelName
+{
+    NSString *current = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSince1970] * 1];
+    
+    //Storing a fixed amount of posts in user defaults for restoring purposes
+    NSString *key =[NSString stringWithFormat:@"log-%@",channelName];
+    NSData *savedLog = [[NSUserDefaults standardUserDefaults] objectForKey:key];
+    if (savedLog.length == 0) {
+        NSMutableArray *zeroArray = [NSMutableArray new];
+        NSData *zeroData = [NSKeyedArchiver archivedDataWithRootObject:zeroArray];
+        [[NSUserDefaults standardUserDefaults] setObject:zeroData forKey:key];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        savedLog = [[NSUserDefaults standardUserDefaults] objectForKey:key];
+    }
+    NSMutableArray *savedMsg = [NSKeyedUnarchiver unarchiveObjectWithData:savedLog];
+    //Only save the message, if it is a new one (i.e. that it is not already saved)
+    if (m.timestamp > current.longLongValue - TOLERANCE_TIME) {
+        [savedMsg addObject:m];
+    }
+    if (savedMsg.count > 10) {
+        [savedMsg removeObjectAtIndex:0];
+    }
+    [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:savedMsg] forKey:key];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+}
 #pragma mark - Find Channel
 
 - (IRCChannel*)findChannel:(NSString*)name
@@ -2359,12 +2397,16 @@
     if ([self checkIgnore:text nick:nick channel:target]) {
         return;
     }
+    
+    //log it for restoring it later
+    [self saveMsg:m forChannel:target];
 
+    
     if (target.isChannelName) {
         // channel
         IRCChannel* c = [self findChannel:target];
         BOOL keyword = [self printBoth:(c ?: (id)target) type:type nick:nick text:text identified:identified timestamp:m.timestamp];
-
+        
         if (type == LINE_TYPE_NOTICE) {
             [self notifyText:USER_NOTIFICATION_CHANNEL_NOTICE target:(c ?: (id)target) nick:nick text:text];
             [SoundPlayer play:[Preferences soundForEvent:USER_NOTIFICATION_CHANNEL_NOTICE]];

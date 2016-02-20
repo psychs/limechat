@@ -5,7 +5,7 @@
 #import "IRCPrefix.h"
 
 
-@interface IRCMessage : NSObject
+@interface IRCMessage : NSObject <NSCoding>
 
 @property (nonatomic) time_t timestamp;
 @property (nonatomic) IRCPrefix* sender;

@@ -8,6 +8,7 @@
 #import "MemberListViewCell.h"
 #import "NSStringHelper.h"
 
+#import "IRCMessage.h"
 
 @implementation IRCChannel
 {
@@ -124,6 +125,18 @@
     _isNamesInit = NO;
     _isWhoInit = NO;
     [self reloadMemberList];
+    
+    
+    //Can maybe be seperated into a function later on
+    NSString *key =[NSString stringWithFormat:@"log-%@",self.name];
+ //   [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:[NSMutableArray new]] forKey:key];
+ //   [[NSUserDefaults standardUserDefaults] synchronize];
+    NSMutableArray *savedMsg = [NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:key]];
+    for (IRCMessage *m in savedMsg) {
+        [self.client receivePrivmsgAndNotice:m];
+    }
+    
+    
 }
 
 - (void)deactivate
