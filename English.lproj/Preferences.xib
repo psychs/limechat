@@ -12,6 +12,8 @@
                 <outlet property="hotKey" destination="879" id="4354"/>
                 <outlet property="keywordsArrayController" destination="4310" id="4333"/>
                 <outlet property="keywordsTable" destination="2123" id="4342"/>
+                <outlet property="savedMessagesLabel" destination="M9u-2H-dx6" id="tao-He-MCz"/>
+                <outlet property="savedMessagesStepper" destination="Pi4-J3-dbf" id="8du-Uc-JcC"/>
                 <outlet property="soundsTable" destination="101" id="4488"/>
                 <outlet property="themeButton" destination="248" id="4402"/>
                 <outlet property="transcriptFolderButton" destination="108" id="4398"/>
@@ -112,7 +114,7 @@
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" id="2123">
-                                                        <rect key="frame" x="0.0" y="0.0" width="190" height="152"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="190" height="19"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <size key="intercellSpacing" width="3" height="2"/>
                                                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -178,7 +180,7 @@
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" id="2514">
-                                                        <rect key="frame" x="0.0" y="0.0" width="190" height="152"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="190" height="19"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <size key="intercellSpacing" width="3" height="2"/>
                                                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -564,6 +566,32 @@
                                                     </dictionary>
                                                 </binding>
                                             </connections>
+                                        </textField>\
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="M9u-2H-dx6">
+                                            <rect key="frame" x="123" y="144" width="21" height="17"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="10" id="dcm-xQ-urR">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" id="Pi4-J3-dbf">
+                                            <rect key="frame" x="147" y="138" width="19" height="27"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <stepperCell key="cell" continuous="YES" alignment="left" maxValue="30" doubleValue="10" id="GIZ-z6-gN3"/>
+                                            <connections>
+                                                <action selector="changeNumberOfMessages:" target="-2" id="YbA-Nc-MLY"/>
+                                            </connections>
+                                        </stepper>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="uuR-e1-Y91">
+                                            <rect key="frame" x="15" y="144" width="117" height="17"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Saved messages:" id="hTl-d0-XGd">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
                                         </textField>
                                     </subviews>
                                 </view>
@@ -809,7 +837,7 @@
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" headerView="4272" id="101">
-                                                        <rect key="frame" x="0.0" y="0.0" width="403" height="178"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="403" height="19"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <size key="intercellSpacing" width="3" height="2"/>
                                                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
