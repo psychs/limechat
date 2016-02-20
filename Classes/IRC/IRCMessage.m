@@ -143,4 +143,29 @@
     return ms;
 }
 
+#pragma mark NSCoding Protocol
+
+-(void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [aCoder encodeObject:@(self.timestamp) forKey:@"timestamp"];
+    [aCoder encodeObject:self.sender forKey:@"sender"];
+    [aCoder encodeObject:self.command forKey:@"command"];
+    [aCoder encodeObject:@(self.numericReply) forKey:@"numericReply"];
+    [aCoder encodeObject:self.params forKey:@"params"];
+
+}
+-(id)initWithCoder:(NSCoder *)aDecoder
+{
+    
+    self = [super init];
+    if (self) {
+        self.timestamp = [[aDecoder decodeObjectForKey:@"timestamp"] longLongValue];
+        self.sender = [aDecoder decodeObjectForKey:@"sender"];
+        self.command = [aDecoder decodeObjectForKey:@"command"];
+        self.numericReply = [[aDecoder decodeObjectForKey:@"numericReply"] intValue];
+        self.params = [aDecoder decodeObjectForKey:@"params"];
+        
+    }
+    return self;
+}
 @end
