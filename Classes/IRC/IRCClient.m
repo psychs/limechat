@@ -28,6 +28,9 @@
 
 #define TOLERANCE_TIME 4
 
+#define MESSAGES_KEY @"numberOfSavedMessages"
+#define STANDARD_SAVED_MESSAGES 10
+
 @implementation IRCClient
 {
     IRCConnection* _conn;
@@ -1634,7 +1637,12 @@
     if (m.timestamp > current.longLongValue - TOLERANCE_TIME) {
         [savedMsg addObject:m];
     }
-    if (savedMsg.count > 10) {
+
+    int maxSavedMsg = [[[NSUserDefaults standardUserDefaults] objectForKey:MESSAGES_KEY] intValue];
+    if (![[NSUserDefaults standardUserDefaults] objectForKey:MESSAGES_KEY]) {
+        maxSavedMsg = STANDARD_SAVED_MESSAGES;
+    }
+    if (savedMsg.count > maxSavedMsg) {
         [savedMsg removeObjectAtIndex:0];
     }
     [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:savedMsg] forKey:key];

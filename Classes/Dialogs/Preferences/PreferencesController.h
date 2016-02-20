@@ -8,7 +8,7 @@
 #define ThemeDidChangeNotification	@"ThemeDidChangeNotification"
 
 
-@interface PreferencesController : NSWindowController
+@interface PreferencesController : NSWindowController 
 
 @property (nonatomic, weak) id delegate;
 @property (nonatomic) NSString* fontDisplayName;
@@ -26,6 +26,8 @@
 @property (nonatomic) IBOutlet NSPopUpButton* transcriptFolderButton;
 @property (nonatomic) IBOutlet NSPopUpButton* themeButton;
 @property (nonatomic) IBOutlet NSTableView* soundsTable;
+@property (weak) IBOutlet NSTextField *savedMessagesLabel;
+@property (weak) IBOutlet NSStepper *savedMessagesStepper;
 
 - (void)show;
 
@@ -40,6 +42,7 @@
 - (void)onInputSelectFont:(id)sender;
 - (void)onOverrideFontChanged:(id)sender;
 - (void)onChangedTransparency:(id)sender;
+- (IBAction)changeNumberOfMessages:(NSSlider *)sender;
 
 @end
 
