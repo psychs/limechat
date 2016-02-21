@@ -61,15 +61,19 @@
 
     [self.window makeKeyAndOrderFront:nil];
     
-    
+    [self updateLabels];
+}
+-(void)updateLabels
+{
+    //Load preferences
     NSNumber *maxMsg = [[NSUserDefaults standardUserDefaults] objectForKey:MESSAGES_KEY];
     if (![[NSUserDefaults standardUserDefaults] objectForKey:MESSAGES_KEY]) {
         maxMsg = @(10);
     }
+    //Adapt label and stepper
     self.savedMessagesLabel.stringValue = [NSString stringWithFormat:@"%@",maxMsg];
     self.savedMessagesStepper.integerValue = maxMsg.integerValue;
 }
-
 #pragma mark - KVC Properties
 
 - (void)setFontDisplayName:(NSString*)value
