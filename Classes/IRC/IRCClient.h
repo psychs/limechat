@@ -87,7 +87,7 @@ typedef enum {
 
 - (void)createChannelListDialog;
 
-//Current solution: make the function public, so that it can be called from IRCChannel
+//Make the function public, so that it can be called from IRCChannel
 - (void)receivePrivmsgAndNotice:(IRCMessage*)m;
 
 

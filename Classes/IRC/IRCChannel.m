@@ -125,18 +125,7 @@
     _isNamesInit = NO;
     _isWhoInit = NO;
     [self reloadMemberList];
-    
-    
-    //Can maybe be seperated into a function later on
-    NSString *key =[NSString stringWithFormat:@"log-%@",self.name];
- //   [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:[NSMutableArray new]] forKey:key];
- //   [[NSUserDefaults standardUserDefaults] synchronize];
-    NSMutableArray *savedMsg = [NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:key]];
-    for (IRCMessage *m in savedMsg) {
-        [self.client receivePrivmsgAndNotice:m];
-    }
-    
-    
+    [self loadSavedMessages];
 }
 
 - (void)deactivate
@@ -145,6 +134,15 @@
     [_members removeAllObjects];
     _isOp = NO;
     [self reloadMemberList];
+}
+-(void)loadSavedMessages
+{
+    //Send every saved message over to the IRCClient
+    NSString *key =[NSString stringWithFormat:@"log-%@",self.name];
+    NSMutableArray *savedMsg = [NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:key]];
+    for (IRCMessage *m in savedMsg) {
+        [self.client receivePrivmsgAndNotice:m];
+    }
 }
 
 - (BOOL)print:(LogLine*)line
