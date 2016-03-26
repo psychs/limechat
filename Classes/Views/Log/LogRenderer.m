@@ -137,6 +137,7 @@ static NSString* renderRange(NSString* body, attr_t attr, int start, int len)
            excludeWords:(NSArray*)excludeWords
      highlightWholeLine:(BOOL)highlightWholeLine
          exactWordMatch:(BOOL)exactWordMatch
+            showEffects:(BOOL)showEffects
             highlighted:(BOOL*)highlighted
               URLRanges:(NSArray**)urlRanges
 {
@@ -155,52 +156,57 @@ static NSString* renderRange(NSString* body, attr_t attr, int start, int len)
     attr_t currentAttr = 0;
     UniChar dest[len];
     int n = 0;
+    
+    if (!showEffects) {
+        body = [body stripMIRCEffects];
+        len = body.length;
+    } else {
+        for (int i=0; i<len; i++) {
+            UniChar c = source[i];
+            if (c < 0x20) {
+                switch (c) {
+                    case 0x02:
+                        if (currentAttr & BOLD_ATTR) {
+                            currentAttr &= ~BOLD_ATTR;
+                        }
+                        else {
+                            currentAttr |= BOLD_ATTR;
+                        }
+                        continue;
+                    case 0x03:
+                    {
+                        int textColor = -1;
+                        int backgroundColor = -1;
 
-    for (int i=0; i<len; i++) {
-        UniChar c = source[i];
-        if (c < 0x20) {
-            switch (c) {
-                case 0x02:
-                    if (currentAttr & BOLD_ATTR) {
-                        currentAttr &= ~BOLD_ATTR;
-                    }
-                    else {
-                        currentAttr |= BOLD_ATTR;
-                    }
-                    continue;
-                case 0x03:
-                {
-                    int textColor = -1;
-                    int backgroundColor = -1;
-
-                    // text color
-                    if (i+1 < len) {
-                        c = source[i+1];
-                        if (IsNumeric(c)) {
-                            ++i;
-                            textColor = c - '0';
-                            if (i+1 < len) {
-                                c = source[i+1];
-                                if (IsNumeric(c)) {
-                                    ++i;
-                                    textColor = textColor * 10 + c - '0';
-                                }
+                        // text color
+                        if (i+1 < len) {
+                            c = source[i+1];
+                            if (IsNumeric(c)) {
+                                ++i;
+                                textColor = c - '0';
                                 if (i+1 < len) {
                                     c = source[i+1];
-                                    if (c == ',') {
+                                    if (IsNumeric(c)) {
                                         ++i;
+                                        textColor = textColor * 10 + c - '0';
+                                    }
+                                    if (i+1 < len) {
+                                        c = source[i+1];
+                                        if (c == ',') {
+                                            ++i;
 
-                                        // background color
-                                        if (i+1 < len) {
-                                            c = source[i+1];
-                                            if (IsNumeric(c)) {
-                                                ++i;
-                                                backgroundColor = c - '0';
-                                                if (i+1 < len) {
-                                                    c = source[i+1];
-                                                    if (IsNumeric(c)) {
-                                                        ++i;
-                                                        backgroundColor = backgroundColor * 10 + c - '0';
+                                            // background color
+                                            if (i+1 < len) {
+                                                c = source[i+1];
+                                                if (IsNumeric(c)) {
+                                                    ++i;
+                                                    backgroundColor = c - '0';
+                                                    if (i+1 < len) {
+                                                        c = source[i+1];
+                                                        if (IsNumeric(c)) {
+                                                            ++i;
+                                                            backgroundColor = backgroundColor * 10 + c - '0';
+                                                        }
                                                     }
                                                 }
                                             }
@@ -208,58 +214,58 @@ static NSString* renderRange(NSString* body, attr_t attr, int start, int len)
                                     }
                                 }
                             }
-                        }
 
-                        currentAttr &= ~(TEXT_COLOR_ATTR | BACKGROUND_COLOR_ATTR | 0xFF);
+                            currentAttr &= ~(TEXT_COLOR_ATTR | BACKGROUND_COLOR_ATTR | 0xFF);
 
-                        if (backgroundColor >= 0) {
-                            backgroundColor %= 16;
-                            currentAttr |= BACKGROUND_COLOR_ATTR;
-                            currentAttr |= (backgroundColor << 4) & BACKGROUND_COLOR_MASK;
-                        }
-                        else {
-                            currentAttr &= ~(BACKGROUND_COLOR_ATTR | BACKGROUND_COLOR_MASK);
-                        }
+                            if (backgroundColor >= 0) {
+                                backgroundColor %= 16;
+                                currentAttr |= BACKGROUND_COLOR_ATTR;
+                                currentAttr |= (backgroundColor << 4) & BACKGROUND_COLOR_MASK;
+                            }
+                            else {
+                                currentAttr &= ~(BACKGROUND_COLOR_ATTR | BACKGROUND_COLOR_MASK);
+                            }
 
-                        if (textColor >= 0) {
-                            textColor %= 16;
-                            currentAttr |= TEXT_COLOR_ATTR;
-                            currentAttr |= textColor & TEXT_COLOR_MASK;
+                            if (textColor >= 0) {
+                                textColor %= 16;
+                                currentAttr |= TEXT_COLOR_ATTR;
+                                currentAttr |= textColor & TEXT_COLOR_MASK;
+                            }
+                            else {
+                                currentAttr &= ~(TEXT_COLOR_ATTR | TEXT_COLOR_MASK);
+                            }
                         }
-                        else {
-                            currentAttr &= ~(TEXT_COLOR_ATTR | TEXT_COLOR_MASK);
-                        }
+                        continue;
                     }
-                    continue;
+                    case 0x0F:
+                        currentAttr = 0;
+                        continue;
+                    case 0x16:
+                        if (currentAttr & ITALIC_ATTR) {
+                            currentAttr &= ~ITALIC_ATTR;
+                        }
+                        else {
+                            currentAttr |= ITALIC_ATTR;
+                        }
+                        continue;
+                    case 0x1F:
+                        if (currentAttr & UNDERLINE_ATTR) {
+                            currentAttr &= ~UNDERLINE_ATTR;
+                        }
+                        else {
+                            currentAttr |= UNDERLINE_ATTR;
+                        }
+                        continue;
                 }
-                case 0x0F:
-                    currentAttr = 0;
-                    continue;
-                case 0x16:
-                    if (currentAttr & ITALIC_ATTR) {
-                        currentAttr &= ~ITALIC_ATTR;
-                    }
-                    else {
-                        currentAttr |= ITALIC_ATTR;
-                    }
-                    continue;
-                case 0x1F:
-                    if (currentAttr & UNDERLINE_ATTR) {
-                        currentAttr &= ~UNDERLINE_ATTR;
-                    }
-                    else {
-                        currentAttr |= UNDERLINE_ATTR;
-                    }
-                    continue;
             }
+
+            attrBuf[n] = currentAttr;
+            dest[n++] = c;
         }
 
-        attrBuf[n] = currentAttr;
-        dest[n++] = c;
+        body = [[NSString alloc] initWithCharacters:dest length:n];
+        len = n;
     }
-
-    body = [[NSString alloc] initWithCharacters:dest length:n];
-    len = n;
 
     //
     // URL
