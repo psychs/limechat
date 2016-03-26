@@ -96,6 +96,12 @@ static NSMutableArray* excludeWords;
     return [ud boolForKey:@"Preferences.General.show_inline_images"];
 }
 
++ (BOOL)hideNSFWInlineImages
+{
+    NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+    return [ud boolForKey:@"Preferences.General.hide_nsfw_inline_images"];
+}
+
 + (BOOL)showJoinLeave
 {
     NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
@@ -798,6 +804,7 @@ static NSMutableArray* excludeWords;
     [d setInt:MAIN_WINDOW_LAYOUT_2_COLUMN forKey:@"Preferences.General.main_window_layout"];
     [d setBool:YES forKey:@"Preferences.General.open_browser_in_background"];
     [d setBool:YES forKey:@"Preferences.General.show_inline_images"];
+    [d setBool:YES forKey:@"Preferences.General.hide_nsfw_inline_images"];
     [d setBool:YES forKey:@"Preferences.General.show_join_leave"];
     [d setBool:YES forKey:@"Preferences.General.showRename"];
     [d setBool:YES forKey:@"Preferences.General.use_growl"];
