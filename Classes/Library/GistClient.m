@@ -4,9 +4,11 @@
 #import "GistClient.h"
 #import "GTMNSString+URLArguments.h"
 
+@import Foundation;
 
-#define GIST_TOP_URL    @"https://gist.github.com/"
-#define GIST_POST_URL   @"https://gist.github.com/gists"
+
+#define GIST_TOP_URL    @"https://api.github.com/"
+#define GIST_POST_URL   @"https://api.github.com/gists"
 #define TIMEOUT         10
 
 
@@ -68,29 +70,33 @@
     _conn = [[NSURLConnection alloc] initWithRequest:req delegate:self];
 }
 
-- (void)postDataWithAutheToken:(NSString*)authToken
+- (void) postPublicGist
 {
     [self cancel];
     _stage = kGistClientPost;
 
-    NSMutableDictionary* params = [NSMutableDictionary dictionary];
-    [params setObject:@"" forKey:@"gist[description]"];
-    [params setObject:@"" forKey:@"gist[files][][oid]"];
-    [params setObject:@"" forKey:@"gist[files][][name]"];
-    [params setObject:_text forKey:@"gist[files][][content]"];
-    [params setObject:_fileType forKey:@"gist[files][][language]"];
-    if (_isPrivate) {
-        [params setObject:@"0" forKey:@"gist[public]"];
-    }
-    if (authToken) {
-        [params setObject:authToken forKey:@"authenticity_token"];
-    }
+    NSMutableDictionary* gist = [NSMutableDictionary dictionary];
+    [gist setObject:_text forKey:@"content"];
 
-    NSData* body = [[self formatParameters:params] dataUsingEncoding:NSUTF8StringEncoding];
+    NSMutableDictionary* files = [NSMutableDictionary dictionaryWithObjectsAndKeys:gist,[@"limechat_gist." stringByAppendingString:_fileType], nil];
+    NSMutableDictionary* postData = [NSMutableDictionary dictionaryWithObjectsAndKeys:files,@"files", nil];
+    NSString *isPublic = (_isPrivate) ? @"false" : @"true";
+    [postData setObject:isPublic forKey:@"public"];
+
+    NSError *error;
+    NSData *data = [NSJSONSerialization dataWithJSONObject:postData options:0 error:&error];
+
+    if (!data) {
+        NSLog(@"%@", error);
+    } else {
+        NSString *JSONString = [[NSString alloc] initWithBytes:[data bytes] length:[data length] encoding:NSUTF8StringEncoding];
+    }
 
     NSMutableURLRequest* req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:GIST_POST_URL] cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:TIMEOUT];
     [req setHTTPMethod:@"POST"];
-    [req setHTTPBody:body];
+    [req setValue:@"application/json" forHTTPHeaderField:@"Content-type"];
+    [req setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [req setHTTPBody:data];
 
     _conn = [[NSURLConnection alloc] initWithRequest:req delegate:self];
 }
@@ -114,51 +120,23 @@
     if (_conn != sender) return;
 
     if (_stage == kGistClientGetTop) {
-        NSString* s = [[NSString alloc] initWithData:_buf encoding:NSUTF8StringEncoding];
-        NSString* authToken = nil;
-
-        NSRange authInputTagRange = [s rangeOfString:@"<input name=\"authenticity_token\""];
-        if (authInputTagRange.location != NSNotFound) {
-            int start = NSMaxRange(authInputTagRange);
-            NSRange tokenStartRange = [s rangeOfString:@"value=\"" options:0 range:NSMakeRange(start, s.length - start)];
-            if (tokenStartRange.location != NSNotFound) {
-                start = NSMaxRange(tokenStartRange);
-                NSRange tokenEndRange = [s rangeOfString:@"\"" options:0 range:NSMakeRange(start, s.length - start)];
-                if (tokenEndRange.location != NSNotFound) {
-                    start = NSMaxRange(tokenStartRange);
-                    int end = tokenEndRange.location;
-                    authToken = [s substringWithRange:NSMakeRange(start, end - start)];
-                }
-            }
-        }
-
-        if (!authToken) {
-            NSRange csrfTokenRange = [s rangeOfString:@"\"csrf-token"];
-            if (csrfTokenRange.location != NSNotFound) {
-                NSRange tokenEndRange = [s rangeOfString:@"\"" options:NSBackwardsSearch range:NSMakeRange(0, csrfTokenRange.location)];
-                if (tokenEndRange.location != NSNotFound) {
-                    NSRange tokenStartRange = [s rangeOfString:@"\"" options:NSBackwardsSearch range:NSMakeRange(0, tokenEndRange.location)];
-                    if (tokenStartRange.location != NSNotFound) {
-                        int start = tokenStartRange.location + 1;
-                        int end = tokenEndRange.location;
-                        authToken = [s substringWithRange:NSMakeRange(start, end - start)];
-                    }
-                }
-            }
-        }
-
-        if (authToken) {
-            [self postDataWithAutheToken:authToken];
-        }
-        else {
-            if ([_delegate respondsToSelector:@selector(gistClient:didFailWithError:statusCode:)]) {
-                [_delegate gistClient:self didFailWithError:@"Failed to post to Gist" statusCode:0];
-            }
-        }
+        [_buf setLength:0];
+        [self postPublicGist];
     }
     else {
         if ([_delegate respondsToSelector:@selector(gistClient:didReceiveResponse:)]) {
-            [_delegate gistClient:self didReceiveResponse:_destUrl];
+
+            NSError* error;
+            NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:_buf options:0 error:&error];
+
+            if (!dictionary) {
+                NSLog(@"Error serializing JSON: %@", error);
+                [_delegate gistClient:self didReceiveResponse:nil];
+            } else {
+                _destUrl = [dictionary valueForKey:@"html_url"];
+                [_buf setLength:0];
+                [_delegate gistClient:self didReceiveResponse:_destUrl];
+            }
         }
     }
 }
