@@ -14,7 +14,7 @@
 #import "ListDialog.h"
 #import "Timer.h"
 #import "HostResolver.h"
-
+#import "IRCMessage.h"
 
 @class IRCWorld;
 
@@ -86,5 +86,10 @@ typedef enum {
 - (int)indexOfTalkChannel;
 
 - (void)createChannelListDialog;
+
+//Make the function public, so that it can be called from IRCChannel
+- (void)receivePrivmsgAndNotice:(IRCMessage*)m;
+
+
 
 @end

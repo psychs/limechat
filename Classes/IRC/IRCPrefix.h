@@ -4,7 +4,7 @@
 #import <Foundation/Foundation.h>
 
 
-@interface IRCPrefix : NSObject
+@interface IRCPrefix : NSObject <NSCoding>
 
 @property (nonatomic) NSString* raw;
 @property (nonatomic) NSString* nick;

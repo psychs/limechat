@@ -13,6 +13,8 @@
 #define PORT_MAX			65535
 #define PONG_INTERVAL_MIN	20
 
+#define MESSAGES_KEY @"numberOfSavedMessages"
+
 
 @implementation PreferencesController
 {
@@ -58,8 +60,20 @@
     }
 
     [self.window makeKeyAndOrderFront:nil];
+    
+    [self updateLabels];
 }
-
+-(void)updateLabels
+{
+    //Load preferences
+    NSNumber *maxMsg = [[NSUserDefaults standardUserDefaults] objectForKey:MESSAGES_KEY];
+    if (![[NSUserDefaults standardUserDefaults] objectForKey:MESSAGES_KEY]) {
+        maxMsg = @(10);
+    }
+    //Adapt label and stepper
+    self.savedMessagesLabel.stringValue = [NSString stringWithFormat:@"%@",maxMsg];
+    self.savedMessagesStepper.integerValue = maxMsg.integerValue;
+}
 #pragma mark - KVC Properties
 
 - (void)setFontDisplayName:(NSString*)value
@@ -465,6 +479,7 @@
     [self onLayoutChanged:nil];
 }
 
+
 #pragma mark - Actions
 
 - (void)editTable:(NSTableView*)table
@@ -486,10 +501,18 @@
     [self performSelector:@selector(editTable:) withObject:_excludeWordsTable afterDelay:0.01];
 }
 
+
 - (void)onLayoutChanged:(id)sender
 {
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
     [nc postNotificationName:ThemeDidChangeNotification object:nil userInfo:nil];
+}
+
+- (IBAction)changeNumberOfMessages:(NSStepper *)sender
+{
+    self.savedMessagesLabel.stringValue = [NSString stringWithFormat:@"%d",sender.intValue];
+    [[NSUserDefaults standardUserDefaults] setObject:@(sender.intValue) forKey:MESSAGES_KEY];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 #pragma mark - NSWindow Delegate

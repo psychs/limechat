@@ -26,6 +26,10 @@
 
 #define CTCP_MIN_INTERVAL   5
 
+#define TOLERANCE_TIME 4
+
+#define MESSAGES_KEY @"numberOfSavedMessages"
+#define STANDARD_SAVED_MESSAGES 10
 
 @implementation IRCClient
 {
@@ -316,6 +320,41 @@
     return NO;
 }
 
+-(void)saveMsg:(IRCMessage*)m forChannel:(NSString*)channelName
+{
+    //Get the current time
+    NSString *current = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSince1970]];
+    
+    //Storing a fixed amount of posts in user defaults for restoring purposes
+    NSString *key =[NSString stringWithFormat:@"log-%@",channelName];
+    NSData *savedLog = [[NSUserDefaults standardUserDefaults] objectForKey:key];
+    if (![[NSUserDefaults standardUserDefaults] objectForKey:key]) {
+        NSMutableArray *zeroArray = [NSMutableArray new];
+        NSData *zeroData = [NSKeyedArchiver archivedDataWithRootObject:zeroArray];
+        [[NSUserDefaults standardUserDefaults] setObject:zeroData forKey:key];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        savedLog = [[NSUserDefaults standardUserDefaults] objectForKey:key];
+    }
+    NSMutableArray *savedMsg = [NSKeyedUnarchiver unarchiveObjectWithData:savedLog];
+    //Only save the message, if it is a new one (i.e. that it is not already saved)
+    //Compare the timestamp of the message to the current time
+    if (m.timestamp > current.longLongValue - TOLERANCE_TIME) {
+        [savedMsg addObject:m];
+    }
+    
+    int maxSavedMsg = [[[NSUserDefaults standardUserDefaults] objectForKey:MESSAGES_KEY] intValue];
+    if (![[NSUserDefaults standardUserDefaults] objectForKey:MESSAGES_KEY]) {
+        maxSavedMsg = STANDARD_SAVED_MESSAGES;
+    }
+    //Remove the first item, if the maximum is reached
+    if (savedMsg.count > maxSavedMsg) {
+        [savedMsg removeObjectAtIndex:0];
+    }
+    [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:savedMsg] forKey:key];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+}
+
 #pragma mark - ListDialog
 
 - (void)createChannelListDialog
@@ -506,6 +545,8 @@
     }
 
     [_conn open];
+        
+    
 }
 
 - (void)disconnect
@@ -1571,10 +1612,20 @@
 
 - (void)sendLine:(NSString*)str
 {
-    [_conn sendLine:str];
-
+   [_conn sendLine:str];
+    
+    //If the outgoing message is a private textmessage, save it
+    if ([str contains:@"PRIVMSG"]) {
+        IRCMessage *m = [[IRCMessage alloc] initWithLine:str];
+        [self saveMsg:m forChannel:m.params[0]];
+    }
+    
+    
+    
+    
     LOG(@">>> %@", str);
 }
+
 
 - (void)send:(NSString*)str, ...
 {
@@ -1602,6 +1653,7 @@
 
     [self sendLine:s];
 }
+
 
 #pragma mark - Find Channel
 
@@ -2359,12 +2411,16 @@
     if ([self checkIgnore:text nick:nick channel:target]) {
         return;
     }
+    
+    //Save it for restoring it after a restart
+    [self saveMsg:m forChannel:target];
 
+    
     if (target.isChannelName) {
         // channel
         IRCChannel* c = [self findChannel:target];
         BOOL keyword = [self printBoth:(c ?: (id)target) type:type nick:nick text:text identified:identified timestamp:m.timestamp];
-
+        
         if (type == LINE_TYPE_NOTICE) {
             [self notifyText:USER_NOTIFICATION_CHANNEL_NOTICE target:(c ?: (id)target) nick:nick text:text];
             [SoundPlayer play:[Preferences soundForEvent:USER_NOTIFICATION_CHANNEL_NOTICE]];
