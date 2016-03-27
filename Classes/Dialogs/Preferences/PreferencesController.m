@@ -207,7 +207,14 @@
 {
     static NSArray* ary;
     if (!ary) {
-        ary = [NSArray arrayWithObjects:@"-", @"Beep", @"Basso", @"Blow", @"Bottle", @"Frog", @"Funk", @"Glass", @"Hero", @"Morse", @"Ping", @"Pop", @"Purr", @"Sosumi", @"Submarine", @"Tink", nil];
+        NSMutableArray* arr = [NSMutableArray arrayWithObject:@"-"];
+        for (NSString *path in [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory,
+                                                                    NSAllDomainsMask, YES) objectEnumerator])
+            for (NSString *soundFile in [[NSFileManager defaultManager]
+                                         enumeratorAtPath:[path stringByAppendingPathComponent:@"Sounds"]])
+                if ([NSSound soundNamed:[soundFile stringByDeletingPathExtension]])
+                    [arr addObject:[soundFile stringByDeletingPathExtension]];
+        ary = [arr copy];
     }
     return ary;
 }
