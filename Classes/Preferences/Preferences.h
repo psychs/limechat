@@ -64,6 +64,7 @@ typedef enum {
 + (BOOL)keywordCurrentNick;
 + (KeywordMatchType)keywordMatchingMethod;
 + (BOOL)keywordWholeLine;
++ (BOOL)keywordNotice;
 
 + (NSString*)pasteCommand;
 + (void)setPasteCommand:(NSString*)value;

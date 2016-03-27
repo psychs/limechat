@@ -163,6 +163,12 @@ static NSMutableArray* excludeWords;
     return [ud boolForKey:@"Preferences.Keyword.whole_line"];
 }
 
++ (BOOL)keywordNotice
+{
+    NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+    return [ud boolForKey:@"Preferences.Keyword.notice"];
+}
+
 + (NSArray*)keywordWords
 {
     NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
@@ -811,6 +817,7 @@ static NSMutableArray* excludeWords;
     [d setBool:YES forKey:@"Preferences.Keyword.current_nick"];
     [d setInt:KEYWORD_MATCH_PARTIAL forKey:@"Preferences.Keyword.matching_method"];
     [d setBool:NO forKey:@"Preferences.Keyword.whole_line"];
+    [d setBool:YES forKey:@"Preferences.Keyword.notice"];
     [d setObject:@"privmsg" forKey:@"Preferences.General.paste_command"];
     [d setObject:@"plain text" forKey:@"Preferences.General.paste_syntax"];
     [d setObject:@"resource:Limelight" forKey:@"Preferences.Theme.name"];
