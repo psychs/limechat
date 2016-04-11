@@ -53,6 +53,7 @@ typedef enum {
 + (BOOL)logTranscript;
 + (MainWindowLayoutType)mainWindowLayout;
 + (BOOL)openBrowserInBackground;
++ (BOOL)hideWindowOnClose;
 + (BOOL)showInlineImages;
 + (BOOL)showJoinLeave;
 + (BOOL)showRename;
