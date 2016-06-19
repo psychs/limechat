@@ -83,7 +83,7 @@ static CFStringRef CFClientDescribeCopy(void* obj)
 {
     [self cancel];
 
-    NSString* url = [NSString stringWithFormat:@"http://api.twitter.com/1/users/profile_image?size=normal&screen_name=%@", [_screenName gtm_stringByEscapingForURLArgument]];
+    NSString* url = [NSString stringWithFormat:@"http://www.paper-glasses.com/api/twipi/%@/normal", [_screenName gtm_stringByEscapingForURLArgument]];
     NSURL* urlObj = [NSURL URLWithString:url];
     if (!urlObj) {
         if ([_delegate respondsToSelector:@selector(twitterImageURLClientDidReceiveBadURL:)]) {
