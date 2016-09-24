@@ -1,15 +1,25 @@
 # LimeChat
 
-LimeChat is an IRC client for Mac OS X.
+LimeChat is an IRC client for macOS (10.8 – 10.12).
+This fork is based on version Satoshi Nakagawa (@Psychs),
+original code can be found here http://github.com/psychs/limechat.
 
 * One window for multiple servers.
 * Rich keyboard shortcuts for your comfortable operations.
 * Fast and stable.
 
+**Current Build Status**
+
+[![Build Status](https://img.shields.io/travis/denji/LimeChat.svg?style=flat-square&branch=master)](https://travis-ci.org/denji/LimeChat)
+
+**Release Status**
+
+[![Latest Version](https://img.shields.io/github/release/denji/LimeChat.svg?style=flat-square)](https://github.com/denji/LimeChat/releases)
+[![Software License](https://img.shields.io/badge/license-GPL%20v2-blue.svg?style=flat-square)](/LICENSE.md)
+
 ## Author
 
-* Satoshi Nakagawa http://github.com/psychs
-* ##limechat on chat.freenode.net
+* Satoshi Nakagawa (http://github.com/psychs)
 
 ## Thanks To
 
@@ -40,4 +50,4 @@ LimeChat is an IRC client for Mac OS X.
 ## License
 
 LimeChat is copyrighted free software by Satoshi Nakagawa (psychs AT limechat DOT net).
-You can redistribute it and/or modify it under the terms of [the GPL version 2](https://github.com/psychs/limechat/blob/master/GPL.txt).
+You can redistribute it and/or modify it under the terms of [the GPL version 2](/LICENSE.md).
