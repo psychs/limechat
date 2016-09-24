@@ -1715,6 +1715,7 @@
 				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = Others/Normal/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.limechat.${LIMECHAT_BUNDLE_IDENTIFIER}";
 				PROVISIONING_PROFILE = "";
 			};
@@ -1726,6 +1727,7 @@
 				CODE_SIGN_IDENTITY = "Developer ID Application: Satoshi Nakagawa";
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = Others/Normal/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.limechat.${LIMECHAT_BUNDLE_IDENTIFIER}";
 				PROVISIONING_PROFILE = "";
 			};
