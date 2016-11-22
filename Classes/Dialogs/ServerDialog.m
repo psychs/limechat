@@ -585,12 +585,14 @@
             [servers addObject:@"irc.cre.ne.jp (cre)"];
             [servers addObject:@"-"];
             [servers addObject:@"chat.freenode.net (freenode)"];
+            [servers addObject:@"irc.ponychat.net (PonyChat)"];
             [servers addObject:@"eu.undernet.org (Undernet)"];
             [servers addObject:@"irc.quakenet.org (QuakeNet)"];
             [servers addObject:@"chat1.ustream.tv (Ustream)"];
         }
         else {
             [servers addObject:@"chat.freenode.net (freenode)"];
+            [servers addObject:@"irc.ponychat.net (PonyChat)"];
             [servers addObject:@"irc.efnet.net (EFnet)"];
             [servers addObject:@"us.undernet.org (Undernet)"];
             [servers addObject:@"eu.undernet.org (Undernet)"];
