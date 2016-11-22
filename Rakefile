@@ -16,7 +16,7 @@ TEMPLATES_PATH = WEB_PATH + 'templates'
 APPCAST_TEMPLATE_PATH = TEMPLATES_PATH + 'appcast.rxml'
 APPCAST_PATH = WEB_PATH + 'appcast.xml'
 TMP_PATH = Pathname.new("/tmp/#{APP_SHORT_NAME}_build_image")
-
+BUILT_APP_PATH = 'build/Release/LimeChat.app'
 
 task :default => :build
 
