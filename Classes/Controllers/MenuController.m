@@ -738,8 +738,13 @@
 
     NSString* message = [NSString stringWithFormat:@"Delete %@ ?", u.name];
 
-    NSInteger result = NSRunAlertPanel(message, @"", @"Delete", @"Cancel", nil);
-    if (result != NSAlertDefaultReturn) {
+    NSAlert *alert = [[NSAlert alloc] init];
+    alert.messageText = message;
+    alert.informativeText = @"";
+    [alert addButtonWithTitle:@"Delete"];
+    [alert addButtonWithTitle:@"Cancel"];
+    NSModalResponse result = [alert runModal];
+    if (result != NSAlertFirstButtonReturn) {
         return;
     }
 
@@ -1164,7 +1169,7 @@
 
 - (void)fileSendPanelDidEnd:(NSOpenPanel *)panel returnCode:(int)returnCode contextInfo:(void  *)contextInfo
 {
-    if (returnCode == NSOKButton) {
+    if (returnCode == NSModalResponseOK) {
         NSArray* files = [panel URLs];
 
         for (IRCUser* m in _fileSendTargets) {

@@ -150,7 +150,7 @@
             // check date
             NSCalendar* cal = [NSCalendar currentCalendar];
             NSDate* now = [NSDate date];
-            NSDateComponents* comp = [cal components:NSDayCalendarUnit|NSMonthCalendarUnit|NSYearCalendarUnit fromDate:now];
+            NSDateComponents* comp = [cal components:NSCalendarUnitDay|NSCalendarUnitMonth|NSCalendarUnitYear fromDate:now];
             if (_logDate) {
                 if (![_logDate isEqual:comp]) {
                     _logDate = comp;

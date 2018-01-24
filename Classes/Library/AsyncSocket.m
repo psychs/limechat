@@ -1464,7 +1464,6 @@ static void MyCFWriteStreamCallback(CFWriteStreamRef stream, CFStreamEventType t
 {
 	NSDictionary* settings = [NSDictionary dictionaryWithObjectsAndKeys:
 								   (NSString *)kCFStreamSocketSecurityLevelNegotiatedSSL, kCFStreamSSLLevel,
-								   kCFBooleanTrue, kCFStreamSSLAllowsAnyRoot,
 								   kCFBooleanFalse, kCFStreamSSLValidatesCertificateChain,
 								   kCFNull, kCFStreamSSLPeerName,
 								   kCFBooleanFalse, kCFStreamSSLIsServer,
