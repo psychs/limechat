@@ -180,10 +180,6 @@
 		786E46EC187F1D3A00CF139C /* Keychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 786E46EA187F1D3A00CF139C /* Keychain.m */; };
 		786E46EF187F1DF000CF139C /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 786E46ED187F1DBB00CF139C /* Security.framework */; };
 		786E46F0187F1DFF00CF139C /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 786E46ED187F1DBB00CF139C /* Security.framework */; };
-		787F49421589809F003AADE2 /* TwitterAvatarURLManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 787F49411589809F003AADE2 /* TwitterAvatarURLManager.m */; };
-		787F49431589809F003AADE2 /* TwitterAvatarURLManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 787F49411589809F003AADE2 /* TwitterAvatarURLManager.m */; };
-		787F494715898166003AADE2 /* TwitterImageURLClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 787F494615898166003AADE2 /* TwitterImageURLClient.m */; };
-		787F494815898166003AADE2 /* TwitterImageURLClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 787F494615898166003AADE2 /* TwitterImageURLClient.m */; };
 		78835406109FEA7F00CD2FFF /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78835405109FEA7F00CD2FFF /* SystemConfiguration.framework */; };
 		789ED3F31193EF4400CFC0B2 /* IgnoreItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 789ED3F21193EF4400CFC0B2 /* IgnoreItem.m */; };
 		789ED4841193F9EB00CFC0B2 /* IgnoreItemSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 789ED4831193F9EB00CFC0B2 /* IgnoreItemSheet.m */; };
@@ -397,10 +393,6 @@
 		786E46E9187F1D3A00CF139C /* Keychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Keychain.h; path = Classes/Library/Keychain.h; sourceTree = SOURCE_ROOT; };
 		786E46EA187F1D3A00CF139C /* Keychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Keychain.m; path = Classes/Library/Keychain.m; sourceTree = SOURCE_ROOT; };
 		786E46ED187F1DBB00CF139C /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		787F49401589809F003AADE2 /* TwitterAvatarURLManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterAvatarURLManager.h; sourceTree = "<group>"; };
-		787F49411589809F003AADE2 /* TwitterAvatarURLManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwitterAvatarURLManager.m; sourceTree = "<group>"; };
-		787F494515898166003AADE2 /* TwitterImageURLClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterImageURLClient.h; sourceTree = "<group>"; };
-		787F494615898166003AADE2 /* TwitterImageURLClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwitterImageURLClient.m; sourceTree = "<group>"; };
 		787FD46C0BFE960100F2F22D /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		78835405109FEA7F00CD2FFF /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = /System/Library/Frameworks/SystemConfiguration.framework; sourceTree = "<absolute>"; };
 		788D56F00BB6872B00DDBF69 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
@@ -791,8 +783,6 @@
 				780844D1134CD34B003BB84C /* ImageDownloadManager.m */,
 				78A8C0C811737F660044E7A1 /* NickCompletinStatus.h */,
 				78A8C0C911737F660044E7A1 /* NickCompletinStatus.m */,
-				787F49401589809F003AADE2 /* TwitterAvatarURLManager.h */,
-				787F49411589809F003AADE2 /* TwitterAvatarURLManager.m */,
 			);
 			name = Controllers;
 			path = Classes/Controllers;
@@ -957,8 +947,6 @@
 				78A8C13411737F660044E7A1 /* GistClient.m */,
 				780844F4134CD45E003BB84C /* ImageSizeCheckClient.h */,
 				780844F5134CD45E003BB84C /* ImageSizeCheckClient.m */,
-				787F494515898166003AADE2 /* TwitterImageURLClient.h */,
-				787F494615898166003AADE2 /* TwitterImageURLClient.m */,
 				78A8C13511737F660044E7A1 /* HostResolver.h */,
 				78A8C13611737F660044E7A1 /* HostResolver.m */,
 				78A8C13711737F660044E7A1 /* HotKeyManager.h */,
@@ -1409,8 +1397,6 @@
 				782DA8F112DB5A3800C07861 /* IgnoreItemSheet.m in Sources */,
 				780844D3134CD34B003BB84C /* ImageDownloadManager.m in Sources */,
 				780844F7134CD45E003BB84C /* ImageSizeCheckClient.m in Sources */,
-				787F49431589809F003AADE2 /* TwitterAvatarURLManager.m in Sources */,
-				787F494815898166003AADE2 /* TwitterImageURLClient.m in Sources */,
 				78AB172815C33374008CD998 /* NumericTextField.m in Sources */,
 				78A3004F15C38FB2003263AA /* UserNotificationController.m in Sources */,
 			);
@@ -1534,8 +1520,6 @@
 				789ED4841193F9EB00CFC0B2 /* IgnoreItemSheet.m in Sources */,
 				780844D2134CD34B003BB84C /* ImageDownloadManager.m in Sources */,
 				780844F6134CD45E003BB84C /* ImageSizeCheckClient.m in Sources */,
-				787F49421589809F003AADE2 /* TwitterAvatarURLManager.m in Sources */,
-				787F494715898166003AADE2 /* TwitterImageURLClient.m in Sources */,
 				78AB172715C33374008CD998 /* NumericTextField.m in Sources */,
 				78A3004E15C38FB2003263AA /* UserNotificationController.m in Sources */,
 				2735CC1D17C1B6EC00E0AC11 /* NSDateHelper.m in Sources */,

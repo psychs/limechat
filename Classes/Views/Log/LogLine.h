@@ -48,7 +48,6 @@ typedef enum {
 @property (nonatomic) int nickColorNumber;
 @property (nonatomic) NSArray* keywords;
 @property (nonatomic) NSArray* excludeWords;
-@property (nonatomic) BOOL useAvatar;
 
 + (NSString*)lineTypeString:(LogLineType)type;
 + (NSString*)memberTypeString:(LogMemberType)type;

@@ -11,7 +11,6 @@
 #import "NSLocaleHelper.h"
 #import "ImageURLParser.h"
 #import "ImageDownloadManager.h"
-#import "TwitterAvatarURLManager.h"
 #import "LCFSystemInfo.h"
 
 
@@ -51,7 +50,6 @@
     NSString* _html;
     BOOL _scrollBottom;
     int _scrollTop;
-    NSMutableSet *_fetchingAvatarScreenNames;
 }
 
 - (id)init
@@ -369,32 +367,6 @@
     }
 }
 
-- (void)replaceAvatarPlaceholderWithScreenName:(NSString*)screenName imageURL:(NSString*)imageURL
-{
-    if (!_loaded || !screenName.length || !imageURL.length) return;
-
-    DOMHTMLDocument* doc = (DOMHTMLDocument*)[[_view mainFrame] DOMDocument];
-    if (!doc) return;
-
-    NSString* placeholderClassName = [NSString stringWithFormat:@"placeholder_%@", tagEscape(screenName)];
-    DOMNodeList* placeholderNodes = (DOMNodeList*)[doc getElementsByClassName:placeholderClassName];
-    if (!placeholderNodes) {
-        return;
-    }
-
-    int placeholderCount = placeholderNodes.length;
-    for (int i=0; i<placeholderCount; i++) {
-        DOMElement* placeholderElement = (DOMElement*)[placeholderNodes item:i];
-        DOMElement* parent = [placeholderElement parentElement];
-
-        DOMHTMLElement* imageTag = (DOMHTMLElement*)[doc createElement:@"img"];
-        [imageTag setAttribute:@"class" value:@"avatar"];
-        [imageTag setAttribute:@"src" value:imageURL];
-
-        [parent replaceChild:imageTag oldChild:placeholderElement];
-    }
-}
-
 - (void)limitNumberOfLines
 {
     _needsLimitNumberOfLines = NO;
@@ -514,30 +486,6 @@
     if (line.time) [s appendFormat:@"<span class=\"time\">%@</span>", logEscape(line.time)];
     if (line.place) [s appendFormat:@"<span class=\"place\">%@</span>", logEscape(line.place)];
     if (line.nick) {
-        if (line.useAvatar && line.nickInfo) {
-            NSString* screenName = line.nickInfo;
-            TwitterAvatarURLManager* avatarManager = [TwitterAvatarURLManager instance];
-            NSString* avatarImageURL = [avatarManager imageURLForTwitterScreenName:screenName];
-            if (!avatarImageURL) {
-                [avatarManager fetchImageURLForTwitterScreenName:screenName];
-                if (!_fetchingAvatarScreenNames) {
-                    _fetchingAvatarScreenNames = [NSMutableSet new];
-                }
-                if (![_fetchingAvatarScreenNames containsObject:screenName]) {
-                    [_fetchingAvatarScreenNames addObject:screenName];
-                    NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
-                    [nc addObserver:self selector:@selector(twitterAvatarURLManagerDidGetImageURL:) name:TwitterAvatarURLManagerDidGetImageURLNotification object:screenName];
-                }
-            }
-
-            NSString* escapedNick = tagEscape(line.nickInfo);
-            if (avatarImageURL) {
-                [s appendFormat:@"<img class=\"avatar\" src=\"%@\"/>", tagEscape(avatarImageURL)];
-            }
-            else {
-                [s appendFormat:@"<span class=\"avatar_placeholder placeholder_%@\"/></span>", escapedNick];
-            }
-        }
         [s appendFormat:@"<span class=\"sender\" _type=\"%@\"", [LogLine memberTypeString:line.memberType]];
         if (!_console) [s appendString:@" oncontextmenu=\"on_nick()\""];
         [s appendFormat:@" identified=\"%@\"", line.identified ? @"true" : @"false"];
@@ -1074,24 +1022,6 @@
 - (NSColor*)markedScrollerColor:(MarkedScroller*)sender
 {
     return [[_theme other] logScrollerMarkColor];
-}
-
-#pragma mark - TwitterAvatarImageURLManager Notifications
-
-- (void)twitterAvatarURLManagerDidGetImageURL:(NSNotification*)note
-{
-    NSString* screenName = [note object];
-    if (screenName) {
-        NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
-        [nc removeObserver:self name:TwitterAvatarURLManagerDidGetImageURLNotification object:screenName];
-
-        [_fetchingAvatarScreenNames removeObject:screenName];
-
-        NSString* imageURL = [[TwitterAvatarURLManager instance] imageURLForTwitterScreenName:screenName];
-        if (imageURL) {
-            [self replaceAvatarPlaceholderWithScreenName:screenName imageURL:imageURL];
-        }
-    }
 }
 
 @end
