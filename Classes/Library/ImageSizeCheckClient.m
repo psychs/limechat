@@ -9,7 +9,8 @@
 
 @implementation ImageSizeCheckClient
 {
-    NSURLConnection* _conn;
+    NSURLSession *_session;
+    NSURLSessionTask *_task;
     NSHTTPURLResponse* _response;
 }
 
@@ -28,8 +29,8 @@
 
 - (void)cancel
 {
-    [_conn cancel];
-    _conn = nil;
+    [_task cancel];
+    _task = nil;
     _response = nil;
 }
 
@@ -37,51 +38,47 @@
 {
     [self cancel];
 
-    NSURL* u = [NSURL URLWithString:_url];
-    NSMutableURLRequest* req = [NSMutableURLRequest requestWithURL:u cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:IMAGE_SIZE_CHECK_TIMEOUT];
-    [req setHTTPMethod:@"HEAD"];
-
-    if ([[u host] hasSuffix:@"pixiv.net"]) {
-        [req setValue:@"http://www.pixiv.net" forHTTPHeaderField:@"Referer"];
+    if (!_session) {
+        _session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration ephemeralSessionConfiguration]];
     }
 
-    _conn = [[NSURLConnection alloc] initWithRequest:req delegate:self];
+    NSURL *url = [NSURL URLWithString:_url];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:IMAGE_SIZE_CHECK_TIMEOUT];
+    [request setHTTPMethod:@"HEAD"];
+
+    if ([url.host hasSuffix:@"pixiv.net"]) {
+        [request setValue:@"http://www.pixiv.net" forHTTPHeaderField:@"Referer"];
+    }
+
+    __weak typeof(self) weakSelf = self;
+    _task = [_session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            __strong typeof(self) strongSelf = weakSelf;
+            if (strongSelf) {
+                if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
+                    [strongSelf handleResponse:(NSHTTPURLResponse *)response error:error];
+                } else {
+                    [strongSelf handleResponse:nil error:error];
+                }
+            }
+        });
+    }];
+    [_task resume];
 }
 
-#pragma mark - NSURLConnection Delegate
-
-- (NSCachedURLResponse *)connection:(NSURLConnection *)connection willCacheResponse:(NSCachedURLResponse *)cachedResponse
+- (void)handleResponse:(NSHTTPURLResponse *)response error:(NSError *)error
 {
-    return nil;
-}
+    _response = response;
 
-- (void)connection:(NSURLConnection *)sender didReceiveResponse:(NSHTTPURLResponse *)aResponse
-{
-    if (_conn != sender) return;
-
-    _response = aResponse;
-}
-
-- (void)connectionDidFinishLoading:(NSURLConnection *)sender
-{
-    if (_conn != sender) return;
-
-	/* If a user clicks a link that redirects to a data image, then 
-	 this value will not be NSHTTPURLResponse which results in a crash
-	 when trying to make a call to -allHeaderFields */
-	if ([_response isKindOfClass:[NSHTTPURLResponse class]] == NO) {
-		return;
-	}
-
+    NSString *contentType;
     long long contentLength = 0;
-    NSString* contentType;
-    int statusCode = [_response statusCode];
+    int statusCode = _response.statusCode;
 
     if (200 <= statusCode && statusCode < 300) {
-        NSDictionary* header = [_response allHeaderFields];
-        NSNumber* contentLengthNum = [header objectForKey:@"Content-Length"];
-        if ([contentLengthNum respondsToSelector:@selector(longLongValue)]) {
-            contentLength = [contentLengthNum longLongValue];
+        NSDictionary *header = _response.allHeaderFields;
+        NSNumber *contentLengthNumber = [header objectForKey:@"Content-Length"];
+        if ([contentLengthNumber respondsToSelector:@selector(longLongValue)]) {
+            contentLength = contentLengthNumber.longLongValue;
         }
         contentType = [header objectForKey:@"Content-Type"];
     }
@@ -90,22 +87,10 @@
         if ([_delegate respondsToSelector:@selector(imageSizeCheckClient:didReceiveContentLength:andType:)]) {
             [_delegate imageSizeCheckClient:self didReceiveContentLength:contentLength andType:contentType];
         }
-    }
-    else {
+    } else {
         if ([_delegate respondsToSelector:@selector(imageSizeCheckClient:didFailWithError:statusCode:)]) {
             [_delegate imageSizeCheckClient:self didFailWithError:nil statusCode:statusCode];
         }
-    }
-}
-
-- (void)connection:(NSURLConnection*)sender didFailWithError:(NSError*)error
-{
-    if (_conn != sender) return;
-
-    [self cancel];
-
-    if ([_delegate respondsToSelector:@selector(imageSizeCheckClient:didFailWithError:statusCode:)]) {
-        [_delegate imageSizeCheckClient:self didFailWithError:error statusCode:0];
     }
 }
 
