@@ -6,43 +6,46 @@
 
 @implementation HostResolver
 
-- (id)initWithDelegate:(id)aDelegate
++ (dispatch_queue_t)sharedQueue
+{
+    static dispatch_queue_t sharedQueue;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedQueue = dispatch_queue_create("net.limechat.LimeChat.HostResolver", DISPATCH_QUEUE_CONCURRENT);
+    });
+    return sharedQueue;
+}
+
+- (instancetype)initWithDelegate:(id<HostResolverDelegate>)delegate
 {
     self = [super init];
     if (self) {
-        _delegate = aDelegate;
+        _delegate = delegate;
     }
     return self;
 }
 
-- (void)resolve:(NSString*)hostname
+- (void)resolve:(NSString *)hostname
 {
-    if (hostname.length) {
-        [NSThread detachNewThreadSelector:@selector(resolveInternal:) toTarget:self withObject:hostname];
-    }
+    NSString *safeHostname = [hostname copy];
+
+    dispatch_async([[self class] sharedQueue], ^{
+        NSHost *host = [NSHost hostWithName:safeHostname];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self hostResolvedWithHost:host hostname:safeHostname];
+        });
+    });
 }
 
-- (void)resolveInternal:(NSString*)hostname
-{
-    @autoreleasepool {
-        NSHost* host = [NSHost hostWithName:hostname];
-        NSArray* info = [NSArray arrayWithObjects:hostname, host, nil];
-        [self performSelectorOnMainThread:@selector(hostResolved:) withObject:info waitUntilDone:YES];
-    }
-}
-
-- (void)hostResolved:(NSArray*)info
+- (void)hostResolvedWithHost:(NSHost *)host hostname:(NSString *)hostname
 {
     if (!_delegate) return;
 
-    if ([info count] == 2) {
-        NSHost* host = [info objectAtIndex:1];
+    if (host) {
         if ([_delegate respondsToSelector:@selector(hostResolver:didResolve:)]) {
             [_delegate hostResolver:self didResolve:host];
         }
-    }
-    else {
-        NSString* hostname = [info objectAtIndex:0];
+    } else {
         if ([_delegate respondsToSelector:@selector(hostResolver:didNotResolve:)]) {
             [_delegate hostResolver:self didNotResolve:hostname];
         }

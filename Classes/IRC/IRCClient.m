@@ -26,6 +26,8 @@
 
 #define CTCP_MIN_INTERVAL   5
 
+@interface IRCClient () <HostResolverDelegate>
+@end
 
 @implementation IRCClient
 {
