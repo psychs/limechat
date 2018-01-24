@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 48;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -29,7 +29,6 @@
 		781A35D0180B8A8D009E88FC /* LCFSystemInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 781A35CF180B8A8D009E88FC /* LCFSystemInfo.m */; };
 		78287EB70D742DBD008D5656 /* Themes in CopyFiles */ = {isa = PBXBuildFile; fileRef = 78287EA90D742DAA008D5656 /* Themes */; };
 		782DA85A12DB5A3800C07861 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 78AD78E20C61B8F8001E77F4 /* Localizable.strings */; };
-		782DA86012DB5A3800C07861 /* AutoOpDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78347EB91158D4B00073E2F0 /* AutoOpDialog.xib */; };
 		782DA86112DB5A3800C07861 /* ChannelDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78347EBB1158D4B00073E2F0 /* ChannelDialog.xib */; };
 		782DA86212DB5A3800C07861 /* TopicSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78347EBD1158D4B00073E2F0 /* TopicSheet.xib */; };
 		782DA86312DB5A3800C07861 /* DCCDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78347EBF1158D4B00073E2F0 /* DCCDialog.xib */; };
@@ -163,7 +162,6 @@
 		782DA8F812DB5A3800C07861 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78835405109FEA7F00CD2FFF /* SystemConfiguration.framework */; };
 		782DA8FA12DB5A3800C07861 /* Themes in CopyFiles */ = {isa = PBXBuildFile; fileRef = 78287EA90D742DAA008D5656 /* Themes */; };
 		782FCF891173824C007BE697 /* LimeChatApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 782FCF881173824C007BE697 /* LimeChatApplication.m */; };
-		78347ED31158D4B00073E2F0 /* AutoOpDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78347EB91158D4B00073E2F0 /* AutoOpDialog.xib */; };
 		78347ED41158D4B00073E2F0 /* ChannelDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78347EBB1158D4B00073E2F0 /* ChannelDialog.xib */; };
 		78347ED51158D4B00073E2F0 /* TopicSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78347EBD1158D4B00073E2F0 /* TopicSheet.xib */; };
 		78347ED61158D4B00073E2F0 /* DCCDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78347EBF1158D4B00073E2F0 /* DCCDialog.xib */; };
@@ -380,7 +378,6 @@
 		782DA90212DB5A3800C07861 /* Info-AppStore.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-AppStore.plist"; sourceTree = "<group>"; };
 		782FCF871173824C007BE697 /* LimeChatApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LimeChatApplication.h; sourceTree = "<group>"; };
 		782FCF881173824C007BE697 /* LimeChatApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LimeChatApplication.m; sourceTree = "<group>"; };
-		78347EBA1158D4B00073E2F0 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/AutoOpDialog.xib; sourceTree = "<group>"; };
 		78347EBC1158D4B00073E2F0 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/ChannelDialog.xib; sourceTree = "<group>"; };
 		78347EBE1158D4B00073E2F0 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/TopicSheet.xib; sourceTree = "<group>"; };
 		78347EC01158D4B00073E2F0 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/DCCDialog.xib; sourceTree = "<group>"; };
@@ -703,7 +700,6 @@
 				785B006815C411D7009A2E36 /* AppStore */,
 				784BBE8F1085BC950080898B /* images */,
 				78F786AD15C3F30D00B7937A /* LimeChat.entitlements */,
-				78347EB91158D4B00073E2F0 /* AutoOpDialog.xib */,
 				78347EBB1158D4B00073E2F0 /* ChannelDialog.xib */,
 				78347EBF1158D4B00073E2F0 /* DCCDialog.xib */,
 				789ED4B11193FA9E00CFC0B2 /* IgnoreItemSheet.xib */,
@@ -1197,7 +1193,7 @@
 				LastUpgradeCheck = 0500;
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "LimeChat" */;
-			compatibilityVersion = "Xcode 3.2";
+			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
@@ -1222,7 +1218,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				782DA85A12DB5A3800C07861 /* Localizable.strings in Resources */,
-				782DA86012DB5A3800C07861 /* AutoOpDialog.xib in Resources */,
 				782DA86112DB5A3800C07861 /* ChannelDialog.xib in Resources */,
 				782DA86212DB5A3800C07861 /* TopicSheet.xib in Resources */,
 				782DA86312DB5A3800C07861 /* DCCDialog.xib in Resources */,
@@ -1252,7 +1247,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				78AD78E40C61B8F8001E77F4 /* Localizable.strings in Resources */,
-				78347ED31158D4B00073E2F0 /* AutoOpDialog.xib in Resources */,
 				78347ED41158D4B00073E2F0 /* ChannelDialog.xib in Resources */,
 				78347ED51158D4B00073E2F0 /* TopicSheet.xib in Resources */,
 				78347ED61158D4B00073E2F0 /* DCCDialog.xib in Resources */,
@@ -1551,14 +1545,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		78347EB91158D4B00073E2F0 /* AutoOpDialog.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				78347EBA1158D4B00073E2F0 /* English */,
-			);
-			name = AutoOpDialog.xib;
-			sourceTree = "<group>";
-		};
 		78347EBB1158D4B00073E2F0 /* ChannelDialog.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1713,7 +1699,6 @@
 				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = Others/Normal/Info.plist;
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
@@ -1724,7 +1709,6 @@
 				CODE_SIGN_IDENTITY = "Developer ID Application: Satoshi Nakagawa";
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = Others/Normal/Info.plist;
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
@@ -1752,7 +1736,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LIMECHAT_BUNDLE_IDENTIFIER = "LimeChat-debug";
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = LimeChat;
 				SDKROOT = macosx;
@@ -1781,7 +1765,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LIMECHAT_BUNDLE_IDENTIFIER = LimeChat;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_NAME = LimeChat;
 				SDKROOT = macosx;
 			};

@@ -1,8 +1,10 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13B42" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13771" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
-        <deployment version="1070" defaultVersion="1080" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4514"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13771"/>
+        <capability name="box content view" minToolsVersion="7.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="LimeChatApplication">
@@ -11,9 +13,9 @@
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
-        <customObject id="-3" userLabel="Application"/>
-        <window title="LimeChat" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" wantsToBeColor="NO" visibleAtLaunch="NO" animationBehavior="default" id="21" userLabel="Window" customClass="MainWindow">
-            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" unifiedTitleAndToolbar="YES"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <window title="LimeChat" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="21" userLabel="Window" customClass="MainWindow">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="605" y="249" width="632" height="501"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1418"/>
@@ -26,15 +28,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="632" height="501"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <box title="Box" boxType="oldStyle" borderType="none" titlePosition="noTitle" id="514">
+                            <box boxType="oldStyle" borderType="none" title="Box" titlePosition="noTitle" id="514">
                                 <rect key="frame" x="0.0" y="0.0" width="176" height="501"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <view key="contentView">
+                                <view key="contentView" id="kpr-1r-Tgf">
                                     <rect key="frame" x="0.0" y="0.0" width="176" height="501"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 </view>
-                                <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                                <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </box>
                             <splitView vertical="YES" id="533" customClass="ThinSplitView">
                                 <rect key="frame" x="185" y="0.0" width="447" height="501"/>
@@ -44,22 +44,20 @@
                                         <rect key="frame" x="0.0" y="0.0" width="261" height="501"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <subviews>
-                                            <box title="Title" boxType="oldStyle" borderType="none" titlePosition="noTitle" id="233" customClass="ChatBox">
+                                            <box boxType="oldStyle" borderType="none" title="Title" titlePosition="noTitle" id="233" customClass="ChatBox">
                                                 <rect key="frame" x="0.0" y="0.0" width="261" height="289"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                <view key="contentView">
+                                                <view key="contentView" id="GKI-A8-mXL">
                                                     <rect key="frame" x="0.0" y="0.0" width="261" height="289"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
-                                                        <box title="Box" boxType="oldStyle" borderType="none" titlePosition="noTitle" id="218">
+                                                        <box boxType="oldStyle" borderType="none" title="Box" titlePosition="noTitle" id="218">
                                                             <rect key="frame" x="42" y="113" width="180" height="144"/>
                                                             <autoresizingMask key="autoresizingMask"/>
-                                                            <view key="contentView">
+                                                            <view key="contentView" id="wgV-h9-0IU">
                                                                 <rect key="frame" x="0.0" y="0.0" width="180" height="144"/>
                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             </view>
-                                                            <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                                                            <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                         </box>
                                                         <textField verticalHuggingPriority="750" id="222" customClass="InputTextField">
                                                             <rect key="frame" x="28" y="63" width="210" height="22"/>
@@ -77,19 +75,15 @@
                                                         </textField>
                                                     </subviews>
                                                 </view>
-                                                <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                                                <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <font key="titleFont" size="11" name="LucidaGrande"/>
                                             </box>
-                                            <box title="Box" boxType="oldStyle" borderType="none" titlePosition="noTitle" id="229">
+                                            <box boxType="oldStyle" borderType="none" title="Box" titlePosition="noTitle" id="229">
                                                 <rect key="frame" x="0.0" y="298" width="261" height="203"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                <view key="contentView">
+                                                <view key="contentView" id="WWK-l6-GNS">
                                                     <rect key="frame" x="0.0" y="0.0" width="261" height="203"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 </view>
-                                                <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                                                <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             </box>
                                         </subviews>
                                         <holdingPriorities>
@@ -134,7 +128,6 @@
                                                             </connections>
                                                         </tableView>
                                                     </subviews>
-                                                    <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 </clipView>
                                                 <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="994">
                                                     <rect key="frame" x="-100" y="-100" width="210" height="15"/>
@@ -145,10 +138,10 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </scroller>
                                             </scrollView>
-                                            <box title="Box" boxType="oldStyle" borderType="none" titlePosition="noTitle" id="531">
+                                            <box boxType="oldStyle" borderType="none" title="Box" titlePosition="noTitle" id="531">
                                                 <rect key="frame" x="0.0" y="337" width="177" height="164"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                <view key="contentView">
+                                                <view key="contentView" id="Eh8-Ur-Wz6">
                                                     <rect key="frame" x="0.0" y="0.0" width="177" height="164"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
@@ -195,8 +188,6 @@
                                                         </scrollView>
                                                     </subviews>
                                                 </view>
-                                                <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                                                <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             </box>
                                         </subviews>
                                         <holdingPriorities>
