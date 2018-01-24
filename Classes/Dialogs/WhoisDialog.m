@@ -18,7 +18,7 @@ static int windowPlace;
 {
     self = [super init];
     if (self) {
-        [NSBundle loadNibNamed:@"WhoisDialog" owner:self];
+        [[NSBundle mainBundle] loadNibNamed:@"WhoisDialog" owner:self topLevelObjects:nil];
     }
     return self;
 }

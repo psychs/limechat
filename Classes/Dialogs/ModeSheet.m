@@ -10,7 +10,7 @@
 {
     self = [super init];
     if (self) {
-        [NSBundle loadNibNamed:@"ModeSheet" owner:self];
+        [[NSBundle mainBundle] loadNibNamed:@"ModeSheet" owner:self topLevelObjects:nil];
     }
     return self;
 }

@@ -24,7 +24,7 @@
 {
     self = [super init];
     if (self) {
-        [NSBundle loadNibNamed:@"ServerDialog" owner:self];
+        [[NSBundle mainBundle] loadNibNamed:@"ServerDialog" owner:self topLevelObjects:nil];
 
         NSArray* servers = [[self class] availableServers];
         for (NSString* s in servers) {

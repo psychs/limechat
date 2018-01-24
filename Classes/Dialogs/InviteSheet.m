@@ -10,7 +10,7 @@
 {
     self = [super init];
     if (self) {
-        [NSBundle loadNibNamed:@"InviteSheet" owner:self];
+        [[NSBundle mainBundle] loadNibNamed:@"InviteSheet" owner:self topLevelObjects:nil];
     }
     return self;
 }

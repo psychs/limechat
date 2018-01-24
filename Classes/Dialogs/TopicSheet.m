@@ -10,7 +10,7 @@
 {
     self = [super init];
     if (self) {
-        [NSBundle loadNibNamed:@"TopicSheet" owner:self];
+        [[NSBundle mainBundle] loadNibNamed:@"TopicSheet" owner:self topLevelObjects:nil];
     }
     return self;
 }

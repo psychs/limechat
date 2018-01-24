@@ -47,7 +47,7 @@
 {
     if (!_loaded) {
         _loaded = YES;
-        [NSBundle loadNibNamed:@"DCCDialog" owner:self];
+        [[NSBundle mainBundle] loadNibNamed:@"DCCDialog" owner:self topLevelObjects:nil];
         [_splitter setFixedViewIndex:1];
 
         DCCFileTransferCell* senderCell = [DCCFileTransferCell new];

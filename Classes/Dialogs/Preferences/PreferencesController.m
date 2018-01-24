@@ -27,7 +27,7 @@
 {
     self = [super init];
     if (self) {
-        [NSBundle loadNibNamed:@"Preferences" owner:self];
+        [[NSBundle mainBundle] loadNibNamed:@"Preferences" owner:self topLevelObjects:nil];
     }
     return self;
 }

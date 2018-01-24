@@ -13,7 +13,7 @@
 {
     self = [super init];
     if (self) {
-        [NSBundle loadNibNamed:@"ChannelDialog" owner:self];
+        [[NSBundle mainBundle] loadNibNamed:@"ChannelDialog" owner:self topLevelObjects:nil];
     }
     return self;
 }

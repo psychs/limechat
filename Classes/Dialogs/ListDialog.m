@@ -16,7 +16,7 @@
 {
     self = [super init];
     if (self) {
-        [NSBundle loadNibNamed:@"ListDialog" owner:self];
+        [[NSBundle mainBundle] loadNibNamed:@"ListDialog" owner:self topLevelObjects:nil];
 
         _list = [NSMutableArray new];
         _sortKey = 1;
