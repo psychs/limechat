@@ -7,30 +7,29 @@
 @implementation DialogWindow
 {
     BOOL _isSheet;
+    NSWindow *_ownerWindow;
 }
 
 - (void)startSheetModalForWindow:(NSWindow *)parentWindow
 {
     _isSheet = YES;
-    [NSApp beginSheet:self modalForWindow:parentWindow modalDelegate:self didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:) contextInfo:nil];
+    _ownerWindow = parentWindow;
+    [_ownerWindow beginSheet:self completionHandler:^(NSModalResponse returnCode) {
+        [self close];
+    }];
 }
 
 - (void)endSheet
 {
-    [NSApp endSheet:self];
-}
-
-- (void)sheetDidEnd:(NSWindow*)sender returnCode:(NSInteger)returnCode contextInfo:(void*)contextInfo
-{
-    [self close];
+    [_ownerWindow endSheet:self];
+    _ownerWindow = nil;
 }
 
 - (void)closeWindowOrSheet
 {
     if (_isSheet) {
         [self endSheet];
-    }
-    else {
+    } else {
         [self close];
     }
 }
