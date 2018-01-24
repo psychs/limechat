@@ -67,7 +67,7 @@
     _rootSplitter.fixedViewIndex = 1;
     _logSplitter.fixedViewIndex = 1;
     _infoSplitter.fixedViewIndex = 1;
-    _treeSplitter.hidden = YES;
+    _treeSplitter.splitterHidden = YES;
 
     _fieldEditor = [[FieldEditorTextView alloc] initWithFrame:NSZeroRect];
     [_fieldEditor setFieldEditor:YES];
@@ -392,18 +392,18 @@
     _threeColumns = value;
 
     if (_threeColumns) {
-        _infoSplitter.hidden = YES;
+        _infoSplitter.splitterHidden = YES;
         _infoSplitter.inverted = YES;
         [_leftTreeBase addSubview:_treeScrollView];
-        _treeSplitter.hidden = NO;
+        _treeSplitter.splitterHidden = NO;
         if (_treeSplitter.position < 1) _treeSplitter.position = 120;
         _treeScrollView.frame = _leftTreeBase.bounds;
     }
     else {
-        _treeSplitter.hidden = YES;
+        _treeSplitter.splitterHidden = YES;
         [_rightTreeBase addSubview:_treeScrollView];
         _infoSplitter.inverted = NO;
-        _infoSplitter.hidden = NO;
+        _infoSplitter.splitterHidden = NO;
         if (_infoSplitter.position < 1) _infoSplitter.position = 100;
         _treeScrollView.frame = _rightTreeBase.bounds;
     }
