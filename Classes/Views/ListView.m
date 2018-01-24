@@ -102,7 +102,7 @@
     [super keyDown:e];
 }
 
-- (void)textDidEndEditing:(NSNotification*)note
+- (void)textDidEndEditing:(NSNotification *)note
 {
     if ([_textDelegate respondsToSelector:@selector(textDidEndEditing:)]) {
         [_textDelegate textDidEndEditing:note];

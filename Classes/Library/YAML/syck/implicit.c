@@ -1684,6 +1684,7 @@ syck_type_id_to_uri( char *type_id )
 
     cursor = type_id;
     limit = type_id + strlen( type_id );
+    marker = NULL;
 
 
 {
