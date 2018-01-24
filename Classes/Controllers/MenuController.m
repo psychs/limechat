@@ -411,7 +411,6 @@
     _pasteSheet.nick = nick;
     _pasteSheet.editMode = editMode;
     _pasteSheet.originalText = content;
-    _pasteSheet.syntax = [Preferences pasteSyntax];
     _pasteSheet.command = [Preferences pasteCommand];
 
     NSDictionary* dic = [Preferences loadWindowStateWithName:@"paste_sheet"];
@@ -440,14 +439,6 @@
     }
 }
 
-- (void)pasteSheet:(PasteSheet*)sender onPasteURL:(NSString*)url
-{
-    [_world focusInputText];
-    NSText* fe = [_window fieldEditor:NO forObject:_text];
-    [fe replaceCharactersInRange:[fe selectedRange] withString:url];
-    [fe scrollRangeToVisible:[fe selectedRange]];
-}
-
 - (void)pasteSheetOnCancel:(PasteSheet*)sender
 {
     if (_pasteSheet.editMode) {
@@ -466,7 +457,6 @@
     [Preferences saveWindowState:dic name:@"paste_sheet"];
 
     if (!_pasteSheet.isShortText) {
-        [Preferences setPasteSyntax:_pasteSheet.syntax];
         [Preferences setPasteCommand:_pasteSheet.command];
     }
 

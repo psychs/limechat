@@ -95,7 +95,6 @@
 		782DA8A412DB5A3800C07861 /* TimerCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C12D11737F660044E7A1 /* TimerCommand.m */; };
 		782DA8A512DB5A3800C07861 /* AsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C13011737F660044E7A1 /* AsyncSocket.m */; };
 		782DA8A612DB5A3800C07861 /* FileLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C13211737F660044E7A1 /* FileLogger.m */; };
-		782DA8A712DB5A3800C07861 /* GistClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C13411737F660044E7A1 /* GistClient.m */; };
 		782DA8A812DB5A3800C07861 /* HostResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C13611737F660044E7A1 /* HostResolver.m */; };
 		782DA8A912DB5A3800C07861 /* HotKeyManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C13811737F660044E7A1 /* HotKeyManager.m */; };
 		782DA8AA12DB5A3800C07861 /* IconController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C13A11737F660044E7A1 /* IconController.m */; };
@@ -239,7 +238,6 @@
 		78A8C1D711737F660044E7A1 /* TimerCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C12D11737F660044E7A1 /* TimerCommand.m */; };
 		78A8C1D811737F660044E7A1 /* AsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C13011737F660044E7A1 /* AsyncSocket.m */; };
 		78A8C1D911737F660044E7A1 /* FileLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C13211737F660044E7A1 /* FileLogger.m */; };
-		78A8C1DA11737F660044E7A1 /* GistClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C13411737F660044E7A1 /* GistClient.m */; };
 		78A8C1DB11737F660044E7A1 /* HostResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C13611737F660044E7A1 /* HostResolver.m */; };
 		78A8C1DC11737F660044E7A1 /* HotKeyManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C13811737F660044E7A1 /* HotKeyManager.m */; };
 		78A8C1DD11737F660044E7A1 /* IconController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A8C13A11737F660044E7A1 /* IconController.m */; };
@@ -511,8 +509,6 @@
 		78A8C13011737F660044E7A1 /* AsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncSocket.m; sourceTree = "<group>"; };
 		78A8C13111737F660044E7A1 /* FileLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileLogger.h; sourceTree = "<group>"; };
 		78A8C13211737F660044E7A1 /* FileLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileLogger.m; sourceTree = "<group>"; };
-		78A8C13311737F660044E7A1 /* GistClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GistClient.h; sourceTree = "<group>"; };
-		78A8C13411737F660044E7A1 /* GistClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GistClient.m; sourceTree = "<group>"; };
 		78A8C13511737F660044E7A1 /* HostResolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HostResolver.h; sourceTree = "<group>"; };
 		78A8C13611737F660044E7A1 /* HostResolver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HostResolver.m; sourceTree = "<group>"; };
 		78A8C13711737F660044E7A1 /* HotKeyManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotKeyManager.h; sourceTree = "<group>"; };
@@ -943,8 +939,6 @@
 				78A8C13011737F660044E7A1 /* AsyncSocket.m */,
 				78A8C13111737F660044E7A1 /* FileLogger.h */,
 				78A8C13211737F660044E7A1 /* FileLogger.m */,
-				78A8C13311737F660044E7A1 /* GistClient.h */,
-				78A8C13411737F660044E7A1 /* GistClient.m */,
 				780844F4134CD45E003BB84C /* ImageSizeCheckClient.h */,
 				780844F5134CD45E003BB84C /* ImageSizeCheckClient.m */,
 				78A8C13511737F660044E7A1 /* HostResolver.h */,
@@ -1335,7 +1329,6 @@
 				782DA8A412DB5A3800C07861 /* TimerCommand.m in Sources */,
 				782DA8A512DB5A3800C07861 /* AsyncSocket.m in Sources */,
 				782DA8A612DB5A3800C07861 /* FileLogger.m in Sources */,
-				782DA8A712DB5A3800C07861 /* GistClient.m in Sources */,
 				782DA8A812DB5A3800C07861 /* HostResolver.m in Sources */,
 				782DA8A912DB5A3800C07861 /* HotKeyManager.m in Sources */,
 				782DA8AA12DB5A3800C07861 /* IconController.m in Sources */,
@@ -1456,7 +1449,6 @@
 				78A8C1D711737F660044E7A1 /* TimerCommand.m in Sources */,
 				78A8C1D811737F660044E7A1 /* AsyncSocket.m in Sources */,
 				78A8C1D911737F660044E7A1 /* FileLogger.m in Sources */,
-				78A8C1DA11737F660044E7A1 /* GistClient.m in Sources */,
 				78A8C1DB11737F660044E7A1 /* HostResolver.m in Sources */,
 				78A8C1DC11737F660044E7A1 /* HotKeyManager.m in Sources */,
 				78A8C1DD11737F660044E7A1 /* IconController.m in Sources */,
