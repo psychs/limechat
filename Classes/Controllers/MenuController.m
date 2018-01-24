@@ -368,8 +368,14 @@
         if (u && c) {
             if (c.isChannel && c.isActive) {
                 NSString* message = [NSString stringWithFormat:@"Close %@ ?", c.name];
-                NSInteger result = NSRunAlertPanel(message, @"", @"Close", @"Cancel", nil);
-                if (result != NSAlertDefaultReturn) {
+
+                NSAlert *alert = [[NSAlert alloc] init];
+                alert.messageText = message;
+                alert.informativeText = @"";
+                [alert addButtonWithTitle:@"Close"];
+                [alert addButtonWithTitle:@"Cancel"];
+                NSModalResponse result = [alert runModal];
+                if (result != NSAlertFirstButtonReturn) {
                     return;
                 }
             }

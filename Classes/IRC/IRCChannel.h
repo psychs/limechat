@@ -25,7 +25,6 @@
 @property (nonatomic, readonly) NSString* channelTypeString;
 @property (nonatomic) NSString* topic;
 @property (nonatomic) NSString* storedTopic;
-@property (nonatomic) BOOL isActive;
 @property (nonatomic) BOOL isOp;
 @property (nonatomic) BOOL isModeInit;
 @property (nonatomic) BOOL isNamesInit;

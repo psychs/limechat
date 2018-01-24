@@ -2,12 +2,13 @@
 // You can redistribute it and/or modify it under the terms of the GPL version 2 (see the file GPL.txt).
 
 #import <Cocoa/Cocoa.h>
+#import <WebKit/WebKit.h>
 
 
 @class MenuController;
 
 
-@interface LogPolicy : NSObject
+@interface LogPolicy : NSObject <WebUIDelegate, WebPolicyDelegate>
 
 @property (nonatomic, weak) MenuController* menuController;
 @property (nonatomic) NSMenu* menu;

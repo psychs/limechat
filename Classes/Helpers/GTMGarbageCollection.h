@@ -36,27 +36,18 @@
 // inline so that tools like Clang's scan-build don't report code as leaking.
 #define GTMNSMakeCollectable(cf) ((id)NSMakeCollectable(cf))
 
-// GTMNSMakeUncollectable is for global maps, etc. that we don't
-// want released ever. You should still retain these in non-gc code.
-GTM_INLINE void GTMNSMakeUncollectable(id object) {
-  [[NSGarbageCollector defaultCollector] disableCollectorForPointer:object];
-}
-
 // Hopefully no code really needs this, but GTMIsGarbageCollectionEnabled is
 // a common way to check at runtime if GC is on.
 // There are some places where GC doesn't work w/ things w/in Apple's
 // frameworks, so this is here so GTM unittests and detect it, and not run
 // individual tests to work around bugs in Apple's frameworks.
 GTM_INLINE BOOL GTMIsGarbageCollectionEnabled(void) {
-  return ([NSGarbageCollector defaultCollector] != nil);
+    return NO;
 }
 
 #else
 
 #define GTMNSMakeCollectable(cf) ((id)(cf))
-
-GTM_INLINE void GTMNSMakeUncollectable(id object) {
-}
 
 GTM_INLINE BOOL GTMIsGarbageCollectionEnabled(void) {
   return NO;

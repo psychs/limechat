@@ -229,14 +229,25 @@
             [msg appendFormat:@"sending %d files", sending];
         }
         [msg appendString:@"."];
-        NSInteger result = NSRunAlertPanel(@"Quit LimeChat?", msg, @"Quit", @"Cancel", nil);
-        if (result != NSAlertDefaultReturn) {
+
+        NSAlert *alert = [[NSAlert alloc] init];
+        alert.messageText = @"Quit LimeChat?";
+        alert.informativeText = msg;
+        [alert addButtonWithTitle:@"Quit"];
+        [alert addButtonWithTitle:@"Cancel"];
+        NSModalResponse result = [alert runModal];
+        if (result != NSAlertFirstButtonReturn) {
             return NO;
         }
     }
     else if ([Preferences confirmQuit]) {
-        NSInteger result = NSRunAlertPanel(@"Quit LimeChat?", @"", @"Quit", @"Cancel", nil);
-        if (result != NSAlertDefaultReturn) {
+        NSAlert *alert = [[NSAlert alloc] init];
+        alert.messageText = @"Quit LimeChat?";
+        alert.informativeText = @"";
+        [alert addButtonWithTitle:@"Quit"];
+        [alert addButtonWithTitle:@"Cancel"];
+        NSModalResponse result = [alert runModal];
+        if (result != NSAlertFirstButtonReturn) {
             return NO;
         }
     }

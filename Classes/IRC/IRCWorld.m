@@ -91,7 +91,7 @@
         [_tree selectItemAtIndex:0];
     }
 
-    [self outlineViewSelectionDidChange:nil];
+    [self reflectTreeSelection];
 }
 
 - (void)save
@@ -954,6 +954,11 @@
 }
 
 - (void)outlineViewSelectionDidChange:(NSNotification *)note
+{
+    [self reflectTreeSelection];
+}
+
+- (void)reflectTreeSelection
 {
     id nextItem = [_tree itemAtRow:[_tree selectedRow]];
 

@@ -27,6 +27,8 @@
 - (void)setBackgroundColor:(NSColor *)color;
 @end
 
+@interface LogController () <WebFrameLoadDelegate, WebResourceLoadDelegate>
+@end
 
 @implementation LogController
 {

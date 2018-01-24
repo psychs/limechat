@@ -448,7 +448,7 @@
     NSIndexSet* indexes = [_receiverTable selectedRowIndexes];
     for (NSUInteger i=[indexes firstIndex]; i!=NSNotFound; i=[indexes indexGreaterThanIndex:i]) {
         DCCReceiver* e = [_receivers objectAtIndex:i];
-        [ws selectFile:e.downloadFileName inFileViewerRootedAtPath:nil];
+        [ws selectFile:e.downloadFileName inFileViewerRootedAtPath:@""];
     }
 
     [self reloadReceiverTable];

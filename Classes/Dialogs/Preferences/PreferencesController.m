@@ -288,7 +288,7 @@
 {
     [_transcriptFolderButton selectItem:[_transcriptFolderButton itemAtIndex:0]];
 
-    if (returnCode == NSOKButton) {
+    if (returnCode == NSModalResponseOK) {
         NSString* path = [[[panel URLs] objectAtIndex:0] path];
 
         // create directory
