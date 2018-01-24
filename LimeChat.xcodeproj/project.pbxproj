@@ -1654,18 +1654,16 @@
 					DEBUG_BUILD,
 				);
 				INFOPLIST_FILE = "Others/AppStore/Info-AppStore.plist";
-				PROVISIONING_PROFILE = "B97D42C6-E7D9-463A-8064-30EEA7EB5961";
 			};
 			name = Debug;
 		};
 		782DA8FF12DB5A3800C07861 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = TARGET_APP_STORE;
 				INFOPLIST_FILE = "Others/AppStore/Info-AppStore.plist";
-				PROVISIONING_PROFILE = "B97D42C6-E7D9-463A-8064-30EEA7EB5961";
 			};
 			name = Release;
 		};
@@ -1675,17 +1673,15 @@
 				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = Others/Normal/Info.plist;
-				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
 		78E570D50C1C306500BDF7EC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Developer ID Application: Satoshi Nakagawa";
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = Others/Normal/Info.plist;
-				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
