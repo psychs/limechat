@@ -594,6 +594,11 @@
     [[NSPasteboard generalPasteboard] setStringContent:s];
 }
 
+- (void)onClearConsole:(id)sender {
+	[_world.consoleLog clear];
+}
+
+
 - (void)onMarkScrollback:(id)sender
 {
     IRCTreeItem* sel = _world.selected;
