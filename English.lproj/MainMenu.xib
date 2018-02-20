@@ -913,8 +913,8 @@
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="bRd-Qb-Ghg"/>
-                <menuItem title="Clear Log" id="sML-wL-3Lt">
-                    <modifierMask key="keyEquivalentModifierMask"/>
+                <menuItem title="Clear Log" keyEquivalent="l" id="sML-wL-3Lt">
+                    <modifierMask key="keyEquivalentModifierMask" control="YES"/>
                     <connections>
                         <action selector="onClearConsole:" target="267" id="Uto-Ac-bkR"/>
                     </connections>
