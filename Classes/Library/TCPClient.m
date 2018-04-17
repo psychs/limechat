@@ -134,7 +134,7 @@
     }
 
     if (_useSSL) {
-        [_conn useSSLWithHost:_host ?: _proxyHost validatesCertificateChain:YES];
+        [_conn useSSLWithHost:_host validatesCertificateChain:YES];
     }
     return YES;
 }
