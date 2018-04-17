@@ -1467,7 +1467,7 @@ static void MyCFWriteStreamCallback(CFWriteStreamRef stream, CFStreamEventType t
     mutableSettings[(NSString *)kCFStreamSSLIsServer] = (NSNumber *)kCFBooleanFalse;
     if (validatesCertificateChain) {
         mutableSettings[(NSString *)kCFStreamSSLValidatesCertificateChain] = (NSNumber *)kCFBooleanTrue;
-        mutableSettings[(NSString *)kCFStreamSSLPeerName] = host;
+        mutableSettings[(NSString *)kCFStreamSSLPeerName] = host ?: (NSNull *)kCFNull;
     } else {
         mutableSettings[(NSString *)kCFStreamSSLValidatesCertificateChain] = (NSNumber *)kCFBooleanFalse;
         mutableSettings[(NSString *)kCFStreamSSLPeerName] = (NSNull *)kCFNull;
