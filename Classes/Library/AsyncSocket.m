@@ -1460,15 +1460,20 @@ static void MyCFWriteStreamCallback(CFWriteStreamRef stream, CFStreamEventType t
 	[socket doCFWriteStreamCallback:type forStream:stream];
 }
 
-- (void)useSSL
+- (void)useSSLWithHost:(NSString *)host validatesCertificateChain:(BOOL)validatesCertificateChain
 {
-	NSDictionary* settings = [NSDictionary dictionaryWithObjectsAndKeys:
-								   (NSString *)kCFStreamSocketSecurityLevelNegotiatedSSL, kCFStreamSSLLevel,
-								   kCFBooleanFalse, kCFStreamSSLValidatesCertificateChain,
-								   kCFNull, kCFStreamSSLPeerName,
-								   kCFBooleanFalse, kCFStreamSSLIsServer,
-								   nil];
-	
+    NSMutableDictionary *mutableSettings = [NSMutableDictionary dictionary];
+    mutableSettings[(NSString *)kCFStreamSSLLevel] = (NSString *)kCFStreamSocketSecurityLevelNegotiatedSSL;
+    mutableSettings[(NSString *)kCFStreamSSLIsServer] = (NSNumber *)kCFBooleanFalse;
+    if (validatesCertificateChain) {
+        mutableSettings[(NSString *)kCFStreamSSLValidatesCertificateChain] = (NSNumber *)kCFBooleanTrue;
+        mutableSettings[(NSString *)kCFStreamSSLPeerName] = host;
+    } else {
+        mutableSettings[(NSString *)kCFStreamSSLValidatesCertificateChain] = (NSNumber *)kCFBooleanFalse;
+        mutableSettings[(NSString *)kCFStreamSSLPeerName] = (NSNull *)kCFNull;
+    }
+    NSDictionary *settings = [mutableSettings copy];
+
 	CFReadStreamSetProperty(theReadStream, kCFStreamPropertySSLSettings, (CFDictionaryRef)settings);
 	CFWriteStreamSetProperty(theWriteStream, kCFStreamPropertySSLSettings, (CFDictionaryRef)settings);
 }
