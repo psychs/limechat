@@ -66,6 +66,12 @@
 
 - (void)dealloc
 {
+    if (_view) {
+        _view.frameLoadDelegate = nil;
+        _view.resourceLoadDelegate = nil;
+        _view.keyDelegate = nil;
+        _view.resizeDelegate = nil;
+    }
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
