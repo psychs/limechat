@@ -125,7 +125,7 @@ typedef enum AsyncSocketError AsyncSocketError;
 - (float) progressOfWriteReturningTag:(long *)tag bytesDone:(CFIndex *)done total:(CFIndex *)total;
 
 /* SSL support */
-- (void)useSSL;
+- (void)useSSLWithHost:(NSString *)host validatesCertificateChain:(BOOL)validatesCertificateChain;
 
 /* Proxy support */
 - (void)useSystemSocksProxy;
