@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13771" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11762" systemVersion="15G19009" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13771"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11762"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -627,7 +627,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <clipView key="contentView" id="3eL-uI-2jU">
                                                 <rect key="frame" x="1" y="0.0" width="369" height="205"/>
-                                                <autoresizingMask key="autoresizingMask"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="firstColumnOnly" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" headerView="958" id="113" customClass="ListView">
                                                         <rect key="frame" x="0.0" y="0.0" width="369" height="188"/>
@@ -708,9 +708,9 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <clipView key="contentView" id="gFV-kd-8Wa">
                                                 <rect key="frame" x="1" y="1" width="369" height="92"/>
-                                                <autoresizingMask key="autoresizingMask"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
-                                                    <textView importsGraphics="NO" richText="NO" verticallyResizable="YES" usesFontPanel="YES" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" spellingCorrection="YES" smartInsertDelete="YES" id="204">
+                                                    <textView importsGraphics="NO" richText="NO" usesFontPanel="YES" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" spellingCorrection="YES" smartInsertDelete="YES" id="204">
                                                         <rect key="frame" x="0.0" y="0.0" width="369" height="92"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -750,6 +750,17 @@
                                                 <action selector="addChannel:" target="-2" id="1014"/>
                                             </connections>
                                         </button>
+                                        <button verticalHuggingPriority="750" id="862">
+                                            <rect key="frame" x="39" y="170" width="23" height="23"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSRemoveTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="951">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="deleteChannel:" target="-2" id="1015"/>
+                                            </connections>
+                                        </button>
                                         <button verticalHuggingPriority="750" id="860">
                                             <rect key="frame" x="333" y="170" width="55" height="23"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -761,15 +772,15 @@
                                                 <action selector="editChannel:" target="-2" id="1016"/>
                                             </connections>
                                         </button>
-                                        <button verticalHuggingPriority="750" id="862">
-                                            <rect key="frame" x="39" y="170" width="23" height="23"/>
+                                        <button verticalHuggingPriority="750" misplaced="YES" id="AF5-Io-wuw">
+                                            <rect key="frame" x="270" y="170" width="55" height="23"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSRemoveTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="951">
+                                            <buttonCell key="cell" type="smallSquare" title="Sort" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="non-nX-SrD">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
                                             <connections>
-                                                <action selector="deleteChannel:" target="-2" id="1015"/>
+                                                <action selector="sortChannels:" target="-2" id="uhd-Pv-bBH"/>
                                             </connections>
                                         </button>
                                     </subviews>
@@ -832,7 +843,7 @@
                                                 <rect key="frame" x="1" y="119" width="223" height="15"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </scroller>
-                                            <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="1032">
+                                            <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="1032">
                                                 <rect key="frame" x="224" y="17" width="15" height="102"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </scroller>

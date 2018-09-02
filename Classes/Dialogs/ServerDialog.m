@@ -352,6 +352,14 @@
     [self reloadChannelTable];
 }
 
+- (void)sortChannels:(id)sender {
+	[_config.channels sortUsingComparator:^NSComparisonResult(IRCChannelConfig*  _Nonnull ch1, IRCChannelConfig* _Nonnull ch2) {
+		NSComparisonResult* result = [ch1.name compare:ch2.name options:NSCaseInsensitiveSearch];
+		return result;
+	}];
+	[self reloadChannelTable];
+}
+
 #pragma mark - Ignore Actions
 
 - (void)addIgnore:(id)sender
