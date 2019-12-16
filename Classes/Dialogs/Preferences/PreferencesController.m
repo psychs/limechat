@@ -492,6 +492,24 @@
     [nc postNotificationName:ThemeDidChangeNotification object:nil userInfo:nil];
 }
 
+- (IBAction)onOpenDownloadsPath:(id)sender {
+    
+    NSOpenPanel* panel = [NSOpenPanel openPanel];
+    [panel setCanChooseFiles:NO];
+    [panel setCanChooseDirectories:YES];
+    [panel setAllowsMultipleSelection:NO];
+    
+
+    [panel beginWithCompletionHandler:^(NSInteger result){
+        if (result == NSFileHandlingPanelOKButton) {
+            NSURL*  theDir = [[panel URLs] objectAtIndex:0];
+            NSString* thePath = theDir.path;
+    
+          
+         }
+    
+      }];}
+
 #pragma mark - NSWindow Delegate
 
 - (void)windowWillClose:(NSNotification *)note

@@ -339,6 +339,26 @@ static NSMutableArray* excludeWords;
     [ud setInteger:value forKey:@"Preferences.Advanced.pongInterval"];
 }
 
+#pragma mark - Downloads Path
+
++ (void)setDownloadsPath:(NSString *)value {
+    
+    NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+    [ud setObject:value forKey:@"Preferences.downloadsPath"];
+}
+
++ (void)setDownloadsPath {
+    
+    NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+    [ud setObject:[@"~/Desktop" stringByExpandingTildeInPath] forKey:@"Preferences.downloadsPath"];
+}
+
++ (NSString*)getDownloadsPath {
+    
+    NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+    return [ud stringForKey:@"Preferences.downloadsPath"];
+}
+
 #pragma mark - Max Log Lines
 
 + (int)maxLogLines
@@ -832,6 +852,7 @@ static NSMutableArray* excludeWords;
     [d setObject:@"~/Documents/LimeChat Transcripts" forKey:@"Preferences.General.transcript_folder"];
     [d setInt:0 forKey:@"Preferences.General.hotkey_key_code"];
     [d setInt:0 forKey:@"Preferences.General.hotkey_modifier_flags"];
+    [d setObject:[@"~/Downloads" stringByExpandingTildeInPath] forKey:@"Preferences.downloadsPath"];
 
     NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
     [ud registerDefaults:d];
