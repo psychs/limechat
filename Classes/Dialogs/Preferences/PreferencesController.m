@@ -504,8 +504,7 @@
         if (result == NSFileHandlingPanelOKButton) {
             NSURL*  theDir = [[panel URLs] objectAtIndex:0];
             NSString* thePath = theDir.path;
-    
-          
+            [Preferences setDownloadsPath:thePath];    
          }
     
       }];}
