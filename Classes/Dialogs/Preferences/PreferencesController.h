@@ -26,6 +26,8 @@
 @property (nonatomic) IBOutlet NSPopUpButton* transcriptFolderButton;
 @property (nonatomic) IBOutlet NSPopUpButton* themeButton;
 @property (nonatomic) IBOutlet NSTableView* soundsTable;
+@property (nonatomic, weak) IBOutlet NSTextField* labelDisplay;
+
 
 - (void)show;
 
@@ -43,6 +45,7 @@
 - (IBAction)onOpenDownloadsPath:(id)sender;
 
 @end
+
 
 
 @interface NSObject (PreferencesControllerDelegate)

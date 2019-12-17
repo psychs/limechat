@@ -9,7 +9,6 @@
 static NSMutableArray* keywords;
 static NSMutableArray* excludeWords;
 
-
 @implementation Preferences
 
 + (DCCActionType)dccAction
@@ -345,6 +344,8 @@ static NSMutableArray* excludeWords;
     
     NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
     [ud setObject:value forKey:@"Preferences.downloadsPath"];
+    
+    
 }
 
 + (void)setDownloadsPath {

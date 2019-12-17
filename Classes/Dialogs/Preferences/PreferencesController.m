@@ -14,6 +14,7 @@
 #define PONG_INTERVAL_MIN	20
 
 
+
 @implementation PreferencesController
 {
     NSMutableArray* _sounds;
@@ -141,6 +142,7 @@
 {
     [Preferences setPongInterval:value];
 }
+
 
 - (BOOL)validateValue:(id *)value forKey:(NSString *)key error:(NSError **)error
 {
@@ -504,7 +506,9 @@
         if (result == NSFileHandlingPanelOKButton) {
             NSURL*  theDir = [[panel URLs] objectAtIndex:0];
             NSString* thePath = theDir.path;
-            [Preferences setDownloadsPath:thePath];    
+            [Preferences setDownloadsPath:thePath];
+            self->_labelDisplay.stringValue = [Preferences getDownloadsPath];
+            
          }
     
       }];}
