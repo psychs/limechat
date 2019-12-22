@@ -32,7 +32,6 @@
 
 - (void)show;
 - (void)receivedNotification:(NSNotification*)notification;
-- (void)statusNotification:(NSNotification*)notification;
 
 - (void)onAddKeyword:(id)sender;
 - (void)onAddExcludeWord:(id)sender;
@@ -48,10 +47,6 @@
 - (IBAction)onOpenDownloadsPath:(id)sender;
 
 - (void)displaySetPath;
-- (NSString*)getPath;
-- (void)quickUpdate;
-
-
 
 @end
 
