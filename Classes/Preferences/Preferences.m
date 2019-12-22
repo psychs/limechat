@@ -343,21 +343,30 @@ static NSMutableArray* excludeWords;
 + (void)setDownloadsPath:(NSString *)value {
     
     NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-    [ud setObject:value forKey:@"Preferences.downloadsPath"];
-    
-    
-}
-
-+ (void)setDownloadsPath {
-    
-    NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-    [ud setObject:[@"~/Desktop" stringByExpandingTildeInPath] forKey:@"Preferences.downloadsPath"];
+    [ud setValue:value forKey:@"Preferences.downloadsPath"];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"Downloads Path Set" object:self];
 }
 
 + (NSString*)getDownloadsPath {
     
     NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
     return [ud stringForKey:@"Preferences.downloadsPath"];
+}
+
++ (void)checkOldPath {
+    
+    NSString* oldPath = [Preferences getDownloadsPath];
+    NSFileManager *fileManager = [[NSFileManager alloc] init];
+    
+    if (![fileManager fileExistsAtPath:oldPath]) {
+        NSString* defaultPath = [@"~/Downloads" stringByExpandingTildeInPath];
+        if (![fileManager fileExistsAtPath:defaultPath]) {
+            [Preferences setDownloadsPath:[@"~/Desktop" stringByExpandingTildeInPath]]; //default to Desktop
+        }
+        else if ([fileManager fileExistsAtPath:defaultPath]) {
+            [Preferences setDownloadsPath:defaultPath]; //default to Downloads
+        }
+    }
 }
 
 #pragma mark - Max Log Lines
@@ -853,7 +862,7 @@ static NSMutableArray* excludeWords;
     [d setObject:@"~/Documents/LimeChat Transcripts" forKey:@"Preferences.General.transcript_folder"];
     [d setInt:0 forKey:@"Preferences.General.hotkey_key_code"];
     [d setInt:0 forKey:@"Preferences.General.hotkey_modifier_flags"];
-    [d setObject:[@"~/Downloads" stringByExpandingTildeInPath] forKey:@"Preferences.downloadsPath"];
+    [d setObject:[@"~Downloads" stringByExpandingTildeInPath] forKey:@"Preferences.downloadsPath"];
 
     NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
     [ud registerDefaults:d];

@@ -2593,14 +2593,15 @@
 
     if ([Preferences dccAction] != DCC_IGNORE) {
         if (port > 0 && size > 0) {
-            NSString* path = [@"~/Downloads" stringByExpandingTildeInPath];
+            NSString* path = [Preferences getDownloadsPath];
             NSFileManager* fm = [NSFileManager defaultManager];
             BOOL isDir = NO;
             if ([fm fileExistsAtPath:path isDirectory:&isDir]) {
-                path = @"~/Downloads";
+                ;
             }
             else {
-                path = @"~/Desktop";
+                [Preferences setDownloadsPath:[@"~Desktop" stringByExpandingTildeInPath]];
+                path = [Preferences getDownloadsPath];
             }
 
             [_world.dcc addReceiverWithUID:self.uid nick:nick host:host port:port path:path fileName:fileName size:size];

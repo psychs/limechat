@@ -13,7 +13,7 @@
                 <outlet property="hotKey" destination="879" id="4354"/>
                 <outlet property="keywordsArrayController" destination="4310" id="4333"/>
                 <outlet property="keywordsTable" destination="2123" id="4342"/>
-                <outlet property="labelDisplay" destination="upG-WO-YPv" id="1ZK-P9-pak"/>
+                <outlet property="labelDisplay" destination="upG-WO-YPv" id="oja-YM-Ufu"/>
                 <outlet property="soundsTable" destination="101" id="4488"/>
                 <outlet property="themeButton" destination="248" id="4402"/>
                 <outlet property="transcriptFolderButton" destination="108" id="4398"/>
@@ -38,7 +38,7 @@
                         <font key="font" metaFont="system"/>
                         <tabViewItems>
                             <tabViewItem label="Highlight" identifier="1" id="10">
-                                <view key="view" ambiguous="YES" id="11">
+                                <view key="view" id="11">
                                     <rect key="frame" x="10" y="33" width="439" height="355"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
@@ -903,7 +903,7 @@
                                 </view>
                             </tabViewItem>
                             <tabViewItem label="Advanced" identifier="2" id="8">
-                                <view key="view" id="9">
+                                <view key="view" ambiguous="YES" id="9">
                                     <rect key="frame" x="10" y="33" width="439" height="355"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
