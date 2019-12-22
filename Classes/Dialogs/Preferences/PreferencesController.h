@@ -26,8 +26,12 @@
 @property (nonatomic) IBOutlet NSPopUpButton* transcriptFolderButton;
 @property (nonatomic) IBOutlet NSPopUpButton* themeButton;
 @property (nonatomic) IBOutlet NSTableView* soundsTable;
+@property (nonatomic, weak) IBOutlet NSTextField *labelDisplay;
+
+
 
 - (void)show;
+- (void)receivedNotification:(NSNotification*)notification;
 
 - (void)onAddKeyword:(id)sender;
 - (void)onAddExcludeWord:(id)sender;
@@ -40,6 +44,9 @@
 - (void)onInputSelectFont:(id)sender;
 - (void)onOverrideFontChanged:(id)sender;
 - (void)onChangedTransparency:(id)sender;
+- (IBAction)onOpenDownloadsPath:(id)sender;
+
+- (void)displaySetPath;
 
 @end
 

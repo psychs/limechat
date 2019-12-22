@@ -14,6 +14,7 @@
 #define PONG_INTERVAL_MIN	20
 
 
+
 @implementation PreferencesController
 {
     NSMutableArray* _sounds;
@@ -29,7 +30,11 @@
     if (self) {
         [[NSBundle mainBundle] loadNibNamed:@"Preferences" owner:self topLevelObjects:nil];
     }
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedNotification:) name:@"Downloads Path Set" object:nil];
+    
     return self;
+    
 }
 
 - (void)dealloc
@@ -42,6 +47,7 @@
     _soundsTable.dataSource = nil;
 }
 
+
 #pragma mark - Utilities
 
 - (void)show
@@ -49,9 +55,11 @@
     [self loadHotKey];
     [self updateTranscriptFolder];
     [self updateTheme];
+    [Preferences checkOldPath];
 
     _logFont = [NSFont fontWithName:[Preferences themeLogFontName] size:[Preferences themeLogFontSize]];
     _inputFont = [NSFont fontWithName:[Preferences themeInputFontName] size:[Preferences themeInputFontSize]];
+    
 
     if (![self.window isVisible]) {
         [self.window center];
@@ -141,6 +149,7 @@
 {
     [Preferences setPongInterval:value];
 }
+
 
 - (BOOL)validateValue:(id *)value forKey:(NSString *)key error:(NSError **)error
 {
@@ -490,6 +499,37 @@
 {
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
     [nc postNotificationName:ThemeDidChangeNotification object:nil userInfo:nil];
+}
+
+- (IBAction)onOpenDownloadsPath:(id)sender {
+    
+    NSOpenPanel* panel = [NSOpenPanel openPanel];
+    [panel setCanChooseFiles:NO];
+    [panel setCanChooseDirectories:YES];
+    [panel setAllowsMultipleSelection:NO];
+    
+
+    [panel beginWithCompletionHandler:^(NSInteger result){
+        if (result == NSFileHandlingPanelOKButton) {
+            NSURL*  theDir = [[panel URLs] objectAtIndex:0];
+            NSString* thePath = theDir.path;
+            [Preferences setDownloadsPath:thePath];
+            
+         }
+      }];}
+
+- (void)displaySetPath {
+    
+    _labelDisplay.stringValue = [Preferences getDownloadsPath];
+}
+
+#pragma mark - Notification
+
+- (void)receivedNotification:(NSNotification*)notification {
+    
+    if ([[notification name] isEqualToString:@"Downloads Path Set"]) {
+        [self displaySetPath];
+    }
 }
 
 #pragma mark - NSWindow Delegate

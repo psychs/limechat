@@ -96,6 +96,10 @@ typedef enum {
 + (int)pongInterval;
 + (void)setPongInterval:(int)value;
 
++ (void)setDownloadsPath:(NSString*)value;
++ (NSString*)getDownloadsPath;
++ (void)checkOldPath;
+
 + (int)maxLogLines;
 + (void)setMaxLogLines:(int)value;
 
