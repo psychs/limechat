@@ -105,6 +105,7 @@
 - (void)textDidEndEditing:(NSNotification *)note
 {
     if ([_textDelegate respondsToSelector:@selector(textDidEndEditing:)]) {
+        // Used in WelcomeDialog
         [_textDelegate textDidEndEditing:note];
     }
     [super textDidEndEditing:note];
