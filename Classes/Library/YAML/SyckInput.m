@@ -1,4 +1,4 @@
-#import <syck.h>
+#import "syck.h"
 #import "YAML.h"
 #import "GTMBase64.h"
 
