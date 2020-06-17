@@ -13,6 +13,8 @@
 		780844D3134CD34B003BB84C /* ImageDownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 780844D1134CD34B003BB84C /* ImageDownloadManager.m */; };
 		780844F6134CD45E003BB84C /* ImageSizeCheckClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 780844F5134CD45E003BB84C /* ImageSizeCheckClient.m */; };
 		780844F7134CD45E003BB84C /* ImageSizeCheckClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 780844F5134CD45E003BB84C /* ImageSizeCheckClient.m */; };
+		780B7F212499CF800035674F /* App.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 780B7F202499CF800035674F /* App.xcassets */; };
+		780B7F222499CFB90035674F /* App.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 780B7F202499CF800035674F /* App.xcassets */; };
 		780C67C811822AFF00CB739F /* ImageURLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 780C67C711822AFF00CB739F /* ImageURLParser.m */; };
 		780C685E118230EE00CB739F /* WebViewAutoScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 780C685D118230EE00CB739F /* WebViewAutoScroll.m */; };
 		780FF69F11813BC3003C7648 /* CustomJSFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 780FF69E11813BC3003C7648 /* CustomJSFile.m */; };
@@ -354,6 +356,7 @@
 		780844D1134CD34B003BB84C /* ImageDownloadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageDownloadManager.m; sourceTree = "<group>"; };
 		780844F4134CD45E003BB84C /* ImageSizeCheckClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageSizeCheckClient.h; sourceTree = "<group>"; };
 		780844F5134CD45E003BB84C /* ImageSizeCheckClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageSizeCheckClient.m; sourceTree = "<group>"; };
+		780B7F202499CF800035674F /* App.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = App.xcassets; sourceTree = "<group>"; };
 		780C67C611822AFF00CB739F /* ImageURLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageURLParser.h; sourceTree = "<group>"; };
 		780C67C711822AFF00CB739F /* ImageURLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageURLParser.m; sourceTree = "<group>"; };
 		780C685C118230EE00CB739F /* WebViewAutoScroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewAutoScroll.h; sourceTree = "<group>"; };
@@ -686,6 +689,7 @@
 			children = (
 				789A65922499628600D4C701 /* icon */,
 				789A65A3249962A400D4C701 /* images */,
+				780B7F202499CF800035674F /* App.xcassets */,
 				78F786AD15C3F30D00B7937A /* LimeChat.entitlements */,
 				789A65CC2499631700D4C701 /* ChannelDialog.xib */,
 				789A65B02499631600D4C701 /* DCCDialog.xib */,
@@ -1211,6 +1215,7 @@
 				789A65AD249962A400D4C701 /* redbadge.png in Resources */,
 				789A65D72499631700D4C701 /* WhoisDialog.xib in Resources */,
 				789A65DD2499631700D4C701 /* Preferences.xib in Resources */,
+				780B7F222499CFB90035674F /* App.xcassets in Resources */,
 				789A65E12499631700D4C701 /* ModeSheet.xib in Resources */,
 				789A65EB2499631700D4C701 /* ChannelDialog.xib in Resources */,
 				789A65D12499631700D4C701 /* IgnoreItemSheet.xib in Resources */,
@@ -1251,6 +1256,7 @@
 				789A65E42499631700D4C701 /* MainMenu.xib in Resources */,
 				789A65A8249962A400D4C701 /* bluebadge@2x.png in Resources */,
 				78C2D609115A428C00705817 /* dsa_pub.pem in Resources */,
+				780B7F212499CF800035674F /* App.xcassets in Resources */,
 				789A65DE2499631700D4C701 /* ListDialog.xib in Resources */,
 				78A8C1E511737F660044E7A1 /* README in Resources */,
 				78A8C1E711737F660044E7A1 /* COPYING in Resources */,
@@ -1757,7 +1763,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LIMECHAT_BUNDLE_IDENTIFIER = "LimeChat-debug";
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = LimeChat;
 				SDKROOT = macosx;
@@ -1809,7 +1815,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LIMECHAT_BUNDLE_IDENTIFIER = LimeChat;
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_NAME = LimeChat;
 				SDKROOT = macosx;
 			};

@@ -158,7 +158,7 @@ Gw
                         <rect key="frame" x="118" y="224" width="209" height="28"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Use this option to log messages in this channel to the console as well." id="79">
-                            <font key="font" metaFont="message" size="11"/>
+                            <font key="font" metaFont="label" size="11"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -167,7 +167,7 @@ Gw
                         <rect key="frame" x="100" y="80" width="227" height="42"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Note: These settings are used to create the channel if it does not exist when you attempt to join." id="80">
-                            <font key="font" metaFont="message" size="11"/>
+                            <font key="font" metaFont="label" size="11"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>

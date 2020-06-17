@@ -334,9 +334,9 @@
     //
     NSBezierPath* path = [self borderPath];
     [path setLineWidth:1];
-    [[NSColor whiteColor] set];
+    [[NSColor textBackgroundColor] set];
     [path fill];
-    [[NSColor colorWithCalibratedWhite:0.6 alpha:1] set];
+    [[NSColor controlLightHighlightColor] set];
     [path stroke];
 
     //
@@ -368,13 +368,16 @@
         NSRect circleRect = [self eraseButtonFrame];
         NSRect xRect = NSInsetRect(circleRect, 4.1, 4.1);
 
-        NSColor* circleColor = _eraseButtonHighlighted ? [NSColor grayColor] : [NSColor lightGrayColor];
+        // Erase button
+        NSColor* circleColor = _eraseButtonHighlighted ? [NSColor colorNamed:@"highlightedEraseButton"] : [NSColor colorNamed:@"eraseButton"];
+        //NSColor* circleColor = _eraseButtonHighlighted ? [NSColor grayColor] : [NSColor lightGrayColor];
         [circleColor set];
         NSBezierPath* circlePath = [NSBezierPath bezierPath];
         [circlePath appendBezierPathWithOvalInRect:circleRect];
         [circlePath fill];
 
-        [[NSColor whiteColor] set];
+        // X
+        [[NSColor controlBackgroundColor] set];
         NSBezierPath* linesPath = [NSBezierPath bezierPath];
         [linesPath setLineCapStyle:NSRoundLineCapStyle];
         [linesPath setLineWidth:1.5];
@@ -396,11 +399,11 @@
     static NSDictionary* placeholderAttribute = nil;
     if (!placeholderAttribute) {
         NSMutableParagraphStyle* ps = [NSMutableParagraphStyle new];
-        [ps setAlignment:NSCenterTextAlignment];
+        [ps setAlignment:NSTextAlignmentCenter];
 
         placeholderAttribute = @{
             NSFontAttributeName: [NSFont systemFontOfSize:12],
-            NSForegroundColorAttributeName: [NSColor colorWithCalibratedWhite:0.4 alpha:1],
+            NSForegroundColorAttributeName: [NSColor placeholderTextColor],
             NSParagraphStyleAttributeName: ps,
         };
     }
@@ -412,11 +415,11 @@
     static NSDictionary* normalAttribute = nil;
     if (!normalAttribute) {
         NSMutableParagraphStyle* ps = [NSMutableParagraphStyle new];
-        [ps setAlignment:NSCenterTextAlignment];
+        [ps setAlignment:NSTextAlignmentCenter];
 
         normalAttribute = @{
             NSFontAttributeName: [NSFont systemFontOfSize:12],
-            NSForegroundColorAttributeName: [NSColor blackColor],
+            NSForegroundColorAttributeName: [NSColor controlTextColor],
             NSParagraphStyleAttributeName: ps,
         };
     }

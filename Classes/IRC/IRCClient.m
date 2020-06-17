@@ -2682,7 +2682,7 @@
         [self printBoth:(c ?: (id)chname) type:LINE_TYPE_JOIN text:text timestamp:m.timestamp];
     }
 
-    //@@@ check auto op
+    // TBD: check auto op
 
     // add user to talk
     c = [self findChannel:nick];
@@ -2905,7 +2905,7 @@
                         [c changeMember:_myNick mode:mode value:plus];
                         c.isOp = m.isOp;
                         if (!prev && c.isOp && c.isWhoInit) {
-                            // @@@ check all auto op
+                            // TBD: check all auto op
                         }
                     }
                 }
@@ -3452,7 +3452,7 @@
                 }
 
                 if ([c numberOfMembers] > 1) {
-                    // @@@add to who queue
+                    // TBD: add to who queue
                 }
                 else {
                     c.isWhoInit = YES;

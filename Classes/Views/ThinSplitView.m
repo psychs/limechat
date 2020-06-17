@@ -102,12 +102,12 @@
 {
     if (_splitterHidden) return;
 
+    [[NSColor colorNamed:@"separator"] set];
+
     if ([self isVertical]) {
-        [[NSColor colorWithCalibratedWhite:0.65 alpha:1] set];
         NSRectFill(rect);
     }
     else {
-        [[NSColor colorWithCalibratedWhite:0.65 alpha:1] set];
         NSPoint left, right;
 
         left = rect.origin;
