@@ -22,7 +22,7 @@
 
 - (void)start;
 
-- (void)sendInChannel:(id)sender;
+- (IBAction)sendInChannel:(id)sender;
 
 @end
 

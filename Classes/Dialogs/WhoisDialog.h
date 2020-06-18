@@ -34,10 +34,10 @@
 - (void)setAwayMessage:(NSString*)value;
 - (void)setIdle:(NSString*)idle signOn:(NSString*)signOn;
 
-- (void)onClose:(id)sender;
-- (void)onTalk:(id)sender;
-- (void)onUpdate:(id)sender;
-- (void)onJoin:(id)sender;
+- (IBAction)onClose:(id)sender;
+- (IBAction)onTalk:(id)sender;
+- (IBAction)onUpdate:(id)sender;
+- (IBAction)onJoin:(id)sender;
 
 @end
 

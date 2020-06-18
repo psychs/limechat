@@ -23,8 +23,8 @@
 
 - (void)start;
 
-- (void)addChannel:(id)sender;
-- (void)deleteChannel:(id)sender;
+- (IBAction)addChannel:(id)sender;
+- (IBAction)deleteChannel:(id)sender;
 
 @end
 

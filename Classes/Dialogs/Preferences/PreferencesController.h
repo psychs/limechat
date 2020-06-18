@@ -29,17 +29,17 @@
 
 - (void)show;
 
-- (void)onAddKeyword:(id)sender;
-- (void)onAddExcludeWord:(id)sender;
+- (IBAction)onAddKeyword:(id)sender;
+- (IBAction)onAddExcludeWord:(id)sender;
 
-- (void)onTranscriptFolderChanged:(id)sender;
-- (void)onLayoutChanged:(id)sender;
-- (void)onChangedTheme:(id)sender;
-- (void)onOpenThemePath:(id)sender;
-- (void)onSelectFont:(id)sender;
-- (void)onInputSelectFont:(id)sender;
-- (void)onOverrideFontChanged:(id)sender;
-- (void)onChangedTransparency:(id)sender;
+- (IBAction)onTranscriptFolderChanged:(id)sender;
+- (IBAction)onLayoutChanged:(id)sender;
+- (IBAction)onChangedTheme:(id)sender;
+- (IBAction)onOpenThemePath:(id)sender;
+- (IBAction)onSelectFont:(id)sender;
+- (IBAction)onInputSelectFont:(id)sender;
+- (IBAction)onOverrideFontChanged:(id)sender;
+- (IBAction)onChangedTransparency:(id)sender;
 
 @end
 

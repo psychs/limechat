@@ -128,14 +128,14 @@
 {
     if (_useSystemSocks) {
         [_conn useSystemSocksProxy];
-    }
-    else if (_useSocks) {
+    } else if (_useSocks) {
         [_conn useSocksProxyVersion:_socksVersion host:_proxyHost port:_proxyPort user:_proxyUser password:_proxyPassword];
     }
 
     if (_useSSL) {
-        [_conn useSSLWithHost:_host validatesCertificateChain:YES];
+        [_conn useSSLWithHost:_host validatesCertificateChain:_useSSLCertificateVerification];
     }
+    
     return YES;
 }
 

@@ -20,12 +20,12 @@
 - (void)show;
 - (void)close;
 
-- (void)onOK:(id)sender;
-- (void)onCancel:(id)sender;
-- (void)onAddChannel:(id)sender;
-- (void)onDeleteChannel:(id)sender;
+- (IBAction)onOK:(id)sender;
+- (IBAction)onCancel:(id)sender;
+- (IBAction)onAddChannel:(id)sender;
+- (IBAction)onDeleteChannel:(id)sender;
 
-- (void)onHostComboChanged:(id)sender;
+- (IBAction)onHostComboChanged:(id)sender;
 
 @end
 

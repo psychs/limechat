@@ -85,6 +85,7 @@
 
     _hostCombo.stringValue = _config.host;
     _sslCheck.state = _config.useSSL;
+    _sslCertificateVerificationCheck.state = _config.useSSLCertificateVerification;
     _portText.intValue = _config.port;
 
     _nickText.stringValue = _config.nick;
@@ -123,6 +124,7 @@
 
     _config.host = _hostCombo.stringValue;
     _config.useSSL = _sslCheck.state;
+    _config.useSSLCertificateVerification = _sslCertificateVerificationCheck.state;
     _config.port = _portText.intValue;
 
     _config.nick = _nickText.stringValue;
@@ -178,6 +180,9 @@
 
     BOOL enabled = name.length && host.length && ![host isEqualToString:@"-"] && port > 0 && nick.length;
     [_okButton setEnabled:enabled];
+
+    BOOL sslEnabled = _sslCheck.state;
+    [_sslCertificateVerificationCheck setEnabled:sslEnabled];
 
     BOOL saslEnabled = nickPassword.length > 0;
     [_saslCheck setEnabled:saslEnabled];
@@ -242,6 +247,11 @@
 }
 
 - (void)hostComboChanged:(id)sender
+{
+    [self updateConnectionPage];
+}
+
+- (void)sslCheckChanged:(id)sender
 {
     [self updateConnectionPage];
 }

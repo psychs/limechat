@@ -71,6 +71,7 @@
             }
         }
         _useSSL = [dic boolForKey:@"ssl"];
+        _useSSLCertificateVerification = [dic boolForKey:@"sslCertificateVerification"];
 
         _nick = [dic stringForKey:@"nick"] ?: @"";
         _username = [dic stringForKey:@"username"] ?: @"";
@@ -134,6 +135,7 @@
     if (_host) [dic setObject:_host forKey:@"host"];
     [dic setInt:_port forKey:@"port"];
     [dic setBool:_useSSL forKey:@"ssl"];
+    [dic setBool:_useSSLCertificateVerification forKey:@"sslCertificateVerification"];
 
     if (_nick) [dic setObject:_nick forKey:@"nick"];
     BOOL useKeychain = YES;

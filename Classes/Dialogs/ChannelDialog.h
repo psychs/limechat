@@ -28,8 +28,8 @@
 - (void)show;
 - (void)close;
 
-- (void)ok:(id)sender;
-- (void)cancel:(id)sender;
+- (IBAction)ok:(id)sender;
+- (IBAction)cancel:(id)sender;
 
 @end
 

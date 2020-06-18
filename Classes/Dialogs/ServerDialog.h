@@ -22,6 +22,7 @@
 
 @property (nonatomic) IBOutlet NSComboBox* hostCombo;
 @property (nonatomic) IBOutlet NSButton* sslCheck;
+@property (nonatomic) IBOutlet NSButton* sslCertificateVerificationCheck;
 @property (nonatomic) IBOutlet NSTextField* portText;
 
 @property (nonatomic) IBOutlet NSTextField* nickText;
@@ -63,21 +64,22 @@
 - (void)show;
 - (void)close;
 
-- (void)ok:(id)sender;
-- (void)cancel:(id)sender;
+- (IBAction)ok:(id)sender;
+- (IBAction)cancel:(id)sender;
 
-- (void)hostComboChanged:(id)sender;
+- (IBAction)hostComboChanged:(id)sender;
+- (IBAction)sslCheckChanged:(id)sender;
 
-- (void)encodingChanged:(id)sender;
-- (void)proxyChanged:(id)sender;
+- (IBAction)encodingChanged:(id)sender;
+- (IBAction)proxyChanged:(id)sender;
 
-- (void)addChannel:(id)sender;
-- (void)editChannel:(id)sender;
-- (void)deleteChannel:(id)sender;
+- (IBAction)addChannel:(id)sender;
+- (IBAction)editChannel:(id)sender;
+- (IBAction)deleteChannel:(id)sender;
 
-- (void)addIgnore:(id)sender;
-- (void)editIgnore:(id)sender;
-- (void)deleteIgnore:(id)sender;
+- (IBAction)addIgnore:(id)sender;
+- (IBAction)editIgnore:(id)sender;
+- (IBAction)deleteIgnore:(id)sender;
 
 + (NSArray*)availableServers;
 

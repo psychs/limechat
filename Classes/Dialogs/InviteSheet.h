@@ -15,7 +15,7 @@
 
 - (void)startWithChannels:(NSArray*)channels;
 
-- (void)invite:(id)sender;
+- (IBAction)invite:(id)sender;
 
 @end
 

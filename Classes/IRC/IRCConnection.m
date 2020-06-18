@@ -47,6 +47,7 @@
     _conn.host = _host;
     _conn.port = _port;
     _conn.useSSL = _useSSL;
+    _conn.useSSLCertificateVerification = _useSSLCertificateVerification;
 
     if (_useSystemSocks) {
         // check if system socks proxy is enabled

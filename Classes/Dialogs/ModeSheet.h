@@ -28,7 +28,7 @@
 
 - (void)start;
 
-- (void)onChangeCheck:(id)sender;
+- (IBAction)onChangeCheck:(id)sender;
 
 @end
 

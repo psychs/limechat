@@ -22,10 +22,10 @@
 
 - (void)addChannel:(NSString*)channel count:(int)count topic:(NSString*)topic;
 
-- (void)onClose:(id)sender;
-- (void)onUpdate:(id)sender;
-- (void)onJoin:(id)sender;
-- (void)onSearchFieldChange:(id)sender;
+- (IBAction)onClose:(id)sender;
+- (IBAction)onUpdate:(id)sender;
+- (IBAction)onJoin:(id)sender;
+- (IBAction)onSearchFieldChange:(id)sender;
 
 @end
 

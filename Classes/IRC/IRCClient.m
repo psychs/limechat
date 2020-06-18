@@ -488,6 +488,7 @@
     _conn.host = host;
     _conn.port = _config.port;
     _conn.useSSL = _config.useSSL;
+    _conn.useSSLCertificateVerification = _config.useSSLCertificateVerification;
     _conn.encoding = _config.encoding;
 
     switch (_config.proxyType) {

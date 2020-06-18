@@ -12,6 +12,7 @@
 @property (nonatomic) NSString* host;
 @property (nonatomic) int port;
 @property (nonatomic) BOOL useSSL;
+@property (nonatomic) BOOL useSSLCertificateVerification;
 @property (nonatomic) NSStringEncoding encoding;
 
 @property (nonatomic) BOOL useSystemSocks;
