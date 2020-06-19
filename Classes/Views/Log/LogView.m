@@ -10,9 +10,9 @@
 {
     if (_keyDelegate) {
         NSUInteger m = [e modifierFlags];
-        BOOL ctrl = (m & NSControlKeyMask) != 0;
-        BOOL alt = (m & NSAlternateKeyMask) != 0;
-        BOOL cmd = (m & NSCommandKeyMask) != 0;
+        BOOL ctrl = (m & NSEventModifierFlagControl) != 0;
+        BOOL alt = (m & NSEventModifierFlagOption) != 0;
+        BOOL cmd = (m & NSEventModifierFlagCommand) != 0;
 
         if (!(ctrl || alt || cmd)) {
             if ([_keyDelegate respondsToSelector:@selector(logViewKeyDown:)]) {
@@ -47,11 +47,11 @@
 {
     WebFrame* frame = [self mainFrame];
     if (!frame) return @"";
-    DOMHTMLDocument* doc = (DOMHTMLDocument*)[frame DOMDocument];
+    DOMHTMLDocument *doc = (DOMHTMLDocument *)frame.DOMDocument;
     if (!doc) return @"";
     DOMElement* body = [doc body];
     if (!body) return @"";
-    DOMHTMLElement* root = (DOMHTMLElement*)[body parentNode];
+    DOMHTMLElement* root = (DOMHTMLElement *)body.parentNode;
     if (!root) return @"";
     return [root outerHTML];
 }

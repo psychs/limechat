@@ -136,9 +136,9 @@
 
     int k = [e keyCode];
     NSUInteger m = [e modifierFlags];
-    BOOL ctrl  = (m & NSControlKeyMask) != 0;
-    BOOL alt   = (m & NSAlternateKeyMask) != 0;
-    BOOL cmd   = (m & NSCommandKeyMask) != 0;
+    BOOL ctrl  = (m & NSEventModifierFlagControl) != 0;
+    BOOL alt   = (m & NSEventModifierFlagOption) != 0;
+    BOOL cmd   = (m & NSEventModifierFlagCommand) != 0;
 
     //LOG(@"keyDown: %d %d", k, m);
 
@@ -178,10 +178,10 @@
 
     int k = [e keyCode];
     NSUInteger m = [e modifierFlags];
-    BOOL ctrl = (m & NSControlKeyMask) != 0;
-    BOOL shift = (m & NSShiftKeyMask) != 0;
-    BOOL alt = (m & NSAlternateKeyMask) != 0;
-    BOOL cmd = (m & NSCommandKeyMask) != 0;
+    BOOL ctrl = (m & NSEventModifierFlagControl) != 0;
+    BOOL shift = (m & NSEventModifierFlagShift) != 0;
+    BOOL alt = (m & NSEventModifierFlagOption) != 0;
+    BOOL cmd = (m & NSEventModifierFlagCommand) != 0;
 
     //LOG(@"performKeyEquivalent: %d %d", k, m);
 
@@ -288,10 +288,10 @@
 
     NSMutableString* s = [NSMutableString string];
 
-    BOOL ctrl  = (_modifierFlags & NSControlKeyMask) != 0;
-    BOOL alt   = (_modifierFlags & NSAlternateKeyMask) != 0;
-    BOOL shift = (_modifierFlags & NSShiftKeyMask) != 0;
-    BOOL cmd   = (_modifierFlags & NSCommandKeyMask) != 0;
+    BOOL ctrl  = (_modifierFlags & NSEventModifierFlagControl) != 0;
+    BOOL alt   = (_modifierFlags & NSEventModifierFlagOption) != 0;
+    BOOL shift = (_modifierFlags & NSEventModifierFlagShift) != 0;
+    BOOL cmd   = (_modifierFlags & NSEventModifierFlagCommand) != 0;
 
     if (ctrl)  [s appendString:CTRL];
     if (alt)   [s appendString:ALT];

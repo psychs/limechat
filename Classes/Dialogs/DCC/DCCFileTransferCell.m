@@ -50,7 +50,7 @@ static char* UNITS[] = { "bytes", "KB", "MB", "GB", "TB" };
         CGFloat y = frame.origin.y + margin;
         NSRect iconFrame = NSMakeRect(x, y, ICON_SIZE.width, ICON_SIZE.height);
         NSRect sourceRect = NSMakeRect(0, 0, _icon.size.width, _icon.size.height);
-        [_icon drawInRect:iconFrame fromRect:sourceRect operation:NSCompositeSourceOver fraction:1 respectFlipped:YES hints:nil];
+        [_icon drawInRect:iconFrame fromRect:sourceRect operation:NSCompositingOperationSourceOver fraction:1 respectFlipped:YES hints:nil];
     }
 
     int offset = _progressBar ? 0 : (PROGRESS_BAR_HEIGHT / 3);
@@ -192,7 +192,7 @@ static char* UNITS[] = { "bytes", "KB", "MB", "GB", "TB" };
     static NSMutableParagraphStyle* fileNameStyle = nil;
     if (!fileNameStyle) {
         fileNameStyle = [NSMutableParagraphStyle new];
-        [fileNameStyle setAlignment:NSLeftTextAlignment];
+        [fileNameStyle setAlignment:NSTextAlignmentLeft];
         [fileNameStyle setLineBreakMode:NSLineBreakByTruncatingMiddle];
     }
     return fileNameStyle;
@@ -203,7 +203,7 @@ static char* UNITS[] = { "bytes", "KB", "MB", "GB", "TB" };
     static NSMutableParagraphStyle* statusStyle = nil;
     if (!statusStyle) {
         statusStyle = [NSMutableParagraphStyle new];
-        [statusStyle setAlignment:NSLeftTextAlignment];
+        [statusStyle setAlignment:NSTextAlignmentLeft];
         [statusStyle setLineBreakMode:NSLineBreakByTruncatingTail];
     }
     return statusStyle;

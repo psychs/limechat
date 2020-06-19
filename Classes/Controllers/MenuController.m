@@ -537,14 +537,14 @@
     if ([klass isEqualToString:@"WebHTMLView"]) {
         while ([t isKindOfClass:[NSView class]]) {
             if ([t isKindOfClass:[LogView class]]) {
-                NSPasteboard* pb = [NSPasteboard pasteboardWithName:NSFindPboard];
+                NSPasteboard* pb = [NSPasteboard pasteboardWithName:NSPasteboardNameFind];
                 [pb setStringContent:[t selection]];
             }
             t = [t superview];
         }
     }
     else if ([t respondsToSelector:@selector(writeSelectionToPasteboard:type:)]) {
-        NSPasteboard* pb = [NSPasteboard pasteboardWithName:NSFindPboard];
+        NSPasteboard* pb = [NSPasteboard pasteboardWithName:NSPasteboardNameFind];
         [pb declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:nil];
         [t writeSelectionToPasteboard:pb type:NSStringPboardType];
     }

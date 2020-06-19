@@ -36,7 +36,7 @@
 
             icon = [icon copy];
             [icon lockFocus];
-            [badge drawInRect:rect fromRect:sourceRect operation:NSCompositeSourceOver fraction:1 respectFlipped:YES hints:hints];
+            [badge drawInRect:rect fromRect:sourceRect operation:NSCompositingOperationSourceOver fraction:1 respectFlipped:YES hints:hints];
             [icon unlockFocus];
         }
     }

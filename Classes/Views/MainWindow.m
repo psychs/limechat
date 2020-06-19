@@ -35,7 +35,7 @@
 
 - (void)sendEvent:(NSEvent *)e
 {
-    if ([e type] == NSKeyDown) {
+    if ([e type] == NSEventTypeKeyDown) {
         if ([_keyHandler processKeyEvent:e]) {
             return;
         }

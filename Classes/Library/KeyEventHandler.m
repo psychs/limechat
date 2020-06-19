@@ -71,7 +71,7 @@
     if (client && client.markedRange.length > 0) return NO;
 
     NSUInteger m = [e modifierFlags];
-    m &= NSShiftKeyMask | NSControlKeyMask | NSAlternateKeyMask | NSCommandKeyMask;
+    m &= NSEventModifierFlagShift | NSEventModifierFlagControl | NSEventModifierFlagOption | NSEventModifierFlagCommand;
     NSNumber* modsKey = @(m);
 
     NSMutableDictionary* codeMap = [_codeHandlerMap objectForKey:modsKey];

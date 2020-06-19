@@ -23,10 +23,10 @@
     [self unregisterHotKey];
 
     UInt32 mod = 0;
-    if (modifier & NSShiftKeyMask) { mod |= shiftKey; }
-    if (modifier & NSControlKeyMask) { mod |= controlKey; }
-    if (modifier & NSCommandKeyMask) { mod |= cmdKey; }
-    if (modifier & NSAlternateKeyMask) { mod |= optionKey; }
+    if (modifier & NSEventModifierFlagShift) { mod |= shiftKey; }
+    if (modifier & NSEventModifierFlagControl) { mod |= controlKey; }
+    if (modifier & NSEventModifierFlagCommand) { mod |= cmdKey; }
+    if (modifier & NSEventModifierFlagOption) { mod |= optionKey; }
 
     EventHotKeyID keyId = {'LmCt', serial++};
 

@@ -1008,48 +1008,52 @@ typedef enum {
     [_fieldEditor setKeyHandlerTarget:self];
 
     [self handler:@selector(tab:) code:KEY_TAB mods:0];
-    [self handler:@selector(shiftTab:) code:KEY_TAB mods:NSShiftKeyMask];
-    [self handler:@selector(sendNotice:) code:KEY_ENTER mods:NSControlKeyMask];
-    [self handler:@selector(sendNotice:) code:KEY_RETURN mods:NSControlKeyMask];
-    [self handler:@selector(showPasteDialog:) code:KEY_ENTER mods:NSAlternateKeyMask];
-    [self handler:@selector(showPasteDialog:) code:KEY_RETURN mods:NSAlternateKeyMask];
-    [self handler:@selector(selectPreviousActiveChannel:) char:'[' mods:NSCommandKeyMask];
-    [self handler:@selector(selectNextActiveChannel:) char:']' mods:NSCommandKeyMask];
-    [self handler:@selector(selectPreviousActiveChannel:) char:'{' mods:NSCommandKeyMask|NSShiftKeyMask];
-    [self handler:@selector(selectNextActiveChannel:) char:'}' mods:NSCommandKeyMask|NSShiftKeyMask];
-    [self handler:@selector(selectPreviousChannel:) code:KEY_UP mods:NSControlKeyMask];
-    [self handler:@selector(selectNextChannel:) code:KEY_DOWN mods:NSControlKeyMask];
-    [self handler:@selector(selectPreviousServer:) code:KEY_LEFT mods:NSControlKeyMask];
-    [self handler:@selector(selectNextServer:) code:KEY_RIGHT mods:NSControlKeyMask];
-    [self handler:@selector(selectPreviousActiveChannel:) code:KEY_UP mods:NSCommandKeyMask];
-    [self handler:@selector(selectPreviousActiveChannel:) code:KEY_UP mods:NSCommandKeyMask|NSAlternateKeyMask];
-    [self handler:@selector(selectNextActiveChannel:) code:KEY_DOWN mods:NSCommandKeyMask];
-    [self handler:@selector(selectNextActiveChannel:) code:KEY_DOWN mods:NSCommandKeyMask|NSAlternateKeyMask];
-    [self handler:@selector(selectPreviousActiveServer:) code:KEY_LEFT mods:NSCommandKeyMask|NSAlternateKeyMask];
-    [self handler:@selector(selectNextActiveServer:) code:KEY_RIGHT mods:NSCommandKeyMask|NSAlternateKeyMask];
-    [self handler:@selector(selectNextUnreadChannel:) code:KEY_TAB mods:NSControlKeyMask];
-    [self handler:@selector(selectNextUnreadChannel:) code:KEY_DOWN mods:NSCommandKeyMask|NSAlternateKeyMask];
-    [self handler:@selector(selectPreviousUnreadChannel:) code:KEY_TAB mods:NSControlKeyMask|NSShiftKeyMask];
-    [self handler:@selector(selectPreviousUnreadChannel:) code:KEY_UP mods:NSCommandKeyMask|NSAlternateKeyMask];
-    [self handler:@selector(selectNextUnreadChannel:) code:KEY_SPACE mods:NSAlternateKeyMask];
-    [self handler:@selector(selectPreviousUnreadChannel:) code:KEY_SPACE mods:NSAlternateKeyMask|NSShiftKeyMask];
-    [self handler:@selector(selectPreviousSelection:) code:KEY_TAB mods:NSAlternateKeyMask];
+    [self handler:@selector(shiftTab:) code:KEY_TAB mods:NSEventModifierFlagShift];
+    [self handler:@selector(sendNotice:) code:KEY_ENTER mods:NSEventModifierFlagControl];
+    [self handler:@selector(sendNotice:) code:KEY_RETURN mods:NSEventModifierFlagControl];
+    [self handler:@selector(showPasteDialog:) code:KEY_ENTER mods:NSEventModifierFlagOption];
+    [self handler:@selector(showPasteDialog:) code:KEY_RETURN mods:NSEventModifierFlagOption];
+    [self handler:@selector(selectPreviousActiveChannel:) char:'[' mods:NSEventModifierFlagCommand];
+    [self handler:@selector(selectNextActiveChannel:) char:']' mods:NSEventModifierFlagCommand];
+    [self handler:@selector(selectPreviousActiveChannel:) char:'{' mods:NSEventModifierFlagCommand|NSEventModifierFlagShift];
+    [self handler:@selector(selectNextActiveChannel:) char:'}' mods:NSEventModifierFlagCommand|NSEventModifierFlagShift];
+    [self handler:@selector(selectPreviousChannel:) code:KEY_UP mods:NSEventModifierFlagControl];
+    [self handler:@selector(selectNextChannel:) code:KEY_DOWN mods:NSEventModifierFlagControl];
+    [self handler:@selector(selectPreviousServer:) code:KEY_LEFT mods:NSEventModifierFlagControl];
+    [self handler:@selector(selectNextServer:) code:KEY_RIGHT mods:NSEventModifierFlagControl];
+    [self handler:@selector(selectPreviousActiveChannel:) code:KEY_UP mods:NSEventModifierFlagCommand];
+    [self handler:@selector(selectPreviousActiveChannel:) code:KEY_UP mods:NSEventModifierFlagCommand|NSEventModifierFlagOption];
+    [self handler:@selector(selectNextActiveChannel:) code:KEY_DOWN mods:NSEventModifierFlagCommand];
+    [self handler:@selector(selectNextActiveChannel:) code:KEY_DOWN mods:NSEventModifierFlagCommand|NSEventModifierFlagOption];
+    [self handler:@selector(selectPreviousActiveServer:) code:KEY_LEFT mods:NSEventModifierFlagCommand|NSEventModifierFlagOption];
+    [self handler:@selector(selectNextActiveServer:) code:KEY_RIGHT mods:NSEventModifierFlagCommand|NSEventModifierFlagOption];
+    [self handler:@selector(selectNextUnreadChannel:) code:KEY_TAB mods:NSEventModifierFlagControl];
+    [self handler:@selector(selectNextUnreadChannel:) code:KEY_DOWN mods:NSEventModifierFlagCommand|NSEventModifierFlagOption];
+    [self handler:@selector(selectNextUnreadChannel:) code:KEY_DOWN mods:NSEventModifierFlagOption|NSEventModifierFlagShift];
+    [self handler:@selector(selectPreviousUnreadChannel:) code:KEY_TAB mods:NSEventModifierFlagControl|NSEventModifierFlagShift];
+    [self handler:@selector(selectPreviousUnreadChannel:) code:KEY_UP mods:NSEventModifierFlagCommand|NSEventModifierFlagOption];
+    [self handler:@selector(selectPreviousUnreadChannel:) code:KEY_UP mods:NSEventModifierFlagOption|NSEventModifierFlagShift];
+    [self handler:@selector(selectNextUnreadChannel:) code:KEY_SPACE mods:NSEventModifierFlagOption];
+    [self handler:@selector(selectPreviousUnreadChannel:) code:KEY_SPACE mods:NSEventModifierFlagOption|NSEventModifierFlagShift];
+    [self handler:@selector(selectPreviousSelection:) code:KEY_TAB mods:NSEventModifierFlagOption];
 
     for (int i=0; i<=9; ++i) {
-        [self handler:@selector(selectChannelAtNumber:) char:'0'+i mods:NSCommandKeyMask];
+        [self handler:@selector(selectChannelAtNumber:) char:'0'+i mods:NSEventModifierFlagCommand];
     }
     for (int i=0; i<=9; ++i) {
-        [self handler:@selector(selectServerAtNumber:) char:'0'+i mods:NSCommandKeyMask|NSControlKeyMask];
+        [self handler:@selector(selectServerAtNumber:) char:'0'+i mods:NSEventModifierFlagCommand|NSEventModifierFlagControl];
     }
 
     [self inputHandler:@selector(inputScrollToTop:) code:KEY_HOME mods:0];
+    [self inputHandler:@selector(inputScrollToTop:) code:KEY_UP mods:NSEventModifierFlagCommand|NSEventModifierFlagShift];
     [self inputHandler:@selector(inputScrollToBottom:) code:KEY_END mods:0];
+    [self inputHandler:@selector(inputScrollToBottom:) code:KEY_DOWN mods:NSEventModifierFlagCommand|NSEventModifierFlagShift];
     [self inputHandler:@selector(inputScrollPageUp:) code:KEY_PAGE_UP mods:0];
     [self inputHandler:@selector(inputScrollPageDown:) code:KEY_PAGE_DOWN mods:0];
     [self inputHandler:@selector(inputHistoryUp:) code:KEY_UP mods:0];
-    [self inputHandler:@selector(inputHistoryUp:) code:KEY_UP mods:NSAlternateKeyMask];
+    [self inputHandler:@selector(inputHistoryUp:) code:KEY_UP mods:NSEventModifierFlagOption];
     [self inputHandler:@selector(inputHistoryDown:) code:KEY_DOWN mods:0];
-    [self inputHandler:@selector(inputHistoryDown:) code:KEY_DOWN mods:NSAlternateKeyMask];
+    [self inputHandler:@selector(inputHistoryDown:) code:KEY_DOWN mods:NSEventModifierFlagOption];
 }
 
 #pragma mark - WelcomeDialog Delegate

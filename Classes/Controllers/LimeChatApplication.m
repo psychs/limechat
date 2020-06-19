@@ -28,7 +28,7 @@ enum {
 
 - (void)sendEvent:(NSEvent *)e
 {
-    if ([e type] == NSSystemDefined && [e subtype] == kEventHotKeyPressedSubtype) {
+    if ([e type] == NSEventTypeSystemDefined && [e subtype] == kEventHotKeyPressedSubtype) {
         if (_hotkey && [_hotkey enabled]) {
             unsigned long long handle = (unsigned long long)_hotkey.handle;
             unsigned long long data1 = [e data1];

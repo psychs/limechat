@@ -36,16 +36,16 @@
 
 - (void)sendEvent:(NSEvent *)e
 {
-    if ([e type] == NSKeyDown) {
+    if ([e type] == NSEventTypeKeyDown) {
         NSTextInputContext *context = [NSTextInputContext currentInputContext];
         id<NSTextInputClient> client = context.client;
         if (!client || client.markedRange.length == 0) {
             int k = [e keyCode];
             NSUInteger m = [e modifierFlags];
-            BOOL shift = (m & NSShiftKeyMask) != 0;
-            BOOL ctrl = (m & NSControlKeyMask) != 0;
-            BOOL alt = (m & NSAlternateKeyMask) != 0;
-            BOOL cmd = (m & NSCommandKeyMask) != 0;
+            BOOL shift = (m & NSEventModifierFlagShift) != 0;
+            BOOL ctrl = (m & NSEventModifierFlagControl) != 0;
+            BOOL alt = (m & NSEventModifierFlagOption) != 0;
+            BOOL cmd = (m & NSEventModifierFlagCommand) != 0;
 
             if (!(shift || ctrl || alt || cmd)) {
                 // no mods

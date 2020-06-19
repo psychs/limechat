@@ -135,10 +135,10 @@
 - (void)moveToTop
 {
     if (!_loaded) return;
-    DOMHTMLDocument* doc = (DOMHTMLDocument*)[[_view mainFrame] DOMDocument];
+    DOMHTMLDocument *doc = (DOMHTMLDocument*)_view.mainFrame.DOMDocument;
     if (!doc) return;
-    DOMHTMLElement* body = [doc body];
-    [body setValue:@0 forKey:@"scrollTop"];
+//    DOMHTMLElement *body = doc.body;
+    doc.documentElement.scrollTop = 0;
 }
 
 - (void)moveToBottom
@@ -146,26 +146,35 @@
     _movingToBottom = NO;
 
     if (!_loaded) return;
-    DOMHTMLDocument* doc = (DOMHTMLDocument*)[[_view mainFrame] DOMDocument];
+    DOMHTMLDocument *doc = (DOMHTMLDocument*)_view.mainFrame.DOMDocument;
     if (!doc) return;
-    DOMHTMLElement* body = [doc body];
-    [body setValue:[body valueForKey:@"scrollHeight"] forKey:@"scrollTop"];
+    DOMHTMLElement *body = doc.body;
+    doc.documentElement.scrollTop = body.scrollHeight;
 }
 
 - (BOOL)viewingBottom
 {
-    if (!_loaded) return YES;
-    if (_movingToBottom) return YES;
+    if (!_loaded) {
+        return YES;
+    }
+    if (_movingToBottom) {
+        return YES;
+    }
 
-    DOMHTMLDocument* doc = (DOMHTMLDocument*)[[_view mainFrame] DOMDocument];
-    if (!doc) return YES;
-    DOMHTMLElement* body = [doc body];
     int viewHeight = _view.frame.size.height;
-    int height = [[body valueForKey:@"scrollHeight"] intValue];
-    int top = [[body valueForKey:@"scrollTop"] intValue];
+    if (viewHeight == 0) {
+        return YES;
+    }
 
-    if (viewHeight == 0) return YES;
-    return top + viewHeight >= height - BOTTOM_EPSILON;
+    DOMHTMLDocument *doc = (DOMHTMLDocument *)_view.mainFrame.DOMDocument;
+    if (!doc) {
+        return YES;
+    }
+    DOMHTMLElement *body = doc.body;
+
+    int scrollHeight = body.scrollHeight;
+    int scrollTop = doc.documentElement.scrollTop;
+    return (scrollTop + viewHeight >= scrollHeight - BOTTOM_EPSILON);
 }
 
 - (void)savePosition
@@ -203,10 +212,10 @@
     [self savePosition];
     [self unmark];
 
-    DOMHTMLDocument* doc = (DOMHTMLDocument*)[[_view mainFrame] DOMDocument];
+    DOMHTMLDocument *doc = (DOMHTMLDocument*)_view.mainFrame.DOMDocument;
     if (!doc) return;
-    DOMHTMLElement* body = [doc body];
-    DOMHTMLElement* e = (DOMHTMLElement*)[doc createElement:@"hr"];
+    DOMHTMLElement *body = doc.body;
+    DOMHTMLElement* e = (DOMHTMLElement *)[doc createElement:@"hr"];
     [e setAttribute:@"id" value:@"mark"];
     [body appendChild:e];
     ++_count;
@@ -218,9 +227,9 @@
 {
     if (!_loaded) return;
 
-    DOMHTMLDocument* doc = (DOMHTMLDocument*)[[_view mainFrame] DOMDocument];
+    DOMHTMLDocument *doc = (DOMHTMLDocument *)_view.mainFrame.DOMDocument;
     if (!doc) return;
-    DOMHTMLElement* e = (DOMHTMLElement*)[doc getElementById:@"mark"];
+    DOMHTMLElement* e = (DOMHTMLElement *)[doc getElementById:@"mark"];
     if (e) {
         [[doc body] removeChild:e];
         --_count;
@@ -231,19 +240,19 @@
 {
     if (!_loaded) return;
 
-    DOMHTMLDocument* doc = (DOMHTMLDocument*)[[_view mainFrame] DOMDocument];
+    DOMHTMLDocument *doc = (DOMHTMLDocument *)_view.mainFrame.DOMDocument;
     if (!doc) return;
-    DOMHTMLElement* e = (DOMHTMLElement*)[doc getElementById:@"mark"];
+    DOMHTMLElement *e = (DOMHTMLElement *)[doc getElementById:@"mark"];
     if (e) {
         int y = 0;
-        DOMHTMLElement* t = e;
+        DOMHTMLElement *t = e;
         while (t) {
             if ([t isKindOfClass:[DOMHTMLElement class]]) {
-                y += [[t valueForKey:@"offsetTop"] intValue];
+                y += t.offsetTop;
             }
-            t = (DOMHTMLElement*)[t parentNode];
+            t = (DOMHTMLElement *)[t parentNode];
         }
-        [[doc body] setValue:@(y - 20) forKey:@"scrollTop"];
+        doc.documentElement.scrollTop = y - 20;
     }
 }
 
@@ -251,14 +260,14 @@
 {
     if (!_loaded) return;
 
-    DOMHTMLDocument* doc = (DOMHTMLDocument*)[[_view mainFrame] DOMDocument];
+    DOMHTMLDocument *doc = (DOMHTMLDocument *)_view.mainFrame.DOMDocument;
     if (!doc) return;
-    DOMHTMLElement* body = [doc body];
+    DOMHTMLElement *body = doc.body;
     if (!body) return;
 
-    _html = [body innerHTML];
+    _html = body.innerHTML;
     _scrollBottom = [self viewingBottom];
-    _scrollTop = [[body valueForKey:@"scrollTop"] intValue];
+    _scrollTop = doc.documentElement.scrollTop;
 
     [[_view mainFrame] loadHTMLString:[self initialDocument] baseURL:_theme.log.baseUrl];
     [_scroller setNeedsDisplay];
@@ -303,18 +312,18 @@
         return;
     }
 
-    DOMHTMLDocument* doc = (DOMHTMLDocument*)[[_view mainFrame] DOMDocument];
+    DOMHTMLDocument *doc = (DOMHTMLDocument*)_view.mainFrame.DOMDocument;
     if (!doc) return;
 
     NSString* lineIdStr = [NSString stringWithFormat:@"line%d", aLineNumber];
-    DOMHTMLElement* lineElement = (DOMHTMLElement*)[doc getElementById:lineIdStr];
+    DOMHTMLElement* lineElement = (DOMHTMLElement *)[doc getElementById:lineIdStr];
     if (lineElement) {
         DOMHTMLElement* messageTag = nil;
 
         DOMNodeList* nodeList = [lineElement childNodes];
         int nodeCount = [nodeList length];
         for (int i=0; i<nodeCount; ++i) {
-            DOMHTMLElement* node = (DOMHTMLElement*)[nodeList item:i];
+            DOMHTMLElement* node = (DOMHTMLElement *)[nodeList item:i];
             if ([node isKindOfClass:[DOMHTMLElement class]]) {
                 NSString* klass = [node className];
                 if ([klass isEqualToString:@"message"]) {
@@ -330,7 +339,7 @@
             DOMNodeList* nodeList = [messageTag childNodes];
             int nodeCount = [nodeList length];
             for (int i=0; i<nodeCount; ++i) {
-                DOMHTMLElement* node = (DOMHTMLElement*)[nodeList item:i];
+                DOMHTMLElement* node = (DOMHTMLElement *)[nodeList item:i];
                 if ([node isKindOfClass:[DOMHTMLBRElement class]]) {
                     beforeTag = node;
                 }
@@ -353,7 +362,7 @@
 
             [self savePosition];
 
-            DOMHTMLElement* imageAnchorTag = (DOMHTMLElement*)[doc createElement:@"a"];
+            DOMHTMLElement* imageAnchorTag = (DOMHTMLElement *)[doc createElement:@"a"];
             [imageAnchorTag setAttribute:@"href" value:url];
             [imageAnchorTag setAttribute:@"imageindex" value:[NSString stringWithFormat:@"%d", imageIndex]];
 
@@ -380,10 +389,10 @@
     int n = _count - _maxLines;
     if (!_loaded || n <= 0 || _count <= 0) return;
 
-    DOMHTMLDocument* doc = (DOMHTMLDocument*)[[_view mainFrame] DOMDocument];
+    DOMHTMLDocument *doc = (DOMHTMLDocument*)_view.mainFrame.DOMDocument;
     if (!doc) return;
-    DOMHTMLElement* body = [doc body];
-    DOMNodeList* nodeList = [body childNodes];
+    DOMHTMLElement *body = doc.body;
+    DOMNodeList* nodeList = body.childNodes;
 
     BOOL viewingBottom = [self viewingBottom];
 
@@ -392,13 +401,13 @@
     int delta = 0;
     if (!viewingBottom) {
         // remeber scroll top
-        top = [[body valueForKey:@"scrollTop"] intValue];
+        top = doc.documentElement.scrollTop;
 
         if (n < [nodeList length]) {
-            DOMHTMLElement* firstNode = (DOMHTMLElement*)[nodeList item:0];
-            DOMHTMLElement* node = (DOMHTMLElement*)[nodeList item:n];
+            DOMHTMLElement* firstNode = (DOMHTMLElement *)[nodeList item:0];
+            DOMHTMLElement* node = (DOMHTMLElement *)[nodeList item:n];
             if ([node isKindOfClass:[DOMHTMLHRElement class]]) {
-                DOMHTMLElement* nextSibling = (DOMHTMLElement*)[node nextSibling];
+                DOMHTMLElement* nextSibling = (DOMHTMLElement *)node.nextSibling;
                 if (nextSibling) {
                     node = nextSibling;
                 }
@@ -415,22 +424,22 @@
     //   removing from the tail is around 6x faster
     //
     for (int i=n-1; i>=0; --i) {
-        DOMHTMLElement* node = (DOMHTMLElement*)[nodeList item:i];
+        DOMHTMLElement* node = (DOMHTMLElement *)[nodeList item:i];
         [body removeChild:node];
     }
 
     if (!viewingBottom) {
         // scroll back by delta
         if (delta > 0) {
-            [body setValue:@(top - delta) forKey:@"scrollTop"];
+            doc.documentElement.scrollTop = top - delta;
         }
     }
 
     // updating highlighted line numbers
     if (_highlightedLineNumbers.count > 0) {
-        DOMNodeList* nodeList = [body childNodes];
+        DOMNodeList* nodeList = body.childNodes;
         if (nodeList.length) {
-            DOMHTMLElement* firstNode = (DOMHTMLElement*)[nodeList item:0];
+            DOMHTMLElement* firstNode = (DOMHTMLElement *)[nodeList item:0];
             if (firstNode) {
                 NSString* lineId = [firstNode valueForKey:@"id"];
                 if (lineId && lineId.length > 4) {
@@ -581,10 +590,10 @@
     ++_lineNumber;
     ++_count;
 
-    DOMHTMLDocument* doc = (DOMHTMLDocument*)[[_view mainFrame] DOMDocument];
+    DOMHTMLDocument *doc = (DOMHTMLDocument*)_view.mainFrame.DOMDocument;
     if (!doc) return;
-    DOMHTMLElement* body = [doc body];
-    DOMHTMLElement* div = (DOMHTMLElement*)[doc createElement:@"div"];
+    DOMHTMLElement *body = doc.body;
+    DOMHTMLElement* div = (DOMHTMLElement *)[doc createElement:@"div"];
     [div setInnerHTML:aHtml];
 
     for (NSString* key in attrs) {
@@ -845,17 +854,16 @@
     _autoScroller.scroller = _scroller;
 
     if (_html) {
-        DOMHTMLDocument* doc = (DOMHTMLDocument*)[[_view mainFrame] DOMDocument];
+        DOMHTMLDocument *doc = (DOMHTMLDocument*)_view.mainFrame.DOMDocument;
         if (doc) {
-            DOMHTMLElement* body = [doc body];
-            [body setInnerHTML:_html];
+            DOMHTMLElement *body = doc.body;
+            body.innerHTML = _html;
             _html = nil;
 
             if (_scrollBottom) {
                 [self moveToBottom];
-            }
-            else if (_scrollTop) {
-                [body setValue:@(_scrollTop) forKey:@"scrollTop"];
+            } else if (_scrollTop) {
+                doc.documentElement.scrollTop = _scrollTop;
             }
         }
     }
@@ -869,12 +877,12 @@
     }
     [_lines removeAllObjects];
 
-    DOMHTMLDocument* doc = (DOMHTMLDocument*)[[_view mainFrame] DOMDocument];
+    DOMHTMLDocument *doc = (DOMHTMLDocument*)_view.mainFrame.DOMDocument;
     if (!doc) return;
-    DOMHTMLElement* body = [doc body];
-    DOMHTMLElement* e = (DOMHTMLElement*)[body firstChild];
+    DOMHTMLElement *body = doc.body;
+    DOMHTMLElement* e = (DOMHTMLElement *)body.firstChild;
     while (e) {
-        DOMHTMLElement* next = (DOMHTMLElement*)[e nextSibling];
+        DOMHTMLElement* next = (DOMHTMLElement *)e.nextSibling;
         if (![e isKindOfClass:[DOMHTMLDivElement class]] && ![e isKindOfClass:[DOMHTMLHRElement class]]) {
             [body removeChild:e];
         }
@@ -1010,11 +1018,11 @@
 {
     NSMutableArray* result = [NSMutableArray array];
 
-    DOMHTMLDocument* doc = (DOMHTMLDocument*)[[_view mainFrame] DOMDocument];
+    DOMHTMLDocument *doc = (DOMHTMLDocument*)_view.mainFrame.DOMDocument;
     if (doc) {
         for (NSNumber* n in _highlightedLineNumbers) {
             NSString* key = [NSString stringWithFormat:@"line%d", [n intValue]];
-            DOMHTMLElement* e = (DOMHTMLElement*)[doc getElementById:key];
+            DOMHTMLElement* e = (DOMHTMLElement *)[doc getElementById:key];
             if (e) {
                 int pos = [[e valueForKey:@"offsetTop"] intValue] + [[e valueForKey:@"offsetHeight"] intValue] / 2;
                 [result addObject:@(pos)];

@@ -46,9 +46,9 @@
     if (self.keyDelegate) {
         int k = [e keyCode];
         NSUInteger m = [e modifierFlags];
-        BOOL ctrl = (m & NSControlKeyMask) != 0;
-        BOOL alt = (m & NSAlternateKeyMask) != 0;
-        BOOL cmd = (m & NSCommandKeyMask) != 0;
+        BOOL ctrl = (m & NSEventModifierFlagControl) != 0;
+        BOOL alt = (m & NSEventModifierFlagOption) != 0;
+        BOOL cmd = (m & NSEventModifierFlagCommand) != 0;
 
         if (!(ctrl || alt || cmd)) {
             switch (k) {

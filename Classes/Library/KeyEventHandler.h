@@ -3,7 +3,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-
 #define KEY_RETURN      0x24
 #define KEY_TAB         0x30
 #define KEY_SPACE       0x31

@@ -54,12 +54,12 @@ static NSMutableParagraphStyle* nickStyle;
 
     if (!markStyle) {
         markStyle = [NSMutableParagraphStyle new];
-        [markStyle setAlignment:NSCenterTextAlignment];
+        [markStyle setAlignment:NSTextAlignmentCenter];
     }
 
     if (!nickStyle) {
         nickStyle = [NSMutableParagraphStyle new];
-        [nickStyle setAlignment:NSLeftTextAlignment];
+        [nickStyle setAlignment:NSTextAlignmentLeft];
         [nickStyle setLineBreakMode:NSLineBreakByTruncatingTail];
     }
 }
