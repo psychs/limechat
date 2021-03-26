@@ -76,8 +76,8 @@
     _logScrollerMarkColor = [self loadColor:@"log-view", @"scroller-highlight-color", nil] ?: [NSColor magentaColor];
 
     _inputTextFont = [self loadFont:@"input-text"] ?: [NSFont systemFontOfSize:0];
-    _inputTextBgColor = [self loadColor:@"input-text", @"background-color", nil] ?: [NSColor whiteColor];
-    _inputTextColor = [self loadColor:@"input-text", @"color", nil] ?: [NSColor blackColor];
+    _inputTextBgColor = [self loadColor:@"input-text", @"background-color", nil] ?: [NSColor textBackgroundColor];
+    _inputTextColor = [self loadColor:@"input-text", @"color", nil] ?: [NSColor textColor];
     _inputTextSelColor = [self loadColor:@"input-text", @"selected", @"background-color", nil] ?: [NSColor selectedTextBackgroundColor];
 
     _treeFont = [self loadFont:@"server-tree"] ?: [NSFont systemFontOfSize:0];
