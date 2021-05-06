@@ -201,7 +201,17 @@
         if (path.length > 1) {
             return [NSString stringWithFormat:@"%@:small", url];
         }
-    }    else if ([host hasSuffix:@"movapic.com"]) {
+    }
+    else if ([host hasSuffix:@"leetfil.es"]) {
+		if ([path hasPrefix:@"/image/"]) {
+			NSString *s = [path substringFromIndex:7];
+
+			if ([s isAlphaNumOnly]) {
+				return [NSString stringWithFormat:@"https://i.leetfil.es/%@", s];
+			}
+		}
+	}
+    else if ([host hasSuffix:@"movapic.com"]) {
         if ([path hasPrefix:@"/pic/"]) {
             NSString* s = [path substringFromIndex:5];
             if ([s isAlphaNumOnly]) {
