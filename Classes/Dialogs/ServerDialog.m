@@ -598,6 +598,7 @@
             [servers addObject:@"eu.undernet.org (Undernet)"];
             [servers addObject:@"irc.quakenet.org (QuakeNet)"];
             [servers addObject:@"chat1.ustream.tv (Ustream)"];
+            [servers addObject:@"irc.libera.chat (Libera Chat)"];
         }
         else {
             [servers addObject:@"chat.freenode.net (freenode)"];
@@ -608,6 +609,7 @@
             [servers addObject:@"uk.quakenet.org (QuakeNet)"];
             [servers addObject:@"irc.mozilla.org (Mozilla)"];
             [servers addObject:@"chat1.ustream.tv (Ustream)"];
+            [servers addObject:@"irc.libera.chat (Libera Chat)"];
         }
     }
     return servers;
