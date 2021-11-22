@@ -3016,7 +3016,7 @@
         if (!user.length) user = _config.nick;
         if (!pass.length) pass = @"";
 
-        NSString* base = [NSString stringWithFormat:@"%@\0%@\0%@", _config.nick, user, pass];
+        NSString* base = [NSString stringWithFormat:@"%@\0%@\0%@", user, user, pass];
         NSData* data = [base dataUsingEncoding:_encoding];
         NSString* authStr = [GTMBase64 stringByEncodingData:data];
         [self send:AUTHENTICATE, authStr, nil];
