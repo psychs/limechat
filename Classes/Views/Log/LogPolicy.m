@@ -24,28 +24,24 @@
 
 - (NSArray *)webView:(WebView *)sender contextMenuItemsForElement:(NSDictionary *)element defaultMenuItems:(NSArray *)defaultMenuItems
 {
+     NSMutableArray* ary = [NSMutableArray array];
     if (_url) {
         _menuController.pointedUrl = _url;
         _url = nil;
 
-        NSMutableArray* ary = [NSMutableArray array];
         for (NSMenuItem* item in [_urlMenu itemArray]) {
             [ary addObject:[item copy]];
         }
-        return ary;
     }
     else if (_addr) {
         _menuController.pointedAddress = _addr;
         _addr = nil;
 
-        NSMutableArray* ary = [NSMutableArray array];
         for (NSMenuItem* item in [_addrMenu itemArray]) {
             [ary addObject:[item copy]];
         }
-        return ary;
     }
     else if (_nick) {
-        NSMutableArray* ary = [NSMutableArray array];
         NSMenuItem* nickItem = [[NSMenuItem alloc] initWithTitle:_nick action:nil keyEquivalent:@""];
         [ary addObject:nickItem];
         [ary addObject:[NSMenuItem separatorItem]];
@@ -58,28 +54,27 @@
             [self modifyMemberMenuItem:item];
             [ary addObject:item];
         }
-        return ary;
     }
     else if (_chan) {
         _menuController.pointedChannelName = _chan;
         _chan = nil;
 
-        NSMutableArray* ary = [NSMutableArray array];
         for (NSMenuItem* item in [_chanMenu itemArray]) {
             [ary addObject:[item copy]];
         }
-        return ary;
     }
     else if (_menu){
-        NSMutableArray* ary = [NSMutableArray array];
         for (NSMenuItem* item in [_menu itemArray]) {
             [ary addObject:[item copy]];
         }
-        return ary;
     }
-    else {
-        return [NSArray array];
+
+    for (NSMenuItem* item in defaultMenuItems) {
+      if ([item tag] == 2024 || [item tag] == 2025) {
+        [ary addObject:[item copy]];
+      }
     }
+    return ary;
 }
 
 - (void)modifyMemberMenu:(NSMenu*)submenu

@@ -832,6 +832,7 @@ static NSMutableArray* excludeWords;
     [d setObject:@"~/Documents/LimeChat Transcripts" forKey:@"Preferences.General.transcript_folder"];
     [d setInt:0 forKey:@"Preferences.General.hotkey_key_code"];
     [d setInt:0 forKey:@"Preferences.General.hotkey_modifier_flags"];
+    [d setBool:YES forKey:@"WebKitDeveloperExtras"];
 
     NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
     [ud registerDefaults:d];
