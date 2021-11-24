@@ -6,10 +6,21 @@ LimeChat is an IRC client for Mac OS X.
 * Rich keyboard shortcuts for your comfortable operations.
 * Fast and stable.
 
+Table of Contents (ToC)
+=======================
+
+* [Author](#author)
+* [Thanks To](#thanks-to)
+* [License](#license)
+
+---
+
 ## Author
 
 * Satoshi Nakagawa http://github.com/psychs
 * ##limechat on chat.freenode.net
+
+---
 
 ## Thanks To
 
@@ -36,6 +47,8 @@ LimeChat is an IRC client for Mac OS X.
 * William Thimbleby  (Syck Cocoa)
 * Yohei Endo  (Application icons)
 * Yukihiro Matsumoto  (Ruby logo)
+
+---
 
 ## License
 
