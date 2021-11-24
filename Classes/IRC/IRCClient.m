@@ -1326,6 +1326,13 @@
                 targetChannelName = [@"#" stringByAppendingString:targetChannelName];
             }
         }
+
+
+        // If we're already in this channel, show it to us
+        IRCChannel *channel = [self findChannel:targetChannelName];
+        if (channel) {
+            [_world select:channel];
+        }
     }
     else if ([cmd isEqualToString:INVITE]) {
         targetChannelName = [s getToken];
