@@ -334,13 +334,12 @@
 
 - (BOOL)windowShouldClose:(id)sender
 {
-    return [self queryTerminate];
+	return YES;
 }
 
 - (void)windowWillClose:(NSNotification *)note
 {
-    _terminating = YES;
-    [NSApp terminate:nil];
+	// removed for OSX close = hide behaviour
 }
 
 #pragma mark - FieldEditorTextView Delegate
