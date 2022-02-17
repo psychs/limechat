@@ -2990,14 +2990,50 @@
     [self startPongTimer];
 }
 
+// This is version 3.1 of the IRC capability negotiation protocol extension
+// ( http://ircv3.atheme.org/specification/capability-negotiation-3.1 )
 - (void)receiveCap:(IRCMessage*)m
 {
-    if (_isLoggedIn) return;
+    if (_isLoggedIn) {
+        [self send:CAP, @"END", nil];
+        return;
+    }
 
     NSString* command = [m paramAt:1];
     NSString* params = [[m paramAt:2] trim];
 
-    if ([command isEqualNoCase:@"ack"]) {
+    // reply from server indicating supported capabilities
+    if ([command isEqualNoCase:@"LS"]) {
+        LOG(@"Server supports capabilities: %@", params);
+
+        NSArray* caps = [params componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+        NSMutableString* requestedCaps = [NSMutableString new];
+
+        for (NSString* cap in caps) {
+            if ([cap isEqualToString:@"znc.in/server-time"]) {
+                [requestedCaps appendString:@"znc.in/server-time "];
+
+            } else if ([cap isEqualToString:@"znc.in/server-time-iso"]) {
+                [requestedCaps appendString:@"znc.in/server-time-iso "];
+
+            } else if ([cap isEqualToString:@"sasl"]) {
+                if (_config.useSASL && _config.nick.length && _config.nickPassword.length) {
+                    [requestedCaps appendString:@"sasl "];
+                }
+            }
+        }
+
+        if (requestedCaps.length > 0) {
+            [self send:CAP, @"REQ", requestedCaps, nil];
+        }
+
+        // Client must send CAP END to continue registration
+        [self send:CAP, @"END", nil];
+
+    // accepted/enabled capabilities
+    } else if ([command isEqualNoCase:@"ACK"]) {
+        LOG(@"Using capabilities: %@", params);
+
         if ([params isEqualNoCase:@"sasl"]) {
             [self send:AUTHENTICATE, @"PLAIN", nil];
         }
@@ -3672,24 +3708,17 @@
     NSString* realName = _config.realName;
     if (!user.length) user = _config.nick;
     if (!realName.length) realName = _config.nick;
-
-    if (_config.useSASL) {
-        // If you send REQ to some servers (hyperion or etc) before PASS, the server refuses connection.
-        // To avoid this, do not send REQ if SASL setting is off.
-        [self send:CAP, @"REQ", @"znc.in/server-time", nil];
-        [self send:CAP, @"REQ", @"znc.in/server-time-iso", nil];
-
-        if (_config.nick.length && _config.nickPassword.length) {
-            [self send:CAP, @"REQ", @"sasl", nil];
-        }
-    }
-
+    
+    [self send:CAP, @"LS", nil];
+    
     if (_config.password.length) {
         [self send:PASS, _config.password, nil];
     }
-
+    
     [self send:NICK, _sentNick, nil];
     [self send:USER, user, [NSString stringWithFormat:@"%d", modeParam], @"*", realName, nil];
+
+    
 
     [self updateClientTitle];
 }
