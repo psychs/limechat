@@ -158,7 +158,7 @@
             }
 
             if (_textRegex) {
-                NSRange range = [_textRegex rangeOfFirstMatchInString:inputNick options:0 range:NSMakeRange(0, inputText.length)];
+                NSRange range = [_textRegex rangeOfFirstMatchInString:inputText options:0 range:NSMakeRange(0, inputText.length)];
                 if (!(range.location == 0 && range.length == inputText.length)) {
                     return NO;
                 }
